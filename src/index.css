@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f1f5f9;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Mobiel: safe area voor bottom nav op iPhone */
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Betere touch feedback op mobiel */
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Input mobiel — voorkom zoom op iOS */
+input, select {
+  font-size: 16px !important;
+}
+
+@media (min-width: 640px) {
+  input, select {
+    font-size: 14px !important;
+  }
+}
