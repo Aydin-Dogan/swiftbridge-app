@@ -5,6 +5,9 @@ import KYCFlow from './components/KYCFlow';
 import Dashboard from './components/Dashboard';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
+import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
+import Privacybeleid from './pages/Privacybeleid';
+import AMLBeleid from './pages/AMLBeleid';
 
 const tabs = [
   { id: 'dashboard', label: 'Dashboard', icoon: '📊' },
@@ -136,6 +139,9 @@ export default function App() {
             <AppShell token={token} gebruiker={gebruiker} onLogout={handleLogout} />
           </ProtectedRoute>
         } />
+        <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
+        <Route path="/privacybeleid" element={<Privacybeleid />} />
+        <Route path="/aml-beleid" element={<AMLBeleid />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

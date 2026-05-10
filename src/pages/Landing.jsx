@@ -194,15 +194,42 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-8 px-4 text-center text-sm">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <span className="text-xl">⚡</span>
-          <span className="font-bold text-white">SwiftBridge</span>
+      <footer className="bg-gray-900 text-gray-400 py-10 px-4 text-sm">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xl">⚡</span>
+                <span className="font-bold text-white text-lg">SwiftBridge</span>
+              </div>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Snel en goedkoop geld overmaken van Nederland naar Turkije. In minder dan 5 minuten op rekening.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-3">Juridisch</h4>
+              <ul className="space-y-2">
+                <li><a href="/algemene-voorwaarden" className="hover:text-white transition">Algemene Voorwaarden</a></li>
+                <li><a href="/privacybeleid" className="hover:text-white transition">Privacybeleid (GDPR)</a></li>
+                <li><a href="/aml-beleid" className="hover:text-white transition">AML-beleid</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-3">Contact</h4>
+              <ul className="space-y-2">
+                <li><a href="mailto:support@swiftbridge.nl" className="hover:text-white transition">support@swiftbridge.nl</a></li>
+                <li><a href="mailto:privacy@swiftbridge.nl" className="hover:text-white transition">privacy@swiftbridge.nl</a></li>
+                <li><a href="mailto:compliance@swiftbridge.nl" className="hover:text-white transition">compliance@swiftbridge.nl</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-6 text-center">
+            <p>© 2026 SwiftBridge B.V. · KvK: [invullen] · DNB-registratie in behandeling</p>
+            <p className="mt-2 text-xs text-gray-600">
+              SwiftBridge B.V. is geregistreerd in Nederland. Momenteel in bèta — DNB-registratie als betaaldienstverlener (PSD2) is in behandeling.
+            </p>
+          </div>
         </div>
-        <p>© 2026 SwiftBridge BV · KvK: [invullen] · DNB-geregistreerd via Modulr Finance BV</p>
-        <p className="mt-2 text-xs text-gray-600">
-          SwiftBridge BV is geregistreerd in Nederland en opereert als agent van Modulr Finance BV (DNB-vergund).
-        </p>
       </footer>
     </div>
   );
