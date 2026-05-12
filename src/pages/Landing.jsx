@@ -1,6 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+function useInstallPrompt() {
+  const [prompt, setPrompt] = useState(null);
+  useEffect(() => {
+    const handler = (e) => { e.preventDefault(); setPrompt(e); };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+  return prompt;
+}
+
 const stats = [
   { getal: '<5 min', label: 'Gemiddelde aankomsttijd' },
   { getal: '2,0–2,5%', label: 'Totale kosten' },
@@ -38,6 +48,13 @@ function LiveKoers() {
 export default function Landing() {
   const navigate = useNavigate();
   const [bedrag, setBedrag] = useState(500);
+  const installPrompt = useInstallPrompt();
+
+  async function installeerApp() {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -106,6 +123,12 @@ export default function Landing() {
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition text-sm">
               Nu gratis starten →
             </button>
+            {installPrompt && (
+              <button onClick={installeerApp}
+                className="w-full mt-2 border-2 border-blue-600 text-blue-600 font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-95">
+                📲 Download de app
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -177,6 +200,42 @@ export default function Landing() {
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      {/* Download sectie */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="text-5xl mb-4">📲</div>
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-3">Download de app</h2>
+          <p className="text-gray-500 mb-8 max-w-md mx-auto">
+            Installeer SwiftBridge direct op je telefoon — geen App Store nodig.
+            Werkt op Android en iPhone.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {[
+              { stap: '1', tekst: 'Open swiftbridge-app.up.railway.app in je browser' },
+              { stap: '2', tekst: 'Tik op "Toevoegen aan beginscherm" of de download-banner' },
+              { stap: '3', tekst: 'App staat op je beginscherm — klaar!' },
+            ].map(s => (
+              <div key={s.stap} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+                <div className="w-10 h-10 bg-blue-600 text-white font-extrabold text-lg rounded-full flex items-center justify-center mx-auto mb-3">
+                  {s.stap}
+                </div>
+                <p className="text-gray-600 text-sm">{s.tekst}</p>
+              </div>
+            ))}
+          </div>
+          {installPrompt ? (
+            <button onClick={installeerApp}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-lg px-8 py-4 rounded-2xl transition shadow-lg flex items-center gap-3 mx-auto active:scale-95">
+              📲 Nu installeren
+            </button>
+          ) : (
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 inline-block text-sm text-gray-500">
+              📱 Open deze pagina op je telefoon om de app te installeren
+            </div>
+          )}
         </div>
       </section>
 

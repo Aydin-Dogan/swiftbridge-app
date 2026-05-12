@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import PaymentFlow from './components/PaymentFlow';
 import KYCFlow from './components/KYCFlow';
@@ -8,6 +8,52 @@ import Login from './pages/Login';
 import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
 import Privacybeleid from './pages/Privacybeleid';
 import AMLBeleid from './pages/AMLBeleid';
+
+// ── PWA Install Banner ────────────────────────────────────────────────────────
+function InstallBanner() {
+  const [prompt, setPrompt] = useState(null);
+  const [toon, setToon] = useState(false);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setPrompt(e);
+      // Toon banner alleen als gebruiker het nog niet heeft weggetikte
+      const verborgen = sessionStorage.getItem('swiftbridge_install_verborgen');
+      if (!verborgen) setToon(true);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  if (!toon || !prompt) return null;
+
+  async function installeer() {
+    prompt.prompt();
+    const { outcome } = await prompt.userChoice;
+    if (outcome === 'accepted') setToon(false);
+  }
+
+  function verberg() {
+    sessionStorage.setItem('swiftbridge_install_verborgen', '1');
+    setToon(false);
+  }
+
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[100] bg-blue-600 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
+      <span className="text-2xl flex-shrink-0">⚡</span>
+      <div className="flex-1 min-w-0">
+        <p className="font-bold text-sm leading-none">Download SwiftBridge</p>
+        <p className="text-blue-200 text-xs mt-0.5">Installeer de app op je telefoon</p>
+      </div>
+      <button onClick={installeer}
+        className="bg-white text-blue-600 font-bold text-xs px-3 py-2 rounded-xl flex-shrink-0 active:scale-95 transition">
+        Installeer
+      </button>
+      <button onClick={verberg} className="text-blue-300 hover:text-white text-lg flex-shrink-0">✕</button>
+    </div>
+  );
+}
 
 const tabs = [
   { id: 'dashboard', label: 'Dashboard', icoon: '📊' },
@@ -23,6 +69,7 @@ function AppShell({ gebruiker, token, onLogout }) {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      <InstallBanner />
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
