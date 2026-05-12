@@ -159,18 +159,47 @@ function ProtectedRoute({ token, gebruiker, onLogout, children }) {
   return <AppShell token={token} gebruiker={gebruiker} onLogout={onLogout} />;
 }
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export default function App() {
-  const [token, setToken] = useState(null);
-  const [gebruiker, setGebruiker] = useState(null);
+  const [token, setToken] = useState(() => localStorage.getItem('sb_token'));
+  const [gebruiker, setGebruiker] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('sb_gebruiker')); } catch { return null; }
+  });
+
+  // Bij opstarten: haal actuele gebruikersdata op (zodat kycStatus altijd klopt)
+  useEffect(() => {
+    const t = localStorage.getItem('sb_token');
+    if (!t) return;
+    fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${t}` } })
+      .then(r => r.ok ? r.json() : null)
+      .then(g => {
+        if (g) {
+          setGebruiker(g);
+          localStorage.setItem('sb_gebruiker', JSON.stringify(g));
+        } else {
+          // Token verlopen
+          localStorage.removeItem('sb_token');
+          localStorage.removeItem('sb_gebruiker');
+          setToken(null);
+          setGebruiker(null);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   function handleLogin(t, g) {
     setToken(t);
     setGebruiker(g);
+    localStorage.setItem('sb_token', t);
+    localStorage.setItem('sb_gebruiker', JSON.stringify(g));
   }
 
   function handleLogout() {
     setToken(null);
     setGebruiker(null);
+    localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_gebruiker');
   }
 
   return (
