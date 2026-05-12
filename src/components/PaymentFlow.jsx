@@ -60,7 +60,7 @@ async function stuurPushNotificatie(titel, tekst) {
   if (!('Notification' in window)) return;
   if (Notification.permission === 'default') await Notification.requestPermission();
   if (Notification.permission === 'granted') {
-    new Notification(titel, { body: tekst, icon: '/favicon.ico' });
+    new Notification(titel, { body: tekst, icon: '/icon-192.png', badge: '/icon-192.png' });
   }
 }
 

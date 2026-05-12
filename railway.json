@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "serve -s dist -l ${PORT:-8080}",
+    "startCommand": "node_modules/.bin/serve -s dist -l ${PORT:-8080}",
     "healthcheckPath": "/",
     "healthcheckTimeout": 30,
     "restartPolicyType": "ON_FAILURE",
