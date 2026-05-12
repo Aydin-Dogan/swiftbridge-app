@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview --port 8080 --host",
-    "start": "serve -s dist"
+    "start": "node server.js"
   },
   "dependencies": {
     "react": "^19.2.5",
