@@ -11,10 +11,19 @@ export default function Login({ onLogin }) {
   const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '' });
   const [laden, setLaden] = useState(false);
   const [fout, setFout] = useState('');
+  const [toonVergeten, setToonVergeten] = useState(false);
+  const [vergetenEmail, setVergetenEmail] = useState('');
+  const [vergetenBericht, setVergetenBericht] = useState('');
+  const [vergetenLaden, setVergetenLaden] = useState(false);
 
-  useEffect(() => {
-    setFout('');
-  }, [tab]);
+  // Wachtwoord reset via link (?reset=TOKEN)
+  const resetToken = params.get('reset');
+  const [toonReset, setToonReset] = useState(!!resetToken);
+  const [nieuwWachtwoord, setNieuwWachtwoord] = useState('');
+  const [resetBericht, setResetBericht] = useState('');
+  const [resetLaden, setResetLaden] = useState(false);
+
+  useEffect(() => { setFout(''); }, [tab]);
 
   function update(k, v) { setForm(f => ({ ...f, [k]: v })); }
 
@@ -45,10 +54,110 @@ export default function Login({ onLogin }) {
     }
   }
 
+  async function stuurResetLink(e) {
+    e.preventDefault();
+    setVergetenLaden(true);
+    try {
+      const res = await fetch(`${API}/auth/wachtwoord-vergeten`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: vergetenEmail }),
+      });
+      const data = await res.json();
+      setVergetenBericht(data.bericht || 'Reset link verstuurd!');
+    } catch {
+      setVergetenBericht('Er ging iets mis. Probeer opnieuw.');
+    } finally {
+      setVergetenLaden(false);
+    }
+  }
+
+  async function resetWachtwoord(e) {
+    e.preventDefault();
+    if (nieuwWachtwoord.length < 8) return setResetBericht('Wachtwoord moet minimaal 8 tekens bevatten.');
+    setResetLaden(true);
+    try {
+      const res = await fetch(`${API}/auth/wachtwoord-reset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: resetToken, nieuwWachtwoord }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setResetBericht('✅ Wachtwoord gewijzigd! Je kunt nu inloggen.');
+      setTimeout(() => setToonReset(false), 2000);
+    } catch (e) {
+      setResetBericht('❌ ' + e.message);
+    } finally {
+      setResetLaden(false);
+    }
+  }
+
+  // ── Wachtwoord reset scherm ──
+  if (toonReset) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 space-y-4">
+          <div className="text-center">
+            <div className="text-4xl mb-2">🔐</div>
+            <h2 className="text-xl font-bold text-gray-800">Nieuw wachtwoord</h2>
+            <p className="text-gray-500 text-sm">Kies een nieuw wachtwoord voor je account</p>
+          </div>
+          <form onSubmit={resetWachtwoord} className="space-y-4">
+            <input
+              type="password" value={nieuwWachtwoord}
+              onChange={e => setNieuwWachtwoord(e.target.value)}
+              placeholder="Nieuw wachtwoord (min. 8 tekens)"
+              minLength={8} required
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500"
+            />
+            {resetBericht && (
+              <p className={`text-sm ${resetBericht.startsWith('✅') ? 'text-green-600' : 'text-red-500'}`}>{resetBericht}</p>
+            )}
+            <button type="submit" disabled={resetLaden}
+              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
+              {resetLaden ? '⏳ Bezig...' : '🔑 Wachtwoord opslaan'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Wachtwoord vergeten scherm ──
+  if (toonVergeten) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 space-y-4">
+          <button onClick={() => setToonVergeten(false)} className="text-gray-400 text-sm">← Terug</button>
+          <div className="text-center">
+            <div className="text-4xl mb-2">📧</div>
+            <h2 className="text-xl font-bold text-gray-800">Wachtwoord vergeten</h2>
+            <p className="text-gray-500 text-sm">Voer je e-mailadres in — je ontvangt een reset link</p>
+          </div>
+          <form onSubmit={stuurResetLink} className="space-y-4">
+            <input
+              type="email" value={vergetenEmail}
+              onChange={e => setVergetenEmail(e.target.value)}
+              placeholder="jouw@email.nl" required
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500"
+            />
+            {vergetenBericht && (
+              <p className="text-sm text-green-600 bg-green-50 border border-green-200 rounded-xl p-3">{vergetenBericht}</p>
+            )}
+            <button type="submit" disabled={vergetenLaden}
+              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
+              {vergetenLaden ? '⏳ Bezig...' : '📧 Stuur reset link'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <div className="text-center mb-8">
           <button onClick={() => navigate('/')} className="inline-flex items-center gap-2 text-white">
             <span className="text-4xl">⚡</span>
@@ -60,7 +169,6 @@ export default function Login({ onLogin }) {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Tabs */}
           <div className="flex">
             {['login', 'register'].map(t => (
               <button key={t} onClick={() => setTab(t)}
@@ -77,15 +185,13 @@ export default function Login({ onLogin }) {
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam</label>
                   <input value={form.naam} onChange={e => update('naam', e.target.value)}
-                    placeholder="Aydin Dogan"
-                    required
+                    placeholder="Aydin Dogan" required
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 mb-1">Telefoonnummer</label>
                   <input value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
-                    placeholder="+31 6 12345678"
-                    type="tel"
+                    placeholder="+31 6 12345678" type="tel"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
               </>
@@ -94,21 +200,28 @@ export default function Login({ onLogin }) {
             <div>
               <label className="block text-xs font-semibold text-gray-600 mb-1">E-mailadres</label>
               <input value={form.email} onChange={e => update('email', e.target.value)}
-                placeholder="naam@email.nl"
-                type="email" required
+                placeholder="naam@email.nl" type="email" required
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-gray-600 mb-1">Wachtwoord</label>
               <input value={form.password} onChange={e => update('password', e.target.value)}
-                placeholder="••••••••"
-                type="password" required minLength={8}
+                placeholder="••••••••" type="password" required minLength={8}
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
               {tab === 'register' && (
                 <p className="text-xs text-gray-400 mt-1">Minimaal 8 tekens</p>
               )}
             </div>
+
+            {tab === 'login' && (
+              <div className="text-right">
+                <button type="button" onClick={() => setToonVergeten(true)}
+                  className="text-xs text-blue-500 hover:text-blue-700">
+                  Wachtwoord vergeten?
+                </button>
+              </div>
+            )}
 
             {fout && (
               <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl">
@@ -120,34 +233,11 @@ export default function Login({ onLogin }) {
               className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3.5 rounded-xl transition text-sm mt-2">
               {laden ? '⏳ Bezig...' : tab === 'login' ? '🔑 Inloggen' : '🚀 Account aanmaken'}
             </button>
-
-            {tab === 'register' && (
-              <p className="text-xs text-gray-400 text-center leading-relaxed">
-                Door te registreren ga je akkoord met onze{' '}
-                <span className="text-blue-500 cursor-pointer">gebruiksvoorwaarden</span> en{' '}
-                <span className="text-blue-500 cursor-pointer">privacybeleid</span>.
-              </p>
-            )}
           </form>
-
-          {/* Demo snelkoppeling */}
-          <div className="px-6 pb-6">
-            <div className="border-t border-gray-100 pt-4">
-              <p className="text-xs text-gray-400 text-center mb-2">Demo — gebruik testaccount:</p>
-              <button
-                onClick={() => {
-                  setTab('login');
-                  setForm(f => ({ ...f, email: 'test@swiftbridge.nl', password: 'Wachtwoord123' }));
-                }}
-                className="w-full border border-dashed border-gray-300 text-gray-500 text-xs py-2 rounded-xl hover:bg-gray-50 transition">
-                🧪 Vul testaccount in
-              </button>
-            </div>
-          </div>
         </div>
 
         <p className="text-center text-blue-200 text-xs mt-6">
-          🔒 Beveiligd via JWT · DNB-geregistreerd · PCI DSS compliant
+          🔒 Beveiligd via JWT · Rate limited · End-to-end versleuteld
         </p>
       </div>
     </div>
