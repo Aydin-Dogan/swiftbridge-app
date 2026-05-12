@@ -1,183 +1,284 @@
-import { useState } from 'react';
+/**
+ * Dashboard.jsx — Persoonlijk overzicht voor SwiftBridge gebruiker
+ * - Live EUR/TRY koers via SwiftNews API
+ * - Echte transactiehistorie uit localStorage
+ * - Persoonlijke statistieken
+ */
+import { useState, useEffect, useCallback } from 'react';
 
-const maanden = ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'];
+const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
+const TX_KEY    = 'swiftbridge_transacties';
 
-const volumeData = [0, 0, 0, 0, 0, 0, 0, 0, 100, 250, 500, 1000];
-const maxVolume = Math.max(...volumeData);
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function laadTransacties() {
+  try { return JSON.parse(localStorage.getItem(TX_KEY) || '[]'); }
+  catch { return []; }
+}
 
-const kpis = [
-  { label: 'Actieve gebruikers', waarde: '2.847', delta: '+12%', kleur: 'blue', icoon: '👥' },
-  { label: 'Maandvolume', waarde: '€1,2M', delta: '+8%', kleur: 'green', icoon: '💶' },
-  { label: 'KYC conversie', waarde: '73%', delta: '+3%', kleur: 'purple', icoon: '✅' },
-  { label: 'Gem. transactie', waarde: '€487', delta: '-2%', kleur: 'orange', icoon: '↗️' },
-];
+function tijdGeleden(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1)  return 'zojuist';
+  if (m < 60) return `${m} min geleden`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h} uur geleden`;
+  return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
+}
 
-const recenteTransacties = [
-  { naam: 'Aydin D.', bedrag: '€500', try: '₺18.007', tijd: '2 min geleden', status: 'voltooid' },
-  { naam: 'Mehmet Y.', bedrag: '€250', try: '₺9.003', tijd: '7 min geleden', status: 'voltooid' },
-  { naam: 'Fatma K.', bedrag: '€1.200', try: '₺43.217', tijd: '12 min geleden', status: 'voltooid' },
-  { naam: 'Ali R.', bedrag: '€150', try: '₺5.401', tijd: '18 min geleden', status: 'in_behandeling' },
-  { naam: 'Zeynep M.', bedrag: '€800', try: '₺28.811', tijd: '25 min geleden', status: 'voltooid' },
-];
+function fmtEur(n) {
+  return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
+}
 
-const kleurMap = {
-  blue: 'bg-blue-100 text-blue-600',
-  green: 'bg-green-100 text-green-600',
-  purple: 'bg-purple-100 text-purple-600',
-  orange: 'bg-orange-100 text-orange-600',
-};
+function fmtTry(n) {
+  return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(n || 0);
+}
 
-function MiniGrafiek({ data, max, kleur }) {
+// ── Live koers kaart ──────────────────────────────────────────────────────────
+function LiveKoersKaart({ koers, laden }) {
   return (
-    <div className="flex items-end gap-1 h-12">
-      {data.map((v, i) => (
-        <div key={i} className="flex-1 flex flex-col justify-end">
-          <div
-            className={`rounded-sm ${kleur} opacity-80`}
-            style={{ height: `${max > 0 ? (v / max) * 100 : 0}%`, minHeight: v > 0 ? 2 : 0 }}
-          />
+    <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-5 text-white shadow-lg">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <span className="text-xl">💱</span>
+          <span className="font-semibold text-blue-100 text-sm">Live wisselkoers</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className={`w-2 h-2 rounded-full ${laden ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`} />
+          <span className="text-blue-200 text-xs">{laden ? 'bijwerken...' : 'live'}</span>
+        </div>
+      </div>
+
+      <div className="flex items-end justify-between">
+        <div>
+          <div className="text-4xl font-extrabold font-mono">
+            {koers ? koers.toFixed(4) : '—'}
+          </div>
+          <div className="text-blue-200 text-sm mt-1">TRY per 1 EUR</div>
+        </div>
+        <div className="text-right">
+          <div className="text-blue-100 text-xs mb-1">SwiftBridge koers</div>
+          <div className="text-white font-bold text-lg">
+            {koers ? (koers * 0.978).toFixed(4) : '—'}
+          </div>
+          <div className="text-blue-200 text-xs">na 2,2% kosten</div>
+        </div>
+      </div>
+
+      <div className="mt-4 bg-blue-500/40 rounded-xl p-3 flex justify-between items-center">
+        <span className="text-blue-100 text-sm">€500 ontvangt →</span>
+        <span className="text-white font-bold text-lg">
+          {koers ? fmtTry(500 * koers * 0.978) : '...'}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ── Statistieken ──────────────────────────────────────────────────────────────
+function StatsRij({ transacties }) {
+  const totaalEur = transacties.reduce((s, t) => s + (t.eurBedrag || 0), 0);
+  const totaalTry = transacties.reduce((s, t) => s + (t.tryBedrag || 0), 0);
+  const voltooide = transacties.filter(t => t.status === 'voltooid').length;
+  const gemBedrag = transacties.length > 0 ? totaalEur / transacties.length : 0;
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      {[
+        { label: 'Totaal verstuurd',  waarde: fmtEur(totaalEur), icoon: '💶', kleur: 'text-blue-600'   },
+        { label: 'Ontvangen in TRY',  waarde: fmtTry(totaalTry), icoon: '🇹🇷', kleur: 'text-green-600'  },
+        { label: 'Transacties',       waarde: voltooide,          icoon: '✅', kleur: 'text-purple-600' },
+        { label: 'Gemiddeld bedrag',  waarde: fmtEur(gemBedrag),  icoon: '📊', kleur: 'text-amber-600'  },
+      ].map(s => (
+        <div key={s.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+          <div className="text-2xl mb-2">{s.icoon}</div>
+          <div className={`text-lg font-bold ${s.kleur}`}>{s.waarde}</div>
+          <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
         </div>
       ))}
     </div>
   );
 }
 
-export default function Dashboard() {
-  const [actievePeriode, setActievePeriode] = useState('Jaar 1');
+// ── Alle transacties modal ────────────────────────────────────────────────────
+function AlleTransactiesModal({ transacties, onSluit }) {
+  const gesorteerd = [...transacties].sort((a, b) => new Date(b.datum) - new Date(a.datum));
+  return (
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-end justify-center p-4">
+      <div className="bg-white rounded-2xl w-full max-w-md max-h-[80vh] flex flex-col">
+        <div className="flex items-center justify-between p-5 border-b border-gray-100">
+          <h3 className="font-bold text-gray-800 text-lg">📋 Alle transacties</h3>
+          <button onClick={onSluit} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+        </div>
+        <div className="overflow-y-auto flex-1 p-4 space-y-2">
+          {gesorteerd.map((t, i) => (
+            <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">
+                  {t.status === 'voltooid' ? '✅' : t.status === 'mislukt' ? '❌' : '⏳'}
+                </span>
+                <div>
+                  <div className="font-semibold text-gray-800 text-sm">{t.ontvangerNaam}</div>
+                  <div className="text-xs text-gray-400">
+                    {new Date(t.datum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </div>
+                  {t.methode && <div className="text-xs text-blue-500">{t.methode}</div>}
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="font-bold text-gray-800 text-sm">{fmtEur(t.eurBedrag)}</div>
+                <div className="text-xs text-green-600">{fmtTry(t.tryBedrag)}</div>
+                <div className={`text-xs font-medium mt-0.5 ${
+                  t.status === 'voltooid' ? 'text-green-500' :
+                  t.status === 'mislukt'  ? 'text-red-500'   : 'text-amber-500'}`}>
+                  {t.status === 'voltooid' ? 'Voltooid' : t.status === 'mislukt' ? 'Mislukt' : 'In behandeling'}
+                </div>
+              </div>
+            </div>
+          ))}
+          {gesorteerd.length === 0 && (
+            <div className="text-center text-gray-400 py-8">Geen transacties gevonden</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-  const jaarData = {
-    'Jaar 1': { gebruikers: '3K–5K', volume: '€1,2M/mnd', omzet: '€317K', resultaat: '-€554K', break_even: 'Mnd 21-22' },
-    'Jaar 2': { gebruikers: '15K–25K', volume: '€7,5M/mnd', omzet: '€1,98M', resultaat: '+€1,2M', break_even: '✅ Bereikt' },
-    'Jaar 3': { gebruikers: '40K–60K', volume: '€24,8M/mnd', omzet: '€5,95M', resultaat: '+€4,81M', break_even: '✅ Bereikt' },
-  };
+// ── Transactiehistorie ────────────────────────────────────────────────────────
+function TransactieHistorie({ transacties, onAlles }) {
+  const recent = [...transacties]
+    .sort((a, b) => new Date(b.datum) - new Date(a.datum))
+    .slice(0, 5);
+
+  if (transacties.length === 0) {
+    return (
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
+        <div className="text-4xl mb-3">💸</div>
+        <h3 className="font-bold text-gray-700 mb-1">Nog geen transacties</h3>
+        <p className="text-gray-400 text-sm">Maak je eerste overschrijving naar Turkije</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      {/* KPI kaarten */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {kpis.map((k) => (
-          <div key={k.label} className="bg-white rounded-2xl shadow p-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className={`text-2xl p-2 rounded-lg ${kleurMap[k.kleur]}`}>{k.icoon}</span>
-              <span className={`text-xs font-semibold px-2 py-1 rounded-full
-                ${k.delta.startsWith('+') ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                {k.delta}
-              </span>
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-bold text-gray-800">⚡ Recente transacties</h3>
+        {transacties.length > 5 && (
+          <button onClick={onAlles} className="text-xs text-blue-600 font-medium hover:underline">
+            Alle {transacties.length} bekijken →
+          </button>
+        )}
+      </div>
+      <div className="space-y-3">
+        {recent.map((t, i) => (
+          <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-base">
+                {t.status === 'voltooid' ? '✅' : t.status === 'mislukt' ? '❌' : '⏳'}
+              </div>
+              <div>
+                <div className="font-semibold text-gray-800 text-sm">{t.ontvangerNaam}</div>
+                <div className="text-xs text-gray-400">{tijdGeleden(t.datum)}</div>
+              </div>
             </div>
-            <div className="text-2xl font-bold text-gray-800">{k.waarde}</div>
-            <div className="text-xs text-gray-500 mt-1">{k.label}</div>
+            <div className="text-right">
+              <div className="font-bold text-gray-800 text-sm">{fmtEur(t.eurBedrag)}</div>
+              <div className="text-xs text-green-600 font-medium">{fmtTry(t.tryBedrag)}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Hoofdcomponent ────────────────────────────────────────────────────────────
+export default function Dashboard({ gebruiker }) {
+  const [koers,       setKoers      ] = useState(null);
+  const [ladenKoers,  setLadenKoers ] = useState(true);
+  const [transacties, setTransacties] = useState([]);
+  const [toonAlles,   setToonAlles  ] = useState(false);
+
+  const haalKoers = useCallback(async () => {
+    setLadenKoers(true);
+    try {
+      const res  = await fetch(`${SWIFTNEWS}/api/forex`);
+      const json = await res.json();
+      if (json.rate) setKoers(json.rate);
+    } catch { /* gebruik laatste bekende koers */ }
+    finally { setLadenKoers(false); }
+  }, []);
+
+  useEffect(() => {
+    haalKoers();
+    const id = setInterval(haalKoers, 90_000);
+    return () => clearInterval(id);
+  }, [haalKoers]);
+
+  useEffect(() => {
+    setTransacties(laadTransacties());
+    const handler = () => setTransacties(laadTransacties());
+    window.addEventListener('swiftbridge_tx_update', handler);
+    return () => window.removeEventListener('swiftbridge_tx_update', handler);
+  }, []);
+
+  const kycGoedgekeurd = gebruiker?.kycStatus === 'goedgekeurd';
+
+  return (
+    <div className="space-y-4">
+      {/* Welkom */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-extrabold text-gray-900">
+            Hallo {gebruiker?.naam?.split(' ')[0] || 'daar'} 👋
+          </h2>
+          <p className="text-gray-500 text-sm">Geld overmaken naar Turkije</p>
+        </div>
+        <button onClick={haalKoers} className="text-gray-400 hover:text-blue-600 transition text-xl" title="Vernieuwen">
+          🔄
+        </button>
+      </div>
+
+      {/* KYC waarschuwing */}
+      {!kycGoedgekeurd && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3 items-start">
+          <span className="text-2xl">🪪</span>
+          <div>
+            <div className="font-bold text-amber-800 text-sm">KYC verificatie vereist</div>
+            <div className="text-amber-600 text-xs mt-1">
+              Verifieer je identiteit om geld over te kunnen maken. Duurt minder dan 5 minuten.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Live koers */}
+      <LiveKoersKaart koers={koers} laden={ladenKoers} />
+
+      {/* Statistieken — alleen als er transacties zijn */}
+      {transacties.length > 0 && <StatsRij transacties={transacties} />}
+
+      {/* Transactiehistorie */}
+      <TransactieHistorie transacties={transacties} onAlles={() => setToonAlles(true)} />
+
+      {/* Info balk */}
+      <div className="grid grid-cols-3 gap-2 text-center">
+        {[
+          { icoon: '⚡', tekst: '< 5 min aankomst'      },
+          { icoon: '🔒', tekst: 'DNB gereguleerd'        },
+          { icoon: '💶', tekst: '2,0–2,5% alles-in'     },
+        ].map(({ icoon, tekst }) => (
+          <div key={tekst} className="bg-white rounded-xl border border-gray-100 p-3">
+            <div className="text-xl mb-1">{icoon}</div>
+            <div className="text-xs text-gray-500 font-medium">{tekst}</div>
           </div>
         ))}
       </div>
 
-      {/* Volume grafiek + Prognose */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Volume grafiek */}
-        <div className="bg-white rounded-2xl shadow p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-gray-800">📊 Maandvolume (EUR)</h3>
-            <span className="text-xs text-gray-400">Jaar 1</span>
-          </div>
-          <div className="flex items-end gap-1 h-32">
-            {volumeData.map((v, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center justify-end gap-1">
-                <div
-                  className="w-full bg-blue-500 rounded-t-sm transition-all"
-                  style={{ height: `${maxVolume > 0 ? (v / maxVolume) * 100 : 0}%`, minHeight: v > 0 ? 4 : 0 }}
-                />
-                <span className="text-xs text-gray-400">{maanden[i].slice(0, 1)}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-3 flex justify-between text-xs text-gray-400">
-            <span>App lancering: mnd 9</span>
-            <span>Doel: €1,2M</span>
-          </div>
-        </div>
-
-        {/* Meerjarenprognose */}
-        <div className="bg-white rounded-2xl shadow p-5">
-          <h3 className="font-bold text-gray-800 mb-4">📈 Meerjarenprognose</h3>
-          <div className="flex gap-2 mb-4">
-            {Object.keys(jaarData).map(j => (
-              <button key={j} onClick={() => setActievePeriode(j)}
-                className={`flex-1 py-1.5 rounded-lg text-sm font-semibold transition
-                  ${actievePeriode === j ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
-                {j}
-              </button>
-            ))}
-          </div>
-          <div className="space-y-3">
-            {Object.entries(jaarData[actievePeriode]).map(([k, v]) => (
-              <div key={k} className="flex justify-between border-b border-gray-100 pb-2">
-                <span className="text-gray-500 text-sm capitalize">{k.replace('_', ' ')}</span>
-                <span className={`font-bold text-sm ${v.startsWith('+') ? 'text-green-600' : v.startsWith('-') ? 'text-red-500' : 'text-gray-800'}`}>{v}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* KPI Leading Indicators */}
-      <div className="bg-white rounded-2xl shadow p-5">
-        <h3 className="font-bold text-gray-800 mb-4">🎯 Leading Indicators (Doel Jaar 1)</h3>
-        <div className="space-y-3">
-          {[
-            { label: 'Nieuwe registraties/mnd', huidig: 284, doel: 400, eenheid: '' },
-            { label: 'KYC conversieratio', huidig: 73, doel: 70, eenheid: '%' },
-            { label: 'Repeat rate (30 dagen)', huidig: 38, doel: 40, eenheid: '%' },
-            { label: 'CAC via referral', huidig: 11, doel: 15, eenheid: '€', inverteert: true },
-          ].map(({ label, huidig, doel, eenheid, inverteert }) => {
-            const pct = Math.min((huidig / doel) * 100, 100);
-            const goed = inverteert ? huidig <= doel : huidig >= doel * 0.9;
-            return (
-              <div key={label}>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600">{label}</span>
-                  <span className="font-semibold">
-                    <span className={goed ? 'text-green-600' : 'text-amber-600'}>{eenheid === '€' ? `€${huidig}` : `${huidig}${eenheid}`}</span>
-                    <span className="text-gray-400 font-normal"> / doel {eenheid === '€' ? `€${doel}` : `${doel}${eenheid}`}</span>
-                  </span>
-                </div>
-                <div className="h-2 bg-gray-100 rounded-full">
-                  <div className={`h-2 rounded-full transition-all ${goed ? 'bg-green-500' : 'bg-amber-400'}`}
-                    style={{ width: `${pct}%` }} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Recente transacties */}
-      <div className="bg-white rounded-2xl shadow p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-bold text-gray-800">⚡ Recente transacties</h3>
-          <span className="text-xs text-blue-600 font-medium cursor-pointer hover:underline">Alle bekijken →</span>
-        </div>
-        <div className="space-y-3">
-          {recenteTransacties.map((t, i) => (
-            <div key={i} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center text-sm font-bold text-blue-600">
-                  {t.naam[0]}
-                </div>
-                <div>
-                  <div className="font-semibold text-gray-800 text-sm">{t.naam}</div>
-                  <div className="text-xs text-gray-400">{t.tijd}</div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-bold text-gray-800 text-sm">{t.bedrag} → {t.try}</div>
-                <span className={`text-xs px-2 py-0.5 rounded-full font-medium
-                  ${t.status === 'voltooid' ? 'bg-green-100 text-green-600' : 'bg-amber-100 text-amber-600'}`}>
-                  {t.status === 'voltooid' ? '✅ Voltooid' : '⏳ In behandeling'}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {toonAlles && (
+        <AlleTransactiesModal transacties={transacties} onSluit={() => setToonAlles(false)} />
+      )}
     </div>
   );
 }

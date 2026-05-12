@@ -66,7 +66,7 @@ function AppShell({ gebruiker, token, onLogout }) {
 
       {/* Inhoud */}
       <main className="max-w-2xl mx-auto px-4 py-5 pb-28">
-        {actief === 'dashboard' && <Dashboard />}
+        {actief === 'dashboard' && <Dashboard gebruiker={gebruiker} />}
         {actief === 'betaling' && (
           kycGoedgekeurd
             ? <PaymentFlow token={token} />
