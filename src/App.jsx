@@ -129,7 +129,7 @@ function AppShell({ gebruiker, token, onLogout }) {
               </div>
             )
         )}
-        {actief === 'kyc' && <KYCFlow token={token} />}
+        {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
       </main>
 
       {/* Bottom navigatie — mobiel geoptimaliseerd */}

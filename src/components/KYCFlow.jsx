@@ -271,8 +271,36 @@ function StapKlaar({ form }) {
   );
 }
 
+// ── Al goedgekeurd scherm ─────────────────────────────────────────────────────
+function KYCGoedgekeurd({ naam }) {
+  return (
+    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto text-4xl">✅</div>
+      <h2 className="text-2xl font-bold text-gray-800">Verificatie voltooid!</h2>
+      <p className="text-gray-500 text-sm">Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken naar Turkije.</p>
+      <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-left space-y-3">
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Status</span>
+          <span className="font-bold text-green-600">✅ Goedgekeurd</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Toegang</span>
+          <span className="font-bold text-green-600">Volledige toegang</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Limiet</span>
+          <span className="font-bold text-gray-800">€10 – €5.000 per transactie</span>
+        </div>
+      </div>
+      <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700">
+        💸 Ga naar het tabblad <strong>Overmaken</strong> om een betaling te starten.
+      </div>
+    </div>
+  );
+}
+
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
-export default function KYCFlow({ token }) {
+export default function KYCFlow({ token, gebruiker }) {
   const [stap,      setStap     ] = useState(0);
   const [form,      setForm     ] = useState({
     voornaam: '', achternaam: '', geboortedatum: '',
@@ -319,6 +347,11 @@ export default function KYCFlow({ token }) {
     } finally {
       setLaden(false);
     }
+  }
+
+  // Al goedgekeurd → toon success scherm
+  if (gebruiker?.kycStatus === 'goedgekeurd') {
+    return <KYCGoedgekeurd naam={gebruiker.naam} />;
   }
 
   return (
