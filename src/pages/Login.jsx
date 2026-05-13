@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import TaalKiezer from '../components/TaalKiezer';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -165,7 +166,8 @@ export default function Login({ onLogin }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4 py-10 relative">
+      <div className="absolute top-4 right-4"><TaalKiezer donker /></div>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <button onClick={() => navigate('/')} className="inline-flex items-center gap-2 text-white">

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LiveKoersTicker from '../components/LiveKoersTicker';
+import TaalKiezer from '../components/TaalKiezer';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -71,7 +72,8 @@ export default function Landing() {
             <a href="#kosten" className="hover:text-blue-600">Kosten</a>
             <a href="#vergelijking" className="hover:text-blue-600">Vergelijking</a>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-1">
+            <TaalKiezer />
             <button onClick={() => navigate('/login')}
               className="text-sm font-semibold text-blue-600 hover:text-blue-700 px-3 py-2">
               Inloggen

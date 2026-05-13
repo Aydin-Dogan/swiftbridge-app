@@ -10,6 +10,8 @@ import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
 import Privacybeleid from './pages/Privacybeleid';
 import AMLBeleid from './pages/AMLBeleid';
 import AdminPanel from './pages/AdminPanel';
+import TaalKiezer from './components/TaalKiezer';
+import { useTaal } from './i18n';
 
 // ── Detecteer iOS ────────────────────────────────────────────────────────────
 function isIOS() {
@@ -109,15 +111,16 @@ function InstallBanner() {
   return null;
 }
 
-const tabs = [
-  { id: 'dashboard', label: 'Dashboard', icoon: '📊' },
-  { id: 'betaling',  label: 'Overmaken',  icoon: '💸' },
-  { id: 'kyc',       label: 'Verificatie', icoon: '🪪' },
-];
-
 function AppShell({ gebruiker, token, onLogout }) {
   const [actief, setActief] = useState('dashboard');
   const navigate = useNavigate();
+  const { t } = useTaal();
+
+  const tabs = [
+    { id: 'dashboard', label: t('tab_dashboard'),    icoon: '📊' },
+    { id: 'betaling',  label: t('tab_overmaken'),    icoon: '💸' },
+    { id: 'kyc',       label: t('tab_verificatie'),  icoon: '🪪' },
+  ];
 
   const kycGoedgekeurd = gebruiker?.kycStatus === 'goedgekeurd';
 
@@ -139,9 +142,10 @@ function AppShell({ gebruiker, token, onLogout }) {
             {!kycGoedgekeurd && (
               <button onClick={() => setActief('kyc')}
                 className="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-1 rounded-full">
-                ⚠️ KYC vereist
+                ⚠️ KYC
               </button>
             )}
+            <TaalKiezer />
             <div className="relative group">
               <div className="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold cursor-pointer">
                 {gebruiker?.naam?.[0] || 'G'}
@@ -153,7 +157,7 @@ function AppShell({ gebruiker, token, onLogout }) {
                 </div>
                 <button onClick={onLogout}
                   className="w-full text-left text-sm text-red-500 hover:bg-red-50 px-3 py-2 rounded-lg font-medium">
-                  🚪 Uitloggen
+                  {t('uitloggen')}
                 </button>
               </div>
             </div>
