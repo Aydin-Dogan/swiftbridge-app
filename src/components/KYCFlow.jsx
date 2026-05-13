@@ -271,7 +271,7 @@ function StapKlaar({ form }) {
   );
 }
 
-// ── Al goedgekeurd scherm ─────────────────────────────────────────────────────
+// ── ✅ Al goedgekeurd scherm ──────────────────────────────────────────────────
 function KYCGoedgekeurd({ naam }) {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
@@ -288,8 +288,12 @@ function KYCGoedgekeurd({ naam }) {
           <span className="font-bold text-green-600">Volledige toegang</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Limiet</span>
-          <span className="font-bold text-gray-800">€10 – €5.000 per transactie</span>
+          <span className="text-gray-500">Transactielimiet</span>
+          <span className="font-bold text-gray-800">€10 – €5.000</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Weeklimiet</span>
+          <span className="font-bold text-gray-800">€5.000 per week</span>
         </div>
       </div>
       <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700">
@@ -299,9 +303,110 @@ function KYCGoedgekeurd({ naam }) {
   );
 }
 
+// ── ⏳ In behandeling scherm ──────────────────────────────────────────────────
+function KYCInBehandeling({ naam }) {
+  return (
+    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+      <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto">
+        <span className="text-4xl animate-pulse">⏳</span>
+      </div>
+      <h2 className="text-2xl font-bold text-gray-800">Aanvraag in behandeling</h2>
+      <p className="text-gray-500 text-sm">
+        Hoi {naam}, we controleren je documenten. Dit duurt normaal <strong>minder dan 5 minuten</strong>.
+      </p>
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left space-y-3">
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Status</span>
+          <span className="font-bold text-amber-600">⏳ In beoordeling</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Ingediend</span>
+          <span className="font-bold text-gray-700">Documenten ontvangen</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Verwacht klaar</span>
+          <span className="font-bold text-green-600">&lt; 5 minuten</span>
+        </div>
+      </div>
+      <div className="space-y-2">
+        {['Documenten ontvangen ✅', 'Identiteitscontrole bezig... 🔍', 'AML/compliance check...'].map((stap, i) => (
+          <div key={i} className={`flex items-center gap-3 p-3 rounded-xl text-sm ${i === 0 ? 'bg-green-50 text-green-700' : i === 1 ? 'bg-amber-50 text-amber-700' : 'bg-gray-50 text-gray-400'}`}>
+            <span>{i === 0 ? '✅' : i === 1 ? '🔄' : '⬜'}</span>
+            <span className={i < 2 ? 'font-medium' : ''}>{stap}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-gray-400">Je ontvangt een e-mail zodra je KYC is beoordeeld.</p>
+    </div>
+  );
+}
+
+// ── ❌ Afgewezen scherm ───────────────────────────────────────────────────────
+function KYCAfgewezen({ naam, onOpnieuw }) {
+  return (
+    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+      <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto text-4xl">❌</div>
+      <h2 className="text-2xl font-bold text-gray-800">Verificatie afgewezen</h2>
+      <p className="text-gray-500 text-sm">
+        Helaas, {naam}, konden we je identiteit niet bevestigen. Je kunt het opnieuw proberen.
+      </p>
+      <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-left space-y-3">
+        <p className="font-semibold text-red-700 text-sm mb-2">Mogelijke redenen:</p>
+        {[
+          'Foto van document was onscherp of onleesbaar',
+          'Selfie kwam niet overeen met het document',
+          'Documentnummer onjuist ingevoerd',
+          'Document is verlopen',
+        ].map((reden, i) => (
+          <div key={i} className="flex items-start gap-2 text-sm text-red-600">
+            <span className="mt-0.5 flex-shrink-0">•</span>
+            <span>{reden}</span>
+          </div>
+        ))}
+      </div>
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">
+        📧 Heb je vragen? Stuur een e-mail naar <strong>support@swiftbridge.nl</strong>
+      </div>
+      <button onClick={onOpnieuw}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
+        🔄 Opnieuw proberen
+      </button>
+    </div>
+  );
+}
+
+// ── 🔒 Geblokkeerd scherm ─────────────────────────────────────────────────────
+function KYCGeblokkeerd() {
+  return (
+    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+      <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto text-4xl">🔒</div>
+      <h2 className="text-2xl font-bold text-gray-800">Account geblokkeerd</h2>
+      <p className="text-gray-500 text-sm">
+        Je account is tijdelijk geblokkeerd. Neem contact op met onze klantenservice.
+      </p>
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left space-y-3">
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Status</span>
+          <span className="font-bold text-gray-700">🔒 Geblokkeerd</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-500">Toegang</span>
+          <span className="font-bold text-red-600">Geen toegang</span>
+        </div>
+      </div>
+      <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 space-y-2">
+        <p className="font-bold">📞 Contact klantenservice</p>
+        <p>E-mail: <strong>support@swiftbridge.nl</strong></p>
+        <p className="text-xs text-red-500">Vermeld je e-mailadres en de reden van je verzoek.</p>
+      </div>
+    </div>
+  );
+}
+
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function KYCFlow({ token, gebruiker }) {
   const [stap,      setStap     ] = useState(0);
+  const [opnieuw,   setOpnieuw  ] = useState(false);
   const [form,      setForm     ] = useState({
     voornaam: '', achternaam: '', geboortedatum: '',
     nationaliteit: 'TR', documentType: 'kimlik',
@@ -318,30 +423,24 @@ export default function KYCFlow({ token, gebruiker }) {
     setLaden(true);
     setFout('');
     try {
-      // Probeer de API
-      try {
-        const res = await fetch(`${API}/kyc/submit`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify({
-            documentType:   form.documentType,
-            documentNummer: form.documentNummer,
-            geboortedatum:  form.geboortedatum,
-            nationaliteit:  form.nationaliteit,
-            heeftDocFoto:   !!docFoto,
-            heeftSelfie:    !!selfieFoto,
-          }),
-        });
-        if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error);
-        }
-      } catch (apiErr) {
-        // API niet bereikbaar — ga toch door (demo mode)
-        console.warn('KYC API niet bereikbaar:', apiErr.message);
+      const res = await fetch(`${API}/kyc/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          documentType:   form.documentType,
+          documentNummer: form.documentNummer,
+          geboortedatum:  form.geboortedatum,
+          nationaliteit:  form.nationaliteit,
+          heeftDocFoto:   !!docFoto,
+          heeftSelfie:    !!selfieFoto,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error);
       }
-
       setStap(3);
+      setOpnieuw(false);
     } catch (e) {
       setFout(e.message || 'Er ging iets mis. Probeer opnieuw.');
     } finally {
@@ -349,9 +448,23 @@ export default function KYCFlow({ token, gebruiker }) {
     }
   }
 
-  // Al goedgekeurd → toon success scherm
-  if (gebruiker?.kycStatus === 'goedgekeurd') {
-    return <KYCGoedgekeurd naam={gebruiker.naam} />;
+  function startOpnieuw() {
+    setOpnieuw(true);
+    setStap(0);
+    setDocFoto(null);
+    setSelfieFoto(null);
+    setFout('');
+    setForm({ voornaam: '', achternaam: '', geboortedatum: '', nationaliteit: 'TR', documentType: 'kimlik', documentNummer: '', telefoon: '' });
+  }
+
+  const kycStatus = gebruiker?.kycStatus;
+
+  // Toon statusscherm op basis van huidige KYC status (tenzij gebruiker opnieuw wil indienen)
+  if (!opnieuw) {
+    if (kycStatus === 'goedgekeurd')    return <KYCGoedgekeurd naam={gebruiker.naam} />;
+    if (kycStatus === 'in_behandeling') return <KYCInBehandeling naam={gebruiker.naam} />;
+    if (kycStatus === 'afgewezen')      return <KYCAfgewezen naam={gebruiker.naam} onOpnieuw={startOpnieuw} />;
+    if (kycStatus === 'geblokkeerd')    return <KYCGeblokkeerd />;
   }
 
   return (
