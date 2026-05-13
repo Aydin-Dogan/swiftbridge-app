@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
 import Privacybeleid from './pages/Privacybeleid';
 import AMLBeleid from './pages/AMLBeleid';
+import AdminPanel from './pages/AdminPanel';
 
 // ── Detecteer iOS ────────────────────────────────────────────────────────────
 function isIOS() {
@@ -299,6 +300,7 @@ export default function App() {
         <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
         <Route path="/privacybeleid" element={<Privacybeleid />} />
         <Route path="/aml-beleid" element={<AMLBeleid />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
