@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-route
 import PaymentFlow from './components/PaymentFlow';
 import KYCFlow from './components/KYCFlow';
 import Dashboard from './components/Dashboard';
+import LiveKoersTicker from './components/LiveKoersTicker';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
@@ -69,6 +70,7 @@ function AppShell({ gebruiker, token, onLogout }) {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      <LiveKoersTicker />
       <InstallBanner />
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -105,11 +107,6 @@ function AppShell({ gebruiker, token, onLogout }) {
           </div>
         </div>
       </header>
-
-      {/* Live koers banner */}
-      <div className="bg-blue-600 text-white text-center py-1.5 text-xs font-medium">
-        💱 Live: 1 EUR ≈ 36,20 TRY &nbsp;·&nbsp; Kosten: 2,0–2,5% &nbsp;·&nbsp; 24/7 beschikbaar
-      </div>
 
       {/* Inhoud */}
       <main className="max-w-2xl mx-auto px-4 py-5 pb-28">
