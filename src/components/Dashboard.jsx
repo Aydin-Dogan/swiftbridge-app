@@ -6,6 +6,7 @@
  * - Filters: alle / voltooid / in behandeling
  */
 import { useState, useEffect, useCallback } from 'react';
+import NotificatieInstellingen from './NotificatieInstellingen';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -379,6 +380,9 @@ export default function Dashboard({ gebruiker }) {
 
       {/* Transactiehistorie */}
       <TransactieHistorie transacties={transacties} laden={ladenTx} />
+
+      {/* Notificatie instellingen — alleen als KYC goedgekeurd */}
+      {kycGoedgekeurd && token && <NotificatieInstellingen token={token} />}
 
       {/* Info balk */}
       <div className="grid grid-cols-3 gap-2 text-center">
