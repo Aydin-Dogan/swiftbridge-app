@@ -156,30 +156,34 @@ export default function AdminPanel() {
   const navigate = useNavigate();
   const secret   = params.get('secret') || '';
 
-  const [aanvragen, setAanvragen] = useState([]);
-  const [stats,     setStats    ] = useState(null);
-  const [filter,    setFilter   ] = useState('in_behandeling');
-  const [laden,     setLaden    ] = useState(true);
-  const [fout,      setFout     ] = useState('');
+  const [aanvragen,    setAanvragen   ] = useState([]);
+  const [stats,        setStats       ] = useState(null);
+  const [integriteit,  setIntegriteit ] = useState(null);
+  const [filter,       setFilter      ] = useState('in_behandeling');
+  const [laden,        setLaden       ] = useState(true);
+  const [fout,         setFout        ] = useState('');
 
   const laadData = useCallback(async () => {
     setLaden(true);
     setFout('');
     try {
-      const [kycRes, statsRes] = await Promise.all([
-        fetch(`${API}/kyc/alle`, { headers: { 'X-Admin-Secret': secret } }),
-        fetch(`${API}/kyc/admin/stats`, { headers: { 'X-Admin-Secret': secret } }),
+      const [kycRes, statsRes, integriteitRes] = await Promise.all([
+        fetch(`${API}/kyc/alle`,              { headers: { 'X-Admin-Secret': secret } }),
+        fetch(`${API}/kyc/admin/stats`,       { headers: { 'X-Admin-Secret': secret } }),
+        fetch(`${API}/kyc/admin/integriteit`, { headers: { 'X-Admin-Secret': secret } }),
       ]);
 
       if (!kycRes.ok) {
         const d = await kycRes.json();
         throw new Error(d.error || 'Geen toegang');
       }
-      const kycData   = await kycRes.json();
-      const statsData = statsRes.ok ? await statsRes.json() : null;
+      const kycData          = await kycRes.json();
+      const statsData        = statsRes.ok ? await statsRes.json() : null;
+      const integriteitData  = integriteitRes.ok ? await integriteitRes.json() : null;
 
       setAanvragen(kycData.aanvragen || []);
       setStats(statsData);
+      setIntegriteit(integriteitData);
     } catch (e) {
       setFout(e.message);
     } finally {
@@ -225,6 +229,26 @@ export default function AdminPanel() {
         {fout && (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-red-700 font-medium text-center">
             ❌ {fout}
+          </div>
+        )}
+
+        {/* Audit log integriteit */}
+        {integriteit && (
+          <div className={`rounded-2xl border p-4 flex items-center gap-3 ${
+            integriteit.geldig
+              ? 'bg-green-50 border-green-200 text-green-800'
+              : 'bg-red-50 border-red-200 text-red-800'}`}>
+            <span className="text-2xl">{integriteit.geldig ? '🔒' : '⚠️'}</span>
+            <div>
+              <div className="font-bold text-sm">
+                {integriteit.geldig ? 'Audit log intact' : 'Audit log AANGETAST!'}
+              </div>
+              <div className="text-xs mt-0.5">
+                {integriteit.geldig
+                  ? `${integriteit.totaal} log entries — hash chain volledig geldig ✅`
+                  : `Gebroken bij log ID ${integriteit.gebroken?.id} (${integriteit.gebroken?.actie})`}
+              </div>
+            </div>
           </div>
         )}
 
