@@ -10,6 +10,8 @@ const VALUTA = [
   { code: 'TJS', land: 'Tadzjikistan', vlag: '🇹🇯', basisKoers: 11.20 },
 ];
 
+const EU_VLAG = '🇪🇺';
+
 function simuleerKoers(basis) {
   const variatie = (Math.random() - 0.5) * 0.004;
   return (basis * (1 + variatie)).toFixed(basis >= 100 ? 0 : 2);
@@ -38,10 +40,13 @@ export default function LiveKoersTicker() {
     <div className="bg-gray-900 text-white overflow-hidden" style={{ height: '32px' }}>
       <div className="flex items-center h-full ticker-scroll">
         {items.map((v, i) => (
-          <div key={i} className="flex items-center gap-1.5 px-5 whitespace-nowrap text-xs font-medium border-r border-gray-700 h-full">
+          <div key={i} className="flex items-center gap-2 px-5 whitespace-nowrap text-xs font-medium border-r border-gray-700 h-full">
+            <span className="text-base leading-none">{EU_VLAG}</span>
+            <span className="text-gray-400">Europa</span>
+            <span className="text-gray-500 mx-0.5">→</span>
             <span className="text-base leading-none">{v.vlag}</span>
-            <span className="text-gray-400">EUR/{v.code}</span>
-            <span className={`font-bold ${v.richting > 0 ? 'text-green-400' : v.richting < 0 ? 'text-red-400' : 'text-white'}`}>
+            <span className="text-gray-300 font-semibold">{v.land}</span>
+            <span className={`font-bold ml-1 ${v.richting > 0 ? 'text-green-400' : v.richting < 0 ? 'text-red-400' : 'text-white'}`}>
               {v.richting > 0 ? '▲' : v.richting < 0 ? '▼' : ''}
               {' '}{parseFloat(v.koers).toLocaleString('nl-NL')}
             </span>
