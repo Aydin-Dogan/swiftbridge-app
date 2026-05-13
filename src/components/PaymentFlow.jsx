@@ -59,19 +59,44 @@ function valideerIBAN(iban) {
   return { geldig: true, fout: null };
 }
 
+// ── Emotionele labels voor begunstigden (familie-focus) ───────────────────────
+const FAMILIE_LABELS = [
+  { id: 'mama',    label: 'Mama',       emoji: '👩‍🦳' },
+  { id: 'papa',    label: 'Papa',       emoji: '👨‍🦳' },
+  { id: 'oma',     label: 'Oma',        emoji: '👵' },
+  { id: 'opa',     label: 'Opa',        emoji: '👴' },
+  { id: 'broer',   label: 'Broer',      emoji: '👨' },
+  { id: 'zus',     label: 'Zus',        emoji: '👩' },
+  { id: 'oom',     label: 'Oom',        emoji: '🧓' },
+  { id: 'tante',   label: 'Tante',      emoji: '👩‍🦰' },
+  { id: 'partner', label: 'Partner',    emoji: '💑' },
+  { id: 'kind',    label: 'Kind',       emoji: '🧒' },
+  { id: 'vriend',  label: 'Vriend(in)', emoji: '👥' },
+  { id: 'anders',  label: 'Anders',     emoji: '👤' },
+];
+
 // ── localStorage helpers ──────────────────────────────────────────────────────
 function laadOntvangers() {
   try { return JSON.parse(localStorage.getItem(ONTV_KEY) || '[]'); }
   catch { return []; }
 }
 
-function slaOntvangerOp(naam, iban) {
+function slaOntvangerOp(naam, iban, label = null) {
   const bestaand = laadOntvangers();
   const bestaat  = bestaand.some(o => o.iban === iban);
   if (!bestaat && naam && iban) {
-    const bijgewerkt = [{ naam, iban, datum: new Date().toISOString() }, ...bestaand].slice(0, 10);
+    const bijgewerkt = [{
+      naam, iban,
+      label: label || null,
+      datum: new Date().toISOString(),
+      laatsteBedrag: null,
+    }, ...bestaand].slice(0, 10);
     localStorage.setItem(ONTV_KEY, JSON.stringify(bijgewerkt));
   }
+}
+
+function getLabelInfo(labelId) {
+  return FAMILIE_LABELS.find(l => l.id === labelId);
 }
 
 function slaTransactieOp(tx) {
@@ -98,19 +123,38 @@ function OntvangerModal({ onKies, onSluit }) {
           <h3 className="font-bold text-gray-800">Kies ontvanger</h3>
           <button onClick={onSluit} className="text-gray-400 text-xl">✕</button>
         </div>
-        <div className="p-3 space-y-2 max-h-64 overflow-y-auto">
-          {ontvangers.map((o, i) => (
-            <button key={i} onClick={() => onKies(o)}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition text-left">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">
-                {o.naam[0]}
-              </div>
-              <div>
-                <div className="font-semibold text-gray-800 text-sm">{o.naam}</div>
-                <div className="text-xs text-gray-400 font-mono">{o.iban.slice(0, 12)}…</div>
-              </div>
-            </button>
-          ))}
+        <div className="p-3 space-y-2 max-h-72 overflow-y-auto">
+          {ontvangers.length === 0 && (
+            <p className="text-center text-gray-400 text-sm py-6">
+              Nog geen opgeslagen ontvangers
+            </p>
+          )}
+          {ontvangers.map((o, i) => {
+            const labelInfo = getLabelInfo(o.label);
+            return (
+              <button key={i} onClick={() => onKies(o)}
+                className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition text-left">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-2xl flex-shrink-0">
+                  {labelInfo?.emoji || o.naam[0]}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold text-gray-800 text-sm">{o.naam}</span>
+                    {labelInfo && (
+                      <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-semibold">
+                        {labelInfo.label}
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-400 font-mono">{o.iban.slice(0, 4)} •••• {o.iban.slice(-4)}</div>
+                  {o.laatsteBedrag && (
+                    <div className="text-xs text-blue-600 font-medium">Vorige: €{o.laatsteBedrag}</div>
+                  )}
+                </div>
+                <span className="text-blue-500">→</span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -118,11 +162,13 @@ function OntvangerModal({ onKies, onSluit }) {
 }
 
 // ── Stap 0: Bedrag ────────────────────────────────────────────────────────────
-function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban, koers, onVolgende }) {
+function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban, koers, onVolgende, ontvangerLabel, setOntvangerLabel }) {
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
   const netto      = parseFloat(bedrag) * 0.978;
   const tryBedrag  = koers && bedrag && !isNaN(bedrag) ? Math.floor(netto * koers) : null;
+  // Voor transparante koers: ook brut koers tonen (zonder fee) zodat user verschil ziet
+  const tryBruto   = koers && bedrag && !isNaN(bedrag) ? Math.floor(parseFloat(bedrag) * koers) : null;
 
   const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;
   const ibanGeldig = !iban || (ibanCheck?.geldig === true);
@@ -156,16 +202,23 @@ function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban,
       {tryBedrag !== null && (
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 space-y-2">
           <div className="flex justify-between text-sm text-gray-600">
-            <span>Wisselkoers</span>
+            <span>📈 Markt wisselkoers</span>
             <span className="font-medium">1 EUR = {koers.toFixed(4)} TRY</span>
           </div>
           <div className="flex justify-between text-sm text-gray-600">
-            <span>Transactiekosten (2,2%)</span>
+            <span>💰 Transactiekosten (2,2%)</span>
             <span className="font-medium text-red-500">−€{(parseFloat(bedrag) * 0.022).toFixed(2)}</span>
           </div>
+          <div className="flex justify-between text-xs text-gray-400">
+            <span>Zonder kosten zou ontvanger krijgen</span>
+            <span className="line-through">₺{tryBruto?.toLocaleString('tr-TR')}</span>
+          </div>
           <div className="border-t border-blue-200 pt-2 flex justify-between font-bold text-blue-700">
-            <span>Ontvanger krijgt</span>
+            <span>✅ Ontvanger krijgt</span>
             <span className="text-lg">₺{tryBedrag.toLocaleString('tr-TR')}</span>
+          </div>
+          <div className="bg-blue-100/50 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
+            👨‍🦳 <strong>Dit ziet je ontvanger</strong> op zijn/haar TR-bankrekening — geen verborgen kosten.
           </div>
         </div>
       )}
@@ -181,6 +234,27 @@ function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban,
         <input value={ontvanger} onChange={e => setOntvanger(e.target.value)}
           placeholder="Mehmet Yilmaz"
           className="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" />
+
+        {/* Familie label selector */}
+        {ontvanger && (
+          <div className="mt-3">
+            <p className="text-xs font-medium text-gray-500 mb-2">Wie is dit voor jou?</p>
+            <div className="flex gap-1.5 flex-wrap">
+              {FAMILIE_LABELS.map(l => (
+                <button key={l.id} type="button"
+                  onClick={() => setOntvangerLabel?.(l.id === ontvangerLabel ? null : l.id)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition flex items-center gap-1 ${
+                    l.id === ontvangerLabel
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-700'
+                  }`}>
+                  <span>{l.emoji}</span>
+                  <span>{l.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div>
@@ -206,7 +280,12 @@ function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban,
 
       {toonOntvangers && (
         <OntvangerModal
-          onKies={o => { setOntvanger(o.naam); setIban(o.iban); setToonOntvangers(false); }}
+          onKies={o => {
+            setOntvanger(o.naam);
+            setIban(o.iban);
+            setOntvangerLabel?.(o.label || null);
+            setToonOntvangers(false);
+          }}
           onSluit={() => setToonOntvangers(false)} />
       )}
     </div>
@@ -339,15 +418,16 @@ function StapVerzonden({ transactie, methode, onNieuw }) {
 
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function PaymentFlow({ token }) {
-  const [stap,       setStap      ] = useState(0);
-  const [bedrag,     setBedrag    ] = useState('500');
-  const [ontvanger,  setOntvanger ] = useState('');
-  const [iban,       setIban      ] = useState('');
-  const [methode,    setMethode   ] = useState('ideal');
-  const [koers,      setKoers     ] = useState(null);
-  const [transactie, setTransactie] = useState(null);
-  const [laden,      setLaden     ] = useState(false);
-  const [fout,       setFout      ] = useState('');
+  const [stap,           setStap          ] = useState(0);
+  const [bedrag,         setBedrag        ] = useState('500');
+  const [ontvanger,      setOntvanger     ] = useState('');
+  const [ontvangerLabel, setOntvangerLabel] = useState(null);
+  const [iban,           setIban          ] = useState('');
+  const [methode,        setMethode       ] = useState('ideal');
+  const [koers,          setKoers         ] = useState(null);
+  const [transactie,     setTransactie    ] = useState(null);
+  const [laden,          setLaden         ] = useState(false);
+  const [fout,           setFout          ] = useState('');
 
   useEffect(() => {
     fetch(`${SWIFTNEWS}/api/forex`)
@@ -411,7 +491,7 @@ export default function PaymentFlow({ token }) {
       };
 
       slaTransactieOp(tx);
-      slaOntvangerOp(ontvanger, iban);
+      slaOntvangerOp(ontvanger, iban, ontvangerLabel);
       setTransactie(tx);
 
       await stuurPushNotificatie(
@@ -455,7 +535,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} ontvanger={ontvanger} setOntvanger={setOntvanger} iban={iban} setIban={setIban} koers={koers} onVolgende={() => setStap(1)} />}
+      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} koers={koers} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapBevestiging bedrag={bedrag} ontvanger={ontvanger} iban={iban} methode={methode} koers={koers} laden={laden} fout={fout} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}

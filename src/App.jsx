@@ -128,6 +128,15 @@ function AppShell({ gebruiker, token, onLogout }) {
   const navigate = useNavigate();
   const { t } = useTaal();
 
+  // Luister naar interne navigatie events (bijv. van FeestKalender)
+  useEffect(() => {
+    const handler = (e) => {
+      if (['dashboard', 'betaling', 'kyc'].includes(e.detail)) setActief(e.detail);
+    };
+    window.addEventListener('swiftbridge_navigate', handler);
+    return () => window.removeEventListener('swiftbridge_navigate', handler);
+  }, []);
+
   const tabs = [
     { id: 'dashboard', label: t('tab_dashboard'),    icoon: '📊' },
     { id: 'betaling',  label: t('tab_overmaken'),    icoon: '💸' },

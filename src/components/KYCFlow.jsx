@@ -78,7 +78,12 @@ function StapPersoonlijk({ form, update, onVolgende }) {
     <div className="bg-white rounded-2xl shadow p-6 space-y-4">
       <div>
         <h2 className="text-xl font-bold text-gray-800">👤 Persoonlijke gegevens</h2>
-        <p className="text-gray-500 text-sm mt-1">Vereist door DNB voor KYC/AML-compliance.</p>
+        <p className="text-gray-500 text-sm mt-1">KYC-procedure conform Wwft en AML-richtlijnen (uitgevoerd via licentiepartner bij commerciële livegang).</p>
+      </div>
+
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
+        <strong>⚠️ Bèta:</strong> Tijdens de testfase worden je documentfoto's lokaal verwerkt en niet permanent opgeslagen.
+        Bij commerciële livegang verloopt KYC via onze licentiepartner met versleutelde opslag.
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -423,6 +428,11 @@ export default function KYCFlow({ token, gebruiker }) {
     setLaden(true);
     setFout('');
     try {
+      // ⚠️ BÈTA: documentfoto's worden nu NIET naar de server gestuurd, alleen flags.
+      // Voor productie-livegang moet hier echte file upload naar S3/encrypted storage komen
+      // met virusscan + face-matching tegen documentfoto. Zonder dat is dit geen
+      // AML/DNB-waardige KYC-flow. Zie BUSINESS_PLAN.md §7.
+      // TODO(livegang): vervang door multipart/form-data POST met docFoto + selfieFoto.
       const res = await fetch(`${API}/kyc/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },

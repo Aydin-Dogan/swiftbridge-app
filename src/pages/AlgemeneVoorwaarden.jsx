@@ -11,7 +11,7 @@ export default function AlgemeneVoorwaarden() {
           <p className="text-sm text-gray-500 mb-8">Versie 1.0 — Datum: mei 2026</p>
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-sm text-amber-800">
-            <strong>⚠️ Let op:</strong> SwiftBridge is momenteel in bèta. Wij zijn bezig met onze DNB-registratie als betaaldienstverlener. Tot die registratie is afgerond, bieden wij uitsluitend demonstratie- en testdiensten aan.
+            <strong>⚠️ Let op:</strong> SwiftBridge is momenteel in bèta en biedt uitsluitend demonstratie- en testdiensten aan. Bij commerciële livegang worden betaaldiensten geleverd via een gelicentieerde EMI- of PSP-partner onder DNB-toezicht (agent-model). SwiftBridge B.V. heeft op dit moment geen eigen vergunning van De Nederlandsche Bank.
           </div>
 
           <div className="space-y-8 text-gray-700 leading-relaxed">

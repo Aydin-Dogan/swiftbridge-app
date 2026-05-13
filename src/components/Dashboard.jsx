@@ -8,6 +8,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import NotificatieInstellingen from './NotificatieInstellingen';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
+import FeestKalender from './FeestKalender';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -352,6 +353,11 @@ export default function Dashboard({ gebruiker }) {
         </button>
       </div>
 
+      {/* Culturele kalender — Bayram/Ramadan herinneringen */}
+      {kycGoedgekeurd && (
+        <FeestKalender onOvermaken={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))} />
+      )}
+
       {/* KYC waarschuwing */}
       {!kycGoedgekeurd && (
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3 items-start">
@@ -400,7 +406,7 @@ export default function Dashboard({ gebruiker }) {
       <div className="grid grid-cols-3 gap-2 text-center">
         {[
           { icoon: '⚡', tekst: '< 5 min aankomst'  },
-          { icoon: '🔒', tekst: 'DNB gereguleerd'    },
+          { icoon: '🔒', tekst: 'Veilig via licentiepartner' },
           { icoon: '💶', tekst: '2,0–2,5% alles-in'  },
         ].map(({ icoon, tekst }) => (
           <div key={tekst} className="bg-white rounded-xl border border-gray-100 p-3">

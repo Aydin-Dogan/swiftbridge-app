@@ -97,10 +97,13 @@ export default function Landing() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
             Geld naar Turkije<br />
-            <span className="text-yellow-300">in minder dan 5 minuten</span>
+            <span className="text-yellow-300">in minder dan 5 minuten<sup className="text-base">*</sup></span>
           </h1>
           <p className="text-blue-100 text-lg md:text-xl mb-8 max-w-xl mx-auto">
             Goedkoper dan je bank. Sneller dan Wise. 24/7 beschikbaar. Met Turks kimlik.
+          </p>
+          <p className="text-blue-200 text-xs mb-6 max-w-md mx-auto">
+            <sup>*</sup> Vanaf je tweede transactie na goedgekeurde KYC. Eerste registratie + identiteitsverificatie duurt 5–15 minuten.
           </p>
 
           {/* Rekentool */}
@@ -310,9 +313,9 @@ export default function Landing() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-6 text-center">
-            <p>© 2026 SwiftBridge B.V. · KvK: [invullen] · DNB-registratie in behandeling</p>
+            <p>© 2026 SwiftBridge B.V. · KvK: [invullen]</p>
             <p className="mt-2 text-xs text-gray-600">
-              SwiftBridge B.V. is geregistreerd in Nederland. Momenteel in bèta — DNB-registratie als betaaldienstverlener (PSD2) is in behandeling.
+              SwiftBridge B.V. is geregistreerd in Nederland. Momenteel in bèta. Bij livegang worden betaaldiensten geleverd via een gelicentieerde EMI-partner (agent-model onder DNB-toezicht via partner). Wij hebben momenteel geen eigen DNB-vergunning.
             </p>
           </div>
         </div>
