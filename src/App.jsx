@@ -1,17 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import PaymentFlow from './components/PaymentFlow';
-import KYCFlow from './components/KYCFlow';
 import Dashboard from './components/Dashboard';
 import LiveKoersTicker from './components/LiveKoersTicker';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
-import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
-import Privacybeleid from './pages/Privacybeleid';
-import AMLBeleid from './pages/AMLBeleid';
-import AdminPanel from './pages/AdminPanel';
 import TaalKiezer from './components/TaalKiezer';
+import OfflineBanner from './components/OfflineBanner';
 import { useTaal } from './i18n';
+
+// Lazy load zware paginas (code splitting)
+const PaymentFlow         = lazy(() => import('./components/PaymentFlow'));
+const KYCFlow             = lazy(() => import('./components/KYCFlow'));
+const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
+const Privacybeleid       = lazy(() => import('./pages/Privacybeleid'));
+const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
+const AdminPanel          = lazy(() => import('./pages/AdminPanel'));
+
+// Loading spinner voor lazy loaded routes
+function LaadSpinner() {
+  return (
+    <div className="flex items-center justify-center py-12">
+      <div className="animate-spin rounded-full h-10 w-10 border-4 border-blue-200 border-t-blue-600"></div>
+    </div>
+  );
+}
 
 // ── Detecteer iOS ────────────────────────────────────────────────────────────
 function isIOS() {
@@ -167,23 +179,25 @@ function AppShell({ gebruiker, token, onLogout }) {
 
       {/* Inhoud */}
       <main className="max-w-2xl mx-auto px-4 py-5 pb-28">
-        {actief === 'dashboard' && <Dashboard gebruiker={gebruiker} />}
-        {actief === 'betaling' && (
-          kycGoedgekeurd
-            ? <PaymentFlow token={token} />
-            : (
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-                <div className="text-4xl mb-3">🪪</div>
-                <h3 className="font-bold text-gray-800 mb-2">KYC verificatie vereist</h3>
-                <p className="text-gray-500 text-sm mb-4">Je moet eerst je identiteit verifiëren voordat je geld kunt overmaken.</p>
-                <button onClick={() => setActief('kyc')}
-                  className="bg-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-700 transition text-sm">
-                  Verificatie starten →
-                </button>
-              </div>
-            )
-        )}
-        {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
+        <Suspense fallback={<LaadSpinner />}>
+          {actief === 'dashboard' && <Dashboard gebruiker={gebruiker} />}
+          {actief === 'betaling' && (
+            kycGoedgekeurd
+              ? <PaymentFlow token={token} />
+              : (
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
+                  <div className="text-4xl mb-3">🪪</div>
+                  <h3 className="font-bold text-gray-800 mb-2">KYC verificatie vereist</h3>
+                  <p className="text-gray-500 text-sm mb-4">Je moet eerst je identiteit verifiëren voordat je geld kunt overmaken.</p>
+                  <button onClick={() => setActief('kyc')}
+                    className="bg-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-700 transition text-sm">
+                    Verificatie starten →
+                  </button>
+                </div>
+              )
+          )}
+          {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
+        </Suspense>
       </main>
 
       {/* Bottom navigatie — mobiel geoptimaliseerd */}
@@ -290,23 +304,26 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={
-          token ? <Navigate to="/app" replace /> :
-          <Login onLogin={handleLogin} />
-        } />
-        <Route path="/app" element={
-          <ProtectedRoute token={token} gebruiker={gebruiker} onLogout={handleLogout}>
-            <AppShell token={token} gebruiker={gebruiker} onLogout={handleLogout} />
-          </ProtectedRoute>
-        } />
-        <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
-        <Route path="/privacybeleid" element={<Privacybeleid />} />
-        <Route path="/aml-beleid" element={<AMLBeleid />} />
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <OfflineBanner />
+      <Suspense fallback={<LaadSpinner />}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={
+            token ? <Navigate to="/app" replace /> :
+            <Login onLogin={handleLogin} />
+          } />
+          <Route path="/app" element={
+            <ProtectedRoute token={token} gebruiker={gebruiker} onLogout={handleLogout}>
+              <AppShell token={token} gebruiker={gebruiker} onLogout={handleLogout} />
+            </ProtectedRoute>
+          } />
+          <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
+          <Route path="/privacybeleid" element={<Privacybeleid />} />
+          <Route path="/aml-beleid" element={<AMLBeleid />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
