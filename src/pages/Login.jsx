@@ -57,6 +57,7 @@ export default function Login({ onLogin }) {
   async function stuurResetLink(e) {
     e.preventDefault();
     setVergetenLaden(true);
+    setVergetenBericht('');
     try {
       const res = await fetch(`${API}/auth/wachtwoord-vergeten`, {
         method: 'POST',
@@ -64,9 +65,13 @@ export default function Login({ onLogin }) {
         body: JSON.stringify({ email: vergetenEmail }),
       });
       const data = await res.json();
-      setVergetenBericht(data.bericht || 'Reset link verstuurd!');
+      if (!res.ok) {
+        setVergetenBericht('❌ ' + (data.error || 'Er ging iets mis. Neem contact op met support.'));
+      } else {
+        setVergetenBericht('✅ ' + (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
+      }
     } catch {
-      setVergetenBericht('Er ging iets mis. Probeer opnieuw.');
+      setVergetenBericht('❌ Geen verbinding met server. Probeer opnieuw.');
     } finally {
       setVergetenLaden(false);
     }
@@ -143,7 +148,11 @@ export default function Login({ onLogin }) {
               className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500"
             />
             {vergetenBericht && (
-              <p className="text-sm text-green-600 bg-green-50 border border-green-200 rounded-xl p-3">{vergetenBericht}</p>
+              <p className={`text-sm rounded-xl p-3 border ${
+                vergetenBericht.startsWith('✅')
+                  ? 'text-green-700 bg-green-50 border-green-200'
+                  : 'text-red-600 bg-red-50 border-red-200'
+              }`}>{vergetenBericht}</p>
             )}
             <button type="submit" disabled={vergetenLaden}
               className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
