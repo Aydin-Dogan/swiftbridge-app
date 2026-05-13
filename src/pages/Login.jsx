@@ -17,6 +17,12 @@ export default function Login({ onLogin }) {
   const [vergetenBericht, setVergetenBericht] = useState('');
   const [vergetenLaden, setVergetenLaden] = useState(false);
 
+  // 2FA state
+  const [twofaUserId, setTwofaUserId] = useState(null);
+  const [twofaCode,   setTwofaCode  ] = useState('');
+  const [twofaLaden,  setTwofaLaden ] = useState(false);
+  const [twofaFout,   setTwofaFout  ] = useState('');
+
   // Wachtwoord reset via link (?reset=TOKEN)
   const resetToken = params.get('reset');
   const [toonReset, setToonReset] = useState(!!resetToken);
@@ -45,6 +51,12 @@ export default function Login({ onLogin }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
+
+      // 2FA tussenstap
+      if (data.tweeFactor) {
+        setTwofaUserId(data.userId);
+        return;
+      }
 
       onLogin(data.token, data.gebruiker, data.refreshToken);
       navigate('/app');
@@ -97,6 +109,63 @@ export default function Login({ onLogin }) {
     } finally {
       setResetLaden(false);
     }
+  }
+
+  async function verifieer2FA(e) {
+    e.preventDefault();
+    setTwofaLaden(true);
+    setTwofaFout('');
+    try {
+      const res = await fetch(`${API}/auth/2fa-verifieer`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: twofaUserId, code: twofaCode }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      onLogin(data.token, data.gebruiker, data.refreshToken);
+      navigate('/app');
+    } catch (e) {
+      setTwofaFout(e.message);
+    } finally {
+      setTwofaLaden(false);
+    }
+  }
+
+  // ── 2FA code invoeren ──
+  if (twofaUserId) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 space-y-4">
+          <div className="text-center">
+            <div className="text-4xl mb-2">📧</div>
+            <h2 className="text-xl font-bold text-gray-800">Inlogcode</h2>
+            <p className="text-gray-500 text-sm">We hebben een 6-cijferige code naar je e-mail gestuurd. Check ook spam folder.</p>
+          </div>
+          <form onSubmit={verifieer2FA} className="space-y-4">
+            <input
+              type="text" inputMode="numeric" pattern="[0-9]*" maxLength={6}
+              value={twofaCode}
+              onChange={e => setTwofaCode(e.target.value.replace(/\D/g, ''))}
+              placeholder="123456"
+              required autoFocus
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 text-center text-3xl font-bold tracking-[0.5em] outline-none focus:border-blue-500"
+            />
+            {twofaFout && (
+              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">❌ {twofaFout}</p>
+            )}
+            <button type="submit" disabled={twofaLaden || twofaCode.length !== 6}
+              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
+              {twofaLaden ? '⏳ Bezig...' : '🔓 Verifieer & inloggen'}
+            </button>
+            <button type="button" onClick={() => { setTwofaUserId(null); setTwofaCode(''); setTwofaFout(''); }}
+              className="w-full text-gray-500 text-sm hover:text-gray-700">
+              ← Terug naar inloggen
+            </button>
+          </form>
+        </div>
+      </div>
+    );
   }
 
   // ── Wachtwoord reset scherm ──

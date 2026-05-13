@@ -7,6 +7,7 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import NotificatieInstellingen from './NotificatieInstellingen';
+import TweeFactorInstellingen from './TweeFactorInstellingen';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -380,6 +381,17 @@ export default function Dashboard({ gebruiker }) {
 
       {/* Transactiehistorie */}
       <TransactieHistorie transacties={transacties} laden={ladenTx} />
+
+      {/* Beveiliging — 2FA toggle, alleen als ingelogd */}
+      {token && (
+        <div className="space-y-3">
+          <h3 className="font-bold text-gray-700 text-sm px-1">🔒 Beveiliging</h3>
+          <TweeFactorInstellingen
+            token={token}
+            twofaIngeschakeld={!!gebruiker?.twofaIngeschakeld}
+          />
+        </div>
+      )}
 
       {/* Notificatie instellingen — alleen als KYC goedgekeurd */}
       {kycGoedgekeurd && token && <NotificatieInstellingen token={token} />}
