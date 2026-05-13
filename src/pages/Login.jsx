@@ -45,7 +45,7 @@ export default function Login({ onLogin }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      onLogin(data.token, data.gebruiker);
+      onLogin(data.token, data.gebruiker, data.refreshToken);
       navigate('/app');
     } catch (e) {
       setFout(e.message);

@@ -167,38 +167,70 @@ export default function App() {
     try { return JSON.parse(localStorage.getItem('sb_gebruiker')); } catch { return null; }
   });
 
-  // Bij opstarten: haal actuele gebruikersdata op (zodat kycStatus altijd klopt)
+  // Ververs access token met refresh token
+  async function verversToken() {
+    const refreshToken = localStorage.getItem('sb_refresh');
+    if (!refreshToken) return null;
+    try {
+      const res = await fetch(`${API}/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken }),
+      });
+      if (!res.ok) throw new Error('Refresh mislukt');
+      const data = await res.json();
+      localStorage.setItem('sb_token', data.token);
+      localStorage.setItem('sb_refresh', data.refreshToken);
+      localStorage.setItem('sb_gebruiker', JSON.stringify(data.gebruiker));
+      setToken(data.token);
+      setGebruiker(data.gebruiker);
+      return data.token;
+    } catch {
+      // Refresh token verlopen — uitloggen
+      handleLogout();
+      return null;
+    }
+  }
+
+  // Bij opstarten: haal actuele gebruikersdata op
   useEffect(() => {
     const t = localStorage.getItem('sb_token');
     if (!t) return;
     fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${t}` } })
-      .then(r => r.ok ? r.json() : null)
+      .then(async r => {
+        if (r.status === 401) {
+          // Access token verlopen — probeer te vernieuwen
+          return verversToken();
+        }
+        return r.ok ? r.json() : null;
+      })
       .then(g => {
-        if (g) {
+        if (g && g.id) {
           setGebruiker(g);
           localStorage.setItem('sb_gebruiker', JSON.stringify(g));
-        } else {
-          // Token verlopen
-          localStorage.removeItem('sb_token');
-          localStorage.removeItem('sb_gebruiker');
-          setToken(null);
-          setGebruiker(null);
         }
       })
       .catch(() => {});
   }, []);
 
-  function handleLogin(t, g) {
+  function handleLogin(t, g, refreshToken) {
     setToken(t);
     setGebruiker(g);
     localStorage.setItem('sb_token', t);
     localStorage.setItem('sb_gebruiker', JSON.stringify(g));
+    if (refreshToken) localStorage.setItem('sb_refresh', refreshToken);
   }
 
   function handleLogout() {
+    // Vertel server dat refresh token ingetrokken moet worden
+    const t = localStorage.getItem('sb_token');
+    if (t) {
+      fetch(`${API}/auth/logout`, { method: 'POST', headers: { Authorization: `Bearer ${t}` } }).catch(() => {});
+    }
     setToken(null);
     setGebruiker(null);
     localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_refresh');
     localStorage.removeItem('sb_gebruiker');
   }
 
