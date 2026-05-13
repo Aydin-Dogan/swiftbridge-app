@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import LiveKoersTicker from '../components/LiveKoersTicker';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -32,25 +33,25 @@ const vergelijking = [
   { naam: 'SwiftBridge', snelheid: '< 5 minuten ⚡', kosten: '2,0–2,5%', kleur: 'text-green-600', highlight: true },
 ];
 
-function LiveKoers() {
-  const [koers, setKoers] = useState(36.20);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setKoers(prev => parseFloat((prev + (Math.random() - 0.5) * 0.05).toFixed(4)));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-  return (
-    <span className="font-mono font-bold text-green-400">1 EUR = {koers} TRY</span>
-  );
+
+function isIOS() {
+  return typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+function isInStandalone() {
+  return typeof window !== 'undefined' && window.navigator.standalone === true;
 }
 
 export default function Landing() {
   const navigate = useNavigate();
   const [bedrag, setBedrag] = useState(500);
   const installPrompt = useInstallPrompt();
+  const [toonIOSUitleg, setToonIOSUitleg] = useState(false);
 
   async function installeerApp() {
+    if (isIOS() && !isInStandalone()) {
+      setToonIOSUitleg(true);
+      return;
+    }
     if (!installPrompt) return;
     installPrompt.prompt();
     await installPrompt.userChoice;
@@ -83,10 +84,8 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Live koers ticker */}
-      <div className="bg-gray-900 text-sm py-2 text-center text-gray-400">
-        📡 Live wisselkoers &nbsp;·&nbsp; <LiveKoers /> &nbsp;·&nbsp; Bijgewerkt elke 90 seconden
-      </div>
+      {/* Live multi-landen koers ticker */}
+      <LiveKoersTicker />
 
       {/* Hero sectie */}
       <section className="bg-gradient-to-br from-blue-700 via-blue-600 to-blue-500 text-white py-20 px-4">
@@ -123,7 +122,7 @@ export default function Landing() {
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition text-sm">
               Nu gratis starten →
             </button>
-            {installPrompt && (
+            {(installPrompt || isIOS()) && !isInStandalone() && (
               <button onClick={installeerApp}
                 className="w-full mt-2 border-2 border-blue-600 text-blue-600 font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-95">
                 📲 Download de app
@@ -132,6 +131,32 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* iOS installatie uitleg popup */}
+      {toonIOSUitleg && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-end justify-center p-4" onClick={() => setToonIOSUitleg(false)}>
+          <div className="bg-gray-900 text-white rounded-2xl w-full max-w-sm p-5 space-y-3 mb-4" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">⚡</span>
+                <span className="font-bold">Installeer SwiftBridge</span>
+              </div>
+              <button onClick={() => setToonIOSUitleg(false)} className="text-gray-400 text-xl">✕</button>
+            </div>
+            <p className="text-gray-400 text-xs">Volg deze 3 stappen in Safari:</p>
+            {[
+              { stap: '1️⃣', tekst: <>Tik op het <strong className="text-white">Deel-icoon ⬆️</strong> onderaan Safari</> },
+              { stap: '2️⃣', tekst: <>Scroll en tik op <strong className="text-white">"Zet op beginscherm"</strong></> },
+              { stap: '3️⃣', tekst: <>Tik op <strong className="text-white">"Voeg toe"</strong> — klaar! 🎉</> },
+            ].map(({ stap, tekst }) => (
+              <div key={stap} className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2.5">
+                <span className="text-lg flex-shrink-0">{stap}</span>
+                <p className="text-sm text-gray-300">{tekst}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Stats */}
       <section className="bg-gray-50 py-12 px-4">
