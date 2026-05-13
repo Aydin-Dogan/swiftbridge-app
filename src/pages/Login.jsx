@@ -185,7 +185,7 @@ export default function Login({ onLogin }) {
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam</label>
                   <input value={form.naam} onChange={e => update('naam', e.target.value)}
-                    placeholder="Aydin Dogan" required
+                    placeholder="Naam" required
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
                 <div>
