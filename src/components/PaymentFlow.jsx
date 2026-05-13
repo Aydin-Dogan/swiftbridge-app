@@ -359,25 +359,54 @@ export default function PaymentFlow({ token }) {
   async function verstuur() {
     setLaden(true);
     setFout('');
-    try {
-      const netto     = parseFloat(bedrag) * 0.978;
-      const tryBedrag = koers ? Math.floor(netto * koers) : 0;
-      let txId        = `SB-${Date.now().toString(36).toUpperCase()}`;
 
-      try {
-        const res  = await fetch(`${API}/transactions`, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body:    JSON.stringify({ eurBedrag: parseFloat(bedrag), ontvangerNaam: ontvanger, ontvangerIBAN: iban, methode }),
-        });
-        const data = await res.json();
-        if (res.ok && data.transactie?.id) txId = data.transactie.id;
-      } catch { /* API niet bereikbaar — lokale simulatie */ }
+    // Genereer een idempotency key per poging — voorkomt dubbele transacties bij retry
+    const idempotencyKey = (window.crypto?.randomUUID?.() ||
+      `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+
+    try {
+      const res = await fetch(`${API}/transactions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'X-Idempotency-Key': idempotencyKey,
+        },
+        body: JSON.stringify({
+          eurBedrag: parseFloat(bedrag),
+          ontvangerNaam: ontvanger,
+          ontvangerIBAN: iban,
+          ontvangerBank: 'Garanti BBVA',
+          methode,
+        }),
+      });
+
+      // Lees het antwoord
+      const data = await res.json().catch(() => ({}));
+
+      // FOUT — geen succes tonen, gebruiker terug naar bevestigingsscherm met fout
+      if (!res.ok) {
+        const errBericht = data.error || `Server fout (${res.status}). Probeer opnieuw.`;
+        setFout(errBericht);
+        return; // Belangrijk: NIET doorgaan naar succes scherm
+      }
+
+      // Server transactie gelukt — gebruik server data, niet lokale berekening
+      if (!data.transactie?.id) {
+        setFout('Onverwachte server respons. Neem contact op met support.');
+        return;
+      }
 
       const tx = {
-        id: txId, eurBedrag: parseFloat(bedrag), tryBedrag,
-        ontvangerNaam: ontvanger, ontvangerIBAN: iban, methode,
-        status: methode === 'ideal' ? 'voltooid' : 'in_behandeling',
+        id: data.transactie.id,
+        eurBedrag: data.transactie.eurBedrag,
+        tryBedrag: data.transactie.tryBedrag,
+        feeEur: data.transactie.feeEur,
+        wisselKoers: data.transactie.wisselKoers,
+        ontvangerNaam: data.transactie.ontvangerNaam,
+        ontvangerIBAN: iban,
+        methode,
+        status: data.transactie.status, // 'in_behandeling' van server
         datum: new Date().toISOString(),
       };
 
@@ -387,12 +416,13 @@ export default function PaymentFlow({ token }) {
 
       await stuurPushNotificatie(
         '✅ SwiftBridge — Betaling verstuurd!',
-        `€${parseFloat(bedrag).toFixed(2)} → ₺${tryBedrag.toLocaleString('tr-TR')} voor ${ontvanger}`
+        `€${tx.eurBedrag.toFixed(2)} → ₺${tx.tryBedrag.toLocaleString('tr-TR')} voor ${ontvanger}`
       );
 
       setStap(3);
     } catch (e) {
-      setFout(e.message || 'Er ging iets mis. Probeer opnieuw.');
+      // Netwerk fout of timeout
+      setFout('Geen verbinding met server. Controleer je internet en probeer opnieuw. Je transactie is NIET verstuurd.');
     } finally {
       setLaden(false);
     }
