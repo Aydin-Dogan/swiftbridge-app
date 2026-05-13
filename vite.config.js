@@ -55,26 +55,6 @@ export default defineConfig({
           },
         ],
       },
-      workbox: {
-        // Zorg dat SW alle routes terugstuurt naar index.html (SPA)
-        navigateFallback: 'index.html',
-        navigateFallbackDenylist: [/^\/api/, /^\/sw\.js/],
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
-        cleanupOutdatedCaches: true,
-        clientsClaim: true,
-        skipWaiting: true,
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/news-production-8477\.up\.railway\.app\/api\/forex/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'forex-api',
-              expiration: { maxEntries: 5, maxAgeSeconds: 300 },
-              networkTimeoutSeconds: 5,
-            },
-          },
-        ],
-      },
     }),
   ],
 })

@@ -7,9 +7,11 @@
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="12" fill="url(#bg)"/>
-  <path d="M 30 8 L 18 36 L 28 36 L 24 56 L 46 24 L 36 24 L 40 8 Z"
-        fill="#facc15"
-        stroke="#fef3c7"
-        stroke-width="1"
-        stroke-linejoin="round"/>
+  <text x="32" y="48"
+        font-family="Arial Black, Arial, sans-serif"
+        font-size="36"
+        font-weight="900"
+        text-anchor="middle"
+        fill="#ffffff"
+        letter-spacing="-2">SB</text>
 </svg>

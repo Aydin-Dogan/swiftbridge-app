@@ -10,8 +10,7 @@ import { registerRoute, NavigationRoute } from 'workbox-routing';
 import { NetworkFirst } from 'workbox-strategies';
 
 // ── Precaching (door Vite ingevoegd) ────────────────────────────────────────
-self.__WB_MANIFEST = self.__WB_MANIFEST || [];
-precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST || []);
 cleanupOutdatedCaches();
 
 // SPA fallback: alle navigatie → index.html
