@@ -35,6 +35,30 @@ const BETAALMETHODEN = [
   },
 ];
 
+// ── IBAN validatie ────────────────────────────────────────────────────────────
+const IBAN_LENGTES = { TR: 26, NL: 18, DE: 22, BE: 16, FR: 27, GB: 22, AT: 20, ES: 24, IT: 27, PL: 28 };
+
+function valideerIBAN(iban) {
+  const schoon = iban.replace(/\s/g, '').toUpperCase();
+  if (schoon.length < 4) return { geldig: false, fout: 'IBAN te kort' };
+  const land = schoon.slice(0, 2);
+  if (!/^[A-Z]{2}$/.test(land)) return { geldig: false, fout: 'Ongeldige landcode' };
+  const verwachteLengte = IBAN_LENGTES[land];
+  if (verwachteLengte && schoon.length !== verwachteLengte) {
+    return { geldig: false, fout: `${land} IBAN moet ${verwachteLengte} tekens zijn (nu ${schoon.length})` };
+  }
+  // Mod-97 checksum
+  const hergerangschikt = schoon.slice(4) + schoon.slice(0, 4);
+  const numeriek = hergerangschikt.split('').map(c => {
+    const code = c.charCodeAt(0);
+    return code >= 65 ? (code - 55).toString() : c;
+  }).join('');
+  let rest = 0;
+  for (const cijfer of numeriek) { rest = (rest * 10 + parseInt(cijfer)) % 97; }
+  if (rest !== 1) return { geldig: false, fout: 'Ongeldig IBAN (controlecijfers kloppen niet)' };
+  return { geldig: true, fout: null };
+}
+
 // ── localStorage helpers ──────────────────────────────────────────────────────
 function laadOntvangers() {
   try { return JSON.parse(localStorage.getItem(ONTV_KEY) || '[]'); }
@@ -100,6 +124,10 @@ function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban,
   const netto      = parseFloat(bedrag) * 0.978;
   const tryBedrag  = koers && bedrag && !isNaN(bedrag) ? Math.floor(netto * koers) : null;
 
+  const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;
+  const ibanGeldig = !iban || (ibanCheck?.geldig === true);
+  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= 10 && ontvanger && iban && ibanCheck?.geldig;
+
   return (
     <div className="bg-white rounded-2xl shadow p-6 space-y-5">
       <h2 className="text-xl font-bold text-gray-800">💸 Geld overmaken</h2>
@@ -156,17 +184,22 @@ function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban,
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-2">IBAN Turkije</label>
+        <label className="block text-sm font-medium text-gray-600 mb-2">IBAN ontvanger</label>
         <input value={iban} onChange={e => setIban(e.target.value.toUpperCase().replace(/\s/g, ''))}
           placeholder="TR330006100519786457841326"
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 font-mono text-sm transition" />
-        {iban && !iban.startsWith('TR') && (
-          <p className="text-amber-600 text-xs mt-1">⚠️ Turks IBAN begint met TR</p>
+          className={`w-full border-2 rounded-xl px-4 py-3 outline-none font-mono text-sm transition ${
+            !iban ? 'border-gray-200' :
+            ibanCheck?.geldig ? 'border-green-400 bg-green-50' : 'border-red-300 bg-red-50'
+          }`} />
+        {iban && ibanCheck && (
+          <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
+            {ibanCheck.geldig ? '✅ Geldig IBAN' : `❌ ${ibanCheck.fout}`}
+          </p>
         )}
       </div>
 
       <button onClick={onVolgende}
-        disabled={!bedrag || isNaN(bedrag) || parseFloat(bedrag) < 10 || !ontvanger || !iban}
+        disabled={!kanVolgende}
         className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition">
         Betaalmethode kiezen →
       </button>
