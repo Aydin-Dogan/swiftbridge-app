@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 const VALUTA = [
   { code: 'TRY', land: 'Turkije',      vlag: '🇹🇷', basisKoers: 36.20 },
   { code: 'AZN', land: 'Azerbeidzjan', vlag: '🇦🇿', basisKoers: 1.89 },
@@ -12,29 +14,48 @@ const VALUTA = [
 
 const EU_VLAG = '🇪🇺';
 
-function simuleerKoers(basis) {
-  const variatie = (Math.random() - 0.5) * 0.004;
-  return (basis * (1 + variatie)).toFixed(basis >= 100 ? 0 : 2);
-}
-
 export default function LiveKoersTicker() {
   const [koersen, setKoersen] = useState(
-    VALUTA.map(v => ({ ...v, koers: v.basisKoers.toFixed(v.basisKoers >= 100 ? 0 : 2), richting: 0 }))
+    VALUTA.map(v => ({ ...v, koers: v.basisKoers, richting: 0 }))
   );
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  async function haalKoersen() {
+    try {
+      const res = await fetch(`${API}/transactions/koersen`);
+      if (!res.ok) throw new Error('API fout');
+      const data = await res.json();
+
       setKoersen(prev => prev.map(v => {
-        const nieuweKoers = simuleerKoers(v.basisKoers);
-        const richting = parseFloat(nieuweKoers) > parseFloat(v.koers) ? 1 : -1;
+        const nieuweKoers = data.koersen[v.code] ?? v.koers;
+        const richting = nieuweKoers > v.koers ? 1 : nieuweKoers < v.koers ? -1 : v.richting;
         return { ...v, koers: nieuweKoers, richting };
       }));
-    }, 4000);
+    } catch {
+      // Fallback: kleine simulatie als API niet bereikbaar
+      setKoersen(prev => prev.map(v => {
+        const variatie = (Math.random() - 0.5) * 0.004;
+        const nieuweKoers = parseFloat((v.koers * (1 + variatie)).toFixed(v.koers >= 100 ? 0 : 4));
+        const richting = nieuweKoers > v.koers ? 1 : -1;
+        return { ...v, koers: nieuweKoers, richting };
+      }));
+    }
+  }
+
+  useEffect(() => {
+    haalKoersen(); // Direct bij opstarten
+    const interval = setInterval(haalKoersen, 60000); // Elke 60 seconden
     return () => clearInterval(interval);
   }, []);
 
   // Dupliceer voor naadloze loop
   const items = [...koersen, ...koersen];
+
+  function formatKoers(koers, code) {
+    if (code === 'KZT' || code === 'UZS') {
+      return Math.round(koers).toLocaleString('nl-NL');
+    }
+    return parseFloat(koers).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+  }
 
   return (
     <div className="bg-gray-900 text-white overflow-hidden" style={{ height: '32px' }}>
@@ -48,7 +69,7 @@ export default function LiveKoersTicker() {
             <span className="text-gray-300 font-semibold">{v.land}</span>
             <span className={`font-bold ml-1 ${v.richting > 0 ? 'text-green-400' : v.richting < 0 ? 'text-red-400' : 'text-white'}`}>
               {v.richting > 0 ? '▲' : v.richting < 0 ? '▼' : ''}
-              {' '}{parseFloat(v.koers).toLocaleString('nl-NL')}
+              {' '}{formatKoers(v.koers, v.code)}
             </span>
           </div>
         ))}
@@ -56,7 +77,7 @@ export default function LiveKoersTicker() {
 
       <style>{`
         .ticker-scroll {
-          animation: ticker 30s linear infinite;
+          animation: ticker 35s linear infinite;
           width: max-content;
         }
         .ticker-scroll:hover {

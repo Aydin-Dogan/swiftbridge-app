@@ -10,50 +10,102 @@ import AlgemeneVoorwaarden from './pages/AlgemeneVoorwaarden';
 import Privacybeleid from './pages/Privacybeleid';
 import AMLBeleid from './pages/AMLBeleid';
 
+// ── Detecteer iOS ────────────────────────────────────────────────────────────
+function isIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+}
+function isInStandaloneMode() {
+  return window.navigator.standalone === true;
+}
+
 // ── PWA Install Banner ────────────────────────────────────────────────────────
 function InstallBanner() {
   const [prompt, setPrompt] = useState(null);
-  const [toon, setToon] = useState(false);
+  const [toonAndroid, setToonAndroid] = useState(false);
+  const [toonIOS, setToonIOS] = useState(false);
 
   useEffect(() => {
+    // Android / Chrome: beforeinstallprompt event
     const handler = (e) => {
       e.preventDefault();
       setPrompt(e);
-      // Toon banner alleen als gebruiker het nog niet heeft weggetikte
       const verborgen = sessionStorage.getItem('swiftbridge_install_verborgen');
-      if (!verborgen) setToon(true);
+      if (!verborgen) setToonAndroid(true);
     };
     window.addEventListener('beforeinstallprompt', handler);
+
+    // iOS Safari: toon handmatige instructie als niet al geïnstalleerd
+    if (isIOS() && !isInStandaloneMode()) {
+      const verborgen = sessionStorage.getItem('swiftbridge_install_verborgen');
+      if (!verborgen) setToonIOS(true);
+    }
+
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  if (!toon || !prompt) return null;
+  function verberg() {
+    sessionStorage.setItem('swiftbridge_install_verborgen', '1');
+    setToonAndroid(false);
+    setToonIOS(false);
+  }
 
   async function installeer() {
     prompt.prompt();
     const { outcome } = await prompt.userChoice;
-    if (outcome === 'accepted') setToon(false);
+    if (outcome === 'accepted') setToonAndroid(false);
   }
 
-  function verberg() {
-    sessionStorage.setItem('swiftbridge_install_verborgen', '1');
-    setToon(false);
-  }
-
-  return (
-    <div className="fixed top-0 left-0 right-0 z-[100] bg-blue-600 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
-      <span className="text-2xl flex-shrink-0">⚡</span>
-      <div className="flex-1 min-w-0">
-        <p className="font-bold text-sm leading-none">Download SwiftBridge</p>
-        <p className="text-blue-200 text-xs mt-0.5">Installeer de app op je telefoon</p>
+  // Android/Chrome banner
+  if (toonAndroid && prompt) {
+    return (
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-blue-600 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
+        <span className="text-2xl flex-shrink-0">⚡</span>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-sm leading-none">Download SwiftBridge</p>
+          <p className="text-blue-200 text-xs mt-0.5">Installeer de app op je telefoon</p>
+        </div>
+        <button onClick={installeer}
+          className="bg-white text-blue-600 font-bold text-xs px-3 py-2 rounded-xl flex-shrink-0 active:scale-95 transition">
+          Installeer
+        </button>
+        <button onClick={verberg} className="text-blue-300 hover:text-white text-lg flex-shrink-0">✕</button>
       </div>
-      <button onClick={installeer}
-        className="bg-white text-blue-600 font-bold text-xs px-3 py-2 rounded-xl flex-shrink-0 active:scale-95 transition">
-        Installeer
-      </button>
-      <button onClick={verberg} className="text-blue-300 hover:text-white text-lg flex-shrink-0">✕</button>
-    </div>
-  );
+    );
+  }
+
+  // iOS Safari banner met stap-voor-stap uitleg
+  if (toonIOS) {
+    return (
+      <div className="fixed bottom-20 left-3 right-3 z-[100] bg-gray-900 text-white rounded-2xl shadow-2xl p-4 border border-gray-700">
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">⚡</span>
+            <div>
+              <p className="font-bold text-sm">Installeer SwiftBridge</p>
+              <p className="text-gray-400 text-xs">Zet de app op je beginscherm</p>
+            </div>
+          </div>
+          <button onClick={verberg} className="text-gray-500 text-xl leading-none">✕</button>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2">
+            <span className="text-lg">1️⃣</span>
+            <p className="text-xs text-gray-300">Tik op het <span className="text-white font-bold">Deel-icoon</span> <span className="text-blue-400">⬆️</span> onderaan Safari</p>
+          </div>
+          <div className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2">
+            <span className="text-lg">2️⃣</span>
+            <p className="text-xs text-gray-300">Scroll naar beneden en tik op <span className="text-white font-bold">"Zet op beginscherm"</span></p>
+          </div>
+          <div className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2">
+            <span className="text-lg">3️⃣</span>
+            <p className="text-xs text-gray-300">Tik op <span className="text-white font-bold">"Voeg toe"</span> — klaar! 🎉</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 const tabs = [
