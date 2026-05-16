@@ -9,6 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import NotificatieInstellingen from './NotificatieInstellingen';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
 import FeestKalender from './FeestKalender';
+import { getValuta, formatBedrag } from '../services/currencies';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -34,6 +35,16 @@ function fmtEur(n) {
 }
 function fmtTry(n) {
   return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(n || 0);
+}
+
+// Toont ontvangen bedrag in de juiste valuta van de transactie
+function fmtOntvangen(tx) {
+  if (tx?.valuta && tx?.ontvangenBedrag != null) {
+    const v = getValuta(tx.valuta);
+    return `${v.vlag} ${formatBedrag(tx.ontvangenBedrag, tx.valuta)}`;
+  }
+  // Legacy: oude transacties hebben alleen tryBedrag
+  return `🇹🇷 ${fmtTry(tx?.tryBedrag)}`;
 }
 
 // ── Statusbadge ───────────────────────────────────────────────────────────────
@@ -169,8 +180,8 @@ function TransactieDetailModal({ tx, onSluit }) {
           {[
             ['Status',        <StatusBadge status={tx.status} />],
             ['Bedrag',        <span className="font-bold">{fmtEur(tx.eurBedrag)}</span>],
-            ['Ontvanger krijgt', <span className="font-bold text-green-600">{fmtTry(tx.tryBedrag)}</span>],
-            ['Wisselkoers',   <span className="font-mono text-sm">{tx.wisselKoers ? `1 EUR = ${tx.wisselKoers} TRY` : '—'}</span>],
+            ['Ontvanger krijgt', <span className="font-bold text-emerald-600">{fmtOntvangen(tx)}</span>],
+            ['Wisselkoers',   <span className="font-mono text-sm">{tx.wisselKoers ? `1 EUR = ${tx.wisselKoers} ${tx.valuta || 'TRY'}` : '—'}</span>],
             ['Kosten',        <span className="text-red-500">{fmtEur(tx.feeEur)}</span>],
             ['Ontvanger',     <span>{tx.ontvangerNaam}</span>],
             ['Bank',          <span>{tx.ontvangerBank || 'Garanti BBVA'}</span>],
@@ -264,7 +275,7 @@ function TransactieHistorie({ transacties, laden }) {
             </div>
             <div className="text-right flex-shrink-0">
               <div className="font-bold text-gray-800 text-sm">{fmtEur(t.eurBedrag)}</div>
-              <div className="text-xs text-green-600 font-medium">{fmtTry(t.tryBedrag)}</div>
+              <div className="text-xs text-emerald-600 font-medium">{fmtOntvangen(t)}</div>
             </div>
           </button>
         ))}

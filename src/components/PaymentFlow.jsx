@@ -1,12 +1,14 @@
 /**
  * PaymentFlow.jsx — Verbeterde betaalflow
  * - iDEAL + SEPA keuze
+ * - Multi-currency: TRY, AZN, KZT, UZS, TMT, KGS, USD, GBP, EUR, MAD
  * - Snelle bedragknoppen
  * - Opgeslagen ontvangers (localStorage)
  * - Transactie opslaan + dashboard notificatie
  * - Browser push notificatie na voltooiing
  */
 import { useState, useEffect } from 'react';
+import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -162,28 +164,37 @@ function OntvangerModal({ onKies, onSluit }) {
 }
 
 // ── Stap 0: Bedrag ────────────────────────────────────────────────────────────
-function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban, koers, onVolgende, ontvangerLabel, setOntvangerLabel }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, ontvanger, setOntvanger, iban, setIban, liveKoersTry, onVolgende, ontvangerLabel, setOntvangerLabel }) {
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
-  const netto      = parseFloat(bedrag) * 0.978;
-  const tryBedrag  = koers && bedrag && !isNaN(bedrag) ? Math.floor(netto * koers) : null;
-  // Voor transparante koers: ook brut koers tonen (zonder fee) zodat user verschil ziet
-  const tryBruto   = koers && bedrag && !isNaN(bedrag) ? Math.floor(parseFloat(bedrag) * koers) : null;
+  const valutaInfo = getValuta(valuta);
+  // Gebruik live TRY koers indien beschikbaar, anders statische koers per valuta
+  const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
+  const bedragNum = Math.max(0, parseFloat(bedrag) || 0);
+  const netto     = bedragNum * 0.978;
+  const ontvangenNetto = bedrag && !isNaN(bedrag) ? netto * effectieveKoers : null;
+  const ontvangenBruto = bedrag && !isNaN(bedrag) ? bedragNum * effectieveKoers : null;
 
   const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;
   const ibanGeldig = !iban || (ibanCheck?.geldig === true);
   const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= 10 && ontvanger && iban && ibanCheck?.geldig;
 
   return (
-    <div className="bg-white rounded-2xl shadow p-6 space-y-5">
-      <h2 className="text-xl font-bold text-gray-800">💸 Geld overmaken</h2>
+    <div className="card-glass p-6 space-y-5 animate-fade-up">
+      <h2 className="text-xl font-bold text-gray-800 tracking-tight">💸 Geld overmaken</h2>
 
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-2">Bedrag (EUR)</label>
         <div className="flex items-center border-2 border-blue-500 rounded-xl px-4 py-3 bg-blue-50/50">
           <span className="text-2xl font-bold text-blue-400 mr-2">€</span>
-          <input type="number" min="10" max="5000" step="10"
-            value={bedrag} onChange={e => setBedrag(e.target.value)}
+          <input type="number" min="0" max="5000" step="10" inputMode="decimal"
+            value={bedrag}
+            onChange={e => {
+              const v = e.target.value;
+              if (v === '' || v === '-') return setBedrag('');
+              const n = parseFloat(v);
+              if (!isNaN(n)) setBedrag(Math.max(0, n).toString());
+            }}
             className="flex-1 text-2xl font-bold text-gray-800 outline-none bg-transparent" />
         </div>
         <div className="flex gap-2 mt-2 flex-wrap">
@@ -199,26 +210,54 @@ function StapBedrag({ bedrag, setBedrag, ontvanger, setOntvanger, iban, setIban,
         </div>
       </div>
 
-      {tryBedrag !== null && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 space-y-2">
+      <div>
+        <label className="block text-sm font-medium text-gray-600 mb-2">Ontvanger krijgt in</label>
+        <div className="grid grid-cols-5 gap-1.5 max-h-32 overflow-y-auto">
+          {VALUTAS.map(v => (
+            <button
+              key={v.code}
+              type="button"
+              onClick={() => setValuta(v.code)}
+              className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-bold transition-all active:scale-95 ${
+                valuta === v.code
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              title={`${v.naam} (${v.land})`}
+            >
+              <span className="text-base leading-none">{v.vlag}</span>
+              <span className="text-[10px] mt-0.5">{v.code}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {ontvangenNetto !== null && (
+        <div
+          className="rounded-xl p-4 space-y-2 animate-fade-up"
+          style={{
+            background: 'linear-gradient(135deg, rgba(219,234,254,0.6), rgba(199,210,254,0.4))',
+            border: '1px solid rgba(59,130,246,0.25)',
+          }}
+        >
           <div className="flex justify-between text-sm text-gray-600">
             <span>📈 Markt wisselkoers</span>
-            <span className="font-medium">1 EUR = {koers.toFixed(4)} TRY</span>
+            <span className="font-mono font-semibold">1 EUR = {effectieveKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
           </div>
           <div className="flex justify-between text-sm text-gray-600">
             <span>💰 Transactiekosten (2,2%)</span>
-            <span className="font-medium text-red-500">−€{(parseFloat(bedrag) * 0.022).toFixed(2)}</span>
+            <span className="font-mono font-medium text-rose-500">−€{(bedragNum * 0.022).toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-xs text-gray-400">
             <span>Zonder kosten zou ontvanger krijgen</span>
-            <span className="line-through">₺{tryBruto?.toLocaleString('tr-TR')}</span>
+            <span className="line-through font-mono">{formatBedrag(ontvangenBruto, valuta)}</span>
           </div>
           <div className="border-t border-blue-200 pt-2 flex justify-between font-bold text-blue-700">
             <span>✅ Ontvanger krijgt</span>
-            <span className="text-lg">₺{tryBedrag.toLocaleString('tr-TR')}</span>
+            <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
           </div>
-          <div className="bg-blue-100/50 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
-            👨‍🦳 <strong>Dit ziet je ontvanger</strong> op zijn/haar TR-bankrekening — geen verborgen kosten.
+          <div className="bg-blue-100/60 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
+            {valutaInfo.vlag} <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening — geen verborgen kosten.
           </div>
         </div>
       )}
@@ -337,22 +376,26 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
 }
 
 // ── Stap 2: Bevestiging ───────────────────────────────────────────────────────
-function StapBevestiging({ bedrag, ontvanger, iban, methode, koers, laden, fout, onVerstuur, onTerug }) {
-  const netto      = parseFloat(bedrag) * 0.978;
-  const tryBedrag  = koers ? Math.floor(netto * koers) : 0;
+function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, laden, fout, onVerstuur, onTerug }) {
+  const valutaInfo = getValuta(valuta);
+  const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
+  const bedragNum = parseFloat(bedrag) || 0;
+  const netto     = bedragNum * 0.978;
+  const ontvangenBedrag = netto * effectieveKoers;
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
 
   return (
-    <div className="bg-white rounded-2xl shadow p-6 space-y-5">
-      <h2 className="text-xl font-bold text-gray-800">✅ Bevestig overmaken</h2>
+    <div className="card-glass p-6 space-y-5 animate-fade-up">
+      <h2 className="text-xl font-bold text-gray-800 tracking-tight">✅ Bevestig overmaken</h2>
       <div className="bg-gray-50 rounded-xl p-4 space-y-3">
         {[
-          ['Van',              `€${parseFloat(bedrag).toFixed(2)}`],
+          ['Van',              `€${bedragNum.toFixed(2)}`],
           ['Betaalmethode',    `${methodeObj?.icon} ${methodeObj?.label}`],
           ['Naar',             ontvanger],
           ['IBAN',             `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
-          ['Transactiekosten', `€${(parseFloat(bedrag) * 0.022).toFixed(2)}`],
-          ['Ontvanger krijgt', `₺${tryBedrag.toLocaleString('tr-TR')}`],
+          ['Transactiekosten', `€${(bedragNum * 0.022).toFixed(2)}`],
+          ['Wisselkoers',      `1 EUR = ${effectieveKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
+          ['Ontvanger krijgt', `${valutaInfo.vlag} ${formatBedrag(ontvangenBedrag, valuta)}`],
           ['Aankomsttijd',     methode === 'ideal' ? '< 5 minuten ⚡' : '1–2 werkdagen'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
@@ -383,33 +426,41 @@ function StapBevestiging({ bedrag, ontvanger, iban, methode, koers, laden, fout,
 // ── Stap 3: Verzonden ─────────────────────────────────────────────────────────
 function StapVerzonden({ transactie, methode, onNieuw }) {
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
+  const valuta = transactie?.valuta || 'TRY';
+  const valutaInfo = getValuta(valuta);
+  const ontvangenBedrag = transactie?.ontvangenBedrag ?? transactie?.tryBedrag ?? 0;
   return (
-    <div className="bg-white rounded-2xl shadow p-6 text-center space-y-5">
+    <div className="card-glass p-6 text-center space-y-5 animate-fade-up">
       <div className="text-6xl">🎉</div>
-      <h2 className="text-2xl font-bold text-green-600">Geld onderweg!</h2>
+      <h2 className="text-2xl font-bold text-emerald-600 tracking-tight">Geld onderweg!</h2>
       <p className="text-gray-500 text-sm">
         {methode === 'ideal'
-          ? 'Je iDEAL betaling is verwerkt. Het geld is binnen 5 minuten op de rekening in Turkije.'
-          : 'Je SEPA overboeking is geregistreerd. Na ontvangst sturen we het geld door naar Turkije.'}
+          ? `Je iDEAL betaling is verwerkt. Het geld is binnen 5 minuten op de rekening in ${valutaInfo.land}.`
+          : `Je SEPA overboeking is geregistreerd. Na ontvangst sturen we het geld door naar ${valutaInfo.land}.`}
       </p>
-      <div className="bg-green-50 border border-green-100 rounded-xl p-4 space-y-2 text-left">
+      <div
+        className="rounded-xl p-4 space-y-2 text-left"
+        style={{
+          background: 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05))',
+          border: '1px solid rgba(16,185,129,0.25)',
+        }}
+      >
         {[
           ['Verstuurd',        `€${transactie?.eurBedrag?.toFixed(2)}`],
-          ['Ontvanger krijgt', `₺${transactie?.tryBedrag?.toLocaleString('tr-TR')}`],
+          ['Ontvanger krijgt', `${valutaInfo.vlag} ${formatBedrag(ontvangenBedrag, valuta)}`],
           ['Methode',          `${methodeObj?.icon} ${methodeObj?.label}`],
           ['Transactie ID',    transactie?.id?.slice(0,16) + '…'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between text-sm">
             <span className="text-gray-500">{label}</span>
-            <span className="font-bold text-gray-800">{value}</span>
+            <span className="font-bold text-gray-800 font-mono">{value}</span>
           </div>
         ))}
       </div>
       <p className="text-xs text-gray-400">
         Je ontvangt een bevestiging per e-mail. De transactie is zichtbaar in je dashboard.
       </p>
-      <button onClick={onNieuw}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
+      <button onClick={onNieuw} className="btn-primary w-full py-3">
         Nieuwe overschrijving
       </button>
     </div>
@@ -420,11 +471,12 @@ function StapVerzonden({ transactie, methode, onNieuw }) {
 export default function PaymentFlow({ token }) {
   const [stap,           setStap          ] = useState(0);
   const [bedrag,         setBedrag        ] = useState('500');
+  const [valuta,         setValuta        ] = useState('TRY');
   const [ontvanger,      setOntvanger     ] = useState('');
   const [ontvangerLabel, setOntvangerLabel] = useState(null);
   const [iban,           setIban          ] = useState('');
   const [methode,        setMethode       ] = useState('ideal');
-  const [koers,          setKoers         ] = useState(null);
+  const [liveKoersTry,   setLiveKoersTry  ] = useState(null);
   const [transactie,     setTransactie    ] = useState(null);
   const [laden,          setLaden         ] = useState(false);
   const [fout,           setFout          ] = useState('');
@@ -432,7 +484,7 @@ export default function PaymentFlow({ token }) {
   useEffect(() => {
     fetch(`${SWIFTNEWS}/api/forex`)
       .then(r => r.json())
-      .then(j => { if (j.rate) setKoers(j.rate); })
+      .then(j => { if (j.rate) setLiveKoersTry(j.rate); })
       .catch(() => {});
   }, []);
 
@@ -458,6 +510,7 @@ export default function PaymentFlow({ token }) {
           ontvangerIBAN: iban,
           ontvangerBank: 'Garanti BBVA',
           methode,
+          valuta,
         }),
       });
 
@@ -477,12 +530,20 @@ export default function PaymentFlow({ token }) {
         return;
       }
 
+      // Bereken ontvangen bedrag in gekozen valuta (frontend, want backend doet TRY)
+      const valutaInfo = getValuta(valuta);
+      const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
+      const eurNetto = data.transactie.eurBedrag * 0.978;
+      const ontvangenBedrag = eurNetto * effectieveKoers;
+
       const tx = {
         id: data.transactie.id,
         eurBedrag: data.transactie.eurBedrag,
         tryBedrag: data.transactie.tryBedrag,
+        valuta,
+        ontvangenBedrag,
         feeEur: data.transactie.feeEur,
-        wisselKoers: data.transactie.wisselKoers,
+        wisselKoers: effectieveKoers,
         ontvangerNaam: data.transactie.ontvangerNaam,
         ontvangerIBAN: iban,
         methode,
@@ -496,7 +557,7 @@ export default function PaymentFlow({ token }) {
 
       await stuurPushNotificatie(
         '✅ SwiftBridge — Betaling verstuurd!',
-        `€${tx.eurBedrag.toFixed(2)} → ₺${tx.tryBedrag.toLocaleString('tr-TR')} voor ${ontvanger}`
+        `€${tx.eurBedrag.toFixed(2)} → ${formatBedrag(ontvangenBedrag, valuta)} voor ${ontvanger}`
       );
 
       setStap(3);
@@ -535,9 +596,9 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} koers={koers} onVolgende={() => setStap(1)} />}
+      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} ontvanger={ontvanger} iban={iban} methode={methode} koers={koers} laden={laden} fout={fout} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}
     </div>
   );
