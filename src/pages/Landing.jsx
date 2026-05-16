@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LiveKoersTicker from '../components/LiveKoersTicker';
 import TaalKiezer from '../components/TaalKiezer';
+import { VALUTAS } from '../services/currencies';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -41,15 +42,6 @@ function isIOS() {
 function isInStandalone() {
   return typeof window !== 'undefined' && window.navigator.standalone === true;
 }
-
-// Wisselkoersen (EUR → andere valuta) — indicatieve waarden
-const VALUTAS = [
-  { code: 'TRY', symbool: '₺', vlag: '🇹🇷', naam: 'Turkse Lira',        koers: 36.20, locale: 'tr-TR', decimals: 0 },
-  { code: 'USD', symbool: '$', vlag: '🇺🇸', naam: 'Amerikaanse Dollar', koers: 1.08,  locale: 'en-US', decimals: 2 },
-  { code: 'GBP', symbool: '£', vlag: '🇬🇧', naam: 'Britse Pond',         koers: 0.85,  locale: 'en-GB', decimals: 2 },
-  { code: 'EUR', symbool: '€', vlag: '🇪🇺', naam: 'Euro',                koers: 1.00,  locale: 'nl-NL', decimals: 2 },
-  { code: 'MAD', symbool: 'DH', vlag: '🇲🇦', naam: 'Marokkaanse Dirham', koers: 10.95, locale: 'ar-MA', decimals: 2 },
-];
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -148,7 +140,7 @@ export default function Landing() {
 
             {/* Valuta selector */}
             <label className="block text-xs font-semibold text-gray-500 mb-1 text-left">Ontvanger krijgt in</label>
-            <div className="grid grid-cols-5 gap-1.5 mb-3">
+            <div className="grid grid-cols-5 gap-1.5 mb-3 max-h-32 overflow-y-auto">
               {VALUTAS.map(v => (
                 <button
                   key={v.code}
