@@ -11,6 +11,7 @@ import TweeFactorInstellingen from './TweeFactorInstellingen';
 import FeestKalender from './FeestKalender';
 import { getValuta, formatBedrag } from '../services/currencies';
 import { useTaal } from '../i18n';
+import TransactieReceipt from './TransactieReceipt';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -311,7 +312,21 @@ function TransactieHistorie({ transacties, laden }) {
         <div className="p-6 text-center text-gray-400 text-sm">Geen transacties gevonden</div>
       )}
 
-      <TransactieDetailModal tx={detailTx} onSluit={() => setDetailTx(null)} />
+      <TransactieReceipt
+        tx={detailTx}
+        onSluit={() => setDetailTx(null)}
+        onHerhaal={(tx) => {
+          // Sla ontvanger op localStorage zodat PaymentFlow het kan voorvullen
+          localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
+            ontvanger: tx.ontvangerNaam || tx.ontvanger_naam,
+            iban: tx.ontvangerIBAN || tx.ontvanger_iban,
+            bedrag: tx.eurBedrag || tx.eur_bedrag,
+            valuta: tx.valuta || 'TRY',
+          }));
+          setDetailTx(null);
+          window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: { tab: 'betaling' } }));
+        }}
+      />
     </div>
   );
 }
@@ -390,6 +405,25 @@ export default function Dashboard({ gebruiker }) {
           🔄
         </button>
       </div>
+
+      {/* Welkomst-deal — eerste transactie gratis */}
+      {gebruiker?.gratisEersteTx && kycGoedgekeurd && (
+        <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 rounded-2xl p-4 text-white shadow-lg animate-fade-up">
+          <div className="flex items-center gap-3">
+            <div className="text-4xl flex-shrink-0">🎁</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-sm">Welkomst-deal: 1e transactie GRATIS!</div>
+              <div className="text-xs text-white/90 mt-0.5">Geen servicekosten op je eerste overboeking (tot €800)</div>
+            </div>
+          </div>
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: { tab: 'betaling' } }))}
+            className="w-full mt-3 bg-white/20 hover:bg-white/30 text-white font-bold py-2.5 rounded-xl text-sm active:scale-95"
+          >
+            💸 Verstuur je eerste gratis transactie →
+          </button>
+        </div>
+      )}
 
       {/* Culturele kalender — Bayram/Ramadan herinneringen */}
       {kycGoedgekeurd && (

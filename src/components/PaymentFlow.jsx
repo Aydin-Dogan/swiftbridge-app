@@ -707,6 +707,19 @@ export default function PaymentFlow({ token }) {
       .then(r => r.json())
       .then(j => { if (j.rate) setLiveKoersTry(j.rate); })
       .catch(() => {});
+
+    // Repeat transactie: pre-fill velden vanuit localStorage
+    try {
+      const repeatRaw = localStorage.getItem('swiftbridge_repeat_tx');
+      if (repeatRaw) {
+        const r = JSON.parse(repeatRaw);
+        if (r.ontvanger)   setOntvanger(r.ontvanger);
+        if (r.iban)        setIban(r.iban);
+        if (r.bedrag)      setBedrag(String(r.bedrag));
+        if (r.valuta)      setValuta(r.valuta);
+        localStorage.removeItem('swiftbridge_repeat_tx');
+      }
+    } catch {}
   }, []);
 
   async function verstuur() {
