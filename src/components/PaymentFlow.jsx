@@ -28,12 +28,28 @@ const BETAALMETHODEN = [
     kleur: 'border-blue-500 bg-blue-50',
   },
   {
-    id:    'sepa',
-    label: 'Bank overboeking (SEPA)',
-    icon:  '🏛️',
-    desc:  'Standaard bankoverboeking',
-    sub:   'Verwerkingstijd: 1–2 werkdagen',
-    kleur: 'border-purple-400 bg-purple-50',
+    id:    'bancontact',
+    label: 'Bancontact',
+    icon:  '🇧🇪',
+    desc:  'Betalen vanuit België',
+    sub:   'Direct via Belgische bank',
+    kleur: 'border-yellow-500 bg-yellow-50',
+  },
+  {
+    id:    'creditcard',
+    label: 'Credit/Debit kaart',
+    icon:  '💳',
+    desc:  'Visa, Mastercard',
+    sub:   'Internationaal · 1,8% extra',
+    kleur: 'border-indigo-500 bg-indigo-50',
+  },
+  {
+    id:    'applepay',
+    label: 'Apple Pay',
+    icon:  '🍎',
+    desc:  'Snel betalen via Apple Pay',
+    sub:   'Touch/Face ID bevestigen',
+    kleur: 'border-gray-700 bg-gray-50',
   },
 ];
 
@@ -530,11 +546,53 @@ export default function PaymentFlow({ token }) {
         return;
       }
 
-      // Bereken ontvangen bedrag in gekozen valuta (frontend, want backend doet TRY)
+      // Bereken ontvangen bedrag in gekozen valuta
       const valutaInfo = getValuta(valuta);
       const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
       const eurNetto = data.transactie.eurBedrag * 0.978;
       const ontvangenBedrag = eurNetto * effectieveKoers;
+
+      // ── Start Mollie betaling — krijg checkoutUrl en redirect gebruiker ──
+      try {
+        const betalingRes = await fetch(`${API}/payments/start`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            transactieId: data.transactie.id,
+            methode,
+          }),
+        });
+        const betalingData = await betalingRes.json();
+        if (betalingRes.ok && betalingData.checkoutUrl) {
+          // Bewaar transactie lokaal vóór redirect
+          slaTransactieOp({
+            id: data.transactie.id,
+            eurBedrag: data.transactie.eurBedrag,
+            tryBedrag: data.transactie.tryBedrag,
+            valuta,
+            ontvangenBedrag,
+            feeEur: data.transactie.feeEur,
+            wisselKoers: effectieveKoers,
+            ontvangerNaam: data.transactie.ontvangerNaam,
+            ontvangerIBAN: iban,
+            methode,
+            status: 'wacht_op_betaling',
+            datum: new Date().toISOString(),
+          });
+          slaOntvangerOp(ontvanger, iban, ontvangerLabel);
+
+          // Redirect naar Mollie checkout
+          window.location.href = betalingData.checkoutUrl;
+          return;
+        }
+        // Als betaling niet kon worden gestart, val terug op simulatie modus
+        console.warn('Mollie betaling kon niet worden gestart, val terug op demo modus');
+      } catch (e) {
+        console.warn('Mollie niet beschikbaar, demo modus:', e.message);
+      }
 
       const tx = {
         id: data.transactie.id,
