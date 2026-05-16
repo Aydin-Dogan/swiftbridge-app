@@ -7,10 +7,16 @@
  * Model: kosten + 0,3% marge van transactie bedrag
  */
 
-const MARGE_PCT = 0.010; // 1,0% SwiftBridge winst
+// Marge per snelheid — Express 1% (snelheid premium), Economy 0,5% (concurreert met Remitly)
+const MARGE_EXPRESS = 0.010; // 1,0%
+const MARGE_ECONOMY = 0.005; // 0,5%
 const FX_SPREAD_PCT = 0.003; // 0,3% wisselkoers marge (FX provider neemt dit)
 const COMPLIANCE_PER_TX = 0.05; // sanctielijst + screening
 const OVERHEAD_PER_TX = 0.80; // hosting + database + monitoring (verdeeld over ~1000 tx/mnd)
+
+function margePct(snelheid) {
+  return snelheid === 'economy' ? MARGE_ECONOMY : MARGE_EXPRESS;
+}
 
 /**
  * Mollie processing fee per methode
@@ -55,7 +61,7 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
   const fxSpread   = bedrag * FX_SPREAD_PCT;
   const compliance = COMPLIANCE_PER_TX;
   const overhead   = OVERHEAD_PER_TX;
-  const marge      = bedrag * MARGE_PCT;
+  const marge      = bedrag * margePct(snelheid);
 
   const totaalKosten     = mollie + transfer + fxSpread + compliance + overhead;
   const klantBetaaltFee  = totaalKosten + marge;
@@ -105,7 +111,7 @@ export const KOSTEN_LABELS = {
   fxSpread: { label: 'Wisselkoers marge', icon: '💱', uitleg: '0,3% bovenop mid-market koers' },
   compliance: { label: 'Compliance & screening', icon: '🛡️', uitleg: 'Anti-fraud + sanctielijst check' },
   overhead: { label: 'Operationele kosten', icon: '⚙️', uitleg: 'Hosting + monitoring + support' },
-  marge: { label: 'SwiftBridge marge', icon: '🌉', uitleg: '1,0% winst voor SwiftBridge' },
+  marge: { label: 'SwiftBridge marge', icon: '🌉', uitleg: '1% Express / 0,5% Economy' },
 };
 
 function round2(n) { return Math.round(n * 100) / 100; }
