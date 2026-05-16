@@ -10,6 +10,7 @@
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 import { berekenKosten, KOSTEN_LABELS } from '../services/kosten';
+import Vlag from './Vlag';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -353,7 +354,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               }`}
               title={`${v.naam} (${v.land})`}
             >
-              <span className="text-base leading-none">{v.vlag}</span>
+              <Vlag land={v.landCode} size={20} />
               <span className="text-[10px] mt-0.5">{v.code}</span>
             </button>
           ))}
@@ -391,7 +392,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           </div>
 
           <div className="bg-blue-100/60 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
-            {valutaInfo.vlag} <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening.
+            <Vlag land={valutaInfo.landCode} size={14} /> <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening.
           </div>
         </div>
       )}

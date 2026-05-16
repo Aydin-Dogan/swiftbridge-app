@@ -4,6 +4,7 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta } from '../services/currencies';
+import Vlag from './Vlag';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -94,7 +95,7 @@ export default function KoersAlerts({ token }) {
                 className="w-full border-2 border-gray-200 rounded-xl px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-blue-500"
               >
                 {VALUTAS.filter(v => v.code !== 'EUR').map(v => (
-                  <option key={v.code} value={v.code}>{v.vlag} {v.code} — {v.naam}</option>
+                  <option key={v.code} value={v.code}>{v.code} — {v.naam} ({v.land})</option>
                 ))}
               </select>
             </div>
@@ -181,7 +182,7 @@ export default function KoersAlerts({ token }) {
                   }`}
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="text-xl">{v.vlag}</span>
+                    <Vlag land={v.landCode} size={22} />
                     <div className="min-w-0">
                       <div className="font-semibold text-sm truncate">
                         1 EUR {a.richting === 'boven' ? '≥' : '≤'} <span className="font-mono">{Number(a.target_koers).toFixed(4)}</span> {a.valuta}

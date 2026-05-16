@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { VALUTAS } from '../services/currencies';
+import Vlag from './Vlag';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const EU_VLAG = '🇪🇺';
 
 // Ticker valuta's (alles behalve EUR zelf)
 const TICKER_VALUTAS = VALUTAS.filter(v => v.code !== 'EUR');
@@ -61,10 +61,10 @@ export default function LiveKoersTicker() {
             key={i}
             className="flex items-center gap-2.5 px-6 whitespace-nowrap text-sm font-semibold border-r border-blue-900/50 h-full"
           >
-            <span className="text-lg leading-none">{EU_VLAG}</span>
+            <Vlag land="EU" size={18} />
             <span className="text-blue-200 font-bold tracking-wide">EUR</span>
             <span className="text-blue-300 mx-0.5 text-base">→</span>
-            <span className="text-lg leading-none">{v.vlag}</span>
+            <Vlag land={v.landCode} size={18} />
             <span className="text-white font-bold">{v.land}</span>
             <span
               className={`font-bold font-mono ml-1.5 px-2 py-1 rounded-lg text-sm ${

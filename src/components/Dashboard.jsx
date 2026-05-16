@@ -38,14 +38,13 @@ function fmtTry(n) {
   return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(n || 0);
 }
 
-// Toont ontvangen bedrag in de juiste valuta van de transactie
+// Toont ontvangen bedrag in de juiste valuta van de transactie (zonder emoji vlag voor consistentie)
 function fmtOntvangen(tx) {
   if (tx?.valuta && tx?.ontvangenBedrag != null) {
-    const v = getValuta(tx.valuta);
-    return `${v.vlag} ${formatBedrag(tx.ontvangenBedrag, tx.valuta)}`;
+    return formatBedrag(tx.ontvangenBedrag, tx.valuta);
   }
   // Legacy: oude transacties hebben alleen tryBedrag
-  return `🇹🇷 ${fmtTry(tx?.tryBedrag)}`;
+  return fmtTry(tx?.tryBedrag);
 }
 
 // ── Statusbadge ───────────────────────────────────────────────────────────────
