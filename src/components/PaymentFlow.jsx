@@ -189,7 +189,7 @@ function OntvangerModal({ onKies, onSluit }) {
 }
 
 // ── Stap 0: Bedrag ────────────────────────────────────────────────────────────
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, onVolgende, ontvangerLabel, setOntvangerLabel }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, onVolgende, ontvangerLabel, setOntvangerLabel }) {
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
   const valutaInfo = getValuta(valuta);
@@ -215,7 +215,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
   const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;
   const ibanGeldig = !iban || (ibanCheck?.geldig === true);
-  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= 10 && ontvanger && iban && ibanCheck?.geldig;
+  const ontvangerInfoOK = uitbetaalMethode === 'papara'
+    ? !!paparaIdentifier
+    : (iban && ibanCheck?.geldig);
+  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= 10 && ontvanger && ontvangerInfoOK;
 
   return (
     <div className="card-glass p-6 space-y-5 animate-fade-up">
@@ -408,20 +411,102 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         )}
       </div>
 
+      {/* Uitbetaal methode toggle: bank vs Papara */}
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-2">IBAN ontvanger</label>
-        <input value={iban} onChange={e => setIban(e.target.value.toUpperCase().replace(/\s/g, ''))}
-          placeholder="TR330006100519786457841326"
-          className={`w-full border-2 rounded-xl px-4 py-3 outline-none font-mono text-sm transition ${
-            !iban ? 'border-gray-200' :
-            ibanCheck?.geldig ? 'border-green-400 bg-green-50' : 'border-red-300 bg-red-50'
-          }`} />
-        {iban && ibanCheck && (
-          <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
-            {ibanCheck.geldig ? '✅ Geldig IBAN' : `❌ ${ibanCheck.fout}`}
-          </p>
-        )}
+        <label className="block text-sm font-medium text-gray-600 mb-2">Hoe ontvangt {ontvanger || 'de ontvanger'} het geld?</label>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => setUitbetaalMethode('bank')}
+            className={`p-3 rounded-xl text-left transition-all active:scale-95 ${
+              uitbetaalMethode === 'bank'
+                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-lg">🏦</span>
+              <span className="font-bold text-sm">Bankrekening</span>
+            </div>
+            <div className={`text-[10px] ${uitbetaalMethode === 'bank' ? 'text-blue-100' : 'text-gray-500'}`}>
+              Garanti, İş Bankası, Ziraat...
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setUitbetaalMethode('papara')}
+            className={`p-3 rounded-xl text-left transition-all active:scale-95 relative ${
+              uitbetaalMethode === 'papara'
+                ? 'bg-gradient-to-br from-purple-600 to-pink-600 text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <span className="absolute top-1 right-1 text-[8px] bg-amber-400 text-amber-900 font-bold px-1 rounded">SOON</span>
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-lg">💜</span>
+              <span className="font-bold text-sm">Papara wallet</span>
+            </div>
+            <div className={`text-[10px] ${uitbetaalMethode === 'papara' ? 'text-pink-100' : 'text-gray-500'}`}>
+              Instant · 18M users in TR
+            </div>
+          </button>
+        </div>
       </div>
+
+      {uitbetaalMethode === 'bank' ? (
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">IBAN ontvanger</label>
+          <input value={iban} onChange={e => setIban(e.target.value.toUpperCase().replace(/\s/g, ''))}
+            placeholder="TR330006100519786457841326"
+            className={`w-full border-2 rounded-xl px-4 py-3 outline-none font-mono text-sm transition ${
+              !iban ? 'border-gray-200' :
+              ibanCheck?.geldig ? 'border-green-400 bg-green-50' : 'border-red-300 bg-red-50'
+            }`} />
+          {iban && ibanCheck && (
+            <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
+              {ibanCheck.geldig ? '✅ Geldig IBAN' : `❌ ${ibanCheck.fout}`}
+            </p>
+          )}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <div className="bg-purple-50 border border-purple-200 rounded-xl p-2.5 text-[11px] text-purple-800 flex items-start gap-1.5">
+            <span>🚧</span>
+            <span><strong>Coming soon:</strong> Papara wallet uitbetaling is in ontwikkeling (live verwacht Q3 2026). Voor nu kun je het bestellen — wij betalen handmatig uit zodra je transactie gelukt is.</span>
+          </div>
+          <label className="block text-sm font-medium text-gray-600">Hoe wil je sturen?</label>
+          <div className="grid grid-cols-3 gap-1.5">
+            {[
+              { type: 'papara_nummer', label: 'Papara #', placeholder: 'PL1234567890' },
+              { type: 'telefoon',      label: 'Telefoon',  placeholder: '+90...' },
+              { type: 'email',         label: 'Email',     placeholder: 'naam@x.com' },
+            ].map(opt => (
+              <button
+                key={opt.type}
+                type="button"
+                onClick={() => setPaparaIdentifierType(opt.type)}
+                className={`py-2 rounded-lg text-xs font-bold transition ${
+                  paparaIdentifierType === opt.type
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-gray-100 text-gray-600'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <input
+            value={paparaIdentifier}
+            onChange={e => setPaparaIdentifier(e.target.value)}
+            placeholder={
+              paparaIdentifierType === 'papara_nummer' ? 'PL1234567890' :
+              paparaIdentifierType === 'telefoon' ? '+905XX1234567' :
+              'naam@example.com'
+            }
+            className="w-full border-2 border-purple-300 rounded-xl px-4 py-3 outline-none font-mono text-sm focus:border-purple-500"
+          />
+        </div>
+      )}
 
       <button onClick={onVolgende}
         disabled={!kanVolgende}
@@ -588,6 +673,9 @@ export default function PaymentFlow({ token }) {
   const [ontvanger,      setOntvanger     ] = useState('');
   const [ontvangerLabel, setOntvangerLabel] = useState(null);
   const [iban,           setIban          ] = useState('');
+  const [uitbetaalMethode,    setUitbetaalMethode]    = useState('bank'); // bank | papara
+  const [paparaIdentifier,    setPaparaIdentifier]    = useState('');
+  const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
   const [methode,        setMethode       ] = useState('ideal');
   const [liveKoersTry,   setLiveKoersTry  ] = useState(null);
   const [transactie,     setTransactie    ] = useState(null);
@@ -620,11 +708,14 @@ export default function PaymentFlow({ token }) {
         body: JSON.stringify({
           eurBedrag: parseFloat(bedrag),
           ontvangerNaam: ontvanger,
-          ontvangerIBAN: iban,
+          ontvangerIBAN: uitbetaalMethode === 'bank' ? iban : null,
           ontvangerBank: 'Garanti BBVA',
           methode,
           valuta,
           snelheid,
+          uitbetaalMethode,
+          paparaIdentifier: uitbetaalMethode === 'papara' ? paparaIdentifier : null,
+          paparaIdentifierType: uitbetaalMethode === 'papara' ? paparaIdentifierType : null,
         }),
       });
 
@@ -752,7 +843,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} onVolgende={() => setStap(1)} />}
+      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}
