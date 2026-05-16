@@ -12,16 +12,41 @@
  */
 
 const FEESTEN = [
-  // 2026
-  { id: 'ramadan-2026',  naam: 'Ramadan',           emoji: '🌙', start: '2026-02-17', eind: '2026-03-19', kleur: 'from-indigo-600 to-purple-700' },
-  { id: 'eid-fitr-2026', naam: 'Ramazan Bayramı',   emoji: '🎉', start: '2026-03-20', eind: '2026-03-23', kleur: 'from-amber-500 to-orange-600' },
-  { id: 'eid-adha-2026', naam: 'Kurban Bayramı',    emoji: '🐑', start: '2026-05-27', eind: '2026-05-30', kleur: 'from-emerald-500 to-teal-600' },
-  { id: 'nieuwjaar-2027', naam: 'Yılbaşı',          emoji: '🎊', start: '2026-12-29', eind: '2027-01-02', kleur: 'from-rose-500 to-pink-600' },
+  // ═══════════════════════════════ 2026 ═══════════════════════════════
+  // — Religieus (Islam) —
+  { id: 'berat-2026',       naam: 'Berat Kandili',       emoji: '🕌', start: '2026-02-02', eind: '2026-02-02', kleur: 'from-violet-600 to-purple-700' },
+  { id: 'ramadan-2026',     naam: 'Ramadan',             emoji: '🌙', start: '2026-02-17', eind: '2026-03-19', kleur: 'from-indigo-600 to-purple-700' },
+  { id: 'kadir-2026',       naam: 'Kadir Gecesi',        emoji: '⭐', start: '2026-03-15', eind: '2026-03-15', kleur: 'from-indigo-700 to-blue-800' },
+  { id: 'eid-fitr-2026',    naam: 'Ramazan Bayramı',     emoji: '🎉', start: '2026-03-20', eind: '2026-03-23', kleur: 'from-amber-500 to-orange-600' },
+  { id: 'eid-adha-2026',    naam: 'Kurban Bayramı',      emoji: '🐑', start: '2026-05-27', eind: '2026-05-30', kleur: 'from-emerald-500 to-teal-600' },
+  { id: 'asure-2026',       naam: 'Aşure Günü',          emoji: '🍯', start: '2026-06-25', eind: '2026-06-25', kleur: 'from-amber-600 to-yellow-700' },
+  { id: 'mevlid-2026',      naam: 'Mevlid Kandili',      emoji: '🕌', start: '2026-09-14', eind: '2026-09-14', kleur: 'from-teal-600 to-emerald-700' },
+  // — Turkse nationale feesten —
+  { id: '23nisan-2026',     naam: '23 Nisan Çocuk Bayramı', emoji: '🧒', start: '2026-04-23', eind: '2026-04-23', kleur: 'from-pink-500 to-rose-600' },
+  { id: '19mayis-2026',     naam: '19 Mayıs Atatürk',    emoji: '🇹🇷', start: '2026-05-19', eind: '2026-05-19', kleur: 'from-red-600 to-rose-700' },
+  { id: '30agustos-2026',   naam: '30 Ağustos Zafer',    emoji: '🏆', start: '2026-08-30', eind: '2026-08-30', kleur: 'from-red-600 to-orange-700' },
+  { id: '29ekim-2026',      naam: '29 Ekim Cumhuriyet',  emoji: '🇹🇷', start: '2026-10-29', eind: '2026-10-29', kleur: 'from-red-700 to-rose-800' },
+  { id: '10kasim-2026',     naam: '10 Kasım Atatürk Anma', emoji: '🕊️', start: '2026-11-10', eind: '2026-11-10', kleur: 'from-slate-600 to-gray-700' },
+  // — Familie momenten —
+  { id: 'moederdag-2026',   naam: 'Anneler Günü (Moederdag)', emoji: '💐', start: '2026-05-10', eind: '2026-05-10', kleur: 'from-pink-500 to-fuchsia-600' },
+  { id: 'vaderdag-2026',    naam: 'Babalar Günü (Vaderdag)',  emoji: '👔', start: '2026-06-21', eind: '2026-06-21', kleur: 'from-blue-600 to-indigo-700' },
+  { id: 'nieuwjaar-2027',   naam: 'Yılbaşı',             emoji: '🎊', start: '2026-12-29', eind: '2027-01-02', kleur: 'from-rose-500 to-pink-600' },
 
-  // 2027
-  { id: 'ramadan-2027',  naam: 'Ramadan',           emoji: '🌙', start: '2027-02-06', eind: '2027-03-08', kleur: 'from-indigo-600 to-purple-700' },
-  { id: 'eid-fitr-2027', naam: 'Ramazan Bayramı',   emoji: '🎉', start: '2027-03-09', eind: '2027-03-12', kleur: 'from-amber-500 to-orange-600' },
-  { id: 'eid-adha-2027', naam: 'Kurban Bayramı',    emoji: '🐑', start: '2027-05-16', eind: '2027-05-19', kleur: 'from-emerald-500 to-teal-600' },
+  // ═══════════════════════════════ 2027 ═══════════════════════════════
+  { id: 'berat-2027',       naam: 'Berat Kandili',       emoji: '🕌', start: '2027-01-22', eind: '2027-01-22', kleur: 'from-violet-600 to-purple-700' },
+  { id: 'ramadan-2027',     naam: 'Ramadan',             emoji: '🌙', start: '2027-02-06', eind: '2027-03-08', kleur: 'from-indigo-600 to-purple-700' },
+  { id: 'kadir-2027',       naam: 'Kadir Gecesi',        emoji: '⭐', start: '2027-03-04', eind: '2027-03-04', kleur: 'from-indigo-700 to-blue-800' },
+  { id: 'eid-fitr-2027',    naam: 'Ramazan Bayramı',     emoji: '🎉', start: '2027-03-09', eind: '2027-03-12', kleur: 'from-amber-500 to-orange-600' },
+  { id: '23nisan-2027',     naam: '23 Nisan Çocuk Bayramı', emoji: '🧒', start: '2027-04-23', eind: '2027-04-23', kleur: 'from-pink-500 to-rose-600' },
+  { id: 'moederdag-2027',   naam: 'Anneler Günü (Moederdag)', emoji: '💐', start: '2027-05-09', eind: '2027-05-09', kleur: 'from-pink-500 to-fuchsia-600' },
+  { id: '19mayis-2027',     naam: '19 Mayıs Atatürk',    emoji: '🇹🇷', start: '2027-05-19', eind: '2027-05-19', kleur: 'from-red-600 to-rose-700' },
+  { id: 'eid-adha-2027',    naam: 'Kurban Bayramı',      emoji: '🐑', start: '2027-05-16', eind: '2027-05-19', kleur: 'from-emerald-500 to-teal-600' },
+  { id: 'vaderdag-2027',    naam: 'Babalar Günü (Vaderdag)',  emoji: '👔', start: '2027-06-20', eind: '2027-06-20', kleur: 'from-blue-600 to-indigo-700' },
+  { id: 'asure-2027',       naam: 'Aşure Günü',          emoji: '🍯', start: '2027-06-14', eind: '2027-06-14', kleur: 'from-amber-600 to-yellow-700' },
+  { id: '30agustos-2027',   naam: '30 Ağustos Zafer',    emoji: '🏆', start: '2027-08-30', eind: '2027-08-30', kleur: 'from-red-600 to-orange-700' },
+  { id: 'mevlid-2027',      naam: 'Mevlid Kandili',      emoji: '🕌', start: '2027-09-03', eind: '2027-09-03', kleur: 'from-teal-600 to-emerald-700' },
+  { id: '29ekim-2027',      naam: '29 Ekim Cumhuriyet',  emoji: '🇹🇷', start: '2027-10-29', eind: '2027-10-29', kleur: 'from-red-700 to-rose-800' },
+  { id: '10kasim-2027',     naam: '10 Kasım Atatürk Anma', emoji: '🕊️', start: '2027-11-10', eind: '2027-11-10', kleur: 'from-slate-600 to-gray-700' },
 ];
 
 const DAGEN_VOORUIT = 14; // Toon banner vanaf 14 dagen voor het feest
