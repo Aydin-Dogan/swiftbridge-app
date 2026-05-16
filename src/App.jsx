@@ -11,6 +11,7 @@ import { useTaal } from './i18n';
 // Lazy load zware paginas (code splitting)
 const PaymentFlow         = lazy(() => import('./components/PaymentFlow'));
 const KYCFlow             = lazy(() => import('./components/KYCFlow'));
+const KoersAlerts         = lazy(() => import('./components/KoersAlerts'));
 const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
 const Privacybeleid       = lazy(() => import('./pages/Privacybeleid'));
 const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
@@ -140,6 +141,7 @@ function AppShell({ gebruiker, token, onLogout }) {
   const tabs = [
     { id: 'dashboard', label: t('tab_dashboard'),    icoon: '📊' },
     { id: 'betaling',  label: t('tab_overmaken'),    icoon: '💸' },
+    { id: 'alerts',    label: 'Alerts',              icoon: '🔔' },
     { id: 'kyc',       label: t('tab_verificatie'),  icoon: '🪪' },
   ];
 
@@ -205,6 +207,7 @@ function AppShell({ gebruiker, token, onLogout }) {
                 </div>
               )
           )}
+          {actief === 'alerts' && <KoersAlerts token={token} />}
           {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
         </Suspense>
       </main>
