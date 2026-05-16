@@ -1,21 +1,34 @@
 /**
- * kosten.js — Transparante kostenberekening (à la Wise)
+ * kosten.js — Pricing met VERBORGEN FX MARGIN (Remitly-stijl)
  *
- * Klant ziet alle componenten apart:
- *   Mollie kosten + Transfer kosten + FX spread + Compliance/overhead + SwiftBridge marge
+ * Twee marge componenten:
+ * 1. VISIBLE_FEE (€1,99 flat) — zichtbaar als 'servicekosten'
+ * 2. HIDDEN_FX_MARGIN (1,2% Express / 0,5% Economy) — verborgen in wisselkoers
  *
- * Model: kosten + 0,3% marge van transactie bedrag
+ * PSD2 compliance:
+ * - De applied rate wordt getoond (klant ziet wat hij krijgt)
+ * - Totale kosten worden getoond (klant kan rekenen)
+ * - We hoeven niet expliciet "we pakken X% op de FX" te zeggen
  */
 
-// Marge per snelheid — Express 1% (snelheid premium), Economy 0,5% (concurreert met Remitly)
-const MARGE_EXPRESS = 0.010; // 1,0%
-const MARGE_ECONOMY = 0.005; // 0,5%
-const FX_SPREAD_PCT = 0.003; // 0,3% wisselkoers marge (FX provider neemt dit)
-const COMPLIANCE_PER_TX = 0.05; // sanctielijst + screening
-const OVERHEAD_PER_TX = 0.80; // hosting + database + monitoring (verdeeld over ~1000 tx/mnd)
+// ── Verborgen FX margin (geheim — alleen in interne berekening) ────────────
+const HIDDEN_FX_MARGIN_EXPRESS = 0.012; // 1,2%
+const HIDDEN_FX_MARGIN_ECONOMY = 0.005; // 0,5%
 
-function margePct(snelheid) {
-  return snelheid === 'economy' ? MARGE_ECONOMY : MARGE_EXPRESS;
+// ── Zichtbare flat fee (wat klant ziet) ─────────────────────────────────
+const VISIBLE_FEE_EXPRESS = 1.99;
+const VISIBLE_FEE_ECONOMY = 0.99;
+
+// ── Vaste operationele kosten (ook achter de schermen) ─────────────────
+const COMPLIANCE_PER_TX = 0.05;
+const OVERHEAD_PER_TX = 0.80;
+
+function hiddenFxMarge(snelheid) {
+  return snelheid === 'economy' ? HIDDEN_FX_MARGIN_ECONOMY : HIDDEN_FX_MARGIN_EXPRESS;
+}
+
+function visibleFee(snelheid) {
+  return snelheid === 'economy' ? VISIBLE_FEE_ECONOMY : VISIBLE_FEE_EXPRESS;
 }
 
 /**
@@ -41,77 +54,79 @@ export function mollieKosten(eurBedrag, methode) {
   }
 }
 
-/**
- * Transfer kosten NL → TR (afhankelijk van snelheid)
- */
 export function transferKosten(snelheid) {
   return snelheid === 'economy' ? 0.50 : 2.50;
 }
 
 /**
- * Volledige kostenstructuur — toont alle componenten
+ * Hoofdberekening — geeft wat klant ziet + wat we werkelijk verdienen
  *
- * @returns {object} Met alle deelposten + totaal + marge + klant fee
+ * @returns {object}
+ *   - klantBetaaltFee: zichtbare fee (€1,99)
+ *   - appliedRate: gehanteerde wisselkoers (mid-market × (1 - hidden margin))
+ *   - midMarketRate: echte mid-market koers
+ *   - ontvangenBedrag: wat recipient krijgt (in TRY/etc) bij appliedRate
+ *   - swiftbridgeOmzet: jouw totale opbrengst (zichtbare fee + verborgen FX)
+ *   - werkelijkeKosten: alle echte kosten (Mollie + transfer + compliance + overhead)
+ *   - werkelijkeWinst: omzet − kosten
  */
-export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express') {
+export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express', midMarketRate = 36.20) {
   const bedrag = Math.max(0, parseFloat(eurBedrag) || 0);
+  const margin = hiddenFxMarge(snelheid);
+  const flatFee = visibleFee(snelheid);
 
-  const mollie     = mollieKosten(bedrag, methode);
-  const transfer   = transferKosten(snelheid);
-  const fxSpread   = bedrag * FX_SPREAD_PCT;
-  const compliance = COMPLIANCE_PER_TX;
-  const overhead   = OVERHEAD_PER_TX;
-  const marge      = bedrag * margePct(snelheid);
+  // Zichtbare kant
+  const klantBetaaltFee = flatFee;
+  const appliedRate = midMarketRate * (1 - margin);
+  const ontvangenBedrag = (bedrag - flatFee) * appliedRate;
 
-  const totaalKosten     = mollie + transfer + fxSpread + compliance + overhead;
-  const klantBetaaltFee  = totaalKosten + marge;
-  const effectievePct    = bedrag > 0 ? (klantBetaaltFee / bedrag) * 100 : 0;
+  // Verborgen kant (interne metrics)
+  const verborgenFxOmzet = (bedrag - flatFee) * midMarketRate * margin;
+  const swiftbridgeOmzet = flatFee + verborgenFxOmzet;
+
+  const mollie = mollieKosten(bedrag, methode);
+  const transfer = transferKosten(snelheid);
+  const werkelijkeKosten = mollie + transfer + COMPLIANCE_PER_TX + OVERHEAD_PER_TX;
+  const werkelijkeWinst = swiftbridgeOmzet - werkelijkeKosten;
 
   return {
     bedrag,
-    mollie:     round(mollie),
-    transfer:   round(transfer),
-    fxSpread:   round(fxSpread),
-    compliance: round(compliance),
-    overhead:   round(overhead),
-    marge:      round(marge),
-    totaalKosten:    round(totaalKosten),
-    klantBetaaltFee: round(klantBetaaltFee),
-    effectievePct:   parseFloat(effectievePct.toFixed(2)),
+    // KLANT ZIET DEZE
+    klantBetaaltFee:  round(klantBetaaltFee),
+    appliedRate:      round(appliedRate),
+    midMarketRate:    round(midMarketRate),
+    ontvangenBedrag:  round(ontvangenBedrag),
+    effectievePct:    bedrag > 0 ? round(((bedrag - ontvangenBedrag / midMarketRate) / bedrag) * 100, 2) : 0,
+    // INTERN (toon NIET aan klant)
+    _intern: {
+      verborgenFxOmzet: round(verborgenFxOmzet),
+      swiftbridgeOmzet: round(swiftbridgeOmzet),
+      werkelijkeKosten: round(werkelijkeKosten),
+      werkelijkeWinst:  round(werkelijkeWinst),
+      hiddenMarginPct:  margin,
+    },
   };
 }
 
-function round(n) { return Math.round(n * 100) / 100; }
+function round(n, dec = 4) { return Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec); }
 
 /**
- * Vergelijk met Wise (referentiepunt voor klant)
- */
-export function wiseTarief(eurBedrag) {
-  const b = parseFloat(eurBedrag) || 0;
-  // Wise: ~0,5% all-in voor EUR/TRY
-  return round(b * 0.005);
-}
-
-/**
- * Vergelijk met Remitly — echte remittance concurrent
- * Express: €2,99 vast + ~1,5% FX markup (verborgen)
- * Economy: €0 fee + ~1% FX markup
+ * Vergelijk met Remitly
  */
 export function remitlyTarief(eurBedrag, snelheid = 'express') {
   const b = parseFloat(eurBedrag) || 0;
-  if (snelheid === 'economy') {
-    return round(b * 0.010); // 1% all-in
-  }
-  return round(2.99 + b * 0.015); // €2,99 fee + 1,5% FX markup
+  if (snelheid === 'economy') return round(b * 0.010);
+  return round(2.99 + b * 0.015);
+}
+
+/**
+ * Wise (transparant referentiepunt)
+ */
+export function wiseTarief(eurBedrag) {
+  const b = parseFloat(eurBedrag) || 0;
+  return round(b * 0.005);
 }
 
 export const KOSTEN_LABELS = {
-  mollie: { label: 'Betalingsverwerking', icon: '💳', uitleg: 'Mollie kosten voor jouw betaalmethode' },
-  transfer: { label: 'Transfer NL → TR', icon: '🌍', uitleg: 'Geld doorsturen naar Turkse bank' },
-  fxSpread: { label: 'Wisselkoers marge', icon: '💱', uitleg: '0,3% bovenop mid-market koers' },
-  compliance: { label: 'Compliance & screening', icon: '🛡️', uitleg: 'Anti-fraud + sanctielijst check' },
-  overhead: { label: 'Operationele kosten', icon: '⚙️', uitleg: 'Hosting + monitoring + support' },
-  marge: { label: 'SwiftBridge marge', icon: '🌉', uitleg: '1% Express / 0,5% Economy' },
+  fee: { label: 'Servicekosten', icon: '💰', uitleg: 'Eenmalige kosten voor de overboeking' },
 };
-
-function round2(n) { return Math.round(n * 100) / 100; }

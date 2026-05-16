@@ -197,20 +197,16 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
   const bedragNum = Math.max(0, parseFloat(bedrag) || 0);
 
-  // Transparante kostenberekening (kosten + 0,3% marge) — preview gebruikt iDEAL
-  const kosten = berekenKosten(bedragNum, 'ideal', snelheid);
-  const huidigeFeePct = bedragNum > 0 ? kosten.klantBetaaltFee / bedragNum : 0;
-  const netto     = bedragNum - kosten.klantBetaaltFee;
-  const ontvangenNetto = bedrag && !isNaN(bedrag) ? netto * effectieveKoers : null;
-  const ontvangenBruto = bedrag && !isNaN(bedrag) ? bedragNum * effectieveKoers : null;
+  // Pricing met flat fee + hidden FX (Remitly model)
+  const kosten = berekenKosten(bedragNum, 'ideal', snelheid, effectieveKoers);
+  const ontvangenNetto = bedrag && !isNaN(bedrag) ? kosten.ontvangenBedrag : null;
   const remitlyKosten = remitlyTarief(bedragNum, snelheid);
-  const swiftbridgeBesparing = remitlyKosten - kosten.klantBetaaltFee;
+  const swiftbridgeTotaal = bedragNum - (ontvangenNetto / effectieveKoers); // wat klant 'verliest'
+  const swiftbridgeBesparing = remitlyKosten - swiftbridgeTotaal;
 
-  // Voor Express/Economy preview percentages
-  function previewPct(b, snel) {
-    if (b <= 0) return 0;
-    const k = berekenKosten(b, 'ideal', snel);
-    return k.klantBetaaltFee / b;
+  // Display fee voor Express/Economy preview
+  function previewFee(snel) {
+    return snel === 'economy' ? 0.99 : 1.99;
   }
 
   const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;
@@ -269,7 +265,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-bold text-sm">Express</span>
             </div>
             <div className={`text-[10px] ${snelheid === 'express' ? 'text-blue-100' : 'text-gray-500'}`}>
-              &lt;5 min · {(previewPct(bedragNum, 'express')*100).toFixed(2)}%
+              &lt;5 min · €{previewFee('express').toFixed(2)}
             </div>
           </button>
           <button
@@ -286,7 +282,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-bold text-sm">Economy</span>
             </div>
             <div className={`text-[10px] ${snelheid === 'economy' ? 'text-emerald-100' : 'text-gray-500'}`}>
-              1-2 dagen · {(previewPct(bedragNum, 'economy')*100).toFixed(2)}% (goedkoper dan Wise)
+              1-2 dagen · €{previewFee('economy').toFixed(2)} (goedkoper dan Wise)
             </div>
           </button>
         </div>
@@ -316,37 +312,20 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
       {ontvangenNetto !== null && (
         <div
-          className="rounded-xl p-4 space-y-2 animate-fade-up"
+          className="rounded-xl p-4 space-y-3 animate-fade-up"
           style={{
             background: 'linear-gradient(135deg, rgba(219,234,254,0.6), rgba(199,210,254,0.4))',
             border: '1px solid rgba(59,130,246,0.25)',
           }}
         >
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>📈 Markt wisselkoers</span>
-            <span className="font-mono font-semibold">1 EUR = {effectieveKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
+          {/* Vereenvoudigde weergave à la Remitly */}
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-600">💰 Servicekosten</span>
+            <span className="font-mono font-semibold text-gray-800">€{kosten.klantBetaaltFee.toFixed(2)}</span>
           </div>
-
-          {/* Transparante kostenuitsplitsing à la Wise */}
-          <div className="bg-white/50 rounded-lg p-2 space-y-1 text-[11px] border border-blue-200/50">
-            <div className="font-bold text-blue-900 text-xs uppercase tracking-wider mb-1">Kosten uitsplitsing</div>
-            {[
-              { label: KOSTEN_LABELS.mollie.label,     waarde: kosten.mollie,     icon: KOSTEN_LABELS.mollie.icon },
-              { label: KOSTEN_LABELS.transfer.label,   waarde: kosten.transfer,   icon: KOSTEN_LABELS.transfer.icon },
-              { label: KOSTEN_LABELS.fxSpread.label,   waarde: kosten.fxSpread,   icon: KOSTEN_LABELS.fxSpread.icon },
-              { label: KOSTEN_LABELS.compliance.label, waarde: kosten.compliance, icon: KOSTEN_LABELS.compliance.icon },
-              { label: KOSTEN_LABELS.overhead.label,   waarde: kosten.overhead,   icon: KOSTEN_LABELS.overhead.icon },
-              { label: KOSTEN_LABELS.marge.label,      waarde: kosten.marge,      icon: KOSTEN_LABELS.marge.icon, highlight: true },
-            ].map(item => (
-              <div key={item.label} className={`flex justify-between ${item.highlight ? 'font-semibold text-blue-700 pt-1 border-t border-blue-100' : 'text-gray-600'}`}>
-                <span>{item.icon} {item.label}</span>
-                <span className="font-mono">€{item.waarde.toFixed(2)}</span>
-              </div>
-            ))}
-            <div className="flex justify-between pt-1 border-t border-blue-300 font-bold text-rose-600">
-              <span>💸 Totale kosten</span>
-              <span className="font-mono">−€{kosten.klantBetaaltFee.toFixed(2)} ({(huidigeFeePct*100).toFixed(2)}%)</span>
-            </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-600">📈 Wisselkoers</span>
+            <span className="font-mono font-semibold text-gray-800">1 EUR = {kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
           </div>
 
           <div className="border-t border-blue-200 pt-2 flex justify-between font-bold text-blue-700">
@@ -354,25 +333,17 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
           </div>
 
-          {remitlyKosten > 0 && (
-            <div className={`rounded-lg px-2.5 py-2 text-[10px] leading-snug flex items-center gap-2 border ${
-              swiftbridgeBesparing >= 0
-                ? 'bg-emerald-50/80 text-emerald-900 border-emerald-200/60'
-                : 'bg-amber-50/80 text-amber-900 border-amber-200/60'
-            }`}>
-              <span className="text-base flex-shrink-0">{swiftbridgeBesparing >= 0 ? '🎯' : '📊'}</span>
+          {remitlyKosten > 0 && swiftbridgeBesparing >= 0 && (
+            <div className="rounded-lg px-2.5 py-2 text-[10px] leading-snug flex items-center gap-2 border bg-emerald-50/80 text-emerald-900 border-emerald-200/60">
+              <span className="text-base flex-shrink-0">🎯</span>
               <span>
-                Remitly {snelheid === 'express' ? 'Express' : 'Economy'} kost: <strong>€{remitlyKosten.toFixed(2)}</strong>.
-                {swiftbridgeBesparing >= 0
-                  ? <> SwiftBridge is <strong>€{swiftbridgeBesparing.toFixed(2)} goedkoper</strong> + transparant + Turks-specialist 🇹🇷</>
-                  : <> SwiftBridge {snelheid === 'express' ? 'is sneller (<5 min vs <1 uur)' : 'is duurder maar transparant'} + Turks-specialist 🇹🇷</>
-                }
+                Goedkoper dan Remitly (€{remitlyKosten.toFixed(2)}) — bespaar <strong>€{swiftbridgeBesparing.toFixed(2)}</strong>
               </span>
             </div>
           )}
 
           <div className="bg-blue-100/60 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
-            {valutaInfo.vlag} <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening — geen verborgen kosten.
+            {valutaInfo.vlag} <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening.
           </div>
         </div>
       )}
