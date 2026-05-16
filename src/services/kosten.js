@@ -86,6 +86,19 @@ export function wiseTarief(eurBedrag) {
   return round(b * 0.005);
 }
 
+/**
+ * Vergelijk met Remitly — echte remittance concurrent
+ * Express: €2,99 vast + ~1,5% FX markup (verborgen)
+ * Economy: €0 fee + ~1% FX markup
+ */
+export function remitlyTarief(eurBedrag, snelheid = 'express') {
+  const b = parseFloat(eurBedrag) || 0;
+  if (snelheid === 'economy') {
+    return round(b * 0.010); // 1% all-in
+  }
+  return round(2.99 + b * 0.015); // €2,99 fee + 1,5% FX markup
+}
+
 export const KOSTEN_LABELS = {
   mollie: { label: 'Betalingsverwerking', icon: '💳', uitleg: 'Mollie kosten voor jouw betaalmethode' },
   transfer: { label: 'Transfer NL → TR', icon: '🌍', uitleg: 'Geld doorsturen naar Turkse bank' },

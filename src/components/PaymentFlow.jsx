@@ -9,7 +9,7 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
-import { berekenKosten, wiseTarief, KOSTEN_LABELS } from '../services/kosten';
+import { berekenKosten, remitlyTarief, KOSTEN_LABELS } from '../services/kosten';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -203,7 +203,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   const netto     = bedragNum - kosten.klantBetaaltFee;
   const ontvangenNetto = bedrag && !isNaN(bedrag) ? netto * effectieveKoers : null;
   const ontvangenBruto = bedrag && !isNaN(bedrag) ? bedragNum * effectieveKoers : null;
-  const wiseKosten = wiseTarief(bedragNum);
+  const remitlyKosten = remitlyTarief(bedragNum, snelheid);
+  const swiftbridgeBesparing = remitlyKosten - kosten.klantBetaaltFee;
 
   // Voor Express/Economy preview percentages
   function previewPct(b, snel) {
@@ -350,10 +351,20 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
           </div>
 
-          {wiseKosten > 0 && (
-            <div className="bg-amber-50/80 rounded-lg px-2 py-1.5 text-[10px] text-amber-900 leading-snug flex items-center gap-1.5 border border-amber-200/60">
-              <span>📊</span>
-              <span>Wise zou kosten: <strong>€{wiseKosten.toFixed(2)}</strong>. SwiftBridge is sneller én Turks-specialist 🇹🇷</span>
+          {remitlyKosten > 0 && (
+            <div className={`rounded-lg px-2.5 py-2 text-[10px] leading-snug flex items-center gap-2 border ${
+              swiftbridgeBesparing >= 0
+                ? 'bg-emerald-50/80 text-emerald-900 border-emerald-200/60'
+                : 'bg-amber-50/80 text-amber-900 border-amber-200/60'
+            }`}>
+              <span className="text-base flex-shrink-0">{swiftbridgeBesparing >= 0 ? '🎯' : '📊'}</span>
+              <span>
+                Remitly {snelheid === 'express' ? 'Express' : 'Economy'} kost: <strong>€{remitlyKosten.toFixed(2)}</strong>.
+                {swiftbridgeBesparing >= 0
+                  ? <> SwiftBridge is <strong>€{swiftbridgeBesparing.toFixed(2)} goedkoper</strong> + transparant + Turks-specialist 🇹🇷</>
+                  : <> SwiftBridge {snelheid === 'express' ? 'is sneller (<5 min vs <1 uur)' : 'is duurder maar transparant'} + Turks-specialist 🇹🇷</>
+                }
+              </span>
             </div>
           )}
 
