@@ -10,6 +10,7 @@ import NotificatieInstellingen from './NotificatieInstellingen';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
 import FeestKalender from './FeestKalender';
 import { getValuta, formatBedrag } from '../services/currencies';
+import { useTaal } from '../i18n';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -65,6 +66,7 @@ function StatusBadge({ status }) {
 
 // ── Weeklimiet balk ───────────────────────────────────────────────────────────
 function WeeklimietBalk({ weekTotaal, weekLimiet }) {
+  const { t } = useTaal();
   const pct = Math.min(100, (weekTotaal / weekLimiet) * 100);
   const resterend = Math.max(0, weekLimiet - weekTotaal);
   const barGradient = pct >= 90
@@ -79,9 +81,9 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-lg">📊</span>
-          <span className="font-semibold text-gray-800 text-sm">Weeklimiet</span>
+          <span className="font-semibold text-gray-800 text-sm">{t('weeklimiet')}</span>
         </div>
-        <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Resets elke 7 dagen</span>
+        <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">{t('weeklimiet_resets')}</span>
       </div>
       <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden relative">
         <div
@@ -94,26 +96,27 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
         />
       </div>
       <div className="flex justify-between text-xs text-gray-600">
-        <span>Gebruikt: <strong className="text-gray-800 font-mono">{fmtEur(weekTotaal)}</strong></span>
-        <span>Nog beschikbaar: <strong className={`font-mono ${resterend < 500 ? 'text-rose-600' : 'text-emerald-600'}`}>{fmtEur(resterend)}</strong></span>
+        <span dangerouslySetInnerHTML={{ __html: t('weeklimiet_gebruikt', { bedrag: `<strong class="text-gray-800 font-mono">${fmtEur(weekTotaal)}</strong>` }) }} />
+        <span dangerouslySetInnerHTML={{ __html: t('weeklimiet_beschikbaar', { bedrag: `<strong class="font-mono ${resterend < 500 ? 'text-rose-600' : 'text-emerald-600'}">${fmtEur(resterend)}</strong>` }) }} />
       </div>
-      <div className="text-right text-[10px] text-gray-400 uppercase tracking-wider">Limiet: {fmtEur(weekLimiet)} per week</div>
+      <div className="text-right text-[10px] text-gray-400 uppercase tracking-wider">{t('weeklimiet_limiet', { bedrag: fmtEur(weekLimiet) })}</div>
     </div>
   );
 }
 
 // ── Live koers kaart ──────────────────────────────────────────────────────────
 function LiveKoersKaart({ koers, laden }) {
+  const { t } = useTaal();
   return (
     <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-5 text-white shadow-lg">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <span className="text-xl">💱</span>
-          <span className="font-semibold text-blue-100 text-sm">Live wisselkoers</span>
+          <span className="font-semibold text-blue-100 text-sm">{t('dashboard_live_koers')}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className={`w-2 h-2 rounded-full ${laden ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`} />
-          <span className="text-blue-200 text-xs">{laden ? 'bijwerken...' : 'live'}</span>
+          <span className="text-blue-200 text-xs">{laden ? '...' : 'live'}</span>
         </div>
       </div>
       <div className="flex items-end justify-between">
@@ -124,15 +127,15 @@ function LiveKoersKaart({ koers, laden }) {
           <div className="text-blue-200 text-sm mt-1">TRY per 1 EUR</div>
         </div>
         <div className="text-right">
-          <div className="text-blue-100 text-xs mb-1">SwiftBridge koers</div>
+          <div className="text-blue-100 text-xs mb-1">{t('dashboard_swiftbridge_koers')}</div>
           <div className="text-white font-bold text-lg">
             {koers ? (koers * 0.978).toFixed(4) : '—'}
           </div>
-          <div className="text-blue-200 text-xs">na 2,2% kosten</div>
+          <div className="text-blue-200 text-xs">{t('dashboard_na_kosten')}</div>
         </div>
       </div>
       <div className="mt-4 bg-blue-500/40 rounded-xl p-3 flex justify-between items-center">
-        <span className="text-blue-100 text-sm">€500 ontvangt →</span>
+        <span className="text-blue-100 text-sm">{t('dashboard_500_ontvangt')}</span>
         <span className="text-white font-bold text-lg">
           {koers ? fmtTry(500 * koers * 0.978) : '...'}
         </span>
@@ -143,19 +146,20 @@ function LiveKoersKaart({ koers, laden }) {
 
 // ── Statistieken ──────────────────────────────────────────────────────────────
 function StatsRij({ transacties }) {
+  const { t } = useTaal();
   // Tel ook in_behandeling en wacht_op_betaling mee — alleen mislukt/geannuleerd uitsluiten
-  const actieve    = transacties.filter(t => !['mislukt', 'geannuleerd'].includes(t.status));
-  const totaalEur  = actieve.reduce((s, t) => s + (t.eurBedrag || 0), 0);
-  const totaalTry  = actieve.reduce((s, t) => s + (t.tryBedrag || 0), 0);
+  const actieve    = transacties.filter(tx => !['mislukt', 'geannuleerd'].includes(tx.status));
+  const totaalEur  = actieve.reduce((s, tx) => s + (tx.eurBedrag || 0), 0);
+  const totaalTry  = actieve.reduce((s, tx) => s + (tx.tryBedrag || 0), 0);
   const gemBedrag  = actieve.length > 0 ? totaalEur / actieve.length : 0;
 
   return (
     <div className="grid grid-cols-2 gap-3">
       {[
-        { label: 'Totaal verstuurd',  waarde: fmtEur(totaalEur),    icoon: '💶', kleur: 'text-blue-600'   },
-        { label: 'Ontvangen in TRY',  waarde: fmtTry(totaalTry),    icoon: '🇹🇷', kleur: 'text-green-600'  },
-        { label: 'Transacties',       waarde: actieve.length,        icoon: '✅', kleur: 'text-purple-600' },
-        { label: 'Gemiddeld bedrag',  waarde: fmtEur(gemBedrag),     icoon: '📊', kleur: 'text-amber-600'  },
+        { label: t('stats_totaal_verstuurd'), waarde: fmtEur(totaalEur), icoon: '💶', kleur: 'text-blue-600'   },
+        { label: t('stats_ontvangen_try'),    waarde: fmtTry(totaalTry), icoon: '🇹🇷', kleur: 'text-green-600'  },
+        { label: t('stats_transacties'),      waarde: actieve.length,    icoon: '✅', kleur: 'text-purple-600' },
+        { label: t('stats_gemiddeld'),        waarde: fmtEur(gemBedrag), icoon: '📊', kleur: 'text-amber-600'  },
       ].map(s => (
         <div key={s.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
           <div className="text-2xl mb-2">{s.icoon}</div>
@@ -202,13 +206,14 @@ function TransactieDetailModal({ tx, onSluit }) {
 
 // ── Transactiehistorie ────────────────────────────────────────────────────────
 function TransactieHistorie({ transacties, laden }) {
+  const { t } = useTaal();
   const [filter,    setFilter   ] = useState('alle');
   const [toonAlles, setToonAlles] = useState(false);
   const [detailTx,  setDetailTx ] = useState(null);
 
-  const gefilterd = transacties.filter(t => {
-    if (filter === 'voltooid')       return t.status === 'voltooid';
-    if (filter === 'in_behandeling') return t.status === 'in_behandeling';
+  const gefilterd = transacties.filter(tx => {
+    if (filter === 'voltooid')       return tx.status === 'voltooid';
+    if (filter === 'in_behandeling') return tx.status === 'in_behandeling';
     return true;
   });
 
@@ -218,7 +223,7 @@ function TransactieHistorie({ transacties, laden }) {
     return (
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
         <div className="text-2xl animate-pulse mb-2">⏳</div>
-        <p className="text-gray-400 text-sm">Transacties laden...</p>
+        <p className="text-gray-400 text-sm">{t('laden')}</p>
       </div>
     );
   }
@@ -227,8 +232,8 @@ function TransactieHistorie({ transacties, laden }) {
     return (
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
         <div className="text-4xl mb-3">💸</div>
-        <h3 className="font-bold text-gray-700 mb-1">Nog geen transacties</h3>
-        <p className="text-gray-400 text-sm">Maak je eerste overschrijving naar Turkije</p>
+        <h3 className="font-bold text-gray-700 mb-1">{t('transacties_geen')}</h3>
+        <p className="text-gray-400 text-sm">{t('transacties_eerste')}</p>
       </div>
     );
   }
@@ -237,7 +242,7 @@ function TransactieHistorie({ transacties, laden }) {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
       <div className="p-5 pb-3">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-bold text-gray-800">⚡ Transacties</h3>
+          <h3 className="font-bold text-gray-800">⚡ {t('transacties')}</h3>
           <span className="text-xs text-gray-400">{transacties.length} totaal</span>
         </div>
 
@@ -302,6 +307,7 @@ function TransactieHistorie({ transacties, laden }) {
 
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function Dashboard({ gebruiker }) {
+  const { t } = useTaal();
   const [koers,       setKoers      ] = useState(null);
   const [ladenKoers,  setLadenKoers ] = useState(true);
   const [transacties, setTransacties] = useState([]);
@@ -364,9 +370,9 @@ export default function Dashboard({ gebruiker }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-extrabold text-gray-900">
-            Hallo {gebruiker?.naam?.split(' ')[0] || 'daar'} 👋
+            {t('dashboard_hallo', { naam: gebruiker?.naam?.split(' ')[0] || '' })}
           </h2>
-          <p className="text-gray-500 text-sm">Geld overmaken naar Turkije</p>
+          <p className="text-gray-500 text-sm">{t('dashboard_subtitel')}</p>
         </div>
         <button onClick={() => { haalKoers(); haalTransacties(); }}
           className="text-gray-400 hover:text-blue-600 transition text-xl" title="Vernieuwen">

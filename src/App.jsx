@@ -141,7 +141,7 @@ function AppShell({ gebruiker, token, onLogout }) {
   const tabs = [
     { id: 'dashboard', label: t('tab_dashboard'),    icoon: '📊' },
     { id: 'betaling',  label: t('tab_overmaken'),    icoon: '💸' },
-    { id: 'alerts',    label: 'Alerts',              icoon: '🔔' },
+    { id: 'alerts',    label: t('tab_alerts'),       icoon: '🔔' },
     { id: 'kyc',       label: t('tab_verificatie'),  icoon: '🪪' },
   ];
 

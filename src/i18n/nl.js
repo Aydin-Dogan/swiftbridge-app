@@ -19,6 +19,7 @@ export const nl = {
   tab_dashboard: 'Dashboard',
   tab_overmaken: 'Overmaken',
   tab_verificatie: 'Verificatie',
+  tab_alerts:      'Alerts',
 
   // Landing page
   landing_titel: 'Geld naar Turkije',
