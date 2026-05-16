@@ -7,7 +7,7 @@
  * Model: kosten + 0,3% marge van transactie bedrag
  */
 
-const MARGE_PCT = 0.003; // 0,3% SwiftBridge winst
+const MARGE_PCT = 0.010; // 1,0% SwiftBridge winst
 const FX_SPREAD_PCT = 0.003; // 0,3% wisselkoers marge (FX provider neemt dit)
 const COMPLIANCE_PER_TX = 0.05; // sanctielijst + screening
 const OVERHEAD_PER_TX = 0.80; // hosting + database + monitoring (verdeeld over ~1000 tx/mnd)
@@ -92,7 +92,7 @@ export const KOSTEN_LABELS = {
   fxSpread: { label: 'Wisselkoers marge', icon: '💱', uitleg: '0,3% bovenop mid-market koers' },
   compliance: { label: 'Compliance & screening', icon: '🛡️', uitleg: 'Anti-fraud + sanctielijst check' },
   overhead: { label: 'Operationele kosten', icon: '⚙️', uitleg: 'Hosting + monitoring + support' },
-  marge: { label: 'SwiftBridge marge', icon: '🌉', uitleg: '0,3% winst voor SwiftBridge' },
+  marge: { label: 'SwiftBridge marge', icon: '🌉', uitleg: '1,0% winst voor SwiftBridge' },
 };
 
 function round2(n) { return Math.round(n * 100) / 100; }
