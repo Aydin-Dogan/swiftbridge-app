@@ -210,7 +210,7 @@ function AppShell({ gebruiker, token, onLogout }) {
               )
           )}
           {actief === 'alerts' && <KoersAlerts token={token} />}
-          {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} onUpdate={onLogin && gebruiker ? (u) => onLogin?.(token, u) : null} />}
+          {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} />}
           {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
         </Suspense>
       </main>
