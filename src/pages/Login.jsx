@@ -134,6 +134,25 @@ export default function Login({ onLogin }) {
 
   // ── 2FA code invoeren ──
   if (twofaUserId) {
+    // Plak code uit klembord (Clipboard API)
+    async function plakUitKlembord() {
+      try {
+        const tekst = await navigator.clipboard.readText();
+        const cijfers = tekst.replace(/\D/g, '').slice(0, 6);
+        if (cijfers.length >= 4) {
+          setTwofaCode(cijfers);
+          // Auto-submit als 6 cijfers
+          if (cijfers.length === 6) {
+            setTimeout(() => document.getElementById('twofa-form')?.requestSubmit(), 200);
+          }
+        } else {
+          setTwofaFout('Geen geldige code in klembord (verwacht 6 cijfers)');
+        }
+      } catch (err) {
+        setTwofaFout('Klembord lezen niet toegestaan. Plak handmatig met Ctrl+V.');
+      }
+    }
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
         <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
@@ -142,15 +161,44 @@ export default function Login({ onLogin }) {
             <h2 className="text-xl font-bold text-gray-800">Inlogcode</h2>
             <p className="text-gray-500 text-sm">We hebben een 6-cijferige code naar je e-mail gestuurd. Check ook spam folder.</p>
           </div>
-          <form onSubmit={verifieer2FA} className="space-y-4">
+          <form id="twofa-form" onSubmit={verifieer2FA} className="space-y-4">
             <input
-              type="text" inputMode="numeric" pattern="[0-9]*" maxLength={6}
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={6}
+              autoComplete="one-time-code"
+              name="otp"
               value={twofaCode}
-              onChange={e => setTwofaCode(e.target.value.replace(/\D/g, ''))}
+              onChange={(e) => {
+                const code = e.target.value.replace(/\D/g, '').slice(0, 6);
+                setTwofaCode(code);
+                // Auto-submit bij paste van 6 cijfers
+                if (code.length === 6 && twofaCode.length < 6) {
+                  setTimeout(() => document.getElementById('twofa-form')?.requestSubmit(), 100);
+                }
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                const tekst = (e.clipboardData || window.clipboardData).getData('text');
+                const cijfers = tekst.replace(/\D/g, '').slice(0, 6);
+                setTwofaCode(cijfers);
+                if (cijfers.length === 6) {
+                  setTimeout(() => document.getElementById('twofa-form')?.requestSubmit(), 100);
+                }
+              }}
               placeholder="123456"
-              required autoFocus
+              required
+              autoFocus
               className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 text-center text-3xl font-bold tracking-[0.5em] outline-none focus:border-blue-500"
             />
+            <button
+              type="button"
+              onClick={plakUitKlembord}
+              className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2.5 rounded-xl transition-all active:scale-95 text-sm flex items-center justify-center gap-2"
+            >
+              📋 Plak code uit klembord
+            </button>
             {twofaFout && (
               <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">❌ {twofaFout}</p>
             )}
@@ -163,6 +211,9 @@ export default function Login({ onLogin }) {
               ← Terug naar inloggen
             </button>
           </form>
+          <div className="bg-blue-50 border border-blue-100 rounded-xl p-2.5 text-[10px] text-blue-800 leading-snug">
+            💡 <strong>Tip:</strong> Op iPhone (iOS 12+) verschijnt de code automatisch boven het toetsenbord wanneer je deze in Mail ziet. Tap erop om in te vullen.
+          </div>
         </div>
       </div>
     );
