@@ -21,19 +21,11 @@ const SNELLE_BEDRAGEN = [100, 250, 500, 1000, 2000];
 const BETAALMETHODEN = [
   {
     id:    'ideal',
-    label: 'iDEAL',
+    label: 'iDEAL / Wero',
     icon:  '🏦',
     desc:  'Directe betaling via je bank',
     sub:   'Meest gekozen · Direct beschikbaar',
     kleur: 'border-blue-500 bg-blue-50',
-  },
-  {
-    id:    'bancontact',
-    label: 'Bancontact',
-    icon:  '🇧🇪',
-    desc:  'Betalen vanuit België',
-    sub:   'Direct via Belgische bank',
-    kleur: 'border-yellow-500 bg-yellow-50',
   },
   {
     id:    'creditcard',
@@ -44,12 +36,28 @@ const BETAALMETHODEN = [
     kleur: 'border-indigo-500 bg-indigo-50',
   },
   {
+    id:    'klarna',
+    label: 'Klarna',
+    icon:  '🛍️',
+    desc:  'Achteraf betalen of in termijnen',
+    sub:   'Veilig en flexibel',
+    kleur: 'border-pink-500 bg-pink-50',
+  },
+  {
     id:    'applepay',
     label: 'Apple Pay',
     icon:  '🍎',
     desc:  'Snel betalen via Apple Pay',
-    sub:   'Touch/Face ID bevestigen',
+    sub:   '⚠️ Activeer eerst in Mollie dashboard',
     kleur: 'border-gray-700 bg-gray-50',
+  },
+  {
+    id:    'bancontact',
+    label: 'Bancontact',
+    icon:  '🇧🇪',
+    desc:  'Betalen vanuit België',
+    sub:   '⚠️ Activeer eerst in Mollie dashboard',
+    kleur: 'border-yellow-500 bg-yellow-50',
   },
 ];
 
