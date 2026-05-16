@@ -50,29 +50,29 @@ export default function LiveKoersTicker() {
     <div
       className="overflow-hidden text-white relative"
       style={{
-        height: '34px',
+        height: '46px',
         background: 'linear-gradient(90deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%)',
-        borderBottom: '1px solid rgba(59,130,246,0.25)',
+        borderBottom: '1px solid rgba(59,130,246,0.3)',
       }}
     >
       <div className="flex items-center h-full ticker-scroll">
         {items.map((v, i) => (
           <div
             key={i}
-            className="flex items-center gap-2 px-5 whitespace-nowrap text-xs font-medium border-r border-blue-900/40 h-full"
+            className="flex items-center gap-2.5 px-6 whitespace-nowrap text-sm font-semibold border-r border-blue-900/50 h-full"
           >
-            <span className="text-sm leading-none">{EU_VLAG}</span>
-            <span className="text-blue-200/80">EUR</span>
-            <span className="text-blue-400/60 mx-0.5">→</span>
-            <span className="text-sm leading-none">{v.vlag}</span>
-            <span className="text-gray-100 font-semibold">{v.land}</span>
+            <span className="text-lg leading-none">{EU_VLAG}</span>
+            <span className="text-blue-200 font-bold tracking-wide">EUR</span>
+            <span className="text-blue-300 mx-0.5 text-base">→</span>
+            <span className="text-lg leading-none">{v.vlag}</span>
+            <span className="text-white font-bold">{v.land}</span>
             <span
-              className={`font-bold font-mono ml-1 px-1.5 py-0.5 rounded-md text-[11px] ${
+              className={`font-bold font-mono ml-1.5 px-2 py-1 rounded-lg text-sm ${
                 v.richting > 0
-                  ? 'text-emerald-300 bg-emerald-500/15'
+                  ? 'text-emerald-200 bg-emerald-500/20 border border-emerald-400/30'
                   : v.richting < 0
-                  ? 'text-rose-300 bg-rose-500/15'
-                  : 'text-white bg-white/10'
+                  ? 'text-rose-200 bg-rose-500/20 border border-rose-400/30'
+                  : 'text-white bg-white/15 border border-white/20'
               }`}
             >
               {v.richting > 0 ? '▲' : v.richting < 0 ? '▼' : ''}
