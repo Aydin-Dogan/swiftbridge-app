@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 import { berekenKosten, KOSTEN_LABELS } from '../services/kosten';
 import Vlag from './Vlag';
-import { TR_BANKEN } from './TrBankenSteun';
+import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -483,10 +483,25 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               onChange={e => setOntvangerBank(e.target.value)}
               className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 font-medium"
             >
-              {TR_BANKEN.filter(b => !['papara','ininal','paycell'].includes(b.id)).map(b => (
-                <option key={b.id} value={b.naam}>{b.naam}</option>
-              ))}
+              {(() => {
+                const groups = bankenPerCategorie();
+                const cats = Object.entries(CATEGORIE_LABELS).sort((a, b) => a[1].volgorde - b[1].volgorde);
+                return cats.map(([catKey, catInfo]) => {
+                  const banken = (groups[catKey] || []).filter(b => catKey !== 'wallet');
+                  if (!banken.length) return null;
+                  return (
+                    <optgroup key={catKey} label={`${catInfo.icon}  ${catInfo.naam}`}>
+                      {banken.map(b => (
+                        <option key={b.id} value={b.naam}>{b.naam}</option>
+                      ))}
+                    </optgroup>
+                  );
+                });
+              })()}
             </select>
+            <p className="text-[10px] text-gray-400 mt-1">
+              💡 Alle banken ondersteunen SEPA via IBAN — kies welke bank de ontvanger gebruikt
+            </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-2">IBAN ontvanger</label>

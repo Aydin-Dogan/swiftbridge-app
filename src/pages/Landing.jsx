@@ -230,13 +230,14 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* TR Banken trust banner */}
+      {/* TR Banken trust banner — alle 36 banken & wallets */}
       <section className="py-12 px-4 bg-gradient-to-b from-white to-blue-50/50">
         <div className="max-w-4xl mx-auto">
           <TrBankenSteun
-            titel="Geld komt aan bij elke grote Turkse bank"
-            ondertitel="Je familie ontvangt direct op hun bestaande rekening — geen nieuwe app, geen registratie"
-            size="md"
+            titel="Alle banken en wallets van Turkije"
+            ondertitel="Je familie ontvangt op hun bestaande rekening — bij elke bank, zonder nieuwe app"
+            size="sm"
+            toonCategorieën={true}
           />
         </div>
       </section>

@@ -1,60 +1,66 @@
 /**
- * TrBankenSteun.jsx — Visuele trust banner met alle TR banken die wij ondersteunen
- * Geeft klant vertrouwen dat hun familie/vrienden bij elke grote TR bank geld kunnen ontvangen
+ * TrBankenSteun.jsx — Trust banner met ALLE 36 banken/wallets in Turkije
+ * Gegroepeerd per categorie (publiek/prive/buitenlands/deelname/digitaal/wallet)
  */
+import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie, AANTAL_BANKEN } from '../services/trBanken';
 
-export const TR_BANKEN = [
-  { id: 'ziraat',    naam: 'Ziraat Bankası',    kort: 'Ziraat',    kleur: '#E30614', icon: '🌾' },
-  { id: 'isbank',    naam: 'Türkiye İş Bankası', kort: 'İş Bank',   kleur: '#0067A5', icon: '$' },
-  { id: 'garanti',   naam: 'Garanti BBVA',      kort: 'Garanti',   kleur: '#1B8B47', icon: '✦' },
-  { id: 'akbank',    naam: 'Akbank',            kort: 'AKBANK',    kleur: '#E2231A', icon: '◆' },
-  { id: 'yapikredi', naam: 'Yapı Kredi',        kort: 'YapıKredi', kleur: '#005CA9', icon: '∞' },
-  { id: 'vakif',     naam: 'VakıfBank',         kort: 'VakıfBank', kleur: '#FFCC00', icon: 'V' },
-  { id: 'halkbank',  naam: 'Halkbank',          kort: 'Halkbank',  kleur: '#005EB8', icon: 'H' },
-  { id: 'kuveyt',    naam: 'KuveytTürk',        kort: 'KuveytTürk', kleur: '#00773E', icon: 'K' },
-  { id: 'denizbank', naam: 'DenizBank',         kort: 'DenizBank', kleur: '#009BCB', icon: '~' },
-  { id: 'qnb',       naam: 'QNB Finansbank',    kort: 'QNB',       kleur: '#88216B', icon: 'Q' },
-  { id: 'ing',       naam: 'ING Türkiye',       kort: 'ING',       kleur: '#FF6200', icon: 'I' },
-  { id: 'teb',       naam: 'TEB',               kort: 'TEB',       kleur: '#00853F', icon: 'T' },
-  { id: 'enpara',    naam: 'Enpara.com',        kort: 'Enpara',    kleur: '#5046E5', icon: 'e' },
-  { id: 'papara',    naam: 'Papara (wallet)',   kort: 'Papara',    kleur: '#7B2CBF', icon: '⌬' },
-  { id: 'ininal',    naam: 'Ininal (wallet)',   kort: 'Ininal',    kleur: '#E91E63', icon: '◉' },
-  { id: 'paycell',   naam: 'Paycell (wallet)',  kort: 'Paycell',   kleur: '#00B5F1', icon: '⊕' },
-];
+export { TR_BANKEN_COMPLEET as TR_BANKEN }; // backward compat
 
 function BankPil({ bank, size = 'md' }) {
   const sizes = {
-    sm: 'px-2.5 py-1.5 text-[10px] gap-1',
-    md: 'px-3 py-2 text-xs gap-1.5',
-    lg: 'px-4 py-2.5 text-sm gap-2',
+    sm: 'px-2 py-1 text-[10px] gap-1',
+    md: 'px-3 py-1.5 text-xs gap-1.5',
+    lg: 'px-4 py-2 text-sm gap-2',
   };
   return (
     <div
-      className={`inline-flex items-center rounded-full font-bold border-2 shadow-sm bg-white ${sizes[size]}`}
+      className={`inline-flex items-center rounded-full font-bold border-2 shadow-sm bg-white whitespace-nowrap ${sizes[size]}`}
       style={{ borderColor: bank.kleur, color: bank.kleur }}
-      title={bank.naam}
+      title={`${bank.naam}${bank.code ? ` (${bank.code})` : ''}`}
     >
-      <span className="font-mono">{bank.icon}</span>
-      <span>{bank.kort}</span>
+      <span className="font-mono">{bank.symbool}</span>
+      <span>{bank.naam.replace(/Türkiye |Bankası| Türk/g, '').trim()}</span>
     </div>
   );
 }
 
-export default function TrBankenSteun({ titel, ondertitel, size = 'md', compact = false }) {
+export default function TrBankenSteun({ titel, ondertitel, size = 'sm', toonCategorieën = true }) {
+  const groups = bankenPerCategorie();
+  const cats = Object.entries(CATEGORIE_LABELS).sort((a, b) => a[1].volgorde - b[1].volgorde);
+
   return (
     <div className="text-center">
       {titel && <h3 className="font-bold text-gray-800 text-lg mb-1">{titel}</h3>}
       {ondertitel && <p className="text-gray-500 text-sm mb-4">{ondertitel}</p>}
-      <div className="flex flex-wrap items-center justify-center gap-2">
-        {(compact ? TR_BANKEN.slice(0, 8) : TR_BANKEN).map(bank => (
-          <BankPil key={bank.id} bank={bank} size={size} />
-        ))}
-      </div>
-      {!compact && (
-        <p className="text-[11px] text-gray-400 mt-3">
-          Logo's en handelsnamen zijn eigendom van de banken zelf. Vermelding betekent niet dat zij ons sponsoren.
-        </p>
+
+      {toonCategorieën ? (
+        <div className="space-y-4 max-w-3xl mx-auto">
+          {cats.map(([catKey, catInfo]) => {
+            const banken = groups[catKey] || [];
+            if (!banken.length) return null;
+            return (
+              <div key={catKey} className="text-left">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base">{catInfo.icon}</span>
+                  <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wider">{catInfo.naam}</span>
+                  <span className="text-[10px] text-gray-400">({banken.length})</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {banken.map(b => <BankPil key={b.id} bank={b} size={size} />)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
+          {TR_BANKEN_COMPLEET.map(b => <BankPil key={b.id} bank={b} size={size} />)}
+        </div>
       )}
+
+      <p className="text-[10px] text-gray-400 mt-4">
+        {AANTAL_BANKEN} banken & wallets ondersteund. Merknamen zijn eigendom van betreffende organisaties.
+      </p>
     </div>
   );
 }
