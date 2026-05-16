@@ -86,25 +86,24 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigatiebalk */}
-      <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <nav className="header-glass-light sticky top-0 z-50 safe-top">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">⚡</span>
-            <span className="text-xl font-extrabold text-gray-900">SwiftBridge</span>
+            <span className="text-xl font-extrabold text-gray-900 tracking-tight">SwiftBridge</span>
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-            <a href="#hoe-werkt-het" className="hover:text-blue-600">Hoe werkt het?</a>
-            <a href="#kosten" className="hover:text-blue-600">Kosten</a>
-            <a href="#vergelijking" className="hover:text-blue-600">Vergelijking</a>
+            <a href="#hoe-werkt-het" className="hover:text-blue-600 transition">Hoe werkt het?</a>
+            <a href="#kosten" className="hover:text-blue-600 transition">Kosten</a>
+            <a href="#vergelijking" className="hover:text-blue-600 transition">Vergelijking</a>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <TaalKiezer />
             <button onClick={() => navigate('/login')}
-              className="text-sm font-semibold text-blue-600 hover:text-blue-700 px-3 py-2">
+              className="text-sm font-semibold text-blue-600 hover:text-blue-700 px-3 py-2 transition">
               Inloggen
             </button>
-            <button onClick={() => navigate('/login?tab=register')}
-              className="text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition">
+            <button onClick={() => navigate('/login?tab=register')} className="btn-primary text-sm">
               Gratis starten →
             </button>
           </div>
@@ -180,13 +179,12 @@ export default function Landing() {
             <div className="text-xs text-gray-400 text-center mb-4">
               Kosten: 2,0% + wisselkoersmarge 0,45%
             </div>
-            <button onClick={() => navigate('/login?tab=register')}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition text-sm">
+            <button onClick={() => navigate('/login?tab=register')} className="btn-primary w-full py-3 text-sm">
               Nu gratis starten →
             </button>
             {(installPrompt || isIOS()) && !isInStandalone() && (
               <button onClick={installeerApp}
-                className="w-full mt-2 border-2 border-blue-600 text-blue-600 font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-95">
+                className="w-full mt-2 border-2 border-blue-600 text-blue-600 font-bold py-3 rounded-xl transition-all text-sm flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-95">
                 📲 Download de app
               </button>
             )}
@@ -221,12 +219,16 @@ export default function Landing() {
       )}
 
       {/* Stats */}
-      <section className="bg-gray-50 py-12 px-4">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map(s => (
-            <div key={s.getal} className="text-center">
-              <div className="text-3xl md:text-4xl font-extrabold text-blue-600">{s.getal}</div>
-              <div className="text-sm text-gray-500 mt-1">{s.label}</div>
+      <section className="py-14 px-4 relative" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(239,246,255,0.5) 100%)' }}>
+        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          {stats.map((s, i) => (
+            <div
+              key={s.getal}
+              className="card-glass p-5 text-center animate-fade-up"
+              style={{ animationDelay: `${i * 0.08}s` }}
+            >
+              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-blue-500 to-blue-700 bg-clip-text text-transparent">{s.getal}</div>
+              <div className="text-xs text-gray-500 mt-1.5 font-medium">{s.label}</div>
             </div>
           ))}
         </div>
@@ -235,20 +237,30 @@ export default function Landing() {
       {/* Hoe werkt het */}
       <section id="hoe-werkt-het" className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-3">Hoe werkt het?</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-3 tracking-tight">Hoe werkt het?</h2>
           <p className="text-gray-500 text-center mb-10">In 4 stappen geld overmaken naar Turkije</p>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
             {stappen.map((s, i) => (
-              <div key={i} className="text-center relative">
+              <div
+                key={i}
+                className="card-glass p-5 text-center relative animate-fade-up"
+                style={{ animationDelay: `${i * 0.1}s` }}
+              >
                 {i < stappen.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-3/4 w-1/2 h-0.5 bg-blue-200 z-0" />
+                  <div className="hidden md:block absolute top-12 -right-3 w-6 h-0.5 bg-gradient-to-r from-blue-400 to-transparent z-0" />
                 )}
-                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 relative z-10">
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 relative z-10 animate-pulse-glow"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(37,99,235,0.05))',
+                    border: '1px solid rgba(59,130,246,0.25)',
+                  }}
+                >
                   {s.icoon}
                 </div>
-                <div className="text-xs font-bold text-blue-600 mb-1">STAP {i + 1}</div>
+                <div className="text-[10px] font-bold text-blue-600 mb-1 uppercase tracking-wider">Stap {i + 1}</div>
                 <h3 className="font-bold text-gray-800 mb-1">{s.titel}</h3>
-                <p className="text-sm text-gray-500">{s.tekst}</p>
+                <p className="text-xs text-gray-500 leading-relaxed">{s.tekst}</p>
               </div>
             ))}
           </div>

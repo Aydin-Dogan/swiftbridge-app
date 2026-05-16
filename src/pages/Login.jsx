@@ -136,7 +136,7 @@ export default function Login({ onLogin }) {
   if (twofaUserId) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 space-y-4">
+        <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
           <div className="text-center">
             <div className="text-4xl mb-2">📧</div>
             <h2 className="text-xl font-bold text-gray-800">Inlogcode</h2>
@@ -155,7 +155,7 @@ export default function Login({ onLogin }) {
               <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">❌ {twofaFout}</p>
             )}
             <button type="submit" disabled={twofaLaden || twofaCode.length !== 6}
-              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
+              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {twofaLaden ? '⏳ Bezig...' : '🔓 Verifieer & inloggen'}
             </button>
             <button type="button" onClick={() => { setTwofaUserId(null); setTwofaCode(''); setTwofaFout(''); }}
@@ -172,7 +172,7 @@ export default function Login({ onLogin }) {
   if (toonReset) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 space-y-4">
+        <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
           <div className="text-center">
             <div className="text-4xl mb-2">🔐</div>
             <h2 className="text-xl font-bold text-gray-800">Nieuw wachtwoord</h2>
@@ -190,7 +190,7 @@ export default function Login({ onLogin }) {
               <p className={`text-sm ${resetBericht.startsWith('✅') ? 'text-green-600' : 'text-red-500'}`}>{resetBericht}</p>
             )}
             <button type="submit" disabled={resetLaden}
-              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
+              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {resetLaden ? '⏳ Bezig...' : '🔑 Wachtwoord opslaan'}
             </button>
           </form>
@@ -203,7 +203,7 @@ export default function Login({ onLogin }) {
   if (toonVergeten) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 space-y-4">
+        <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
           <button onClick={() => setToonVergeten(false)} className="text-gray-400 text-sm">← Terug</button>
           <div className="text-center">
             <div className="text-4xl mb-2">📧</div>
@@ -225,7 +225,7 @@ export default function Login({ onLogin }) {
               }`}>{vergetenBericht}</p>
             )}
             <button type="submit" disabled={vergetenLaden}
-              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition">
+              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {vergetenLaden ? '⏳ Bezig...' : '📧 Stuur reset link'}
             </button>
           </form>
@@ -310,7 +310,7 @@ export default function Login({ onLogin }) {
             )}
 
             <button type="submit" disabled={laden}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3.5 rounded-xl transition text-sm mt-2">
+              className="btn-primary w-full py-3.5 mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
               {laden ? '⏳ Bezig...' : tab === 'login' ? '🔑 Inloggen' : '🚀 Account aanmaken'}
             </button>
           </form>
