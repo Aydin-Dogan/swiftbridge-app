@@ -1,0 +1,294 @@
+/**
+ * Profiel.jsx — Account houder profielgegevens
+ * Naam, e-mail, telefoon, adres
+ * Beschikbaar na KYC verificatie
+ */
+import { useState, useEffect } from 'react';
+import { useTaal } from '../i18n';
+import Vlag from './Vlag';
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+const LANDEN = [
+  { code: 'NL', naam: 'Nederland' },
+  { code: 'BE', naam: 'België' },
+  { code: 'DE', naam: 'Duitsland' },
+  { code: 'TR', naam: 'Türkiye' },
+  { code: 'FR', naam: 'Frankrijk' },
+  { code: 'GB', naam: 'Verenigd Koninkrijk' },
+  { code: 'AT', naam: 'Oostenrijk' },
+];
+
+export default function Profiel({ token, gebruiker, onUpdate }) {
+  const { t } = useTaal();
+  const [laden, setLaden] = useState(true);
+  const [bezig, setBezig] = useState(false);
+  const [bericht, setBericht] = useState(null);
+  const [fout, setFout] = useState('');
+  const [form, setForm] = useState({
+    naam: '',
+    telefoon: '',
+    adresStraat: '',
+    adresHuisnummer: '',
+    adresPostcode: '',
+    adresStad: '',
+    adresLand: 'NL',
+  });
+  const [profiel, setProfiel] = useState(null);
+
+  async function laad() {
+    setLaden(true);
+    try {
+      const res = await fetch(`${API}/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setProfiel(data);
+      setForm({
+        naam: data.naam || '',
+        telefoon: data.telefoon || '',
+        adresStraat: data.adres?.straat || '',
+        adresHuisnummer: data.adres?.huisnummer || '',
+        adresPostcode: data.adres?.postcode || '',
+        adresStad: data.adres?.stad || '',
+        adresLand: data.adres?.land || 'NL',
+      });
+    } catch (e) {
+      setFout('Profiel ophalen mislukt');
+    } finally {
+      setLaden(false);
+    }
+  }
+
+  useEffect(() => { laad(); }, []);
+
+  function update(k, v) {
+    setForm(f => ({ ...f, [k]: v }));
+  }
+
+  async function opslaan(e) {
+    e.preventDefault();
+    setBezig(true);
+    setFout('');
+    setBericht(null);
+    try {
+      const res = await fetch(`${API}/users/me`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Opslaan mislukt');
+      setBericht('✅ Profiel bijgewerkt');
+      setProfiel(data.gebruiker);
+      onUpdate?.(data.gebruiker);
+      setTimeout(() => setBericht(null), 3000);
+    } catch (e) {
+      setFout(e.message);
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  if (laden) {
+    return (
+      <div className="card-glass p-6 space-y-3">
+        <div className="h-6 animate-shimmer rounded w-1/2" />
+        <div className="h-12 animate-shimmer rounded" />
+        <div className="h-12 animate-shimmer rounded" />
+        <div className="h-12 animate-shimmer rounded" />
+      </div>
+    );
+  }
+
+  const kycOk = profiel?.kycStatus === 'goedgekeurd';
+
+  return (
+    <div className="space-y-4">
+      {/* Profielkaart header */}
+      <div className="card-glass p-5 animate-fade-up">
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+            {profiel?.naam?.[0]?.toUpperCase() || 'G'}
+          </div>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-lg font-bold text-gray-800 truncate">{profiel?.naam}</h2>
+            <p className="text-xs text-gray-500 truncate">{profiel?.email}</p>
+            <div className="flex items-center gap-2 mt-1">
+              {kycOk ? (
+                <span className="pill-success">✅ KYC goedgekeurd</span>
+              ) : (
+                <span className="pill-warning">⏳ KYC vereist</span>
+              )}
+              {profiel?.twofaIngeschakeld && (
+                <span className="pill-success">🔒 2FA</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {profiel?.statistieken && (
+          <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{profiel.statistieken.aantalTransacties}</div>
+              <div className="text-[10px] text-gray-500 uppercase tracking-wider">Transacties</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-emerald-600">€{profiel.statistieken.totaalVerstuurdEur.toFixed(0)}</div>
+              <div className="text-[10px] text-gray-500 uppercase tracking-wider">Verstuurd</div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* KYC check */}
+      {!kycOk && (
+        <div className="card-glass p-4 border-l-4 border-amber-500">
+          <div className="flex items-start gap-2">
+            <span className="text-2xl">🪪</span>
+            <div>
+              <h3 className="font-bold text-gray-800 text-sm">KYC verificatie nodig</h3>
+              <p className="text-xs text-gray-600 mt-1">
+                Voltooi eerst je identiteitsverificatie om je profielgegevens aan te kunnen passen.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Profiel formulier */}
+      <form onSubmit={opslaan} className="card-glass p-5 space-y-4 animate-fade-up">
+        <h3 className="font-bold text-gray-800 flex items-center gap-2">
+          👤 Persoonlijke gegevens
+        </h3>
+
+        <div>
+          <label className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam *</label>
+          <input
+            value={form.naam}
+            onChange={e => update('naam', e.target.value)}
+            disabled={!kycOk}
+            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+            required
+            minLength={2}
+            maxLength={100}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1">E-mailadres</label>
+            <input
+              value={profiel?.email || ''}
+              disabled
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none bg-gray-50 text-gray-500 cursor-not-allowed"
+              title="E-mail kan niet gewijzigd worden"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1">Telefoon</label>
+            <input
+              type="tel"
+              value={form.telefoon}
+              onChange={e => update('telefoon', e.target.value)}
+              disabled={!kycOk}
+              placeholder="+31 6 12345678"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+            />
+          </div>
+        </div>
+
+        <h3 className="font-bold text-gray-800 flex items-center gap-2 pt-2 border-t border-gray-100">
+          🏠 Adres
+        </h3>
+
+        <div className="grid grid-cols-3 gap-2">
+          <div className="col-span-2">
+            <label className="block text-xs font-semibold text-gray-600 mb-1">Straat</label>
+            <input
+              value={form.adresStraat}
+              onChange={e => update('adresStraat', e.target.value)}
+              disabled={!kycOk}
+              placeholder="Hoofdstraat"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1">Huisnr.</label>
+            <input
+              value={form.adresHuisnummer}
+              onChange={e => update('adresHuisnummer', e.target.value)}
+              disabled={!kycOk}
+              placeholder="12A"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2">
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1">Postcode</label>
+            <input
+              value={form.adresPostcode}
+              onChange={e => update('adresPostcode', e.target.value.toUpperCase())}
+              disabled={!kycOk}
+              placeholder="1234AB"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50 font-mono"
+            />
+          </div>
+          <div className="col-span-2">
+            <label className="block text-xs font-semibold text-gray-600 mb-1">Stad</label>
+            <input
+              value={form.adresStad}
+              onChange={e => update('adresStad', e.target.value)}
+              disabled={!kycOk}
+              placeholder="Amsterdam"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-gray-600 mb-1">Land</label>
+          <div className="flex items-center gap-2">
+            <div className="flex-shrink-0">
+              <Vlag land={form.adresLand} size={28} />
+            </div>
+            <select
+              value={form.adresLand}
+              onChange={e => update('adresLand', e.target.value)}
+              disabled={!kycOk}
+              className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+            >
+              {LANDEN.map(l => (
+                <option key={l.code} value={l.code}>{l.naam} ({l.code})</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {fout && (
+          <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
+            ❌ {fout}
+          </div>
+        )}
+        {bericht && (
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl px-3 py-2 text-sm">
+            {bericht}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={!kycOk || bezig}
+          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {bezig ? '⏳ Opslaan...' : '💾 Opslaan'}
+        </button>
+      </form>
+    </div>
+  );
+}

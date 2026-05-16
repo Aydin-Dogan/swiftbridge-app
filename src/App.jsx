@@ -12,6 +12,7 @@ import { useTaal } from './i18n';
 const PaymentFlow         = lazy(() => import('./components/PaymentFlow'));
 const KYCFlow             = lazy(() => import('./components/KYCFlow'));
 const KoersAlerts         = lazy(() => import('./components/KoersAlerts'));
+const Profiel             = lazy(() => import('./components/Profiel'));
 const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
 const Privacybeleid       = lazy(() => import('./pages/Privacybeleid'));
 const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
@@ -142,6 +143,7 @@ function AppShell({ gebruiker, token, onLogout }) {
     { id: 'dashboard', label: t('tab_dashboard'),    icoon: '📊' },
     { id: 'betaling',  label: t('tab_overmaken'),    icoon: '💸' },
     { id: 'alerts',    label: t('tab_alerts'),       icoon: '🔔' },
+    { id: 'profiel',   label: t('tab_profiel'),      icoon: '👤' },
     { id: 'kyc',       label: t('tab_verificatie'),  icoon: '🪪' },
   ];
 
@@ -208,6 +210,7 @@ function AppShell({ gebruiker, token, onLogout }) {
               )
           )}
           {actief === 'alerts' && <KoersAlerts token={token} />}
+          {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} onUpdate={onLogin && gebruiker ? (u) => onLogin?.(token, u) : null} />}
           {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
         </Suspense>
       </main>

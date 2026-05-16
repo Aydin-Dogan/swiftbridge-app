@@ -20,6 +20,7 @@ export const tr = {
   tab_overmaken: 'Para Gönder',
   tab_verificatie: 'Kimlik Doğrulama',
   tab_alerts:      'Uyarılar',
+  tab_profiel:     'Profil',
 
   // Landing page
   landing_titel: 'Türkiye\'ye para',

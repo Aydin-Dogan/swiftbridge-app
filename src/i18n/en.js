@@ -20,6 +20,7 @@ export const en = {
   tab_overmaken: 'Send',
   tab_verificatie: 'Verification',
   tab_alerts:      'Alerts',
+  tab_profiel:     'Profile',
 
   // Landing page
   landing_titel: 'Money to Turkey',
