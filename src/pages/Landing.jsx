@@ -5,6 +5,7 @@ import TaalKiezer from '../components/TaalKiezer';
 import { VALUTAS } from '../services/currencies';
 import { useTaal } from '../i18n';
 import Vlag from '../components/Vlag';
+import TrBankenSteun from '../components/TrBankenSteun';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -226,6 +227,17 @@ export default function Landing() {
               <div className="text-xs text-gray-500 mt-1.5 font-medium">{s.label}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* TR Banken trust banner */}
+      <section className="py-12 px-4 bg-gradient-to-b from-white to-blue-50/50">
+        <div className="max-w-4xl mx-auto">
+          <TrBankenSteun
+            titel="Geld komt aan bij elke grote Turkse bank"
+            ondertitel="Je familie ontvangt direct op hun bestaande rekening — geen nieuwe app, geen registratie"
+            size="md"
+          />
         </div>
       </section>
 
