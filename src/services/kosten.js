@@ -1,5 +1,5 @@
 /**
- * kosten.js — Pricing met VERBORGEN FX MARGIN (Remitly-stijl)
+ * kosten.js — Pricing model met hidden FX margin
  *
  * Twee marge componenten:
  * 1. VISIBLE_FEE (€1,99 flat) — zichtbaar als 'servicekosten'
@@ -8,7 +8,6 @@
  * PSD2 compliance:
  * - De applied rate wordt getoond (klant ziet wat hij krijgt)
  * - Totale kosten worden getoond (klant kan rekenen)
- * - We hoeven niet expliciet "we pakken X% op de FX" te zeggen
  */
 
 // ── Verborgen FX margin (geheim — alleen in interne berekening) ────────────
@@ -109,23 +108,6 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
 }
 
 function round(n, dec = 4) { return Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec); }
-
-/**
- * Vergelijk met Remitly
- */
-export function remitlyTarief(eurBedrag, snelheid = 'express') {
-  const b = parseFloat(eurBedrag) || 0;
-  if (snelheid === 'economy') return round(b * 0.010);
-  return round(2.99 + b * 0.015);
-}
-
-/**
- * Wise (transparant referentiepunt)
- */
-export function wiseTarief(eurBedrag) {
-  const b = parseFloat(eurBedrag) || 0;
-  return round(b * 0.005);
-}
 
 export const KOSTEN_LABELS = {
   fee: { label: 'Servicekosten', icon: '💰', uitleg: 'Eenmalige kosten voor de overboeking' },

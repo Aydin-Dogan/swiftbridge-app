@@ -9,7 +9,7 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
-import { berekenKosten, remitlyTarief, KOSTEN_LABELS } from '../services/kosten';
+import { berekenKosten, KOSTEN_LABELS } from '../services/kosten';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -250,12 +250,9 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
   const bedragNum = Math.max(0, parseFloat(bedrag) || 0);
 
-  // Pricing met flat fee + hidden FX (Remitly model)
+  // Pricing met flat fee + hidden FX
   const kosten = berekenKosten(bedragNum, 'ideal', snelheid, effectieveKoers);
   const ontvangenNetto = bedrag && !isNaN(bedrag) ? kosten.ontvangenBedrag : null;
-  const remitlyKosten = remitlyTarief(bedragNum, snelheid);
-  const swiftbridgeTotaal = bedragNum - (ontvangenNetto / effectieveKoers); // wat klant 'verliest'
-  const swiftbridgeBesparing = remitlyKosten - swiftbridgeTotaal;
 
   // Display fee voor Express/Economy preview
   function previewFee(snel) {
@@ -335,7 +332,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-bold text-sm">Economy</span>
             </div>
             <div className={`text-[10px] ${snelheid === 'economy' ? 'text-emerald-100' : 'text-gray-500'}`}>
-              1-2 dagen · €{previewFee('economy').toFixed(2)} (goedkoper dan Wise)
+              1-2 dagen · €{previewFee('economy').toFixed(2)} · zeer voordelig
             </div>
           </button>
         </div>
@@ -371,7 +368,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             border: '1px solid rgba(59,130,246,0.25)',
           }}
         >
-          {/* Vereenvoudigde weergave à la Remitly */}
+          {/* Vereenvoudigde kostenweergave */}
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">💰 Servicekosten</span>
             <span className="font-mono font-semibold text-gray-800">€{kosten.klantBetaaltFee.toFixed(2)}</span>
@@ -386,14 +383,12 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
           </div>
 
-          {remitlyKosten > 0 && swiftbridgeBesparing >= 0 && (
-            <div className="rounded-lg px-2.5 py-2 text-[10px] leading-snug flex items-center gap-2 border bg-emerald-50/80 text-emerald-900 border-emerald-200/60">
-              <span className="text-base flex-shrink-0">🎯</span>
-              <span>
-                Goedkoper dan Remitly (€{remitlyKosten.toFixed(2)}) — bespaar <strong>€{swiftbridgeBesparing.toFixed(2)}</strong>
-              </span>
-            </div>
-          )}
+          <div className="rounded-lg px-2.5 py-2 text-[10px] leading-snug flex items-center gap-2 border bg-emerald-50/80 text-emerald-900 border-emerald-200/60">
+            <span className="text-base flex-shrink-0">⚡</span>
+            <span>
+              Snelle, eerlijke prijs · Turks-specialist 🇹🇷
+            </span>
+          </div>
 
           <div className="bg-blue-100/60 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
             {valutaInfo.vlag} <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening.

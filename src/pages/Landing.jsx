@@ -4,6 +4,7 @@ import LiveKoersTicker from '../components/LiveKoersTicker';
 import TaalKiezer from '../components/TaalKiezer';
 import { VALUTAS } from '../services/currencies';
 import { useTaal } from '../i18n';
+import Vlag from '../components/Vlag';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -30,10 +31,10 @@ const stappen = [
 ];
 
 const vergelijking = [
-  { naam: 'Bank', snelheid: '3–5 dagen', kosten: '3–5%', kleur: 'text-red-500' },
-  { naam: 'Wise', snelheid: 'Min.–2 dagen', kosten: '0,4–1,5%', kleur: 'text-orange-500' },
-  { naam: 'Revolut', snelheid: '2–3 dagen', kosten: '2–6%', kleur: 'text-orange-500' },
-  { naam: 'SwiftBridge', snelheid: '< 5 minuten ⚡', kosten: '2,0–2,5%', kleur: 'text-green-600', highlight: true },
+  { naam: 'Traditionele bank',     snelheid: '3–5 dagen',    kosten: '3–5%',    kleur: 'text-red-500' },
+  { naam: 'Andere money apps',     snelheid: 'Uren – 2 dgn', kosten: '1,5–3%',  kleur: 'text-orange-500' },
+  { naam: 'Wisselkantoren',        snelheid: 'Direct cash',  kosten: '4–7%',    kleur: 'text-orange-500' },
+  { naam: 'SwiftBridge',           snelheid: '< 5 minuten ⚡', kosten: '€1,99 + 1,2%', kleur: 'text-green-600', highlight: true },
 ];
 
 
@@ -111,7 +112,7 @@ export default function Landing() {
       <section className="bg-gradient-to-br from-blue-700 via-blue-600 to-blue-500 text-white py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-blue-500 bg-opacity-50 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
-            🇳🇱 Nederland → Turkije 🇹🇷
+            <Vlag land="NL" size={20} /> Nederland → Turkije <Vlag land="TR" size={20} />
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
             {t('landing_titel')}<br />
