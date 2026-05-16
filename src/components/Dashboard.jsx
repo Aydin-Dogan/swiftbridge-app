@@ -39,14 +39,14 @@ function fmtTry(n) {
 // ── Statusbadge ───────────────────────────────────────────────────────────────
 function StatusBadge({ status }) {
   const map = {
-    voltooid:       { kleur: 'bg-green-100 text-green-700', icoon: '✅', label: 'Voltooid'        },
-    in_behandeling: { kleur: 'bg-amber-100 text-amber-700', icoon: '⏳', label: 'In behandeling'  },
-    mislukt:        { kleur: 'bg-red-100 text-red-700',     icoon: '❌', label: 'Mislukt'          },
-    geannuleerd:    { kleur: 'bg-gray-100 text-gray-600',   icoon: '🚫', label: 'Geannuleerd'      },
+    voltooid:       { pill: 'pill-success', icoon: '✅', label: 'Voltooid'        },
+    in_behandeling: { pill: 'pill-warning', icoon: '⏳', label: 'In behandeling'  },
+    mislukt:        { pill: 'pill-error',   icoon: '❌', label: 'Mislukt'          },
+    geannuleerd:    { pill: 'pill-neutral', icoon: '🚫', label: 'Geannuleerd'      },
   };
   const s = map[status] || map.in_behandeling;
   return (
-    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full ${s.kleur}`}>
+    <span className={`inline-flex items-center gap-1 ${s.pill}`}>
       {s.icoon} {s.label}
     </span>
   );
@@ -56,28 +56,37 @@ function StatusBadge({ status }) {
 function WeeklimietBalk({ weekTotaal, weekLimiet }) {
   const pct = Math.min(100, (weekTotaal / weekLimiet) * 100);
   const resterend = Math.max(0, weekLimiet - weekTotaal);
-  const kleur = pct >= 90 ? 'bg-red-500' : pct >= 70 ? 'bg-amber-500' : 'bg-green-500';
+  const barGradient = pct >= 90
+    ? 'linear-gradient(90deg, #f43f5e, #fb7185)'
+    : pct >= 70
+    ? 'linear-gradient(90deg, #f59e0b, #fbbf24)'
+    : 'linear-gradient(90deg, #10b981, #34d399)';
+  const glowColor = pct >= 90 ? 'rgba(244,63,94,0.5)' : pct >= 70 ? 'rgba(245,158,11,0.5)' : 'rgba(16,185,129,0.5)';
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 space-y-3">
+    <div className="card-glass p-4 space-y-3 animate-fade-up">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-lg">📊</span>
           <span className="font-semibold text-gray-800 text-sm">Weeklimiet</span>
         </div>
-        <span className="text-xs text-gray-500">Resets elke 7 dagen</span>
+        <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Resets elke 7 dagen</span>
       </div>
-      <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+      <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden relative">
         <div
-          className={`h-3 rounded-full transition-all duration-700 ${kleur}`}
-          style={{ width: `${pct}%` }}
+          className="h-3 rounded-full transition-all duration-700 ease-out"
+          style={{
+            width: `${pct}%`,
+            background: barGradient,
+            boxShadow: `0 0 12px ${glowColor}`,
+          }}
         />
       </div>
       <div className="flex justify-between text-xs text-gray-600">
-        <span>Gebruikt: <strong className="text-gray-800">{fmtEur(weekTotaal)}</strong></span>
-        <span>Nog beschikbaar: <strong className={resterend < 500 ? 'text-red-600' : 'text-green-600'}>{fmtEur(resterend)}</strong></span>
+        <span>Gebruikt: <strong className="text-gray-800 font-mono">{fmtEur(weekTotaal)}</strong></span>
+        <span>Nog beschikbaar: <strong className={`font-mono ${resterend < 500 ? 'text-rose-600' : 'text-emerald-600'}`}>{fmtEur(resterend)}</strong></span>
       </div>
-      <div className="text-right text-xs text-gray-400">Limiet: {fmtEur(weekLimiet)} per week</div>
+      <div className="text-right text-[10px] text-gray-400 uppercase tracking-wider">Limiet: {fmtEur(weekLimiet)} per week</div>
     </div>
   );
 }
