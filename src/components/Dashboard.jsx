@@ -174,11 +174,23 @@ function StatsRij({ transacties }) {
 function TransactieDetailModal({ tx, onSluit }) {
   if (!tx) return null;
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-end justify-center p-4" onClick={onSluit}>
-      <div className="bg-white rounded-2xl w-full max-w-md p-6 space-y-4" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between">
+    <div
+      className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 sm:p-6"
+      onClick={onSluit}
+    >
+      <div
+        className="bg-white rounded-2xl w-full max-w-md p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl animate-fade-up"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between border-b border-gray-100 pb-3">
           <h3 className="font-bold text-gray-800 text-lg">Transactiedetails</h3>
-          <button onClick={onSluit} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+          <button
+            onClick={onSluit}
+            className="text-gray-400 hover:text-gray-600 text-xl w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition"
+            aria-label="Sluiten"
+          >
+            ✕
+          </button>
         </div>
         <div className="space-y-3">
           {[
