@@ -180,14 +180,29 @@ function OntvangerModal({ onKies, onSluit }) {
 }
 
 // ── Stap 0: Bedrag ────────────────────────────────────────────────────────────
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, ontvanger, setOntvanger, iban, setIban, liveKoersTry, onVolgende, ontvangerLabel, setOntvangerLabel }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, onVolgende, ontvangerLabel, setOntvangerLabel }) {
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
   const valutaInfo = getValuta(valuta);
   // Gebruik live TRY koers indien beschikbaar, anders statische koers per valuta
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
   const bedragNum = Math.max(0, parseFloat(bedrag) || 0);
-  const netto     = bedragNum * 0.978;
+
+  // Fee per snelheid (gespiegeld met backend)
+  function feePct(b, snel) {
+    if (snel === 'economy') {
+      if (b <= 200)  return 0.0070;
+      if (b <= 500)  return 0.0050;
+      if (b <= 1000) return 0.0040;
+      return 0.0030;
+    }
+    if (b <= 200)  return 0.0150;
+    if (b <= 500)  return 0.0120;
+    if (b <= 1000) return 0.0100;
+    return 0.0080;
+  }
+  const huidigeFeePct = feePct(bedragNum, snelheid);
+  const netto     = bedragNum * (1 - huidigeFeePct);
   const ontvangenNetto = bedrag && !isNaN(bedrag) ? netto * effectieveKoers : null;
   const ontvangenBruto = bedrag && !isNaN(bedrag) ? bedragNum * effectieveKoers : null;
 
@@ -226,6 +241,47 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, ontvanger, setOntvan
         </div>
       </div>
 
+      {/* Snelheid keuze: Express vs Economy */}
+      <div>
+        <label className="block text-sm font-medium text-gray-600 mb-2">Snelheid</label>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => setSnelheid('express')}
+            className={`p-3 rounded-xl text-left transition-all active:scale-95 ${
+              snelheid === 'express'
+                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-lg">⚡</span>
+              <span className="font-bold text-sm">Express</span>
+            </div>
+            <div className={`text-[10px] ${snelheid === 'express' ? 'text-blue-100' : 'text-gray-500'}`}>
+              &lt;5 min · {(feePct(bedragNum, 'express')*100).toFixed(1)}%
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setSnelheid('economy')}
+            className={`p-3 rounded-xl text-left transition-all active:scale-95 ${
+              snelheid === 'economy'
+                ? 'bg-gradient-to-br from-emerald-600 to-emerald-700 text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-lg">🐢</span>
+              <span className="font-bold text-sm">Economy</span>
+            </div>
+            <div className={`text-[10px] ${snelheid === 'economy' ? 'text-emerald-100' : 'text-gray-500'}`}>
+              1-2 dagen · {(feePct(bedragNum, 'economy')*100).toFixed(1)}% (goedkoper dan Wise)
+            </div>
+          </button>
+        </div>
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-2">Ontvanger krijgt in</label>
         <div className="grid grid-cols-5 gap-1.5 max-h-32 overflow-y-auto">
@@ -261,8 +317,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, ontvanger, setOntvan
             <span className="font-mono font-semibold">1 EUR = {effectieveKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
           </div>
           <div className="flex justify-between text-sm text-gray-600">
-            <span>💰 Transactiekosten (2,2%)</span>
-            <span className="font-mono font-medium text-rose-500">−€{(bedragNum * 0.022).toFixed(2)}</span>
+            <span>💰 Transactiekosten ({(huidigeFeePct*100).toFixed(2)}%)</span>
+            <span className="font-mono font-medium text-rose-500">−€{(bedragNum * huidigeFeePct).toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-xs text-gray-400">
             <span>Zonder kosten zou ontvanger krijgen</span>
@@ -488,6 +544,7 @@ export default function PaymentFlow({ token }) {
   const [stap,           setStap          ] = useState(0);
   const [bedrag,         setBedrag        ] = useState('500');
   const [valuta,         setValuta        ] = useState('TRY');
+  const [snelheid,       setSnelheid      ] = useState('express'); // express | economy
   const [ontvanger,      setOntvanger     ] = useState('');
   const [ontvangerLabel, setOntvangerLabel] = useState(null);
   const [iban,           setIban          ] = useState('');
@@ -527,6 +584,7 @@ export default function PaymentFlow({ token }) {
           ontvangerBank: 'Garanti BBVA',
           methode,
           valuta,
+          snelheid,
         }),
       });
 
@@ -654,7 +712,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} onVolgende={() => setStap(1)} />}
+      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}

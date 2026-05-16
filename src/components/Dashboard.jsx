@@ -143,17 +143,18 @@ function LiveKoersKaart({ koers, laden }) {
 
 // ── Statistieken ──────────────────────────────────────────────────────────────
 function StatsRij({ transacties }) {
-  const voltooide  = transacties.filter(t => t.status === 'voltooid');
-  const totaalEur  = voltooide.reduce((s, t) => s + (t.eurBedrag || 0), 0);
-  const totaalTry  = voltooide.reduce((s, t) => s + (t.tryBedrag || 0), 0);
-  const gemBedrag  = voltooide.length > 0 ? totaalEur / voltooide.length : 0;
+  // Tel ook in_behandeling en wacht_op_betaling mee — alleen mislukt/geannuleerd uitsluiten
+  const actieve    = transacties.filter(t => !['mislukt', 'geannuleerd'].includes(t.status));
+  const totaalEur  = actieve.reduce((s, t) => s + (t.eurBedrag || 0), 0);
+  const totaalTry  = actieve.reduce((s, t) => s + (t.tryBedrag || 0), 0);
+  const gemBedrag  = actieve.length > 0 ? totaalEur / actieve.length : 0;
 
   return (
     <div className="grid grid-cols-2 gap-3">
       {[
         { label: 'Totaal verstuurd',  waarde: fmtEur(totaalEur),    icoon: '💶', kleur: 'text-blue-600'   },
         { label: 'Ontvangen in TRY',  waarde: fmtTry(totaalTry),    icoon: '🇹🇷', kleur: 'text-green-600'  },
-        { label: 'Transacties',       waarde: voltooide.length,      icoon: '✅', kleur: 'text-purple-600' },
+        { label: 'Transacties',       waarde: actieve.length,        icoon: '✅', kleur: 'text-purple-600' },
         { label: 'Gemiddeld bedrag',  waarde: fmtEur(gemBedrag),     icoon: '📊', kleur: 'text-amber-600'  },
       ].map(s => (
         <div key={s.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">

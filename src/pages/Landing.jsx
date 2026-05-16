@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import LiveKoersTicker from '../components/LiveKoersTicker';
 import TaalKiezer from '../components/TaalKiezer';
 import { VALUTAS } from '../services/currencies';
+import { useTaal } from '../i18n';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -45,6 +46,7 @@ function isInStandalone() {
 
 export default function Landing() {
   const navigate = useNavigate();
+  const { t } = useTaal();
   const [bedrag, setBedrag] = useState(500);
   const [valuta, setValuta] = useState('TRY');
   const installPrompt = useInstallPrompt();
@@ -112,11 +114,11 @@ export default function Landing() {
             🇳🇱 Nederland → Turkije 🇹🇷
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-            Geld naar Turkije<br />
-            <span className="text-yellow-300">in minder dan 5 minuten<sup className="text-base">*</sup></span>
+            {t('landing_titel')}<br />
+            <span className="text-yellow-300">{t('landing_ondertitel')}<sup className="text-base">*</sup></span>
           </h1>
           <p className="text-blue-100 text-lg md:text-xl mb-8 max-w-xl mx-auto">
-            Goedkoper dan je bank. Sneller dan Wise. 24/7 beschikbaar. Met Turks kimlik.
+            {t('landing_uitleg')}
           </p>
           <p className="text-blue-200 text-xs mb-6 max-w-md mx-auto">
             <sup>*</sup> Vanaf je tweede transactie na goedgekeurde KYC. Eerste registratie + identiteitsverificatie duurt 5–15 minuten.
