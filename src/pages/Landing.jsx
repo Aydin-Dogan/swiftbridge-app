@@ -6,6 +6,7 @@ import { VALUTAS } from '../services/currencies';
 import { useTaal } from '../i18n';
 import Vlag from '../components/Vlag';
 import TrBankenSteun from '../components/TrBankenSteun';
+import TurkstaligeBankenSteun from '../components/TurkstaligeBankenSteun';
 
 function useInstallPrompt() {
   const [prompt, setPrompt] = useState(null);
@@ -230,14 +231,13 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* TR Banken trust banner — alle 36 banken & wallets */}
+      {/* Banken trust banner — alle Turkstalige landen */}
       <section className="py-12 px-4 bg-gradient-to-b from-white to-blue-50/50">
         <div className="max-w-4xl mx-auto">
-          <TrBankenSteun
-            titel="Alle banken en wallets van Turkije"
-            ondertitel="Je familie ontvangt op hun bestaande rekening — bij elke bank, zonder nieuwe app"
+          <TurkstaligeBankenSteun
+            titel="Banken in alle Turkstalige landen"
+            ondertitel="Stuur naar Turkije, Azerbeidzjan, Kazachstan, Oezbekistan, Turkmenistan, Kirgizië en Tadzjikistan"
             size="sm"
-            toonCategorieën={true}
           />
         </div>
       </section>
