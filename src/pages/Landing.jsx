@@ -42,11 +42,36 @@ function isInStandalone() {
   return typeof window !== 'undefined' && window.navigator.standalone === true;
 }
 
+// Wisselkoersen (EUR → andere valuta) — indicatieve waarden
+const VALUTAS = [
+  { code: 'TRY', symbool: '₺', vlag: '🇹🇷', naam: 'Turkse Lira',        koers: 36.20, locale: 'tr-TR', decimals: 0 },
+  { code: 'USD', symbool: '$', vlag: '🇺🇸', naam: 'Amerikaanse Dollar', koers: 1.08,  locale: 'en-US', decimals: 2 },
+  { code: 'GBP', symbool: '£', vlag: '🇬🇧', naam: 'Britse Pond',         koers: 0.85,  locale: 'en-GB', decimals: 2 },
+  { code: 'EUR', symbool: '€', vlag: '🇪🇺', naam: 'Euro',                koers: 1.00,  locale: 'nl-NL', decimals: 2 },
+  { code: 'MAD', symbool: 'DH', vlag: '🇲🇦', naam: 'Marokkaanse Dirham', koers: 10.95, locale: 'ar-MA', decimals: 2 },
+];
+
 export default function Landing() {
   const navigate = useNavigate();
   const [bedrag, setBedrag] = useState(500);
+  const [valuta, setValuta] = useState('TRY');
   const installPrompt = useInstallPrompt();
   const [toonIOSUitleg, setToonIOSUitleg] = useState(false);
+
+  const valutaInfo = VALUTAS.find(v => v.code === valuta) ?? VALUTAS[0];
+  const bedragNum = Math.max(0, Number(bedrag) || 0);
+  const ontvangen = bedragNum * valutaInfo.koers * 0.9775;
+  const ontvangenFmt = ontvangen.toLocaleString(valutaInfo.locale, {
+    minimumFractionDigits: valutaInfo.decimals,
+    maximumFractionDigits: valutaInfo.decimals,
+  });
+
+  function setBedragSafe(val) {
+    if (val === '' || val === '-') return setBedrag('');
+    const n = parseFloat(val);
+    if (isNaN(n)) return;
+    setBedrag(Math.max(0, n));
+  }
 
   async function installeerApp() {
     if (isIOS() && !isInStandalone()) {
@@ -111,14 +136,46 @@ export default function Landing() {
             <label className="block text-xs font-semibold text-gray-500 mb-1 text-left">Jij verstuurt (EUR)</label>
             <div className="flex items-center border-2 border-blue-500 rounded-xl px-4 py-3 mb-3">
               <span className="text-xl font-bold text-gray-400 mr-2">€</span>
-              <input type="number" value={bedrag} onChange={e => setBedrag(e.target.value)}
-                className="flex-1 text-2xl font-bold text-gray-800 outline-none" />
+              <input
+                type="number"
+                inputMode="decimal"
+                min="0"
+                step="10"
+                value={bedrag}
+                onChange={e => setBedragSafe(e.target.value)}
+                className="flex-1 text-2xl font-bold text-gray-800 outline-none"
+              />
             </div>
-            <div className="bg-blue-50 rounded-xl px-4 py-3 mb-4 flex justify-between items-center">
+
+            {/* Valuta selector */}
+            <label className="block text-xs font-semibold text-gray-500 mb-1 text-left">Ontvanger krijgt in</label>
+            <div className="grid grid-cols-5 gap-1.5 mb-3">
+              {VALUTAS.map(v => (
+                <button
+                  key={v.code}
+                  type="button"
+                  onClick={() => setValuta(v.code)}
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-bold transition-all active:scale-95 ${
+                    valuta === v.code
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                  title={v.naam}
+                >
+                  <span className="text-base leading-none">{v.vlag}</span>
+                  <span className="text-[10px] mt-0.5">{v.code}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="bg-blue-50 rounded-xl px-4 py-3 mb-2 flex justify-between items-center">
               <span className="text-sm text-gray-500">Ontvanger krijgt</span>
               <span className="text-xl font-bold text-blue-700">
-                ₺{Math.round(bedrag * 36.20 * 0.9775).toLocaleString('tr-TR')}
+                {valutaInfo.symbool}{ontvangenFmt}
               </span>
+            </div>
+            <div className="text-[10px] text-gray-400 text-left mb-3">
+              Koers: 1 EUR = {valutaInfo.koers.toLocaleString('nl-NL')} {valutaInfo.code}
             </div>
             <div className="text-xs text-gray-400 text-center mb-4">
               Kosten: 2,0% + wisselkoersmarge 0,45%
