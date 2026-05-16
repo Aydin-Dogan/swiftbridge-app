@@ -20,22 +20,40 @@ const STAPPEN = ['Bedrag', 'Betaalmethode', 'Bevestiging', 'Verzonden'];
 const SNELLE_BEDRAGEN = [100, 250, 500, 1000, 2000];
 
 const BETAALMETHODEN = [
+  // ── Aanbevolen (NL klanten) ──
+  {
+    id:    'ideal',
+    label: 'iDEAL',
+    icon:  '🏦',
+    desc:  'Direct via je Nederlandse bank',
+    sub:   '⭐ Meest gekozen · 1,99 fee',
+    kleur: 'border-blue-500 bg-blue-50',
+  },
   {
     id:    'creditcard',
     label: 'Credit/Debit kaart',
     icon:  '💳',
     desc:  'Visa, Mastercard',
-    sub:   'Wereldwijd · 1,8% verwerking',
+    sub:   'Wereldwijd · 1,8% extra',
     kleur: 'border-indigo-500 bg-indigo-50',
+  },
+  {
+    id:    'paypal',
+    label: 'PayPal',
+    icon:  '💙',
+    desc:  'Betalen met je PayPal account',
+    sub:   'Internationaal',
+    kleur: 'border-sky-500 bg-sky-50',
   },
   {
     id:    'banktransfer',
     label: 'SEPA bankoverboeking',
-    icon:  '🏦',
+    icon:  '🏛️',
     desc:  'Standaard bankoverboeking',
     sub:   '1-2 dagen · goedkoopste optie',
     kleur: 'border-emerald-500 bg-emerald-50',
   },
+  // ── BE klanten ──
   {
     id:    'bancontact',
     label: 'Bancontact',
@@ -60,6 +78,7 @@ const BETAALMETHODEN = [
     sub:   'Voor Belfius klanten',
     kleur: 'border-purple-500 bg-purple-50',
   },
+  // ── UK ──
   {
     id:    'paybybank',
     label: 'Pay By Bank',
@@ -68,6 +87,7 @@ const BETAALMETHODEN = [
     sub:   'Voor UK klanten',
     kleur: 'border-blue-500 bg-blue-50',
   },
+  // ── B2B ──
   {
     id:    'billie',
     label: 'Billie (factuur)',
@@ -76,14 +96,7 @@ const BETAALMETHODEN = [
     sub:   'Achteraf betalen',
     kleur: 'border-rose-500 bg-rose-50',
   },
-  {
-    id:    'ideal',
-    label: 'iDEAL',
-    icon:  '🏦',
-    desc:  '⚠️ Activeer eerst in Mollie',
-    sub:   'Belangrijkste NL methode',
-    kleur: 'border-gray-300 bg-gray-50 opacity-60',
-  },
+  // ── Nog te activeren ──
   {
     id:    'applepay',
     label: 'Apple Pay',
@@ -98,14 +111,6 @@ const BETAALMETHODEN = [
     icon:  '🛍️',
     desc:  '⚠️ Activeer eerst in Mollie',
     sub:   'Achteraf betalen',
-    kleur: 'border-gray-300 bg-gray-50 opacity-60',
-  },
-  {
-    id:    'paypal',
-    label: 'PayPal',
-    icon:  '💙',
-    desc:  '⚠️ Activeer eerst in Mollie',
-    sub:   'Wereldwijd',
     kleur: 'border-gray-300 bg-gray-50 opacity-60',
   },
 ];
@@ -695,7 +700,7 @@ export default function PaymentFlow({ token }) {
   const [uitbetaalMethode,    setUitbetaalMethode]    = useState('bank'); // bank | papara
   const [paparaIdentifier,    setPaparaIdentifier]    = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
-  const [methode,        setMethode       ] = useState('ideal');
+  const [methode,        setMethode       ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
   const [liveKoersTry,   setLiveKoersTry  ] = useState(null);
   const [transactie,     setTransactie    ] = useState(null);
   const [laden,          setLaden         ] = useState(false);
