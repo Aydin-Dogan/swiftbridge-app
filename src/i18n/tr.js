@@ -118,4 +118,57 @@ export const tr = {
 
   // Voettekst
   beveiligd_via_jwt: '🔒 JWT ile güvenli · Hız sınırlı · Uçtan uca şifreli',
+
+  // ── API hata mesajları (errorCode → metin) ──────────────────────────────
+  errors: {
+    // Genel
+    INVALID_INPUT: 'Geçersiz veri. Lütfen alanları kontrol edip tekrar deneyin.',
+    NOT_FOUND: 'Bulunamadı.',
+    UNAUTHORIZED: 'Oturumunuz sona erdi. Lütfen tekrar giriş yapın.',
+    FORBIDDEN: 'Erişim reddedildi.',
+    RATE_LIMITED: 'Çok fazla istek. Lütfen biraz sonra tekrar deneyin.',
+    SERVER_ERROR: 'Sunucu tarafında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.',
+    SERVICE_UNAVAILABLE: 'Hizmet geçici olarak kullanılamıyor.',
+    CONFLICT: 'Bu işlem gerçekleştirilemedi.',
+
+    // İşlem
+    TX_INVALID_AMOUNT: 'Tutar €10 ile €5.000 arasında olmalıdır.',
+    TX_INVALID_IBAN: 'Geçersiz IBAN. Alıcının IBAN numarasını kontrol edin.',
+    TX_INSUFFICIENT_KYC: 'Para gönderebilmek için önce kimlik doğrulaması (KYC) yapın.',
+    TX_VALUTA_NIET_BESCHIKBAAR: 'Bu para birimi şu anda kullanılamıyor.',
+    TX_BANK_NIET_BESCHIKBAAR: 'Bu banka şu anda kullanılamıyor.',
+    TX_WEEKLIMIET_BEREIKT: 'Haftalık limitiniz doldu. Lütfen önümüzdeki hafta tekrar deneyin.',
+    TX_NOT_FOUND: 'İşlem bulunamadı.',
+    TX_PAPARA_INVALID: 'Papara bilgileri geçersiz.',
+    TX_SANCTIONED_RECIPIENT: 'Bu alıcıya ödeme yapılamaz. Lütfen müşteri hizmetlerimizle iletişime geçin.',
+    TX_MISSING_FIELDS: 'Tüm zorunlu alanlar doldurulmadı.',
+
+    // Ödeme
+    PAY_MOLLIE_FOUT: 'Ödeme oluşturulamadı. Lütfen tekrar deneyin.',
+    PAY_WEBHOOK_INVALID: 'Geçersiz ödeme bildirimi.',
+    PAY_REEDS_VOLTOOID: 'Bu işlem için ödeme zaten başlatıldı.',
+    PAY_NIET_GECONFIGUREERD: 'Ödemeler şu anda kullanılamıyor.',
+    PAY_MISSING_FIELDS: 'transactieId ve methode zorunludur.',
+
+    // KYC
+    KYC_BEELD_FOUT: 'Fotoğrafla ilgili bir sorun var. Daha net bir fotoğraf deneyin.',
+    KYC_DOCUMENT_AFGEWEZEN: 'Belgeniz onaylanamadı. Başka bir belge ile tekrar deneyin.',
+    KYC_REEDS_INGEDIEND: 'KYC zaten onaylandı.',
+    KYC_GEBLOKKEERD: 'Hesabınız engellendi. Lütfen destek ekibiyle iletişime geçin.',
+    KYC_NOT_FOUND: 'KYC başvurusu bulunamadı.',
+    KYC_MISSING_FIELDS: 'Belge türü, belge numarası ve doğum tarihi zorunludur.',
+    KYC_INVALID_DECISION: 'Geçersiz karar.',
+
+    // iDIN
+    IDIN_INIT_FOUT: 'iDIN başlatılamadı. Lütfen daha sonra tekrar deneyin.',
+    IDIN_VERIFICATIE_AFGEWEZEN: 'iDIN doğrulaması başarısız veya iptal edildi.',
+    IDIN_NOT_FOUND: 'iDIN sonucu bulunamadı.',
+    IDIN_MISSING_FIELDS: 'transactionId zorunludur.',
+
+    // Push
+    PUSH_INVALID_SUBSCRIPTION: 'Push kaydı geçersiz.',
+    PUSH_ENDPOINT_HIJACK: 'Bu cihaz başka bir hesaba bağlı.',
+    PUSH_NIET_GECONFIGUREERD: 'Push bildirimleri kullanılamıyor.',
+    PUSH_MISSING_ENDPOINT: 'Endpoint gerekli.',
+  },
 };

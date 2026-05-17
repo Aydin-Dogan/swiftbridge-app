@@ -10,6 +10,8 @@
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 import { berekenKosten, KOSTEN_LABELS } from '../services/kosten';
+import { parseError } from '../services/api';
+import { useTaal } from '../i18n';
 import Vlag from './Vlag';
 import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
 import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
@@ -743,6 +745,7 @@ function StapVerzonden({ transactie, methode, onNieuw }) {
 
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function PaymentFlow({ token }) {
+  const { t } = useTaal();
   const [stap,           setStap          ] = useState(0);
   const [bedrag,         setBedrag        ] = useState('500');
   const [valuta,         setValuta        ] = useState('TRY');
@@ -825,8 +828,7 @@ export default function PaymentFlow({ token }) {
 
       // FOUT — geen succes tonen, gebruiker terug naar bevestigingsscherm met fout
       if (!res.ok) {
-        const errBericht = data.error || `Server fout (${res.status}). Probeer opnieuw.`;
-        setFout(errBericht);
+        setFout(parseError({ ...data, status: res.status }, t));
         return; // Belangrijk: NIET doorgaan naar succes scherm
       }
 

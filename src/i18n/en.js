@@ -118,4 +118,57 @@ export const en = {
 
   // Voettekst
   beveiligd_via_jwt: '🔒 Secured by JWT · Rate limited · End-to-end encrypted',
+
+  // ── API error messages (errorCode → text) ────────────────────────────────
+  errors: {
+    // General
+    INVALID_INPUT: 'Invalid input. Please check the fields and try again.',
+    NOT_FOUND: 'Not found.',
+    UNAUTHORIZED: 'Your session expired. Please log in again.',
+    FORBIDDEN: 'Access denied.',
+    RATE_LIMITED: 'Too many requests. Please try again in a moment.',
+    SERVER_ERROR: 'Something went wrong on our end. Please try again later.',
+    SERVICE_UNAVAILABLE: 'Service temporarily unavailable.',
+    CONFLICT: 'This action could not be completed.',
+
+    // Transaction
+    TX_INVALID_AMOUNT: 'Amount must be between €10 and €5,000.',
+    TX_INVALID_IBAN: 'Invalid IBAN. Please check the recipient\'s IBAN.',
+    TX_INSUFFICIENT_KYC: 'KYC verification is required before you can send money.',
+    TX_VALUTA_NIET_BESCHIKBAAR: 'This currency is currently unavailable.',
+    TX_BANK_NIET_BESCHIKBAAR: 'This bank is currently unavailable.',
+    TX_WEEKLIMIET_BEREIKT: 'You\'ve reached your weekly limit. Please try again next week.',
+    TX_NOT_FOUND: 'Transaction not found.',
+    TX_PAPARA_INVALID: 'Papara details are invalid.',
+    TX_SANCTIONED_RECIPIENT: 'This recipient cannot be paid. Please contact customer service.',
+    TX_MISSING_FIELDS: 'Some required fields are missing.',
+
+    // Payment
+    PAY_MOLLIE_FOUT: 'The payment could not be created. Please try again.',
+    PAY_WEBHOOK_INVALID: 'Invalid payment notification.',
+    PAY_REEDS_VOLTOOID: 'A payment has already been started for this transaction.',
+    PAY_NIET_GECONFIGUREERD: 'Payments are temporarily unavailable.',
+    PAY_MISSING_FIELDS: 'transactieId and methode are required.',
+
+    // KYC
+    KYC_BEELD_FOUT: 'There\'s an issue with the photo. Try a clearer image.',
+    KYC_DOCUMENT_AFGEWEZEN: 'Your document could not be approved. Please try again with a different document.',
+    KYC_REEDS_INGEDIEND: 'Your KYC has already been approved.',
+    KYC_GEBLOKKEERD: 'Your account is blocked. Please contact support.',
+    KYC_NOT_FOUND: 'No KYC request found.',
+    KYC_MISSING_FIELDS: 'Document type, document number and date of birth are required.',
+    KYC_INVALID_DECISION: 'Invalid decision.',
+
+    // iDIN
+    IDIN_INIT_FOUT: 'iDIN could not be started. Please try again later.',
+    IDIN_VERIFICATIE_AFGEWEZEN: 'iDIN verification failed or was cancelled.',
+    IDIN_NOT_FOUND: 'iDIN result not found.',
+    IDIN_MISSING_FIELDS: 'transactionId is required.',
+
+    // Push
+    PUSH_INVALID_SUBSCRIPTION: 'Push subscription is invalid.',
+    PUSH_ENDPOINT_HIJACK: 'This device is already linked to another account.',
+    PUSH_NIET_GECONFIGUREERD: 'Push notifications are not available.',
+    PUSH_MISSING_ENDPOINT: 'Endpoint required.',
+  },
 };

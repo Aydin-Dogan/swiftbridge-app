@@ -6,6 +6,8 @@
  * - Voortgangsbalk + stap validatie
  */
 import { useState, useRef, useCallback } from 'react';
+import { parseError } from '../services/api';
+import { useTaal } from '../i18n';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -410,6 +412,7 @@ function KYCGeblokkeerd() {
 
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function KYCFlow({ token, gebruiker }) {
+  const { t } = useTaal();
   const [stap,      setStap     ] = useState(0);
   const [opnieuw,   setOpnieuw  ] = useState(false);
   const [form,      setForm     ] = useState({
@@ -446,13 +449,16 @@ export default function KYCFlow({ token, gebruiker }) {
         }),
       });
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error);
+        const data = await res.json().catch(() => ({}));
+        const err = new Error(data.error || `HTTP ${res.status}`);
+        err.errorCode = data.errorCode || data.code;
+        err.data = data;
+        throw err;
       }
       setStap(3);
       setOpnieuw(false);
     } catch (e) {
-      setFout(e.message || 'Er ging iets mis. Probeer opnieuw.');
+      setFout(parseError(e, t));
     } finally {
       setLaden(false);
     }

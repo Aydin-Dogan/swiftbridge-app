@@ -118,4 +118,57 @@ export const nl = {
 
   // Voettekst
   beveiligd_via_jwt: '🔒 Beveiligd via JWT · Rate limited · End-to-end versleuteld',
+
+  // ── API foutmeldingen (errorCode → tekst) ────────────────────────────────
+  errors: {
+    // Algemeen
+    INVALID_INPUT: 'Ongeldige invoer. Controleer de velden en probeer opnieuw.',
+    NOT_FOUND: 'Niet gevonden.',
+    UNAUTHORIZED: 'Je sessie is verlopen. Log opnieuw in.',
+    FORBIDDEN: 'Geen toegang.',
+    RATE_LIMITED: 'Te veel pogingen. Probeer over een minuutje opnieuw.',
+    SERVER_ERROR: 'Er ging iets fout aan onze kant. Probeer het later opnieuw.',
+    SERVICE_UNAVAILABLE: 'Service tijdelijk niet beschikbaar.',
+    CONFLICT: 'Deze actie kon niet worden uitgevoerd.',
+
+    // Transactie
+    TX_INVALID_AMOUNT: 'Bedrag moet tussen €10 en €5.000 zijn.',
+    TX_INVALID_IBAN: 'Ongeldig IBAN nummer. Controleer het IBAN van de ontvanger.',
+    TX_INSUFFICIENT_KYC: 'KYC verificatie is vereist voordat je geld kunt overmaken.',
+    TX_VALUTA_NIET_BESCHIKBAAR: 'Deze valuta is op dit moment niet beschikbaar.',
+    TX_BANK_NIET_BESCHIKBAAR: 'Deze bank is op dit moment niet beschikbaar.',
+    TX_WEEKLIMIET_BEREIKT: 'Je weeklimiet is bereikt. Probeer het volgende week opnieuw.',
+    TX_NOT_FOUND: 'Transactie niet gevonden.',
+    TX_PAPARA_INVALID: 'Papara gegevens zijn ongeldig.',
+    TX_SANCTIONED_RECIPIENT: 'Deze ontvanger kan niet betaald worden. Neem contact op met onze klantenservice.',
+    TX_MISSING_FIELDS: 'Niet alle velden zijn ingevuld.',
+
+    // Payment
+    PAY_MOLLIE_FOUT: 'De betaling kon niet worden aangemaakt. Probeer opnieuw.',
+    PAY_WEBHOOK_INVALID: 'Ongeldige betalingsmelding.',
+    PAY_REEDS_VOLTOOID: 'Voor deze transactie is al een betaling gestart.',
+    PAY_NIET_GECONFIGUREERD: 'Betalingen zijn tijdelijk niet beschikbaar.',
+    PAY_MISSING_FIELDS: 'transactieId en methode zijn verplicht.',
+
+    // KYC
+    KYC_BEELD_FOUT: 'Er is iets mis met de foto. Probeer een scherpere foto.',
+    KYC_DOCUMENT_AFGEWEZEN: 'Je document kon niet worden goedgekeurd. Probeer opnieuw met een ander document.',
+    KYC_REEDS_INGEDIEND: 'Je KYC is al goedgekeurd.',
+    KYC_GEBLOKKEERD: 'Je account is geblokkeerd. Neem contact op met support.',
+    KYC_NOT_FOUND: 'Geen KYC aanvraag gevonden.',
+    KYC_MISSING_FIELDS: 'Documenttype, documentnummer en geboortedatum zijn verplicht.',
+    KYC_INVALID_DECISION: 'Ongeldige beslissing.',
+
+    // iDIN
+    IDIN_INIT_FOUT: 'iDIN kon niet worden gestart. Probeer het later opnieuw.',
+    IDIN_VERIFICATIE_AFGEWEZEN: 'iDIN verificatie is mislukt of geannuleerd.',
+    IDIN_NOT_FOUND: 'iDIN resultaat niet gevonden.',
+    IDIN_MISSING_FIELDS: 'transactionId is verplicht.',
+
+    // Push
+    PUSH_INVALID_SUBSCRIPTION: 'Push registratie is ongeldig.',
+    PUSH_ENDPOINT_HIJACK: 'Dit apparaat is al gekoppeld aan een ander account.',
+    PUSH_NIET_GECONFIGUREERD: 'Push notificaties zijn niet beschikbaar.',
+    PUSH_MISSING_ENDPOINT: 'Endpoint is vereist.',
+  },
 };

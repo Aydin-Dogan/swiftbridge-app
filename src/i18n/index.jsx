@@ -39,10 +39,29 @@ export function TaalProvider({ children }) {
   }, [taal]);
 
   // t() functie — haal vertaling op met variabelen
+  // Ondersteunt geneste keys via puntnotatie, bv. t('errors.SERVER_ERROR').
   const t = useMemo(() => {
     const dict = VERTALINGEN[taal] || VERTALINGEN.nl;
+    function lookup(d, sleutel) {
+      if (d == null) return undefined;
+      if (sleutel in d) return d[sleutel];
+      // Geneste lookup voor "groep.code" notatie
+      if (sleutel.includes('.')) {
+        const segmenten = sleutel.split('.');
+        let waarde = d;
+        for (const s of segmenten) {
+          if (waarde == null) return undefined;
+          waarde = waarde[s];
+        }
+        return waarde;
+      }
+      return undefined;
+    }
     return (sleutel, vars = {}) => {
-      let tekst = dict[sleutel] ?? VERTALINGEN.nl[sleutel] ?? sleutel;
+      let tekst = lookup(dict, sleutel);
+      if (tekst === undefined) tekst = lookup(VERTALINGEN.nl, sleutel);
+      if (tekst === undefined) tekst = sleutel;
+      if (typeof tekst !== 'string') return tekst; // bv. t('errors') retourneert het object
       for (const [k, v] of Object.entries(vars)) {
         tekst = tekst.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
       }

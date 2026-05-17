@@ -5,6 +5,8 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { parseError } from '../services/api';
+import { useTaal } from '../i18n';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -37,6 +39,7 @@ function StatusBadge({ status }) {
 
 // ── KYC kaart ─────────────────────────────────────────────────────────────────
 function KYCKaart({ aanvraag, secret, onRefresh }) {
+  const { t } = useTaal();
   const [laden, setLaden] = useState(false);
   const [bezig, setBezig] = useState(null);
 
@@ -51,10 +54,10 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
         body: JSON.stringify({ beslissing }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) throw Object.assign(new Error(data.error || 'Fout'), { errorCode: data.errorCode, data });
       onRefresh();
     } catch (e) {
-      alert('Fout: ' + e.message);
+      alert('Fout: ' + parseError(e, t));
     } finally {
       setLaden(false);
       setBezig(null);
@@ -152,6 +155,7 @@ function StatKaart({ icoon, label, waarde, kleur }) {
 
 // ── Hoofdpagina ───────────────────────────────────────────────────────────────
 export default function AdminPanel() {
+  const { t } = useTaal();
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const secret   = params.get('secret') || '';
@@ -174,8 +178,8 @@ export default function AdminPanel() {
       ]);
 
       if (!kycRes.ok) {
-        const d = await kycRes.json();
-        throw new Error(d.error || 'Geen toegang');
+        const d = await kycRes.json().catch(() => ({}));
+        throw Object.assign(new Error(d.error || 'Geen toegang'), { errorCode: d.errorCode || d.code, data: d });
       }
       const kycData          = await kycRes.json();
       const statsData        = statsRes.ok ? await statsRes.json() : null;
@@ -185,7 +189,7 @@ export default function AdminPanel() {
       setStats(statsData);
       setIntegriteit(integriteitData);
     } catch (e) {
-      setFout(e.message);
+      setFout(parseError(e, t));
     } finally {
       setLaden(false);
     }
