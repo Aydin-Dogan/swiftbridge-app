@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import TaalKiezer from '../components/TaalKiezer';
-
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { apiFetch, haalProfiel } from '../services/api';
 
 export default function Login({ onLogin }) {
   const [params] = useSearchParams();
@@ -44,13 +43,8 @@ export default function Login({ onLogin }) {
         ? { email: form.email, password: form.password }
         : { email: form.email, password: form.password, naam: form.naam, telefoon: form.telefoon };
 
-      const res = await fetch(`${API}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      // apiFetch zet `credentials: 'include'` — backend zet sb_token cookie.
+      const data = await apiFetch(endpoint, { method: 'POST', body });
 
       // 2FA tussenstap
       if (data.tweeFactor) {
@@ -58,7 +52,9 @@ export default function Login({ onLogin }) {
         return;
       }
 
-      onLogin(data.token, data.gebruiker, data.refreshToken);
+      // Cookie is gezet door server. Haal profiel op via /auth/me i.p.v. body te vertrouwen.
+      const profiel = await haalProfiel();
+      onLogin(null, profiel || data.gebruiker);
       navigate('/app');
     } catch (e) {
       setFout(e.message);
@@ -72,19 +68,13 @@ export default function Login({ onLogin }) {
     setVergetenLaden(true);
     setVergetenBericht('');
     try {
-      const res = await fetch(`${API}/auth/wachtwoord-vergeten`, {
+      const data = await apiFetch('/auth/wachtwoord-vergeten', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: vergetenEmail }),
+        body: { email: vergetenEmail },
       });
-      const data = await res.json();
-      if (!res.ok) {
-        setVergetenBericht('❌ ' + (data.error || 'Er ging iets mis. Neem contact op met support.'));
-      } else {
-        setVergetenBericht('✅ ' + (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
-      }
-    } catch {
-      setVergetenBericht('❌ Geen verbinding met server. Probeer opnieuw.');
+      setVergetenBericht('✅ ' + (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
+    } catch (e) {
+      setVergetenBericht('❌ ' + (e.message || 'Geen verbinding met server. Probeer opnieuw.'));
     } finally {
       setVergetenLaden(false);
     }
@@ -95,13 +85,10 @@ export default function Login({ onLogin }) {
     if (nieuwWachtwoord.length < 8) return setResetBericht('Wachtwoord moet minimaal 8 tekens bevatten.');
     setResetLaden(true);
     try {
-      const res = await fetch(`${API}/auth/wachtwoord-reset`, {
+      await apiFetch('/auth/wachtwoord-reset', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: resetToken, nieuwWachtwoord }),
+        body: { token: resetToken, nieuwWachtwoord },
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
       setResetBericht('✅ Wachtwoord gewijzigd! Je kunt nu inloggen.');
       setTimeout(() => setToonReset(false), 2000);
     } catch (e) {
@@ -116,14 +103,13 @@ export default function Login({ onLogin }) {
     setTwofaLaden(true);
     setTwofaFout('');
     try {
-      const res = await fetch(`${API}/auth/2fa-verifieer`, {
+      await apiFetch('/auth/2fa-verifieer', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: twofaUserId, code: twofaCode }),
+        body: { userId: twofaUserId, code: twofaCode },
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      onLogin(data.token, data.gebruiker, data.refreshToken);
+      // Cookie is gezet — haal profiel op via /auth/me
+      const profiel = await haalProfiel();
+      onLogin(null, profiel);
       navigate('/app');
     } catch (e) {
       setTwofaFout(e.message);

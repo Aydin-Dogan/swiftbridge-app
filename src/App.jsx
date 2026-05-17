@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import TaalKiezer from './components/TaalKiezer';
 import OfflineBanner from './components/OfflineBanner';
 import { useTaal } from './i18n';
+import { haalProfiel, logout as logoutApi } from './services/api';
 
 // Lazy load zware paginas (code splitting)
 const PaymentFlow         = lazy(() => import('./components/PaymentFlow'));
@@ -274,79 +275,55 @@ function ProtectedRoute({ token, gebruiker, onLogout, children }) {
   return <AppShell token={token} gebruiker={gebruiker} onLogout={onLogout} />;
 }
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// Sentinel: andere componenten ontvangen `token` als prop. Met de httpOnly cookie
+// is er geen leesbare token-string meer, maar we willen die props niet wijzigen
+// (out of scope). Een truthy placeholder houdt `if (token)`-checks elders heel —
+// downstream fetch calls sturen straks gewoon `credentials: 'include'`.
+const TOKEN_SENTINEL = 'cookie';
 
 export default function App() {
-  const [token, setToken] = useState(() => localStorage.getItem('sb_token'));
-  const [gebruiker, setGebruiker] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('sb_gebruiker')); } catch { return null; }
-  });
+  // `gebruiker === null` = uitgelogd, `gebruiker === undefined` = nog niet gecheckt
+  const [gebruiker, setGebruiker] = useState(undefined);
+  const token = gebruiker ? TOKEN_SENTINEL : null;
 
-  // Ververs access token met refresh token
-  async function verversToken() {
-    const refreshToken = localStorage.getItem('sb_refresh');
-    if (!refreshToken) return null;
-    try {
-      const res = await fetch(`${API}/auth/refresh`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken }),
-      });
-      if (!res.ok) throw new Error('Refresh mislukt');
-      const data = await res.json();
-      localStorage.setItem('sb_token', data.token);
-      localStorage.setItem('sb_refresh', data.refreshToken);
-      localStorage.setItem('sb_gebruiker', JSON.stringify(data.gebruiker));
-      setToken(data.token);
-      setGebruiker(data.gebruiker);
-      return data.token;
-    } catch {
-      // Refresh token verlopen — uitloggen
-      handleLogout();
-      return null;
-    }
-  }
-
-  // Bij opstarten: haal actuele gebruikersdata op
+  // Bij opstarten: vraag /auth/me — als 401, dan niet ingelogd
   useEffect(() => {
-    const t = localStorage.getItem('sb_token');
-    if (!t) return;
-    fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${t}` } })
-      .then(async r => {
-        if (r.status === 401) {
-          // Access token verlopen — probeer te vernieuwen
-          return verversToken();
-        }
-        return r.ok ? r.json() : null;
-      })
+    // Eenmalige opruimactie: oude tokens uit localStorage verwijderen.
+    try {
+      localStorage.removeItem('sb_token');
+      localStorage.removeItem('sb_refresh');
+      localStorage.removeItem('sb_gebruiker');
+    } catch {}
+
+    let geannuleerd = false;
+    haalProfiel()
       .then(g => {
-        if (g && g.id) {
-          setGebruiker(g);
-          localStorage.setItem('sb_gebruiker', JSON.stringify(g));
-        }
+        if (geannuleerd) return;
+        setGebruiker(g && g.id ? g : null);
       })
-      .catch(() => {});
+      .catch(() => { if (!geannuleerd) setGebruiker(null); });
+    return () => { geannuleerd = true; };
   }, []);
 
-  function handleLogin(t, g, refreshToken) {
-    setToken(t);
+  function handleLogin(_t, g) {
+    // Token kwam mee in body voor backward compat — negeren, cookie is leidend.
     setGebruiker(g);
-    localStorage.setItem('sb_token', t);
-    localStorage.setItem('sb_gebruiker', JSON.stringify(g));
-    if (refreshToken) localStorage.setItem('sb_refresh', refreshToken);
   }
 
   function handleLogout() {
-    // Vertel server dat refresh token ingetrokken moet worden
-    const t = localStorage.getItem('sb_token');
-    if (t) {
-      fetch(`${API}/auth/logout`, { method: 'POST', headers: { Authorization: `Bearer ${t}` } }).catch(() => {});
-    }
-    setToken(null);
+    // Vertel server dat refresh token ingetrokken moet worden (cookie wordt server-side gewist)
+    logoutApi();
     setGebruiker(null);
-    localStorage.removeItem('sb_token');
-    localStorage.removeItem('sb_refresh');
-    localStorage.removeItem('sb_gebruiker');
+  }
+
+  // Toon spinner terwijl /auth/me nog loopt — voorkomt flash van /login bij refresh
+  if (gebruiker === undefined) {
+    return (
+      <BrowserRouter>
+        <OfflineBanner />
+        <LaadSpinner />
+      </BrowserRouter>
+    );
   }
 
   return (
