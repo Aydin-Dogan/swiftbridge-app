@@ -126,6 +126,20 @@ function InstallBanner() {
 }
 
 function AppShell({ gebruiker, token, onLogout }) {
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!accountMenuOpen) return;
+    const onClickOutside = (e) => {
+      if (!e.target.closest('#account-menu-wrap')) setAccountMenuOpen(false);
+    };
+    const onEsc = (e) => { if (e.key === 'Escape') setAccountMenuOpen(false); };
+    document.addEventListener('click', onClickOutside);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('click', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, [accountMenuOpen]);
   const [actief, setActief] = useState('dashboard');
   const navigate = useNavigate();
   const { t } = useTaal();
@@ -157,7 +171,7 @@ function AppShell({ gebruiker, token, onLogout }) {
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button onClick={() => navigate('/')} className="flex items-center gap-2">
-            <span className="text-2xl">⚡</span>
+            <img src="/icon-192.png" alt="SwiftBridge" className="w-9 h-9 rounded-xl shadow-sm" />
             <div>
               <h1 className="text-base font-extrabold text-gray-900 leading-none">SwiftBridge</h1>
               <p className="text-xs text-blue-600 font-medium">NL → TR in &lt;5 min</p>
@@ -171,20 +185,38 @@ function AppShell({ gebruiker, token, onLogout }) {
               </button>
             )}
             <TaalKiezer />
-            <div className="relative group">
-              <div className="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold cursor-pointer">
-                {gebruiker?.naam?.[0] || 'G'}
-              </div>
-              <div className="absolute right-0 top-11 bg-white rounded-xl shadow-lg border border-gray-100 w-48 p-2 hidden group-hover:block z-50">
-                <div className="px-3 py-2 border-b border-gray-100 mb-1">
-                  <p className="font-semibold text-sm text-gray-800">{gebruiker?.naam}</p>
-                  <p className="text-xs text-gray-400">{gebruiker?.email}</p>
+            <div id="account-menu-wrap" className="relative">
+              <button
+                onClick={(e) => { e.stopPropagation(); setAccountMenuOpen(o => !o); }}
+                className="w-10 h-10 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-white text-sm font-bold transition shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                aria-label="Account menu"
+                aria-expanded={accountMenuOpen}
+              >
+                {gebruiker?.naam?.[0]?.toUpperCase() || 'G'}
+              </button>
+              {accountMenuOpen && (
+                <div
+                  className="absolute right-0 top-12 bg-white rounded-2xl shadow-xl border border-gray-100 w-60 p-2 z-50 animate-fade-up"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="px-3 py-3 border-b border-gray-100 mb-1">
+                    <p className="font-semibold text-sm text-gray-800 truncate">{gebruiker?.naam}</p>
+                    <p className="text-xs text-gray-400 truncate">{gebruiker?.email}</p>
+                  </div>
+                  <button
+                    onClick={() => { setAccountMenuOpen(false); setActief('profiel'); }}
+                    className="w-full text-left text-sm text-gray-700 hover:bg-gray-50 px-3 py-2.5 rounded-lg font-medium flex items-center gap-2"
+                  >
+                    <span>👤</span> {t('tab_profiel')}
+                  </button>
+                  <button
+                    onClick={() => { setAccountMenuOpen(false); onLogout(); }}
+                    className="w-full text-left text-sm text-red-600 hover:bg-red-50 px-3 py-2.5 rounded-lg font-medium flex items-center gap-2 mt-1"
+                  >
+                    <span>🚪</span> {t('uitloggen')}
+                  </button>
                 </div>
-                <button onClick={onLogout}
-                  className="w-full text-left text-sm text-red-500 hover:bg-red-50 px-3 py-2 rounded-lg font-medium">
-                  {t('uitloggen')}
-                </button>
-              </div>
+              )}
             </div>
           </div>
         </div>
