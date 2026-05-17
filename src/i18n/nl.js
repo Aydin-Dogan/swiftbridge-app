@@ -25,7 +25,7 @@ export const nl = {
   // Landing page
   landing_titel: 'Geld naar Turkije',
   landing_ondertitel: 'in minder dan 5 minuten',
-  landing_uitleg: 'Goedkoper dan je bank. Sneller dan Wise. 24/7 beschikbaar. Met Turks kimlik.',
+  landing_uitleg: 'Goedkoper dan je bank. Razendsnel. 24/7 beschikbaar. Met Turks kimlik.',
   gratis_starten: 'Gratis starten →',
   download_app: '📲 Download de app',
   inloggen: 'Inloggen',

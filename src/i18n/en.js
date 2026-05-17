@@ -25,7 +25,7 @@ export const en = {
   // Landing page
   landing_titel: 'Money to Turkey',
   landing_ondertitel: 'in less than 5 minutes',
-  landing_uitleg: 'Cheaper than your bank. Faster than Wise. 24/7 available. With Turkish kimlik.',
+  landing_uitleg: 'Cheaper than your bank. Lightning fast. 24/7 available. With Turkish kimlik.',
   gratis_starten: 'Get started for free →',
   download_app: '📲 Download the app',
   inloggen: 'Log in',

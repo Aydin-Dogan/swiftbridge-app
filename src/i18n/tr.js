@@ -25,7 +25,7 @@ export const tr = {
   // Landing page
   landing_titel: 'Türkiye\'ye para',
   landing_ondertitel: '5 dakikadan kısa sürede',
-  landing_uitleg: 'Bankanızdan daha ucuz. Wise\'den daha hızlı. 7/24 erişilebilir. Türk kimliği ile.',
+  landing_uitleg: 'Bankanızdan daha ucuz. Şimşek hızında. 7/24 erişilebilir. Türk kimliği ile.',
   gratis_starten: 'Ücretsiz başla →',
   download_app: '📲 Uygulamayı indir',
   inloggen: 'Giriş Yap',
