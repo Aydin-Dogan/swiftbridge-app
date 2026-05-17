@@ -371,26 +371,40 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             border: '1px solid rgba(59,130,246,0.25)',
           }}
         >
-          {/* Vereenvoudigde kostenweergave */}
+          {/* PSD2 transparante kostenweergave — vereist door EU 2019/518 */}
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">💰 Servicekosten</span>
             <span className="font-mono font-semibold text-gray-800">€{kosten.klantBetaaltFee.toFixed(2)}</span>
           </div>
+
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">📈 Wisselkoers</span>
-            <span className="font-mono font-semibold text-gray-800">1 EUR = {kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
+            <span className="text-gray-600">💱 Wisselkoers marge ({kosten.fxAfwijkingPct}%)</span>
+            <span className="font-mono font-semibold text-gray-800">€{kosten.fxKostenEur.toFixed(2)}</span>
+          </div>
+
+          <div className="border-t border-blue-200 pt-2 flex justify-between text-sm font-bold text-rose-700">
+            <span>💸 Totale kosten</span>
+            <span className="font-mono">€{kosten.totaleKostenEur.toFixed(2)} ({kosten.totaleKostenPct}%)</span>
+          </div>
+
+          {/* Mid-market vs gehanteerde koers — PSD2 vereiste */}
+          <div className="bg-white/60 rounded-lg p-2 space-y-1 text-[11px] border border-blue-100">
+            <div className="flex justify-between text-gray-500">
+              <span>Mid-market koers (ECB referentie)</span>
+              <span className="font-mono">1 EUR = {kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}</span>
+            </div>
+            <div className="flex justify-between text-gray-800 font-semibold">
+              <span>Onze koers</span>
+              <span className="font-mono">1 EUR = {kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
+            </div>
+            <div className="text-[10px] text-gray-400 mt-1">
+              Onze koers wijkt {kosten.fxAfwijkingPct}% af van de ECB referentiekoers
+            </div>
           </div>
 
           <div className="border-t border-blue-200 pt-2 flex justify-between font-bold text-blue-700">
             <span>✅ Ontvanger krijgt</span>
             <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
-          </div>
-
-          <div className="rounded-lg px-2.5 py-2 text-[10px] leading-snug flex items-center gap-2 border bg-emerald-50/80 text-emerald-900 border-emerald-200/60">
-            <span className="text-base flex-shrink-0">⚡</span>
-            <span>
-              Snelle, eerlijke prijs · Turks-specialist 🇹🇷
-            </span>
           </div>
 
           <div className="bg-blue-100/60 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
@@ -637,9 +651,9 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
   const valutaInfo = getValuta(valuta);
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
   const bedragNum = parseFloat(bedrag) || 0;
-  const netto     = bedragNum * 0.978;
-  const ontvangenBedrag = netto * effectieveKoers;
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
+  // PSD2 compliant cost breakdown
+  const kosten = berekenKosten(bedragNum, methode || 'ideal', 'express', effectieveKoers);
 
   return (
     <div className="card-glass p-6 space-y-5 animate-fade-up">
@@ -650,10 +664,13 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
           ['Betaalmethode',    `${methodeObj?.icon} ${methodeObj?.label}`],
           ['Naar',             ontvanger],
           ['IBAN',             `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
-          ['Transactiekosten', `€${(bedragNum * 0.022).toFixed(2)}`],
-          ['Wisselkoers',      `1 EUR = ${effectieveKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
-          ['Ontvanger krijgt', `${valutaInfo.vlag} ${formatBedrag(ontvangenBedrag, valuta)}`],
-          ['Aankomsttijd',     methode === 'ideal' ? '< 5 minuten ⚡' : '1–2 werkdagen'],
+          ['Servicekosten',    `€${kosten.klantBetaaltFee.toFixed(2)}`],
+          [`Wisselkoers marge (${kosten.fxAfwijkingPct}%)`, `€${kosten.fxKostenEur.toFixed(2)}`],
+          ['Totale kosten',    `€${kosten.totaleKostenEur.toFixed(2)} (${kosten.totaleKostenPct}%)`],
+          ['Mid-market koers (ECB)', `1 EUR = ${kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],
+          ['Onze wisselkoers',  `1 EUR = ${kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
+          ['Ontvanger krijgt',  formatBedrag(kosten.ontvangenBedrag, valuta)],
+          ['Aankomsttijd',      methode === 'ideal' ? '< 5 minuten ⚡' : '1–2 werkdagen'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
             <span className="text-gray-500 text-sm">{label}</span>

@@ -88,15 +88,25 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
   const werkelijkeKosten = mollie + transfer + COMPLIANCE_PER_TX + OVERHEAD_PER_TX;
   const werkelijkeWinst = swiftbridgeOmzet - werkelijkeKosten;
 
+  // PSD2 transparantie: toon klant ook de totale kosten incl. wisselkoers-marge
+  const fxKostenInEur = bedrag > 0 ? (verborgenFxOmzet / 1) : 0; // de FX marge uitgedrukt in EUR
+  const totaleKostenEur = klantBetaaltFee + fxKostenInEur;
+  const totaleKostenPct = bedrag > 0 ? (totaleKostenEur / bedrag) * 100 : 0;
+  const fxAfwijkingPct = margin * 100; // hoeveel % de applied rate afwijkt van mid-market
+
   return {
     bedrag,
     // KLANT ZIET DEZE
-    klantBetaaltFee:  round(klantBetaaltFee),
-    appliedRate:      round(appliedRate),
-    midMarketRate:    round(midMarketRate),
+    klantBetaaltFee:  round(klantBetaaltFee),    // zichtbare servicekosten
+    appliedRate:      round(appliedRate),         // gehanteerde koers
+    midMarketRate:    round(midMarketRate),       // ECB/mid-market referentie (PSD2 verplicht)
+    fxKostenEur:      round(fxKostenInEur),       // FX marge in EUR (PSD2: totale kosten zichtbaar)
+    totaleKostenEur:  round(totaleKostenEur),     // fee + FX = wat klant feitelijk betaalt
+    totaleKostenPct:  round(totaleKostenPct, 2),  // als percentage van bedrag
+    fxAfwijkingPct:   round(fxAfwijkingPct, 2),   // afwijking van mid-market (EU Cross-Border 2019/518)
     ontvangenBedrag:  round(ontvangenBedrag),
     effectievePct:    bedrag > 0 ? round(((bedrag - ontvangenBedrag / midMarketRate) / bedrag) * 100, 2) : 0,
-    // INTERN (toon NIET aan klant)
+    // INTERN (toon NIET aan klant — alleen voor admin reporting)
     _intern: {
       verborgenFxOmzet: round(verborgenFxOmzet),
       swiftbridgeOmzet: round(swiftbridgeOmzet),
