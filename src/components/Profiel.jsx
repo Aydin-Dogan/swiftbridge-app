@@ -8,6 +8,7 @@ import { useTaal } from '../i18n';
 import { parseError } from '../services/api';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
+import TweeFactorInstellingen from './TweeFactorInstellingen';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -464,6 +465,13 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           {bezig ? '⏳ Opslaan...' : '💾 Opslaan'}
         </button>
       </form>
+
+      {/* 2-staps verificatie (TOTP) */}
+      <TweeFactorInstellingen
+        token={token}
+        twofaIngeschakeld={!!profiel?.twofaIngeschakeld}
+        onChange={(nieuweStatus) => setProfiel(p => ({ ...p, twofaIngeschakeld: nieuweStatus }))}
+      />
 
       {/* AVG / GDPR beheer — data export + account anonimiseren */}
       <div className="card-glass p-5 animate-fade-up border-l-4 border-blue-500 space-y-2">
