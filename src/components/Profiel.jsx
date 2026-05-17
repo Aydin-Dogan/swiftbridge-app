@@ -9,6 +9,108 @@ import Vlag from './Vlag';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+// ── iDIN verificatie via NL bank ─────────────────────────────────────
+const NL_BANKEN_IDIN = [
+  { code: 'INGBNL2A', naam: 'ING',          kleur: '#FF6200' },
+  { code: 'RABONL2U', naam: 'Rabobank',     kleur: '#005EB8' },
+  { code: 'ABNANL2A', naam: 'ABN AMRO',     kleur: '#00A551' },
+  { code: 'SNSBNL2A', naam: 'SNS Bank',     kleur: '#003D7E' },
+  { code: 'BUNQNL2A', naam: 'bunq',         kleur: '#2A2F37' },
+  { code: 'KNABNL2H', naam: 'Knab',         kleur: '#FFCC00' },
+  { code: 'ASNBNL21', naam: 'ASN Bank',     kleur: '#1B8B47' },
+  { code: 'RBRBNL21', naam: 'RegioBank',    kleur: '#005EB8' },
+  { code: 'TRIONL2U', naam: 'Triodos Bank', kleur: '#00853E' },
+];
+
+function IdinKnop({ token, onSucces }) {
+  const [open, setOpen] = useState(false);
+  const [gekozen, setGekozen] = useState(null);
+  const [bezig, setBezig] = useState(false);
+  const [fout, setFout] = useState('');
+
+  async function startVerificatie(bank) {
+    setBezig(true);
+    setFout('');
+    setGekozen(bank);
+    try {
+      const res = await fetch(`${API}/idin/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ bankIssuer: bank.code }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Start mislukt');
+
+      // Mock flow: simuleer redirect terug + voltooi direct
+      if (data.mock) {
+        const voltooi = await fetch(`${API}/idin/voltooien`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ transactionId: data.transactionId }),
+        });
+        const vRes = await voltooi.json();
+        if (!voltooi.ok) throw new Error(vRes.error || 'Voltooien mislukt');
+        alert(`✅ Mock iDIN gelukt!\nNaam: ${vRes.geverifieerd.naam}\nAdres: ${vRes.geverifieerd.adres}`);
+        onSucces?.();
+      } else {
+        // Echte flow: stuur door naar bank
+        window.location.href = data.redirectUrl;
+      }
+    } catch (e) {
+      setFout(e.message);
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  return (
+    <div className="card-glass p-5 border-l-4 border-blue-500 animate-fade-up">
+      <div className="flex items-start gap-3">
+        <div className="text-3xl flex-shrink-0">🪪</div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-bold text-gray-800">Verifieer met je bank (iDIN)</h3>
+          <p className="text-xs text-gray-600 mt-1 mb-3">
+            Snelste manier — log even in bij je bank. Wij krijgen alleen je geverifieerde naam, geboortedatum en adres. Geen wachtwoorden, geen scans.
+          </p>
+
+          {!open ? (
+            <button
+              onClick={() => setOpen(true)}
+              className="btn-primary w-full py-3 text-sm"
+            >
+              🏦 Kies mijn bank →
+            </button>
+          ) : (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-gray-600">Kies je bank:</p>
+              <div className="grid grid-cols-3 gap-1.5">
+                {NL_BANKEN_IDIN.map(b => (
+                  <button
+                    key={b.code}
+                    onClick={() => startVerificatie(b)}
+                    disabled={bezig}
+                    className="border-2 rounded-lg py-2 px-1 text-[10px] font-bold transition active:scale-95 disabled:opacity-50"
+                    style={{ borderColor: b.kleur, color: b.kleur, background: 'white' }}
+                  >
+                    {bezig && gekozen?.code === b.code ? '⏳' : b.naam}
+                  </button>
+                ))}
+              </div>
+              {fout && <div className="text-xs text-rose-600 bg-rose-50 p-2 rounded-lg">❌ {fout}</div>}
+              <button
+                onClick={() => setOpen(false)}
+                className="text-xs text-gray-500 hover:text-gray-700"
+              >
+                ← Terug
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const LANDEN = [
   { code: 'NL', naam: 'Nederland' },
   { code: 'BE', naam: 'België' },
@@ -162,6 +264,11 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         )}
       </div>
 
+      {/* iDIN verificatie via bank — snelste route naar KYC */}
+      {!kycOk && (
+        <IdinKnop token={token} onSucces={laad} />
+      )}
+
       {/* KYC check */}
       {!kycOk && (
         <div className="card-glass p-4 border-l-4 border-amber-500">
@@ -170,7 +277,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             <div>
               <h3 className="font-bold text-gray-800 text-sm">KYC verificatie nodig</h3>
               <p className="text-xs text-gray-600 mt-1">
-                Voltooi eerst je identiteitsverificatie om je profielgegevens aan te kunnen passen.
+                Voltooi eerst je identiteitsverificatie om je profielgegevens aan te kunnen passen. Gebruik bij voorkeur iDIN hierboven — snelste en veiligste manier via je bank.
               </p>
             </div>
           </div>
