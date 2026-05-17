@@ -135,6 +135,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
     adresPostcode: '',
     adresStad: '',
     adresLand: 'NL',
+    whatsappOptIn: true,
   });
   const [profiel, setProfiel] = useState(null);
 
@@ -158,6 +159,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         adresPostcode: data.adres?.postcode || '',
         adresStad: data.adres?.stad || '',
         adresLand: data.adres?.land || 'NL',
+        whatsappOptIn: data.whatsappOptIn !== undefined ? !!data.whatsappOptIn : true,
       });
     } catch (e) {
       setFout('Profiel ophalen mislukt: ' + e.message);
@@ -323,6 +325,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
               placeholder="+31 6 12345678"
               className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
             />
+            <p className="text-[10px] text-gray-500 mt-1">Vereist voor WhatsApp</p>
           </div>
         </div>
 
@@ -394,6 +397,28 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             </select>
           </div>
         </div>
+
+        <h3 className="font-bold text-gray-800 flex items-center gap-2 pt-2 border-t border-gray-100">
+          📲 Notificaties
+        </h3>
+
+        <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border-2 border-gray-200 hover:border-emerald-300 transition">
+          <input
+            type="checkbox"
+            checked={!!form.whatsappOptIn}
+            onChange={e => update('whatsappOptIn', e.target.checked)}
+            disabled={!kycOk}
+            className="mt-0.5 h-5 w-5 accent-emerald-600 disabled:opacity-50"
+          />
+          <div className="flex-1">
+            <div className="text-sm font-semibold text-gray-800">WhatsApp bevestigingen</div>
+            <div className="text-xs text-gray-500 mt-0.5">
+              Ontvang een WhatsApp bericht zodra je geld is aangekomen. {(!form.telefoon) && (
+                <span className="text-amber-600 font-medium">Telefoonnummer is nodig.</span>
+              )}
+            </div>
+          </div>
+        </label>
 
         {fout && (
           <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
