@@ -834,7 +834,7 @@ export default function PaymentFlow({ token }) {
 
       // Server transactie gelukt — gebruik server data, niet lokale berekening
       if (!data.transactie?.id) {
-        setFout('Onverwachte server respons. Neem contact op met support.');
+        setFout(parseError({ errorCode: 'SERVER_ERROR' }, t));
         return;
       }
 
@@ -912,8 +912,8 @@ export default function PaymentFlow({ token }) {
 
       setStap(3);
     } catch (e) {
-      // Netwerk fout of timeout
-      setFout('Geen verbinding met server. Controleer je internet en probeer opnieuw. Je transactie is NIET verstuurd.');
+      // Netwerk fout of timeout — parseError zorgt voor i18n vertaling
+      setFout(parseError(e, t));
     } finally {
       setLaden(false);
     }

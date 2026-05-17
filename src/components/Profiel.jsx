@@ -5,6 +5,7 @@
  */
 import { useState, useEffect } from 'react';
 import { useTaal } from '../i18n';
+import { parseError } from '../services/api';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 
@@ -24,6 +25,7 @@ const NL_BANKEN_IDIN = [
 ];
 
 function IdinKnop({ token, onSucces }) {
+  const { t } = useTaal();
   const [open, setOpen] = useState(false);
   const [gekozen, setGekozen] = useState(null);
   const [bezig, setBezig] = useState(false);
@@ -39,8 +41,11 @@ function IdinKnop({ token, onSucces }) {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ bankIssuer: bank.code }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Start mislukt');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setFout(parseError({ ...data, status: res.status }, t));
+        return;
+      }
 
       // Mock flow: simuleer redirect terug + voltooi direct
       if (data.mock) {
@@ -49,8 +54,11 @@ function IdinKnop({ token, onSucces }) {
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify({ transactionId: data.transactionId }),
         });
-        const vRes = await voltooi.json();
-        if (!voltooi.ok) throw new Error(vRes.error || 'Voltooien mislukt');
+        const vRes = await voltooi.json().catch(() => ({}));
+        if (!voltooi.ok) {
+          setFout(parseError({ ...vRes, status: voltooi.status }, t));
+          return;
+        }
         alert(`✅ Mock iDIN gelukt!\nNaam: ${vRes.geverifieerd.naam}\nAdres: ${vRes.geverifieerd.adres}`);
         onSucces?.();
       } else {
@@ -58,7 +66,7 @@ function IdinKnop({ token, onSucces }) {
         window.location.href = data.redirectUrl;
       }
     } catch (e) {
-      setFout(e.message);
+      setFout(parseError(e, t));
     } finally {
       setBezig(false);
     }
@@ -146,11 +154,11 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       const res = await fetch(`${API}/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${res.status}`);
+        setFout(parseError({ ...data, status: res.status }, t));
+        return;
       }
-      const data = await res.json();
       setProfiel(data);
       setForm({
         naam: data.naam || '',
@@ -163,7 +171,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         whatsappOptIn: data.whatsappOptIn !== undefined ? !!data.whatsappOptIn : true,
       });
     } catch (e) {
-      setFout('Profiel ophalen mislukt: ' + e.message);
+      setFout(parseError(e, t));
       console.error('Profiel laad fout:', e);
     } finally {
       setLaden(false);
@@ -190,14 +198,17 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Opslaan mislukt');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setFout(parseError({ ...data, status: res.status }, t));
+        return;
+      }
       setBericht('✅ Profiel bijgewerkt');
       setProfiel(data.gebruiker);
       onUpdate?.(data.gebruiker);
       setTimeout(() => setBericht(null), 3000);
     } catch (e) {
-      setFout(e.message);
+      setFout(parseError(e, t));
     } finally {
       setBezig(false);
     }
@@ -403,7 +414,11 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           📲 Notificaties
         </h3>
 
-        <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border-2 border-gray-200 hover:border-emerald-300 transition">
+        <label className={`flex items-start gap-3 cursor-pointer p-4 rounded-xl border-2 transition ${
+          form.whatsappOptIn
+            ? 'border-emerald-400 bg-gradient-to-br from-emerald-50 to-green-50 shadow-sm'
+            : 'border-gray-200 bg-white hover:border-emerald-300'
+        }`}>
           <input
             type="checkbox"
             checked={!!form.whatsappOptIn}
@@ -412,12 +427,21 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             className="mt-0.5 h-5 w-5 accent-emerald-600 disabled:opacity-50"
           />
           <div className="flex-1">
-            <div className="text-sm font-semibold text-gray-800">WhatsApp bevestigingen</div>
-            <div className="text-xs text-gray-500 mt-0.5">
-              Ontvang een WhatsApp bericht zodra je geld is aangekomen. {(!form.telefoon) && (
-                <span className="text-amber-600 font-medium">Telefoonnummer is nodig.</span>
+            <div className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+              {t('profiel_whatsapp_titel')}
+              {form.whatsappOptIn && (
+                <span className="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded-full font-bold">AAN</span>
               )}
             </div>
+            <div className="text-xs text-gray-600 mt-1 leading-relaxed">
+              {t('profiel_whatsapp_uitleg')}
+            </div>
+            {(!form.telefoon) && (
+              <div className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded-lg px-2 py-1 inline-flex items-center gap-1">
+                <span>📞</span>
+                <span className="font-medium">{t('profiel_whatsapp_geen_telefoon')}</span>
+              </div>
+            )}
           </div>
         </label>
 
@@ -442,6 +466,14 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       </form>
 
       {/* AVG / GDPR beheer — data export + account anonimiseren */}
+      <div className="card-glass p-5 animate-fade-up border-l-4 border-blue-500 space-y-2">
+        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+          {t('profiel_gdpr_kop')}
+        </h3>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {t('profiel_gdpr_uitleg')}
+        </p>
+      </div>
       <GdprBeheer token={token} />
     </div>
   );

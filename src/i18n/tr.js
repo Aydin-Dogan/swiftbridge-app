@@ -119,6 +119,43 @@ export const tr = {
   // Voettekst
   beveiligd_via_jwt: '🔒 JWT ile güvenli · Hız sınırlı · Uçtan uca şifreli',
 
+  // ── Profil: WhatsApp opt-in ──────────────────────────────────────────────
+  profiel_whatsapp_titel: '🇹🇷 Aile için WhatsApp onayı',
+  profiel_whatsapp_uitleg: 'Ailen bekliyor mu? Para Türkiye\'ye ulaştığı anda doğrudan WhatsApp bildirimi al. E-postaya gerek yok.',
+  profiel_whatsapp_geen_telefoon: 'Önce telefon numaranı ekle.',
+
+  // ── Profil: KVKK / GDPR bölümü başlığı ───────────────────────────────────
+  profiel_gdpr_kop: '🔒 Gizlilik ve veri yönetimi',
+  profiel_gdpr_uitleg: 'KVKK/GDPR kapsamında verilerine erişme (indirme) ve unutulma (hesabı anonimleştirme) hakkın var. Wwft yasası, kişisel bilgi olmadan işlem geçmişini 5 yıl saklamamızı zorunlu kılar.',
+
+  // ── GDPR Yönetim ─────────────────────────────────────────────────────────
+  gdpr_titel: 'KVKK / GDPR yönetimi',
+  gdpr_intro: 'GDPR kapsamında verilerinize erişme (Madde 15) ve unutulma (Madde 17) hakkınız vardır.',
+  gdpr_wwft_disclaimer: 'Önemli — Wwft Madde 38, anonimleştirme sonrasında bile işlem geçmişini 5 yıl saklamamızı zorunlu kılar. Yalnızca kişisel kimlik bilgileri (PII) silinir.',
+  gdpr_download_titel: '📥 Verilerimi indir',
+  gdpr_download_uitleg: 'Tüm profil bilgileriniz, işlemler, KYC kayıtları, denetim günlüğü ve bildirim ayarlarınızı içeren tek bir JSON dosyası. Doğrudan cihazınıza kaydedin.',
+  gdpr_download_knop: '⬇️ JSON olarak indir',
+  gdpr_download_bezig: 'Hazırlanıyor...',
+  gdpr_download_subtekst: 'Bu dosyayı güvenli bir yerde saklayın — tüm kişisel verilerinizi içerir.',
+  gdpr_download_succes: 'İndirme başladı. Dosyanızı güvenli bir yerde saklayın.',
+  gdpr_anonimiseer_titel: '⚠️ Hesabı anonimleştir',
+  gdpr_anonimiseer_uitleg: 'Adınız, e-posta, telefon, adres ve KYC verilerini siler. Geri alınamaz. Anında çıkış yaparsınız.',
+  gdpr_anonimiseer_knop: '🗑️ Hesabı anonimleştir (kalıcı)',
+  gdpr_modal_titel: 'Hesabı anonimleştir — son kontrol',
+  gdpr_modal_wist_uitleg: 'Bundan sonra aşağıdaki veriler geri alınamaz şekilde silinir:',
+  gdpr_modal_li_persoonlijk: 'Ad, e-posta, telefon, adres',
+  gdpr_modal_li_kyc: 'KYC belgeleri ve iDIN bilgileri',
+  gdpr_modal_li_notificaties: 'Push bildirimleri ve kur uyarıları',
+  gdpr_modal_li_login: 'Giriş bilgileri ve 2FA',
+  gdpr_modal_wwft_note: 'İşlem geçmişiniz saklanır ancak kimlik bilgileriniz olmadan (Wwft Madde 38, 5 yıl saklama zorunluluğu).',
+  gdpr_modal_typ_label: 'Onaylamak için',
+  gdpr_modal_typ_om: 'yazın:',
+  gdpr_modal_annuleer: 'İptal',
+  gdpr_modal_bevestig: 'Kalıcı olarak anonimleştir',
+  gdpr_modal_bezig: 'İşleniyor...',
+  gdpr_typ_fout: 'Tam olarak şunu yazın: IK BEGRIJP HET',
+  gdpr_afmelden_bericht: 'Hesabınız anonimleştirildi. Şimdi çıkış yapılıyor.',
+
   // ── API hata mesajları (errorCode → metin) ──────────────────────────────
   errors: {
     // Genel

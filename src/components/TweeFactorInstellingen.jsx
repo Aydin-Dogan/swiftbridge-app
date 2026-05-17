@@ -2,10 +2,13 @@
  * TweeFactorInstellingen — Toggle voor 2FA via e-mail
  */
 import { useState } from 'react';
+import { parseError } from '../services/api';
+import { useTaal } from '../i18n';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onChange }) {
+  const { t } = useTaal();
   const [bezig,   setBezig  ] = useState(false);
   const [bericht, setBericht] = useState('');
 
@@ -18,14 +21,17 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ingeschakeld: !twofaIngeschakeld }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setBericht('❌ ' + parseError({ ...data, status: res.status }, t));
+        return;
+      }
       onChange?.(data.twofaIngeschakeld);
       setBericht(data.twofaIngeschakeld
         ? '✅ 2FA ingeschakeld. Volgende keer inloggen krijg je een code per e-mail.'
         : '2FA uitgeschakeld.');
     } catch (e) {
-      setBericht('❌ ' + e.message);
+      setBericht('❌ ' + parseError(e, t));
     } finally {
       setBezig(false);
     }

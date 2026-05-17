@@ -119,6 +119,43 @@ export const nl = {
   // Voettekst
   beveiligd_via_jwt: '🔒 Beveiligd via JWT · Rate limited · End-to-end versleuteld',
 
+  // ── Profiel: WhatsApp opt-in ─────────────────────────────────────────────
+  profiel_whatsapp_titel: '🇹🇷 WhatsApp bevestiging voor familie',
+  profiel_whatsapp_uitleg: 'Familie wachten? Krijg direct een WhatsApp bevestiging zodra het geld in Türkiye is. Geen e-mail nodig.',
+  profiel_whatsapp_geen_telefoon: 'Voeg eerst je telefoonnummer toe.',
+
+  // ── Profiel: GDPR / AVG sectie kop ───────────────────────────────────────
+  profiel_gdpr_kop: '🔒 Privacy & gegevensbeheer',
+  profiel_gdpr_uitleg: 'Onder AVG heb je recht op inzage (download je data) en vergetelheid (account anonimiseren). Wwft verplicht ons 5 jaar transactiebewaring zonder PII.',
+
+  // ── GDPR Beheer component ────────────────────────────────────────────────
+  gdpr_titel: 'AVG / GDPR beheer',
+  gdpr_intro: 'Onder de AVG heb je het recht op inzage in je gegevens (Art. 15) en het recht op vergetelheid (Art. 17).',
+  gdpr_wwft_disclaimer: 'Let op — Wwft Art. 38 verplicht ons om je transactie-historie 5 jaar te bewaren, ook na anonimisering. Alleen persoonlijke identificatiegegevens (PII) worden gewist.',
+  gdpr_download_titel: '📥 Download mijn data',
+  gdpr_download_uitleg: 'Eén JSON-bestand met al je profielgegevens, transacties, KYC-records, audit-log en notificatie-instellingen. Direct opslaan op je apparaat.',
+  gdpr_download_knop: '⬇️ Download als JSON',
+  gdpr_download_bezig: 'Bezig met ophalen...',
+  gdpr_download_subtekst: 'Bewaar dit bestand op een veilige plek — het bevat al je persoonsgegevens.',
+  gdpr_download_succes: 'Download gestart. Bewaar je gegevensbestand op een veilige plek.',
+  gdpr_anonimiseer_titel: '⚠️ Account anonimiseren',
+  gdpr_anonimiseer_uitleg: 'Wist je naam, e-mail, telefoon, adres en KYC-gegevens. Onomkeerbaar. Je wordt direct uitgelogd.',
+  gdpr_anonimiseer_knop: '🗑️ Account anonimiseren (definitief)',
+  gdpr_modal_titel: 'Account anonimiseren — laatste check',
+  gdpr_modal_wist_uitleg: 'Hierna worden de volgende gegevens onomkeerbaar gewist:',
+  gdpr_modal_li_persoonlijk: 'Naam, e-mail, telefoon, adres',
+  gdpr_modal_li_kyc: 'KYC documenten en iDIN gegevens',
+  gdpr_modal_li_notificaties: 'Push-notificaties en koers-alerts',
+  gdpr_modal_li_login: 'Inloggegevens en 2FA',
+  gdpr_modal_wwft_note: 'Je transactie-historie blijft bewaard maar zonder identificeerbare gegevens (Wwft Art. 38, 5 jaar bewaarplicht).',
+  gdpr_modal_typ_label: 'Typ',
+  gdpr_modal_typ_om: 'om te bevestigen:',
+  gdpr_modal_annuleer: 'Annuleren',
+  gdpr_modal_bevestig: 'Definitief anonimiseren',
+  gdpr_modal_bezig: 'Bezig...',
+  gdpr_typ_fout: 'Typ exact: IK BEGRIJP HET',
+  gdpr_afmelden_bericht: 'Je account is geanonimiseerd. Je wordt nu uitgelogd.',
+
   // ── API foutmeldingen (errorCode → tekst) ────────────────────────────────
   errors: {
     // Algemeen

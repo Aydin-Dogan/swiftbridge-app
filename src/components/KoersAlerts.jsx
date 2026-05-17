@@ -4,11 +4,14 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta } from '../services/currencies';
+import { parseError } from '../services/api';
+import { useTaal } from '../i18n';
 import Vlag from './Vlag';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function KoersAlerts({ token }) {
+  const { t } = useTaal();
   const [alerts, setAlerts] = useState([]);
   const [laden, setLaden] = useState(true);
   const [valuta, setValuta] = useState('TRY');
@@ -21,10 +24,14 @@ export default function KoersAlerts({ token }) {
     setLaden(true);
     try {
       const res = await fetch(`${API}/alerts`, { headers: { Authorization: `Bearer ${token}` } });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setFout(parseError({ ...data, status: res.status }, t));
+        return;
+      }
       setAlerts(data.alerts || []);
     } catch (e) {
-      setFout('Alerts ophalen mislukt');
+      setFout(parseError(e, t));
     } finally {
       setLaden(false);
     }
@@ -36,7 +43,7 @@ export default function KoersAlerts({ token }) {
     e.preventDefault();
     setFout('');
     const koers = parseFloat(target);
-    if (!koers || koers <= 0) return setFout('Voer een geldige doelkoers in');
+    if (!koers || koers <= 0) return setFout(parseError({ errorCode: 'INVALID_INPUT' }, t));
     setBezig(true);
     try {
       const res = await fetch(`${API}/alerts`, {
@@ -44,14 +51,15 @@ export default function KoersAlerts({ token }) {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ valuta, target_koers: koers, richting }),
       });
+      const d = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const d = await res.json();
-        throw new Error(d.error || 'Aanmaken mislukt');
+        setFout(parseError({ ...d, status: res.status }, t));
+        return;
       }
       setTarget('');
       await laad();
     } catch (e) {
-      setFout(e.message);
+      setFout(parseError(e, t));
     } finally {
       setBezig(false);
     }

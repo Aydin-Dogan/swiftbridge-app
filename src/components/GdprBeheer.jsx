@@ -5,10 +5,13 @@
  * blijven 5 jaar bewaard conform Wwft Art. 38).
  */
 import { useState } from 'react';
+import { parseError } from '../services/api';
+import { useTaal } from '../i18n';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function GdprBeheer({ token }) {
+  const { t } = useTaal();
   const [bezigExport, setBezigExport] = useState(false);
   const [bezigAnoniem, setBezigAnoniem] = useState(false);
   const [fout, setFout] = useState('');
@@ -26,7 +29,8 @@ export default function GdprBeheer({ token }) {
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${res.status}`);
+        setFout(parseError({ ...err, status: res.status }, t));
+        return;
       }
       const blob = await res.blob();
       // Haal filename uit Content-Disposition als beschikbaar
@@ -42,9 +46,9 @@ export default function GdprBeheer({ token }) {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      setBericht('Download gestart. Bewaar je gegevensbestand op een veilige plek.');
+      setBericht(t('gdpr_download_succes'));
     } catch (e) {
-      setFout('Download mislukt: ' + e.message);
+      setFout(parseError(e, t));
     } finally {
       setBezigExport(false);
     }
@@ -52,7 +56,7 @@ export default function GdprBeheer({ token }) {
 
   async function bevestigAnonimiseren() {
     if (bevestiging.trim() !== 'IK BEGRIJP HET') {
-      setFout('Typ exact: IK BEGRIJP HET');
+      setFout(t('gdpr_typ_fout'));
       return;
     }
     setBezigAnoniem(true);
@@ -67,7 +71,11 @@ export default function GdprBeheer({ token }) {
         body: JSON.stringify({ bevestiging: 'IK BEGRIJP HET' }),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      if (!res.ok) {
+        setFout(parseError({ ...data, status: res.status }, t));
+        setBezigAnoniem(false);
+        return;
+      }
 
       // Wis lokale sessie volledig
       try {
@@ -77,10 +85,10 @@ export default function GdprBeheer({ token }) {
         sessionStorage.clear();
       } catch {}
 
-      alert('Je account is geanonimiseerd. Je wordt nu uitgelogd.');
+      alert(t('gdpr_afmelden_bericht'));
       window.location.href = '/login';
     } catch (e) {
-      setFout('Anonimiseren mislukt: ' + e.message);
+      setFout(parseError(e, t));
       setBezigAnoniem(false);
     }
   }
@@ -96,53 +104,66 @@ export default function GdprBeheer({ token }) {
     <div className="card-glass p-5 space-y-4 animate-fade-up border-l-4 border-slate-400">
       <div>
         <h3 className="font-bold text-gray-800 flex items-center gap-2">
-          AVG / GDPR beheer
+          <span className="text-xl">🛡️</span>
+          <span>{t('gdpr_titel')}</span>
         </h3>
-        <p className="text-xs text-gray-500 mt-1">
-          Onder de AVG heb je het recht op inzage in je gegevens (Art. 15) en het recht op vergetelheid (Art. 17).
+        <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+          {t('gdpr_intro')}
         </p>
       </div>
 
-      {/* Data download */}
-      <div className="rounded-xl border-2 border-blue-100 bg-blue-50/40 p-4 space-y-2">
-        <h4 className="font-semibold text-sm text-gray-800">Download mijn data</h4>
-        <p className="text-xs text-gray-600">
-          Krijg een JSON-bestand met al je profielgegevens, transacties, KYC-records, audit-log en notificatie-instellingen.
+      {/* Wwft disclaimer — prominent geel info box bovenaan */}
+      <div className="rounded-xl border-2 border-amber-300 bg-amber-50 p-3 flex items-start gap-2">
+        <span className="text-lg flex-shrink-0">⚠️</span>
+        <p className="text-xs text-amber-900 leading-relaxed">
+          {t('gdpr_wwft_disclaimer')}
+        </p>
+      </div>
+
+      {/* Data download — blauwe sectie */}
+      <div className="rounded-xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-sky-50 p-4 space-y-2">
+        <h4 className="font-bold text-sm text-gray-800 flex items-center gap-1.5">
+          <span>{t('gdpr_download_titel')}</span>
+        </h4>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {t('gdpr_download_uitleg')}
         </p>
         <button
           onClick={downloadData}
           disabled={bezigExport}
-          className="btn-primary w-full py-2.5 text-sm disabled:opacity-50"
+          className="w-full py-2.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         >
-          {bezigExport ? 'Bezig met ophalen...' : 'Download mijn data (JSON)'}
+          {bezigExport ? `⏳ ${t('gdpr_download_bezig')}` : t('gdpr_download_knop')}
         </button>
+        <p className="text-[11px] text-gray-500 leading-snug pt-1">
+          🔐 {t('gdpr_download_subtekst')}
+        </p>
       </div>
 
-      {/* Account anonimiseren */}
-      <div className="rounded-xl border-2 border-rose-200 bg-rose-50/40 p-4 space-y-2">
-        <h4 className="font-semibold text-sm text-gray-800">Account anonimiseren</h4>
-        <p className="text-xs text-gray-600">
-          Wist je naam, e-mail, telefoon, adres en KYC-gegevens. Deze actie is <strong>onomkeerbaar</strong> en je wordt direct uitgelogd.
+      {/* Account anonimiseren — rode sectie, danger zone */}
+      <div className="rounded-xl border-2 border-rose-300 bg-rose-50 p-4 space-y-2">
+        <h4 className="font-bold text-sm text-rose-900 flex items-center gap-1.5">
+          <span>{t('gdpr_anonimiseer_titel')}</span>
+        </h4>
+        <p className="text-xs text-rose-800 leading-relaxed">
+          {t('gdpr_anonimiseer_uitleg')}
         </p>
-        <div className="text-[11px] text-gray-500 bg-white/60 rounded-lg px-2 py-1.5 border border-gray-100">
-          <strong>Wwft bewaarplicht:</strong> je transactie historie wordt 5 jaar bewaard zonder identificeerbare gegevens.
-        </div>
         <button
           onClick={() => { setModalOpen(true); setFout(''); setBericht(''); }}
-          className="w-full py-2.5 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-xl transition disabled:opacity-50"
+          className="w-full py-2.5 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-xl transition disabled:opacity-50 shadow-sm flex items-center justify-center gap-1.5"
         >
-          Account anonimiseren (definitief)
+          {t('gdpr_anonimiseer_knop')}
         </button>
       </div>
 
       {fout && (
         <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
-          {fout}
+          ❌ {fout}
         </div>
       )}
       {bericht && (
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl px-3 py-2 text-sm">
-          {bericht}
+          ✅ {bericht}
         </div>
       )}
 
@@ -156,25 +177,27 @@ export default function GdprBeheer({ token }) {
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="font-bold text-lg text-gray-900">Account anonimiseren</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">⚠️</span>
+              <h3 className="font-bold text-lg text-rose-900">{t('gdpr_modal_titel')}</h3>
+            </div>
             <div className="text-sm text-gray-700 space-y-2">
-              <p>
-                Hierna worden de volgende gegevens <strong>onomkeerbaar gewist</strong>:
-              </p>
-              <ul className="list-disc list-inside text-xs text-gray-600 space-y-0.5">
-                <li>Naam, e-mail, telefoon, adres</li>
-                <li>KYC documenten en iDIN gegevens</li>
-                <li>Push-notificaties en koers-alerts</li>
-                <li>Inloggegevens en 2FA</li>
+              <p>{t('gdpr_modal_wist_uitleg')}</p>
+              <ul className="list-disc list-inside text-xs text-gray-600 space-y-0.5 pl-1">
+                <li>{t('gdpr_modal_li_persoonlijk')}</li>
+                <li>{t('gdpr_modal_li_kyc')}</li>
+                <li>{t('gdpr_modal_li_notificaties')}</li>
+                <li>{t('gdpr_modal_li_login')}</li>
               </ul>
-              <p className="text-xs text-gray-600">
-                Je transactie-historie blijft bewaard maar zonder identificeerbare gegevens (Wwft Art. 38, 5 jaar bewaarplicht).
-              </p>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-900 flex gap-1.5">
+                <span>📋</span>
+                <span>{t('gdpr_modal_wwft_note')}</span>
+              </div>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Typ <span className="font-mono text-rose-600">IK BEGRIJP HET</span> om te bevestigen:
+                {t('gdpr_modal_typ_label')} <span className="font-mono text-rose-600">IK BEGRIJP HET</span> {t('gdpr_modal_typ_om')}
               </label>
               <input
                 value={bevestiging}
@@ -198,14 +221,14 @@ export default function GdprBeheer({ token }) {
                 disabled={bezigAnoniem}
                 className="flex-1 py-2.5 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition disabled:opacity-50"
               >
-                Annuleren
+                {t('gdpr_modal_annuleer')}
               </button>
               <button
                 onClick={bevestigAnonimiseren}
                 disabled={bezigAnoniem || bevestiging.trim() !== 'IK BEGRIJP HET'}
                 className="flex-1 py-2.5 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {bezigAnoniem ? 'Bezig...' : 'Definitief anonimiseren'}
+                {bezigAnoniem ? `⏳ ${t('gdpr_modal_bezig')}` : t('gdpr_modal_bevestig')}
               </button>
             </div>
           </div>

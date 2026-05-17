@@ -18,6 +18,7 @@ const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
 const Privacybeleid       = lazy(() => import('./pages/Privacybeleid'));
 const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
 const AdminPanel          = lazy(() => import('./pages/AdminPanel'));
+const AdminCompliance     = lazy(() => import('./pages/AdminCompliance'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -345,6 +346,9 @@ export default function App() {
           <Route path="/privacybeleid" element={<Privacybeleid />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/compliance" element={
+            token ? <AdminCompliance /> : <Navigate to="/login" replace />
+          } />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>

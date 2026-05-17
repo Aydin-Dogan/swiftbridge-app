@@ -119,6 +119,43 @@ export const en = {
   // Voettekst
   beveiligd_via_jwt: '🔒 Secured by JWT · Rate limited · End-to-end encrypted',
 
+  // ── Profile: WhatsApp opt-in ─────────────────────────────────────────────
+  profiel_whatsapp_titel: '🇹🇷 WhatsApp confirmation for family',
+  profiel_whatsapp_uitleg: 'Family waiting? Get an instant WhatsApp confirmation the moment the money lands in Türkiye. No email needed.',
+  profiel_whatsapp_geen_telefoon: 'Add your phone number first.',
+
+  // ── Profile: GDPR section header ─────────────────────────────────────────
+  profiel_gdpr_kop: '🔒 Privacy & data management',
+  profiel_gdpr_uitleg: 'Under GDPR you have the right of access (download your data) and the right to be forgotten (anonymise account). Wwft law requires us to retain transaction data for 5 years without PII.',
+
+  // ── GDPR management component ────────────────────────────────────────────
+  gdpr_titel: 'GDPR management',
+  gdpr_intro: 'Under GDPR you have the right of access to your data (Art. 15) and the right to be forgotten (Art. 17).',
+  gdpr_wwft_disclaimer: 'Heads up — Wwft Art. 38 requires us to keep your transaction history for 5 years, even after anonymisation. Only personal identifying information (PII) is wiped.',
+  gdpr_download_titel: '📥 Download my data',
+  gdpr_download_uitleg: 'One JSON file with all your profile data, transactions, KYC records, audit log and notification settings. Saved directly to your device.',
+  gdpr_download_knop: '⬇️ Download as JSON',
+  gdpr_download_bezig: 'Preparing...',
+  gdpr_download_subtekst: 'Store this file in a safe place — it contains all your personal data.',
+  gdpr_download_succes: 'Download started. Keep the file in a safe place.',
+  gdpr_anonimiseer_titel: '⚠️ Anonymise account',
+  gdpr_anonimiseer_uitleg: 'Wipes your name, email, phone, address and KYC data. Irreversible. You\'ll be logged out immediately.',
+  gdpr_anonimiseer_knop: '🗑️ Anonymise account (permanent)',
+  gdpr_modal_titel: 'Anonymise account — final check',
+  gdpr_modal_wist_uitleg: 'The following data will be irreversibly wiped:',
+  gdpr_modal_li_persoonlijk: 'Name, email, phone, address',
+  gdpr_modal_li_kyc: 'KYC documents and iDIN data',
+  gdpr_modal_li_notificaties: 'Push notifications and rate alerts',
+  gdpr_modal_li_login: 'Login credentials and 2FA',
+  gdpr_modal_wwft_note: 'Your transaction history is retained but without identifying data (Wwft Art. 38, 5 year retention).',
+  gdpr_modal_typ_label: 'Type',
+  gdpr_modal_typ_om: 'to confirm:',
+  gdpr_modal_annuleer: 'Cancel',
+  gdpr_modal_bevestig: 'Permanently anonymise',
+  gdpr_modal_bezig: 'Processing...',
+  gdpr_typ_fout: 'Type exactly: IK BEGRIJP HET',
+  gdpr_afmelden_bericht: 'Your account has been anonymised. Logging you out now.',
+
   // ── API error messages (errorCode → text) ────────────────────────────────
   errors: {
     // General
