@@ -12,6 +12,7 @@ import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 import { berekenKosten, KOSTEN_LABELS } from '../services/kosten';
 import Vlag from './Vlag';
 import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
+import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -477,14 +478,23 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
       {uitbetaalMethode === 'bank' ? (
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">Bank van ontvanger</label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Bank van ontvanger
+              {valutaInfo.landCode && LAND_INFO[valutaInfo.landCode] && (
+                <span className="text-gray-400 text-xs ml-1">
+                  ({LAND_INFO[valutaInfo.landCode].naam})
+                </span>
+              )}
+            </label>
             <select
               value={ontvangerBank}
               onChange={e => setOntvangerBank(e.target.value)}
               className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 font-medium"
             >
               {(() => {
-                const groups = bankenPerCategorie();
+                // Bepaal welk land op basis van gekozen valuta
+                const landCode = LAND_INFO[valutaInfo.landCode] ? valutaInfo.landCode : 'TR';
+                const groups = bankenPerLandPerCategorie(landCode);
                 const cats = Object.entries(CATEGORIE_LABELS).sort((a, b) => a[1].volgorde - b[1].volgorde);
                 return cats.map(([catKey, catInfo]) => {
                   const banken = (groups[catKey] || []).filter(b => catKey !== 'wallet');
@@ -500,7 +510,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               })()}
             </select>
             <p className="text-[10px] text-gray-400 mt-1">
-              💡 Alle banken ondersteunen SEPA via IBAN — kies welke bank de ontvanger gebruikt
+              💡 Banken passen automatisch aan op de gekozen valuta
             </p>
           </div>
           <div>
@@ -752,6 +762,16 @@ export default function PaymentFlow({ token }) {
       }
     } catch {}
   }, []);
+
+  // Reset bank wanneer valuta verandert (bv USD -> TRY: ander land = andere banken)
+  useEffect(() => {
+    const vInfo = getValuta(valuta);
+    const landCode = LAND_INFO[vInfo.landCode] ? vInfo.landCode : 'TR';
+    const banken = bankenPerLand(landCode).filter(b => b.categorie !== 'wallet');
+    if (banken.length && !banken.find(b => b.naam === ontvangerBank)) {
+      setOntvangerBank(banken[0].naam); // default eerste bank van het nieuwe land
+    }
+  }, [valuta]);
 
   async function verstuur() {
     setLaden(true);
