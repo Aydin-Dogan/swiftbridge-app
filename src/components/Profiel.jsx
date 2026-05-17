@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
+import GdprBeheer from './GdprBeheer';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -439,6 +440,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           {bezig ? '⏳ Opslaan...' : '💾 Opslaan'}
         </button>
       </form>
+
+      {/* AVG / GDPR beheer — data export + account anonimiseren */}
+      <GdprBeheer token={token} />
     </div>
   );
 }
