@@ -42,6 +42,10 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       const res = await fetch(`${API}/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
       const data = await res.json();
       setProfiel(data);
       setForm({
@@ -54,7 +58,8 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         adresLand: data.adres?.land || 'NL',
       });
     } catch (e) {
-      setFout('Profiel ophalen mislukt');
+      setFout('Profiel ophalen mislukt: ' + e.message);
+      console.error('Profiel laad fout:', e);
     } finally {
       setLaden(false);
     }
@@ -95,11 +100,24 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
   if (laden) {
     return (
-      <div className="card-glass p-6 space-y-3">
-        <div className="h-6 animate-shimmer rounded w-1/2" />
-        <div className="h-12 animate-shimmer rounded" />
-        <div className="h-12 animate-shimmer rounded" />
-        <div className="h-12 animate-shimmer rounded" />
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-3">
+        <div className="h-6 bg-gray-200 rounded w-1/2 animate-pulse" />
+        <div className="h-12 bg-gray-100 rounded animate-pulse" />
+        <div className="h-12 bg-gray-100 rounded animate-pulse" />
+        <div className="h-12 bg-gray-100 rounded animate-pulse" />
+      </div>
+    );
+  }
+
+  if (fout && !profiel) {
+    return (
+      <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center space-y-3">
+        <div className="text-4xl">⚠️</div>
+        <h2 className="font-bold text-rose-800">Profiel kon niet geladen worden</h2>
+        <p className="text-sm text-rose-700">{fout}</p>
+        <button onClick={laad} className="btn-primary text-sm">
+          🔄 Opnieuw proberen
+        </button>
       </div>
     );
   }
