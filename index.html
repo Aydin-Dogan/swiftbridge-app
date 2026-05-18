@@ -1,15 +1,47 @@
 <!doctype html>
 <html lang="nl">
   <head>
+    <!-- ═══ Basis ═══ -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#2563eb" />
 
-    <!-- Titel & beschrijving -->
-    <title>SwiftBridge — NL → TR in &lt;5 min</title>
-    <meta name="description" content="Geld overmaken van Nederland naar Turkije in minder dan 5 minuten. Veilig, snel en goedkoop." />
+    <!-- ═══ Security (client-side defense-in-depth) ═══ -->
+    <!-- De server stuurt de definitieve, strengere headers (Helmet + eigen middleware).
+         Deze meta-tags bieden bescherming bij offline/cached loads en oude proxies. -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
+
+    <!-- ═══ SEO ═══ -->
+    <title>SwiftBridge - Geld snel &amp; veilig naar Türkiye | NL → TR in 5 minuten</title>
+    <meta name="description" content="Stuur geld vanuit Nederland naar Turkije en 6 Turkic landen. €1,99 vaste fee, binnen 5 minuten op de rekening, 10x goedkoper dan banken. DNB toezicht." />
+    <meta name="keywords" content="geld sturen turkije, remittance turkije, wise alternatief, remitly turkije, nederland turkije overboeking, eur tl, transferwise alternatief, garanti overboeking, akbank overboeking" />
+    <meta name="author" content="SwiftBridge B.V." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://swiftbridge.app/" />
+
+    <!-- ═══ Open Graph (Facebook / LinkedIn) ═══ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://swiftbridge.app/" />
+    <meta property="og:title" content="SwiftBridge - Geld snel &amp; veilig naar Türkiye" />
+    <meta property="og:description" content="€1,99 vaste fee, binnen 5 minuten op de rekening, 10x goedkoper dan banken" />
+    <meta property="og:image" content="https://swiftbridge.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:locale:alternate" content="tr_TR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:site_name" content="SwiftBridge" />
+
+    <!-- ═══ Twitter Card ═══ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://swiftbridge.app/" />
+    <meta name="twitter:title" content="SwiftBridge - Geld snel &amp; veilig naar Türkiye" />
+    <meta name="twitter:description" content="€1,99 vaste fee, binnen 5 minuten op de rekening" />
+    <meta name="twitter:image" content="https://swiftbridge.app/og-image.png" />
 
     <!-- ═══ PWA — Android / Chrome ═══ -->
-    <meta name="theme-color" content="#2563EB" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
     <!-- ═══ PWA — Apple / iOS Safari ═══ -->
@@ -19,8 +51,6 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
-
-    <!-- Apple Splash Screens (zorgt voor goede laadscherm) -->
     <meta name="apple-touch-fullscreen" content="yes" />
 
     <!-- ═══ Microsoft / Windows ═══ -->
@@ -31,11 +61,51 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
 
-    <!-- ═══ Open Graph ═══ -->
-    <meta property="og:title" content="SwiftBridge — Geld naar Turkije in &lt;5 min" />
-    <meta property="og:description" content="Snel, goedkoop en veilig geld overmaken van Nederland naar Turkije." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/icon-512.png" />
+    <!-- ═══ Performance ═══ -->
+    <link rel="preconnect" href="https://swiftbridge-api-production.up.railway.app" crossorigin />
+    <link rel="dns-prefetch" href="https://swiftbridge-api-production.up.railway.app" />
+
+    <!-- ═══ Structured data: Organization / FinancialService (JSON-LD) ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "SwiftBridge",
+      "url": "https://swiftbridge.app",
+      "logo": "https://swiftbridge.app/icon-512.png",
+      "description": "Snelle en goedkope geldoverboekingen van Nederland naar Türkiye en Turkic landen.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "NL",
+        "addressLocality": "Amsterdam"
+      },
+      "areaServed": [
+        {"@type":"Country","name":"Turkey"},
+        {"@type":"Country","name":"Azerbaijan"},
+        {"@type":"Country","name":"Kazakhstan"},
+        {"@type":"Country","name":"Uzbekistan"},
+        {"@type":"Country","name":"Turkmenistan"},
+        {"@type":"Country","name":"Kyrgyzstan"},
+        {"@type":"Country","name":"Tajikistan"}
+      ],
+      "priceRange": "€",
+      "currenciesAccepted": ["EUR"],
+      "paymentAccepted": ["iDEAL","Creditcard","PayPal","SEPA"]
+    }
+    </script>
+
+    <!-- ═══ Structured data: FAQ ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Hoe snel komt geld aan in Türkiye?","acceptedAnswer":{"@type":"Answer","text":"Binnen 5 minuten via iDEAL. SwiftBridge gebruikt directe banktransfers naar 109 Turkse banken."}},
+        {"@type":"Question","name":"Wat zijn de kosten van SwiftBridge?","acceptedAnswer":{"@type":"Answer","text":"€1,99 vaste fee + 1,2% wisselkoers marge voor Express. Totale kosten 10x lager dan reguliere banken."}},
+        {"@type":"Question","name":"Is SwiftBridge veilig?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge staat onder toezicht van DNB (De Nederlandsche Bank), volgt Wwft en AVG, en gebruikt 256-bit encryptie. Alle transacties worden gescreend tegen EU sanctielijsten."}}
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

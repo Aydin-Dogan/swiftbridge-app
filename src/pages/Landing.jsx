@@ -26,6 +26,35 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* SEO content — visually hidden but crawlable */}
+      <div className="sr-only">
+        <h1>SwiftBridge — Geld sturen naar Türkiye en Turkic landen in 5 minuten</h1>
+        <h2>Goedkoop alternatief voor Wise, Remitly en Western Union</h2>
+        <p>
+          SwiftBridge is de snelste en goedkoopste manier om geld over te maken
+          vanuit Nederland naar Turkije, Azerbeidzjan, Kazachstan, Oezbekistan,
+          Turkmenistan, Kirgizië en Tadzjikistan. Vaste fee van €1,99, betaling
+          via iDEAL, creditcard, PayPal of SEPA, en het bedrag staat binnen 5
+          minuten op de Turkse bankrekening (Garanti, Akbank, İş Bankası,
+          Ziraat, Yapı Kredi en 100+ andere banken).
+        </p>
+        <h2>Waarom SwiftBridge het beste Wise- en Remitly-alternatief is</h2>
+        <ul>
+          <li>10x goedkoper dan reguliere banken bij EUR → TRY overboekingen</li>
+          <li>Onder toezicht van DNB (De Nederlandsche Bank)</li>
+          <li>Wwft- en AVG-compliant, EU-sanctielijst screening</li>
+          <li>256-bit encryptie en multi-factor authenticatie</li>
+          <li>Live wisselkoers EUR/TRY, geen verborgen marges</li>
+        </ul>
+        <h2>Veelgestelde vragen — geld sturen naar Turkije</h2>
+        <p>
+          Hoe snel komt geld aan in Türkiye? Binnen 5 minuten via iDEAL.
+          Wat zijn de kosten? €1,99 vaste fee plus 1,2% wisselkoersmarge
+          voor Express. Is SwiftBridge veilig? Ja, DNB-toezicht en volledige
+          Wwft- en AVG-compliance.
+        </p>
+      </div>
+
       {/* Sticky navigation */}
       <nav className="header-glass-light sticky top-0 z-50 safe-top">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
