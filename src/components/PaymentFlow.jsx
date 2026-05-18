@@ -803,6 +803,7 @@ export default function PaymentFlow({ token }) {
 
     try {
       const res = await fetch(`${API}/transactions`, {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -847,6 +848,7 @@ export default function PaymentFlow({ token }) {
       // ── Start Mollie betaling — krijg checkoutUrl en redirect gebruiker ──
       try {
         const betalingRes = await fetch(`${API}/payments/start`, {
+        credentials: 'include',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

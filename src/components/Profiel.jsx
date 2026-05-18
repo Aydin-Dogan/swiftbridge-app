@@ -38,6 +38,7 @@ function IdinKnop({ token, onSucces }) {
     setGekozen(bank);
     try {
       const res = await fetch(`${API}/idin/start`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ bankIssuer: bank.code }),
@@ -51,6 +52,7 @@ function IdinKnop({ token, onSucces }) {
       // Mock flow: simuleer redirect terug + voltooi direct
       if (data.mock) {
         const voltooi = await fetch(`${API}/idin/voltooien`, {
+        credentials: 'include',
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify({ transactionId: data.transactionId }),
@@ -153,6 +155,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
     setLaden(true);
     try {
       const res = await fetch(`${API}/users/me`, {
+        credentials: 'include',
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json().catch(() => ({}));
@@ -192,6 +195,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
     setBericht(null);
     try {
       const res = await fetch(`${API}/users/me`, {
+        credentials: 'include',
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

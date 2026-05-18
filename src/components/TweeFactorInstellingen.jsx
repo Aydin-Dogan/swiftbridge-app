@@ -177,6 +177,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
     setFout('');
     try {
       const res = await fetch(`${API}/auth/2fa/setup`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: '{}',
@@ -205,6 +206,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
     setFout('');
     try {
       const res = await fetch(`${API}/auth/2fa/aanzetten`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ code: code.trim() }),
@@ -234,6 +236,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
     setFout('');
     try {
       const res = await fetch(`${API}/auth/2fa/uitzetten`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ wachtwoord, code: uitCode.trim() }),
@@ -262,6 +265,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
     setFout('');
     try {
       const res = await fetch(`${API}/auth/2fa/backup-codes-regenereren`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ wachtwoord }),

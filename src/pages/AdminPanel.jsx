@@ -49,6 +49,7 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
     setBezig(beslissing);
     try {
       const res = await fetch(`${API}/kyc/${aanvraag.id}/beoordeel`, {
+        credentials: 'include',
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': secret },
         body: JSON.stringify({ beslissing }),
@@ -172,9 +173,12 @@ export default function AdminPanel() {
     setFout('');
     try {
       const [kycRes, statsRes, integriteitRes] = await Promise.all([
-        fetch(`${API}/kyc/alle`,              { headers: { 'X-Admin-Secret': secret } }),
-        fetch(`${API}/kyc/admin/stats`,       { headers: { 'X-Admin-Secret': secret } }),
-        fetch(`${API}/kyc/admin/integriteit`, { headers: { 'X-Admin-Secret': secret } }),
+        fetch(`${API}/kyc/alle`, {
+        credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
+        fetch(`${API}/kyc/admin/stats`, {
+        credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
+        fetch(`${API}/kyc/admin/integriteit`, {
+        credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
       ]);
 
       if (!kycRes.ok) {

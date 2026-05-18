@@ -14,7 +14,7 @@ export default function LiveKoersTicker() {
 
   async function haalKoersen() {
     try {
-      const res = await fetch(`${API}/transactions/koersen`);
+      const res = await fetch(`${API}/transactions/koersen`, { credentials: 'include' });
       if (!res.ok) throw new Error('API fout');
       const data = await res.json();
       setKoersen(prev => prev.map(v => {

@@ -353,7 +353,7 @@ export default function Dashboard({ gebruiker }) {
   const haalKoers = useCallback(async () => {
     setLadenKoers(true);
     try {
-      const res  = await fetch(`${API}/transactions/koersen`);
+      const res  = await fetch(`${API}/transactions/koersen`, { credentials: 'include' });
       const json = await res.json();
       if (json.koersen?.TRY) setKoers(json.koersen.TRY);
     } catch { /* gebruik laatste bekende koers */ }
@@ -365,6 +365,7 @@ export default function Dashboard({ gebruiker }) {
     setLadenTx(true);
     try {
       const res  = await fetch(`${API}/transactions`, {
+        credentials: 'include',
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error('Niet ingelogd');

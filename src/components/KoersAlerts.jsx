@@ -23,7 +23,8 @@ export default function KoersAlerts({ token }) {
   async function laad() {
     setLaden(true);
     try {
-      const res = await fetch(`${API}/alerts`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`${API}/alerts`, {
+        credentials: 'include', headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setFout(parseError({ ...data, status: res.status }, t));
@@ -47,6 +48,7 @@ export default function KoersAlerts({ token }) {
     setBezig(true);
     try {
       const res = await fetch(`${API}/alerts`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ valuta, target_koers: koers, richting }),
@@ -67,6 +69,7 @@ export default function KoersAlerts({ token }) {
 
   async function toggleAlert(id) {
     await fetch(`${API}/alerts/${id}/toggle`, {
+        credentials: 'include',
       method: 'PATCH',
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -76,6 +79,7 @@ export default function KoersAlerts({ token }) {
   async function verwijderAlert(id) {
     if (!confirm('Alert verwijderen?')) return;
     await fetch(`${API}/alerts/${id}`, {
+        credentials: 'include',
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     });

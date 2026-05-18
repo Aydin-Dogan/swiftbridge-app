@@ -437,6 +437,7 @@ export default function KYCFlow({ token, gebruiker }) {
       // AML/DNB-waardige KYC-flow. Zie BUSINESS_PLAN.md §7.
       // TODO(livegang): vervang door multipart/form-data POST met docFoto + selfieFoto.
       const res = await fetch(`${API}/kyc/submit`, {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({

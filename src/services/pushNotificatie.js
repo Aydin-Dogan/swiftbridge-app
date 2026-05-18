@@ -36,7 +36,7 @@ export async function pushInschakelen(token) {
   }
 
   // 2. Haal de VAPID public key op van de server
-  const vapidRes = await fetch(`${API}/push/vapid-public-key`);
+  const vapidRes = await fetch(`${API}/push/vapid-public-key`, { credentials: 'include' });
   if (!vapidRes.ok) throw new Error('Server niet bereikbaar.');
   const { publicKey } = await vapidRes.json();
 
@@ -54,6 +54,7 @@ export async function pushInschakelen(token) {
 
   // 5. Stuur subscription naar server
   const subscribeRes = await fetch(`${API}/push/subscribe`, {
+        credentials: 'include',
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify(subscription.toJSON()),
@@ -72,6 +73,7 @@ export async function pushUitschakelen(token) {
 
   // Verwijder van server
   await fetch(`${API}/push/unsubscribe`, {
+        credentials: 'include',
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ endpoint: subscription.endpoint }),
@@ -84,6 +86,7 @@ export async function pushUitschakelen(token) {
 // Test notificatie sturen
 export async function stuurTestNotificatie(token) {
   const res = await fetch(`${API}/push/test`, {
+        credentials: 'include',
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
   });

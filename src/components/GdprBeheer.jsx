@@ -25,6 +25,7 @@ export default function GdprBeheer({ token }) {
     setBericht('');
     try {
       const res = await fetch(`${API}/users/me/export`, {
+        credentials: 'include',
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) {
@@ -63,6 +64,7 @@ export default function GdprBeheer({ token }) {
     setFout('');
     try {
       const res = await fetch(`${API}/users/me/anonimiseer`, {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
