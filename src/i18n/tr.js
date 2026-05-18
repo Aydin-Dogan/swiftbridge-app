@@ -92,6 +92,21 @@ export const tr = {
   dashboard_notif_leeg: 'Yeni bildirim yok.',
   dashboard_notif_alles: 'Tümünü gör →',
 
+  // Banners (uygulama geneli duyurular)
+  banner_sluit: 'Bildirimi kapat',
+  banner_admin_titel: 'Banner yönetimi',
+  banner_admin_nieuw: 'Yeni banner',
+  banner_admin_bewerken: 'Banner düzenle',
+  banner_admin_geen: 'Henüz banner oluşturulmadı',
+  banner_veld_titel: 'Başlık',
+  banner_veld_bericht: 'Mesaj',
+  banner_veld_type: 'Tür',
+  banner_veld_sluitbaar: 'Kapatılabilir',
+  banner_veld_cta_tekst: 'CTA metni',
+  banner_veld_cta_url: 'CTA URL',
+  banner_veld_start: 'Başlangıç',
+  banner_veld_eind: 'Bitiş',
+
   // Weeklimiet
   weeklimiet: 'Haftalık limit',
   weeklimiet_resets: 'Her 7 günde sıfırlanır',
@@ -167,6 +182,35 @@ export const tr = {
   // ── Profil: KVKK / GDPR bölümü başlığı ───────────────────────────────────
   profiel_gdpr_kop: '🔒 Gizlilik ve veri yönetimi',
   profiel_gdpr_uitleg: 'KVKK/GDPR kapsamında verilerine erişme (indirme) ve unutulma (hesabı anonimleştirme) hakkın var. Wwft yasası, kişisel bilgi olmadan işlem geçmişini 5 yıl saklamamızı zorunlu kılar.',
+
+  // ── Arkadaş davet programı ───────────────────────────────────────────────
+  profiel_referral_kop: '🎁 Arkadaşlarını davet et',
+  profiel_referral_uitleg: 'SwiftBridge\'i aile ve arkadaşlarınla paylaş. İlk transferi yapan her arkadaşın için €5 kazan — arkadaşın da kazanır!',
+  referral_titel: '🎁 Arkadaşlarını davet et',
+  referral_intro: 'SwiftBridge\'i deneyen her arkadaşın için €{bedrag} kazan. O da €{bedrag} kazanır. Sınır yok.',
+  referral_jouw_code: 'Senin kodun',
+  referral_deel_link: 'Paylaşım linki',
+  referral_kopieer: 'Kopyala',
+  referral_kopieer_code: 'Kodu kopyalamak için tıkla',
+  referral_kopieer_link: 'Linki kopyalamak için tıkla',
+  referral_gekopieerd: 'Kopyalandı!',
+  referral_deel_whatsapp: 'WhatsApp',
+  referral_deel_email: 'E-posta',
+  referral_deel_kopieer: 'Linki kopyala',
+  referral_stats_vrienden: 'Davet edilen',
+  referral_stats_verdiend: 'Kazanılan',
+  referral_hoe_titel: '💡 Nasıl çalışır',
+  referral_hoe_stap1: 'Kodunu ya da linkini WhatsApp veya e-posta ile arkadaşlarınla paylaş.',
+  referral_hoe_stap2: 'Arkadaşın kodunla kayıt olur ve ilk transferini yapar.',
+  referral_hoe_stap3: 'İkiniz de bir sonraki transferde €{bedrag} indirim kazanırsınız.',
+  referral_share_whatsapp: 'Selam! SwiftBridge ile Türkiye\'ye para gönderiyorum — bankadan hızlı ve ucuz. Benim kodumla kayıt olursan €{bedrag} bonus kazanırsın: {url}',
+  referral_share_email_onderwerp: 'SwiftBridge\'i dene — €5 bonus kazan',
+  referral_share_email_tekst: 'Selam!\n\nSwiftBridge ile Türkiye\'ye hızlı ve ucuz para gönderiyorum. Linkimle kayıt olursan ilk transferinde €{bedrag} bonus, ben de kazanıyorum!\n\n{url}\n\nSelamlar,',
+  registreer_referral_label: 'Seni davet eden var mı? (isteğe bağlı)',
+  registreer_referral_placeholder: 'ABCD1234',
+  registreer_referral_check: 'Kod kontrol ediliyor...',
+  registreer_referral_geldig: '{naam} tarafından davet edildin ✓',
+  registreer_referral_ongeldig: 'Bu kod geçerli değil — kayıtı kodsuz da tamamlayabilirsin.',
 
   // ── GDPR Yönetim ─────────────────────────────────────────────────────────
   gdpr_titel: 'KVKK / GDPR yönetimi',
@@ -316,6 +360,56 @@ export const tr = {
   landing_footer_rechten: 'Tüm hakları saklıdır.',
   landing_footer_dnb_disclaimer: 'SwiftBridge B.V. beta aşamasındadır. Ödeme hizmetleri DNB lisanslı bir EMI ortağı aracılığıyla sunulur (acente modeli). Şu anda kendi DNB lisansımız yoktur.',
 
+  // ── Onboarding sihirbazı (4 adım) ──────────────────────────────────────────
+  onb_stap_van_totaal: 'Adım {huidige} / {totaal}',
+  onb_sla_over: 'Şimdilik geç',
+  onb_label_welkom: 'Hoş geldin',
+  onb_label_kyc: 'Kimlik',
+  onb_label_deal: 'Hoş geldin fırsatı',
+  onb_label_klaar: 'Hazır',
+
+  // Adım 1 — Hoş geldin
+  onb_welkom_titel: 'SwiftBridge\'e hoş geldin, {naam}! 🎉',
+  onb_welkom_subtitel: 'Türkiye\'ye para göndermek için hesabını 2 dakikada hazırlayalım.',
+  onb_welkom_punt_1: 'Hesap oluşturuldu',
+  onb_welkom_punt_2: 'Kimliğini doğrula (1 dakika, Hollanda bankan üzerinden)',
+  onb_welkom_punt_3: 'İlk transferin ücretsiz (€800\'e kadar)',
+  onb_welkom_cta: 'Hadi başlayalım',
+
+  // Adım 2 — KYC yönlendirme
+  onb_kyc_titel: 'Kimliğini 1 dakikada doğrula',
+  onb_kyc_subtitel: 'Yasal olarak zorunlu (Wwft) — kendi bankan üzerinden 60 saniye sürer.',
+  onb_kyc_via_bank: 'Hollanda bankanla çalışır',
+  onb_kyc_waarom_titel: 'Neden gerekli?',
+  onb_kyc_reden_1: 'DNB denetimi altında tüm kullanıcıları doğrulamamız gerekir (kara para önleme yasası).',
+  onb_kyc_reden_2: 'iDIN güvenlidir — şifre yok, sadece bankan kimliğini doğrular.',
+  onb_kyc_reden_3: 'Verilerin bizimle kalır (GDPR uyumlu, üçüncü taraflara satılmaz).',
+  onb_kyc_start_idin: 'iDIN doğrulamasını başlat',
+  onb_kyc_later: 'Daha sonra yaparım',
+
+  // Adım 3 — Onay + hoş geldin fırsatı
+  onb_bevestig_titel: 'Doğrulandın',
+  onb_bevestig_subtitel: 'Artık hoş geldin fırsatınla para gönderebilirsin: €800\'e kadar €0 ücret.',
+  onb_bevestig_promo_label: 'Hoş geldin fırsatı',
+  onb_bevestig_promo_titel: '€800\'e kadar €0 ücret',
+  onb_bevestig_promo_code_label: 'Promo kod',
+  onb_bevestig_promo_uitleg: 'İlk transferine otomatik uygulanır. 30 gün geçerli.',
+  onb_bevestig_volgende_label: 'Sıradaki adım',
+  onb_bevestig_volgende_tekst: 'İlk transferini Türkiye\'ye yap',
+  onb_bevestig_cta: 'Devam',
+
+  // Adım 4 — Hazır
+  onb_klaar_titel: 'Başlamaya hazırsın!',
+  onb_klaar_subtitel: 'SwiftBridge\'den en iyi şekilde yararlanmak için birkaç ipucu.',
+  onb_klaar_tip_pwa_titel: 'Uygulamayı yükle',
+  onb_klaar_tip_pwa_tekst: 'Hızlı erişim için SwiftBridge\'i ana ekranına ekle.',
+  onb_klaar_tip_pwa_knop: 'Şimdi yükle',
+  onb_klaar_tip_notif_titel: 'Bildirimleri aç',
+  onb_klaar_tip_notif_tekst: 'Başarılı transferler ve kur uyarıları için bildirim al.',
+  onb_klaar_tip_deel_titel: 'Ailenle paylaş',
+  onb_klaar_tip_deel_tekst: 'Aile de ücretsiz alabilir — SwiftBridge\'i paylaş.',
+  onb_klaar_cta: 'Transferime git',
+
   // ── API hata mesajları (errorCode → metin) ──────────────────────────────
   errors: {
     // Genel
@@ -368,4 +462,28 @@ export const tr = {
     PUSH_NIET_GECONFIGUREERD: 'Push bildirimleri kullanılamıyor.',
     PUSH_MISSING_ENDPOINT: 'Endpoint gerekli.',
   },
+
+  // Destek sohbet widget
+  support_titel: 'SwiftBridge Destek',
+  support_online_status: 'Çevrimiçi — ort. yanıt süresi 2 saat',
+  support_open_chat: 'Destek sohbetini aç',
+  support_sluit: 'Sohbeti kapat',
+  support_dialog_label: 'SwiftBridge destek sohbeti',
+  support_welkom: 'Merhaba! 👋 Bugün size nasıl yardımcı olabilirim? Bir konu seçin veya sorunuzu yazın.',
+  support_welkom_met_naam: 'Merhaba {naam}! 👋 Bugün size nasıl yardımcı olabilirim? Bir konu seçin veya sorunuzu yazın.',
+  support_quick_actions_titel: 'Sık sorulan sorular',
+  support_invoer_placeholder: 'Mesajınızı yazın…',
+  support_invoer_label: 'Destek için mesajınızı yazın',
+  support_verstuur: 'Mesaj gönder',
+  support_aan_het_typen: 'Destek yazıyor',
+  support_bericht_ontvangen: 'Mesaj alındı — 2 saat içinde yanıt vereceğiz.',
+  support_offline_fallback: 'Mesajınız kaydedildi. Şu an çevrimiçi yanıt veremiyoruz — hızlı yardım için support@swiftbridge.tx adresine e-posta gönderin.',
+  support_footer_mail: 'Veya e-posta gönderin:',
+  support_ongelezen: '{aantal} okunmamış mesaj',
+  support_qa_kyc_vraag: 'KYC belgelerimi nasıl yüklerim?',
+  support_qa_kyc_antwoord: 'Doğrulama sekmesine gidin ve "Belge tara" düğmesine tıklayın. Gerekenler:\n• Pasaport veya kimlik kartı (geçerli)\n• İkamet kanıtı (en fazla 3 ay eski)\n• Onay için selfie\n\nTarama 5 dakikadan az sürer ve anında geri bildirim alırsınız.',
+  support_qa_kosten_vraag: 'Para transferinin maliyeti nedir?',
+  support_qa_kosten_antwoord: 'SwiftBridge şeffaf fiyatlandırır:\n• İşlem başına sabit € 1,99 ücret\n• Kur marjı: %1,2 (Express) veya %0,5 (Economy)\n\nGizli maliyet yok — onaylamadan önce tam tutarı görürsünüz.',
+  support_qa_status_vraag: 'Param henüz gelmedi — şimdi ne yapmalıyım?',
+  support_qa_status_antwoord: 'Endişelenmeyin — önce Panel\'den durumu kontrol edin. Referans numarasını (TX-XXXXXX) bir sonraki mesajda gönderin, sizin için hemen kontrol edeyim.\n\n• Express: < 5 dk\n• Economy: 2 iş gününe kadar',
 };

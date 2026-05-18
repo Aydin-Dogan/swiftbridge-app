@@ -92,6 +92,21 @@ export const en = {
   dashboard_notif_leeg: 'No new notifications.',
   dashboard_notif_alles: 'View all →',
 
+  // Banners (app-wide announcements)
+  banner_sluit: 'Dismiss notification',
+  banner_admin_titel: 'Banner management',
+  banner_admin_nieuw: 'New banner',
+  banner_admin_bewerken: 'Edit banner',
+  banner_admin_geen: 'No banners created yet',
+  banner_veld_titel: 'Title',
+  banner_veld_bericht: 'Message',
+  banner_veld_type: 'Type',
+  banner_veld_sluitbaar: 'Dismissible',
+  banner_veld_cta_tekst: 'CTA text',
+  banner_veld_cta_url: 'CTA URL',
+  banner_veld_start: 'Starts at',
+  banner_veld_eind: 'Ends at',
+
   // Weeklimiet
   weeklimiet: 'Weekly limit',
   weeklimiet_resets: 'Resets every 7 days',
@@ -167,6 +182,35 @@ export const en = {
   // ── Profile: GDPR section header ─────────────────────────────────────────
   profiel_gdpr_kop: '🔒 Privacy & data management',
   profiel_gdpr_uitleg: 'Under GDPR you have the right of access (download your data) and the right to be forgotten (anonymise account). Wwft law requires us to retain transaction data for 5 years without PII.',
+
+  // ── Referral programme ───────────────────────────────────────────────────
+  profiel_referral_kop: '🎁 Invite friends',
+  profiel_referral_uitleg: 'Share SwiftBridge with family and friends. For every friend that makes their first transfer you get €5 — and your friend too!',
+  referral_titel: '🎁 Invite friends',
+  referral_intro: 'Earn €{bedrag} for every friend who tries SwiftBridge. They get €{bedrag} too. No limit.',
+  referral_jouw_code: 'Your code',
+  referral_deel_link: 'Shareable link',
+  referral_kopieer: 'Copy',
+  referral_kopieer_code: 'Click to copy code',
+  referral_kopieer_link: 'Click to copy link',
+  referral_gekopieerd: 'Copied!',
+  referral_deel_whatsapp: 'WhatsApp',
+  referral_deel_email: 'Email',
+  referral_deel_kopieer: 'Copy link',
+  referral_stats_vrienden: 'Invited',
+  referral_stats_verdiend: 'Earned',
+  referral_hoe_titel: '💡 How it works',
+  referral_hoe_stap1: 'Share your code or link with friends via WhatsApp or email.',
+  referral_hoe_stap2: 'Your friend signs up with your code and makes a first transfer.',
+  referral_hoe_stap3: 'You both get €{bedrag} off your next transfer.',
+  referral_share_whatsapp: 'Hey! I use SwiftBridge to send money to Türkiye — faster and cheaper than the bank. Get €{bedrag} bonus when you sign up with my code: {url}',
+  referral_share_email_onderwerp: 'Try SwiftBridge — get €5 bonus',
+  referral_share_email_tekst: 'Hi!\n\nI use SwiftBridge to send money quickly and cheaply to Türkiye. Sign up via my link and you get €{bedrag} bonus on your first transfer, and so do I!\n\n{url}\n\nCheers,',
+  registreer_referral_label: 'Did someone invite you? (optional)',
+  registreer_referral_placeholder: 'ABCD1234',
+  registreer_referral_check: 'Checking code...',
+  registreer_referral_geldig: 'Invited by {naam} ✓',
+  registreer_referral_ongeldig: 'This code is not valid — you can still register without a code.',
 
   // ── GDPR management component ────────────────────────────────────────────
   gdpr_titel: 'GDPR management',
@@ -316,6 +360,56 @@ export const en = {
   landing_footer_rechten: 'All rights reserved.',
   landing_footer_dnb_disclaimer: 'SwiftBridge B.V. is in beta. Payment services are delivered via a DNB-licensed EMI partner (agent model). We do not currently hold our own DNB licence.',
 
+  // ── Onboarding wizard (4-step) ────────────────────────────────────────────
+  onb_stap_van_totaal: 'Step {huidige} of {totaal}',
+  onb_sla_over: 'Skip for now',
+  onb_label_welkom: 'Welcome',
+  onb_label_kyc: 'Identify',
+  onb_label_deal: 'Welcome deal',
+  onb_label_klaar: 'Ready',
+
+  // Step 1 — Welcome
+  onb_welkom_titel: 'Welcome to SwiftBridge, {naam}! 🎉',
+  onb_welkom_subtitel: 'Let\'s get your account ready in 2 minutes so you can send money to Türkiye.',
+  onb_welkom_punt_1: 'Account created',
+  onb_welkom_punt_2: 'Verify your identity (1 minute, via your Dutch bank)',
+  onb_welkom_punt_3: 'Send your first transfer for free (up to €800)',
+  onb_welkom_cta: 'Let\'s get started',
+
+  // Step 2 — KYC nudge
+  onb_kyc_titel: 'Verify your identity in 1 minute',
+  onb_kyc_subtitel: 'Legally required (Wwft) — takes 60 seconds via your own bank.',
+  onb_kyc_via_bank: 'Works with your Dutch bank',
+  onb_kyc_waarom_titel: 'Why is this required?',
+  onb_kyc_reden_1: 'Under DNB supervision we must identify all users (anti-money laundering law).',
+  onb_kyc_reden_2: 'iDIN is secure — no passwords, only your bank verifies your identity.',
+  onb_kyc_reden_3: 'Your data stays with us (GDPR-compliant, never sold to third parties).',
+  onb_kyc_start_idin: 'Start iDIN verification',
+  onb_kyc_later: 'I\'ll do this later',
+
+  // Step 3 — Confirm + welcome deal
+  onb_bevestig_titel: 'You\'re verified',
+  onb_bevestig_subtitel: 'You can now send money with your welcome deal: €0 fee up to €800.',
+  onb_bevestig_promo_label: 'Welcome deal',
+  onb_bevestig_promo_titel: '€0 fee up to €800',
+  onb_bevestig_promo_code_label: 'Promo code',
+  onb_bevestig_promo_uitleg: 'Automatically applied to your first transfer. Valid for 30 days.',
+  onb_bevestig_volgende_label: 'Next step',
+  onb_bevestig_volgende_tekst: 'Make your first transfer to Türkiye',
+  onb_bevestig_cta: 'Continue',
+
+  // Step 4 — Ready
+  onb_klaar_titel: 'Ready to get going!',
+  onb_klaar_subtitel: 'A few tips to get the most out of SwiftBridge.',
+  onb_klaar_tip_pwa_titel: 'Install the app',
+  onb_klaar_tip_pwa_tekst: 'Add SwiftBridge to your home screen for quick access.',
+  onb_klaar_tip_pwa_knop: 'Install now',
+  onb_klaar_tip_notif_titel: 'Turn on notifications',
+  onb_klaar_tip_notif_tekst: 'Get alerts for successful transfers and rate updates.',
+  onb_klaar_tip_deel_titel: 'Share with family',
+  onb_klaar_tip_deel_tekst: 'Family can receive for free too — share SwiftBridge.',
+  onb_klaar_cta: 'Go to my transfer',
+
   // ── API error messages (errorCode → text) ────────────────────────────────
   errors: {
     // General
@@ -368,4 +462,28 @@ export const en = {
     PUSH_NIET_GECONFIGUREERD: 'Push notifications are not available.',
     PUSH_MISSING_ENDPOINT: 'Endpoint required.',
   },
+
+  // Support chat widget
+  support_titel: 'SwiftBridge Support',
+  support_online_status: 'Online — avg. response time 2 hours',
+  support_open_chat: 'Open support chat',
+  support_sluit: 'Close chat',
+  support_dialog_label: 'SwiftBridge support chat',
+  support_welkom: 'Hi there! 👋 How can I help you today? Pick a topic or type your question.',
+  support_welkom_met_naam: 'Hi {naam}! 👋 How can I help you today? Pick a topic or type your question.',
+  support_quick_actions_titel: 'Frequently asked',
+  support_invoer_placeholder: 'Type your message…',
+  support_invoer_label: 'Type your message to support',
+  support_verstuur: 'Send message',
+  support_aan_het_typen: 'Support is typing',
+  support_bericht_ontvangen: 'Message received — we will reply within 2 hours.',
+  support_offline_fallback: 'Message saved. We cannot respond online right now — email support@swiftbridge.tx for faster help.',
+  support_footer_mail: 'Or email us at',
+  support_ongelezen: '{aantal} unread messages',
+  support_qa_kyc_vraag: 'How do I upload my KYC documents?',
+  support_qa_kyc_antwoord: 'Go to the Verification tab and click "Scan document". You\'ll need:\n• Passport or ID card (valid)\n• Proof of residence (max 3 months old)\n• Selfie for confirmation\n\nThe scan takes less than 5 minutes and you get instant feedback.',
+  support_qa_kosten_vraag: 'What does a transfer cost?',
+  support_qa_kosten_antwoord: 'SwiftBridge has transparent pricing:\n• € 1,99 fixed fee per transaction\n• Exchange rate margin: 1.2% (Express) or 0.5% (Economy)\n\nNo hidden costs — you see the exact outcome before you confirm.',
+  support_qa_status_vraag: 'My money hasn\'t arrived yet — what now?',
+  support_qa_status_antwoord: 'No worries — first check the status on your Dashboard. Send me the reference number (TX-XXXXXX) in the next message and I\'ll look it up right away.\n\n• Express: < 5 min\n• Economy: up to 2 business days',
 };

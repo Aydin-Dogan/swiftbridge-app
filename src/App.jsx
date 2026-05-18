@@ -1,11 +1,12 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate, useParams } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import LiveKoersTicker from './components/LiveKoersTicker';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import TaalKiezer from './components/TaalKiezer';
 import OfflineBanner from './components/OfflineBanner';
+import SupportChat from './components/chat/SupportChat';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi } from './services/api';
 
@@ -277,6 +278,14 @@ function ProtectedRoute({ token, gebruiker, onLogout, children }) {
   return <AppShell token={token} gebruiker={gebruiker} onLogout={onLogout} />;
 }
 
+// ── Referral redirect: /r/:code → /login?tab=register&ref=:code ──
+// Hierdoor werken gedeelde links zoals https://swiftbridge.app/r/ABCD1234
+function ReferralRedirect() {
+  const { code } = useParams();
+  const safe = (code || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+  return <Navigate to={`/login?tab=register&ref=${encodeURIComponent(safe)}`} replace />;
+}
+
 // Sentinel: andere componenten ontvangen `token` als prop. Met de httpOnly cookie
 // is er geen leesbare token-string meer, maar we willen die props niet wijzigen
 // (out of scope). Een truthy placeholder houdt `if (token)`-checks elders heel —
@@ -343,6 +352,7 @@ export default function App() {
               <AppShell token={token} gebruiker={gebruiker} onLogout={handleLogout} />
             </ProtectedRoute>
           } />
+          <Route path="/r/:code" element={<ReferralRedirect />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacybeleid" element={<Privacybeleid />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />
@@ -353,6 +363,60 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
+      <SupportChatGlobal gebruiker={gebruiker} token={token} />
     </BrowserRouter>
   );
+}
+
+// ── SupportChat wrapper ─────────────────────────────────────────────────────
+// Toont de chat widget:
+//  - na login (token aanwezig) op alle interne paginas
+//  - op de publieke landing
+//  - NIET op /login en /admin* om de focus daar zuiver te houden
+//  - auto-hide als window.__sb_kyc_scan_active__ === true (KYC camera flow)
+function SupportChatGlobal({ gebruiker, token }) {
+  const [pad, setPad] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
+  const [kycScanActief, setKycScanActief] = useState(false);
+
+  useEffect(() => {
+    const onPath = () => setPad(window.location.pathname);
+    window.addEventListener('popstate', onPath);
+    // Patch pushState/replaceState zodat we routewissels meekrijgen
+    const origPush = window.history.pushState;
+    const origReplace = window.history.replaceState;
+    window.history.pushState = function (...args) {
+      const r = origPush.apply(this, args);
+      onPath();
+      return r;
+    };
+    window.history.replaceState = function (...args) {
+      const r = origReplace.apply(this, args);
+      onPath();
+      return r;
+    };
+    return () => {
+      window.removeEventListener('popstate', onPath);
+      window.history.pushState = origPush;
+      window.history.replaceState = origReplace;
+    };
+  }, []);
+
+  // Hook voor KYCFlow: dispatch CustomEvent('swiftbridge_kyc_scan', { detail: true|false })
+  // om de chat tijdelijk te verbergen tijdens camera-gebruik.
+  useEffect(() => {
+    const handler = (e) => setKycScanActief(!!e.detail);
+    window.addEventListener('swiftbridge_kyc_scan', handler);
+    return () => window.removeEventListener('swiftbridge_kyc_scan', handler);
+  }, []);
+
+  // Bepaal of widget zichtbaar mag zijn
+  const isLanding = pad === '/' || pad === '';
+  const isApp = pad.startsWith('/app');
+  const isPublic = isLanding;
+  const isHidden = pad.startsWith('/login') || pad.startsWith('/admin');
+
+  const mag = (token && isApp) || isPublic;
+  if (!mag || isHidden || kycScanActief) return null;
+
+  return <SupportChat gebruiker={gebruiker || null} actief={!kycScanActief} />;
 }

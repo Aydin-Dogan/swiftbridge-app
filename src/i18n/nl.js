@@ -92,6 +92,21 @@ export const nl = {
   dashboard_notif_leeg: 'Geen nieuwe meldingen.',
   dashboard_notif_alles: 'Alles bekijken →',
 
+  // Banners (app-wide announcements)
+  banner_sluit: 'Sluit melding',
+  banner_admin_titel: 'Banner beheer',
+  banner_admin_nieuw: 'Nieuwe banner',
+  banner_admin_bewerken: 'Banner bewerken',
+  banner_admin_geen: 'Geen banners aangemaakt',
+  banner_veld_titel: 'Titel',
+  banner_veld_bericht: 'Bericht',
+  banner_veld_type: 'Type',
+  banner_veld_sluitbaar: 'Sluitbaar',
+  banner_veld_cta_tekst: 'CTA tekst',
+  banner_veld_cta_url: 'CTA URL',
+  banner_veld_start: 'Start vanaf',
+  banner_veld_eind: 'Eindigt op',
+
   // Weeklimiet
   weeklimiet: 'Weeklimiet',
   weeklimiet_resets: 'Resets elke 7 dagen',
@@ -167,6 +182,36 @@ export const nl = {
   // ── Profiel: GDPR / AVG sectie kop ───────────────────────────────────────
   profiel_gdpr_kop: '🔒 Privacy & gegevensbeheer',
   profiel_gdpr_uitleg: 'Onder AVG heb je recht op inzage (download je data) en vergetelheid (account anonimiseren). Wwft verplicht ons 5 jaar transactiebewaring zonder PII.',
+
+  // ── Referral programma ───────────────────────────────────────────────────
+  profiel_referral_kop: '🎁 Nodig vrienden uit',
+  profiel_referral_uitleg: 'Deel SwiftBridge met familie en vrienden. Voor elke vriend die zijn eerste overboeking doet krijg je €5 — en je vriend ook!',
+  referral_titel: '🎁 Nodig vrienden uit',
+  referral_intro: 'Krijg €{bedrag} per vriend die SwiftBridge probeert. Hij/zij krijgt óók €{bedrag}. Geen limiet.',
+  referral_jouw_code: 'Jouw code',
+  referral_deel_link: 'Deelbare link',
+  referral_kopieer: 'Kopieer',
+  referral_kopieer_code: 'Klik om de code te kopiëren',
+  referral_kopieer_link: 'Klik om de link te kopiëren',
+  referral_gekopieerd: 'Gekopieerd!',
+  referral_deel_whatsapp: 'WhatsApp',
+  referral_deel_email: 'E-mail',
+  referral_deel_kopieer: 'Kopieer link',
+  referral_stats_vrienden: 'Uitgenodigd',
+  referral_stats_verdiend: 'Verdiend',
+  referral_hoe_titel: '💡 Zo werkt het',
+  referral_hoe_stap1: 'Deel je code of link met vrienden via WhatsApp of e-mail.',
+  referral_hoe_stap2: 'Je vriend registreert met jouw code en doet een eerste overboeking.',
+  referral_hoe_stap3: 'Jullie krijgen allebei €{bedrag} korting op een volgende overboeking.',
+  referral_share_whatsapp: 'Hey! Ik gebruik SwiftBridge voor geld sturen naar Türkiye — sneller en goedkoper dan de bank. Krijg €{bedrag} bonus als je via mijn code registreert: {url}',
+  referral_share_email_onderwerp: 'Probeer SwiftBridge — krijg €5 bonus',
+  referral_share_email_tekst: 'Hoi!\n\nIk gebruik SwiftBridge om snel en goedkoop geld te sturen naar Türkiye. Als je je registreert via mijn link krijg je €{bedrag} bonus op je eerste overboeking, en ik ook!\n\n{url}\n\nGroet,',
+  // Registratie veld
+  registreer_referral_label: 'Heeft iemand je uitgenodigd? (optioneel)',
+  registreer_referral_placeholder: 'ABCD1234',
+  registreer_referral_check: 'Code controleren...',
+  registreer_referral_geldig: 'Uitgenodigd door {naam} ✓',
+  registreer_referral_ongeldig: 'Deze code is niet geldig — je kunt de registratie zonder code voltooien.',
 
   // ── GDPR Beheer component ────────────────────────────────────────────────
   gdpr_titel: 'AVG / GDPR beheer',
@@ -316,6 +361,56 @@ export const nl = {
   landing_footer_rechten: 'Alle rechten voorbehouden.',
   landing_footer_dnb_disclaimer: 'SwiftBridge B.V. opereert in bèta. Betaaldiensten worden geleverd via een door DNB gelicentieerde EMI-partner (agent-model). Wij beschikken momenteel niet over een eigen DNB-vergunning.',
 
+  // ── Onboarding wizard (4-staps) ───────────────────────────────────────────
+  onb_stap_van_totaal: 'Stap {huidige} van {totaal}',
+  onb_sla_over: 'Sla over voor nu',
+  onb_label_welkom: 'Welkom',
+  onb_label_kyc: 'Identificatie',
+  onb_label_deal: 'Welkomstdeal',
+  onb_label_klaar: 'Klaar',
+
+  // Stap 1 — Welkom
+  onb_welkom_titel: 'Welkom bij SwiftBridge, {naam}! 🎉',
+  onb_welkom_subtitel: 'Laten we je account in 2 minuten klaarmaken om geld naar Türkiye te sturen.',
+  onb_welkom_punt_1: 'Account aangemaakt',
+  onb_welkom_punt_2: 'Identificeer jezelf (1 minuut, via je Nederlandse bank)',
+  onb_welkom_punt_3: 'Verstuur je eerste overboeking gratis (tot €800)',
+  onb_welkom_cta: 'Laten we beginnen',
+
+  // Stap 2 — KYC nudge
+  onb_kyc_titel: 'Identificeer jezelf in 1 minuut',
+  onb_kyc_subtitel: 'Wettelijk verplicht (Wwft) — neemt 60 seconden via je eigen bank.',
+  onb_kyc_via_bank: 'Werkt met jouw Nederlandse bank',
+  onb_kyc_waarom_titel: 'Waarom moet dit?',
+  onb_kyc_reden_1: 'Onder DNB-toezicht moeten we alle gebruikers identificeren (anti-witwaswet).',
+  onb_kyc_reden_2: 'iDIN is veilig — geen wachtwoorden, alleen je bank verifieert je identiteit.',
+  onb_kyc_reden_3: 'Je gegevens blijven bij ons (AVG-conform, geen verkoop aan derden).',
+  onb_kyc_start_idin: 'Start iDIN identificatie',
+  onb_kyc_later: 'Doe ik later',
+
+  // Stap 3 — Bevestig + welkomstdeal
+  onb_bevestig_titel: 'Je bent geverifieerd',
+  onb_bevestig_subtitel: 'Je kunt nu geld versturen met je welkomstdeal: €0 fee tot €800.',
+  onb_bevestig_promo_label: 'Welkomstdeal',
+  onb_bevestig_promo_titel: '€0 fee tot €800',
+  onb_bevestig_promo_code_label: 'Promo code',
+  onb_bevestig_promo_uitleg: 'Wordt automatisch toegepast op je eerste overboeking. Geldig 30 dagen.',
+  onb_bevestig_volgende_label: 'Volgende stap',
+  onb_bevestig_volgende_tekst: 'Maak je eerste overboeking naar Türkiye',
+  onb_bevestig_cta: 'Verder',
+
+  // Stap 4 — Klaar
+  onb_klaar_titel: 'Klaar om te beginnen!',
+  onb_klaar_subtitel: 'Een paar tips om het meeste uit SwiftBridge te halen.',
+  onb_klaar_tip_pwa_titel: 'Installeer de app',
+  onb_klaar_tip_pwa_tekst: 'Zet SwiftBridge op je beginscherm voor snelle toegang.',
+  onb_klaar_tip_pwa_knop: 'Installeer nu',
+  onb_klaar_tip_notif_titel: 'Zet notificaties aan',
+  onb_klaar_tip_notif_tekst: 'Krijg meldingen bij geslaagde overboekingen en koersalerts.',
+  onb_klaar_tip_deel_titel: 'Deel met familie',
+  onb_klaar_tip_deel_tekst: 'Familie kan ook gratis ontvangen — deel SwiftBridge.',
+  onb_klaar_cta: 'Naar mijn overboeking',
+
   // ── API foutmeldingen (errorCode → tekst) ────────────────────────────────
   errors: {
     // Algemeen
@@ -368,4 +463,28 @@ export const nl = {
     PUSH_NIET_GECONFIGUREERD: 'Push notificaties zijn niet beschikbaar.',
     PUSH_MISSING_ENDPOINT: 'Endpoint is vereist.',
   },
+
+  // Support chat widget
+  support_titel: 'SwiftBridge Support',
+  support_online_status: 'Online — gem. reactietijd 2 uur',
+  support_open_chat: 'Open support chat',
+  support_sluit: 'Chat sluiten',
+  support_dialog_label: 'SwiftBridge support chat',
+  support_welkom: 'Hallo! 👋 Waarmee kan ik je vandaag helpen? Kies een onderwerp of typ je vraag.',
+  support_welkom_met_naam: 'Hallo {naam}! 👋 Waarmee kan ik je vandaag helpen? Kies een onderwerp of typ je vraag.',
+  support_quick_actions_titel: 'Veelgestelde vragen',
+  support_invoer_placeholder: 'Typ je bericht…',
+  support_invoer_label: 'Typ je bericht aan support',
+  support_verstuur: 'Verstuur bericht',
+  support_aan_het_typen: 'Support is aan het typen',
+  support_bericht_ontvangen: 'Bericht ontvangen — we reageren binnen 2 uur.',
+  support_offline_fallback: 'Bericht is opgeslagen. We kunnen je nu niet online beantwoorden — mail support@swiftbridge.tx voor snelle hulp.',
+  support_footer_mail: 'Of mail naar',
+  support_ongelezen: '{aantal} ongelezen berichten',
+  support_qa_kyc_vraag: 'Hoe upload ik mijn KYC documenten?',
+  support_qa_kyc_antwoord: 'Ga naar het tabblad Verificatie en klik op "Document scannen". Je hebt nodig:\n• Paspoort of ID-kaart (geldig)\n• Bewijs van woonadres (max 3 maanden oud)\n• Selfie ter bevestiging\n\nDe scan duurt minder dan 5 minuten en je krijgt direct feedback.',
+  support_qa_kosten_vraag: 'Wat zijn de kosten van een overboeking?',
+  support_qa_kosten_antwoord: 'SwiftBridge rekent een transparante prijs:\n• € 1,99 vaste fee per transactie\n• Wisselkoers marge: 1,2% (Express) of 0,5% (Economy)\n\nGeen verborgen kosten — je ziet de exacte uitkomst voor je bevestigt.',
+  support_qa_status_vraag: 'Mijn geld is nog niet aangekomen — wat nu?',
+  support_qa_status_antwoord: 'Geen paniek — check eerst de status op je Dashboard. Stuur me het referentienummer (TX-XXXXXX) in een volgend bericht, dan zoek ik het direct voor je op.\n\n• Express: < 5 min\n• Economy: tot 2 werkdagen',
 };
