@@ -300,14 +300,14 @@ export default function Login({ onLogin }) {
             {tab === 'register' && (
               <>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam</label>
-                  <input value={form.naam} onChange={e => update('naam', e.target.value)}
+                  <label htmlFor="reg-naam" className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam</label>
+                  <input id="reg-naam" name="naam" autoComplete="name" value={form.naam} onChange={e => update('naam', e.target.value)}
                     placeholder="Naam" required
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Telefoonnummer</label>
-                  <input value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
+                  <label htmlFor="reg-telefoon" className="block text-xs font-semibold text-gray-600 mb-1">Telefoonnummer</label>
+                  <input id="reg-telefoon" name="telefoon" autoComplete="tel" value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
                     placeholder="+31 6 12345678" type="tel"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                 </div>
@@ -315,19 +315,20 @@ export default function Login({ onLogin }) {
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">E-mailadres</label>
-              <input value={form.email} onChange={e => update('email', e.target.value)}
+              <label htmlFor="auth-email" className="block text-xs font-semibold text-gray-600 mb-1">E-mailadres</label>
+              <input id="auth-email" name="email" autoComplete="email" value={form.email} onChange={e => update('email', e.target.value)}
                 placeholder="naam@email.nl" type="email" required
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">Wachtwoord</label>
-              <input value={form.password} onChange={e => update('password', e.target.value)}
+              <label htmlFor="auth-password" className="block text-xs font-semibold text-gray-600 mb-1">Wachtwoord</label>
+              <input id="auth-password" name="password" autoComplete={tab === 'login' ? 'current-password' : 'new-password'} value={form.password} onChange={e => update('password', e.target.value)}
                 placeholder="••••••••" type="password" required minLength={8}
+                aria-describedby={tab === 'register' ? 'pw-hint' : undefined}
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
               {tab === 'register' && (
-                <p className="text-xs text-gray-400 mt-1">Minimaal 8 tekens</p>
+                <p id="pw-hint" className="text-xs text-gray-400 mt-1">Minimaal 8 tekens</p>
               )}
             </div>
 
@@ -341,8 +342,8 @@ export default function Login({ onLogin }) {
             )}
 
             {fout && (
-              <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl">
-                ⚠️ {fout}
+              <div role="alert" aria-live="assertive" className="bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-xl flex items-start gap-2">
+                <span aria-hidden="true">⚠️</span><span>{fout}</span>
               </div>
             )}
 

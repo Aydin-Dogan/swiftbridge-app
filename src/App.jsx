@@ -182,8 +182,9 @@ function AppShell({ gebruiker, token, onLogout }) {
           <div className="flex items-center gap-2">
             {!kycGoedgekeurd && (
               <button onClick={() => setActief('kyc')}
-                className="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-1 rounded-full">
-                ⚠️ KYC
+                aria-label="KYC verificatie nog vereist - klik om te starten"
+                className="text-xs bg-amber-100 hover:bg-amber-200 active:bg-amber-300 text-amber-800 font-semibold px-3 py-2 min-h-[36px] rounded-full transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400 inline-flex items-center gap-1">
+                <span aria-hidden="true">⚠️</span> KYC
               </button>
             )}
             <TaalKiezer />

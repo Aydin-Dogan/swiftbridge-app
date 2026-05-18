@@ -243,9 +243,16 @@ function TransactieHistorie({ transacties, laden }) {
   if (transacties.length === 0) {
     return (
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
-        <div className="text-4xl mb-3">💸</div>
+        <div className="text-4xl mb-3" aria-hidden="true">💸</div>
         <h3 className="font-bold text-gray-700 mb-1">{t('transacties_geen')}</h3>
-        <p className="text-gray-400 text-sm">{t('transacties_eerste')}</p>
+        <p className="text-gray-400 text-sm mb-4">{t('transacties_eerste')}</p>
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
+          className="btn-primary text-sm px-5 py-2.5 inline-flex items-center gap-2"
+        >
+          <span aria-hidden="true">💸</span>
+          Begin je eerste overboeking
+        </button>
       </div>
     );
   }
@@ -401,8 +408,10 @@ export default function Dashboard({ gebruiker }) {
           <p className="text-gray-500 text-sm">{t('dashboard_subtitel')}</p>
         </div>
         <button onClick={() => { haalKoers(); haalTransacties(); }}
-          className="text-gray-400 hover:text-blue-600 transition text-xl" title="Vernieuwen">
-          🔄
+          className="text-gray-400 hover:text-blue-600 active:scale-95 transition text-xl w-11 h-11 rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-300"
+          title="Vernieuwen"
+          aria-label="Dashboard vernieuwen">
+          <span aria-hidden="true">🔄</span>
         </button>
       </div>
 
