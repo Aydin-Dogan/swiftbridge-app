@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import Vlag from './Vlag';
 import { formatBedrag, getValuta } from '../services/currencies';
+import { API_URL } from '../services/api';
 
 function formatTime(iso) {
   if (!iso) return null;
@@ -28,10 +29,47 @@ const MILESTONES = [
 
 export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
   const [print, setPrint] = useState(false);
+  const [pdfLaden, setPdfLaden] = useState(false);
+  const [pdfFout, setPdfFout] = useState(null);
   if (!tx) return null;
 
   const valutaInfo = getValuta(tx.valuta || 'TRY');
   const refNr = tx.referentieNr || tx.referentie_nr || tx.id?.slice(0, 16);
+  const isVoltooid = tx.status === 'voltooid';
+
+  async function downloadPdf() {
+    if (!tx?.id || pdfLaden) return;
+    setPdfLaden(true);
+    setPdfFout(null);
+    try {
+      const res = await fetch(`${API_URL}/transactions/${tx.id}/pdf`, {
+        credentials: 'include',
+      });
+      if (!res.ok) {
+        let bericht = `PDF kon niet worden geladen (${res.status})`;
+        try {
+          const data = await res.json();
+          if (data?.error) bericht = data.error;
+        } catch { /* niet JSON */ }
+        throw new Error(bericht);
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `swiftbridge-${refNr}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      // korte timeout zodat de browser de download kan starten voordat de URL wordt vrijgegeven
+      setTimeout(() => window.URL.revokeObjectURL(url), 1500);
+    } catch (err) {
+      console.error('PDF download fout:', err);
+      setPdfFout(err.message || 'PDF download mislukt');
+    } finally {
+      setPdfLaden(false);
+    }
+  }
 
   return (
     <div
@@ -154,17 +192,43 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
           <strong>💡 Houd er rekening mee:</strong> de bank van de ontvanger kan het geld tot 3 werkdagen vasthouden voordat het beschikbaar is.
         </div>
 
+        {/* PDF foutmelding */}
+        {pdfFout && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-[11px] text-red-800 print:hidden">
+            ⚠️ {pdfFout}
+          </div>
+        )}
+
         {/* Acties */}
         <div className="grid grid-cols-2 gap-2 print:hidden">
           <button
             onClick={() => window.print()}
             className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl text-sm transition active:scale-95"
           >
-            🖨️ Print / PDF
+            🖨️ Print
+          </button>
+          <button
+            onClick={downloadPdf}
+            disabled={!isVoltooid || pdfLaden}
+            title={!isVoltooid ? 'PDF beschikbaar zodra de transactie voltooid is' : 'Download officiële kwitantie als PDF'}
+            className={`font-semibold py-3 rounded-xl text-sm transition active:scale-95 flex items-center justify-center gap-1 ${
+              !isVoltooid || pdfLaden
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
+            }`}
+          >
+            {pdfLaden ? (
+              <>
+                <span className="inline-block w-3 h-3 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                Bezig…
+              </>
+            ) : (
+              <>📄 Download PDF</>
+            )}
           </button>
           <button
             onClick={() => onHerhaal?.(tx)}
-            className="btn-primary py-3 text-sm"
+            className="btn-primary py-3 text-sm col-span-2"
           >
             🔁 Opnieuw versturen
           </button>
