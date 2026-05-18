@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import TaalKiezer from '../components/TaalKiezer';
+import { useTaal } from '../i18n';
 import { apiFetch, haalProfiel } from '../services/api';
 
 export default function Login({ onLogin }) {
   const [params] = useSearchParams();
+  const { t } = useTaal();
   const [tab, setTab] = useState(params.get('tab') === 'register' ? 'register' : 'login');
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '' });
+  // Auto-vul referralCode uit URL ?ref=ABCD1234 (gedeeld via WhatsApp/email)
+  const initialRef = params.get('ref') || params.get('r') || '';
+  const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '', referralCode: initialRef.toUpperCase() });
+  // Referral validatie state
+  const [refValidatie, setRefValidatie] = useState({ status: 'idle', uitnodigerNaam: '' }); // idle | bezig | geldig | ongeldig
   const [laden, setLaden] = useState(false);
   const [fout, setFout] = useState('');
   const [toonVergeten, setToonVergeten] = useState(false);
@@ -31,6 +37,30 @@ export default function Login({ onLogin }) {
 
   useEffect(() => { setFout(''); }, [tab]);
 
+  // Live validatie van referral code — debounced 400ms
+  useEffect(() => {
+    if (tab !== 'register') return;
+    const code = (form.referralCode || '').trim().toUpperCase();
+    if (!code) { setRefValidatie({ status: 'idle', uitnodigerNaam: '' }); return; }
+    if (code.length < 6) { setRefValidatie({ status: 'idle', uitnodigerNaam: '' }); return; }
+    let geannuleerd = false;
+    setRefValidatie({ status: 'bezig', uitnodigerNaam: '' });
+    const timer = setTimeout(async () => {
+      try {
+        const data = await apiFetch('/referral/valideer', { method: 'POST', body: { code } });
+        if (geannuleerd) return;
+        if (data?.geldig) {
+          setRefValidatie({ status: 'geldig', uitnodigerNaam: data.uitnodigerNaam || '' });
+        } else {
+          setRefValidatie({ status: 'ongeldig', uitnodigerNaam: '' });
+        }
+      } catch {
+        if (!geannuleerd) setRefValidatie({ status: 'ongeldig', uitnodigerNaam: '' });
+      }
+    }, 400);
+    return () => { geannuleerd = true; clearTimeout(timer); };
+  }, [form.referralCode, tab]);
+
   function update(k, v) { setForm(f => ({ ...f, [k]: v })); }
 
   async function submit(e) {
@@ -41,7 +71,13 @@ export default function Login({ onLogin }) {
       const endpoint = tab === 'login' ? '/auth/login' : '/auth/register';
       const body = tab === 'login'
         ? { email: form.email, password: form.password }
-        : { email: form.email, password: form.password, naam: form.naam, telefoon: form.telefoon };
+        : {
+            email: form.email,
+            password: form.password,
+            naam: form.naam,
+            telefoon: form.telefoon,
+            ...(form.referralCode ? { referralCode: form.referralCode.trim().toUpperCase() } : {}),
+          };
 
       // apiFetch zet `credentials: 'include'` — backend zet sb_token cookie.
       const data = await apiFetch(endpoint, { method: 'POST', body });
@@ -310,6 +346,40 @@ export default function Login({ onLogin }) {
                   <input id="reg-telefoon" name="telefoon" autoComplete="tel" value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
                     placeholder="+31 6 12345678" type="tel"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                </div>
+                <div>
+                  <label htmlFor="reg-ref" className="block text-xs font-semibold text-gray-600 mb-1">
+                    {t('registreer_referral_label')}
+                  </label>
+                  <input
+                    id="reg-ref"
+                    name="referralCode"
+                    autoComplete="off"
+                    value={form.referralCode}
+                    onChange={e => update('referralCode', e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12))}
+                    placeholder={t('registreer_referral_placeholder')}
+                    maxLength={12}
+                    className={`w-full border rounded-xl px-4 py-3 text-sm outline-none font-mono tracking-widest focus:ring-2 focus:ring-blue-100 ${
+                      refValidatie.status === 'geldig'
+                        ? 'border-emerald-500 bg-emerald-50'
+                        : refValidatie.status === 'ongeldig'
+                        ? 'border-rose-300 bg-rose-50'
+                        : 'border-gray-200 focus:border-blue-500'
+                    }`}
+                  />
+                  {refValidatie.status === 'bezig' && (
+                    <p className="text-[11px] text-gray-500 mt-1">⏳ {t('registreer_referral_check')}</p>
+                  )}
+                  {refValidatie.status === 'geldig' && (
+                    <p className="text-[11px] text-emerald-700 mt-1 font-semibold">
+                      ✅ {t('registreer_referral_geldig', { naam: refValidatie.uitnodigerNaam })}
+                    </p>
+                  )}
+                  {refValidatie.status === 'ongeldig' && form.referralCode && (
+                    <p className="text-[11px] text-rose-600 mt-1">
+                      ⚠️ {t('registreer_referral_ongeldig')}
+                    </p>
+                  )}
                 </div>
               </>
             )}

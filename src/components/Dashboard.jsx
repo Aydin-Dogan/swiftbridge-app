@@ -36,8 +36,45 @@ import KoersChart from './dashboard/KoersChart';
 import RecentTransacties from './dashboard/RecentTransacties';
 import InsightsCard from './dashboard/InsightsCard';
 
+// Onboarding wizard voor nieuwe gebruikers
+import OnboardingModal from './onboarding/OnboardingModal';
+
+// App-wide announcement banners (door admin beheerd)
+import BannerLijst from './banners/BannerLijst';
+
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
+const ONB_DISMISS_KEY = 'sb_onboarding_dismissed';
+
+// Bepaal of we de onboarding modal moeten tonen.
+// Voorwaarden:
+//   - gebruiker.aangemeldOp < 24u geleden (verse accounts)
+//   - kycStatus !== 'goedgekeurd' (KYC nudge nog relevant) OF nog niet dismissed
+//   - localStorage 'sb_onboarding_dismissed' niet gezet
+// Robust voor missende `aangemeldOp` op de backend: als veld ontbreekt vallen we
+// terug op alleen de KYC-staat zodat we de wizard niet voor elke bestaande
+// gebruiker forceren te zien.
+function moetOnboardingTonen(gebruiker) {
+  if (!gebruiker) return false;
+  try {
+    if (localStorage.getItem(ONB_DISMISS_KEY) === '1') return false;
+  } catch { /* private mode — gewoon doortonen */ }
+
+  const aangemeld = gebruiker.aangemeldOp || gebruiker.aangemeld_op || gebruiker.createdAt || gebruiker.created_at;
+  if (aangemeld) {
+    const ts = new Date(aangemeld).getTime();
+    if (Number.isFinite(ts)) {
+      const verseAccount = (Date.now() - ts) < 24 * 60 * 60 * 1000;
+      if (!verseAccount) return false;
+    }
+    // Als de timestamp aanwezig maar onparseerbaar is, toon toch — dismiss-flag
+    // is dan de enige stop. Dit voorkomt dat een verkeerde datum de wizard verbergt.
+  }
+  // Geen aangemeld-datum bekend? Toon enkel zolang KYC niet voltooid is — dan
+  // weten we redelijk zeker dat de gebruiker nog in het onboarding-traject zit.
+  if (!aangemeld && gebruiker.kycStatus === 'goedgekeurd') return false;
+  return true;
+}
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function laadLokaleTransacties() {
@@ -98,6 +135,17 @@ export default function Dashboard({ gebruiker }) {
   const [transacties,   setTransacties  ] = useState([]);
   const [ladenTx,       setLadenTx      ] = useState(true);
   const [weekData,      setWeekData     ] = useState({ weekTotaal: 0, weekLimiet: 5000 });
+
+  // Onboarding modal — toon één keer voor verse accounts die nog niet door KYC heen zijn
+  const [onboardingOpen, setOnboardingOpen] = useState(() => moetOnboardingTonen(gebruiker));
+  useEffect(() => {
+    // Herevalueer wanneer de gebruiker-data binnenkomt (login flow)
+    if (moetOnboardingTonen(gebruiker)) setOnboardingOpen(true);
+  }, [gebruiker]);
+  function sluitOnboarding() {
+    try { localStorage.setItem(ONB_DISMISS_KEY, '1'); } catch {}
+    setOnboardingOpen(false);
+  }
 
   // Live koers ophalen via backend (60s polling)
   const haalKoers = useCallback(async () => {
@@ -167,6 +215,16 @@ export default function Dashboard({ gebruiker }) {
 
   return (
     <div className="space-y-4">
+      {/* Onboarding wizard voor verse accounts — 1x dismissibel via localStorage */}
+      <OnboardingModal
+        gebruiker={gebruiker}
+        open={onboardingOpen}
+        onDismiss={sluitOnboarding}
+      />
+
+      {/* App-wide banners (admin-gedreven, dismissible per gebruiker) */}
+      <BannerLijst />
+
       {/* 1. Welcome header met KYC status pill */}
       <SaldoCard gebruiker={gebruiker} onVernieuw={vernieuwAlles} />
 

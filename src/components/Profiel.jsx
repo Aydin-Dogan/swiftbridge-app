@@ -9,6 +9,7 @@ import { parseError } from '../services/api';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
+import ReferralKaart from './referral/ReferralKaart';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -487,6 +488,17 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </p>
       </div>
       <GdprBeheer token={token} />
+
+      {/* ── Vrienden uitnodigen — referral programma ──────────────────── */}
+      <div className="card-glass p-5 animate-fade-up border-l-4 border-emerald-500 space-y-2">
+        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+          {t('profiel_referral_kop')}
+        </h3>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {t('profiel_referral_uitleg')}
+        </p>
+      </div>
+      <ReferralKaart />
     </div>
   );
 }

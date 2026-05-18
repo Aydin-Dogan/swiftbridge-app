@@ -9,7 +9,7 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
-import { berekenKosten, KOSTEN_LABELS } from '../services/kosten';
+import { berekenKosten, KOSTEN_LABELS, zichtbarePercentage } from '../services/kosten';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
@@ -31,7 +31,7 @@ const BETAALMETHODEN = [
     label: 'iDEAL',
     icon:  '🏦',
     desc:  'Direct via je Nederlandse bank',
-    sub:   '⭐ Meest gekozen · 1,99 fee',
+    sub:   '⭐ Meest gekozen · vanaf 0,8%',
     kleur: 'border-blue-500 bg-blue-50',
   },
   {
@@ -255,13 +255,15 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
   const bedragNum = Math.max(0, parseFloat(bedrag) || 0);
 
-  // Pricing met flat fee + hidden FX
+  // Pricing met tariefkaart-staffel + verborgen FX (zie services/kosten.js)
   const kosten = berekenKosten(bedragNum, 'ideal', snelheid, effectieveKoers);
   const ontvangenNetto = bedrag && !isNaN(bedrag) ? kosten.ontvangenBedrag : null;
 
-  // Display fee voor Express/Economy preview
+  // Display fee voor Express/Economy preview — gebruikt nu de matrix
   function previewFee(snel) {
-    return snel === 'economy' ? 0.99 : 1.99;
+    const methodeVoorPreview = snel === 'economy' ? 'sepa' : 'ideal';
+    const k = berekenKosten(bedragNum || 100, methodeVoorPreview, snel, effectieveKoers);
+    return k.klantBetaaltFee;
   }
 
   const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;

@@ -1,12 +1,14 @@
 /**
  * AdminCompliance.jsx — Compliance dashboard voor DNB-toezicht
  *
- * 5 tabs:
+ * Tabs:
  *   1. Stats — kerncijfers
- *   2. Audit logs — paginated met filter
- *   3. Sanctie matches — Wwft Art. 33
- *   4. GDPR acties — AVG Art. 15/17
- *   5. Transactie monitoring — geanonimiseerd
+ *   2. Gebruikers — user management
+ *   3. Audit logs — paginated met filter
+ *   4. Sanctie matches — Wwft Art. 33
+ *   5. GDPR acties — AVG Art. 15/17
+ *   6. Transactie monitoring — geanonimiseerd
+ *   7. Banners — app-wide announcement banners beheren
  *
  * Toegang: gebruiker moet ingelogd zijn EN in ADMIN_EMAILS staan
  * (backend check in src/middleware/admin.js).
@@ -15,6 +17,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
+import UserManagement from '../components/admin/UserManagement';
+import BannerBeheer from '../components/admin/BannerBeheer';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmtEur(n) {
@@ -508,10 +512,12 @@ export default function AdminCompliance() {
 
   const tabs = [
     { id: 'stats',      label: 'Overzicht',         icoon: '📊' },
+    { id: 'users',      label: 'Gebruikers',         icoon: '👥' },
     { id: 'audit',      label: 'Audit logs',         icoon: '📋' },
     { id: 'sanctie',    label: 'Sanctie matches',    icoon: '🛂' },
     { id: 'gdpr',       label: 'GDPR acties',        icoon: '📜' },
     { id: 'tx',         label: 'Transacties',        icoon: '💸' },
+    { id: 'banners',    label: 'Banners',            icoon: '📣' },
   ];
 
   if (fout && !stats) {
@@ -578,10 +584,12 @@ export default function AdminCompliance() {
 
       <main className="max-w-7xl mx-auto px-4 py-6">
         {tab === 'stats'   && <StatsTab stats={stats} chain={chain} />}
+        {tab === 'users'   && <UserManagement />}
         {tab === 'audit'   && <AuditTab />}
         {tab === 'sanctie' && <SanctieTab />}
         {tab === 'gdpr'    && <GdprTab />}
         {tab === 'tx'      && <TransactieTab />}
+        {tab === 'banners' && <BannerBeheer />}
       </main>
     </div>
   );
