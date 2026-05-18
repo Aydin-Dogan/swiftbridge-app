@@ -9,8 +9,10 @@ import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { nl } from './nl';
 import { tr } from './tr';
 import { en } from './en';
+import { ru } from './ru';
+import { az } from './az';
 
-const VERTALINGEN = { nl, tr, en };
+const VERTALINGEN = { nl, tr, en, ru, az };
 const STORAGE_KEY = 'swiftbridge_taal';
 
 // Bepaal startaal: localStorage > browser > nl
@@ -84,4 +86,6 @@ export const TALEN = [
   { code: 'nl', vlag: '🇳🇱', naam: 'Nederlands' },
   { code: 'tr', vlag: '🇹🇷', naam: 'Türkçe'    },
   { code: 'en', vlag: '🇬🇧', naam: 'English'   },
+  { code: 'ru', vlag: '🇷🇺', naam: 'Русский'   },
+  { code: 'az', vlag: '🇦🇿', naam: 'Azərbaycan' },
 ];
