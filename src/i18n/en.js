@@ -196,6 +196,126 @@ export const en = {
   gdpr_typ_fout: 'Type exactly: IK BEGRIJP HET',
   gdpr_afmelden_bericht: 'Your account has been anonymised. Logging you out now.',
 
+  // ── Landing page — premium redesign ─────────────────────────────────────
+  // Navigation
+  landing_nav_how: 'How it works',
+  landing_nav_kosten: 'Pricing',
+  landing_nav_landen: 'Countries',
+  landing_nav_faq: 'FAQ',
+
+  // Hero
+  landing_pill_route: 'Netherlands → Türkiye',
+  landing_hero_titel_1: 'Send money fast & safe from the Netherlands to',
+  landing_hero_titel_2: 'Türkiye',
+  landing_hero_subline: '10x cheaper than banks. On your family\'s account in under 5 minutes. €1.99 flat fee — no hidden costs.',
+  landing_hero_cta_primary: 'Start for free',
+  landing_hero_cta_secondary: 'See how it works',
+  landing_trust_dnb: 'Wwft / DNB-supervised',
+  landing_trust_ideal: 'iDEAL & iDIN',
+  landing_trust_encrypted: '256-bit encryption',
+  landing_trust_reviews: '4.8★ from 1,240 reviews',
+
+  // Currency widget
+  landing_widget_titel: 'Calculate your transfer',
+  landing_widget_live: 'Live rate',
+  landing_widget_jij_verstuurt: 'You send',
+  landing_widget_ontvanger_in: 'Recipient gets in',
+  landing_widget_ontvanger_krijgt: 'Recipient gets',
+  landing_widget_koers: 'Exchange rate',
+  landing_widget_fee: 'Fee: €1.99 + 1.2%',
+  landing_widget_no_account_needed: 'No credit card needed to start',
+
+  // Features
+  landing_features_eyebrow: 'Why SwiftBridge',
+  landing_features_titel: 'Fast, transparent and secure',
+  landing_features_subtitel: 'Built for the Turkish community in the Netherlands — by people who know the pain of expensive bank transfers.',
+  landing_feature_snel_titel: 'Lightning fast',
+  landing_feature_snel_tekst: 'Money on the Turkish bank account within 5 minutes — including weekends and outside business hours.',
+  landing_feature_goedkoop_titel: 'Fairly priced',
+  landing_feature_goedkoop_tekst: '€1.99 flat transaction fee and a transparent exchange rate. No surprises, no hidden margin.',
+  landing_feature_veilig_titel: 'Secure & regulated',
+  landing_feature_veilig_tekst: 'Under DNB supervision via our EMI partner, sanctions list check on every recipient, iDIN identification.',
+
+  // How it works
+  landing_how_eyebrow: 'How it works',
+  landing_how_titel: 'To Türkiye in 4 steps',
+  landing_how_subtitel: 'Quick sign-up, one-time identification — after that send money in seconds.',
+  landing_step_account_titel: 'Create your account',
+  landing_step_account_tekst: 'Sign up in 2 minutes — email and password only.',
+  landing_step_idin_titel: 'Verify with iDIN',
+  landing_step_idin_tekst: 'Fast & secure via your own Dutch bank — no scans or selfies.',
+  landing_step_ideal_titel: 'Pay with iDEAL',
+  landing_step_ideal_tekst: 'Enter the amount and confirm with one tap in your bank app.',
+  landing_step_ontvangen_titel: 'Family receives',
+  landing_step_ontvangen_tekst: 'Money lands on the Turkish bank account within 5 minutes. WhatsApp confirmation included.',
+
+  // Social proof / stats
+  landing_stat_overboekingen: 'Transfers processed',
+  landing_stat_omzet: 'Total sent',
+  landing_stat_reviews: 'Average Trustpilot score',
+  landing_stat_gebruikers: 'Active users',
+  landing_reviews_eyebrow: 'What our customers say',
+  landing_reviews_titel: 'Trusted by the Turkish community',
+  landing_reviews_aantal: '1,240 reviews',
+  landing_testimonial_aydin: 'Finally an app that does it right. Saved €15 vs my bank and my mom had the money in 4 minutes.',
+  landing_testimonial_elif: 'Super transparent — you see right away what the recipient gets. No hidden fees like Western Union.',
+  landing_testimonial_mehmet: 'Send money for my dad every month. Stable, fast and the WhatsApp confirmation is gold.',
+
+  // Pricing
+  landing_pricing_eyebrow: 'Transparent pricing',
+  landing_pricing_titel: 'Us vs. the competition',
+  landing_pricing_subtitel: 'Sending {bedrag} — all costs laid out, no surprises.',
+  landing_pricing_aanbevolen: 'Best choice',
+  landing_pricing_col_aanbieder: 'Provider',
+  landing_pricing_col_fee: 'Flat fee',
+  landing_pricing_col_marge: 'Rate margin',
+  landing_pricing_col_snelheid: 'Speed',
+  landing_pricing_col_totaal: 'Total cost',
+  landing_pricing_col_ontvanger: 'Recipient gets',
+  landing_pricing_disclaimer: 'Indicative calculations based on EUR/TRY ≈ 36.2. Actual rates and fees are confirmed before you authorise the transaction.',
+
+  // Country support
+  landing_landen_eyebrow: 'Destinations',
+  landing_landen_titel: 'Banks in 7 Turkic countries',
+  landing_landen_subtitel: 'Over {banken} banks across {landen} countries — from Türkiye to Central Asia.',
+  landing_landen_banken: 'banks',
+
+  // FAQ
+  landing_faq_eyebrow: 'Frequently asked',
+  landing_faq_titel: 'Answers to your questions',
+  landing_faq_subtitel: 'Didn\'t find what you were looking for? Send us an email — we reply within 24h.',
+  landing_faq_snelheid_vraag: 'How fast does the money arrive in Türkiye?',
+  landing_faq_snelheid_antwoord: 'In most cases within 5 minutes after your iDEAL payment is confirmed. For large amounts or outside business hours it can take up to 1 hour. The very first transfer can be slightly slower because we verify your KYC once.',
+  landing_faq_kosten_vraag: 'What does it really cost?',
+  landing_faq_kosten_antwoord: 'We charge a €1.99 flat fee per transfer + 1.2% exchange rate margin. On a €500 transfer that\'s ~€7.99 total. No subscription, no hidden costs and no surprises afterwards.',
+  landing_faq_veiligheid_vraag: 'Is my money safe with SwiftBridge?',
+  landing_faq_veiligheid_antwoord: 'Yes. Payments are handled by a DNB-licensed EMI partner (agent model under DNB supervision). We check every recipient against the international sanctions list, use 256-bit encryption and store your data in line with GDPR and Wwft.',
+  landing_faq_banken_vraag: 'Which Turkish banks are supported?',
+  landing_faq_banken_antwoord: 'All major Turkish banks including Garanti BBVA, İş Bankası, Ziraat, Yapı Kredi, Akbank, Halkbank, VakıfBank, DenizBank, Finansbank and more. Papara and other e-wallets are also supported. Plus banks in Azerbaijan, Kazakhstan, Uzbekistan, Turkmenistan, Kyrgyzstan and Tajikistan.',
+  landing_faq_idin_vraag: 'What is iDIN identification?',
+  landing_faq_idin_antwoord: 'iDIN is the official Dutch identification system run by the banks. You verify your identity via your own Dutch bank app — no passport scan, no selfie, no waiting. Once verified, you never have to do it again.',
+  landing_faq_contact_vraag: 'How can I get in touch?',
+  landing_faq_contact_antwoord: 'Email support@swiftbridge.nl or reach us via WhatsApp. We speak Dutch, Turkish and English and typically reply within 4 hours during business hours.',
+  landing_faq_nog_vragen: 'Still have questions?',
+
+  // CTA
+  landing_cta_titel: 'Ready to get started?',
+  landing_cta_subtitel: 'Sign up in 2 minutes and send your first transfer today.',
+  landing_cta_primary: 'Create free account',
+  landing_cta_secondary: 'Log in',
+  landing_cta_disclaimer: 'No subscription. No hidden costs. Cancel anytime.',
+
+  // Footer
+  landing_footer_slogan: 'Fast and affordable money transfers from the Netherlands to Türkiye and all Turkic countries — on the account within 5 minutes.',
+  landing_footer_product: 'Product',
+  landing_footer_juridisch: 'Legal',
+  landing_footer_contact: 'Contact',
+  landing_footer_voorwaarden: 'Terms & conditions',
+  landing_footer_privacy: 'Privacy policy (GDPR)',
+  landing_footer_aml: 'AML policy',
+  landing_footer_rechten: 'All rights reserved.',
+  landing_footer_dnb_disclaimer: 'SwiftBridge B.V. is in beta. Payment services are delivered via a DNB-licensed EMI partner (agent model). We do not currently hold our own DNB licence.',
+
   // ── API error messages (errorCode → text) ────────────────────────────────
   errors: {
     // General

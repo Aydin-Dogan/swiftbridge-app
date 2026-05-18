@@ -196,6 +196,126 @@ export const tr = {
   gdpr_typ_fout: 'Tam olarak şunu yazın: IK BEGRIJP HET',
   gdpr_afmelden_bericht: 'Hesabınız anonimleştirildi. Şimdi çıkış yapılıyor.',
 
+  // ── Landing sayfası — premium yeniden tasarım ────────────────────────────
+  // Navigasyon
+  landing_nav_how: 'Nasıl çalışır?',
+  landing_nav_kosten: 'Ücretler',
+  landing_nav_landen: 'Ülkeler',
+  landing_nav_faq: 'SSS',
+
+  // Hero
+  landing_pill_route: 'Hollanda → Türkiye',
+  landing_hero_titel_1: 'Hollanda\'dan hızlı ve güvenli para gönder',
+  landing_hero_titel_2: 'Türkiye\'ye',
+  landing_hero_subline: 'Bankalardan 10 kat daha ucuz. 5 dakika içinde ailenizin hesabında. €1,99 sabit ücret — gizli masraf yok.',
+  landing_hero_cta_primary: 'Ücretsiz başla',
+  landing_hero_cta_secondary: 'Nasıl çalıştığını gör',
+  landing_trust_dnb: 'Wwft / DNB denetimi',
+  landing_trust_ideal: 'iDEAL ve iDIN',
+  landing_trust_encrypted: '256-bit şifreli',
+  landing_trust_reviews: '4,8★ — 1.240 yorum',
+
+  // Currency widget
+  landing_widget_titel: 'Transferinizi hesaplayın',
+  landing_widget_live: 'Canlı kur',
+  landing_widget_jij_verstuurt: 'Siz gönderiyorsunuz',
+  landing_widget_ontvanger_in: 'Alıcı şu para biriminde alır',
+  landing_widget_ontvanger_krijgt: 'Alıcı alır',
+  landing_widget_koers: 'Döviz kuru',
+  landing_widget_fee: 'Ücret: €1,99 + %1,2',
+  landing_widget_no_account_needed: 'Başlamak için kredi kartı gerekmez',
+
+  // Features
+  landing_features_eyebrow: 'Neden SwiftBridge',
+  landing_features_titel: 'Hızlı, şeffaf ve güvenli',
+  landing_features_subtitel: 'Hollanda\'daki Türk topluluğu için — pahalı banka transferlerinin acısını bilen insanlar tarafından geliştirildi.',
+  landing_feature_snel_titel: 'Şimşek hızında',
+  landing_feature_snel_tekst: 'Türk banka hesabına 5 dakika içinde para — hafta sonları ve mesai dışı saatlerde de.',
+  landing_feature_goedkoop_titel: 'Adil fiyatlı',
+  landing_feature_goedkoop_tekst: '€1,99 sabit işlem ücreti ve şeffaf döviz kuru. Sürpriz yok, gizli marj yok.',
+  landing_feature_veilig_titel: 'Güvenli ve denetimli',
+  landing_feature_veilig_tekst: 'EMI ortağımız aracılığıyla DNB denetiminde, her alıcı için yaptırım listesi kontrolü, iDIN kimlik doğrulama.',
+
+  // How it works
+  landing_how_eyebrow: 'Nasıl çalışır',
+  landing_how_titel: '4 adımda Türkiye\'ye',
+  landing_how_subtitel: 'Hızlı kayıt, tek seferlik kimlik doğrulama — sonrasında saniyeler içinde para gönder.',
+  landing_step_account_titel: 'Hesabını oluştur',
+  landing_step_account_tekst: '2 dakikada kayıt — sadece e-posta ve şifre.',
+  landing_step_idin_titel: 'iDIN ile kimlik doğrula',
+  landing_step_idin_tekst: 'Kendi Hollanda bankan üzerinden hızlı ve güvenli — tarama veya selfie yok.',
+  landing_step_ideal_titel: 'iDEAL ile öde',
+  landing_step_ideal_tekst: 'Tutarı gir, banka uygulamandan tek dokunuşla onayla.',
+  landing_step_ontvangen_titel: 'Aile parayı alır',
+  landing_step_ontvangen_tekst: 'Para 5 dakika içinde Türk banka hesabında. WhatsApp bildirimi dahil.',
+
+  // Social proof / stats
+  landing_stat_overboekingen: 'Tamamlanan transfer',
+  landing_stat_omzet: 'Toplam gönderilen',
+  landing_stat_reviews: 'Ortalama Trustpilot puanı',
+  landing_stat_gebruikers: 'Aktif kullanıcı',
+  landing_reviews_eyebrow: 'Müşterilerimiz ne diyor',
+  landing_reviews_titel: 'Türk topluluğunun güvendiği uygulama',
+  landing_reviews_aantal: '1.240 yorum',
+  landing_testimonial_aydin: 'Sonunda işi doğru yapan bir uygulama. Bankaya kıyasla €15 tasarruf ettim ve annem parayı 4 dakikada aldı.',
+  landing_testimonial_elif: 'Çok şeffaf — alıcının ne alacağını anında görüyorsun. Western Union\'daki gibi gizli ücret yok.',
+  landing_testimonial_mehmet: 'Her ay babam için para gönderiyorum. İstikrarlı, hızlı ve WhatsApp onayı altın değerinde.',
+
+  // Pricing
+  landing_pricing_eyebrow: 'Şeffaf fiyatlandırma',
+  landing_pricing_titel: 'Biz ve rakiplerimiz',
+  landing_pricing_subtitel: '{bedrag} transferinde — tüm maliyetler bir arada, sürpriz yok.',
+  landing_pricing_aanbevolen: 'En iyi seçim',
+  landing_pricing_col_aanbieder: 'Sağlayıcı',
+  landing_pricing_col_fee: 'Sabit ücret',
+  landing_pricing_col_marge: 'Kur marjı',
+  landing_pricing_col_snelheid: 'Hız',
+  landing_pricing_col_totaal: 'Toplam maliyet',
+  landing_pricing_col_ontvanger: 'Alıcı alır',
+  landing_pricing_disclaimer: 'EUR/TRY ≈ 36,2 kuruna göre indikatif hesaplamalar. Gerçek kur ve ücretler işlem onayından önce gösterilir.',
+
+  // Country support
+  landing_landen_eyebrow: 'Varış noktaları',
+  landing_landen_titel: '7 Türk dilli ülkede bankalar',
+  landing_landen_subtitel: '{landen} ülkede {banken}+ banka — Türkiye\'den Orta Asya\'ya.',
+  landing_landen_banken: 'banka',
+
+  // FAQ
+  landing_faq_eyebrow: 'Sıkça sorulan sorular',
+  landing_faq_titel: 'Sorularınızın cevapları',
+  landing_faq_subtitel: 'Aradığını bulamadın mı? Bize mail at — 24 saat içinde dönüş yapıyoruz.',
+  landing_faq_snelheid_vraag: 'Para Türkiye\'ye ne kadar sürede ulaşır?',
+  landing_faq_snelheid_antwoord: 'Çoğu durumda iDEAL ödemenin onayından sonra 5 dakika içinde. Büyük tutarlar veya mesai dışı saatlerde en fazla 1 saate kadar uzayabilir. İlk transferde KYC doğrulamasından dolayı biraz daha sürebilir.',
+  landing_faq_kosten_vraag: 'Gerçek maliyet nedir?',
+  landing_faq_kosten_antwoord: 'Transfer başına €1,99 sabit ücret + %1,2 döviz kuru marjı. €500\'lık bir transferde toplam yaklaşık €7,99 ödersin. Abonelik yok, gizli ücret yok ve sonradan sürpriz yok.',
+  landing_faq_veiligheid_vraag: 'Param SwiftBridge\'de güvende mi?',
+  landing_faq_veiligheid_antwoord: 'Evet. Ödemeler DNB lisanslı bir EMI ortağı aracılığıyla yürütülür (DNB denetimi altında acente modeli). Her alıcıyı uluslararası yaptırım listesinde kontrol ederiz, 256-bit şifreleme kullanırız ve verilerinizi GDPR ve Wwft uyarınca saklarız.',
+  landing_faq_banken_vraag: 'Hangi Türk bankaları destekleniyor?',
+  landing_faq_banken_antwoord: 'Garanti BBVA, İş Bankası, Ziraat, Yapı Kredi, Akbank, Halkbank, VakıfBank, DenizBank, Finansbank dahil tüm büyük Türk bankaları. Papara ve diğer e-cüzdanlar da desteklenir. Ayrıca Azerbaycan, Kazakistan, Özbekistan, Türkmenistan, Kırgızistan ve Tacikistan bankaları.',
+  landing_faq_idin_vraag: 'iDIN kimlik doğrulaması nedir?',
+  landing_faq_idin_antwoord: 'iDIN, Hollanda bankalarının resmi kimlik doğrulama sistemidir. Kendi Hollanda banka uygulaman üzerinden doğrularsın — pasaport taraması yok, selfie yok, bekleme yok. Bir kez doğrulandı mı, tekrar gerekmez.',
+  landing_faq_contact_vraag: 'Sizinle nasıl iletişime geçebilirim?',
+  landing_faq_contact_antwoord: 'support@swiftbridge.nl adresine mail at veya WhatsApp üzerinden ulaş. Hollandaca, Türkçe ve İngilizce konuşuyoruz ve mesai saatlerinde genellikle 4 saat içinde yanıt veriyoruz.',
+  landing_faq_nog_vragen: 'Başka sorun var mı?',
+
+  // CTA
+  landing_cta_titel: 'Başlamaya hazır mısın?',
+  landing_cta_subtitel: '2 dakikada kayıt ol ve ilk transferini bugün gönder.',
+  landing_cta_primary: 'Ücretsiz hesap oluştur',
+  landing_cta_secondary: 'Giriş Yap',
+  landing_cta_disclaimer: 'Abonelik yok. Gizli maliyet yok. İstediğin zaman iptal et.',
+
+  // Footer
+  landing_footer_slogan: 'Hollanda\'dan Türkiye\'ye ve tüm Türk dilli ülkelere hızlı ve ucuz para transferi — 5 dakika içinde hesapta.',
+  landing_footer_product: 'Ürün',
+  landing_footer_juridisch: 'Yasal',
+  landing_footer_contact: 'İletişim',
+  landing_footer_voorwaarden: 'Kullanım koşulları',
+  landing_footer_privacy: 'Gizlilik politikası (GDPR)',
+  landing_footer_aml: 'AML politikası',
+  landing_footer_rechten: 'Tüm hakları saklıdır.',
+  landing_footer_dnb_disclaimer: 'SwiftBridge B.V. beta aşamasındadır. Ödeme hizmetleri DNB lisanslı bir EMI ortağı aracılığıyla sunulur (acente modeli). Şu anda kendi DNB lisansımız yoktur.',
+
   // ── API hata mesajları (errorCode → metin) ──────────────────────────────
   errors: {
     // Genel
