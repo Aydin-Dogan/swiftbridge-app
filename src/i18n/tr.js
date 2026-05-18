@@ -110,8 +110,8 @@ export const tr = {
   // Weeklimiet
   weeklimiet: 'Haftalık limit',
   weeklimiet_resets: 'Her 7 günde sıfırlanır',
-  weeklimiet_gebruikt: 'Kullanılan: {bedrag}',
-  weeklimiet_beschikbaar: 'Kalan: {bedrag}',
+  weeklimiet_gebruikt_label: 'Kullanılan:',
+  weeklimiet_beschikbaar_label: 'Kalan:',
   weeklimiet_limiet: 'Limit: haftada {bedrag}',
 
   // Statistieken

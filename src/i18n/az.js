@@ -95,8 +95,8 @@ export const az = {
   // Weeklimiet
   weeklimiet: 'Həftəlik limit',
   weeklimiet_resets: 'Hər 7 gündən bir sıfırlanır',
-  weeklimiet_gebruikt: 'İstifadə olunub: {bedrag}',
-  weeklimiet_beschikbaar: 'Qalıb: {bedrag}',
+  weeklimiet_gebruikt_label: 'İstifadə olunub:',
+  weeklimiet_beschikbaar_label: 'Qalıb:',
   weeklimiet_limiet: 'Limit: həftədə {bedrag}',
 
   // Statistieken

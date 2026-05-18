@@ -118,8 +118,14 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
         />
       </div>
       <div className="flex justify-between text-xs text-gray-600">
-        <span dangerouslySetInnerHTML={{ __html: t('weeklimiet_gebruikt', { bedrag: `<strong class="text-gray-800 font-mono">${fmtEur(weekTotaal)}</strong>` }) }} />
-        <span dangerouslySetInnerHTML={{ __html: t('weeklimiet_beschikbaar', { bedrag: `<strong class="font-mono ${resterend < 500 ? 'text-rose-600' : 'text-emerald-600'}">${fmtEur(resterend)}</strong>` }) }} />
+        <span>
+          {t('weeklimiet_gebruikt_label')}{' '}
+          <strong className="text-gray-800 font-mono">{fmtEur(weekTotaal)}</strong>
+        </span>
+        <span>
+          {t('weeklimiet_beschikbaar_label')}{' '}
+          <strong className={`font-mono ${resterend < 500 ? 'text-rose-600' : 'text-emerald-600'}`}>{fmtEur(resterend)}</strong>
+        </span>
       </div>
       <div className="text-right text-[10px] text-gray-400 uppercase tracking-wider">{t('weeklimiet_limiet', { bedrag: fmtEur(weekLimiet) })}</div>
     </div>

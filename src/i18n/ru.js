@@ -95,8 +95,8 @@ export const ru = {
   // Weeklimiet
   weeklimiet: 'Недельный лимит',
   weeklimiet_resets: 'Сбрасывается каждые 7 дней',
-  weeklimiet_gebruikt: 'Использовано: {bedrag}',
-  weeklimiet_beschikbaar: 'Доступно: {bedrag}',
+  weeklimiet_gebruikt_label: 'Использовано:',
+  weeklimiet_beschikbaar_label: 'Доступно:',
   weeklimiet_limiet: 'Лимит: {bedrag} в неделю',
 
   // Statistieken

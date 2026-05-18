@@ -110,8 +110,8 @@ export const nl = {
   // Weeklimiet
   weeklimiet: 'Weeklimiet',
   weeklimiet_resets: 'Resets elke 7 dagen',
-  weeklimiet_gebruikt: 'Gebruikt: {bedrag}',
-  weeklimiet_beschikbaar: 'Nog beschikbaar: {bedrag}',
+  weeklimiet_gebruikt_label: 'Gebruikt:',
+  weeklimiet_beschikbaar_label: 'Nog beschikbaar:',
   weeklimiet_limiet: 'Limiet: {bedrag} per week',
 
   // Statistieken

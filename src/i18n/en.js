@@ -110,8 +110,8 @@ export const en = {
   // Weeklimiet
   weeklimiet: 'Weekly limit',
   weeklimiet_resets: 'Resets every 7 days',
-  weeklimiet_gebruikt: 'Used: {bedrag}',
-  weeklimiet_beschikbaar: 'Remaining: {bedrag}',
+  weeklimiet_gebruikt_label: 'Used:',
+  weeklimiet_beschikbaar_label: 'Remaining:',
   weeklimiet_limiet: 'Limit: {bedrag} per week',
 
   // Statistieken

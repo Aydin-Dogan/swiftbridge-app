@@ -13,12 +13,24 @@
  * Toegang: gebruiker moet ingelogd zijn EN in ADMIN_EMAILS staan
  * (backend check in src/middleware/admin.js).
  */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
-import UserManagement from '../components/admin/UserManagement';
-import BannerBeheer from '../components/admin/BannerBeheer';
+
+// Lazy load heavy admin sub-components — alleen ophalen wanneer tab geopend wordt.
+// Houdt de initial AdminCompliance bundle ~1MB+ kleiner (UserManagement 664 LOC + BannerBeheer 412 LOC).
+const UserManagement = lazy(() => import('../components/admin/UserManagement'));
+const BannerBeheer   = lazy(() => import('../components/admin/BannerBeheer'));
+
+// Lichtgewicht fallback voor lazy admin tabs
+function AdminLazyFallback() {
+  return (
+    <div className="flex items-center justify-center py-12">
+      <div className="animate-spin rounded-full h-10 w-10 border-4 border-white/30 border-t-white"></div>
+    </div>
+  );
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmtEur(n) {
@@ -583,13 +595,15 @@ export default function AdminCompliance() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-6">
-        {tab === 'stats'   && <StatsTab stats={stats} chain={chain} />}
-        {tab === 'users'   && <UserManagement />}
-        {tab === 'audit'   && <AuditTab />}
-        {tab === 'sanctie' && <SanctieTab />}
-        {tab === 'gdpr'    && <GdprTab />}
-        {tab === 'tx'      && <TransactieTab />}
-        {tab === 'banners' && <BannerBeheer />}
+        <Suspense fallback={<AdminLazyFallback />}>
+          {tab === 'stats'   && <StatsTab stats={stats} chain={chain} />}
+          {tab === 'users'   && <UserManagement />}
+          {tab === 'audit'   && <AuditTab />}
+          {tab === 'sanctie' && <SanctieTab />}
+          {tab === 'gdpr'    && <GdprTab />}
+          {tab === 'tx'      && <TransactieTab />}
+          {tab === 'banners' && <BannerBeheer />}
+        </Suspense>
       </main>
     </div>
   );
