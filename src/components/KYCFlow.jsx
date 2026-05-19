@@ -5,9 +5,12 @@
  * - Preview van geüploade foto's
  * - Voortgangsbalk + stap validatie
  */
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, lazy, Suspense } from 'react';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
+
+// Lazy load document upload wizard (alleen relevant voor users zonder NL bank).
+const DocumentUploadFlow = lazy(() => import('./kyc/DocumentUploadFlow'));
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -512,6 +515,60 @@ export default function KYCFlow({ token, gebruiker }) {
       {stap === 1 && <StapDocument form={form} update={update} docFoto={docFoto} setDocFoto={setDocFoto} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapSelfie selfieFoto={selfieFoto} setSelfieFoto={setSelfieFoto} laden={laden} fout={fout} onIndienen={dien_in} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapKlaar form={form} />}
+
+      {/* Document upload fallback (voor users zonder NL bank) — alleen tonen
+          tijdens de actieve flow, niet op het Klaar-scherm */}
+      {stap < 3 && <DocumentUploadFallback />}
+    </div>
+  );
+}
+
+// ── Document upload fallback (collapsible) ────────────────────────────────────
+function DocumentUploadFallback() {
+  const { t } = useTaal();
+  const [open, setOpen] = useState(false);
+  const [klaar, setKlaar] = useState(false);
+
+  return (
+    <div className="mt-5 bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-controls="doc-upload-paneel"
+        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition"
+      >
+        <div className="flex items-center gap-3">
+          <div className="text-2xl" aria-hidden="true">🌍</div>
+          <div>
+            <div className="font-bold text-gray-800 text-sm">
+              {t('kyc_fallback_titel')}
+            </div>
+            <div className="text-xs text-gray-500">
+              {t('kyc_fallback_subtitel')}
+            </div>
+          </div>
+        </div>
+        <div className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true">▼</div>
+      </button>
+      {open && (
+        <div id="doc-upload-paneel" className="border-t border-gray-100 p-5 bg-gray-50">
+          {klaar ? (
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
+              ✅ {t('kyc_upload_succes_omschrijving')}
+            </div>
+          ) : (
+            <Suspense fallback={
+              <div className="text-center py-6 text-gray-500 text-sm">{t('laden')}</div>
+            }>
+              <DocumentUploadFlow
+                onSuccess={() => setKlaar(true)}
+                onAnnuleer={() => setOpen(false)}
+              />
+            </Suspense>
+          )}
+        </div>
+      )}
     </div>
   );
 }

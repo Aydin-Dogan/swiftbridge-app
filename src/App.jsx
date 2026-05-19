@@ -20,6 +20,8 @@ const Privacybeleid       = lazy(() => import('./pages/Privacybeleid'));
 const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
 const AdminPanel          = lazy(() => import('./pages/AdminPanel'));
 const AdminCompliance     = lazy(() => import('./pages/AdminCompliance'));
+const VerifyEmail         = lazy(() => import('./pages/VerifyEmail'));
+const Recurring           = lazy(() => import('./pages/Recurring'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -352,7 +354,11 @@ export default function App() {
               <AppShell token={token} gebruiker={gebruiker} onLogout={handleLogout} />
             </ProtectedRoute>
           } />
+          <Route path="/app/recurring" element={
+            token ? <Recurring /> : <Navigate to="/login" replace />
+          } />
           <Route path="/r/:code" element={<ReferralRedirect />} />
+          <Route path="/verifieer-email" element={<VerifyEmail />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacybeleid" element={<Privacybeleid />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />

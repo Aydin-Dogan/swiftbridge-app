@@ -10,6 +10,7 @@ import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
 import ReferralKaart from './referral/ReferralKaart';
+import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -477,6 +478,15 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         twofaIngeschakeld={!!profiel?.twofaIngeschakeld}
         onChange={(nieuweStatus) => setProfiel(p => ({ ...p, twofaIngeschakeld: nieuweStatus }))}
       />
+
+      {/* ── Mijn ontvangers — beneficiaries beheer ─────────────────── */}
+      <div className="card-glass p-5 animate-fade-up border-l-4 border-purple-500 space-y-3">
+        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+          {t('profiel_benef_kop')}
+        </h3>
+        <p className="text-xs text-gray-600 leading-relaxed">{t('profiel_benef_uitleg')}</p>
+        <BeneficiaryLijst token={token} />
+      </div>
 
       {/* AVG / GDPR beheer — data export + account anonimiseren */}
       <div className="card-glass p-5 animate-fade-up border-l-4 border-blue-500 space-y-2">

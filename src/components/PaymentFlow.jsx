@@ -10,11 +10,12 @@
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 import { berekenKosten, KOSTEN_LABELS, zichtbarePercentage } from '../services/kosten';
-import { parseError } from '../services/api';
+import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
 import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
 import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
+import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -190,6 +191,31 @@ function slaTransactieOp(tx) {
   window.dispatchEvent(new Event('swiftbridge_tx_update'));
 }
 
+// ── Beneficiary helper: opslaan via API (best-effort, faalt stil) ────────────
+function leesCsrfCookie() {
+  if (typeof document === 'undefined' || !document.cookie) return null;
+  const m = document.cookie.match(/(?:^|;\s*)sb_csrf=([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+async function slaBeneficiaryOpAPI({ token, naam, iban, bank, valuta, bijnaam }) {
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    const csrf = leesCsrfCookie();
+    if (csrf) headers['X-CSRF-Token'] = csrf;
+    if (token) headers.Authorization = `Bearer ${token}`;
+    await fetch(`${API}/beneficiaries`, {
+      method: 'POST',
+      credentials: 'include',
+      headers,
+      body: JSON.stringify({ naam, iban, bank, valuta, bijnaam: bijnaam || null }),
+    });
+  } catch (e) {
+    // Best-effort — niet fataal voor de transactie
+    console.warn('Beneficiary opslaan mislukt:', e?.message);
+  }
+}
+
 async function stuurPushNotificatie(titel, tekst) {
   if (!('Notification' in window)) return;
   if (Notification.permission === 'default') await Notification.requestPermission();
@@ -247,7 +273,7 @@ function OntvangerModal({ onKies, onSluit }) {
 }
 
 // ── Stap 0: Bedrag ────────────────────────────────────────────────────────────
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet }) {
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
   const valutaInfo = getValuta(valuta);
@@ -417,6 +443,18 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         </div>
       )}
 
+      {/* Bestaande ontvanger kiezen (uit beneficiaries API) */}
+      <BeneficiaryKiezer
+        token={token}
+        onSelect={(b) => {
+          if (b?.naam) setOntvanger(b.naam);
+          if (b?.iban) setIban(b.iban);
+          if (b?.bank) setOntvangerBank(b.bank);
+          if (b?.valuta) setValuta(b.valuta);
+          if (b?.bijnaam || b?.label) setOntvangerLabel?.(b.bijnaam || b.label);
+        }}
+      />
+
       <div>
         <div className="flex items-center justify-between mb-2">
           <label className="block text-sm font-medium text-gray-600">Naam ontvanger</label>
@@ -428,6 +466,19 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         <input value={ontvanger} onChange={e => setOntvanger(e.target.value)}
           placeholder="Mehmet Yilmaz"
           className="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" />
+
+        {/* Bewaar als favoriete ontvanger checkbox */}
+        {ontvanger && iban && (
+          <label className="flex items-center gap-2 mt-2 cursor-pointer text-xs text-gray-600 select-none">
+            <input
+              type="checkbox"
+              checked={!!bewaarAlsFavoriet}
+              onChange={e => setBewaarAlsFavoriet?.(e.target.checked)}
+              className="h-4 w-4 accent-blue-600"
+            />
+            <span>💾 Bewaar als favoriete ontvanger</span>
+          </label>
+        )}
 
         {/* Familie label selector */}
         {ontvanger && (
@@ -651,7 +702,8 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
 }
 
 // ── Stap 2: Bevestiging ───────────────────────────────────────────────────────
-function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, laden, fout, onVerstuur, onTerug }) {
+function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug }) {
+  const { t } = useTaal();
   const valutaInfo = getValuta(valuta);
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
   const bedragNum = parseFloat(bedrag) || 0;
@@ -683,7 +735,43 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
         ))}
       </div>
 
-      {fout && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{fout}</div>}
+      {fout && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm space-y-2"
+        >
+          <div>{fout}</div>
+          {emailNietGeverifieerd && (
+            <div className="border-t border-red-200 pt-2 space-y-2">
+              <button
+                type="button"
+                onClick={onResendEmail}
+                disabled={resendLaden}
+                className="text-red-700 hover:text-red-900 font-bold underline text-sm disabled:opacity-50"
+              >
+                {resendLaden
+                  ? `⏳ ${t('laden')}`
+                  : `📨 ${t('payment_email_resend_link')}`}
+              </button>
+              {resendBericht && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className={`text-xs rounded-lg px-2 py-1.5 border ${
+                    resendOk
+                      ? 'text-green-700 bg-green-50 border-green-200'
+                      : 'text-red-700 bg-red-50 border-red-200'
+                  }`}
+                >
+                  {resendOk ? '✅ ' : '⚠️ '}
+                  {resendBericht}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       <p className="text-xs text-gray-400 text-center">
         Door te bevestigen ga je akkoord met onze{' '}
@@ -764,6 +852,12 @@ export default function PaymentFlow({ token }) {
   const [transactie,     setTransactie    ] = useState(null);
   const [laden,          setLaden         ] = useState(false);
   const [fout,           setFout          ] = useState('');
+  const [bewaarAlsFavoriet, setBewaarAlsFavoriet] = useState(false);
+  // Email verificatie — bij EMAIL_NIET_GEVERIFIEERD tonen we een resend-link
+  const [emailNietGeverifieerd, setEmailNietGeverifieerd] = useState(false);
+  const [resendLaden,     setResendLaden    ] = useState(false);
+  const [resendBericht,   setResendBericht  ] = useState('');
+  const [resendOk,        setResendOk       ] = useState(false);
 
   useEffect(() => {
     fetch(`${SWIFTNEWS}/api/forex`)
@@ -795,9 +889,34 @@ export default function PaymentFlow({ token }) {
     }
   }, [valuta]);
 
+  async function verstuurEmailOpnieuw() {
+    setResendLaden(true);
+    setResendBericht('');
+    setResendOk(false);
+    try {
+      const data = await apiFetch('/auth/verifieer-email/opnieuw-sturen', {
+        method: 'POST',
+        body: {},
+      });
+      setResendOk(true);
+      setResendBericht(data?.bericht || t('verify_email_resend_succes'));
+    } catch (e) {
+      if (e.status === 429) {
+        setResendBericht(t('verify_email_resend_rate_limit'));
+      } else {
+        setResendBericht(parseError(e, t));
+      }
+    } finally {
+      setResendLaden(false);
+    }
+  }
+
   async function verstuur() {
     setLaden(true);
     setFout('');
+    setEmailNietGeverifieerd(false);
+    setResendBericht('');
+    setResendOk(false);
 
     // Genereer een idempotency key per poging — voorkomt dubbele transacties bij retry
     const idempotencyKey = (window.crypto?.randomUUID?.() ||
@@ -831,6 +950,10 @@ export default function PaymentFlow({ token }) {
 
       // FOUT — geen succes tonen, gebruiker terug naar bevestigingsscherm met fout
       if (!res.ok) {
+        const code = data?.errorCode || data?.code;
+        if (code === 'EMAIL_NIET_GEVERIFIEERD') {
+          setEmailNietGeverifieerd(true);
+        }
         setFout(parseError({ ...data, status: res.status }, t));
         return; // Belangrijk: NIET doorgaan naar succes scherm
       }
@@ -879,6 +1002,9 @@ export default function PaymentFlow({ token }) {
             datum: new Date().toISOString(),
           });
           slaOntvangerOp(ontvanger, iban, ontvangerLabel);
+          if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
+            await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
+          }
 
           // Redirect naar Mollie checkout
           window.location.href = betalingData.checkoutUrl;
@@ -907,6 +1033,9 @@ export default function PaymentFlow({ token }) {
 
       slaTransactieOp(tx);
       slaOntvangerOp(ontvanger, iban, ontvangerLabel);
+      if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
+        await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
+      }
       setTransactie(tx);
 
       await stuurPushNotificatie(
@@ -950,9 +1079,9 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => setStap(1)} />}
+      {stap === 0 && <StapBedrag token={token} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}
     </div>
   );

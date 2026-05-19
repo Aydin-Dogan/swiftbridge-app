@@ -22,6 +22,7 @@ import { useTaal } from '../i18n';
 // Houdt de initial AdminCompliance bundle ~1MB+ kleiner (UserManagement 664 LOC + BannerBeheer 412 LOC).
 const UserManagement = lazy(() => import('../components/admin/UserManagement'));
 const BannerBeheer   = lazy(() => import('../components/admin/BannerBeheer'));
+const KYCReviewQueue = lazy(() => import('../components/admin/KYCReviewQueue'));
 
 // Lichtgewicht fallback voor lazy admin tabs
 function AdminLazyFallback() {
@@ -525,6 +526,7 @@ export default function AdminCompliance() {
   const tabs = [
     { id: 'stats',      label: 'Overzicht',         icoon: '📊' },
     { id: 'users',      label: 'Gebruikers',         icoon: '👥' },
+    { id: 'kycreview',  label: 'KYC Review',         icoon: '🪪' },
     { id: 'audit',      label: 'Audit logs',         icoon: '📋' },
     { id: 'sanctie',    label: 'Sanctie matches',    icoon: '🛂' },
     { id: 'gdpr',       label: 'GDPR acties',        icoon: '📜' },
@@ -596,13 +598,14 @@ export default function AdminCompliance() {
 
       <main className="max-w-7xl mx-auto px-4 py-6">
         <Suspense fallback={<AdminLazyFallback />}>
-          {tab === 'stats'   && <StatsTab stats={stats} chain={chain} />}
-          {tab === 'users'   && <UserManagement />}
-          {tab === 'audit'   && <AuditTab />}
-          {tab === 'sanctie' && <SanctieTab />}
-          {tab === 'gdpr'    && <GdprTab />}
-          {tab === 'tx'      && <TransactieTab />}
-          {tab === 'banners' && <BannerBeheer />}
+          {tab === 'stats'     && <StatsTab stats={stats} chain={chain} />}
+          {tab === 'users'     && <UserManagement />}
+          {tab === 'kycreview' && <KYCReviewQueue />}
+          {tab === 'audit'     && <AuditTab />}
+          {tab === 'sanctie'   && <SanctieTab />}
+          {tab === 'gdpr'      && <GdprTab />}
+          {tab === 'tx'        && <TransactieTab />}
+          {tab === 'banners'   && <BannerBeheer />}
         </Suspense>
       </main>
     </div>

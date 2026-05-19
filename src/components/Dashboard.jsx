@@ -23,6 +23,7 @@
  *   - Custom event 'swiftbridge_navigate' voor in-app navigatie
  */
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NotificatieInstellingen from './NotificatieInstellingen';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
 import FeestKalender from './FeestKalender';
@@ -41,6 +42,9 @@ import OnboardingModal from './onboarding/OnboardingModal';
 
 // App-wide announcement banners (door admin beheerd)
 import BannerLijst from './banners/BannerLijst';
+
+// API helper voor email verificatie resend
+import { apiFetch, parseError } from '../services/api';
 
 const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -129,6 +133,121 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
       </div>
       <div className="text-right text-[10px] text-gray-400 uppercase tracking-wider">{t('weeklimiet_limiet', { bedrag: fmtEur(weekLimiet) })}</div>
     </div>
+  );
+}
+
+// ── Email verificatie banner ─────────────────────────────────────────────────
+// Toont bovenaan dashboard als gebruiker.emailGeverifieerd === false.
+// Niet dismissible — gebruiker moet email verifiëren om te kunnen overmaken.
+function EmailVerificatieBanner({ email }) {
+  const { t } = useTaal();
+  const [laden, setLaden] = useState(false);
+  const [bericht, setBericht] = useState('');
+  const [ok, setOk] = useState(false);
+
+  async function stuurOpnieuw() {
+    if (!email) return;
+    setLaden(true);
+    setBericht('');
+    setOk(false);
+    try {
+      const data = await apiFetch('/auth/verifieer-email/opnieuw-sturen', {
+        method: 'POST',
+        body: { email },
+      });
+      setOk(true);
+      setBericht(data?.bericht || t('verify_email_resend_succes'));
+    } catch (e) {
+      if (e.status === 429) {
+        setBericht(t('verify_email_resend_rate_limit'));
+      } else {
+        setBericht(parseError(e, t));
+      }
+    } finally {
+      setLaden(false);
+    }
+  }
+
+  return (
+    <div
+      role="alert"
+      aria-live="polite"
+      className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-4 animate-fade-up shadow-sm"
+    >
+      <div className="flex gap-3 items-start">
+        <span className="text-3xl flex-shrink-0" aria-hidden="true">📧</span>
+        <div className="flex-1 min-w-0">
+          <div className="font-bold text-amber-900 text-sm">
+            {t('email_banner_titel')}
+          </div>
+          <div className="text-amber-800 text-xs mt-1">
+            {t('email_banner_uitleg', { email: email || '' })}
+          </div>
+          {bericht && (
+            <div
+              role="status"
+              aria-live="polite"
+              className={`mt-2 text-xs rounded-lg px-2.5 py-2 border ${
+                ok
+                  ? 'text-green-700 bg-green-50 border-green-200'
+                  : 'text-red-700 bg-red-50 border-red-200'
+              }`}
+            >
+              {ok ? '✅ ' : '⚠️ '}
+              {bericht}
+            </div>
+          )}
+          <button
+            onClick={stuurOpnieuw}
+            disabled={laden}
+            className="mt-3 inline-flex items-center gap-1 bg-amber-600 hover:bg-amber-700 disabled:bg-gray-300 text-white text-xs font-bold px-4 py-2 rounded-xl transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          >
+            {laden ? `⏳ ${t('laden')}` : `📨 ${t('email_banner_resend_knop')}`}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Terugkerend (recurring) badge / link ─────────────────────────────────────
+// Klein kaartje onder de QuickActions dat het aantal actieve recurring
+// schedules toont en navigeert naar /app/recurring. Wordt verborgen totdat
+// de gebruiker KYC heeft (anders ziet hij toch een 403 op die pagina).
+function RecurringBadge() {
+  const { t } = useTaal();
+  const navigate = useNavigate();
+  const [aantal, setAantal] = useState(null);
+
+  useEffect(() => {
+    let geannuleerd = false;
+    apiFetch('/recurring')
+      .then(d => { if (!geannuleerd) setAantal(d?.actief ?? 0); })
+      .catch(() => { if (!geannuleerd) setAantal(0); });
+    return () => { geannuleerd = true; };
+  }, []);
+
+  return (
+    <button
+      type="button"
+      onClick={() => navigate('/app/recurring')}
+      className="w-full bg-white/80 backdrop-blur-lg border border-white/70 rounded-2xl p-4 text-left shadow-sm hover:shadow-md transition active:scale-[0.99] flex items-center gap-3 animate-fade-up"
+    >
+      <span className="text-2xl flex-shrink-0 w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center" aria-hidden="true">🔁</span>
+      <div className="flex-1 min-w-0">
+        <div className="font-bold text-sm text-slate-900 leading-tight">
+          {t('dashboard_recurring_titel')}
+        </div>
+        <div className="text-xs text-slate-500 mt-0.5">
+          {aantal == null
+            ? t('dashboard_recurring_subtitel_laden')
+            : aantal === 0
+              ? t('dashboard_recurring_subtitel_leeg')
+              : t('dashboard_recurring_subtitel_n', { n: aantal })}
+        </div>
+      </div>
+      <span className="text-lg flex-shrink-0 text-slate-400" aria-hidden="true">→</span>
+    </button>
   );
 }
 
@@ -228,6 +347,11 @@ export default function Dashboard({ gebruiker }) {
         onDismiss={sluitOnboarding}
       />
 
+      {/* Email verificatie banner — niet dismissible, blokkeert overboeking-flow */}
+      {gebruiker?.emailGeverifieerd === false && (
+        <EmailVerificatieBanner email={gebruiker?.email} />
+      )}
+
       {/* App-wide banners (admin-gedreven, dismissible per gebruiker) */}
       <BannerLijst />
 
@@ -278,6 +402,9 @@ export default function Dashboard({ gebruiker }) {
 
       {/* 5. Quick Actions */}
       <QuickActions />
+
+      {/* 5b. Terugkerende overboekingen link (alleen voor KYC-goedgekeurde users) */}
+      {kycGoedgekeurd && <RecurringBadge />}
 
       {/* 6. Live koers met sparkline */}
       <KoersChart koers={koers} laden={ladenKoers} />
