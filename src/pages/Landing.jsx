@@ -15,6 +15,7 @@ import Features from '../components/landing/Features';
 import HowItWorks from '../components/landing/HowItWorks';
 import SocialProof from '../components/landing/SocialProof';
 import Pricing from '../components/landing/Pricing';
+import Tariefkaart from '../components/landing/Tariefkaart';
 import CountrySupport from '../components/landing/CountrySupport';
 import FAQ from '../components/landing/FAQ';
 import CTA from '../components/landing/CTA';
@@ -33,10 +34,10 @@ export default function Landing() {
         <p>
           SwiftBridge is de snelste en goedkoopste manier om geld over te maken
           vanuit Nederland naar Turkije, Azerbeidzjan, Kazachstan, Oezbekistan,
-          Turkmenistan, Kirgizië en Tadzjikistan. Vaste fee van €1,99, betaling
-          via iDEAL, creditcard, PayPal of SEPA, en het bedrag staat binnen 5
-          minuten op de Turkse bankrekening (Garanti, Akbank, İş Bankası,
-          Ziraat, Yapı Kredi en 100+ andere banken).
+          Turkmenistan, Kirgizië en Tadzjikistan. Tarieven vanaf 0,8% per
+          overboeking met iDEAL, en betaling via iDEAL, creditcard, PayPal of
+          SEPA. Het bedrag staat binnen 5 minuten op de Turkse bankrekening
+          (Garanti, Akbank, İş Bankası, Ziraat, Yapı Kredi en 100+ andere banken).
         </p>
         <h2>Waarom SwiftBridge het beste Wise- en Remitly-alternatief is</h2>
         <ul>
@@ -44,13 +45,14 @@ export default function Landing() {
           <li>Onder toezicht van DNB (De Nederlandsche Bank)</li>
           <li>Wwft- en AVG-compliant, EU-sanctielijst screening</li>
           <li>256-bit encryptie en multi-factor authenticatie</li>
-          <li>Live wisselkoers EUR/TRY, geen verborgen marges</li>
+          <li>Volledige tariefkaart vooraf zichtbaar — staffel per bedrag en methode</li>
         </ul>
         <h2>Veelgestelde vragen — geld sturen naar Turkije</h2>
         <p>
           Hoe snel komt geld aan in Türkiye? Binnen 5 minuten via iDEAL.
-          Wat zijn de kosten? €1,99 vaste fee plus 1,2% wisselkoersmarge
-          voor Express. Is SwiftBridge veilig? Ja, DNB-toezicht en volledige
+          Wat zijn de kosten? Vanaf 0,8% per overboeking via iDEAL (€2.500+);
+          €500 kost 1,5% (€7,50), €1.000 kost 1,2% (€12). Volledige tariefkaart
+          op landing-pagina. Is SwiftBridge veilig? Ja, DNB-toezicht en volledige
           Wwft- en AVG-compliance.
         </p>
       </div>
@@ -113,6 +115,7 @@ export default function Landing() {
       <HowItWorks />
       <SocialProof />
       <Pricing />
+      <Tariefkaart />
       <CountrySupport />
       <FAQ />
       <CTA />

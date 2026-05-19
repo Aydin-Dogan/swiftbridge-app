@@ -251,7 +251,7 @@ export const tr = {
   landing_pill_route: 'Hollanda → Türkiye',
   landing_hero_titel_1: 'Hollanda\'dan hızlı ve güvenli para gönder',
   landing_hero_titel_2: 'Türkiye\'ye',
-  landing_hero_subline: 'Bankalardan 10 kat daha ucuz. 5 dakika içinde ailenizin hesabında. €1,99 sabit ücret — gizli masraf yok.',
+  landing_hero_subline: 'Bankalardan 10 kat daha ucuz. 5 dakika içinde ailenizin hesabında. Tarifeler %0,8\'den başlıyor — gizli masraf yok.',
   landing_hero_cta_primary: 'Ücretsiz başla',
   landing_hero_cta_secondary: 'Nasıl çalıştığını gör',
   landing_trust_dnb: 'Wwft / DNB denetimi',
@@ -266,7 +266,7 @@ export const tr = {
   landing_widget_ontvanger_in: 'Alıcı şu para biriminde alır',
   landing_widget_ontvanger_krijgt: 'Alıcı alır',
   landing_widget_koers: 'Döviz kuru',
-  landing_widget_fee: 'Ücret: €1,99 + %1,2',
+  landing_widget_fee: 'İşlem başına %0,8\'den itibaren',
   landing_widget_no_account_needed: 'Başlamak için kredi kartı gerekmez',
 
   // Features
@@ -276,7 +276,7 @@ export const tr = {
   landing_feature_snel_titel: 'Şimşek hızında',
   landing_feature_snel_tekst: 'Türk banka hesabına 5 dakika içinde para — hafta sonları ve mesai dışı saatlerde de.',
   landing_feature_goedkoop_titel: 'Adil fiyatlı',
-  landing_feature_goedkoop_tekst: '€1,99 sabit işlem ücreti ve şeffaf döviz kuru. Sürpriz yok, gizli marj yok.',
+  landing_feature_goedkoop_tekst: 'Adil kademeli tarife, işlem başına %0,8\'den başlayan. Ne kadar çok gönderirsen, o kadar düşük tarife. Tam tarife kartı önceden görünür.',
   landing_feature_veilig_titel: 'Güvenli ve denetimli',
   landing_feature_veilig_tekst: 'EMI ortağımız aracılığıyla DNB denetiminde, her alıcı için yaptırım listesi kontrolü, iDIN kimlik doğrulama.',
 
@@ -292,6 +292,17 @@ export const tr = {
   landing_step_ideal_tekst: 'Tutarı gir, banka uygulamandan tek dokunuşla onayla.',
   landing_step_ontvangen_titel: 'Aile parayı alır',
   landing_step_ontvangen_tekst: 'Para 5 dakika içinde Türk banka hesabında. WhatsApp bildirimi dahil.',
+
+  // Tarife kartı bölümü
+  tariefkaart_eyebrow: 'Tarifelerimiz',
+  tariefkaart_titel: 'Tam tarife kartı',
+  tariefkaart_subtitel: 'Adil kademeli tarife — ne kadar çok gönderirsen, o kadar düşük tarife. Gizli masraf yok.',
+  tariefkaart_col_bedrag: 'Tutar',
+  tariefkaart_methode_ideal: 'iDEAL / Wero',
+  tariefkaart_methode_card: 'Kredi kartı',
+  tariefkaart_methode_klarna: 'Klarna',
+  tariefkaart_methode_sepa: 'SEPA',
+  tariefkaart_disclaimer: 'Döviz kuru canlı mid-market kura dayalı. Örnek: €500 iDEAL ile %1,5 = €7,50 ücret.',
 
   // Social proof / stats
   landing_stat_overboekingen: 'Tamamlanan transfer',
@@ -331,7 +342,7 @@ export const tr = {
   landing_faq_snelheid_vraag: 'Para Türkiye\'ye ne kadar sürede ulaşır?',
   landing_faq_snelheid_antwoord: 'Çoğu durumda iDEAL ödemenin onayından sonra 5 dakika içinde. Büyük tutarlar veya mesai dışı saatlerde en fazla 1 saate kadar uzayabilir. İlk transferde KYC doğrulamasından dolayı biraz daha sürebilir.',
   landing_faq_kosten_vraag: 'Gerçek maliyet nedir?',
-  landing_faq_kosten_antwoord: 'Transfer başına €1,99 sabit ücret + %1,2 döviz kuru marjı. €500\'lık bir transferde toplam yaklaşık €7,99 ödersin. Abonelik yok, gizli ücret yok ve sonradan sürpriz yok.',
+  landing_faq_kosten_antwoord: 'Tarifelerimiz kademeli sistem kullanır: küçük tutarlar için (€10-200) %2,0\'den başlayıp, €2.500+ için %0,8\'e iner. €500\'da %1,5 (€7,50) ödersin, €1.000\'de %1,2 (€12). Tam tarife kartı landing sayfasında. Abonelik yok, gizli masraf yok.',
   landing_faq_veiligheid_vraag: 'Param SwiftBridge\'de güvende mi?',
   landing_faq_veiligheid_antwoord: 'Evet. Ödemeler DNB lisanslı bir EMI ortağı aracılığıyla yürütülür (DNB denetimi altında acente modeli). Her alıcıyı uluslararası yaptırım listesinde kontrol ederiz, 256-bit şifreleme kullanırız ve verilerinizi GDPR ve Wwft uyarınca saklarız.',
   landing_faq_banken_vraag: 'Hangi Türk bankaları destekleniyor?',

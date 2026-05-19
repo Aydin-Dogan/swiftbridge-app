@@ -252,7 +252,7 @@ export const nl = {
   landing_pill_route: 'Nederland → Türkiye',
   landing_hero_titel_1: 'Geld snel & veilig van Nederland naar',
   landing_hero_titel_2: 'Türkiye',
-  landing_hero_subline: '10x goedkoper dan banken. Binnen 5 minuten op de rekening van je familie. €1,99 vaste fee — geen verborgen kosten.',
+  landing_hero_subline: '10x goedkoper dan banken. Binnen 5 minuten op de rekening van je familie. Tarieven vanaf 0,8% — geen verborgen kosten.',
   landing_hero_cta_primary: 'Gratis starten',
   landing_hero_cta_secondary: 'Bekijk hoe het werkt',
   landing_trust_dnb: 'Wwft / DNB-toezicht',
@@ -267,7 +267,7 @@ export const nl = {
   landing_widget_ontvanger_in: 'Ontvanger krijgt in',
   landing_widget_ontvanger_krijgt: 'Ontvanger krijgt',
   landing_widget_koers: 'Wisselkoers',
-  landing_widget_fee: 'Fee: €1,99 + 1,2%',
+  landing_widget_fee: 'Vanaf 0,8% per overboeking',
   landing_widget_no_account_needed: 'Geen creditcard nodig om te beginnen',
 
   // Features
@@ -277,7 +277,7 @@ export const nl = {
   landing_feature_snel_titel: 'Razendsnel',
   landing_feature_snel_tekst: 'Geld op de Turkse bankrekening binnen 5 minuten — ook in het weekend en buiten kantooruren.',
   landing_feature_goedkoop_titel: 'Eerlijk geprijsd',
-  landing_feature_goedkoop_tekst: '€1,99 vaste transactiefee en transparante wisselkoers. Geen verrassingen, geen verborgen marge.',
+  landing_feature_goedkoop_tekst: 'Eerlijke staffel-tarieven vanaf 0,8% per overboeking. Hoe meer je stuurt, hoe lager je tarief. Volledige tariefkaart vooraf zichtbaar.',
   landing_feature_veilig_titel: 'Veilig & gereguleerd',
   landing_feature_veilig_tekst: 'Onder DNB-toezicht via onze EMI-partner, sanctielijst-check op iedere ontvanger, iDIN-identificatie.',
 
@@ -293,6 +293,17 @@ export const nl = {
   landing_step_ideal_tekst: 'Voer het bedrag in en bevestig met één tik in je bank-app.',
   landing_step_ontvangen_titel: 'Familie ontvangt geld',
   landing_step_ontvangen_tekst: 'Geld staat binnen 5 minuten op de Turkse bankrekening. WhatsApp-melding incl.',
+
+  // Tariefkaart sectie
+  tariefkaart_eyebrow: 'Onze tarieven',
+  tariefkaart_titel: 'Volledige tariefkaart',
+  tariefkaart_subtitel: 'Eerlijke staffel: hoe meer je stuurt, hoe lager je tarief. Geen verborgen kosten — wat je ziet is wat je betaalt.',
+  tariefkaart_col_bedrag: 'Bedrag',
+  tariefkaart_methode_ideal: 'iDEAL / Wero',
+  tariefkaart_methode_card: 'Creditcard',
+  tariefkaart_methode_klarna: 'Klarna',
+  tariefkaart_methode_sepa: 'SEPA',
+  tariefkaart_disclaimer: 'Wisselkoers op basis van live mid-market koers. Voorbeeld: op €500 via iDEAL betaal je 1,5% = €7,50 fee.',
 
   // Social proof / stats
   landing_stat_overboekingen: 'Overboekingen verwerkt',
@@ -332,7 +343,7 @@ export const nl = {
   landing_faq_snelheid_vraag: 'Hoe snel komt het geld aan in Türkiye?',
   landing_faq_snelheid_antwoord: 'In de meeste gevallen binnen 5 minuten na bevestiging van je iDEAL-betaling. Bij grote bedragen of buiten kantooruren kan dit oplopen tot maximaal 1 uur. Voor de allereerste transactie kan het iets langer duren omdat we je KYC eenmalig verifiëren.',
   landing_faq_kosten_vraag: 'Wat zijn de werkelijke kosten?',
-  landing_faq_kosten_antwoord: 'Wij rekenen een vaste fee van €1,99 per overboeking + 1,2% wisselkoersmarge. Op een overmaking van €500 betaal je dus ~€7,99 totaal. Geen abonnement, geen verborgen kosten en geen verrassingen achteraf.',
+  landing_faq_kosten_antwoord: 'Onze tarieven werken op een staffel: 2,0% voor kleine bedragen (€10-200), aflopend tot 0,8% voor €2.500+. Op €500 betaal je 1,5% (€7,50), op €1.000 betaal je 1,2% (€12). De volledige tariefkaart staat op de landing-pagina. Geen abonnement, geen verborgen kosten.',
   landing_faq_veiligheid_vraag: 'Is mijn geld veilig bij SwiftBridge?',
   landing_faq_veiligheid_antwoord: 'Ja. Betalingen lopen via een DNB-gelicentieerde EMI-partner (agent-model onder DNB-toezicht). We checken iedere ontvanger op de internationale sanctielijst, gebruiken 256-bit versleuteling en bewaren je gegevens conform AVG en Wwft.',
   landing_faq_banken_vraag: 'Welke Turkse banken worden ondersteund?',

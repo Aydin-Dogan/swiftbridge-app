@@ -236,7 +236,7 @@ export const az = {
   landing_pill_route: 'Hollandiya → Türkiyə',
   landing_hero_titel_1: 'Hollandiyadan sürətli və təhlükəsiz pul göndər',
   landing_hero_titel_2: 'Türkiyəyə',
-  landing_hero_subline: 'Banklardan 10 dəfə ucuz. 5 dəqiqədən az müddətdə ailənizin hesabında. €1,99 sabit komissiya — gizli xərclər yoxdur.',
+  landing_hero_subline: 'Banklardan 10 dəfə ucuz. 5 dəqiqədən az müddətdə ailənizin hesabında. Tariflər 0,8%-dən başlayır — gizli xərclər yoxdur.',
   landing_hero_cta_primary: 'Pulsuz başla',
   landing_hero_cta_secondary: 'Necə işlədiyinə bax',
   landing_trust_dnb: 'Wwft / DNB nəzarəti',
@@ -251,7 +251,7 @@ export const az = {
   landing_widget_ontvanger_in: 'Qəbul edən alır',
   landing_widget_ontvanger_krijgt: 'Qəbul edən alır',
   landing_widget_koers: 'Mübadilə kursu',
-  landing_widget_fee: 'Komissiya: €1,99 + 1,2%',
+  landing_widget_fee: 'Köçürmə başına 0,8%-dən başlayan tarif',
   landing_widget_no_account_needed: 'Başlamaq üçün kredit kartı tələb olunmur',
 
   // Features
@@ -261,7 +261,7 @@ export const az = {
   landing_feature_snel_titel: 'Şimşək sürətində',
   landing_feature_snel_tekst: 'Türk bank hesabına 5 dəqiqə ərzində pul — həftə sonları və iş saatlarından kənar da.',
   landing_feature_goedkoop_titel: 'Ədalətli qiymət',
-  landing_feature_goedkoop_tekst: '€1,99 sabit əməliyyat komissiyası və şəffaf mübadilə kursu. Sürpriz yoxdur, gizli marja yoxdur.',
+  landing_feature_goedkoop_tekst: 'Ədalətli pilləli tarif, köçürmə başına 0,8%-dən başlayan. Nə qədər çox göndərsən, bir o qədər aşağı tarif. Tam tarif cədvəli əvvəlcədən görünür.',
   landing_feature_veilig_titel: 'Təhlükəsiz və tənzimlənən',
   landing_feature_veilig_tekst: 'EMI tərəfdaşımız vasitəsilə DNB nəzarəti altında, hər qəbul edən üçün sanksiya siyahısı yoxlaması, iDIN identifikasiyası.',
 
@@ -277,6 +277,17 @@ export const az = {
   landing_step_ideal_tekst: 'Məbləği daxil edin və bank tətbiqinizdə bir toxunuşla təsdiqləyin.',
   landing_step_ontvangen_titel: 'Ailə pulu alır',
   landing_step_ontvangen_tekst: 'Pul 5 dəqiqə ərzində türk bank hesabına çatır. WhatsApp bildirişi daxildir.',
+
+  // Tarif cədvəli bölməsi
+  tariefkaart_eyebrow: 'Tariflərimiz',
+  tariefkaart_titel: 'Tam tarif cədvəli',
+  tariefkaart_subtitel: 'Ədalətli pilləli tarif — nə qədər çox göndərsən, bir o qədər aşağı tarif. Gizli xərclər yoxdur.',
+  tariefkaart_col_bedrag: 'Məbləğ',
+  tariefkaart_methode_ideal: 'iDEAL / Wero',
+  tariefkaart_methode_card: 'Kredit kartı',
+  tariefkaart_methode_klarna: 'Klarna',
+  tariefkaart_methode_sepa: 'SEPA',
+  tariefkaart_disclaimer: 'Mübadilə kursu canlı mid-market kursa əsaslanır. Nümunə: €500 iDEAL ilə 1,5% = €7,50 komissiya.',
 
   // Social proof / stats
   landing_stat_overboekingen: 'İşlənmiş köçürmələr',
@@ -316,7 +327,7 @@ export const az = {
   landing_faq_snelheid_vraag: 'Pul Türkiyəyə nə qədər tez çatır?',
   landing_faq_snelheid_antwoord: 'Əksər hallarda iDEAL ödənişinizin təsdiqindən sonra 5 dəqiqə ərzində. Böyük məbləğlər və ya iş saatlarından kənar zamanlarda bu, ən çox 1 saata qədər uzana bilər. Çox ilk köçürmədə KYC-ni bir dəfəlik yoxladığımız üçün biraz daha çox vaxt apara bilər.',
   landing_faq_kosten_vraag: 'Real xərclər nədir?',
-  landing_faq_kosten_antwoord: 'Köçürmə başına €1,99 sabit komissiya + 1,2% mübadilə kursu marjı tutulur. €500-luq köçürmədə cəmi təxminən €7,99 ödəyəcəksiniz. Abunəlik yoxdur, gizli xərclər yoxdur və sonradan sürpriz yoxdur.',
+  landing_faq_kosten_antwoord: 'Tariflərimiz pilləli sistemdən istifadə edir: kiçik məbləğlər üçün (€10-200) 2,0%-dən başlayıb €2.500+ üçün 0,8%-ə düşür. €500-da 1,5% (€7,50), €1.000-da 1,2% (€12) ödəyirsən. Tam tarif cədvəli landing səhifəsindədir. Abunəlik yoxdur, gizli xərclər yoxdur.',
   landing_faq_veiligheid_vraag: 'Pulum SwiftBridge-də təhlükəsizdirmi?',
   landing_faq_veiligheid_antwoord: 'Bəli. Ödənişlər DNB lisenziyalı EMI tərəfdaşı vasitəsilə həyata keçirilir (DNB nəzarəti altında agent modeli). Hər qəbul edəni beynəlxalq sanksiya siyahısı ilə yoxlayırıq, 256-bit şifrələmə istifadə edirik və məlumatlarınızı GDPR və Wwft-yə uyğun saxlayırıq.',
   landing_faq_banken_vraag: 'Hansı türk bankları dəstəklənir?',

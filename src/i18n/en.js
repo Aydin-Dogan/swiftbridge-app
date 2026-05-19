@@ -251,7 +251,7 @@ export const en = {
   landing_pill_route: 'Netherlands → Türkiye',
   landing_hero_titel_1: 'Send money fast & safe from the Netherlands to',
   landing_hero_titel_2: 'Türkiye',
-  landing_hero_subline: '10x cheaper than banks. On your family\'s account in under 5 minutes. €1.99 flat fee — no hidden costs.',
+  landing_hero_subline: '10x cheaper than banks. On your family\'s account in under 5 minutes. From 0.8% per transfer — no hidden costs.',
   landing_hero_cta_primary: 'Start for free',
   landing_hero_cta_secondary: 'See how it works',
   landing_trust_dnb: 'Wwft / DNB-supervised',
@@ -266,7 +266,7 @@ export const en = {
   landing_widget_ontvanger_in: 'Recipient gets in',
   landing_widget_ontvanger_krijgt: 'Recipient gets',
   landing_widget_koers: 'Exchange rate',
-  landing_widget_fee: 'Fee: €1.99 + 1.2%',
+  landing_widget_fee: 'From 0.8% per transfer',
   landing_widget_no_account_needed: 'No credit card needed to start',
 
   // Features
@@ -276,7 +276,7 @@ export const en = {
   landing_feature_snel_titel: 'Lightning fast',
   landing_feature_snel_tekst: 'Money on the Turkish bank account within 5 minutes — including weekends and outside business hours.',
   landing_feature_goedkoop_titel: 'Fairly priced',
-  landing_feature_goedkoop_tekst: '€1.99 flat transaction fee and a transparent exchange rate. No surprises, no hidden margin.',
+  landing_feature_goedkoop_tekst: 'Fair tiered pricing from 0.8% per transfer. The more you send, the lower your rate. Full pricing table upfront.',
   landing_feature_veilig_titel: 'Secure & regulated',
   landing_feature_veilig_tekst: 'Under DNB supervision via our EMI partner, sanctions list check on every recipient, iDIN identification.',
 
@@ -292,6 +292,17 @@ export const en = {
   landing_step_ideal_tekst: 'Enter the amount and confirm with one tap in your bank app.',
   landing_step_ontvangen_titel: 'Family receives',
   landing_step_ontvangen_tekst: 'Money lands on the Turkish bank account within 5 minutes. WhatsApp confirmation included.',
+
+  // Pricing table section
+  tariefkaart_eyebrow: 'Our pricing',
+  tariefkaart_titel: 'Full pricing table',
+  tariefkaart_subtitel: 'Fair tiered pricing — the more you send, the lower your rate. No hidden costs — what you see is what you pay.',
+  tariefkaart_col_bedrag: 'Amount',
+  tariefkaart_methode_ideal: 'iDEAL / Wero',
+  tariefkaart_methode_card: 'Credit card',
+  tariefkaart_methode_klarna: 'Klarna',
+  tariefkaart_methode_sepa: 'SEPA',
+  tariefkaart_disclaimer: 'Exchange rate based on live mid-market rate. Example: €500 via iDEAL costs 1.5% = €7.50 fee.',
 
   // Social proof / stats
   landing_stat_overboekingen: 'Transfers processed',
@@ -331,7 +342,7 @@ export const en = {
   landing_faq_snelheid_vraag: 'How fast does the money arrive in Türkiye?',
   landing_faq_snelheid_antwoord: 'In most cases within 5 minutes after your iDEAL payment is confirmed. For large amounts or outside business hours it can take up to 1 hour. The very first transfer can be slightly slower because we verify your KYC once.',
   landing_faq_kosten_vraag: 'What does it really cost?',
-  landing_faq_kosten_antwoord: 'We charge a €1.99 flat fee per transfer + 1.2% exchange rate margin. On a €500 transfer that\'s ~€7.99 total. No subscription, no hidden costs and no surprises afterwards.',
+  landing_faq_kosten_antwoord: 'Our pricing uses a tiered model: 2.0% for small amounts (€10-200), down to 0.8% for €2,500+. On €500 you pay 1.5% (€7.50), on €1,000 you pay 1.2% (€12). Full pricing table on the landing page. No subscription, no hidden costs.',
   landing_faq_veiligheid_vraag: 'Is my money safe with SwiftBridge?',
   landing_faq_veiligheid_antwoord: 'Yes. Payments are handled by a DNB-licensed EMI partner (agent model under DNB supervision). We check every recipient against the international sanctions list, use 256-bit encryption and store your data in line with GDPR and Wwft.',
   landing_faq_banken_vraag: 'Which Turkish banks are supported?',

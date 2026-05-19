@@ -236,7 +236,7 @@ export const ru = {
   landing_pill_route: 'Нидерланды → Türkiye',
   landing_hero_titel_1: 'Деньги быстро и безопасно из Нидерландов в',
   landing_hero_titel_2: 'Türkiye',
-  landing_hero_subline: 'В 10 раз дешевле, чем в банках. На счёт вашей семьи менее чем за 5 минут. Фиксированная комиссия €1,99 — без скрытых платежей.',
+  landing_hero_subline: 'В 10 раз дешевле, чем в банках. На счёт вашей семьи менее чем за 5 минут. Тарифы от 0,8% — без скрытых платежей.',
   landing_hero_cta_primary: 'Начать бесплатно',
   landing_hero_cta_secondary: 'Посмотреть, как это работает',
   landing_trust_dnb: 'Под контролем Wwft / DNB',
@@ -251,7 +251,7 @@ export const ru = {
   landing_widget_ontvanger_in: 'Получатель получит в',
   landing_widget_ontvanger_krijgt: 'Получатель получит',
   landing_widget_koers: 'Обменный курс',
-  landing_widget_fee: 'Комиссия: €1,99 + 1,2%',
+  landing_widget_fee: 'От 0,8% за перевод',
   landing_widget_no_account_needed: 'Кредитная карта для начала не нужна',
 
   // Features
@@ -261,7 +261,7 @@ export const ru = {
   landing_feature_snel_titel: 'Молниеносно',
   landing_feature_snel_tekst: 'Деньги на турецком банковском счёте в течение 5 минут — также в выходные и вне рабочего времени.',
   landing_feature_goedkoop_titel: 'Честные цены',
-  landing_feature_goedkoop_tekst: 'Фиксированная комиссия €1,99 за транзакцию и прозрачный обменный курс. Никаких сюрпризов, никаких скрытых наценок.',
+  landing_feature_goedkoop_tekst: 'Справедливые многоуровневые тарифы от 0,8% за перевод. Чем больше отправляешь, тем ниже тариф. Полная таблица тарифов видна заранее.',
   landing_feature_veilig_titel: 'Безопасно и под надзором',
   landing_feature_veilig_tekst: 'Под надзором DNB через нашего EMI-партнёра, проверка по санкционным спискам каждого получателя, идентификация iDIN.',
 
@@ -277,6 +277,17 @@ export const ru = {
   landing_step_ideal_tekst: 'Введите сумму и подтвердите одним нажатием в банковском приложении.',
   landing_step_ontvangen_titel: 'Семья получает деньги',
   landing_step_ontvangen_tekst: 'Деньги поступают на турецкий банковский счёт в течение 5 минут. Уведомление по WhatsApp включено.',
+
+  // Таблица тарифов
+  tariefkaart_eyebrow: 'Наши тарифы',
+  tariefkaart_titel: 'Полная таблица тарифов',
+  tariefkaart_subtitel: 'Справедливые многоуровневые тарифы — чем больше отправляешь, тем ниже тариф. Без скрытых платежей.',
+  tariefkaart_col_bedrag: 'Сумма',
+  tariefkaart_methode_ideal: 'iDEAL / Wero',
+  tariefkaart_methode_card: 'Кредитная карта',
+  tariefkaart_methode_klarna: 'Klarna',
+  tariefkaart_methode_sepa: 'SEPA',
+  tariefkaart_disclaimer: 'Обменный курс на основе живого mid-market курса. Пример: €500 через iDEAL стоит 1,5% = €7,50 комиссии.',
 
   // Social proof / stats
   landing_stat_overboekingen: 'Обработанных переводов',
@@ -316,7 +327,7 @@ export const ru = {
   landing_faq_snelheid_vraag: 'Как быстро деньги поступают в Türkiye?',
   landing_faq_snelheid_antwoord: 'В большинстве случаев в течение 5 минут после подтверждения вашего платежа iDEAL. При крупных суммах или вне рабочего времени это может занять до 1 часа. Самый первый перевод может занять немного больше времени, потому что мы один раз проверяем ваш KYC.',
   landing_faq_kosten_vraag: 'Какова реальная стоимость?',
-  landing_faq_kosten_antwoord: 'Мы берём фиксированную комиссию €1,99 за перевод + 1,2% наценки обменного курса. При переводе €500 вы заплатите в общей сложности около €7,99. Никакой подписки, никаких скрытых расходов и никаких сюрпризов после.',
+  landing_faq_kosten_antwoord: 'Наши тарифы используют многоуровневую модель: 2,0% для небольших сумм (€10-200), снижаясь до 0,8% для €2.500+. При переводе €500 платишь 1,5% (€7,50), при €1.000 — 1,2% (€12). Полная таблица тарифов на главной странице. Без подписки, без скрытых платежей.',
   landing_faq_veiligheid_vraag: 'Безопасны ли мои деньги в SwiftBridge?',
   landing_faq_veiligheid_antwoord: 'Да. Платежи проходят через EMI-партнёра с лицензией DNB (агентская модель под надзором DNB). Мы проверяем каждого получателя по международному санкционному списку, используем 256-битное шифрование и храним ваши данные в соответствии с GDPR и Wwft.',
   landing_faq_banken_vraag: 'Какие турецкие банки поддерживаются?',

@@ -6,8 +6,8 @@ import { useTaal } from '../../i18n';
 // Voorbeeldbedrag voor de vergelijking
 const BEDRAG = 500;
 
-// Berekening:
-// SwiftBridge: €1,99 vast + 1,2% wisselkoersmarge ≈ €1,99 + €6,00 = €7,99 totaal
+// Berekening op €500 via iDEAL Express:
+// SwiftBridge: 1,5% staffel-fee = €7,50 (zie tariefkaart sectie voor volledige staffel)
 // Bank: gem. €15 vast + 3-4% marge ≈ €15 + €17,50 = €32,50
 // Wise: €4,38 fee + 0,5% marge ≈ €4,38 + €2,50 = €6,88 (sneller voor sommige routes)
 const ROWS = [
@@ -15,11 +15,11 @@ const ROWS = [
     key: 'swiftbridge',
     naam: 'SwiftBridge',
     highlight: true,
-    fee: '€1,99',
-    marge: '1,2%',
+    fee: '1,5%',
+    marge: 'inbegrepen',
     snelheid: '< 5 min',
-    totaal: '€7,99',
-    ontvanger: '~₺17.821',
+    totaal: '€7,50',
+    ontvanger: '~₺17.829',
     badge: 'landing_pricing_aanbevolen',
   },
   {
