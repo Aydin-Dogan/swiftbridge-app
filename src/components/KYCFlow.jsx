@@ -11,6 +11,8 @@ import { useTaal } from '../i18n';
 
 // Lazy load document upload wizard (alleen relevant voor users zonder NL bank).
 const DocumentUploadFlow = lazy(() => import('./kyc/DocumentUploadFlow'));
+// Lazy load Onfido embed — alleen geladen als backend een Onfido sdkToken teruggeeft.
+const OnfidoEmbed = lazy(() => import('./kyc/OnfidoEmbed'));
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -416,6 +418,7 @@ function KYCGeblokkeerd() {
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function KYCFlow({ token, gebruiker }) {
   const { t } = useTaal();
+  const taal = (typeof navigator !== 'undefined' && navigator.language || 'nl').slice(0, 2);
   const [stap,      setStap     ] = useState(0);
   const [opnieuw,   setOpnieuw  ] = useState(false);
   const [form,      setForm     ] = useState({
@@ -427,6 +430,8 @@ export default function KYCFlow({ token, gebruiker }) {
   const [selfieFoto,setSelfieFoto] = useState(null);
   const [laden,     setLaden    ] = useState(false);
   const [fout,      setFout     ] = useState('');
+  // Onfido SDK state — alleen gezet als backend KYC_PROVIDER=onfido draait
+  const [onfidoToken, setOnfidoToken] = useState(null);
 
   function update(k, v) { setForm(f => ({ ...f, [k]: v })); }
 
@@ -459,7 +464,16 @@ export default function KYCFlow({ token, gebruiker }) {
         err.data = data;
         throw err;
       }
-      setStap(3);
+      // Backend kan een sdkToken meegeven (Onfido/Veriff/Sumsub). Als die er is,
+      // schakelen we over naar de embedded SDK-flow ipv direct naar 'klaar'.
+      // Mock-provider geeft geen sdkToken — dan blijft het oude pad gelden.
+      const data = await res.json().catch(() => ({}));
+      if (data?.sdkToken && data?.provider && data.provider !== 'mock') {
+        setOnfidoToken(data.sdkToken);
+        // Stap blijft 2 — render OnfidoEmbed in plaats van StapSelfie
+      } else {
+        setStap(3);
+      }
       setOpnieuw(false);
     } catch (e) {
       setFout(parseError(e, t));
@@ -468,12 +482,20 @@ export default function KYCFlow({ token, gebruiker }) {
     }
   }
 
+  function onOnfidoVoltooid() {
+    // SDK-flow door user voltooid; eindbeslissing komt straks via webhook.
+    // We tonen 'in behandeling' totdat user/profiel opnieuw geladen wordt.
+    setOnfidoToken(null);
+    setStap(3);
+  }
+
   function startOpnieuw() {
     setOpnieuw(true);
     setStap(0);
     setDocFoto(null);
     setSelfieFoto(null);
     setFout('');
+    setOnfidoToken(null);
     setForm({ voornaam: '', achternaam: '', geboortedatum: '', nationaliteit: 'TR', documentType: 'kimlik', documentNummer: '', telefoon: '' });
   }
 
@@ -513,7 +535,18 @@ export default function KYCFlow({ token, gebruiker }) {
 
       {stap === 0 && <StapPersoonlijk form={form} update={update} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapDocument form={form} update={update} docFoto={docFoto} setDocFoto={setDocFoto} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapSelfie selfieFoto={selfieFoto} setSelfieFoto={setSelfieFoto} laden={laden} fout={fout} onIndienen={dien_in} onTerug={() => setStap(1)} />}
+      {stap === 2 && !onfidoToken && <StapSelfie selfieFoto={selfieFoto} setSelfieFoto={setSelfieFoto} laden={laden} fout={fout} onIndienen={dien_in} onTerug={() => setStap(1)} />}
+      {stap === 2 && onfidoToken && (
+        <Suspense fallback={<div className="text-center py-6 text-gray-500 text-sm">{t('laden')}</div>}>
+          <OnfidoEmbed
+            sdkToken={onfidoToken}
+            taal={taal}
+            onComplete={onOnfidoVoltooid}
+            onError={(msg) => { setFout(msg || 'SDK fout'); setOnfidoToken(null); }}
+            onAnnuleer={() => { setOnfidoToken(null); }}
+          />
+        </Suspense>
+      )}
       {stap === 3 && <StapKlaar form={form} />}
 
       {/* Document upload fallback (voor users zonder NL bank) — alleen tonen
