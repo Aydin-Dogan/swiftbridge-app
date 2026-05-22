@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SwiftBridge sitemap.
+  Productie-domein: swiftbridge.tr (voorstel — wordt aangepast zodra canonical bevestigd).
+  Update de <loc> URL's wanneer .nl of .com.tr canonical wordt.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home / landing — hoogste prioriteit -->
   <url>
-    <loc>https://swiftbridge.app/</loc>
-    <changefreq>daily</changefreq>
+    <loc>https://swiftbridge.tr/</loc>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Inschrijving (anker via Login-pagina) -->
   <url>
-    <loc>https://swiftbridge.app/registreer</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://swiftbridge.tr/login</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Juridisch — verplicht zichtbaar voor compliance -->
   <url>
-    <loc>https://swiftbridge.app/algemene-voorwaarden</loc>
+    <loc>https://swiftbridge.tr/algemene-voorwaarden</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
+
   <url>
-    <loc>https://swiftbridge.app/privacybeleid</loc>
+    <loc>https://swiftbridge.tr/privacybeleid</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
+
   <url>
-    <loc>https://swiftbridge.app/aml-beleid</loc>
+    <loc>https://swiftbridge.tr/aml-beleid</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
+
 </urlset>

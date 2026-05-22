@@ -1,9 +1,40 @@
+# SwiftBridge — robots.txt
+# Productie-domein wordt swiftbridge.tr (voorstel, beslissing nog bij Stefan).
+# Update dit bestand zodra canonical-domein is bevestigd.
+
 User-agent: *
 Allow: /
+
+# Privé / auth-gated routes — geen waarde voor zoekmachines
 Disallow: /admin
+Disallow: /admin/
 Disallow: /profiel
 Disallow: /dashboard
 Disallow: /auth
 Disallow: /api
+Disallow: /kyc
 
-Sitemap: https://swiftbridge.app/sitemap.xml
+# Crawl-vriendelijk: niet te aggressief om server-load laag te houden
+Crawl-delay: 1
+
+# AI scrapers — wel toestaan voor publieke landing-content, niet voor de app
+User-agent: GPTBot
+Allow: /
+Allow: /algemene-voorwaarden
+Allow: /privacybeleid
+Allow: /aml-beleid
+Disallow: /dashboard
+Disallow: /profiel
+Disallow: /admin
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /dashboard
+Disallow: /profiel
+Disallow: /admin
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://swiftbridge.tr/sitemap.xml
