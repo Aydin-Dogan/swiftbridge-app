@@ -322,7 +322,7 @@ export const tr = {
   landing_pricing_subtitel: '{bedrag} transferinde — tüm maliyetler bir arada, sürpriz yok.',
   landing_pricing_aanbevolen: 'En iyi seçim',
   landing_pricing_col_aanbieder: 'Sağlayıcı',
-  landing_pricing_col_fee: 'Sabit ücret',
+  landing_pricing_col_fee: 'Hizmet ücreti',
   landing_pricing_col_marge: 'Kur marjı',
   landing_pricing_col_snelheid: 'Hız',
   landing_pricing_col_totaal: 'Toplam maliyet',
@@ -531,7 +531,7 @@ export const tr = {
   support_qa_kyc_vraag: 'KYC belgelerimi nasıl yüklerim?',
   support_qa_kyc_antwoord: 'Doğrulama sekmesine gidin ve "Belge tara" düğmesine tıklayın. Gerekenler:\n• Pasaport veya kimlik kartı (geçerli)\n• İkamet kanıtı (en fazla 3 ay eski)\n• Onay için selfie\n\nTarama 5 dakikadan az sürer ve anında geri bildirim alırsınız.',
   support_qa_kosten_vraag: 'Para transferinin maliyeti nedir?',
-  support_qa_kosten_antwoord: 'SwiftBridge şeffaf fiyatlandırır:\n• İşlem başına sabit € 1,99 ücret\n• Kur marjı: %1,2 (Express) veya %0,5 (Economy)\n\nGizli maliyet yok — onaylamadan önce tam tutarı görürsünüz.',
+  support_qa_kosten_antwoord: 'SwiftBridge adil kademeli tarife kullanır:\n• iDEAL Express: %2,0 (küçük) - %0,8 (€2.500+)\n• SEPA Economy: %1,2 - %0,4\n• Minimum ücret: €1,99 (express) / €0,99 (economy)\n\nTam tarife kartı landing sayfasında görünür. Gizli maliyet yok — onaylamadan önce tam tutarı görürsünüz.',
   support_qa_status_vraag: 'Param henüz gelmedi — şimdi ne yapmalıyım?',
   support_qa_status_antwoord: 'Endişelenmeyin — önce Panel\'den durumu kontrol edin. Referans numarasını (TX-XXXXXX) bir sonraki mesajda gönderin, sizin için hemen kontrol edeyim.\n\n• Express: < 5 dk\n• Economy: 2 iş gününe kadar',
 

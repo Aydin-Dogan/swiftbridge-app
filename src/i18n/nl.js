@@ -323,7 +323,7 @@ export const nl = {
   landing_pricing_subtitel: 'Bij {bedrag} overmaken — alle kosten op een rij, geen verrassingen.',
   landing_pricing_aanbevolen: 'Beste keuze',
   landing_pricing_col_aanbieder: 'Aanbieder',
-  landing_pricing_col_fee: 'Vaste fee',
+  landing_pricing_col_fee: 'Servicekosten',
   landing_pricing_col_marge: 'Koersmarge',
   landing_pricing_col_snelheid: 'Snelheid',
   landing_pricing_col_totaal: 'Totale kosten',
@@ -594,7 +594,7 @@ export const nl = {
   support_qa_kyc_vraag: 'Hoe upload ik mijn KYC documenten?',
   support_qa_kyc_antwoord: 'Ga naar het tabblad Verificatie en klik op "Document scannen". Je hebt nodig:\n• Paspoort of ID-kaart (geldig)\n• Bewijs van woonadres (max 3 maanden oud)\n• Selfie ter bevestiging\n\nDe scan duurt minder dan 5 minuten en je krijgt direct feedback.',
   support_qa_kosten_vraag: 'Wat zijn de kosten van een overboeking?',
-  support_qa_kosten_antwoord: 'SwiftBridge rekent een transparante prijs:\n• € 1,99 vaste fee per transactie\n• Wisselkoers marge: 1,2% (Express) of 0,5% (Economy)\n\nGeen verborgen kosten — je ziet de exacte uitkomst voor je bevestigt.',
+  support_qa_kosten_antwoord: 'SwiftBridge gebruikt een eerlijke staffel:\n• iDEAL Express: 2,0% (klein) tot 0,8% (€2.500+)\n• SEPA Economy: 1,2% tot 0,4%\n• Minimum fee: €1,99 (express) / €0,99 (economy)\n\nVolledige tariefkaart zichtbaar op de landing-pagina. Geen verborgen kosten — je ziet de exacte uitkomst voor je bevestigt.',
   support_qa_status_vraag: 'Mijn geld is nog niet aangekomen — wat nu?',
   support_qa_status_antwoord: 'Geen paniek — check eerst de status op je Dashboard. Stuur me het referentienummer (TX-XXXXXX) in een volgend bericht, dan zoek ik het direct voor je op.\n\n• Express: < 5 min\n• Economy: tot 2 werkdagen',
 

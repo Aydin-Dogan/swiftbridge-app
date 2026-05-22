@@ -307,7 +307,7 @@ export const ru = {
   landing_pricing_subtitel: 'При переводе {bedrag} — все расходы наглядно, без сюрпризов.',
   landing_pricing_aanbevolen: 'Лучший выбор',
   landing_pricing_col_aanbieder: 'Провайдер',
-  landing_pricing_col_fee: 'Фикс. комиссия',
+  landing_pricing_col_fee: 'Сервисный сбор',
   landing_pricing_col_marge: 'Наценка курса',
   landing_pricing_col_snelheid: 'Скорость',
   landing_pricing_col_totaal: 'Общая стоимость',

@@ -322,7 +322,7 @@ export const en = {
   landing_pricing_subtitel: 'Sending {bedrag} — all costs laid out, no surprises.',
   landing_pricing_aanbevolen: 'Best choice',
   landing_pricing_col_aanbieder: 'Provider',
-  landing_pricing_col_fee: 'Flat fee',
+  landing_pricing_col_fee: 'Service fee',
   landing_pricing_col_marge: 'Rate margin',
   landing_pricing_col_snelheid: 'Speed',
   landing_pricing_col_totaal: 'Total cost',
@@ -531,7 +531,7 @@ export const en = {
   support_qa_kyc_vraag: 'How do I upload my KYC documents?',
   support_qa_kyc_antwoord: 'Go to the Verification tab and click "Scan document". You\'ll need:\n• Passport or ID card (valid)\n• Proof of residence (max 3 months old)\n• Selfie for confirmation\n\nThe scan takes less than 5 minutes and you get instant feedback.',
   support_qa_kosten_vraag: 'What does a transfer cost?',
-  support_qa_kosten_antwoord: 'SwiftBridge has transparent pricing:\n• € 1,99 fixed fee per transaction\n• Exchange rate margin: 1.2% (Express) or 0.5% (Economy)\n\nNo hidden costs — you see the exact outcome before you confirm.',
+  support_qa_kosten_antwoord: 'SwiftBridge uses fair tiered pricing:\n• iDEAL Express: 2.0% (small) to 0.8% (€2,500+)\n• SEPA Economy: 1.2% to 0.4%\n• Minimum fee: €1.99 (express) / €0.99 (economy)\n\nFull pricing table visible on the landing page. No hidden costs — you see the exact outcome before you confirm.',
   support_qa_status_vraag: 'My money hasn\'t arrived yet — what now?',
   support_qa_status_antwoord: 'No worries — first check the status on your Dashboard. Send me the reference number (TX-XXXXXX) in the next message and I\'ll look it up right away.\n\n• Express: < 5 min\n• Economy: up to 2 business days',
 

@@ -307,7 +307,7 @@ export const az = {
   landing_pricing_subtitel: '{bedrag} köçürmədə — bütün xərclər bir yerdə, sürpriz yoxdur.',
   landing_pricing_aanbevolen: 'Ən yaxşı seçim',
   landing_pricing_col_aanbieder: 'Provayder',
-  landing_pricing_col_fee: 'Sabit komissiya',
+  landing_pricing_col_fee: 'Xidmət ücreti',
   landing_pricing_col_marge: 'Məzənnə marjı',
   landing_pricing_col_snelheid: 'Sürət',
   landing_pricing_col_totaal: 'Ümumi xərc',
