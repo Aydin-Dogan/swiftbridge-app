@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: i18n consistency check
+        run: node scripts/i18n-check.mjs --strict
+
+      - name: Build
+        run: npm run build
+
+      - name: Security audit (moderate+)
+        run: npm audit --audit-level=moderate
+        continue-on-error: false
