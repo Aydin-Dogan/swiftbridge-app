@@ -354,7 +354,21 @@ export const tr = {
   landing_faq_idin_vraag: 'iDIN kimlik doğrulaması nedir?',
   landing_faq_idin_antwoord: 'iDIN, Hollanda bankalarının resmi kimlik doğrulama sistemidir. Kendi Hollanda banka uygulaman üzerinden doğrularsın — pasaport taraması yok, selfie yok, bekleme yok. Bir kez doğrulandı mı, tekrar gerekmez.',
   landing_faq_contact_vraag: 'Sizinle nasıl iletişime geçebilirim?',
-  landing_faq_contact_antwoord: 'support@swiftbridge.nl adresine mail at veya WhatsApp üzerinden ulaş. Hollandaca, Türkçe ve İngilizce konuşuyoruz ve mesai saatlerinde genellikle 4 saat içinde yanıt veriyoruz.',
+  landing_faq_contact_antwoord: 'support@swiftbridge.tr adresine mail at. Hollandaca, Türkçe ve İngilizce konuşuyoruz ve mesai saatlerinde genellikle 4 saat içinde yanıt veriyoruz.',
+
+  // FAQ — Sprint 3: 6 yeni long-tail SEO sorusu
+  landing_faq_limieten_vraag: 'Aylık veya günlük limitler nelerdir?',
+  landing_faq_limieten_antwoord: 'KYC onayından sonraki ilk 90 günde haftalık €5.000 limit geçerlidir. Sonrasında işlem geçmişin ve Wwft risk profilin temelinde otomatik artırılır. Tek seferlik daha büyük bir tutar göndermek istiyorsan? Destek ile iletişime geç — talep üzerine işlem başına maksimum €25.000\'e kadar daha yüksek bir limit aktif edebiliriz.',
+  landing_faq_wise_vergelijk_vraag: 'SwiftBridge Wise ile nasıl karşılaştırılır?',
+  landing_faq_wise_vergelijk_antwoord: 'Wise küresel ve 1.000+ para birimi işliyor. SwiftBridge EUR→TRY koridorunda ve ilgili Türki ülkelerde uzmanlaşmış — bu sayede daha hızlı (genellikle iDEAL ile <5 dk) ve Garanti, Akbank, İş Bankası, Yapı Kredi gibi Türk bankaları için daha iyi destek. €500\'lük bir işlemde tarifemiz Wise\'ın €1-2 üstünde — bu ek maliyetle daha fazla hız ve Hollandaca konuşan müşteri hizmeti alıyorsun.',
+  landing_faq_annuleren_vraag: 'Bir işlemi iptal edebilir veya geri alabilir miyim?',
+  landing_faq_annuleren_antwoord: 'iDEAL ödemesi tamamlanmadan önce: evet, ödeme yapmazsan işlem 1 saat içinde otomatik olarak iptal olur. Ödeme sonrası ancak çıkış öncesi (\'işleniyor\' durumu): tutar Türk bankasına doğru yolda olduğu için genellikle artık değil. Tamamlandıktan sonra: yalnızca alıcıya iade talebi yoluyla. İptal şansını maksimuma çıkarmak için ödeme sonrası 30 dakika içinde destek ile iletişime geç.',
+  landing_faq_koers_wijzigt_vraag: 'Ödememle sırasında döviz kuru değişirse ne olur?',
+  landing_faq_koers_wijzigt_antwoord: 'Kur, ödeme anında değil, işlemi onayladığında sabitlenir. Onaydan itibaren gösterilen kur ile iDEAL ödemesini tamamlamak için 15 dakikan var. Daha uzun mu sürüyor? Güncel kurla yeniden hesaplıyoruz ve işlem yapılmadan önce seni bilgilendiriyoruz.',
+  landing_faq_feestdagen_vraag: 'SwiftBridge Ramazan, Bayram ve Türk bayramlarında çalışır mı?',
+  landing_faq_feestdagen_antwoord: 'Evet — teknik altyapımız 7/24 çalışır. Ancak Türk bankalarının bayramlarda gelen transferleri işlemekte gecikmesi sıktır. Ramazan Bayramı ve Kurban Bayramı sırasında teslim biraz daha uzun sürebilir (<5 dakika yerine 1 iş gününe kadar). Bayramda bir işlem planlarsan önceden push bildirimi gönderiyoruz.',
+  landing_faq_belgie_duitsland_vraag: 'SwiftBridge Belçika veya Almanya\'dan da çalışır mı?',
+  landing_faq_belgie_duitsland_antwoord: 'Evet. Belçika\'dan iDEAL\'in eşdeğeri olarak Bancontact destekliyoruz. Almanya\'dan Sofort ve SEPA çalışıyor. Alıcının Türkiye, Azerbaycan, Kazakistan, Özbekistan, Türkmenistan, Kırgızistan veya Tacikistan\'da hesabı olması gerekir. Tarifeler EUR kademeli tarifemizle aynıdır.',
   landing_faq_nog_vragen: 'Başka sorun var mı?',
 
   // CTA

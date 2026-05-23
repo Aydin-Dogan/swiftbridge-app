@@ -354,7 +354,21 @@ export const en = {
   landing_faq_idin_vraag: 'What is iDIN identification?',
   landing_faq_idin_antwoord: 'iDIN is the official Dutch identification system run by the banks. You verify your identity via your own Dutch bank app — no passport scan, no selfie, no waiting. Once verified, you never have to do it again.',
   landing_faq_contact_vraag: 'How can I get in touch?',
-  landing_faq_contact_antwoord: 'Email support@swiftbridge.nl or reach us via WhatsApp. We speak Dutch, Turkish and English and typically reply within 4 hours during business hours.',
+  landing_faq_contact_antwoord: 'Email support@swiftbridge.tr. We speak Dutch, Turkish and English and typically reply within 4 hours during business hours.',
+
+  // FAQ — Sprint 3: 6 new long-tail SEO questions
+  landing_faq_limieten_vraag: 'What are the monthly or daily limits?',
+  landing_faq_limieten_antwoord: 'In the first 90 days after KYC approval, a weekly limit of €5,000 applies. After that, it is automatically raised based on your transaction history and Wwft risk profile. Want to send a larger amount one-time? Contact support — we can activate a higher limit on request up to €25,000 per transaction.',
+  landing_faq_wise_vergelijk_vraag: 'How does SwiftBridge compare to Wise?',
+  landing_faq_wise_vergelijk_antwoord: 'Wise is global and handles 1,000+ currencies. SwiftBridge specializes in the EUR→TRY corridor and related Turkic countries — making us faster (often <5 min via iDEAL) and with better support for Turkish banks like Garanti, Akbank, İş Bankası and Yapı Kredi. On a €500 transaction our rate is €1-2 above Wise — for that extra cost you get more speed and Dutch-speaking customer service.',
+  landing_faq_annuleren_vraag: 'Can I cancel or reverse a transaction?',
+  landing_faq_annuleren_antwoord: 'Before iDEAL payment is completed: yes, transaction expires automatically within 1 hour if you don\'t pay. After payment but before payout (status \'in_progress\'): usually not, because the amount is already in the pipeline to the Turkish bank. After completion: only via a refund request to the recipient. Call or email support within 30 minutes after payment for the best chance at cancellation.',
+  landing_faq_koers_wijzigt_vraag: 'What if the exchange rate changes during my payment?',
+  landing_faq_koers_wijzigt_antwoord: 'The rate is locked when you confirm the transaction, not at payment. From confirmation you have 15 minutes to complete the iDEAL payment at the shown rate. Takes longer? We recalculate at the current rate and inform you before processing.',
+  landing_faq_feestdagen_vraag: 'Does SwiftBridge work during Ramazan, Bayram and Turkish holidays?',
+  landing_faq_feestdagen_antwoord: 'Yes — our technical infrastructure runs 24/7. However, Turkish banks often have delays processing incoming transfers on holidays. During Ramazan Bayramı and Kurban Bayramı, delivery can take slightly longer (up to 1 business day instead of <5 minutes). We send push notifications in advance if you schedule a transaction on a holiday.',
+  landing_faq_belgie_duitsland_vraag: 'Does SwiftBridge also work from Belgium or Germany?',
+  landing_faq_belgie_duitsland_antwoord: 'Yes. From Belgium we support Bancontact as equivalent to iDEAL. From Germany Sofort and SEPA work. The recipient must have an account in Türkiye, Azerbaijan, Kazakhstan, Uzbekistan, Turkmenistan, Kyrgyzstan or Tajikistan. Rates are identical to our EUR tiered pricing.',
   landing_faq_nog_vragen: 'Still have questions?',
 
   // CTA

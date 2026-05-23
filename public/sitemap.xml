@@ -1,42 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   SwiftBridge sitemap.
-  Productie-domein: swiftbridge.tr (voorstel — wordt aangepast zodra canonical bevestigd).
-  Update de <loc> URL's wanneer .nl of .com.tr canonical wordt.
+  Canonical: swiftbridge.tr (Stefan plaatst DNS dinsdag).
+  Update <lastmod> bij elke deploy via build-script (TODO Sprint 3.2).
 -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- Home / landing — hoogste prioriteit -->
   <url>
     <loc>https://swiftbridge.tr/</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://swiftbridge.tr/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://swiftbridge.tr/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://swiftbridge.tr/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://swiftbridge.tr/" />
+    <xhtml:link rel="alternate" hreflang="az" href="https://swiftbridge.tr/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://swiftbridge.tr/" />
   </url>
 
-  <!-- Inschrijving (anker via Login-pagina) -->
+  <!-- Registratie / inschrijving -->
   <url>
     <loc>https://swiftbridge.tr/login</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Juridisch — verplicht zichtbaar voor compliance -->
+  <!-- Juridisch — verplicht zichtbaar voor compliance + waardevol voor SEO trust -->
   <url>
     <loc>https://swiftbridge.tr/algemene-voorwaarden</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>quarterly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
     <loc>https://swiftbridge.tr/privacybeleid</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>quarterly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
     <loc>https://swiftbridge.tr/aml-beleid</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>quarterly</changefreq>
     <priority>0.4</priority>
+  </url>
+
+  <!-- Anchor-secties van de landing — niet apart geïndexeerd door Google
+       maar wel als reference voor sitelinks. -->
+  <url>
+    <loc>https://swiftbridge.tr/#hoe-werkt-het</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbridge.tr/#kosten</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbridge.tr/#tariefkaart</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbridge.tr/#landen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbridge.tr/#faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>

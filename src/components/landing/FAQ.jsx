@@ -4,12 +4,19 @@
 import { useState } from 'react';
 import { useTaal } from '../../i18n';
 
+// 12 vragen — long-tail SEO content. Volgorde: meest-gevraagd → minder.
 const VRAGEN = [
   { key: 'snelheid' },
   { key: 'kosten' },
   { key: 'veiligheid' },
   { key: 'banken' },
   { key: 'idin' },
+  { key: 'limieten' },          // NIEUW
+  { key: 'wise_vergelijk' },    // NIEUW
+  { key: 'annuleren' },         // NIEUW
+  { key: 'koers_wijzigt' },     // NIEUW
+  { key: 'feestdagen' },        // NIEUW
+  { key: 'belgie_duitsland' },  // NIEUW
   { key: 'contact' },
 ];
 
@@ -99,10 +106,10 @@ export default function FAQ() {
           <p className="text-sm text-gray-500">
             {t('landing_faq_nog_vragen')}{' '}
             <a
-              href="mailto:support@swiftbridge.nl"
-              className="text-blue-600 hover:text-blue-700 font-bold"
+              href="mailto:support@swiftbridge.tr"
+              className="text-brand-600 hover:text-brand-700 font-semibold"
             >
-              support@swiftbridge.nl
+              support@swiftbridge.tr
             </a>
           </p>
         </div>

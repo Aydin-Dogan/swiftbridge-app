@@ -88,11 +88,48 @@ const FLAGS = {
   ),
 };
 
-export default function Vlag({ land = 'NL', size = 20 }) {
-  const flag = FLAGS[land?.toUpperCase()];
+// Volledige landnamen voor a11y / SEO (alt-equivalent op SVG-vlaggen)
+const LANDNAMEN = {
+  NL: 'Vlag van Nederland',
+  TR: 'Vlag van Türkiye',
+  AZ: 'Vlag van Azerbeidzjan',
+  KZ: 'Vlag van Kazachstan',
+  UZ: 'Vlag van Oezbekistan',
+  TM: 'Vlag van Turkmenistan',
+  KG: 'Vlag van Kirgizië',
+  US: 'Vlag van de Verenigde Staten',
+  GB: 'Vlag van het Verenigd Koninkrijk',
+  EU: 'Vlag van de Europese Unie',
+  MA: 'Vlag van Marokko',
+  BE: 'Vlag van België',
+};
+
+export default function Vlag({ land = 'NL', size = 20, decorative = false }) {
+  const code = land?.toUpperCase();
+  const flag = FLAGS[code];
   if (!flag) {
     // Fallback: gewoon de letters
-    return <span style={{ fontWeight: 'bold', fontSize: size * 0.6 }}>{land}</span>;
+    return (
+      <span
+        style={{ fontWeight: 'bold', fontSize: size * 0.6 }}
+        role={decorative ? 'presentation' : 'img'}
+        aria-label={decorative ? undefined : land}
+      >
+        {land}
+      </span>
+    );
   }
-  return flag(size);
+  // Wrap de SVG in een element met role + aria-label voor screen-readers.
+  // Bij `decorative={true}` (bv. naast tekstuele land-naam): verberg voor
+  // screen-readers met aria-hidden om dubbele uitspraak te voorkomen.
+  return (
+    <span
+      role={decorative ? 'presentation' : 'img'}
+      aria-label={decorative ? undefined : (LANDNAMEN[code] || `Vlag ${code}`)}
+      aria-hidden={decorative ? 'true' : undefined}
+      style={{ display: 'inline-block', lineHeight: 0 }}
+    >
+      {flag(size)}
+    </span>
+  );
 }
