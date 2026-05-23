@@ -105,8 +105,9 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
+              {/* Primary CTA: rekenen zonder account (Sprint 4 conversie-fix) */}
               <button
-                onClick={() => navigate('/login?tab=register')}
+                onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
                 className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-semibold text-brand-800 bg-white hover:bg-blue-50 transition-colors duration-150 active:scale-[0.98] inline-flex items-center justify-center gap-2"
               >
                 {t('landing_hero_cta_primary')}
@@ -204,7 +205,7 @@ export default function Hero() {
               </div>
 
               <button
-                onClick={() => navigate('/login?tab=register')}
+                onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
                 className="btn-primary w-full py-3.5 text-sm"
               >
                 {t('landing_hero_cta_primary')}

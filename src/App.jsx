@@ -13,6 +13,7 @@ import { haalProfiel, logout as logoutApi } from './services/api';
 // Lazy load zware paginas (code splitting)
 const PaymentFlow         = lazy(() => import('./components/PaymentFlow'));
 const KYCFlow             = lazy(() => import('./components/KYCFlow'));
+const Calculator          = lazy(() => import('./pages/Calculator'));
 const KoersAlerts         = lazy(() => import('./components/KoersAlerts'));
 const Profiel             = lazy(() => import('./components/Profiel'));
 const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
@@ -345,6 +346,11 @@ export default function App() {
       <Suspense fallback={<LaadSpinner />}>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/calculator" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Bezig met laden...</div>}>
+              <Calculator />
+            </Suspense>
+          } />
           <Route path="/login" element={
             token ? <Navigate to="/app" replace /> :
             <Login onLogin={handleLogin} />
