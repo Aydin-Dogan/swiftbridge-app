@@ -675,7 +675,7 @@ export const ru = {
   support_verstuur: 'Отправить сообщение',
   support_aan_het_typen: 'Поддержка печатает',
   support_bericht_ontvangen: 'Сообщение получено — мы ответим в течение 2 часов.',
-  support_offline_fallback: 'Сообщение сохранено. Мы не в сети — напишите на support@swiftbridge.tx для быстрой помощи.',
+  support_offline_fallback: 'Сообщение сохранено. Мы не в сети — напишите на support@swiftbridge.tr для быстрой помощи.',
   support_footer_mail: 'Или напишите на',
   support_ongelezen: '{aantal} непрочитанных сообщений',
   support_qa_kyc_vraag: 'Как загрузить документы KYC?',

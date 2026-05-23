@@ -525,7 +525,7 @@ export const en = {
   support_verstuur: 'Send message',
   support_aan_het_typen: 'Support is typing',
   support_bericht_ontvangen: 'Message received — we will reply within 2 hours.',
-  support_offline_fallback: 'Message saved. We cannot respond online right now — email support@swiftbridge.tx for faster help.',
+  support_offline_fallback: 'Message saved. We cannot respond online right now — email support@swiftbridge.tr for faster help.',
   support_footer_mail: 'Or email us at',
   support_ongelezen: '{aantal} unread messages',
   support_qa_kyc_vraag: 'How do I upload my KYC documents?',

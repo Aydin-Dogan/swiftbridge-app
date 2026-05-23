@@ -588,7 +588,7 @@ export const nl = {
   support_verstuur: 'Verstuur bericht',
   support_aan_het_typen: 'Support is aan het typen',
   support_bericht_ontvangen: 'Bericht ontvangen — we reageren binnen 2 uur.',
-  support_offline_fallback: 'Bericht is opgeslagen. We kunnen je nu niet online beantwoorden — mail support@swiftbridge.tx voor snelle hulp.',
+  support_offline_fallback: 'Bericht is opgeslagen. We kunnen je nu niet online beantwoorden — mail support@swiftbridge.tr voor snelle hulp.',
   support_footer_mail: 'Of mail naar',
   support_ongelezen: '{aantal} ongelezen berichten',
   support_qa_kyc_vraag: 'Hoe upload ik mijn KYC documenten?',

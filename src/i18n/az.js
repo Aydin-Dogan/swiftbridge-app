@@ -675,7 +675,7 @@ export const az = {
   support_verstuur: 'Mesaj göndər',
   support_aan_het_typen: 'Dəstək yazır',
   support_bericht_ontvangen: 'Mesaj alındı — 2 saat ərzində cavab verəcəyik.',
-  support_offline_fallback: 'Mesaj saxlanıldı. Hazırda onlayn deyilik — sürətli kömək üçün support@swiftbridge.tx ünvanına yazın.',
+  support_offline_fallback: 'Mesaj saxlanıldı. Hazırda onlayn deyilik — sürətli kömək üçün support@swiftbridge.tr ünvanına yazın.',
   support_footer_mail: 'Və ya yazın',
   support_ongelezen: '{aantal} oxunmamış mesaj',
   support_qa_kyc_vraag: 'KYC sənədlərimi necə yükləyə bilərəm?',

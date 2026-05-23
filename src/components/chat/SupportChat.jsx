@@ -365,10 +365,10 @@ export default function SupportChat({ gebruiker, actief = true }) {
             <p className="text-[10px] text-gray-400 text-center mt-1.5">
               {t('support_footer_mail')}{' '}
               <a
-                href="mailto:support@swiftbridge.tx"
+                href="mailto:support@swiftbridge.tr"
                 className="text-blue-600 hover:underline"
               >
-                support@swiftbridge.tx
+                support@swiftbridge.tr
               </a>
             </p>
           </form>

@@ -525,7 +525,7 @@ export const tr = {
   support_verstuur: 'Mesaj gönder',
   support_aan_het_typen: 'Destek yazıyor',
   support_bericht_ontvangen: 'Mesaj alındı — 2 saat içinde yanıt vereceğiz.',
-  support_offline_fallback: 'Mesajınız kaydedildi. Şu an çevrimiçi yanıt veremiyoruz — hızlı yardım için support@swiftbridge.tx adresine e-posta gönderin.',
+  support_offline_fallback: 'Mesajınız kaydedildi. Şu an çevrimiçi yanıt veremiyoruz — hızlı yardım için support@swiftbridge.tr adresine e-posta gönderin.',
   support_footer_mail: 'Veya e-posta gönderin:',
   support_ongelezen: '{aantal} okunmamış mesaj',
   support_qa_kyc_vraag: 'KYC belgelerimi nasıl yüklerim?',
