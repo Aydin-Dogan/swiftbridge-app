@@ -400,6 +400,13 @@ export const tr = {
   landing_cta_primary: 'Ücretsiz hesap oluştur',
   landing_cta_secondary: 'Giriş Yap',
   landing_cta_disclaimer: 'Abonelik yok. Gizli maliyet yok. İstediğin zaman iptal et.',
+  // CTA trust-bullets
+  landing_cta_bullet_snel_titel: '<5 dakika',
+  landing_cta_bullet_snel_sub: 'TR hesabına para',
+  landing_cta_bullet_veilig_titel: 'DNB denetimi altında',
+  landing_cta_bullet_veilig_sub: 'EMI ortağı aracılığıyla',
+  landing_cta_bullet_geen_account_titel: 'Hesap gerekmez',
+  landing_cta_bullet_geen_account_sub: 'Önce hesapla, sonra kaydol',
 
   // Footer
   landing_footer_slogan: 'Hollanda\'dan Türkiye\'ye ve tüm Türk dilli ülkelere hızlı ve ucuz para transferi — 5 dakika içinde hesapta.',

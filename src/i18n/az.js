@@ -385,6 +385,13 @@ export const az = {
   landing_cta_primary: 'Pulsuz hesab yarat',
   landing_cta_secondary: 'Daxil ol',
   landing_cta_disclaimer: 'Abunəlik yoxdur. Gizli xərc yoxdur. İstədiyiniz vaxt ləğv edin.',
+  // CTA trust-bullets
+  landing_cta_bullet_snel_titel: '<5 dəqiqə',
+  landing_cta_bullet_snel_sub: 'TR hesabına pul',
+  landing_cta_bullet_veilig_titel: 'DNB nəzarəti altında',
+  landing_cta_bullet_veilig_sub: 'EMI tərəfdaşı vasitəsilə',
+  landing_cta_bullet_geen_account_titel: 'Hesab tələb olunmur',
+  landing_cta_bullet_geen_account_sub: 'Əvvəlcə hesabla, sonra qeydiyyat',
 
   // Footer
   landing_footer_slogan: 'Hollandiyadan Türkiyəyə və bütün türkdilli ölkələrə sürətli və ucuz pul köçürmələri — 5 dəqiqə ərzində hesabda.',

@@ -385,6 +385,13 @@ export const ru = {
   landing_cta_primary: 'Создать бесплатный аккаунт',
   landing_cta_secondary: 'Войти',
   landing_cta_disclaimer: 'Без подписки. Без скрытых расходов. Отменить можно в любое время.',
+  // CTA trust-bullets
+  landing_cta_bullet_snel_titel: '<5 минут',
+  landing_cta_bullet_snel_sub: 'Деньги на TR счёт',
+  landing_cta_bullet_veilig_titel: 'Под надзором DNB',
+  landing_cta_bullet_veilig_sub: 'Через EMI-партнёра',
+  landing_cta_bullet_geen_account_titel: 'Без аккаунта',
+  landing_cta_bullet_geen_account_sub: 'Сначала рассчитать, потом регистрация',
 
   // Footer
   landing_footer_slogan: 'Быстрые и доступные денежные переводы из Нидерландов в Türkiye и все тюркоязычные страны — на счёт в течение 5 минут.',

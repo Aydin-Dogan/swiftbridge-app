@@ -16,6 +16,7 @@ import Vlag from './Vlag';
 import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
 import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
 import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
+import { Bank, Card, Wallet, Euro, Globe } from './icons/Icons';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -25,99 +26,93 @@ const ONTV_KEY  = 'swiftbridge_ontvangers';
 const STAPPEN = ['Bedrag', 'Betaalmethode', 'Bevestiging', 'Verzonden'];
 const SNELLE_BEDRAGEN = [100, 250, 500, 1000, 2000];
 
+// Betaalmethodes — SVG iconen (Sprint 2: emoji-overload weg).
+// Type-veld bepaalt welk icon getoond wordt; renderer logica zit in JSX
+// (zodat zowel Icon-component als Vlag-component werken).
 const BETAALMETHODEN = [
   // ── Aanbevolen (NL klanten) ──
   {
     id:    'ideal',
     label: 'iDEAL',
-    icon:  '🏦',
+    iconType: 'icon', Icon: Bank,
     desc:  'Direct via je Nederlandse bank',
-    sub:   '⭐ Meest gekozen · vanaf 0,8%',
-    kleur: 'border-blue-500 bg-blue-50',
+    sub:   'Meest gekozen · vanaf 0,8%',
   },
   {
     id:    'creditcard',
     label: 'Credit/Debit kaart',
-    icon:  '💳',
+    iconType: 'icon', Icon: Card,
     desc:  'Visa, Mastercard',
-    sub:   'Wereldwijd · 1,8% extra',
-    kleur: 'border-indigo-500 bg-indigo-50',
+    sub:   'Wereldwijd',
   },
   {
     id:    'paypal',
     label: 'PayPal',
-    icon:  '💙',
+    iconType: 'icon', Icon: Wallet,
     desc:  'Betalen met je PayPal account',
     sub:   'Internationaal',
-    kleur: 'border-sky-500 bg-sky-50',
   },
   {
     id:    'banktransfer',
     label: 'SEPA bankoverboeking',
-    icon:  '🏛️',
+    iconType: 'icon', Icon: Euro,
     desc:  'Standaard bankoverboeking',
     sub:   '1-2 dagen · goedkoopste optie',
-    kleur: 'border-emerald-500 bg-emerald-50',
   },
-  // ── BE klanten ──
+  // ── BE klanten — vlag als logo ──
   {
     id:    'bancontact',
     label: 'Bancontact',
-    icon:  '🇧🇪',
+    iconType: 'vlag', land: 'BE',
     desc:  'Direct via Belgische bank',
     sub:   'Voor BE klanten',
-    kleur: 'border-yellow-500 bg-yellow-50',
   },
   {
     id:    'kbc',
     label: 'KBC/CBC',
-    icon:  '🇧🇪',
+    iconType: 'vlag', land: 'BE',
     desc:  'KBC of CBC bank knop',
     sub:   'Belgische banken',
-    kleur: 'border-yellow-500 bg-yellow-50',
   },
   {
     id:    'belfius',
     label: 'Belfius Pay',
-    icon:  '🇧🇪',
+    iconType: 'vlag', land: 'BE',
     desc:  'Belfius bank app',
     sub:   'Voor Belfius klanten',
-    kleur: 'border-purple-500 bg-purple-50',
   },
   // ── UK ──
   {
     id:    'paybybank',
     label: 'Pay By Bank',
-    icon:  '🇬🇧',
+    iconType: 'vlag', land: 'GB',
     desc:  'UK Open Banking',
     sub:   'Voor UK klanten',
-    kleur: 'border-blue-500 bg-blue-50',
   },
   // ── B2B ──
   {
     id:    'billie',
     label: 'Billie (factuur)',
-    icon:  '📄',
+    iconType: 'icon', Icon: Globe,
     desc:  'Pay by Invoice voor zakelijk',
     sub:   'Achteraf betalen',
-    kleur: 'border-rose-500 bg-rose-50',
   },
   // ── Nog te activeren ──
   {
     id:    'applepay',
     label: 'Apple Pay',
-    icon:  '🍎',
-    desc:  '⚠️ Activeer eerst in Mollie',
+    iconType: 'icon', Icon: Card,
+    desc:  'Activeer eerst in Mollie',
     sub:   'Touch/Face ID',
-    kleur: 'border-gray-300 bg-gray-50 opacity-60',
+    disabled: true,
   },
   {
     id:    'klarna',
     label: 'Klarna',
-    icon:  '🛍️',
-    desc:  '⚠️ Activeer eerst in Mollie',
+    iconType: 'icon', Icon: Card,
+    desc:  'Activeer eerst in Mollie',
     sub:   'Achteraf betalen',
-    kleur: 'border-gray-300 bg-gray-50 opacity-60',
+    disabled: true,
   },
 ];
 
@@ -660,27 +655,41 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 // ── Stap 1: Betaalmethode ─────────────────────────────────────────────────────
 function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
   return (
-    <div className="bg-white rounded-2xl shadow p-6 space-y-5">
-      <h2 className="text-xl font-bold text-gray-800">💳 Kies betaalmethode</h2>
-      <div className="space-y-3">
-        {BETAALMETHODEN.map(m => (
-          <label key={m.id}
-            className={`flex items-center gap-4 p-4 border-2 rounded-2xl cursor-pointer transition ${
-              methode === m.id ? m.kleur : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
-            <input type="radio" name="methode" value={m.id}
-              checked={methode === m.id} onChange={() => setMethode(m.id)} className="sr-only" />
-            <span className="text-3xl">{m.icon}</span>
-            <div className="flex-1">
-              <div className="font-bold text-gray-800">{m.label}</div>
-              <div className="text-sm text-gray-500">{m.desc}</div>
-              <div className="text-xs text-gray-400 mt-0.5">{m.sub}</div>
-            </div>
-            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              methode === m.id ? 'border-blue-600 bg-blue-600' : 'border-gray-300'}`}>
-              {methode === m.id && <div className="w-2 h-2 rounded-full bg-white" />}
-            </div>
-          </label>
-        ))}
+    <div className="bg-white rounded-2xl shadow-soft p-6 space-y-5">
+      <h2 className="text-xl font-semibold text-gray-900">Kies betaalmethode</h2>
+      <div className="space-y-2.5">
+        {BETAALMETHODEN.map(m => {
+          const selected = methode === m.id;
+          const disabled = m.disabled;
+          return (
+            <label key={m.id}
+              className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-colors ${
+                disabled ? 'border border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
+                : selected ? 'border-2 border-brand-500 bg-brand-50'
+                : 'border border-gray-200 hover:border-gray-300 hover:bg-gray-50 bg-white'
+              }`}>
+              <input type="radio" name="methode" value={m.id}
+                checked={selected} disabled={disabled}
+                onChange={() => !disabled && setMethode(m.id)} className="sr-only" />
+              <div className={`w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                selected ? 'bg-brand-600 text-white' : 'bg-gray-100 text-gray-600'
+              }`}>
+                {m.iconType === 'vlag'
+                  ? <Vlag land={m.land} size={22} decorative />
+                  : <m.Icon className="w-5 h-5" />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-gray-900">{m.label}</div>
+                <div className="text-sm text-gray-500 truncate">{m.desc}</div>
+                <div className="text-xs text-gray-400 mt-0.5">{m.sub}</div>
+              </div>
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                selected ? 'border-brand-600 bg-brand-600' : 'border-gray-300'}`}>
+                {selected && <div className="w-2 h-2 rounded-full bg-white" />}
+              </div>
+            </label>
+          );
+        })}
       </div>
 
       {methode === 'sepa' && (
@@ -717,7 +726,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
       <div className="bg-gray-50 rounded-xl p-4 space-y-3">
         {[
           ['Van',              `€${bedragNum.toFixed(2)}`],
-          ['Betaalmethode',    `${methodeObj?.icon} ${methodeObj?.label}`],
+          ['Betaalmethode',    methodeObj?.label || methode],
           ['Naar',             ontvanger],
           ['IBAN',             `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
           ['Servicekosten',    `€${kosten.klantBetaaltFee.toFixed(2)}`],
@@ -814,7 +823,7 @@ function StapVerzonden({ transactie, methode, onNieuw }) {
         {[
           ['Verstuurd',        `€${transactie?.eurBedrag?.toFixed(2)}`],
           ['Ontvanger krijgt', `${valutaInfo.vlag} ${formatBedrag(ontvangenBedrag, valuta)}`],
-          ['Methode',          `${methodeObj?.icon} ${methodeObj?.label}`],
+          ['Methode',          methodeObj?.label || methode],
           ['Transactie ID',    transactie?.id?.slice(0,16) + '…'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between text-sm">

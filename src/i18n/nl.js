@@ -401,6 +401,13 @@ export const nl = {
   landing_cta_primary: 'Gratis account aanmaken',
   landing_cta_secondary: 'Inloggen',
   landing_cta_disclaimer: 'Geen abonnement. Geen verborgen kosten. Annuleer wanneer je wil.',
+  // CTA trust-bullets
+  landing_cta_bullet_snel_titel: '<5 minuten',
+  landing_cta_bullet_snel_sub: 'Geld op TR-rekening',
+  landing_cta_bullet_veilig_titel: 'Onder DNB-toezicht',
+  landing_cta_bullet_veilig_sub: 'Via EMI-partner',
+  landing_cta_bullet_geen_account_titel: 'Geen account nodig',
+  landing_cta_bullet_geen_account_sub: 'Bereken eerst, registreer later',
 
   // Footer
   landing_footer_slogan: 'Snel en goedkoop geld overmaken van Nederland naar Türkiye en alle Turkstalige landen — binnen 5 minuten op rekening.',

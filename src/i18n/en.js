@@ -400,6 +400,13 @@ export const en = {
   landing_cta_primary: 'Create free account',
   landing_cta_secondary: 'Log in',
   landing_cta_disclaimer: 'No subscription. No hidden costs. Cancel anytime.',
+  // CTA trust-bullets
+  landing_cta_bullet_snel_titel: '<5 minutes',
+  landing_cta_bullet_snel_sub: 'Money on TR account',
+  landing_cta_bullet_veilig_titel: 'Under DNB supervision',
+  landing_cta_bullet_veilig_sub: 'Via EMI partner',
+  landing_cta_bullet_geen_account_titel: 'No account required',
+  landing_cta_bullet_geen_account_sub: 'Calculate first, register later',
 
   // Footer
   landing_footer_slogan: 'Fast and affordable money transfers from the Netherlands to Türkiye and all Turkic countries — on the account within 5 minutes.',
