@@ -4,6 +4,7 @@
  * Modular composition — see src/components/landing/* for individual sections.
  * Mobile-first, glassmorphism, gradient accents, conversion-optimised.
  */
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LiveKoersTicker from '../components/LiveKoersTicker';
 import TaalKiezer from '../components/TaalKiezer';
@@ -24,36 +25,52 @@ import Footer from '../components/landing/Footer';
 export default function Landing() {
   const navigate = useNavigate();
   const { t } = useTaal();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Sluit mobile menu bij ESC of bij route-change (anchor-klik)
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e) => e.key === 'Escape' && setMobileMenuOpen(false);
+    document.addEventListener('keydown', onKey);
+    // Voorkom body-scroll wanneer menu open is
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* SEO content — visually hidden but crawlable */}
+      {/* SEO content — visually hidden but crawlable.
+          H1 staat visueel in Hero.jsx — hier alleen H2's met long-tail content
+          om dubbele H1 te voorkomen. */}
       <div className="sr-only">
-        <h1>SwiftBridge — Geld sturen naar Türkiye en Turkic landen in 5 minuten</h1>
-        <h2>Goedkoop alternatief voor Wise, Remitly en Western Union</h2>
+        <h2>SwiftBridge — Goedkoop alternatief voor Wise, Remitly en Western Union</h2>
         <p>
-          SwiftBridge is de snelste en goedkoopste manier om geld over te maken
+          SwiftBridge is een snelle en transparante manier om geld over te maken
           vanuit Nederland naar Turkije, Azerbeidzjan, Kazachstan, Oezbekistan,
           Turkmenistan, Kirgizië en Tadzjikistan. Tarieven vanaf 0,8% per
           overboeking met iDEAL, en betaling via iDEAL, creditcard, PayPal of
-          SEPA. Het bedrag staat binnen 5 minuten op de Turkse bankrekening
-          (Garanti, Akbank, İş Bankası, Ziraat, Yapı Kredi en 100+ andere banken).
+          SEPA. Het bedrag staat doorgaans binnen 5 minuten op de Turkse
+          bankrekening (Garanti, Akbank, İş Bankası, Ziraat, Yapı Kredi en
+          100+ andere banken).
         </p>
-        <h2>Waarom SwiftBridge het beste Wise- en Remitly-alternatief is</h2>
+        <h2>Waarom SwiftBridge een goed Wise- en Remitly-alternatief is</h2>
         <ul>
-          <li>10x goedkoper dan reguliere banken bij EUR → TRY overboekingen</li>
-          <li>Onder toezicht van DNB (De Nederlandsche Bank)</li>
-          <li>Wwft- en AVG-compliant, EU-sanctielijst screening</li>
+          <li>Staffel-tarief vanaf 0,8% per overboeking (hoe meer je stuurt, hoe lager het tarief)</li>
+          <li>Onder DNB-toezicht via EMI-partner (Wwft-compliant)</li>
+          <li>Wwft- en AVG-compliant, EU-sanctielijst screening op iedere ontvanger</li>
           <li>256-bit encryptie en multi-factor authenticatie</li>
-          <li>Volledige tariefkaart vooraf zichtbaar — staffel per bedrag en methode</li>
+          <li>Volledige tariefkaart vooraf zichtbaar — geen verborgen vaste fees</li>
         </ul>
         <h2>Veelgestelde vragen — geld sturen naar Turkije</h2>
         <p>
-          Hoe snel komt geld aan in Türkiye? Binnen 5 minuten via iDEAL.
+          Hoe snel komt geld aan in Türkiye? Doorgaans binnen 5 minuten via iDEAL.
           Wat zijn de kosten? Vanaf 0,8% per overboeking via iDEAL (€2.500+);
           €500 kost 1,5% (€7,50), €1.000 kost 1,2% (€12). Volledige tariefkaart
-          op landing-pagina. Is SwiftBridge veilig? Ja, DNB-toezicht en volledige
-          Wwft- en AVG-compliance.
+          op landing-pagina. Is SwiftBridge veilig? Ja — onder DNB-toezicht via
+          EMI-partner, volledig Wwft- en AVG-compliant.
         </p>
       </div>
 
@@ -101,9 +118,75 @@ export default function Landing() {
             >
               {t('landing_hero_cta_primary')} →
             </button>
+            {/* Mobile hamburger — alleen <md zichtbaar */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition ml-1"
+              aria-label="Menu openen"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="4" y1="7" x2="20" y2="7"/>
+                <line x1="4" y1="12" x2="20" y2="12"/>
+                <line x1="4" y1="17" x2="20" y2="17"/>
+              </svg>
+            </button>
           </div>
         </div>
       </nav>
+
+      {/* Mobile menu — slide-down sheet, alleen <md */}
+      {mobileMenuOpen && (
+        <div
+          id="mobile-menu"
+          className="md:hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm animate-fade-in"
+          onClick={() => setMobileMenuOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Hoofdmenu"
+        >
+          <div
+            className="absolute top-0 right-0 w-full max-w-xs h-full bg-white shadow-2xl flex flex-col safe-top"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+              <span className="font-extrabold text-gray-900 text-lg">Menu</span>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-10 h-10 inline-flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition"
+                aria-label="Menu sluiten"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                  <line x1="6" y1="18" x2="18" y2="6"/>
+                </svg>
+              </button>
+            </div>
+            <nav className="flex-1 px-5 py-6 flex flex-col gap-1 text-base font-semibold text-gray-700">
+              <a href="#hoe-werkt-het" onClick={() => setMobileMenuOpen(false)} className="py-3 px-3 rounded-lg hover:bg-gray-50 hover:text-blue-600 transition">
+                {t('landing_nav_how')}
+              </a>
+              <a href="#kosten" onClick={() => setMobileMenuOpen(false)} className="py-3 px-3 rounded-lg hover:bg-gray-50 hover:text-blue-600 transition">
+                {t('landing_nav_kosten')}
+              </a>
+              <a href="#landen" onClick={() => setMobileMenuOpen(false)} className="py-3 px-3 rounded-lg hover:bg-gray-50 hover:text-blue-600 transition">
+                {t('landing_nav_landen')}
+              </a>
+              <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="py-3 px-3 rounded-lg hover:bg-gray-50 hover:text-blue-600 transition">
+                {t('landing_nav_faq')}
+              </a>
+              <div className="border-t border-gray-100 my-3" />
+              <button
+                onClick={() => { setMobileMenuOpen(false); navigate('/login'); }}
+                className="py-3 px-3 rounded-lg text-left text-blue-600 hover:bg-blue-50 transition"
+              >
+                {t('inloggen')}
+              </button>
+            </nav>
+          </div>
+        </div>
+      )}
 
       {/* Live multi-currency ticker */}
       <LiveKoersTicker />

@@ -97,23 +97,15 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:support@swiftbridge.nl" className="hover:text-white transition inline-flex items-center gap-2">
-                  <span aria-hidden="true">✉️</span> support@swiftbridge.nl
+                <a href="mailto:support@swiftbridge.tr" className="hover:text-white transition inline-flex items-center gap-2">
+                  <span aria-hidden="true">✉️</span> support@swiftbridge.tr
                 </a>
               </li>
+              {/* WhatsApp-support pas tonen wanneer er een echt nummer is.
+                  Tot dan: link verwijderd om misleidende UX te voorkomen. */}
               <li>
-                <a
-                  href="https://wa.me/31600000000"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-white transition inline-flex items-center gap-2"
-                >
-                  <span aria-hidden="true">💬</span> WhatsApp ondersteuning
-                </a>
-              </li>
-              <li>
-                <a href="mailto:compliance@swiftbridge.nl" className="hover:text-white transition inline-flex items-center gap-2">
-                  <span aria-hidden="true">🛡️</span> compliance@swiftbridge.nl
+                <a href="mailto:compliance@swiftbridge.tr" className="hover:text-white transition inline-flex items-center gap-2">
+                  <span aria-hidden="true">🛡️</span> compliance@swiftbridge.tr
                 </a>
               </li>
             </ul>

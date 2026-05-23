@@ -16,10 +16,12 @@ const TIERS = [
   { label: '€2.500+' },
 ];
 
+// Klarna staat in PaymentFlow.jsx als 'Activeer eerst in Mollie' — totdat
+// Klarna écht beschikbaar is, niet in publieke tariefkaart tonen (anders
+// misleidende reclame). Voeg Klarna weer toe zodra Mollie het activeert.
 const METHODEN = [
   { key: 'ideal',  icon: '🏦', i18n: 'tariefkaart_methode_ideal' },
   { key: 'card',   icon: '💳', i18n: 'tariefkaart_methode_card' },
-  { key: 'klarna', icon: '🛍️', i18n: 'tariefkaart_methode_klarna' },
   { key: 'sepa',   icon: '🏛️', i18n: 'tariefkaart_methode_sepa' },
 ];
 

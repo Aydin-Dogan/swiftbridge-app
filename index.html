@@ -11,35 +11,47 @@
          Deze meta-tags bieden bescherming bij offline/cached loads en oude proxies. -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.tr https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
 
     <!-- ═══ SEO ═══ -->
-    <title>SwiftBridge - Geld snel &amp; veilig naar Türkiye | NL → TR in 5 minuten</title>
-    <meta name="description" content="Stuur geld vanuit Nederland naar Turkije en 6 Turkic landen. €1,99 vaste fee, binnen 5 minuten op de rekening, 10x goedkoper dan banken. DNB toezicht." />
-    <meta name="keywords" content="geld sturen turkije, remittance turkije, wise alternatief, remitly turkije, nederland turkije overboeking, eur tl, transferwise alternatief, garanti overboeking, akbank overboeking" />
+    <title>SwiftBridge — Geld naar Türkiye in 5 minuten | Vanaf 0,8%</title>
+    <meta name="description" content="Stuur geld vanuit Nederland naar Turkije en 6 Turkic landen. Vanaf 0,8% per overboeking met staffel-tarief, binnen 5 minuten op de rekening. Onder DNB-toezicht via EMI-partner." />
     <meta name="author" content="SwiftBridge B.V." />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://swiftbridge.app/" />
+    <link rel="canonical" href="https://swiftbridge.tr/" />
 
-    <!-- ═══ Open Graph (Facebook / LinkedIn) ═══ -->
+    <!-- ═══ hreflang voor 5 talen (NL, EN, TR, RU, AZ) ═══ -->
+    <!-- Tot URL-routes per taal bestaan (Sprint 3) wijzen alle hreflang's naar root.
+         Google gebruikt dan Accept-Language header voor taal-detectie. -->
+    <link rel="alternate" hreflang="nl" href="https://swiftbridge.tr/" />
+    <link rel="alternate" hreflang="en" href="https://swiftbridge.tr/" />
+    <link rel="alternate" hreflang="tr" href="https://swiftbridge.tr/" />
+    <link rel="alternate" hreflang="ru" href="https://swiftbridge.tr/" />
+    <link rel="alternate" hreflang="az" href="https://swiftbridge.tr/" />
+    <link rel="alternate" hreflang="x-default" href="https://swiftbridge.tr/" />
+
+    <!-- ═══ Open Graph (Facebook / LinkedIn / WhatsApp) ═══ -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://swiftbridge.app/" />
-    <meta property="og:title" content="SwiftBridge - Geld snel &amp; veilig naar Türkiye" />
-    <meta property="og:description" content="€1,99 vaste fee, binnen 5 minuten op de rekening, 10x goedkoper dan banken" />
-    <meta property="og:image" content="https://swiftbridge.app/og-image.png" />
+    <meta property="og:url" content="https://swiftbridge.tr/" />
+    <meta property="og:title" content="SwiftBridge — Geld naar Türkiye in 5 minuten" />
+    <meta property="og:description" content="Vanaf 0,8% per overboeking, binnen 5 minuten op de Turkse bankrekening. Onder DNB-toezicht via EMI-partner." />
+    <meta property="og:image" content="https://swiftbridge.tr/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="nl_NL" />
     <meta property="og:locale:alternate" content="tr_TR" />
     <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:locale:alternate" content="az_AZ" />
     <meta property="og:site_name" content="SwiftBridge" />
 
     <!-- ═══ Twitter Card ═══ -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://swiftbridge.app/" />
-    <meta name="twitter:title" content="SwiftBridge - Geld snel &amp; veilig naar Türkiye" />
-    <meta name="twitter:description" content="€1,99 vaste fee, binnen 5 minuten op de rekening" />
-    <meta name="twitter:image" content="https://swiftbridge.app/og-image.png" />
+    <meta name="twitter:url" content="https://swiftbridge.tr/" />
+    <meta name="twitter:title" content="SwiftBridge — Geld naar Türkiye in 5 minuten" />
+    <meta name="twitter:description" content="Vanaf 0,8% per overboeking, binnen 5 minuten op de Turkse bankrekening." />
+    <meta name="twitter:image" content="https://swiftbridge.tr/og-image.png" />
 
     <!-- ═══ PWA — Android / Chrome ═══ -->
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -62,23 +74,36 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
 
     <!-- ═══ Performance ═══ -->
-    <link rel="preconnect" href="https://swiftbridge-api-production.up.railway.app" crossorigin />
-    <link rel="dns-prefetch" href="https://swiftbridge-api-production.up.railway.app" />
+    <link rel="preconnect" href="https://api.swiftbridge.tr" crossorigin />
+    <link rel="dns-prefetch" href="https://api.swiftbridge.tr" />
 
-    <!-- ═══ Structured data: Organization / FinancialService (JSON-LD) ═══ -->
+    <!-- ═══ Structured data: Organization (root entity) ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SwiftBridge",
+      "url": "https://swiftbridge.tr",
+      "logo": "https://swiftbridge.tr/icon-512.png",
+      "description": "Snelle en goedkope geldoverboekingen van Nederland naar Türkiye en Turkic landen.",
+      "foundingDate": "2026",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "NL"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <!-- ═══ Structured data: FinancialService ═══ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FinancialService",
       "name": "SwiftBridge",
-      "url": "https://swiftbridge.app",
-      "logo": "https://swiftbridge.app/icon-512.png",
-      "description": "Snelle en goedkope geldoverboekingen van Nederland naar Türkiye en Turkic landen.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "NL",
-        "addressLocality": "Amsterdam"
-      },
+      "url": "https://swiftbridge.tr",
+      "logo": "https://swiftbridge.tr/icon-512.png",
+      "description": "Geldoverboekingen EUR naar TRY en Turkic-valutas, met staffel-tarief vanaf 0,8% per overboeking. Werkt onder DNB-toezicht via EMI-partner.",
       "areaServed": [
         {"@type":"Country","name":"Turkey"},
         {"@type":"Country","name":"Azerbaijan"},
@@ -100,9 +125,9 @@
       "@context":"https://schema.org",
       "@type":"FAQPage",
       "mainEntity":[
-        {"@type":"Question","name":"Hoe snel komt geld aan in Türkiye?","acceptedAnswer":{"@type":"Answer","text":"Binnen 5 minuten via iDEAL. SwiftBridge gebruikt directe banktransfers naar 109 Turkse banken."}},
-        {"@type":"Question","name":"Wat zijn de kosten van SwiftBridge?","acceptedAnswer":{"@type":"Answer","text":"€1,99 vaste fee + 1,2% wisselkoers marge voor Express. Totale kosten 10x lager dan reguliere banken."}},
-        {"@type":"Question","name":"Is SwiftBridge veilig?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge staat onder toezicht van DNB (De Nederlandsche Bank), volgt Wwft en AVG, en gebruikt 256-bit encryptie. Alle transacties worden gescreend tegen EU sanctielijsten."}}
+        {"@type":"Question","name":"Hoe snel komt geld aan in Türkiye?","acceptedAnswer":{"@type":"Answer","text":"Binnen 5 minuten via iDEAL. SwiftBridge gebruikt directe banktransfers naar Turkse banken."}},
+        {"@type":"Question","name":"Wat zijn de kosten van SwiftBridge?","acceptedAnswer":{"@type":"Answer","text":"Staffel-tarief: 2,0% voor kleine bedragen (€10-200) tot 0,8% voor €2.500+. Op €500 betaal je 1,5% (€7,50). Volledige tariefkaart staat op de landing-pagina."}},
+        {"@type":"Question","name":"Is SwiftBridge veilig?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge werkt onder DNB-toezicht via een EMI-partner. We volgen Wwft en AVG, gebruiken 256-bit encryptie en 2FA, en screenen alle transacties tegen EU sanctielijsten."}}
       ]
     }
     </script>
