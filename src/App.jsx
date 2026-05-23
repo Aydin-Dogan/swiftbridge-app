@@ -24,6 +24,14 @@ const AdminCompliance     = lazy(() => import('./pages/AdminCompliance'));
 const VerifyEmail         = lazy(() => import('./pages/VerifyEmail'));
 const Recurring           = lazy(() => import('./pages/Recurring'));
 
+// SEO landings (Sprint 3 deel 2) — long-tail Google traffic per query.
+// Code-split zodat ze geen bundle-size toevoegen aan de hoofdroute.
+const SeoWiseAlternatief    = lazy(() => import('./pages/seo/WiseAlternatief'));
+const SeoWiseVsSwiftbridge  = lazy(() => import('./pages/seo/WiseVsSwiftbridge'));
+const SeoGarantiOverboeking = lazy(() => import('./pages/seo/GarantiOverboeking'));
+const SeoPaparaYukleme      = lazy(() => import('./pages/seo/PaparaYukleme'));
+const SeoBayramRemittance   = lazy(() => import('./pages/seo/BayramRemittance'));
+
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
   return (
@@ -349,6 +357,33 @@ export default function App() {
           <Route path="/calculator" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Bezig met laden...</div>}>
               <Calculator />
+            </Suspense>
+          } />
+
+          {/* SEO landings — public, no auth */}
+          <Route path="/wise-alternatief" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <SeoWiseAlternatief />
+            </Suspense>
+          } />
+          <Route path="/wise-vs-swiftbridge" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <SeoWiseVsSwiftbridge />
+            </Suspense>
+          } />
+          <Route path="/garanti-overboeking" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <SeoGarantiOverboeking />
+            </Suspense>
+          } />
+          <Route path="/papara-yukleme" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <SeoPaparaYukleme />
+            </Suspense>
+          } />
+          <Route path="/bayram-remittance" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <SeoBayramRemittance />
             </Suspense>
           } />
           <Route path="/login" element={
