@@ -2,6 +2,7 @@
  * Footer.jsx — Premium landing footer with compliance badges & socials.
  */
 import { useTaal } from '../../i18n';
+import { Mail, Shield } from '../icons/Icons';
 
 function Badge({ children }) {
   return (
@@ -98,14 +99,14 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="mailto:support@swiftbridge.tr" className="hover:text-white transition inline-flex items-center gap-2">
-                  <span aria-hidden="true">✉️</span> support@swiftbridge.tr
+                  <Mail className="w-4 h-4" /> support@swiftbridge.tr
                 </a>
               </li>
               {/* WhatsApp-support pas tonen wanneer er een echt nummer is.
                   Tot dan: link verwijderd om misleidende UX te voorkomen. */}
               <li>
                 <a href="mailto:compliance@swiftbridge.tr" className="hover:text-white transition inline-flex items-center gap-2">
-                  <span aria-hidden="true">🛡️</span> compliance@swiftbridge.tr
+                  <Shield className="w-4 h-4" /> compliance@swiftbridge.tr
                 </a>
               </li>
             </ul>

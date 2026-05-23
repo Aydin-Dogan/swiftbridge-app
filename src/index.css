@@ -2,13 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * SwiftBridge — matte-modern design-system (Sprint 2)
+ *
+ * Geen glassmorphism, geen 4-5 gradient-paletten. Eén brand-blauw,
+ * soft-shadows, meer whitespace. Inspiratie: Wise / Stripe / Linear.
+ *
+ * Bestaande .card-glass / .header-glass-light classes blijven werken
+ * (backward-compat) maar zijn lichter en zonder backdrop-blur.
+ */
+
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(180deg, #f0f4ff 0%, #f8fafc 50%, #f1f5f9 100%);
-  background-attachment: fixed;
+  /* Subtiele, niet-distracterende achtergrond */
+  background: #fafbfc;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'cv11', 'ss01', 'ss03';
+  color: #0f172a;
 }
 
 #root {
@@ -16,7 +27,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── Safe area voor mobiel ────────────────────────────── */
+/* ── Safe area voor mobiel ──────────────────────────────── */
 .safe-area-inset-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -57,79 +68,89 @@ input, select, textarea {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(15, 23, 42, 0.15);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.4);
+  background: rgba(15, 23, 42, 0.30);
 }
 ::selection {
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(37, 99, 235, 0.15);
   color: #1e3a8a;
 }
 
 @layer components {
-  /* Glassmorphism cards (LIGHT) */
+  /*
+   * Card-styling — Sprint 2 matte versie.
+   * Wat is veranderd: backdrop-blur weg, gradient-fill weg.
+   * Soft-shadows + clean white. Hover-effect alleen op klikbare cards.
+   */
   .card-glass {
-    @apply rounded-2xl backdrop-blur-md transition-all duration-200;
-    background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(248,250,252,0.7) 100%);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 4px 24px -8px rgba(15, 23, 42, 0.08);
+    @apply rounded-2xl bg-white border border-gray-200/70 transition-all duration-200;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
   }
-  .card-glass:hover {
-    border-color: rgba(59, 130, 246, 0.4);
-    box-shadow: 0 8px 32px -8px rgba(59, 130, 246, 0.15);
-    transform: translateY(-1px);
+  /* Hover alleen op interactive variant — niet automatisch op alle cards */
+  .card-glass-interactive:hover {
+    border-color: rgba(37, 99, 235, 0.3);
+    box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.05);
   }
 
-  /* Premium pill badges */
+  /* Pill badges — vlakker, geen gradients */
   .pill-success {
-    @apply text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full;
-    background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.18));
-    border: 1px solid rgba(16,185,129,0.35);
+    @apply inline-flex items-center text-success-700 text-xs font-semibold px-2.5 py-1 rounded-full;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
   }
   .pill-warning {
-    @apply text-amber-700 text-xs font-bold px-2.5 py-0.5 rounded-full;
-    background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(217,119,6,0.18));
-    border: 1px solid rgba(245,158,11,0.35);
+    @apply inline-flex items-center text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
   }
   .pill-error {
-    @apply text-rose-700 text-xs font-bold px-2.5 py-0.5 rounded-full;
-    background: linear-gradient(135deg, rgba(244,63,94,0.12), rgba(225,29,72,0.18));
-    border: 1px solid rgba(244,63,94,0.35);
+    @apply inline-flex items-center text-rose-700 text-xs font-semibold px-2.5 py-1 rounded-full;
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
   }
   .pill-neutral {
-    @apply text-slate-700 text-xs font-bold px-2.5 py-0.5 rounded-full;
-    background: rgba(241,245,249,0.8);
-    border: 1px solid rgba(203,213,225,0.6);
+    @apply inline-flex items-center text-gray-700 text-xs font-semibold px-2.5 py-1 rounded-full;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
   }
 
-  /* Premium gradient buttons */
+  /* Buttons — matte, geen gradient-shadow-explosion */
   .btn-primary {
-    @apply px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 active:scale-95;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    box-shadow: 0 4px 14px -2px rgba(59,130,246,0.5);
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors duration-150 active:scale-[0.98];
+    background-color: #2563eb;
   }
   .btn-primary:hover {
-    box-shadow: 0 6px 20px -2px rgba(59,130,246,0.6);
-    transform: translateY(-1px);
+    background-color: #1d4ed8;
   }
-  .btn-success {
-    @apply px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 active:scale-95;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 4px 14px -2px rgba(16,185,129,0.5);
-  }
-  .btn-success:hover {
-    box-shadow: 0 6px 20px -2px rgba(16,185,129,0.6);
-    transform: translateY(-1px);
+  .btn-primary:active {
+    background-color: #1e40af;
   }
 
-  /* Glass header */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-700 bg-white border border-gray-300 transition-colors duration-150 active:scale-[0.98];
+  }
+  .btn-secondary:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+  }
+
+  .btn-success {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors duration-150 active:scale-[0.98];
+    background-color: #10b981;
+  }
+  .btn-success:hover {
+    background-color: #059669;
+  }
+
+  /* Header — lichter blur, minder opvallend */
   .header-glass-light {
-    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(59,130,246,0.12);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid #e5e7eb;
   }
 
   /* No scrollbar utility */
@@ -145,15 +166,11 @@ input, select, textarea {
 @layer utilities {
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes shimmer {
-    0% { background-position: -200% 0; }
+    0%   { background-position: -200% 0; }
     100% { background-position: 200% 0; }
-  }
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 20px -4px rgba(59,130,246,0.3); }
-    50% { box-shadow: 0 0 30px -2px rgba(59,130,246,0.5); }
   }
   .animate-fade-up {
     animation: fadeInUp 0.4s ease-out backwards;
@@ -162,9 +179,6 @@ input, select, textarea {
     background: linear-gradient(90deg, rgba(226,232,240,0.4) 0%, rgba(241,245,249,0.8) 50%, rgba(226,232,240,0.4) 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
-  }
-  .animate-pulse-glow {
-    animation: pulseGlow 2.5s ease-in-out infinite;
   }
   .delay-100 { animation-delay: 0.1s; }
   .delay-200 { animation-delay: 0.2s; }
