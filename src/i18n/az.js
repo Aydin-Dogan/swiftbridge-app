@@ -379,6 +379,19 @@ export const az = {
   calc_footer_geen_account: 'Burada hesablamaq üçün hesab tələb olunmur — yalnız \'davam et\' düyməsində məlumatlarınızı soruşacağıq.',
   calc_terug_naar_home: 'Ana səhifəyə qayıt',
 
+  // ── 404 səhifəsi ─────────────────────────────────────────────────────────
+  notfound_titel: 'Səhifə tapılmadı',
+  notfound_subtitel: 'Bu səhifə artıq mövcud deyil və ya keçid yanlışdır. Narahat olmayın — aşağıdan məşhur təyinat seçin.',
+  notfound_naar_home: 'Ana səhifəyə get',
+  notfound_naar_calculator: 'Köçürmə hesabla',
+  notfound_populair_titel: 'Məşhur səhifələr',
+  notfound_link_calculator: 'Köçürmənizi hesablayın (hesab tələb olunmur)',
+  notfound_link_wise: 'SwiftBridge vs Wise — dürüst müqayisə',
+  notfound_link_garanti: 'Türkiyədəki Garanti BBVA-ya pul göndər',
+  notfound_link_papara: 'Hollandiyadan Papara cüzdanına yükləmə',
+  notfound_link_bayram: 'Bayram köçürmələri: məsləhətlər + təqvim',
+  notfound_contact_prefix: 'Köməyə ehtiyacınız var? Yazın',
+
   // CTA
   landing_cta_titel: 'Başlamağa hazırsınız?',
   landing_cta_subtitel: '2 dəqiqədə qeydiyyatdan keçin və ilk köçürmənizi bu gün edin.',

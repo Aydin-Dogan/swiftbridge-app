@@ -393,6 +393,19 @@ export const nl = {
   calc_vergelijk_kol_snelheid: 'Snelheid',
   calc_footer_geen_account: 'Geen account nodig om hier te rekenen — pas bij \'doorgaan\' vragen we je gegevens.',
   calc_terug_naar_home: 'Terug naar home',
+
+  // ── 404 pagina ──────────────────────────────────────────────────────────
+  notfound_titel: 'Pagina niet gevonden',
+  notfound_subtitel: 'Deze pagina bestaat niet meer, of de link klopt niet. Geen zorgen — kies hieronder een populaire bestemming.',
+  notfound_naar_home: 'Naar de homepage',
+  notfound_naar_calculator: 'Bereken een transfer',
+  notfound_populair_titel: 'Populaire pagina\'s',
+  notfound_link_calculator: 'Bereken je transfer (geen account nodig)',
+  notfound_link_wise: 'SwiftBridge vs Wise — eerlijke vergelijking',
+  notfound_link_garanti: 'Geld naar Garanti BBVA in Türkiye',
+  notfound_link_papara: 'Papara hesabına para yükleme',
+  notfound_link_bayram: 'Bayram-overboeking: tips + kalender',
+  notfound_contact_prefix: 'Hulp nodig? Mail',
   landing_faq_nog_vragen: 'Heb je nog vragen?',
 
   // CTA

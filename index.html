@@ -20,14 +20,15 @@
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://swiftbridge.tr/" />
 
-    <!-- ═══ hreflang voor 5 talen (NL, EN, TR, RU, AZ) ═══ -->
-    <!-- Tot URL-routes per taal bestaan (Sprint 3) wijzen alle hreflang's naar root.
-         Google gebruikt dan Accept-Language header voor taal-detectie. -->
-    <link rel="alternate" hreflang="nl" href="https://swiftbridge.tr/" />
-    <link rel="alternate" hreflang="en" href="https://swiftbridge.tr/" />
-    <link rel="alternate" hreflang="tr" href="https://swiftbridge.tr/" />
-    <link rel="alternate" hreflang="ru" href="https://swiftbridge.tr/" />
-    <link rel="alternate" hreflang="az" href="https://swiftbridge.tr/" />
+    <!-- ═══ hreflang voor 5 talen (Verbetering F — per-locale URLs) ═══ -->
+    <!-- Iedere taal heeft nu een eigen route /tr/, /en/, /nl/, /ru/, /az/.
+         Google indexeert ze als aparte taal-versies in plaats van duplicate
+         content op /. x-default = nl voor onbekende locales. -->
+    <link rel="alternate" hreflang="nl" href="https://swiftbridge.tr/nl" />
+    <link rel="alternate" hreflang="en" href="https://swiftbridge.tr/en" />
+    <link rel="alternate" hreflang="tr" href="https://swiftbridge.tr/tr" />
+    <link rel="alternate" hreflang="ru" href="https://swiftbridge.tr/ru" />
+    <link rel="alternate" hreflang="az" href="https://swiftbridge.tr/az" />
     <link rel="alternate" hreflang="x-default" href="https://swiftbridge.tr/" />
 
     <!-- ═══ Open Graph (Facebook / LinkedIn / WhatsApp) ═══ -->

@@ -392,6 +392,19 @@ export const tr = {
   calc_vergelijk_kol_snelheid: 'Hız',
   calc_footer_geen_account: 'Burada hesaplama yapmak için hesap gerekmiyor — \'devam et\'te bilgilerini istiyoruz.',
   calc_terug_naar_home: 'Ana sayfaya dön',
+
+  // ── 404 sayfası ──────────────────────────────────────────────────────────
+  notfound_titel: 'Sayfa bulunamadı',
+  notfound_subtitel: 'Bu sayfa artık mevcut değil veya bağlantı doğru değil. Endişelenme — aşağıdan popüler bir hedef seç.',
+  notfound_naar_home: 'Ana sayfaya git',
+  notfound_naar_calculator: 'Transfer hesapla',
+  notfound_populair_titel: 'Popüler sayfalar',
+  notfound_link_calculator: 'Transferini hesapla (hesap gerekmiyor)',
+  notfound_link_wise: 'SwiftBridge vs Wise — dürüst karşılaştırma',
+  notfound_link_garanti: 'Garanti BBVA Türkiye\'ye para gönder',
+  notfound_link_papara: 'Hollanda\'dan Papara cüzdanına yükle',
+  notfound_link_bayram: 'Bayram transferleri: ipuçları + takvim',
+  notfound_contact_prefix: 'Yardıma mı ihtiyacın var? Mail at',
   landing_faq_nog_vragen: 'Başka sorun var mı?',
 
   // CTA

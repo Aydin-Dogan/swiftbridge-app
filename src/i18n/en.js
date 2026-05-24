@@ -392,6 +392,19 @@ export const en = {
   calc_vergelijk_kol_snelheid: 'Speed',
   calc_footer_geen_account: 'No account needed to calculate here — only at \'continue\' we ask your details.',
   calc_terug_naar_home: 'Back to home',
+
+  // ── 404 page ─────────────────────────────────────────────────────────────
+  notfound_titel: 'Page not found',
+  notfound_subtitel: 'This page does not exist anymore, or the link is incorrect. No worries — pick a popular destination below.',
+  notfound_naar_home: 'Go to homepage',
+  notfound_naar_calculator: 'Calculate a transfer',
+  notfound_populair_titel: 'Popular pages',
+  notfound_link_calculator: 'Calculate your transfer (no account needed)',
+  notfound_link_wise: 'SwiftBridge vs Wise — honest comparison',
+  notfound_link_garanti: 'Send money to Garanti BBVA in Türkiye',
+  notfound_link_papara: 'Top up Papara wallet from Netherlands',
+  notfound_link_bayram: 'Bayram transfers: tips + calendar',
+  notfound_contact_prefix: 'Need help? Email',
   landing_faq_nog_vragen: 'Still have questions?',
 
   // CTA

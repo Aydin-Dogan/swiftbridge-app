@@ -15,9 +15,19 @@ import { az } from './az';
 const VERTALINGEN = { nl, tr, en, ru, az };
 const STORAGE_KEY = 'swiftbridge_taal';
 
-// Bepaal startaal: localStorage > browser > nl
+// Bepaal startaal: URL pad > localStorage > browser > nl
+// URL pad heeft hoogste prioriteit zodat /tr/ ALTIJD in Turkse taal opent,
+// ook als gebruiker eerder NL had gekozen — voor consistente SEO + share-links.
 function detecteerTaal() {
   if (typeof window === 'undefined') return 'nl';
+
+  // Check URL pad — eerste segment kan een locale-code zijn (/tr/, /en/...)
+  const segments = (window.location.pathname || '/').split('/').filter(Boolean);
+  if (segments.length > 0) {
+    const eerste = segments[0].toLowerCase();
+    if (VERTALINGEN[eerste]) return eerste;
+  }
+
   const opgeslagen = localStorage.getItem(STORAGE_KEY);
   if (opgeslagen && VERTALINGEN[opgeslagen]) return opgeslagen;
   const browserTaal = (navigator.language || 'nl').slice(0, 2).toLowerCase();

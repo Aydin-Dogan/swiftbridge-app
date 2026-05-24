@@ -379,6 +379,19 @@ export const ru = {
   calc_footer_geen_account: 'Здесь не нужен аккаунт для расчёта — только при «продолжить» мы запросим ваши данные.',
   calc_terug_naar_home: 'Назад на главную',
 
+  // ── 404 страница ─────────────────────────────────────────────────────────
+  notfound_titel: 'Страница не найдена',
+  notfound_subtitel: 'Этой страницы больше нет, или ссылка неверна. Не беспокойтесь — выберите популярное направление ниже.',
+  notfound_naar_home: 'На главную',
+  notfound_naar_calculator: 'Рассчитать перевод',
+  notfound_populair_titel: 'Популярные страницы',
+  notfound_link_calculator: 'Рассчитайте перевод (без аккаунта)',
+  notfound_link_wise: 'SwiftBridge vs Wise — честное сравнение',
+  notfound_link_garanti: 'Перевод в Garanti BBVA Türkiye',
+  notfound_link_papara: 'Пополнение Papara из Нидерландов',
+  notfound_link_bayram: 'Переводы на Байрам: советы + календарь',
+  notfound_contact_prefix: 'Нужна помощь? Напишите',
+
   // CTA
   landing_cta_titel: 'Готовы начать?',
   landing_cta_subtitel: 'Зарегистрируйтесь за 2 минуты и отправьте свой первый перевод уже сегодня.',

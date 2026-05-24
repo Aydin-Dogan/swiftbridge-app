@@ -31,6 +31,8 @@ const SeoWiseVsSwiftbridge  = lazy(() => import('./pages/seo/WiseVsSwiftbridge')
 const SeoGarantiOverboeking = lazy(() => import('./pages/seo/GarantiOverboeking'));
 const SeoPaparaYukleme      = lazy(() => import('./pages/seo/PaparaYukleme'));
 const SeoBayramRemittance   = lazy(() => import('./pages/seo/BayramRemittance'));
+const NotFound              = lazy(() => import('./pages/NotFound'));
+const LocaleLanding         = lazy(() => import('./pages/LocaleLanding'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -354,6 +356,20 @@ export default function App() {
       <Suspense fallback={<LaadSpinner />}>
         <Routes>
           <Route path="/" element={<Landing />} />
+          {/* Multi-locale landing routes (Verbetering F) — voor hreflang SEO.
+              /tr/, /nl/, /en/, /ru/, /az/ renderen allemaal Landing met geforceerde
+              taal. Subpages (/calculator, /wise-alternatief, etc.) blijven mono-route. */}
+          {['nl', 'tr', 'en', 'ru', 'az'].map(loc => (
+            <Route
+              key={loc}
+              path={`/${loc}`}
+              element={
+                <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+                  <LocaleLanding />
+                </Suspense>
+              }
+            />
+          ))}
           <Route path="/calculator" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Bezig met laden...</div>}>
               <Calculator />
@@ -407,7 +423,12 @@ export default function App() {
           <Route path="/admin/compliance" element={
             token ? <AdminCompliance /> : <Navigate to="/login" replace />
           } />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* Custom 404 ipv silent redirect — geeft bezoeker feedback + navigatie-suggesties */}
+          <Route path="*" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <NotFound />
+            </Suspense>
+          } />
         </Routes>
       </Suspense>
       <SupportChatGlobal gebruiker={gebruiker} token={token} />

@@ -7,18 +7,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Home / landing — hoogste prioriteit -->
+  <!-- Home / landing — hoogste prioriteit. Per-locale URLs voor multi-language SEO. -->
   <url>
     <loc>https://swiftbridge.tr/</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://swiftbridge.tr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://swiftbridge.tr/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://swiftbridge.tr/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://swiftbridge.tr/" />
-    <xhtml:link rel="alternate" hreflang="az" href="https://swiftbridge.tr/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://swiftbridge.tr/nl" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://swiftbridge.tr/en" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://swiftbridge.tr/tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://swiftbridge.tr/ru" />
+    <xhtml:link rel="alternate" hreflang="az" href="https://swiftbridge.tr/az" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://swiftbridge.tr/" />
+  </url>
+
+  <!-- Per-locale landing-pagina's (Verbetering F). Google indexeert deze als
+       aparte taal-versies via hreflang. Allemaal verwijzen naar dezelfde
+       Landing-component met geforceerde i18n taal. -->
+  <url>
+    <loc>https://swiftbridge.tr/nl</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://swiftbridge.tr/en</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://swiftbridge.tr/tr</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://swiftbridge.tr/ru</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://swiftbridge.tr/az</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Registratie / inschrijving -->
