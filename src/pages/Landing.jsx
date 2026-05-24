@@ -15,8 +15,7 @@ import Hero from '../components/landing/Hero';
 import Features from '../components/landing/Features';
 import HowItWorks from '../components/landing/HowItWorks';
 import SocialProof from '../components/landing/SocialProof';
-import Pricing from '../components/landing/Pricing';
-import Tariefkaart from '../components/landing/Tariefkaart';
+import PricingSection from '../components/landing/PricingSection';
 import CountrySupport from '../components/landing/CountrySupport';
 import FAQ from '../components/landing/FAQ';
 import CTA from '../components/landing/CTA';
@@ -42,6 +41,15 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Skip-to-content link voor toetsenbord-gebruikers (a11y).
+          Verschijnt alleen bij focus (Tab-toets vanaf URL-bar). */}
+      <a
+        href="#top"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+      >
+        {t('a11y_skip_to_content')}
+      </a>
+
       {/* SEO content — visually hidden but crawlable.
           H1 staat visueel in Hero.jsx — hier alleen H2's met long-tail content
           om dubbele H1 te voorkomen. */}
@@ -197,8 +205,7 @@ export default function Landing() {
       <Features />
       <HowItWorks />
       <SocialProof />
-      <Pricing />
-      <Tariefkaart />
+      <PricingSection />
       <CountrySupport />
       <FAQ />
       <CTA />

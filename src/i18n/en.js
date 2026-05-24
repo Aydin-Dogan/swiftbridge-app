@@ -405,6 +405,16 @@ export const en = {
   notfound_link_papara: 'Top up Papara wallet from Netherlands',
   notfound_link_bayram: 'Bayram transfers: tips + calendar',
   notfound_contact_prefix: 'Need help? Email',
+
+  // ── Pricing-section wrapper ───────────────────────────────────────────────
+  pricing_section_eyebrow: 'Transparent pricing',
+  pricing_section_titel: 'What does a transfer cost?',
+  pricing_section_subtitel: 'Compare SwiftBridge to competitors on €500, or view our full amount×method tiered pricing.',
+  pricing_section_tab_vergelijking: 'Vs competitors',
+  pricing_section_tab_staffel: 'Full pricing table',
+
+  // ── A11y ─────────────────────────────────────────────────────────────────
+  a11y_skip_to_content: 'Skip to main content',
   landing_faq_nog_vragen: 'Still have questions?',
 
   // CTA

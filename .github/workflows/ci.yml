@@ -29,6 +29,9 @@ jobs:
       - name: Pricing consistency check (geen verouderde flat-fee strings)
         run: node scripts/pricing-consistency.mjs --strict
 
+      - name: Vitest (frontend unit + component tests)
+        run: npm test
+
       - name: Build
         run: npm run build
 

@@ -157,14 +157,64 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Tariefkaart",
-          "item": "https://swiftbridge.tr/#tariefkaart"
+          "name": "Kosten",
+          "item": "https://swiftbridge.tr/#kosten"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Hoe het werkt",
           "item": "https://swiftbridge.tr/#hoe-werkt-het"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ═══ Structured data: HowTo (4 stappen) — voor Google rich snippets ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Geld sturen naar Türkiye in 4 stappen",
+      "description": "Stuur geld vanuit Nederland naar Turkije in minder dan 5 minuten via iDEAL. Vier eenvoudige stappen.",
+      "totalTime": "PT5M",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "EUR",
+        "value": "1.99"
+      },
+      "supply": [
+        {"@type": "HowToSupply", "name": "Nederlandse bankrekening met iDEAL"},
+        {"@type": "HowToSupply", "name": "Identiteitsbewijs voor KYC verificatie"}
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Maak je SwiftBridge-account aan",
+          "text": "Registreer in 2 minuten met je e-mailadres en wachtwoord. Geen creditcard nodig.",
+          "url": "https://swiftbridge.tr/login?tab=register"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Identificeer jezelf met iDIN",
+          "text": "Snel en veilig via je eigen Nederlandse bank (ING, Rabobank, ABN AMRO, etc.). Geen scans of selfies nodig.",
+          "url": "https://swiftbridge.tr/"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Bereken je transfer en betaal met iDEAL",
+          "text": "Voer bedrag en ontvanger-IBAN in. Bevestig met één tik in je bank-app via iDEAL.",
+          "url": "https://swiftbridge.tr/calculator"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Familie ontvangt geld op Turkse rekening",
+          "text": "Het bedrag staat doorgaans binnen 5 minuten op de Turkse bankrekening. Ontvanger krijgt automatisch een SMS van de bank.",
+          "url": "https://swiftbridge.tr/garanti-overboeking"
         }
       ]
     }

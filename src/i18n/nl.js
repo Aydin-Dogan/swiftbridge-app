@@ -406,6 +406,16 @@ export const nl = {
   notfound_link_papara: 'Papara hesabına para yükleme',
   notfound_link_bayram: 'Bayram-overboeking: tips + kalender',
   notfound_contact_prefix: 'Hulp nodig? Mail',
+
+  // ── Pricing-section wrapper (audit P1: consolidatie) ────────────────────
+  pricing_section_eyebrow: 'Transparante prijzen',
+  pricing_section_titel: 'Wat kost een overboeking?',
+  pricing_section_subtitel: 'Vergelijk SwiftBridge met concurrenten op €500, of bekijk onze volledige bedrag×methode-staffel.',
+  pricing_section_tab_vergelijking: 'Vs concurrenten',
+  pricing_section_tab_staffel: 'Volledige tariefkaart',
+
+  // ── A11y ─────────────────────────────────────────────────────────────────
+  a11y_skip_to_content: 'Naar hoofdinhoud springen',
   landing_faq_nog_vragen: 'Heb je nog vragen?',
 
   // CTA

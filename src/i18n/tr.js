@@ -405,6 +405,16 @@ export const tr = {
   notfound_link_papara: 'Hollanda\'dan Papara cüzdanına yükle',
   notfound_link_bayram: 'Bayram transferleri: ipuçları + takvim',
   notfound_contact_prefix: 'Yardıma mı ihtiyacın var? Mail at',
+
+  // ── Pricing-section wrapper ───────────────────────────────────────────────
+  pricing_section_eyebrow: 'Şeffaf fiyatlar',
+  pricing_section_titel: 'Bir transfer ne kadar?',
+  pricing_section_subtitel: 'SwiftBridge\'i €500\'de rakiplerle karşılaştır veya tam tutar×yöntem kademeli tarifemizi gör.',
+  pricing_section_tab_vergelijking: 'Rakiplere karşı',
+  pricing_section_tab_staffel: 'Tam tarife kartı',
+
+  // ── A11y ─────────────────────────────────────────────────────────────────
+  a11y_skip_to_content: 'Ana içeriğe atla',
   landing_faq_nog_vragen: 'Başka sorun var mı?',
 
   // CTA

@@ -3,6 +3,14 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  // Vitest config — frontend unit + component tests
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.js'],
+    css: false, // skip CSS-parsing voor snellere tests
+    include: ['src/**/*.{test,spec}.{js,jsx}'],
+  },
   // Bundle-size optimalisatie (Verbetering G):
   // - vendor chunk voor react/react-dom/react-router-dom — gecached door
   //   browser, hoeft niet opnieuw geladen bij elke deploy.

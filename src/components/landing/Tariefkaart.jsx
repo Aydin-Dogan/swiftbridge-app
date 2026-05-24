@@ -30,27 +30,16 @@ function pct(v) {
   return `${(v * 100).toFixed(1).replace('.', ',')}%`;
 }
 
-export default function Tariefkaart() {
+/**
+ * @param {object} props
+ * @param {boolean} [props.embedded=false] - render zonder outer section/header
+ *   (voor gebruik binnen PricingSection wrapper).
+ */
+export default function Tariefkaart({ embedded = false }) {
   const { t } = useTaal();
 
-  return (
-    <section
-      id="tariefkaart"
-      className="py-16 sm:py-20 px-4 bg-white"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10">
-          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">
-            {t('tariefkaart_eyebrow')}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-3">
-            {t('tariefkaart_titel')}
-          </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            {t('tariefkaart_subtitel')}
-          </p>
-        </div>
-
+  const inhoud = (
+    <>
         {/* Desktop tabel */}
         <div className="hidden md:block bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
           <table className="w-full text-sm">
@@ -129,6 +118,28 @@ export default function Tariefkaart() {
         <p className="text-xs text-gray-400 text-center mt-6 max-w-2xl mx-auto">
           {t('tariefkaart_disclaimer')}
         </p>
+    </>
+  );
+
+  if (embedded) {
+    return inhoud;
+  }
+
+  return (
+    <section id="tariefkaart" className="py-16 sm:py-20 px-4 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="text-xs font-semibold text-brand-600 uppercase tracking-widest mb-3">
+            {t('tariefkaart_eyebrow')}
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
+            {t('tariefkaart_titel')}
+          </h2>
+          <p className="text-gray-500 max-w-2xl mx-auto">
+            {t('tariefkaart_subtitel')}
+          </p>
+        </div>
+        {inhoud}
       </div>
     </section>
   );

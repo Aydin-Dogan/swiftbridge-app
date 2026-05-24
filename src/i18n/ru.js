@@ -392,6 +392,16 @@ export const ru = {
   notfound_link_bayram: 'Переводы на Байрам: советы + календарь',
   notfound_contact_prefix: 'Нужна помощь? Напишите',
 
+  // ── Pricing-section wrapper ───────────────────────────────────────────────
+  pricing_section_eyebrow: 'Прозрачные цены',
+  pricing_section_titel: 'Сколько стоит перевод?',
+  pricing_section_subtitel: 'Сравните SwiftBridge с конкурентами на €500, или посмотрите нашу полную многоуровневую таблицу тарифов.',
+  pricing_section_tab_vergelijking: 'Против конкурентов',
+  pricing_section_tab_staffel: 'Полная таблица тарифов',
+
+  // ── A11y ─────────────────────────────────────────────────────────────────
+  a11y_skip_to_content: 'Перейти к основному содержанию',
+
   // CTA
   landing_cta_titel: 'Готовы начать?',
   landing_cta_subtitel: 'Зарегистрируйтесь за 2 минуты и отправьте свой первый перевод уже сегодня.',

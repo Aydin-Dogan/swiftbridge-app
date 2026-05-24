@@ -392,6 +392,16 @@ export const az = {
   notfound_link_bayram: 'Bayram köçürmələri: məsləhətlər + təqvim',
   notfound_contact_prefix: 'Köməyə ehtiyacınız var? Yazın',
 
+  // ── Pricing-section wrapper ───────────────────────────────────────────────
+  pricing_section_eyebrow: 'Şəffaf qiymətlər',
+  pricing_section_titel: 'Bir köçürmə nə qədərdir?',
+  pricing_section_subtitel: 'SwiftBridge-i €500-də rəqiblərlə müqayisə edin və ya tam məbləğ×üsul pilləli tarif cədvəlimizə baxın.',
+  pricing_section_tab_vergelijking: 'Rəqiblərə qarşı',
+  pricing_section_tab_staffel: 'Tam tarif cədvəli',
+
+  // ── A11y ─────────────────────────────────────────────────────────────────
+  a11y_skip_to_content: 'Əsas məzmuna keç',
+
   // CTA
   landing_cta_titel: 'Başlamağa hazırsınız?',
   landing_cta_subtitel: '2 dəqiqədə qeydiyyatdan keçin və ilk köçürmənizi bu gün edin.',

@@ -48,7 +48,12 @@ const CONCURRENT_DATA = [
   },
 ];
 
-export default function Pricing() {
+/**
+ * @param {object} props
+ * @param {boolean} [props.embedded=false] - als true: render zonder outer
+ *   section + heading (voor gebruik binnen PricingSection wrapper).
+ */
+export default function Pricing({ embedded = false }) {
   const { t } = useTaal();
   const [liveKoersTry, setLiveKoersTry] = useState(36.20); // fallback
 
@@ -127,24 +132,10 @@ export default function Pricing() {
     },
   ];
 
-  return (
-    <section
-      id="kosten"
-      className="py-16 sm:py-20 px-4 bg-gradient-to-b from-white to-slate-50"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">
-            {t('landing_pricing_eyebrow')}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-3">
-            {t('landing_pricing_titel')}
-          </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            {t('landing_pricing_subtitel', { bedrag: `€${BEDRAG}` })}
-          </p>
-        </div>
-
+  // Inhoud (tabel + mobile cards) — apart van outer-wrapper zodat we kunnen
+  // kiezen of we 'm in een eigen section of in PricingSection renderen.
+  const inhoud = (
+    <>
         {/* Desktop tabel */}
         <div className="hidden md:block bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
           <table className="w-full text-sm">
@@ -255,6 +246,33 @@ export default function Pricing() {
         <p className="text-xs text-gray-400 text-center mt-6 max-w-2xl mx-auto">
           {t('landing_pricing_disclaimer')}
         </p>
+    </>
+  );
+
+  // Embedded mode (binnen PricingSection wrapper): return alleen de inhoud
+  if (embedded) {
+    return inhoud;
+  }
+
+  // Standalone mode (backwards compat): wrap in eigen section + heading
+  return (
+    <section
+      id="kosten"
+      className="py-16 sm:py-20 px-4 bg-gradient-to-b from-white to-slate-50"
+    >
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-3">
+            {t('landing_pricing_eyebrow')}
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
+            {t('landing_pricing_titel')}
+          </h2>
+          <p className="text-gray-500 max-w-2xl mx-auto">
+            {t('landing_pricing_subtitel', { bedrag: `€${BEDRAG}` })}
+          </p>
+        </div>
+        {inhoud}
       </div>
     </section>
   );
