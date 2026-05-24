@@ -185,19 +185,30 @@ export default function Hero() {
                 <span className="text-sm font-medium text-gray-700">
                   {t('landing_widget_ontvanger_krijgt')}
                 </span>
-                <span className="text-2xl font-bold text-brand-700">
-                  {valutaInfo.symbool}
-                  {ontvangenFmt}
-                </span>
+                {liveKoersen === null ? (
+                  // Skeleton tijdens koers-fetch (eerste 0,5-2 sec)
+                  <span className="h-7 w-32 rounded-md animate-shimmer" aria-label="Bezig met laden..." />
+                ) : (
+                  <span className="text-2xl font-bold text-brand-700">
+                    {valutaInfo.symbool}
+                    {ontvangenFmt}
+                  </span>
+                )}
               </div>
 
               <div className="flex items-center justify-between text-[11px] text-gray-500 mb-4">
                 <span>
                   {t('landing_widget_koers')}: 1 € ={' '}
-                  {Number(huidigeKoers).toLocaleString('nl-NL', {
-                    maximumFractionDigits: valutaInfo.decimals === 0 ? 2 : 4,
-                  })}{' '}
-                  {valutaInfo.code}
+                  {liveKoersen === null ? (
+                    <span className="inline-block h-3 w-16 rounded animate-shimmer align-middle" aria-label="Koers laden" />
+                  ) : (
+                    <>
+                      {Number(huidigeKoers).toLocaleString('nl-NL', {
+                        maximumFractionDigits: valutaInfo.decimals === 0 ? 2 : 4,
+                      })}{' '}
+                      {valutaInfo.code}
+                    </>
+                  )}
                 </span>
                 <span className="text-success-700 font-semibold">
                   {kosten.zichtbarePct ? `${String(kosten.zichtbarePct).replace('.', ',')}%` : t('landing_widget_fee')}

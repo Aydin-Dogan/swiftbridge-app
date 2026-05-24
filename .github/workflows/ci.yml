@@ -35,3 +35,32 @@ jobs:
       - name: Security audit (moderate+)
         run: npm audit --audit-level=moderate
         continue-on-error: false
+
+  # Snyk dependency vuln scan (free tier — vereist SNYK_TOKEN secret in repo).
+  # Faalt niet de build maar uploads naar Snyk dashboard voor tracking.
+  # Voorbereiding voor pre-launch Mythos audit. Activeren door SNYK_TOKEN
+  # toe te voegen in GitHub Settings → Secrets → Actions.
+  snyk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ vars.ENABLE_SNYK == 'true' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Snyk test
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high

@@ -1,58 +1,131 @@
 /**
- * Pricing.jsx — Transparent pricing comparison vs banks vs Wise.
+ * Pricing.jsx — Transparante prijs-vergelijking SwiftBridge vs concurrenten.
+ *
+ * Sprint 2/3 fix (P4 uit audit): ontvanger-bedragen dynamisch berekenen op
+ * basis van live-koers + de échte berekenKosten() — voorheen hardcoded
+ * '~₺17.829' wat afweek van de live-koers in Hero-widget.
  */
+import { useState, useEffect } from 'react';
 import { useTaal } from '../../i18n';
+import { berekenKosten } from '../../services/kosten';
+import { API_URL } from '../../services/api';
 
 // Voorbeeldbedrag voor de vergelijking
 const BEDRAG = 500;
 
-// Berekening op €500 via iDEAL Express:
-// SwiftBridge: 1,5% staffel-fee = €7,50 (zie tariefkaart sectie voor volledige staffel)
-// Bank: gem. €15 vast + 3-4% marge ≈ €15 + €17,50 = €32,50
-// Wise: €4,38 fee + 0,5% marge ≈ €4,38 + €2,50 = €6,88 (sneller voor sommige routes)
-const ROWS = [
-  {
-    key: 'swiftbridge',
-    naam: 'SwiftBridge',
-    highlight: true,
-    fee: '1,5%',
-    marge: 'inbegrepen',
-    snelheid: '< 5 min',
-    totaal: '€7,50',
-    ontvanger: '~₺17.829',
-    badge: 'landing_pricing_aanbevolen',
-  },
+// Concurrent-tarieven (publieke pricing voorjaar 2026). Update bij majeure
+// wijzigingen — bron: bank.nl, wise.com/pricing, westernunion.com.
+// SwiftBridge wordt dynamisch berekend, niet hardcoded.
+const CONCURRENT_DATA = [
   {
     key: 'bank',
-    naam: 'Traditionele bank',
     fee: '€15+',
     marge: '3–4%',
     snelheid: '3–5 dagen',
-    totaal: '€32,50',
-    ontvanger: '~₺16.890',
+    totaalEur: 32.50,
+    // Effectieve koers concurrent ≈ mid-market * (1 - margePct):
+    // (500 - 15) * (mid * 0.965) = ontvangen
+    margePct: 0.035,
+    flatFeeEur: 15,
   },
   {
     key: 'wise',
-    naam: 'Wise',
     fee: '€4,38',
     marge: '0,5%',
     snelheid: '1–2 dgn',
-    totaal: '€6,88',
-    ontvanger: '~₺17.940',
+    totaalEur: 6.88,
+    margePct: 0.005,
+    flatFeeEur: 4.38,
   },
   {
     key: 'wu',
-    naam: 'Western Union',
     fee: '€7,90',
     marge: '4–6%',
     snelheid: 'minuten – 1 dag',
-    totaal: '€32,90',
-    ontvanger: '~₺16.560',
+    totaalEur: 32.90,
+    margePct: 0.05,
+    flatFeeEur: 7.90,
   },
 ];
 
 export default function Pricing() {
   const { t } = useTaal();
+  const [liveKoersTry, setLiveKoersTry] = useState(36.20); // fallback
+
+  useEffect(() => {
+    let geannuleerd = false;
+    async function haal() {
+      try {
+        const res = await fetch(`${API_URL}/transactions/koersen`, {
+          credentials: 'include',
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!geannuleerd && data?.koersen?.TRY) setLiveKoersTry(data.koersen.TRY);
+      } catch {
+        // stille fallback
+      }
+    }
+    haal();
+    return () => { geannuleerd = true; };
+  }, []);
+
+  // Bereken SwiftBridge ontvanger-bedrag dynamisch via échte berekenKosten()
+  // → ALTIJD synchroon met Hero-widget + Tariefkaart op dezelfde pagina
+  const sbKosten = berekenKosten(BEDRAG, 'ideal', 'express', liveKoersTry);
+  const sbOntvangenFmt = sbKosten.ontvangenBedrag.toLocaleString('tr-TR', {
+    maximumFractionDigits: 0,
+  });
+
+  // Bereken concurrent-ontvangen op dezelfde live mid-market koers
+  function berekenConcurrent(c) {
+    const netto = BEDRAG - c.flatFeeEur;
+    const effectieveKoers = liveKoersTry * (1 - c.margePct);
+    return Math.max(0, netto * effectieveKoers).toLocaleString('tr-TR', {
+      maximumFractionDigits: 0,
+    });
+  }
+
+  const ROWS = [
+    {
+      key: 'swiftbridge',
+      naam: 'SwiftBridge',
+      highlight: true,
+      fee: `${String(sbKosten.zichtbarePct).replace('.', ',')}%`,
+      marge: 'inbegrepen',
+      snelheid: '< 5 min',
+      totaal: `€${sbKosten.klantBetaaltFee.toFixed(2).replace('.', ',')}`,
+      ontvanger: `~₺${sbOntvangenFmt}`,
+      badge: 'landing_pricing_aanbevolen',
+    },
+    {
+      key: 'bank',
+      naam: 'Traditionele bank',
+      fee: CONCURRENT_DATA[0].fee,
+      marge: CONCURRENT_DATA[0].marge,
+      snelheid: CONCURRENT_DATA[0].snelheid,
+      totaal: `€${CONCURRENT_DATA[0].totaalEur.toFixed(2).replace('.', ',')}`,
+      ontvanger: `~₺${berekenConcurrent(CONCURRENT_DATA[0])}`,
+    },
+    {
+      key: 'wise',
+      naam: 'Wise',
+      fee: CONCURRENT_DATA[1].fee,
+      marge: CONCURRENT_DATA[1].marge,
+      snelheid: CONCURRENT_DATA[1].snelheid,
+      totaal: `€${CONCURRENT_DATA[1].totaalEur.toFixed(2).replace('.', ',')}`,
+      ontvanger: `~₺${berekenConcurrent(CONCURRENT_DATA[1])}`,
+    },
+    {
+      key: 'wu',
+      naam: 'Western Union',
+      fee: CONCURRENT_DATA[2].fee,
+      marge: CONCURRENT_DATA[2].marge,
+      snelheid: CONCURRENT_DATA[2].snelheid,
+      totaal: `€${CONCURRENT_DATA[2].totaalEur.toFixed(2).replace('.', ',')}`,
+      ontvanger: `~₺${berekenConcurrent(CONCURRENT_DATA[2])}`,
+    },
+  ];
 
   return (
     <section

@@ -261,15 +261,24 @@ export default function Calculator() {
                 {t('calc_resultaat_label')}
               </div>
 
-              {/* Ontvanger krijgt */}
+              {/* Ontvanger krijgt — met skeleton tijdens koers-fetch */}
               <div className="bg-brand-50 border border-brand-100 rounded-xl px-4 py-4 mb-4">
                 <div className="text-xs text-gray-600 mb-1">{t('calc_ontvanger_krijgt')}</div>
-                <div className="text-3xl font-bold text-brand-700">
-                  {valutaInfo.symbool}{ontvangenFmt}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  1 € = {Number(huidigeKoers).toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}
-                </div>
+                {liveKoersen === null ? (
+                  <>
+                    <div className="h-9 w-40 rounded-md animate-shimmer mb-1.5" aria-label="Bezig met laden" />
+                    <div className="h-3 w-32 rounded animate-shimmer" />
+                  </>
+                ) : (
+                  <>
+                    <div className="text-3xl font-bold text-brand-700">
+                      {valutaInfo.symbool}{ontvangenFmt}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      1 € = {Number(huidigeKoers).toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Breakdown */}
