@@ -316,6 +316,11 @@ export default function Calculator() {
                 <ArrowRight className="w-4 h-4" />
               </button>
 
+              {/* Share-knop — kopieert huidige URL naar clipboard zodat
+                  gebruiker zijn berekening kan delen via WhatsApp etc.
+                  Gebruik navigator.share waar mogelijk (mobiel), anders clipboard. */}
+              <ShareButton />
+
               {/* Trust signals onder CTA */}
               <div className="mt-4 grid grid-cols-1 gap-2 text-xs text-gray-500">
                 <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-brand-600" /> {t('calc_trust_dnb')}</span>
@@ -385,5 +390,72 @@ export default function Calculator() {
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * ShareButton — deelt huidige Calculator URL (met query params).
+ * Gebruikt navigator.share waar mogelijk (mobiel native sheet),
+ * anders fallback naar clipboard + visuele "gekopieerd" bevestiging.
+ */
+function ShareButton() {
+  const { t } = useTaal();
+  const [gekopieerd, setGekopieerd] = useState(false);
+
+  async function deel() {
+    const url = window.location.href;
+    const title = t('calc_share_title');
+    const text = t('calc_share_text');
+
+    // 1. Native share (mobiele Safari/Chrome) — beste UX
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+        return;
+      } catch (err) {
+        // User cancelled — niet doorgaan naar clipboard
+        if (err.name === 'AbortError') return;
+        // Andere fout → fallback naar clipboard
+      }
+    }
+
+    // 2. Clipboard fallback
+    try {
+      await navigator.clipboard.writeText(url);
+      setGekopieerd(true);
+      setTimeout(() => setGekopieerd(false), 2500);
+    } catch {
+      // Echt geen optie → toon URL in prompt zodat gebruiker handmatig kan kopiëren
+      // eslint-disable-next-line no-alert
+      window.prompt(t('calc_share_handmatig'), url);
+    }
+  }
+
+  return (
+    <button
+      onClick={deel}
+      className="mt-3 w-full text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
+      aria-live="polite"
+    >
+      {gekopieerd ? (
+        <>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          {t('calc_share_gekopieerd')}
+        </>
+      ) : (
+        <>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="3" />
+            <circle cx="6" cy="12" r="3" />
+            <circle cx="18" cy="19" r="3" />
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+          </svg>
+          {t('calc_share_knop')}
+        </>
+      )}
+    </button>
   );
 }

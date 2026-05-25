@@ -81,7 +81,11 @@ export const tr = {
   dashboard_recent_bekijk_alle: 'Tümünü gör →',
   dashboard_recent_leeg_titel: 'Henüz transfer yok',
   dashboard_recent_leeg_uitleg: 'İlk transferinizi yapın, işlemleriniz burada görünecek.',
-  dashboard_recent_leeg_cta: '💸 İlk transferinizi yapın',
+  dashboard_recent_leeg_cta: 'İlk transferinizi yapın',
+  dashboard_recent_leeg_bereken: 'Önce hesapla',
+  dashboard_recent_leeg_stap1: 'Tutarı girin',
+  dashboard_recent_leeg_stap2: 'iDEAL ile öde',
+  dashboard_recent_leeg_stap3: 'Varış <5 dk',
   dashboard_tips_titel: 'Biliyor muydun?',
   dashboard_tip_1: 'TRY kuru geçen haftaya göre %{pct} daha iyi — şimdi göndermek için ideal.',
   dashboard_tip_2: 'Bankana göre şimdiye kadar {bedrag} tasarruf ettin.',
@@ -455,6 +459,26 @@ export const tr = {
   status_refresh: 'Yenile',
   status_help_title: 'Sorun mu yaşıyorsunuz?',
   status_help_desc: 'Burada gösterilmeyen bir sorun yaşıyorsanız bize bildirin. Genellikle bir saat içinde yanıt veriyoruz.',
+
+  // ── Yapışkan mobil CTA ───────────────────────────────────────────────────
+  sticky_cta_label: 'Transfere başla',
+
+  // ── Hesaplayıcı paylaş ───────────────────────────────────────────────────
+  calc_share_knop: 'Bu hesaplamayı paylaş',
+  calc_share_gekopieerd: 'Bağlantı kopyalandı!',
+  calc_share_title: 'SwiftBridge hesaplamam',
+  calc_share_text: 'SwiftBridge ile ne kadar gönderebileceğimi görün:',
+  calc_share_handmatig: 'Paylaşmak için bu bağlantıyı kopyalayın:',
+
+  // ── Footer güven satırı ──────────────────────────────────────────────────
+  footer_trust_dnb_label: 'DNB denetimi',
+  footer_trust_dnb_sub: 'EMI ortağı üzerinden — Wwft uyumlu',
+  footer_trust_wwft_label: 'KVKK & AML',
+  footer_trust_wwft_sub: 'Kişisel veri korumalı, yaptırım taraması',
+  footer_trust_ssl_label: '256-bit SSL/TLS',
+  footer_trust_ssl_sub: 'Uçtan uca şifreleme, girişte MFA',
+  footer_trust_mollie_label: 'Mollie ödemeleri',
+  footer_trust_mollie_sub: 'iDEAL, kredi kartı, PayPal ve SEPA',
   landing_faq_nog_vragen: 'Başka sorun var mı?',
 
   // CTA

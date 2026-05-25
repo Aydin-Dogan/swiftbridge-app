@@ -90,7 +90,7 @@ export default function Tariefkaart({ embedded = false }) {
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xl" aria-hidden="true">{m.icon}</span>
-                <div className="font-extrabold text-gray-900">{t(m.i18n)}</div>
+                <div className="font-bold text-gray-900">{t(m.i18n)}</div>
               </div>
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
                 {TIERS.flatMap((tier, idx) => [

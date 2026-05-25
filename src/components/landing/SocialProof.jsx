@@ -98,7 +98,7 @@ export default function SocialProof() {
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-white font-extrabold text-lg shadow-md"
+                      className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md"
                       style={{ background: tt.color }}
                     >
                       {tt.initial}

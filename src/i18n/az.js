@@ -81,7 +81,11 @@ export const az = {
   dashboard_recent_bekijk_alle: 'Hamısına bax →',
   dashboard_recent_leeg_titel: 'Hələ köçürmə yoxdur',
   dashboard_recent_leeg_uitleg: 'İlk köçürmənizi edin və əməliyyatlarınızın burada görünməsinə baxın.',
-  dashboard_recent_leeg_cta: '💸 İlk köçürmənizi edin',
+  dashboard_recent_leeg_cta: 'İlk köçürmənizi edin',
+  dashboard_recent_leeg_bereken: 'Əvvəlcə hesabla',
+  dashboard_recent_leeg_stap1: 'Məbləği daxil et',
+  dashboard_recent_leeg_stap2: 'iDEAL ilə ödə',
+  dashboard_recent_leeg_stap3: 'Çatış <5 dəq',
   dashboard_tips_titel: 'Bilirdinizmi?',
   dashboard_tip_1: 'TRY məzənnəsi keçən həftəyə nisbətən {pct}% sərfəlidir — köçürmək üçün yaxşı andır.',
   dashboard_tip_2: 'Bankınıza nisbətən artıq {bedrag} qənaət etmisiniz.',
@@ -441,6 +445,26 @@ export const az = {
   status_refresh: 'Yenilə',
   status_help_title: 'Problem yaşayırsınız?',
   status_help_desc: 'Burada göstərilməyən bir problem yaşayırsınızsa bizə bildirin. Adətən bir saat ərzində cavab veririk.',
+
+  // ── Yapışqan mobil CTA ───────────────────────────────────────────────────
+  sticky_cta_label: 'Köçürməyə başla',
+
+  // ── Kalkulyatoru paylaş ──────────────────────────────────────────────────
+  calc_share_knop: 'Bu hesablamanı paylaş',
+  calc_share_gekopieerd: 'Link kopyalandı!',
+  calc_share_title: 'SwiftBridge hesablamam',
+  calc_share_text: 'SwiftBridge ilə nə qədər göndərə bildiyimi gör:',
+  calc_share_handmatig: 'Paylaşmaq üçün bu linki kopyalayın:',
+
+  // ── Footer etibar sırası ─────────────────────────────────────────────────
+  footer_trust_dnb_label: 'DNB nəzarəti',
+  footer_trust_dnb_sub: 'EMI tərəfdaşı vasitəsilə — AML uyğun',
+  footer_trust_wwft_label: 'GDPR & AML',
+  footer_trust_wwft_sub: 'Şəxsi məlumatlar qorunur, sanksiya yoxlaması',
+  footer_trust_ssl_label: '256-bit SSL/TLS',
+  footer_trust_ssl_sub: 'Uctan uca şifrələmə, girişdə MFA',
+  footer_trust_mollie_label: 'Mollie ödənişləri',
+  footer_trust_mollie_sub: 'iDEAL, kredit kartı, PayPal və SEPA',
 
   // CTA
   landing_cta_titel: 'Başlamağa hazırsınız?',

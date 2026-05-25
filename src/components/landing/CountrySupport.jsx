@@ -59,7 +59,7 @@ export default function CountrySupport() {
                   <Vlag land={l.code} size={32} />
                 </div>
               </div>
-              <div className="font-extrabold text-gray-900 text-sm mb-1">
+              <div className="font-bold text-gray-900 text-sm mb-1">
                 {l.naam}
               </div>
               <div className="text-xs text-gray-500">

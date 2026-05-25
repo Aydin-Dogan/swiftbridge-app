@@ -162,7 +162,7 @@ export default function Pricing({ embedded = false }) {
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`font-extrabold ${
+                        className={`font-bold ${
                           r.highlight ? 'text-blue-700' : 'text-gray-800'
                         }`}
                       >
@@ -213,7 +213,7 @@ export default function Pricing({ embedded = false }) {
               } shadow-sm`}
             >
               <div className="flex items-center justify-between mb-3">
-                <div className="font-extrabold text-gray-900">
+                <div className="font-bold text-gray-900">
                   {r.highlight && '⚡ '}
                   {r.naam}
                 </div>

@@ -88,25 +88,72 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
     .sort((a, b) => new Date(b.aangemaaktOp || b.datum || 0) - new Date(a.aangemaaktOp || a.datum || 0))
     .slice(0, 5);
 
-  // Lege state
+  // Lege state — rijke empty state met SVG-illustratie, 3-staps preview
+  // en dubbele CTA (start meteen / bereken eerst).
   if (!laden && transacties.length === 0) {
     return (
       <section
         aria-label={t('dashboard_recent_titel')}
-        className="rounded-2xl border border-white/60 bg-white/80 backdrop-blur-lg p-8 text-center shadow-sm animate-fade-up"
+        className="rounded-2xl border border-white/60 bg-white/80 backdrop-blur-lg p-6 sm:p-8 text-center shadow-sm animate-fade-up"
       >
-        <div className="text-5xl mb-3" aria-hidden="true">💸</div>
-        <h3 className="font-bold text-slate-800 mb-1">{t('dashboard_recent_leeg_titel')}</h3>
+        {/* SVG illustratie — vriendelijke geld-stroom NL→TR */}
+        <svg
+          width="160"
+          height="80"
+          viewBox="0 0 160 80"
+          fill="none"
+          aria-hidden="true"
+          className="mx-auto mb-4"
+        >
+          {/* NL flag circle */}
+          <circle cx="25" cy="40" r="20" fill="#fef3c7" />
+          <text x="25" y="46" textAnchor="middle" fontSize="20">🇳🇱</text>
+          {/* Pijl met euro */}
+          <path d="M 50 40 L 105 40" stroke="#2563EB" strokeWidth="2" strokeDasharray="3 3" />
+          <polygon points="105,35 115,40 105,45" fill="#2563EB" />
+          <circle cx="80" cy="40" r="14" fill="#fff" stroke="#2563EB" strokeWidth="2" />
+          <text x="80" y="46" textAnchor="middle" fontSize="14" fill="#2563EB" fontWeight="bold">€</text>
+          {/* TR flag circle */}
+          <circle cx="135" cy="40" r="20" fill="#fee2e2" />
+          <text x="135" y="46" textAnchor="middle" fontSize="20">🇹🇷</text>
+        </svg>
+
+        <h3 className="font-bold text-slate-800 mb-1 text-lg">
+          {t('dashboard_recent_leeg_titel')}
+        </h3>
         <p className="text-slate-500 text-sm mb-5 max-w-sm mx-auto">
           {t('dashboard_recent_leeg_uitleg')}
         </p>
-        <button
-          onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
-          className="btn-primary inline-flex items-center gap-2 min-h-[44px]"
-          aria-label={t('dashboard_recent_leeg_cta')}
-        >
-          <span>{t('dashboard_recent_leeg_cta')}</span>
-        </button>
+
+        {/* 3-stappen preview — verlaagt drempel */}
+        <ol className="grid grid-cols-3 gap-2 max-w-sm mx-auto mb-6 text-xs">
+          {[1, 2, 3].map((n) => (
+            <li key={n} className="bg-slate-50 rounded-xl px-2 py-3">
+              <div className="w-6 h-6 mx-auto mb-1.5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs">
+                {n}
+              </div>
+              <div className="text-slate-700 font-medium leading-tight">
+                {t(`dashboard_recent_leeg_stap${n}`)}
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="flex flex-col sm:flex-row gap-2 justify-center">
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
+            className="btn-primary inline-flex items-center justify-center gap-2 min-h-[44px]"
+            aria-label={t('dashboard_recent_leeg_cta')}
+          >
+            <span>{t('dashboard_recent_leeg_cta')} →</span>
+          </button>
+          <a
+            href="/calculator"
+            className="text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl px-5 py-3 transition inline-flex items-center justify-center min-h-[44px]"
+          >
+            {t('dashboard_recent_leeg_bereken')}
+          </a>
+        </div>
       </section>
     );
   }

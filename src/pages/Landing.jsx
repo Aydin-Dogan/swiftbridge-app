@@ -21,6 +21,7 @@ import CountrySupport from '../components/landing/CountrySupport';
 import FAQ from '../components/landing/FAQ';
 import CTA from '../components/landing/CTA';
 import Footer from '../components/landing/Footer';
+import StickyMobileCTA from '../components/landing/StickyMobileCTA';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -211,6 +212,10 @@ export default function Landing() {
       <FAQ />
       <CTA />
       <Footer />
+
+      {/* Sticky mobile CTA (Verbetering P) — verschijnt voorbij Hero, weg
+          dichtbij footer. Alleen <md zichtbaar. */}
+      <StickyMobileCTA />
 
       {/* Cookie consent banner — verschijnt alleen bij eerste bezoek (geen
           localStorage entry). AVG/GDPR-compliant: granular consent met

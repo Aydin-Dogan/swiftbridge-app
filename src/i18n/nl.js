@@ -81,7 +81,11 @@ export const nl = {
   dashboard_recent_bekijk_alle: 'Bekijk alle →',
   dashboard_recent_leeg_titel: 'Nog geen overboekingen',
   dashboard_recent_leeg_uitleg: 'Begin je eerste overboeking en zie je transacties hier verschijnen.',
-  dashboard_recent_leeg_cta: '💸 Begin je eerste overboeking',
+  dashboard_recent_leeg_cta: 'Begin je eerste overboeking',
+  dashboard_recent_leeg_bereken: 'Eerst berekenen',
+  dashboard_recent_leeg_stap1: 'Bedrag invullen',
+  dashboard_recent_leeg_stap2: 'Betalen met iDEAL',
+  dashboard_recent_leeg_stap3: 'Aankomst <5 min',
   dashboard_tips_titel: 'Wist je dat?',
   dashboard_tip_1: 'TRY koers is {pct}% gunstiger dan vorige week — handig moment om over te maken.',
   dashboard_tip_2: 'Je hebt al {bedrag} bespaard ten opzichte van je bank.',
@@ -456,6 +460,26 @@ export const nl = {
   status_refresh: 'Vernieuwen',
   status_help_title: 'Probleem ervaren?',
   status_help_desc: 'Als je een storing ervaart die hier niet wordt getoond, laat het ons weten. We reageren meestal binnen een uur.',
+
+  // ── Sticky mobile CTA ────────────────────────────────────────────────────
+  sticky_cta_label: 'Begin overboeking',
+
+  // ── Calculator share ─────────────────────────────────────────────────────
+  calc_share_knop: 'Deel deze berekening',
+  calc_share_gekopieerd: 'Link gekopieerd!',
+  calc_share_title: 'Mijn SwiftBridge berekening',
+  calc_share_text: 'Bekijk wat ik kan sturen via SwiftBridge:',
+  calc_share_handmatig: 'Kopieer deze link om te delen:',
+
+  // ── Footer trust-row ─────────────────────────────────────────────────────
+  footer_trust_dnb_label: 'DNB-toezicht',
+  footer_trust_dnb_sub: 'Via EMI-partner — Wwft-compliant',
+  footer_trust_wwft_label: 'AVG & Wwft',
+  footer_trust_wwft_sub: 'Persoonsgegevens beschermd, sanctielijst-screening',
+  footer_trust_ssl_label: '256-bit SSL/TLS',
+  footer_trust_ssl_sub: 'End-to-end versleuteling, MFA voor login',
+  footer_trust_mollie_label: 'Mollie betalingen',
+  footer_trust_mollie_sub: 'iDEAL, creditcard, PayPal en SEPA',
   landing_faq_nog_vragen: 'Heb je nog vragen?',
 
   // CTA

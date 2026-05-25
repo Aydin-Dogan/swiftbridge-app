@@ -81,7 +81,11 @@ export const en = {
   dashboard_recent_bekijk_alle: 'View all →',
   dashboard_recent_leeg_titel: 'No transfers yet',
   dashboard_recent_leeg_uitleg: 'Make your first transfer and watch your transactions appear here.',
-  dashboard_recent_leeg_cta: '💸 Make your first transfer',
+  dashboard_recent_leeg_cta: 'Make your first transfer',
+  dashboard_recent_leeg_bereken: 'Calculate first',
+  dashboard_recent_leeg_stap1: 'Enter amount',
+  dashboard_recent_leeg_stap2: 'Pay with iDEAL',
+  dashboard_recent_leeg_stap3: 'Arrives <5 min',
   dashboard_tips_titel: 'Did you know?',
   dashboard_tip_1: 'The TRY rate is {pct}% better than last week — good moment to send.',
   dashboard_tip_2: 'You\'ve already saved {bedrag} compared to your bank.',
@@ -455,6 +459,26 @@ export const en = {
   status_refresh: 'Refresh',
   status_help_title: 'Experiencing issues?',
   status_help_desc: 'If you are experiencing an issue not shown here, let us know. We usually respond within an hour.',
+
+  // ── Sticky mobile CTA ────────────────────────────────────────────────────
+  sticky_cta_label: 'Start transfer',
+
+  // ── Calculator share ─────────────────────────────────────────────────────
+  calc_share_knop: 'Share this calculation',
+  calc_share_gekopieerd: 'Link copied!',
+  calc_share_title: 'My SwiftBridge calculation',
+  calc_share_text: 'See what I can send with SwiftBridge:',
+  calc_share_handmatig: 'Copy this link to share:',
+
+  // ── Footer trust-row ─────────────────────────────────────────────────────
+  footer_trust_dnb_label: 'DNB-supervised',
+  footer_trust_dnb_sub: 'Via EMI partner — AML compliant',
+  footer_trust_wwft_label: 'GDPR & AML',
+  footer_trust_wwft_sub: 'Personal data protected, sanctions screening',
+  footer_trust_ssl_label: '256-bit SSL/TLS',
+  footer_trust_ssl_sub: 'End-to-end encryption, MFA at login',
+  footer_trust_mollie_label: 'Mollie payments',
+  footer_trust_mollie_sub: 'iDEAL, credit card, PayPal and SEPA',
   landing_faq_nog_vragen: 'Still have questions?',
 
   // CTA

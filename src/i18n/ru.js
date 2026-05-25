@@ -81,7 +81,11 @@ export const ru = {
   dashboard_recent_bekijk_alle: 'Показать все →',
   dashboard_recent_leeg_titel: 'Переводов пока нет',
   dashboard_recent_leeg_uitleg: 'Сделайте свой первый перевод, и ваши транзакции появятся здесь.',
-  dashboard_recent_leeg_cta: '💸 Сделайте свой первый перевод',
+  dashboard_recent_leeg_cta: 'Сделайте свой первый перевод',
+  dashboard_recent_leeg_bereken: 'Сначала рассчитать',
+  dashboard_recent_leeg_stap1: 'Введите сумму',
+  dashboard_recent_leeg_stap2: 'Оплатите iDEAL',
+  dashboard_recent_leeg_stap3: 'Доставка <5 мин',
   dashboard_tips_titel: 'А вы знали?',
   dashboard_tip_1: 'Курс TRY сейчас на {pct}% выгоднее, чем на прошлой неделе — удачный момент для перевода.',
   dashboard_tip_2: 'Вы уже сэкономили {bedrag} по сравнению со своим банком.',
@@ -441,6 +445,26 @@ export const ru = {
   status_refresh: 'Обновить',
   status_help_title: 'Возникли проблемы?',
   status_help_desc: 'Если вы столкнулись с проблемой, которая здесь не отображается, сообщите нам. Обычно мы отвечаем в течение часа.',
+
+  // ── Закреплённая мобильная CTA ───────────────────────────────────────────
+  sticky_cta_label: 'Начать перевод',
+
+  // ── Поделиться калькуляцией ──────────────────────────────────────────────
+  calc_share_knop: 'Поделиться расчётом',
+  calc_share_gekopieerd: 'Ссылка скопирована!',
+  calc_share_title: 'Мой расчёт SwiftBridge',
+  calc_share_text: 'Посмотрите, сколько я могу отправить через SwiftBridge:',
+  calc_share_handmatig: 'Скопируйте эту ссылку, чтобы поделиться:',
+
+  // ── Доверительный ряд футера ─────────────────────────────────────────────
+  footer_trust_dnb_label: 'Под надзором DNB',
+  footer_trust_dnb_sub: 'Через EMI-партнёра — AML-совместимо',
+  footer_trust_wwft_label: 'GDPR & AML',
+  footer_trust_wwft_sub: 'Защита персональных данных, проверка санкций',
+  footer_trust_ssl_label: '256-бит SSL/TLS',
+  footer_trust_ssl_sub: 'Сквозное шифрование, MFA при входе',
+  footer_trust_mollie_label: 'Платежи Mollie',
+  footer_trust_mollie_sub: 'iDEAL, кредитная карта, PayPal и SEPA',
 
   // CTA
   landing_cta_titel: 'Готовы начать?',
