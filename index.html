@@ -77,6 +77,11 @@
     <!-- ═══ Performance ═══ -->
     <link rel="preconnect" href="https://api.swiftbridge.tr" crossorigin />
     <link rel="dns-prefetch" href="https://api.swiftbridge.tr" />
+    <!-- Wise koers-feed is third-party — DNS prefetch om eerste fetch te versnellen -->
+    <link rel="dns-prefetch" href="https://wise.com" />
+    <link rel="preconnect" href="https://wise.com" crossorigin />
+    <!-- Preload het hero-logo om LCP te verbeteren (kritiek above-the-fold asset) -->
+    <link rel="preload" as="image" href="/icon-192.png" fetchpriority="high" />
 
     <!-- ═══ Structured data: Organization (root entity) ═══ -->
     <script type="application/ld+json">

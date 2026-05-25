@@ -415,6 +415,46 @@ export const tr = {
 
   // ── A11y ─────────────────────────────────────────────────────────────────
   a11y_skip_to_content: 'Ana içeriğe atla',
+
+  // ── Çerez onayı (KVKK/GDPR) ──────────────────────────────────────────────
+  cookie_title: 'Gizliliğinize saygı duyuyoruz',
+  cookie_desc: 'Sadece sitenin çalışması için gerekli çerezleri kullanıyoruz. Analitik ve pazarlama için açık onay istiyoruz. Daha fazla bilgi için',
+  cookie_privacy_link: 'gizlilik politikamıza',
+  cookie_accept_all: 'Tümünü kabul et',
+  cookie_reject_all: 'Sadece gerekli',
+  cookie_customize: 'Tercihleri özelleştir',
+  cookie_hide_details: 'Detayları gizle',
+  cookie_save_choice: 'Tercihleri kaydet',
+  cookie_cat_necessary: 'Gerekli',
+  cookie_cat_necessary_desc: 'Giriş, dil seçimi ve güvenlik için gereklidir. Devre dışı bırakılamaz.',
+  cookie_cat_analytics: 'Analitik',
+  cookie_cat_analytics_desc: 'Siteyi geliştirmek için anonim istatistikler. Kişisel profil yok.',
+  cookie_cat_marketing: 'Pazarlama',
+  cookie_cat_marketing_desc: 'Kişiselleştirilmiş reklamlar ve yeniden hedefleme. Şu anda aktif değil.',
+
+  // ── Sistem durumu ────────────────────────────────────────────────────────
+  status_breadcrumb: 'Sistem durumu',
+  status_page_title: 'Sistem durumu',
+  status_page_intro: 'Hizmetlerimizin gerçek zamanlı durumu. Her 30 saniyede otomatik yenilenir.',
+  status_overall_up: 'Tüm sistemler çalışıyor',
+  status_overall_degraded: 'Performans düştü',
+  status_overall_down: 'Kesinti tespit edildi',
+  status_overall_checking: 'Durum kontrol ediliyor…',
+  status_label_up: 'Çalışıyor',
+  status_label_degraded: 'Yavaş',
+  status_label_down: 'Kullanılamıyor',
+  status_label_checking: 'Kontrol ediliyor',
+  status_svc_api_name: 'SwiftBridge API',
+  status_svc_api_desc: 'Giriş, ödeme ve KYC için backend.',
+  status_svc_db_name: 'Veritabanı',
+  status_svc_db_desc: 'Kullanıcılar ve işlemler için kalıcı depolama.',
+  status_svc_rates_name: 'Döviz kuru beslemesi',
+  status_svc_rates_desc: 'Hesaplayıcı ve widget için canlı EUR→TRY kuru.',
+  status_last_checked: 'Son kontrol:',
+  status_auto_refresh: 'her 30 sn otomatik yenileme',
+  status_refresh: 'Yenile',
+  status_help_title: 'Sorun mu yaşıyorsunuz?',
+  status_help_desc: 'Burada gösterilmeyen bir sorun yaşıyorsanız bize bildirin. Genellikle bir saat içinde yanıt veriyoruz.',
   landing_faq_nog_vragen: 'Başka sorun var mı?',
 
   // CTA

@@ -190,7 +190,7 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
       >
         {preview ? (
           <div className="space-y-2">
-            <img src={preview} alt={t('kyc_upload_preview_alt')} className="h-36 mx-auto rounded-xl object-cover shadow" />
+            <img src={preview} alt={t('kyc_upload_preview_alt')} className="h-36 mx-auto rounded-xl object-cover shadow" loading="lazy" decoding="async" />
             <p className="text-green-700 font-semibold text-sm">
               {t('kyc_upload_geupload')} ({(file.size / 1024 / 1024).toFixed(2)} MB)
             </p>
@@ -801,5 +801,5 @@ function ThumbVoorkant({ file }) {
     r.readAsDataURL(file);
   }, [file]);
   if (!src) return <div className="bg-gray-100 h-20 rounded-lg animate-pulse" />;
-  return <img src={src} alt="thumbnail" className="h-20 w-full object-cover rounded-lg shadow" />;
+  return <img src={src} alt="thumbnail" className="h-20 w-full object-cover rounded-lg shadow" loading="lazy" decoding="async" />;
 }

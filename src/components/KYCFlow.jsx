@@ -54,7 +54,7 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
       >
         {preview ? (
           <div className="space-y-2">
-            <img src={preview} alt="Preview" className="h-32 mx-auto rounded-xl object-cover shadow" />
+            <img src={preview} alt="Preview" className="h-32 mx-auto rounded-xl object-cover shadow" loading="lazy" decoding="async" />
             <p className="text-green-600 font-semibold text-sm">✅ Foto geüpload</p>
             <p className="text-gray-400 text-xs">Klik om te wijzigen</p>
           </div>

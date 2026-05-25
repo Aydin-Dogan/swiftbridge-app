@@ -416,6 +416,46 @@ export const nl = {
 
   // ── A11y ─────────────────────────────────────────────────────────────────
   a11y_skip_to_content: 'Naar hoofdinhoud springen',
+
+  // ── Cookie consent (AVG/GDPR) ────────────────────────────────────────────
+  cookie_title: 'Wij respecteren je privacy',
+  cookie_desc: 'We gebruiken alleen noodzakelijke cookies voor het functioneren van de site. Voor analytics en marketing vragen we expliciet toestemming. Lees meer in ons',
+  cookie_privacy_link: 'privacybeleid',
+  cookie_accept_all: 'Alles accepteren',
+  cookie_reject_all: 'Alleen noodzakelijk',
+  cookie_customize: 'Voorkeuren aanpassen',
+  cookie_hide_details: 'Details verbergen',
+  cookie_save_choice: 'Voorkeuren opslaan',
+  cookie_cat_necessary: 'Noodzakelijk',
+  cookie_cat_necessary_desc: 'Vereist voor login, taalkeuze en beveiliging. Kan niet worden uitgeschakeld.',
+  cookie_cat_analytics: 'Analytics',
+  cookie_cat_analytics_desc: 'Anonieme statistieken om de site te verbeteren. Geen persoonlijke profielen.',
+  cookie_cat_marketing: 'Marketing',
+  cookie_cat_marketing_desc: 'Voor gepersonaliseerde advertenties en retargeting. Momenteel niet actief.',
+
+  // ── Status page ──────────────────────────────────────────────────────────
+  status_breadcrumb: 'Service status',
+  status_page_title: 'Service status',
+  status_page_intro: 'Realtime status van onze diensten. Auto-refresh elke 30 seconden.',
+  status_overall_up: 'Alle systemen operationeel',
+  status_overall_degraded: 'Verminderde prestaties',
+  status_overall_down: 'Storing gedetecteerd',
+  status_overall_checking: 'Status wordt gecontroleerd…',
+  status_label_up: 'Operationeel',
+  status_label_degraded: 'Vertraagd',
+  status_label_down: 'Niet beschikbaar',
+  status_label_checking: 'Controleren',
+  status_svc_api_name: 'SwiftBridge API',
+  status_svc_api_desc: 'Backend voor login, betalingen en KYC.',
+  status_svc_db_name: 'Database',
+  status_svc_db_desc: 'Persistente opslag voor gebruikers en transacties.',
+  status_svc_rates_name: 'Wisselkoers feed',
+  status_svc_rates_desc: 'Live EUR→TRY koers voor calculator en widget.',
+  status_last_checked: 'Laatste controle:',
+  status_auto_refresh: 'auto-refresh elke 30s',
+  status_refresh: 'Vernieuwen',
+  status_help_title: 'Probleem ervaren?',
+  status_help_desc: 'Als je een storing ervaart die hier niet wordt getoond, laat het ons weten. We reageren meestal binnen een uur.',
   landing_faq_nog_vragen: 'Heb je nog vragen?',
 
   // CTA

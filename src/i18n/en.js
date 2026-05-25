@@ -415,6 +415,46 @@ export const en = {
 
   // ── A11y ─────────────────────────────────────────────────────────────────
   a11y_skip_to_content: 'Skip to main content',
+
+  // ── Cookie consent (GDPR) ────────────────────────────────────────────────
+  cookie_title: 'We respect your privacy',
+  cookie_desc: 'We only use necessary cookies to run the site. For analytics and marketing we ask explicit consent. Read more in our',
+  cookie_privacy_link: 'privacy policy',
+  cookie_accept_all: 'Accept all',
+  cookie_reject_all: 'Necessary only',
+  cookie_customize: 'Customize',
+  cookie_hide_details: 'Hide details',
+  cookie_save_choice: 'Save preferences',
+  cookie_cat_necessary: 'Necessary',
+  cookie_cat_necessary_desc: 'Required for login, language choice and security. Cannot be disabled.',
+  cookie_cat_analytics: 'Analytics',
+  cookie_cat_analytics_desc: 'Anonymous statistics to improve the site. No personal profiles.',
+  cookie_cat_marketing: 'Marketing',
+  cookie_cat_marketing_desc: 'For personalized ads and retargeting. Not currently active.',
+
+  // ── Status page ──────────────────────────────────────────────────────────
+  status_breadcrumb: 'Service status',
+  status_page_title: 'Service status',
+  status_page_intro: 'Real-time status of our services. Auto-refreshes every 30 seconds.',
+  status_overall_up: 'All systems operational',
+  status_overall_degraded: 'Degraded performance',
+  status_overall_down: 'Outage detected',
+  status_overall_checking: 'Checking status…',
+  status_label_up: 'Operational',
+  status_label_degraded: 'Slow',
+  status_label_down: 'Unavailable',
+  status_label_checking: 'Checking',
+  status_svc_api_name: 'SwiftBridge API',
+  status_svc_api_desc: 'Backend for login, payments and KYC.',
+  status_svc_db_name: 'Database',
+  status_svc_db_desc: 'Persistent storage for users and transactions.',
+  status_svc_rates_name: 'Exchange rate feed',
+  status_svc_rates_desc: 'Live EUR→TRY rate for calculator and widget.',
+  status_last_checked: 'Last checked:',
+  status_auto_refresh: 'auto-refresh every 30s',
+  status_refresh: 'Refresh',
+  status_help_title: 'Experiencing issues?',
+  status_help_desc: 'If you are experiencing an issue not shown here, let us know. We usually respond within an hour.',
   landing_faq_nog_vragen: 'Still have questions?',
 
   // CTA

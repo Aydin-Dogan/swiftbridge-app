@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import TaalKiezer from './components/TaalKiezer';
 import OfflineBanner from './components/OfflineBanner';
 import SupportChat from './components/chat/SupportChat';
+import ErrorBoundary from './components/ErrorBoundary';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi } from './services/api';
 
@@ -33,6 +34,7 @@ const SeoPaparaYukleme      = lazy(() => import('./pages/seo/PaparaYukleme'));
 const SeoBayramRemittance   = lazy(() => import('./pages/seo/BayramRemittance'));
 const NotFound              = lazy(() => import('./pages/NotFound'));
 const LocaleLanding         = lazy(() => import('./pages/LocaleLanding'));
+const Status                = lazy(() => import('./pages/Status'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -187,7 +189,15 @@ function AppShell({ gebruiker, token, onLogout }) {
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button onClick={() => navigate('/')} className="flex items-center gap-2">
-            <img src="/icon-192.png" alt="SwiftBridge" className="w-9 h-9 rounded-xl shadow-sm" />
+            <img
+              src="/icon-192.png"
+              alt="SwiftBridge"
+              className="w-9 h-9 rounded-xl shadow-sm"
+              width="36"
+              height="36"
+              decoding="async"
+              fetchpriority="high"
+            />
             <div>
               <h1 className="text-base font-extrabold text-gray-900 leading-none">SwiftBridge</h1>
               <p className="text-xs text-blue-600 font-medium">NL → TR in &lt;5 min</p>
@@ -353,6 +363,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <OfflineBanner />
+      {/* Globale ErrorBoundary (Verbetering N) — vangt uncaught JS errors per
+          route op zodat we nooit een white screen tonen. Errors loggen naar
+          /errors/frontend in productie + console in dev. */}
+      <ErrorBoundary>
       <Suspense fallback={<LaadSpinner />}>
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -419,6 +433,12 @@ export default function App() {
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacybeleid" element={<Privacybeleid />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />
+          {/* Publieke status page (Verbetering L) — bouwt vertrouwen, live healthchecks */}
+          <Route path="/status" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <Status />
+            </Suspense>
+          } />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/admin/compliance" element={
             token ? <AdminCompliance /> : <Navigate to="/login" replace />
@@ -431,6 +451,7 @@ export default function App() {
           } />
         </Routes>
       </Suspense>
+      </ErrorBoundary>
       <SupportChatGlobal gebruiker={gebruiker} token={token} />
     </BrowserRouter>
   );

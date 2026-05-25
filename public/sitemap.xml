@@ -161,4 +161,11 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://swiftbridge.tr/status</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.4</priority>
+  </url>
+
 </urlset>

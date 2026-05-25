@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LiveKoersTicker from '../components/LiveKoersTicker';
 import TaalKiezer from '../components/TaalKiezer';
+import CookieConsent from '../components/CookieConsent';
 import { useTaal } from '../i18n';
 
 // Landing-specific sections
@@ -210,6 +211,11 @@ export default function Landing() {
       <FAQ />
       <CTA />
       <Footer />
+
+      {/* Cookie consent banner — verschijnt alleen bij eerste bezoek (geen
+          localStorage entry). AVG/GDPR-compliant: granular consent met
+          gelijkwaardige Accept/Reject knoppen, geen dark patterns. */}
+      <CookieConsent />
     </div>
   );
 }

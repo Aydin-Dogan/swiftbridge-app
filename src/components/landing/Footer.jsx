@@ -88,6 +88,11 @@ export default function Footer() {
                   {t('landing_footer_aml')}
                 </a>
               </li>
+              <li>
+                <a href="/status" className="hover:text-white transition">
+                  {t('status_page_title')}
+                </a>
+              </li>
             </ul>
           </div>
 

@@ -62,7 +62,7 @@ function DocumentBeeld({ recordId, type, label }) {
         {fout ? (
           <div className="text-xs text-red-300 p-2 text-center">{fout}</div>
         ) : src ? (
-          <img src={src} alt={label} className="w-full h-full object-contain" />
+          <img src={src} alt={label} className="w-full h-full object-contain" loading="lazy" decoding="async" />
         ) : (
           <div className="text-xs text-white/40 animate-pulse">{t('laden')}</div>
         )}
