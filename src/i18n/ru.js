@@ -186,6 +186,8 @@ export const ru = {
   referral_deel_whatsapp: 'WhatsApp',
   referral_deel_email: 'E-mail',
   referral_deel_kopieer: 'Копировать ссылку',
+  referral_deel_meer: 'Другие варианты',
+  referral_badge_verdien: 'Получите €{bedrag} за приглашение',
   referral_stats_vrienden: 'Приглашено',
   referral_stats_verdiend: 'Заработано',
   referral_hoe_titel: '💡 Как это работает',
@@ -455,6 +457,18 @@ export const ru = {
   calc_share_title: 'Мой расчёт SwiftBridge',
   calc_share_text: 'Посмотрите, сколько я могу отправить через SwiftBridge:',
   calc_share_handmatig: 'Скопируйте эту ссылку, чтобы поделиться:',
+  calc_share_whatsapp: 'Поделиться через WhatsApp',
+
+  // ── Оверлей загрузки платежа (Улучшение W) ───────────────────────────────
+  pay_overlay_titel: 'Подготовка платежа',
+  pay_overlay_subtitel: 'Подождите — мы скоро перенаправим вас в ваш банк.',
+  pay_overlay_stap1: 'Создание транзакции',
+  pay_overlay_stap2: 'Подготовка платежа',
+  pay_overlay_stap3: 'Перенаправление на страницу оплаты',
+  pay_overlay_geduld: 'Не закрывайте это окно — обычно это занимает менее 5 секунд.',
+
+  // ── История курса в Hero (Улучшение X) ───────────────────────────────────
+  hero_koers_7d_label: '7д тренд:',
 
   // ── Доверительный ряд футера ─────────────────────────────────────────────
   footer_trust_dnb_label: 'Под надзором DNB',

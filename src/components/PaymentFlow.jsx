@@ -17,6 +17,7 @@ import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../ser
 import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
 import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
 import { Bank, Card, Wallet, Euro, Globe } from './icons/Icons';
+import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -1092,6 +1093,11 @@ export default function PaymentFlow({ token }) {
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}
+
+      {/* PaymentLoadingOverlay (Verbetering W) — full-screen feedback tijdens
+          de transactie-aanmaak → Mollie payment-start → redirect sequence.
+          Voorkomt verwarring tijdens 1-4s wachttijd, plus blokkeert dubbele klik. */}
+      <PaymentLoadingOverlay open={laden && stap === 2} />
     </div>
   );
 }

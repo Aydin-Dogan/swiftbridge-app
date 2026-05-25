@@ -201,6 +201,8 @@ export const nl = {
   referral_deel_whatsapp: 'WhatsApp',
   referral_deel_email: 'E-mail',
   referral_deel_kopieer: 'Kopieer link',
+  referral_deel_meer: 'Meer delen',
+  referral_badge_verdien: 'Verdien €{bedrag} per uitnodiging',
   referral_stats_vrienden: 'Uitgenodigd',
   referral_stats_verdiend: 'Verdiend',
   referral_hoe_titel: '💡 Zo werkt het',
@@ -470,6 +472,18 @@ export const nl = {
   calc_share_title: 'Mijn SwiftBridge berekening',
   calc_share_text: 'Bekijk wat ik kan sturen via SwiftBridge:',
   calc_share_handmatig: 'Kopieer deze link om te delen:',
+  calc_share_whatsapp: 'Delen via WhatsApp',
+
+  // ── PaymentLoadingOverlay (Verbetering W) ────────────────────────────────
+  pay_overlay_titel: 'Betaling voorbereiden',
+  pay_overlay_subtitel: 'Even geduld — we sturen je zo door naar je bank.',
+  pay_overlay_stap1: 'Transactie aanmaken',
+  pay_overlay_stap2: 'Betaling voorbereiden',
+  pay_overlay_stap3: 'Doorsturen naar betaalpagina',
+  pay_overlay_geduld: 'Sluit dit venster niet — dit duurt meestal minder dan 5 seconden.',
+
+  // ── Hero koers-historiek (Verbetering X) ─────────────────────────────────
+  hero_koers_7d_label: '7d trend:',
 
   // ── Footer trust-row ─────────────────────────────────────────────────────
   footer_trust_dnb_label: 'DNB-toezicht',

@@ -186,6 +186,8 @@ export const az = {
   referral_deel_whatsapp: 'WhatsApp',
   referral_deel_email: 'E-poçt',
   referral_deel_kopieer: 'Linki kopyala',
+  referral_deel_meer: 'Daha çox paylaş',
+  referral_badge_verdien: 'Hər dəvətə görə €{bedrag} qazan',
   referral_stats_vrienden: 'Dəvət edildi',
   referral_stats_verdiend: 'Qazanıldı',
   referral_hoe_titel: '💡 Necə işləyir',
@@ -455,6 +457,18 @@ export const az = {
   calc_share_title: 'SwiftBridge hesablamam',
   calc_share_text: 'SwiftBridge ilə nə qədər göndərə bildiyimi gör:',
   calc_share_handmatig: 'Paylaşmaq üçün bu linki kopyalayın:',
+  calc_share_whatsapp: 'WhatsApp ilə paylaş',
+
+  // ── Ödəniş yükləmə örtüyü (Təkmilləşdirmə W) ─────────────────────────────
+  pay_overlay_titel: 'Ödəniş hazırlanır',
+  pay_overlay_subtitel: 'Gözləyin — sizi qısa müddətdə bankınıza yönləndirəcəyik.',
+  pay_overlay_stap1: 'Əməliyyat yaradılır',
+  pay_overlay_stap2: 'Ödəniş hazırlanır',
+  pay_overlay_stap3: 'Ödəniş səhifəsinə yönləndirilir',
+  pay_overlay_geduld: 'Bu pəncərəni bağlamayın — bu adətən 5 saniyədən az çəkir.',
+
+  // ── Hero məzənnə tarixçəsi (Təkmilləşdirmə X) ────────────────────────────
+  hero_koers_7d_label: '7g trend:',
 
   // ── Footer etibar sırası ─────────────────────────────────────────────────
   footer_trust_dnb_label: 'DNB nəzarəti',

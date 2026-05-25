@@ -11,6 +11,7 @@ import { berekenKosten } from '../../services/kosten';
 import Vlag from '../Vlag';
 import { API_URL } from '../../services/api';
 import { ShieldCheck, Bank, Lock, ArrowRight } from '../icons/Icons';
+import KoersSparkline from './KoersSparkline';
 
 // Trust signals — geen emoji's, SVG-iconen
 function TrustRow({ t }) {
@@ -196,7 +197,7 @@ export default function Hero() {
                 )}
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-gray-500 mb-4">
+              <div className="flex items-center justify-between text-[11px] text-gray-500 mb-2">
                 <span>
                   {t('landing_widget_koers')}: 1 € ={' '}
                   {liveKoersen === null ? (
@@ -214,6 +215,14 @@ export default function Hero() {
                   {kosten.zichtbarePct ? `${String(kosten.zichtbarePct).replace('.', ',')}%` : t('landing_widget_fee')}
                 </span>
               </div>
+
+              {/* Mini sparkline laatste 7 dagen (Verbetering X) — alleen tonen
+                  als we daadwerkelijk een koers hebben. */}
+              {liveKoersen !== null && (
+                <div className="mb-4">
+                  <KoersSparkline huidigeKoers={huidigeKoers} valuta={valuta} />
+                </div>
+              )}
 
               <button
                 onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
