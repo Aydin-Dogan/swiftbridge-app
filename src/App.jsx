@@ -35,6 +35,7 @@ const SeoBayramRemittance   = lazy(() => import('./pages/seo/BayramRemittance'))
 const NotFound              = lazy(() => import('./pages/NotFound'));
 const LocaleLanding         = lazy(() => import('./pages/LocaleLanding'));
 const Status                = lazy(() => import('./pages/Status'));
+const AdminErrors           = lazy(() => import('./pages/AdminErrors'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -53,57 +54,132 @@ function isInStandaloneMode() {
   return window.navigator.standalone === true;
 }
 
-// ── PWA Install Banner ────────────────────────────────────────────────────────
+// ── PWA Install Banner (Verbetering AA) ───────────────────────────────────────
+// Verbeteringen:
+//   - Toont pas vanaf 2e bezoek (minder opdringerig, geen "instant pitch")
+//   - 3-voordelen lijst legt de waarde uit (sneller, offline, push)
+//   - i18n via useTaal() — alle 5 talen
+//   - "Niet nu" / "Niet meer vragen" twee-trap dismissal
 function InstallBanner() {
+  const { t } = useTaal();
   const [prompt, setPrompt] = useState(null);
   const [toonAndroid, setToonAndroid] = useState(false);
   const [toonIOS, setToonIOS] = useState(false);
 
   useEffect(() => {
+    // Tel bezoeken — alleen tonen vanaf 2e bezoek voor minder opdringerig
+    let bezoekCount = parseInt(localStorage.getItem('swiftbridge_bezoek_count') || '0', 10);
+    bezoekCount += 1;
+    try {
+      localStorage.setItem('swiftbridge_bezoek_count', String(bezoekCount));
+    } catch {/* ignored */}
+
+    const permanentVerborgen = localStorage.getItem('swiftbridge_install_permanent_verborgen') === '1';
+    const sessieVerborgen = sessionStorage.getItem('swiftbridge_install_verborgen') === '1';
+    const minimaalBezoek = bezoekCount >= 2;
+    const magTonen = minimaalBezoek && !permanentVerborgen && !sessieVerborgen;
+
     // Android / Chrome: beforeinstallprompt event
     const handler = (e) => {
       e.preventDefault();
       setPrompt(e);
-      const verborgen = sessionStorage.getItem('swiftbridge_install_verborgen');
-      if (!verborgen) setToonAndroid(true);
+      if (magTonen) setToonAndroid(true);
     };
     window.addEventListener('beforeinstallprompt', handler);
 
     // iOS Safari: toon handmatige instructie als niet al geïnstalleerd
-    if (isIOS() && !isInStandaloneMode()) {
-      const verborgen = sessionStorage.getItem('swiftbridge_install_verborgen');
-      if (!verborgen) setToonIOS(true);
+    if (isIOS() && !isInStandaloneMode() && magTonen) {
+      setToonIOS(true);
     }
 
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  function verberg() {
-    sessionStorage.setItem('swiftbridge_install_verborgen', '1');
+  function verberg(permanent = false) {
+    if (permanent) {
+      try { localStorage.setItem('swiftbridge_install_permanent_verborgen', '1'); } catch {/* ignored */}
+    } else {
+      try { sessionStorage.setItem('swiftbridge_install_verborgen', '1'); } catch {/* ignored */}
+    }
     setToonAndroid(false);
     setToonIOS(false);
   }
 
   async function installeer() {
+    if (!prompt) return;
     prompt.prompt();
     const { outcome } = await prompt.userChoice;
-    if (outcome === 'accepted') setToonAndroid(false);
+    if (outcome === 'accepted') {
+      setToonAndroid(false);
+      try { localStorage.setItem('swiftbridge_install_permanent_verborgen', '1'); } catch {/* ignored */}
+    }
   }
 
-  // Android/Chrome banner
+  // Voordelen-lijst — hergebruikt door beide platforms
+  function Voordelen() {
+    return (
+      <ul className="space-y-1.5 text-xs">
+        <li className="flex items-center gap-2">
+          <span className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-emerald-300" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </span>
+          {t('install_voordeel_snel')}
+        </li>
+        <li className="flex items-center gap-2">
+          <span className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-emerald-300" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </span>
+          {t('install_voordeel_push')}
+        </li>
+        <li className="flex items-center gap-2">
+          <span className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-emerald-300" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </span>
+          {t('install_voordeel_offline')}
+        </li>
+      </ul>
+    );
+  }
+
+  // Android/Chrome banner — bottom-sheet stijl met voordelen
   if (toonAndroid && prompt) {
     return (
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-blue-600 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
-        <span className="text-2xl flex-shrink-0">⚡</span>
-        <div className="flex-1 min-w-0">
-          <p className="font-bold text-sm leading-none">Download SwiftBridge</p>
-          <p className="text-blue-200 text-xs mt-0.5">Installeer de app op je telefoon</p>
+      <div className="fixed bottom-20 left-3 right-3 z-[100] bg-gray-900 text-white rounded-2xl shadow-2xl p-4 border border-gray-700 max-w-md mx-auto">
+        <div className="flex items-start gap-3 mb-3">
+          <img src="/icon-192.png" alt="" width="40" height="40" className="rounded-xl flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-sm">{t('install_android_titel')}</p>
+            <p className="text-gray-400 text-xs mt-0.5">{t('install_android_subtitel')}</p>
+          </div>
+          <button
+            onClick={() => verberg(false)}
+            className="text-gray-500 hover:text-white text-xl leading-none flex-shrink-0"
+            aria-label={t('install_sluit')}
+          >
+            ✕
+          </button>
         </div>
-        <button onClick={installeer}
-          className="bg-white text-blue-600 font-bold text-xs px-3 py-2 rounded-xl flex-shrink-0 active:scale-95 transition">
-          Installeer
-        </button>
-        <button onClick={verberg} className="text-blue-300 hover:text-white text-lg flex-shrink-0">✕</button>
+        <Voordelen />
+        <div className="flex gap-2 mt-4">
+          <button
+            onClick={installeer}
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm py-2.5 rounded-xl transition active:scale-95"
+          >
+            {t('install_installeer')}
+          </button>
+          <button
+            onClick={() => verberg(true)}
+            className="text-xs text-gray-500 hover:text-gray-300 px-3 py-2"
+          >
+            {t('install_niet_meer')}
+          </button>
+        </div>
       </div>
     );
   }
@@ -111,31 +187,42 @@ function InstallBanner() {
   // iOS Safari banner met stap-voor-stap uitleg
   if (toonIOS) {
     return (
-      <div className="fixed bottom-20 left-3 right-3 z-[100] bg-gray-900 text-white rounded-2xl shadow-2xl p-4 border border-gray-700">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">⚡</span>
-            <div>
-              <p className="font-bold text-sm">Installeer SwiftBridge</p>
-              <p className="text-gray-400 text-xs">Zet de app op je beginscherm</p>
-            </div>
+      <div className="fixed bottom-20 left-3 right-3 z-[100] bg-gray-900 text-white rounded-2xl shadow-2xl p-4 border border-gray-700 max-w-md mx-auto">
+        <div className="flex items-start gap-3 mb-3">
+          <img src="/icon-192.png" alt="" width="40" height="40" className="rounded-xl flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-sm">{t('install_ios_titel')}</p>
+            <p className="text-gray-400 text-xs mt-0.5">{t('install_ios_subtitel')}</p>
           </div>
-          <button onClick={verberg} className="text-gray-500 text-xl leading-none">✕</button>
+          <button
+            onClick={() => verberg(false)}
+            className="text-gray-500 hover:text-white text-xl leading-none flex-shrink-0"
+            aria-label={t('install_sluit')}
+          >
+            ✕
+          </button>
         </div>
-        <div className="space-y-2">
+        <Voordelen />
+        <div className="space-y-2 mt-4 pt-3 border-t border-gray-700">
           <div className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2">
-            <span className="text-lg">1️⃣</span>
-            <p className="text-xs text-gray-300">Tik op het <span className="text-white font-bold">Deel-icoon</span> <span className="text-blue-400">⬆️</span> onderaan Safari</p>
+            <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <p className="text-xs text-gray-300">{t('install_ios_stap1')}</p>
           </div>
           <div className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2">
-            <span className="text-lg">2️⃣</span>
-            <p className="text-xs text-gray-300">Scroll naar beneden en tik op <span className="text-white font-bold">"Zet op beginscherm"</span></p>
+            <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <p className="text-xs text-gray-300">{t('install_ios_stap2')}</p>
           </div>
           <div className="flex items-center gap-3 bg-gray-800 rounded-xl px-3 py-2">
-            <span className="text-lg">3️⃣</span>
-            <p className="text-xs text-gray-300">Tik op <span className="text-white font-bold">"Voeg toe"</span> — klaar! 🎉</p>
+            <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <p className="text-xs text-gray-300">{t('install_ios_stap3')}</p>
           </div>
         </div>
+        <button
+          onClick={() => verberg(true)}
+          className="text-xs text-gray-500 hover:text-gray-300 mt-3 underline"
+        >
+          {t('install_niet_meer')}
+        </button>
       </div>
     );
   }
@@ -442,6 +529,12 @@ export default function App() {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/admin/compliance" element={
             token ? <AdminCompliance /> : <Navigate to="/login" replace />
+          } />
+          {/* Admin errors viewer (Verbetering Z) — hangt aan U backend endpoint */}
+          <Route path="/admin/errors" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <AdminErrors />
+            </Suspense>
           } />
           {/* Custom 404 ipv silent redirect — geeft bezoeker feedback + navigatie-suggesties */}
           <Route path="*" element={

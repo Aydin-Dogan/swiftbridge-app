@@ -39,6 +39,7 @@ import InsightsCard from './dashboard/InsightsCard';
 
 // Onboarding wizard voor nieuwe gebruikers
 import OnboardingModal from './onboarding/OnboardingModal';
+import TourOverlay, { moetTourTonen } from './onboarding/TourOverlay';
 
 // App-wide announcement banners (door admin beheerd)
 import BannerLijst from './banners/BannerLijst';
@@ -270,7 +271,21 @@ export default function Dashboard({ gebruiker }) {
   function sluitOnboarding() {
     try { localStorage.setItem(ONB_DISMISS_KEY, '1'); } catch {}
     setOnboardingOpen(false);
+    // Tour-overlay direct hierna tonen — 1× automatisch (Verbetering BB)
+    if (moetTourTonen()) setTourOpen(true);
   }
+
+  // Tour overlay state (Verbetering BB) — 5-staps bottom-nav uitleg
+  const [tourOpen, setTourOpen] = useState(false);
+  useEffect(() => {
+    // Toon tour ook als wizard al weg is maar tour nog niet — bv. herhaalde
+    // bezoekers die wizard al hadden gesloten vóór BB werd uitgerold.
+    // Maar NIET tegelijk met wizard (kan dubbele overlay geven).
+    if (!onboardingOpen && moetTourTonen() && gebruiker?.id) {
+      const timer = setTimeout(() => setTourOpen(true), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [onboardingOpen, gebruiker?.id]);
 
   // Live koers ophalen via backend (60s polling)
   const haalKoers = useCallback(async () => {
@@ -346,6 +361,10 @@ export default function Dashboard({ gebruiker }) {
         open={onboardingOpen}
         onDismiss={sluitOnboarding}
       />
+
+      {/* Tour-overlay (Verbetering BB) — 5-staps uitleg bottom-nav.
+          Toont 1× automatisch na wizard, opnieuw via "Tour herstarten" in Profiel. */}
+      <TourOverlay open={tourOpen} onSluit={() => setTourOpen(false)} />
 
       {/* Email verificatie banner — niet dismissible, blokkeert overboeking-flow */}
       {gebruiker?.emailGeverifieerd === false && (
