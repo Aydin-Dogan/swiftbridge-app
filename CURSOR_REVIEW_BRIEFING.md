@@ -1,6 +1,11 @@
 # SwiftBridge — review-briefing voor externe code-reviewer
 
-> **Doel:** onafhankelijke second-opinion op de 20 verbeteringen die de afgelopen sessies zijn gedaan, vóór go-live van swiftbridge.tr.
+> **Doel:** onafhankelijke second-opinion op de **68 verbeteringen** (A t/m XXX)
+> die de afgelopen sessies zijn gedaan, vóór go-live van swiftbridge.tr.
+>
+> **Update 26 mei 2026:** sinds versie 1 van dit document zijn er nog 48
+> verbeteringen toegevoegd (Z t/m XXX). Zie `OPEN_PUNTEN.md` voor complete
+> lijst per categorie en bekende risico's.
 
 ---
 
