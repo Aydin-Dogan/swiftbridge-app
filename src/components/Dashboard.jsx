@@ -36,6 +36,7 @@ import QuickActions from './dashboard/QuickActions';
 import KoersChart from './dashboard/KoersChart';
 import RecentTransacties from './dashboard/RecentTransacties';
 import InsightsCard from './dashboard/InsightsCard';
+import Spaardoelen from './dashboard/Spaardoelen';
 
 // Onboarding wizard voor nieuwe gebruikers
 import OnboardingModal from './onboarding/OnboardingModal';
@@ -435,6 +436,10 @@ export default function Dashboard({ gebruiker }) {
 
       {/* 8. Recente transacties (incl. lege-state CTA) */}
       <RecentTransacties transacties={transacties} laden={ladenTx} />
+
+      {/* Spaardoelen (Verbetering AAA) — user-defined savings goals
+          met progress-bar, deadline-countdown en suggested bijdrage. */}
+      <Spaardoelen />
 
       {/* 9. Insights / Tips */}
       <InsightsCard
