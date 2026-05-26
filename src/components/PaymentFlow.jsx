@@ -891,6 +891,81 @@ function PushOptInCard({ token }) {
   );
 }
 
+// ── Tracking-link share card (Verbetering OO) ────────────────────────────────
+// Toont copy + WhatsApp share knoppen voor publieke /tx/:token URL.
+// Veilig: link bevat geen PII, alleen status-info voor ontvanger.
+function TrackingShareCard({ trackingToken }) {
+  const [gekopieerd, setGekopieerd] = useState(false);
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const trackUrl = `${origin}/tx/${trackingToken}`;
+
+  async function kopieer() {
+    try {
+      await navigator.clipboard.writeText(trackUrl);
+      setGekopieerd(true);
+      setTimeout(() => setGekopieerd(false), 2500);
+    } catch {
+      window.prompt('Kopieer deze link:', trackUrl);
+    }
+  }
+
+  function deelWhatsApp() {
+    const text = `Hier kan je het geld volgen: ${trackUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+  }
+
+  async function deelNative() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'SwiftBridge transactie',
+          text: 'Hier kan je de status van de overboeking volgen',
+          url: trackUrl,
+        });
+      } catch (e) { if (e.name !== 'AbortError') kopieer(); }
+    } else {
+      kopieer();
+    }
+  }
+
+  return (
+    <div className="bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-left space-y-3">
+      <div className="flex items-start gap-3">
+        <span className="text-2xl flex-shrink-0" aria-hidden="true">🔗</span>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-indigo-900 text-sm">Deel tracking-link met ontvanger</p>
+          <p className="text-xs text-indigo-800 mt-0.5">
+            Ze kunnen status volgen zonder account — geen persoonsgegevens zichtbaar.
+          </p>
+        </div>
+      </div>
+      <div className="bg-white rounded-lg px-3 py-2 text-xs font-mono text-gray-700 truncate">
+        {trackUrl}
+      </div>
+      <div className="grid grid-cols-3 gap-2">
+        <button
+          onClick={kopieer}
+          className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg py-2.5 transition"
+        >
+          {gekopieerd ? '✓ Gekopieerd' : '📋 Kopieer'}
+        </button>
+        <button
+          onClick={deelWhatsApp}
+          className="text-xs font-bold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-lg py-2.5 transition"
+        >
+          WhatsApp
+        </button>
+        <button
+          onClick={deelNative}
+          className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg py-2.5 transition"
+        >
+          🔗 Delen
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Stap 3: Verzonden ─────────────────────────────────────────────────────────
 function StapVerzonden({ transactie, methode, onNieuw, token }) {
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
@@ -928,6 +1003,11 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
       <p className="text-xs text-gray-400">
         Je ontvangt een bevestiging per e-mail. De transactie is zichtbaar in je dashboard.
       </p>
+
+      {/* Tracking-link share (Verbetering OO) — alleen als trackingToken aanwezig is */}
+      {transactie?.trackingToken && (
+        <TrackingShareCard trackingToken={transactie.trackingToken} />
+      )}
 
       {/* Push opt-in (Verbetering NN) — alleen tonen als browser ondersteunt en niet al beslist */}
       <PushOptInCard token={token} />

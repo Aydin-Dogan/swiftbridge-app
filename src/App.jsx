@@ -37,6 +37,7 @@ const NotFound              = lazy(() => import('./pages/NotFound'));
 const LocaleLanding         = lazy(() => import('./pages/LocaleLanding'));
 const Status                = lazy(() => import('./pages/Status'));
 const AdminErrors           = lazy(() => import('./pages/AdminErrors'));
+const TransactieTracking    = lazy(() => import('./pages/TransactieTracking'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -532,6 +533,13 @@ export default function App() {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/admin/compliance" element={
             token ? <AdminCompliance /> : <Navigate to="/login" replace />
+          } />
+          {/* Publieke transactie tracking-link (Verbetering OO) — ontvanger
+              kan status zien zonder login, geen PII zichtbaar. */}
+          <Route path="/tx/:token" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <TransactieTracking />
+            </Suspense>
           } />
           {/* Admin errors viewer (Verbetering Z) — hangt aan U backend endpoint */}
           <Route path="/admin/errors" element={
