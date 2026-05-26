@@ -920,6 +920,31 @@ export const az = {
   maand_overzicht_vorige_maand: 'keçən ay',
   maand_overzicht_30d_geleden: '30 gün əvvəl',
   maand_overzicht_vandaag: 'bu gün',
+
+  // ── Bildiriş tərcihləri (Təkmilləşdirmə GGG) ─────────────────────────────
+  notif_voorkeuren_titel: 'Bildiriş tərcihləri',
+  notif_voorkeuren_uitleg: 'Hansı kanallardan yeniləmə almaq istədiyinizi seçin. Sonra dəyişdirə bilərsiniz.',
+  notif_email_label: 'E-poçt',
+  notif_email_uitleg: 'Hər transfer üçün təsdiq + aylıq xülasə',
+  notif_push_label: 'Push bildirişlər',
+  notif_push_uitleg: 'Məzənnə və əməliyyat statusu üçün sürətli bildiriş',
+  notif_whatsapp_label: 'WhatsApp',
+  notif_whatsapp_uitleg: 'Pul çatdırıldıqda izləmə yeniləməsi',
+
+  // ── Təkrarlanan ical (Təkmilləşdirmə III) ────────────────────────────────
+  recurring_ical_knop: '📅 Təqvim (.ics)',
+  recurring_ical_tooltip: 'Google/Apple/Outlook üçün yüklə',
+
+  // ── Dəvət lider lövhəsi (Təkmilləşdirmə JJJ) ─────────────────────────────
+  referral_leaderboard_titel: 'Ən çox dəvət edənlər',
+  referral_leaderboard_uitleg: 'Ən çox dost dəvət edənlər. Məxfilik üçün adlar anonimləşdirilib.',
+  referral_leaderboard_leeg: 'İlk siz olun — dostlarınızı dəvət edin!',
+  referral_leaderboard_aantal: 'dəvət',
+  referral_leaderboard_jij: 'siz',
+
+  // ── Sevimli valyutalar (Təkmilləşdirmə KKK) ──────────────────────────────
+  valuta_favoriet_aria: 'Sevimli olaraq qeyd et',
+  valuta_favoriet_max: 'Maksimum 8 sevimli',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

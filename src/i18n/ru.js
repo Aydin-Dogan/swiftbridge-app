@@ -920,6 +920,31 @@ export const ru = {
   maand_overzicht_vorige_maand: 'в прошлом месяце',
   maand_overzicht_30d_geleden: '30 дней назад',
   maand_overzicht_vandaag: 'сегодня',
+
+  // ── Настройки уведомлений (Улучшение GGG) ────────────────────────────────
+  notif_voorkeuren_titel: 'Настройки уведомлений',
+  notif_voorkeuren_uitleg: 'Выберите по каким каналам получать обновления. Можно изменить позже.',
+  notif_email_label: 'Email',
+  notif_email_uitleg: 'Подтверждение по каждому переводу + месячная сводка',
+  notif_push_label: 'Push-уведомления',
+  notif_push_uitleg: 'Быстрые уведомления о курсе и статусе транзакции',
+  notif_whatsapp_label: 'WhatsApp',
+  notif_whatsapp_uitleg: 'Обновление при доставке денег',
+
+  // ── Экспорт календаря (Улучшение III) ────────────────────────────────────
+  recurring_ical_knop: '📅 Календарь (.ics)',
+  recurring_ical_tooltip: 'Скачать для Google/Apple/Outlook',
+
+  // ── Рейтинг реферралов (Улучшение JJJ) ───────────────────────────────────
+  referral_leaderboard_titel: 'Лучшие приглашатели',
+  referral_leaderboard_uitleg: 'Кто пригласил больше всего друзей. Имена анонимизированы.',
+  referral_leaderboard_leeg: 'Будьте первым — пригласите друзей!',
+  referral_leaderboard_aantal: 'приглашений',
+  referral_leaderboard_jij: 'вы',
+
+  // ── Любимые валюты (Улучшение KKK) ───────────────────────────────────────
+  valuta_favoriet_aria: 'Отметить как любимое',
+  valuta_favoriet_max: 'Максимум 8 любимых',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

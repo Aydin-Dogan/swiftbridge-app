@@ -119,6 +119,14 @@ export default function RecurringKaart({ item, onPauzeer, onHervat, onUitvoer, o
         >
           {t('recurring_actie_uitvoer_nu')}
         </button>
+        {/* III — calendar export */}
+        <a
+          href={`${import.meta.env.VITE_API_URL || ''}/recurring/${item.id}/ical`}
+          className="text-xs px-3 py-2 rounded-lg bg-purple-50 text-purple-700 font-medium border border-purple-100 hover:bg-purple-100 active:scale-95 transition inline-flex items-center"
+          title={t('recurring_ical_tooltip')}
+        >
+          {t('recurring_ical_knop')}
+        </a>
         <button
           type="button"
           onClick={() => onVerwijder(item.id)}

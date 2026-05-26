@@ -12,6 +12,7 @@ import TweeFactorInstellingen from './TweeFactorInstellingen';
 import LoginHistory from './LoginHistory';
 import TourOverlay, { resetTour } from './onboarding/TourOverlay';
 import AccountantBeheer from './AccountantBeheer';
+import NotificatieVoorkeuren from './NotificatieVoorkeuren';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 
@@ -480,6 +481,12 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         token={token}
         twofaIngeschakeld={!!profiel?.twofaIngeschakeld}
         onChange={(nieuweStatus) => setProfiel(p => ({ ...p, twofaIngeschakeld: nieuweStatus }))}
+      />
+
+      {/* Notificatie voorkeuren (Verbetering GGG) — email/push/whatsapp toggles */}
+      <NotificatieVoorkeuren
+        profiel={profiel}
+        onUpdate={(patch) => setProfiel(p => ({ ...p, ...patch }))}
       />
 
       {/* Login historiek (Verbetering JJ) — recente login-events voor security */}

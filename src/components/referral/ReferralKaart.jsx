@@ -12,6 +12,7 @@
 import { useState, useEffect } from 'react';
 import { useTaal } from '../../i18n';
 import { apiFetch, parseError } from '../../services/api';
+import ReferralLeaderboard from './ReferralLeaderboard';
 
 // SVG iconen — vervangen emoji's voor consistentie met matte-modern stijl
 const IconWhatsApp = () => (
@@ -261,6 +262,10 @@ export default function ReferralKaart() {
           <li>{t('referral_hoe_stap3', { bedrag: beloningPerVriendEur })}</li>
         </ol>
       </div>
+
+      {/* Leaderboard (Verbetering JJJ) — verbergt zichzelf als niemand
+          nog iemand heeft uitgenodigd. */}
+      <ReferralLeaderboard />
     </div>
   );
 }

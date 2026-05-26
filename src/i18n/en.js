@@ -1009,6 +1009,31 @@ export const en = {
   maand_overzicht_vorige_maand: 'last month',
   maand_overzicht_30d_geleden: '30 days ago',
   maand_overzicht_vandaag: 'today',
+
+  // ── Notification preferences (Improvement GGG) ───────────────────────────
+  notif_voorkeuren_titel: 'Notification preferences',
+  notif_voorkeuren_uitleg: 'Choose which channels you want updates on. You can change this later.',
+  notif_email_label: 'Email',
+  notif_email_uitleg: 'Confirmation per transfer + monthly summary',
+  notif_push_label: 'Push notifications',
+  notif_push_uitleg: 'Quick alerts for rate changes and transaction status',
+  notif_whatsapp_label: 'WhatsApp',
+  notif_whatsapp_uitleg: 'Tracking update when money is delivered',
+
+  // ── Recurring ical export (Improvement III) ──────────────────────────────
+  recurring_ical_knop: '📅 Calendar (.ics)',
+  recurring_ical_tooltip: 'Download for Google/Apple/Outlook Calendar',
+
+  // ── Referral leaderboard (Improvement JJJ) ───────────────────────────────
+  referral_leaderboard_titel: 'Top inviters',
+  referral_leaderboard_uitleg: 'People who invited the most friends. Names are anonymized for privacy.',
+  referral_leaderboard_leeg: 'Be the first on the list — invite friends!',
+  referral_leaderboard_aantal: 'invites',
+  referral_leaderboard_jij: 'you',
+
+  // ── Currency favorites (Improvement KKK) ─────────────────────────────────
+  valuta_favoriet_aria: 'Mark as favorite',
+  valuta_favoriet_max: 'Maximum 8 favorites',
   recurring_melding_uitvoer_ok: 'Transfer created — see your transaction history.',
   recurring_kaart_bedrag: 'Amount',
   recurring_kaart_frequentie: 'Frequency',

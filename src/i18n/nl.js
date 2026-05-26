@@ -891,6 +891,31 @@ export const nl = {
   maand_overzicht_vorige_maand: 'vorige maand',
   maand_overzicht_30d_geleden: '30 dagen geleden',
   maand_overzicht_vandaag: 'vandaag',
+
+  // ── Notificatie voorkeuren (Verbetering GGG) ─────────────────────────────
+  notif_voorkeuren_titel: 'Notificatie voorkeuren',
+  notif_voorkeuren_uitleg: 'Kies via welke kanalen je updates wilt ontvangen. Je kunt dit altijd later wijzigen.',
+  notif_email_label: 'E-mail',
+  notif_email_uitleg: 'Bevestiging per overboeking + maandelijkse samenvatting',
+  notif_push_label: 'Push notificaties',
+  notif_push_uitleg: 'Snelle melding bij koers-alerts en transactie-status',
+  notif_whatsapp_label: 'WhatsApp',
+  notif_whatsapp_uitleg: 'Tracking-update wanneer geld is afgeleverd',
+
+  // ── Recurring ical export (Verbetering III) ──────────────────────────────
+  recurring_ical_knop: '📅 Calendar (.ics)',
+  recurring_ical_tooltip: 'Download voor Google/Apple/Outlook Calendar',
+
+  // ── Referral leaderboard (Verbetering JJJ) ───────────────────────────────
+  referral_leaderboard_titel: 'Top uitnodigers',
+  referral_leaderboard_uitleg: 'Mensen die de meeste vrienden hebben uitgenodigd. Namen zijn geanonimiseerd voor privacy.',
+  referral_leaderboard_leeg: 'Wees de eerste op de lijst — nodig vrienden uit!',
+  referral_leaderboard_aantal: 'uitnodigingen',
+  referral_leaderboard_jij: 'jij',
+
+  // ── Favoriete valutas (Verbetering KKK) ──────────────────────────────────
+  valuta_favoriet_aria: 'Markeer als favoriet',
+  valuta_favoriet_max: 'Maximaal 8 favorieten',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

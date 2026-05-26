@@ -1009,6 +1009,31 @@ export const tr = {
   maand_overzicht_vorige_maand: 'geçen ay',
   maand_overzicht_30d_geleden: '30 gün önce',
   maand_overzicht_vandaag: 'bugün',
+
+  // ── Bildirim tercihleri (İyileştirme GGG) ────────────────────────────────
+  notif_voorkeuren_titel: 'Bildirim tercihleri',
+  notif_voorkeuren_uitleg: 'Hangi kanallardan güncelleme almak istediğinizi seçin. Daha sonra değiştirebilirsiniz.',
+  notif_email_label: 'E-posta',
+  notif_email_uitleg: 'Her transfer için onay + aylık özet',
+  notif_push_label: 'Push bildirimler',
+  notif_push_uitleg: 'Kur uyarıları ve işlem durumu için hızlı bildirim',
+  notif_whatsapp_label: 'WhatsApp',
+  notif_whatsapp_uitleg: 'Para teslim edildiğinde takip güncellemesi',
+
+  // ── Tekrarlayan ical (İyileştirme III) ───────────────────────────────────
+  recurring_ical_knop: '📅 Takvim (.ics)',
+  recurring_ical_tooltip: 'Google/Apple/Outlook Takvim için indir',
+
+  // ── Davet liderlik tablosu (İyileştirme JJJ) ─────────────────────────────
+  referral_leaderboard_titel: 'En çok davet edenler',
+  referral_leaderboard_uitleg: 'En çok arkadaş davet edenler. Gizlilik için isimler anonimleştirildi.',
+  referral_leaderboard_leeg: 'Listede ilk siz olun — arkadaş davet edin!',
+  referral_leaderboard_aantal: 'davet',
+  referral_leaderboard_jij: 'siz',
+
+  // ── Favori para birimleri (İyileştirme KKK) ──────────────────────────────
+  valuta_favoriet_aria: 'Favori olarak işaretle',
+  valuta_favoriet_max: 'Maksimum 8 favori',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',
