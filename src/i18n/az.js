@@ -912,6 +912,14 @@ export const az = {
   spaardoel_form_ontvanger: 'Kimin üçün? (istəyə bağlı)',
   spaardoel_form_ontvanger_placeholder: 'Məs. Mehmet (ata)',
   spaardoel_form_aanmaken: 'Yığım hədəfi yarat',
+
+  // ── Aylıq baxış (Təkmilləşdirmə EEE) ─────────────────────────────────────
+  maand_overzicht_titel: 'Bu ay göndərildi',
+  maand_overzicht_tx_enkel: 'əməliyyat',
+  maand_overzicht_tx_meerdere: 'əməliyyat',
+  maand_overzicht_vorige_maand: 'keçən ay',
+  maand_overzicht_30d_geleden: '30 gün əvvəl',
+  maand_overzicht_vandaag: 'bu gün',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

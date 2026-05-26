@@ -37,6 +37,7 @@ import KoersChart from './dashboard/KoersChart';
 import RecentTransacties from './dashboard/RecentTransacties';
 import InsightsCard from './dashboard/InsightsCard';
 import Spaardoelen from './dashboard/Spaardoelen';
+import MaandOverzicht from './dashboard/MaandOverzicht';
 
 // Onboarding wizard voor nieuwe gebruikers
 import OnboardingModal from './onboarding/OnboardingModal';
@@ -419,6 +420,10 @@ export default function Dashboard({ gebruiker }) {
 
       {/* 4. Stats hero — 4 boxes deze maand */}
       <StatistiekCards transacties={transacties} laden={ladenTx} />
+
+      {/* MaandOverzicht widget (Verbetering EEE) — verbergt zichzelf als
+          0 voltooide transacties. Hergebruikt al-opgehaalde transacties prop. */}
+      <MaandOverzicht transacties={transacties} />
 
       {/* 5. Quick Actions */}
       <QuickActions />

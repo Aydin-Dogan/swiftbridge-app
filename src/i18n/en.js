@@ -1001,6 +1001,14 @@ export const en = {
   spaardoel_form_ontvanger: 'For whom? (optional)',
   spaardoel_form_ontvanger_placeholder: 'E.g. Mehmet (father)',
   spaardoel_form_aanmaken: 'Create savings goal',
+
+  // ── MaandOverzicht widget (Improvement EEE) ──────────────────────────────
+  maand_overzicht_titel: 'Sent this month',
+  maand_overzicht_tx_enkel: 'transaction',
+  maand_overzicht_tx_meerdere: 'transactions',
+  maand_overzicht_vorige_maand: 'last month',
+  maand_overzicht_30d_geleden: '30 days ago',
+  maand_overzicht_vandaag: 'today',
   recurring_melding_uitvoer_ok: 'Transfer created — see your transaction history.',
   recurring_kaart_bedrag: 'Amount',
   recurring_kaart_frequentie: 'Frequency',

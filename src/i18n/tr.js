@@ -1001,6 +1001,14 @@ export const tr = {
   spaardoel_form_ontvanger: 'Kimin için? (opsiyonel)',
   spaardoel_form_ontvanger_placeholder: 'Örn. Mehmet (baba)',
   spaardoel_form_aanmaken: 'Birikim hedefi oluştur',
+
+  // ── Aylık Genel Bakış (İyileştirme EEE) ──────────────────────────────────
+  maand_overzicht_titel: 'Bu ay gönderildi',
+  maand_overzicht_tx_enkel: 'işlem',
+  maand_overzicht_tx_meerdere: 'işlem',
+  maand_overzicht_vorige_maand: 'geçen ay',
+  maand_overzicht_30d_geleden: '30 gün önce',
+  maand_overzicht_vandaag: 'bugün',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

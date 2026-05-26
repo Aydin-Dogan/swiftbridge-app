@@ -883,6 +883,14 @@ export const nl = {
   spaardoel_form_ontvanger: 'Voor wie? (optioneel)',
   spaardoel_form_ontvanger_placeholder: 'Bv. Mehmet (vader)',
   spaardoel_form_aanmaken: 'Spaardoel aanmaken',
+
+  // ── MaandOverzicht widget (Verbetering EEE) ──────────────────────────────
+  maand_overzicht_titel: 'Deze maand verstuurd',
+  maand_overzicht_tx_enkel: 'transactie',
+  maand_overzicht_tx_meerdere: 'transacties',
+  maand_overzicht_vorige_maand: 'vorige maand',
+  maand_overzicht_30d_geleden: '30 dagen geleden',
+  maand_overzicht_vandaag: 'vandaag',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

@@ -912,6 +912,14 @@ export const ru = {
   spaardoel_form_ontvanger: 'Для кого? (необязательно)',
   spaardoel_form_ontvanger_placeholder: 'Напр. Мехмет (отец)',
   spaardoel_form_aanmaken: 'Создать цель',
+
+  // ── Месячный обзор (Улучшение EEE) ───────────────────────────────────────
+  maand_overzicht_titel: 'Отправлено в этом месяце',
+  maand_overzicht_tx_enkel: 'транзакция',
+  maand_overzicht_tx_meerdere: 'транзакций',
+  maand_overzicht_vorige_maand: 'в прошлом месяце',
+  maand_overzicht_30d_geleden: '30 дней назад',
+  maand_overzicht_vandaag: 'сегодня',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',
