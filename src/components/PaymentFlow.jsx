@@ -799,8 +799,100 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
   );
 }
 
+// ── Push opt-in card (Verbetering NN) — toont alleen bij succes-scherm ──────
+// Triggered op StapVerzonden zodat we de gebruiker vragen IN context van een
+// transactie ("Wil je melding bij aankomst?") ipv apart in Profiel waar het
+// makkelijk gemist wordt. Veel hogere acceptance rate.
+function PushOptInCard({ token }) {
+  const [verborgen, setVerborgen] = useState(false);
+  const [bezig, setBezig] = useState(false);
+  const [resultaat, setResultaat] = useState(null); // null | 'ok' | 'geweigerd' | 'fout'
+
+  useEffect(() => {
+    // Verberg als browser niet ondersteunt of al beslist (granted/denied)
+    if (typeof window === 'undefined') return;
+    const heeftBeslist = sessionStorage.getItem('sb_push_optin_done') === '1';
+    if (heeftBeslist) setVerborgen(true);
+    // Niet tonen als notif al granted (gebruiker is al actief)
+    if ('Notification' in window && Notification.permission === 'granted') {
+      setVerborgen(true);
+    }
+    // Niet tonen als al denied (dan moeten ze handmatig naar settings)
+    if ('Notification' in window && Notification.permission === 'denied') {
+      setVerborgen(true);
+    }
+    if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+      setVerborgen(true);
+    }
+  }, []);
+
+  async function jaActiveer() {
+    setBezig(true);
+    try {
+      const { pushInschakelen } = await import('../services/pushNotificatie');
+      await pushInschakelen(token);
+      setResultaat('ok');
+    } catch (err) {
+      setResultaat(err?.message?.includes('geweigerd') ? 'geweigerd' : 'fout');
+    } finally {
+      setBezig(false);
+      try { sessionStorage.setItem('sb_push_optin_done', '1'); } catch {/* ignored */}
+    }
+  }
+
+  function neeBedankt() {
+    setVerborgen(true);
+    try { sessionStorage.setItem('sb_push_optin_done', '1'); } catch {/* ignored */}
+  }
+
+  if (verborgen) return null;
+  if (resultaat === 'ok') {
+    return (
+      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-700 flex items-center gap-2">
+        <span aria-hidden="true">✓</span>
+        Notificaties aangezet — je krijgt bericht bij aankomst.
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-left">
+      <div className="flex items-start gap-3">
+        <span className="text-2xl flex-shrink-0" aria-hidden="true">🔔</span>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-blue-900 text-sm">Krijg bericht bij aankomst?</p>
+          <p className="text-xs text-blue-800 mt-0.5">
+            We sturen één korte notificatie wanneer het geld is aangekomen op de Turkse rekening.
+          </p>
+        </div>
+      </div>
+      <div className="flex gap-2 mt-3">
+        <button
+          onClick={jaActiveer}
+          disabled={bezig}
+          className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold py-2 rounded-lg transition"
+        >
+          {bezig ? 'Bezig…' : 'Ja, graag'}
+        </button>
+        <button
+          onClick={neeBedankt}
+          className="text-xs font-semibold text-gray-600 hover:text-gray-800 px-3 py-2"
+        >
+          Nee, dank je
+        </button>
+      </div>
+      {resultaat === 'geweigerd' && (
+        <p className="text-[11px] text-amber-700 mt-2">Je hebt toestemming geweigerd. Aanpassen kan in je browserinstellingen.</p>
+      )}
+      {resultaat === 'fout' && (
+        <p className="text-[11px] text-red-700 mt-2">Activeren mislukt. Probeer het later opnieuw via Alerts.</p>
+      )}
+    </div>
+  );
+}
+
 // ── Stap 3: Verzonden ─────────────────────────────────────────────────────────
-function StapVerzonden({ transactie, methode, onNieuw }) {
+function StapVerzonden({ transactie, methode, onNieuw, token }) {
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
   const valuta = transactie?.valuta || 'TRY';
   const valutaInfo = getValuta(valuta);
@@ -836,6 +928,10 @@ function StapVerzonden({ transactie, methode, onNieuw }) {
       <p className="text-xs text-gray-400">
         Je ontvangt een bevestiging per e-mail. De transactie is zichtbaar in je dashboard.
       </p>
+
+      {/* Push opt-in (Verbetering NN) — alleen tonen als browser ondersteunt en niet al beslist */}
+      <PushOptInCard token={token} />
+
       <button onClick={onNieuw} className="btn-primary w-full py-3">
         Nieuwe overschrijving
       </button>
@@ -1092,7 +1188,7 @@ export default function PaymentFlow({ token }) {
       {stap === 0 && <StapBedrag token={token} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
-      {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} />}
+      {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} token={token} />}
 
       {/* PaymentLoadingOverlay (Verbetering W) — full-screen feedback tijdens
           de transactie-aanmaak → Mollie payment-start → redirect sequence.

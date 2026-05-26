@@ -78,6 +78,70 @@ function BackupCodesPaneel({ codes }) {
     URL.revokeObjectURL(url);
   }
 
+  // Print-to-PDF via nieuw venster (Verbetering KK) — geen externe library nodig.
+  // Browser's print-dialoog ondersteunt overal "Save as PDF" / "Opslaan als PDF".
+  function printPdf() {
+    const datum = new Date().toLocaleDateString('nl-NL', { day: '2-digit', month: 'long', year: 'numeric' });
+    const html = `<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>SwiftBridge — 2FA backup codes</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+           color: #111; max-width: 600px; margin: 40px auto; padding: 0 24px; }
+    header { border-bottom: 2px solid #2563eb; padding-bottom: 16px; margin-bottom: 24px; }
+    h1 { font-size: 22px; margin: 0 0 4px; color: #2563eb; }
+    .subtitle { color: #666; font-size: 13px; }
+    .warning { background: #fef3c7; border: 2px solid #fcd34d; border-radius: 8px;
+               padding: 12px 16px; margin: 24px 0; font-size: 13px; }
+    .warning strong { color: #92400e; }
+    .codes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 24px 0; }
+    .code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 16px;
+            background: #f3f4f6; border: 1px solid #d1d5db; padding: 10px 14px;
+            border-radius: 6px; letter-spacing: 2px; text-align: center; }
+    .code .num { color: #999; font-size: 11px; margin-right: 6px; }
+    footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e7eb;
+             font-size: 11px; color: #999; text-align: center; }
+    @media print {
+      body { margin: 20px; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SwiftBridge — 2FA backup codes</h1>
+    <p class="subtitle">Gegenereerd op ${datum} · swiftbridge.tr</p>
+  </header>
+  <div class="warning">
+    <strong>⚠ Bewaar deze codes veilig.</strong> Gebruik ze alleen als je geen toegang
+    meer hebt tot je authenticator-app. Elke code is <strong>één keer</strong> bruikbaar.
+    Print of bewaar dit document op een fysiek veilige plek (kluis, papier-archief).
+  </div>
+  <div class="codes">
+    ${codes.map((c, i) => `<div class="code"><span class="num">${String(i + 1).padStart(2, '0')}.</span>${c}</div>`).join('')}
+  </div>
+  <footer>
+    SwiftBridge B.V. · support@swiftbridge.tr · Deel deze codes nooit met anderen.
+  </footer>
+  <script>
+    // Direct printdialoog openen — gebruiker kan "Save as PDF" kiezen
+    window.onload = () => setTimeout(() => window.print(), 200);
+  </script>
+</body>
+</html>`;
+    const venster = window.open('', '_blank', 'width=720,height=900');
+    if (!venster) {
+      // Pop-up geblokkeerd → fallback naar txt download met melding
+      alert('Sta pop-ups toe om als PDF op te slaan, of gebruik Download .txt.');
+      return;
+    }
+    venster.document.write(html);
+    venster.document.close();
+  }
+
   return (
     <div className="space-y-3">
       <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4">
@@ -105,20 +169,30 @@ function BackupCodesPaneel({ codes }) {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         <button
           onClick={copy}
-          className="px-4 py-3 rounded-xl border-2 border-blue-500 text-blue-600 text-sm font-bold hover:bg-blue-50 transition active:scale-95"
+          className="px-3 py-3 rounded-xl border-2 border-blue-500 text-blue-600 text-xs font-bold hover:bg-blue-50 transition active:scale-95"
         >
           {gekopieerd ? '✓ Gekopieerd' : '📋 Kopiëren'}
         </button>
         <button
           onClick={download}
-          className="px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-bold hover:opacity-90 transition active:scale-95"
+          className="px-3 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition active:scale-95"
         >
-          💾 Download .txt
+          💾 .txt
+        </button>
+        <button
+          onClick={printPdf}
+          className="px-3 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold hover:opacity-90 transition active:scale-95"
+          title="Print of opslaan als PDF"
+        >
+          🖨️ PDF
         </button>
       </div>
+      <p className="text-[11px] text-gray-500 text-center mt-1">
+        PDF: kies "Opslaan als PDF" in de print-dialoog
+      </p>
     </div>
   );
 }
