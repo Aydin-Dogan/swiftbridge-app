@@ -736,7 +736,13 @@ export const nl = {
   recurring_actie_uitvoer_nu: '⚡ Nu uitvoeren',
   recurring_actie_verwijder: 'Verwijderen',
   recurring_bevestig_uitvoer: 'Nu een transactie afvuren via dit schedule?',
+  recurring_bevestig_uitvoer_titel: 'Nu uitvoeren?',
   recurring_bevestig_verwijder: 'Schedule verwijderen? Dit kan niet ongedaan worden gemaakt.',
+  recurring_bevestig_verwijder_titel: 'Verwijderen?',
+  // Algemene confirm-dialog labels (Verbetering DD)
+  confirm_ok: 'Bevestigen',
+  confirm_annuleer: 'Annuleer',
+  confirm_bezig: 'Bezig',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

@@ -18,6 +18,7 @@ import { useTaal } from '../i18n';
 import { apiFetch, parseError } from '../services/api';
 import RecurringKaart from '../components/recurring/RecurringKaart';
 import RecurringFormulier from '../components/recurring/RecurringFormulier';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 export default function Recurring() {
   const { t } = useTaal();
@@ -29,6 +30,10 @@ export default function Recurring() {
   const [bezig, setBezig] = useState(false);
   const [meldingId, setMeldingId] = useState(null);
   const [melding, setMelding] = useState('');
+  // Confirmation dialog state (Verbetering DD) — vervangt window.confirm()
+  // met een nette modal die ESC-toets + click-outside ondersteunt.
+  const [bevestig, setBevestig] = useState(null);
+  // bevestig = { actie: 'uitvoer'|'verwijder', id, title, message, variant }
 
   const laad = useCallback(async () => {
     setLaden(true);
@@ -67,33 +72,61 @@ export default function Recurring() {
     } finally { setBezig(false); }
   }
 
-  async function uitvoer(id) {
+  // Trigger bevestiging-dialog ipv direct uit te voeren
+  function vraagUitvoer(id) {
     if (bezig) return;
-    if (!confirm(t('recurring_bevestig_uitvoer'))) return;
-    setBezig(true);
-    setMeldingId(id);
-    try {
-      const r = await apiFetch(`/recurring/${id}/uitvoeren-nu`, { method: 'POST' });
-      setMelding(t('recurring_melding_uitvoer_ok'));
-      await laad();
-    } catch (e) {
-      setFout(parseError(e, t));
-    } finally {
-      setBezig(false);
-      setTimeout(() => { setMelding(''); setMeldingId(null); }, 3500);
-    }
+    setBevestig({
+      actie: 'uitvoer',
+      id,
+      title: t('recurring_bevestig_uitvoer_titel'),
+      message: t('recurring_bevestig_uitvoer'),
+      variant: 'default',
+    });
   }
 
-  async function verwijder(id) {
+  function vraagVerwijder(id) {
     if (bezig) return;
-    if (!confirm(t('recurring_bevestig_verwijder'))) return;
+    setBevestig({
+      actie: 'verwijder',
+      id,
+      title: t('recurring_bevestig_verwijder_titel'),
+      message: t('recurring_bevestig_verwijder'),
+      variant: 'destructive',
+    });
+  }
+
+  async function bevestigUitvoeren() {
+    if (!bevestig || bezig) return;
+    const { actie, id } = bevestig;
     setBezig(true);
-    try {
-      await apiFetch(`/recurring/${id}`, { method: 'DELETE' });
-      await laad();
-    } catch (e) {
-      setFout(parseError(e, t));
-    } finally { setBezig(false); }
+
+    if (actie === 'uitvoer') {
+      setMeldingId(id);
+      try {
+        await apiFetch(`/recurring/${id}/uitvoeren-nu`, { method: 'POST' });
+        setMelding(t('recurring_melding_uitvoer_ok'));
+        await laad();
+      } catch (e) {
+        setFout(parseError(e, t));
+      } finally {
+        setBezig(false);
+        setBevestig(null);
+        setTimeout(() => { setMelding(''); setMeldingId(null); }, 3500);
+      }
+    } else if (actie === 'verwijder') {
+      try {
+        await apiFetch(`/recurring/${id}`, { method: 'DELETE' });
+        await laad();
+      } catch (e) {
+        setFout(parseError(e, t));
+      } finally {
+        setBezig(false);
+        setBevestig(null);
+      }
+    } else {
+      setBezig(false);
+      setBevestig(null);
+    }
   }
 
   function aangemaakt(neuw) {
@@ -162,8 +195,8 @@ export default function Recurring() {
               item={item}
               onPauzeer={pauzeer}
               onHervat={hervat}
-              onUitvoer={uitvoer}
-              onVerwijder={verwijder}
+              onUitvoer={vraagUitvoer}
+              onVerwijder={vraagVerwijder}
               bezig={bezig && meldingId === item.id}
             />
           ))}
@@ -174,6 +207,17 @@ export default function Recurring() {
         open={formOpen}
         onSluit={() => setFormOpen(false)}
         onAangemaakt={aangemaakt}
+      />
+
+      {/* Bevestig-dialog voor uitvoer + verwijder (Verbetering DD) */}
+      <ConfirmDialog
+        open={!!bevestig}
+        onClose={() => !bezig && setBevestig(null)}
+        onConfirm={bevestigUitvoeren}
+        title={bevestig?.title}
+        message={bevestig?.message}
+        variant={bevestig?.variant}
+        busy={bezig}
       />
     </div>
   );
