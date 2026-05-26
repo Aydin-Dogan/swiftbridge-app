@@ -861,6 +861,10 @@ export const en = {
   confirm_ok: 'Confirm',
   confirm_annuleer: 'Cancel',
   confirm_bezig: 'Busy',
+
+  // Alerts delete dialog (Improvement GG)
+  alerts_verwijder_titel: 'Delete alert?',
+  alerts_verwijder_bericht: "You'll no longer be notified when the rate hits this target.",
   recurring_melding_uitvoer_ok: 'Transfer created — see your transaction history.',
   recurring_kaart_bedrag: 'Amount',
   recurring_kaart_frequentie: 'Frequency',

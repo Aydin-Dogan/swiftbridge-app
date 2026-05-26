@@ -772,6 +772,10 @@ export const az = {
   confirm_ok: 'Təsdiq',
   confirm_annuleer: 'Ləğv et',
   confirm_bezig: 'İşləyir',
+
+  // Xəbərdarlıq silmə (Təkmilləşdirmə GG)
+  alerts_verwijder_titel: 'Xəbərdarlıq silinsin?',
+  alerts_verwijder_bericht: 'Məzənnə bu hədəfə çatdıqda artıq bildiriş almayacaqsınız.',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

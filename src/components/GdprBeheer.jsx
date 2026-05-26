@@ -85,10 +85,15 @@ export default function GdprBeheer({ token }) {
         localStorage.removeItem('sb_refresh');
         localStorage.removeItem('sb_gebruiker');
         sessionStorage.clear();
-      } catch {}
+      } catch {/* private mode */}
 
-      alert(t('gdpr_afmelden_bericht'));
-      window.location.href = '/login';
+      // Toon bevestiging in modal (geen native alert) — daarna redirect na 2s
+      // zodat gebruiker de bevestiging écht ziet.
+      setModalOpen(false);
+      setBericht(t('gdpr_afmelden_bericht'));
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 2500);
     } catch (e) {
       setFout(parseError(e, t));
       setBezigAnoniem(false);

@@ -772,6 +772,10 @@ export const ru = {
   confirm_ok: 'Подтвердить',
   confirm_annuleer: 'Отмена',
   confirm_bezig: 'Обработка',
+
+  // Удаление уведомления (Улучшение GG)
+  alerts_verwijder_titel: 'Удалить уведомление?',
+  alerts_verwijder_bericht: 'Вы больше не получите уведомление при достижении этого курса.',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

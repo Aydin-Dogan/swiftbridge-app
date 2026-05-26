@@ -743,6 +743,10 @@ export const nl = {
   confirm_ok: 'Bevestigen',
   confirm_annuleer: 'Annuleer',
   confirm_bezig: 'Bezig',
+
+  // Alerts verwijder-dialog (Verbetering GG)
+  alerts_verwijder_titel: 'Alert verwijderen?',
+  alerts_verwijder_bericht: 'Je krijgt geen melding meer wanneer de koers dit doel bereikt.',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

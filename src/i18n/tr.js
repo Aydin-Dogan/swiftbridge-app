@@ -861,6 +861,10 @@ export const tr = {
   confirm_ok: 'Onayla',
   confirm_annuleer: 'İptal',
   confirm_bezig: 'İşleniyor',
+
+  // Uyarı sil dialog (İyileştirme GG)
+  alerts_verwijder_titel: 'Uyarı silinsin mi?',
+  alerts_verwijder_bericht: 'Kur bu hedefe ulaştığında artık bildirim almayacaksınız.',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

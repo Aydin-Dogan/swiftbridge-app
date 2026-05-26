@@ -7,6 +7,7 @@ import { VALUTAS, getValuta } from '../services/currencies';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
+import ConfirmDialog from './ConfirmDialog';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -76,14 +77,28 @@ export default function KoersAlerts({ token }) {
     await laad();
   }
 
-  async function verwijderAlert(id) {
-    if (!confirm('Alert verwijderen?')) return;
-    await fetch(`${API}/alerts/${id}`, {
+  // Verwijder-bevestigingsdialog state (Verbetering GG)
+  const [verwijderId, setVerwijderId] = useState(null);
+  const [verwijderBezig, setVerwijderBezig] = useState(false);
+
+  function vraagVerwijderAlert(id) {
+    setVerwijderId(id);
+  }
+
+  async function bevestigVerwijderAlert() {
+    if (!verwijderId) return;
+    setVerwijderBezig(true);
+    try {
+      await fetch(`${API}/alerts/${verwijderId}`, {
         credentials: 'include',
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    await laad();
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      await laad();
+    } finally {
+      setVerwijderBezig(false);
+      setVerwijderId(null);
+    }
   }
 
   return (
@@ -222,7 +237,7 @@ export default function KoersAlerts({ token }) {
                       </button>
                     )}
                     <button
-                      onClick={() => verwijderAlert(a.id)}
+                      onClick={() => vraagVerwijderAlert(a.id)}
                       className="text-xs px-2 py-1 rounded-lg bg-rose-100 text-rose-700 hover:bg-rose-200"
                     >
                       🗑️
@@ -238,6 +253,17 @@ export default function KoersAlerts({ token }) {
           Alerts worden elke 5 minuten gecheckt. Push notificatie aanzetten in instellingen.
         </p>
       </div>
+
+      {/* Bevestig-dialog voor alert-verwijder (Verbetering GG) */}
+      <ConfirmDialog
+        open={!!verwijderId}
+        onClose={() => !verwijderBezig && setVerwijderId(null)}
+        onConfirm={bevestigVerwijderAlert}
+        title={t('alerts_verwijder_titel')}
+        message={t('alerts_verwijder_bericht')}
+        variant="destructive"
+        busy={verwijderBezig}
+      />
     </div>
   );
 }
