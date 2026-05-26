@@ -823,6 +823,13 @@ export const ru = {
   track_cta_uitleg: 'Хотите сами отправить деньги в Турцию?',
   track_cta_button: 'Попробовать SwiftBridge',
   track_disclaimer: 'Эта ссылка не содержит личных данных. Безопасна для распространения.',
+
+  // ── CSV экспорт (Улучшение TT) ───────────────────────────────────────────
+  gdpr_csv_titel: 'Транзакции в CSV',
+  gdpr_csv_uitleg: 'Скачайте транзакции в CSV для бухгалтера или собственного учёта. Совместимо с Excel (UTF-8 BOM).',
+  gdpr_csv_knop: 'Скачать CSV (последние 12 мес)',
+  gdpr_csv_subtekst: 'Содержит дату, суммы, получателя и статус — без пароля или данных входа.',
+  gdpr_csv_succes: 'CSV скачан.',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

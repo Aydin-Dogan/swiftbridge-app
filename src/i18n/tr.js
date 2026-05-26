@@ -912,6 +912,13 @@ export const tr = {
   track_cta_uitleg: 'Kendiniz Türkiye\'ye para göndermek ister misiniz?',
   track_cta_button: 'SwiftBridge\'i deneyin',
   track_disclaimer: 'Bu bağlantı kişisel veri içermez. Güvenle paylaşılabilir.',
+
+  // ── CSV dışa aktarma (İyileştirme TT) ────────────────────────────────────
+  gdpr_csv_titel: 'İşlemleri CSV olarak',
+  gdpr_csv_uitleg: 'İşlemlerinizi muhasebeciniz veya kendi kayıtlarınız için CSV olarak indirin. Excel uyumlu UTF-8 BOM ile.',
+  gdpr_csv_knop: 'CSV indir (son 12 ay)',
+  gdpr_csv_subtekst: 'Tarih, tutar, alıcı ve durum içerir — şifre veya giriş bilgisi yok.',
+  gdpr_csv_succes: 'CSV indirildi.',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

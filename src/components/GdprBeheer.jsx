@@ -13,6 +13,7 @@ const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export default function GdprBeheer({ token }) {
   const { t } = useTaal();
   const [bezigExport, setBezigExport] = useState(false);
+  const [bezigCsv, setBezigCsv] = useState(false);
   const [bezigAnoniem, setBezigAnoniem] = useState(false);
   const [fout, setFout] = useState('');
   const [bericht, setBericht] = useState('');
@@ -52,6 +53,41 @@ export default function GdprBeheer({ token }) {
       setFout(parseError(e, t));
     } finally {
       setBezigExport(false);
+    }
+  }
+
+  // CSV export (Verbetering TT) — download als bestand
+  async function downloadCsv() {
+    setBezigCsv(true);
+    setFout('');
+    setBericht('');
+    try {
+      const res = await fetch(`${API}/users/me/transacties-export.csv`, {
+        credentials: 'include',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setFout(parseError({ ...err, status: res.status }, t));
+        return;
+      }
+      const blob = await res.blob();
+      const cd = res.headers.get('Content-Disposition') || '';
+      const match = cd.match(/filename="([^"]+)"/);
+      const naam = match ? match[1] : `swiftbridge-transacties-${new Date().toISOString().slice(0, 10)}.csv`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = naam;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setBericht(t('gdpr_csv_succes'));
+    } catch (e) {
+      setFout(parseError(e, t));
+    } finally {
+      setBezigCsv(false);
     }
   }
 
@@ -144,6 +180,26 @@ export default function GdprBeheer({ token }) {
         </button>
         <p className="text-[11px] text-gray-500 leading-snug pt-1">
           🔐 {t('gdpr_download_subtekst')}
+        </p>
+      </div>
+
+      {/* CSV export voor accountant (Verbetering TT) — naast JSON-volledig */}
+      <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-4 space-y-2">
+        <h4 className="font-bold text-sm text-gray-800 flex items-center gap-1.5">
+          <span>📊 {t('gdpr_csv_titel')}</span>
+        </h4>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {t('gdpr_csv_uitleg')}
+        </p>
+        <button
+          onClick={downloadCsv}
+          disabled={bezigCsv}
+          className="w-full py-2.5 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+        >
+          {bezigCsv ? `⏳ ${t('gdpr_download_bezig')}` : t('gdpr_csv_knop')}
+        </button>
+        <p className="text-[11px] text-gray-500 leading-snug pt-1">
+          📋 {t('gdpr_csv_subtekst')}
         </p>
       </div>
 

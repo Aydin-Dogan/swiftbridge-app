@@ -794,6 +794,13 @@ export const nl = {
   track_cta_uitleg: 'Wil je zelf snel geld sturen naar Türkiye?',
   track_cta_button: 'Probeer SwiftBridge',
   track_disclaimer: 'Deze link bevat geen persoonsgegevens. Veilig deelbaar.',
+
+  // ── CSV export (Verbetering TT) ──────────────────────────────────────────
+  gdpr_csv_titel: 'Transacties als CSV',
+  gdpr_csv_uitleg: 'Download je transacties als CSV-bestand voor je boekhouder of eigen administratie. Excel-vriendelijk met UTF-8 BOM.',
+  gdpr_csv_knop: 'Download CSV (laatste 12 maanden)',
+  gdpr_csv_subtekst: 'Bevat datum, bedragen, ontvanger en status — geen wachtwoord of inlogdata.',
+  gdpr_csv_succes: 'CSV gedownload.',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',
