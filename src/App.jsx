@@ -38,6 +38,7 @@ const LocaleLanding         = lazy(() => import('./pages/LocaleLanding'));
 const Status                = lazy(() => import('./pages/Status'));
 const AdminErrors           = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking    = lazy(() => import('./pages/TransactieTracking'));
+const AdminOverzicht        = lazy(() => import('./pages/AdminOverzicht'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -539,6 +540,12 @@ export default function App() {
           <Route path="/tx/:token" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
               <TransactieTracking />
+            </Suspense>
+          } />
+          {/* Admin KPI dashboard (Verbetering XX) — top-level overzicht */}
+          <Route path="/admin/overzicht" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <AdminOverzicht />
             </Suspense>
           } />
           {/* Admin errors viewer (Verbetering Z) — hangt aan U backend endpoint */}

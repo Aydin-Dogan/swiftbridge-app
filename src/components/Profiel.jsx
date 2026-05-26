@@ -11,6 +11,7 @@ import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
 import LoginHistory from './LoginHistory';
 import TourOverlay, { resetTour } from './onboarding/TourOverlay';
+import AccountantBeheer from './AccountantBeheer';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 
@@ -509,6 +510,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </p>
       </div>
       <GdprBeheer token={token} />
+
+      {/* Accountant deel-links (Verbetering ZZ) — read-only CSV-toegang */}
+      <AccountantBeheer />
 
       {/* ── Vrienden uitnodigen — referral programma ──────────────────── */}
       <div className="card-glass p-5 animate-fade-up border-l-4 border-emerald-500 space-y-2">

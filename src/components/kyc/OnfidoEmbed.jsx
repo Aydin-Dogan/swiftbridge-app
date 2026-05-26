@@ -111,7 +111,8 @@ export default function OnfidoEmbed({ sdkToken, taal = 'nl', onComplete, onError
             'complete',
           ],
           onComplete: (data) => {
-            console.log('[Onfido] flow voltooid', data);
+            // KYC flow voltooid — backend krijgt webhook van Onfido, frontend
+            // hoeft alleen de UI te updaten via onComplete callback.
             try { sdkInstanceRef.current?.tearDown?.(); } catch { /* noop */ }
             onComplete?.(data);
           },
