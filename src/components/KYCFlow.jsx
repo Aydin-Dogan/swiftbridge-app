@@ -353,22 +353,29 @@ function KYCInBehandeling({ naam }) {
   );
 }
 
-// ── ❌ Afgewezen scherm ───────────────────────────────────────────────────────
+// ── ❌ Afgewezen scherm (Verbetering MM polish) ──────────────────────────────
 function KYCAfgewezen({ naam, onOpnieuw }) {
+  const { t } = useTaal();
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
-      <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto text-4xl">❌</div>
-      <h2 className="text-2xl font-bold text-gray-800">Verificatie afgewezen</h2>
+      <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-red-600">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
+      </div>
+      <h2 className="text-2xl font-bold text-gray-800">{t('kyc_afgewezen_titel')}</h2>
       <p className="text-gray-500 text-sm">
-        Helaas, {naam}, konden we je identiteit niet bevestigen. Je kunt het opnieuw proberen.
+        {t('kyc_afgewezen_intro', { naam })}
       </p>
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-left space-y-3">
-        <p className="font-semibold text-red-700 text-sm mb-2">Mogelijke redenen:</p>
+        <p className="font-semibold text-red-700 text-sm mb-2">{t('kyc_afgewezen_redenen_titel')}:</p>
         {[
-          'Foto van document was onscherp of onleesbaar',
-          'Selfie kwam niet overeen met het document',
-          'Documentnummer onjuist ingevoerd',
-          'Document is verlopen',
+          t('kyc_afgewezen_reden_1'),
+          t('kyc_afgewezen_reden_2'),
+          t('kyc_afgewezen_reden_3'),
+          t('kyc_afgewezen_reden_4'),
         ].map((reden, i) => (
           <div key={i} className="flex items-start gap-2 text-sm text-red-600">
             <span className="mt-0.5 flex-shrink-0">•</span>
@@ -377,11 +384,15 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
         ))}
       </div>
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">
-        📧 Heb je vragen? Stuur een e-mail naar <strong>support@swiftbridge.nl</strong>
+        {t('kyc_afgewezen_support')} <a href="mailto:support@swiftbridge.tr" className="font-bold underline">support@swiftbridge.tr</a>
       </div>
       <button onClick={onOpnieuw}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
-        🔄 Opnieuw proberen
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition inline-flex items-center justify-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polyline points="23 4 23 10 17 10" />
+          <path d="M20.49 15A9 9 0 1 1 5.64 5.64L23 10" />
+        </svg>
+        {t('kyc_afgewezen_opnieuw')}
       </button>
     </div>
   );

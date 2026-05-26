@@ -865,6 +865,31 @@ export const tr = {
   // Uyarı sil dialog (İyileştirme GG)
   alerts_verwijder_titel: 'Uyarı silinsin mi?',
   alerts_verwijder_bericht: 'Kur bu hedefe ulaştığında artık bildirim almayacaksınız.',
+
+  // ── Giriş geçmişi (İyileştirme JJ) ───────────────────────────────────────
+  login_history_titel: 'Son aktivite',
+  login_history_uitleg: 'Aşağıdaki tüm girişlerin size ait olduğunu kontrol edin. Tanımadığınız bir şey görüyorsanız hemen şifrenizi değiştirin.',
+  login_history_leeg: 'Henüz giriş kaydı yok.',
+  login_history_actie_login: 'Giriş yapıldı',
+  login_history_actie_login_2fa: '2FA ile giriş yapıldı',
+  login_history_actie_mislukt: 'Başarısız giriş',
+  login_history_actie_logout: 'Çıkış yapıldı',
+  login_history_disclaimer: 'Gizliliğinizi korumak için IP adresinin son kısmı gizlenmiştir.',
+
+  // ── Bakım banner'ı (İyileştirme LL) ──────────────────────────────────────
+  maintenance_default_msg: 'Planlı bakım — bazı özellikler geçici olarak çalışmıyor.',
+  maintenance_eta_label: 'Tahmini bitiş',
+
+  // ── KYC reddedildi ekranı (İyileştirme MM) ───────────────────────────────
+  kyc_afgewezen_titel: 'Doğrulama reddedildi',
+  kyc_afgewezen_intro: 'Maalesef {naam}, kimliğinizi doğrulayamadık. Tekrar deneyebilirsiniz.',
+  kyc_afgewezen_redenen_titel: 'Olası nedenler',
+  kyc_afgewezen_reden_1: 'Belge fotoğrafı bulanık veya okunamıyor',
+  kyc_afgewezen_reden_2: 'Selfie belgeyle eşleşmedi',
+  kyc_afgewezen_reden_3: 'Belge numarası yanlış girildi',
+  kyc_afgewezen_reden_4: 'Belge süresi dolmuş',
+  kyc_afgewezen_support: 'Sorularınız mı var? E-posta:',
+  kyc_afgewezen_opnieuw: 'Tekrar dene',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

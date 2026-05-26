@@ -776,6 +776,31 @@ export const az = {
   // Xəbərdarlıq silmə (Təkmilləşdirmə GG)
   alerts_verwijder_titel: 'Xəbərdarlıq silinsin?',
   alerts_verwijder_bericht: 'Məzənnə bu hədəfə çatdıqda artıq bildiriş almayacaqsınız.',
+
+  // ── Giriş tarixçəsi (Təkmilləşdirmə JJ) ──────────────────────────────────
+  login_history_titel: 'Son aktivlik',
+  login_history_uitleg: 'Aşağıdakı bütün girişlərin sizə aid olduğunu yoxlayın. Şübhəli bir şey görürsünüzsə dərhal şifrənizi dəyişin.',
+  login_history_leeg: 'Hələ giriş qeydi yoxdur.',
+  login_history_actie_login: 'Daxil oldu',
+  login_history_actie_login_2fa: '2FA ilə daxil oldu',
+  login_history_actie_mislukt: 'Uğursuz giriş',
+  login_history_actie_logout: 'Çıxış etdi',
+  login_history_disclaimer: 'Məxfiliyinizi qorumaq üçün IP ünvanının son hissəsi gizlədilib.',
+
+  // ── Texniki xidmət banner (Təkmilləşdirmə LL) ────────────────────────────
+  maintenance_default_msg: 'Planlı texniki xidmət — bəzi funksiyalar müvəqqəti olaraq mövcud deyil.',
+  maintenance_eta_label: 'Təxmini bitiş',
+
+  // ── KYC rədd ekranı (Təkmilləşdirmə MM) ──────────────────────────────────
+  kyc_afgewezen_titel: 'Doğrulama rədd edildi',
+  kyc_afgewezen_intro: 'Təəssüf ki, {naam}, kimliyinizi təsdiqləyə bilmədik. Yenidən cəhd edə bilərsiniz.',
+  kyc_afgewezen_redenen_titel: 'Mümkün səbəblər',
+  kyc_afgewezen_reden_1: 'Sənəd şəkli bulanıq və ya oxunmaz idi',
+  kyc_afgewezen_reden_2: 'Selfi sənədlə uyğun gəlmədi',
+  kyc_afgewezen_reden_3: 'Sənəd nömrəsi yanlış daxil edildi',
+  kyc_afgewezen_reden_4: 'Sənədin müddəti bitib',
+  kyc_afgewezen_support: 'Suallarınız var? E-poçt:',
+  kyc_afgewezen_opnieuw: 'Yenidən cəhd et',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

@@ -6,6 +6,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import TaalKiezer from './components/TaalKiezer';
 import OfflineBanner from './components/OfflineBanner';
+import MaintenanceBanner from './components/MaintenanceBanner';
 import SupportChat from './components/chat/SupportChat';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useTaal } from './i18n';
@@ -442,6 +443,7 @@ export default function App() {
     return (
       <BrowserRouter>
         <OfflineBanner />
+      <MaintenanceBanner />
         <LaadSpinner />
       </BrowserRouter>
     );
@@ -450,6 +452,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <OfflineBanner />
+      <MaintenanceBanner />
       {/* Globale ErrorBoundary (Verbetering N) — vangt uncaught JS errors per
           route op zodat we nooit een white screen tonen. Errors loggen naar
           /errors/frontend in productie + console in dev. */}

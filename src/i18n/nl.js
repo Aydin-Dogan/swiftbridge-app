@@ -747,6 +747,31 @@ export const nl = {
   // Alerts verwijder-dialog (Verbetering GG)
   alerts_verwijder_titel: 'Alert verwijderen?',
   alerts_verwijder_bericht: 'Je krijgt geen melding meer wanneer de koers dit doel bereikt.',
+
+  // ── Login historiek (Verbetering JJ) ─────────────────────────────────────
+  login_history_titel: 'Recente activiteit',
+  login_history_uitleg: 'Controleer of alle aanmeldingen hierbeneden van jou zijn. Zie je iets dat niet klopt? Wijzig direct je wachtwoord.',
+  login_history_leeg: 'Nog geen aanmeldingen geregistreerd.',
+  login_history_actie_login: 'Ingelogd',
+  login_history_actie_login_2fa: 'Ingelogd met 2FA',
+  login_history_actie_mislukt: 'Mislukte aanmelding',
+  login_history_actie_logout: 'Uitgelogd',
+  login_history_disclaimer: 'IP-adres laatste octet is verborgen om je privacy te beschermen.',
+
+  // ── Maintenance banner (Verbetering LL) ──────────────────────────────────
+  maintenance_default_msg: 'Geplande onderhoud — sommige functies werken tijdelijk niet.',
+  maintenance_eta_label: 'Verwacht klaar',
+
+  // ── KYC afgewezen scherm (Verbetering MM) ────────────────────────────────
+  kyc_afgewezen_titel: 'Verificatie afgewezen',
+  kyc_afgewezen_intro: 'Helaas, {naam}, konden we je identiteit niet bevestigen. Je kunt het opnieuw proberen.',
+  kyc_afgewezen_redenen_titel: 'Mogelijke redenen',
+  kyc_afgewezen_reden_1: 'Foto van document was onscherp of onleesbaar',
+  kyc_afgewezen_reden_2: 'Selfie kwam niet overeen met het document',
+  kyc_afgewezen_reden_3: 'Documentnummer onjuist ingevoerd',
+  kyc_afgewezen_reden_4: 'Document is verlopen',
+  kyc_afgewezen_support: 'Heb je vragen? Stuur een e-mail naar',
+  kyc_afgewezen_opnieuw: 'Opnieuw proberen',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

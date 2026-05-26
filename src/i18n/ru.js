@@ -776,6 +776,31 @@ export const ru = {
   // Удаление уведомления (Улучшение GG)
   alerts_verwijder_titel: 'Удалить уведомление?',
   alerts_verwijder_bericht: 'Вы больше не получите уведомление при достижении этого курса.',
+
+  // ── История входов (Улучшение JJ) ────────────────────────────────────────
+  login_history_titel: 'Недавняя активность',
+  login_history_uitleg: 'Проверьте, что все входы ниже — ваши. Видите что-то подозрительное? Немедленно смените пароль.',
+  login_history_leeg: 'Входы ещё не зарегистрированы.',
+  login_history_actie_login: 'Вход',
+  login_history_actie_login_2fa: 'Вход с 2FA',
+  login_history_actie_mislukt: 'Неудачный вход',
+  login_history_actie_logout: 'Выход',
+  login_history_disclaimer: 'Последний октет IP скрыт для защиты вашей конфиденциальности.',
+
+  // ── Баннер обслуживания (Улучшение LL) ───────────────────────────────────
+  maintenance_default_msg: 'Плановое обслуживание — некоторые функции временно недоступны.',
+  maintenance_eta_label: 'Завершение',
+
+  // ── Экран отклонения KYC (Улучшение MM) ──────────────────────────────────
+  kyc_afgewezen_titel: 'Верификация отклонена',
+  kyc_afgewezen_intro: 'К сожалению, {naam}, мы не смогли подтвердить вашу личность. Вы можете попробовать снова.',
+  kyc_afgewezen_redenen_titel: 'Возможные причины',
+  kyc_afgewezen_reden_1: 'Фото документа размытое или нечитаемое',
+  kyc_afgewezen_reden_2: 'Селфи не совпало с документом',
+  kyc_afgewezen_reden_3: 'Номер документа введён неверно',
+  kyc_afgewezen_reden_4: 'Срок действия документа истёк',
+  kyc_afgewezen_support: 'Есть вопросы? Напишите на',
+  kyc_afgewezen_opnieuw: 'Попробовать снова',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

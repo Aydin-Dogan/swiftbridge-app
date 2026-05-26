@@ -865,6 +865,31 @@ export const en = {
   // Alerts delete dialog (Improvement GG)
   alerts_verwijder_titel: 'Delete alert?',
   alerts_verwijder_bericht: "You'll no longer be notified when the rate hits this target.",
+
+  // ── Login history (Improvement JJ) ───────────────────────────────────────
+  login_history_titel: 'Recent activity',
+  login_history_uitleg: "Check if all sign-ins below are yours. See something off? Change your password immediately.",
+  login_history_leeg: 'No sign-ins recorded yet.',
+  login_history_actie_login: 'Signed in',
+  login_history_actie_login_2fa: 'Signed in with 2FA',
+  login_history_actie_mislukt: 'Failed sign-in',
+  login_history_actie_logout: 'Signed out',
+  login_history_disclaimer: 'Last IP octet is hidden to protect your privacy.',
+
+  // ── Maintenance banner (Improvement LL) ──────────────────────────────────
+  maintenance_default_msg: 'Scheduled maintenance — some features are temporarily unavailable.',
+  maintenance_eta_label: 'Back online',
+
+  // ── KYC rejected screen (Improvement MM) ─────────────────────────────────
+  kyc_afgewezen_titel: 'Verification rejected',
+  kyc_afgewezen_intro: "Unfortunately, {naam}, we couldn't verify your identity. You can try again.",
+  kyc_afgewezen_redenen_titel: 'Possible reasons',
+  kyc_afgewezen_reden_1: 'Document photo was blurry or unreadable',
+  kyc_afgewezen_reden_2: 'Selfie did not match the document',
+  kyc_afgewezen_reden_3: 'Document number entered incorrectly',
+  kyc_afgewezen_reden_4: 'Document has expired',
+  kyc_afgewezen_support: 'Questions? Email',
+  kyc_afgewezen_opnieuw: 'Try again',
   recurring_melding_uitvoer_ok: 'Transfer created — see your transaction history.',
   recurring_kaart_bedrag: 'Amount',
   recurring_kaart_frequentie: 'Frequency',

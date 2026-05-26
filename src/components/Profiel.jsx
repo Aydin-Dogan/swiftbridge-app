@@ -9,6 +9,7 @@ import { parseError } from '../services/api';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
+import LoginHistory from './LoginHistory';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 
@@ -478,6 +479,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         twofaIngeschakeld={!!profiel?.twofaIngeschakeld}
         onChange={(nieuweStatus) => setProfiel(p => ({ ...p, twofaIngeschakeld: nieuweStatus }))}
       />
+
+      {/* Login historiek (Verbetering JJ) — recente login-events voor security */}
+      <LoginHistory />
 
       {/* ── Mijn ontvangers — beneficiaries beheer ─────────────────── */}
       <div className="card-glass p-5 animate-fade-up border-l-4 border-purple-500 space-y-3">
