@@ -10,6 +10,7 @@ import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
 import LoginHistory from './LoginHistory';
+import TourOverlay, { resetTour } from './onboarding/TourOverlay';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 
@@ -483,6 +484,12 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       {/* Login historiek (Verbetering JJ) — recente login-events voor security */}
       <LoginHistory />
 
+      {/* Tour herstart (Verbetering VV) — sluit aan op BB onboarding tour.
+          State is lokaal aan deze sectie; TourOverlay zelf gebruikt
+          localStorage flag sb_tour_done om bij volgende dashboard-mount
+          NIET opnieuw automatisch te tonen. */}
+      <TourRestartSectie />
+
       {/* ── Mijn ontvangers — beneficiaries beheer ─────────────────── */}
       <div className="card-glass p-5 animate-fade-up border-l-4 border-purple-500 space-y-3">
         <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
@@ -513,6 +520,46 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </p>
       </div>
       <ReferralKaart />
+    </div>
+  );
+}
+
+// ── Tour herstart sectie (Verbetering VV) ────────────────────────────────────
+// Geeft user de mogelijkheid om de 5-staps tour opnieuw te bekijken.
+// Reset localStorage flag + opent TourOverlay direct.
+function TourRestartSectie() {
+  const { t } = useTaal();
+  const [open, setOpen] = useState(false);
+
+  function start() {
+    resetTour();
+    setOpen(true);
+  }
+
+  return (
+    <div className="card-glass p-5 animate-fade-up border-l-4 border-amber-400">
+      <h3 className="font-bold text-gray-800 flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        {t('profiel_tour_kop')}
+      </h3>
+      <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+        {t('profiel_tour_uitleg')}
+      </p>
+      <button
+        onClick={start}
+        className="mt-3 text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg px-4 py-2 transition inline-flex items-center gap-1.5"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+        {t('profiel_tour_knop')}
+      </button>
+
+      <TourOverlay open={open} onSluit={() => setOpen(false)} />
     </div>
   );
 }

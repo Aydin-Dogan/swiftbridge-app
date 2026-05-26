@@ -830,6 +830,11 @@ export const ru = {
   gdpr_csv_knop: 'Скачать CSV (последние 12 мес)',
   gdpr_csv_subtekst: 'Содержит дату, суммы, получателя и статус — без пароля или данных входа.',
   gdpr_csv_succes: 'CSV скачан.',
+
+  // ── Перезапуск тура (Улучшение VV) ───────────────────────────────────────
+  profiel_tour_kop: 'Посмотреть тур снова',
+  profiel_tour_uitleg: 'Забыли, как что-то работает? Посмотрите 5-шаговый тур приложения снова.',
+  profiel_tour_knop: 'Запустить тур',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

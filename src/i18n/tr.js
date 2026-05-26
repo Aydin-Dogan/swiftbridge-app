@@ -919,6 +919,11 @@ export const tr = {
   gdpr_csv_knop: 'CSV indir (son 12 ay)',
   gdpr_csv_subtekst: 'Tarih, tutar, alıcı ve durum içerir — şifre veya giriş bilgisi yok.',
   gdpr_csv_succes: 'CSV indirildi.',
+
+  // ── Profilde turu yeniden başlat (İyileştirme VV) ────────────────────────
+  profiel_tour_kop: 'Turu tekrar izle',
+  profiel_tour_uitleg: 'Bir şeyin nasıl çalıştığını unuttunuz mu? 5 adımlı uygulama turunu tekrar izleyin.',
+  profiel_tour_knop: 'Turu başlat',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

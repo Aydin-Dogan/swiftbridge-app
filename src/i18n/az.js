@@ -830,6 +830,11 @@ export const az = {
   gdpr_csv_knop: 'CSV yüklə (son 12 ay)',
   gdpr_csv_subtekst: 'Tarix, məbləğ, qəbul edən və status daxildir — şifrə və ya giriş məlumatı yoxdur.',
   gdpr_csv_succes: 'CSV yükləndi.',
+
+  // ── Turu yenidən başlat (Təkmilləşdirmə VV) ──────────────────────────────
+  profiel_tour_kop: 'Turu yenidən izlə',
+  profiel_tour_uitleg: 'Bir şeyin necə işlədiyini unutdunuz? 5-addımlı tətbiq turunu yenidən izləyin.',
+  profiel_tour_knop: 'Turu başlat',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

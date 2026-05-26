@@ -801,6 +801,11 @@ export const nl = {
   gdpr_csv_knop: 'Download CSV (laatste 12 maanden)',
   gdpr_csv_subtekst: 'Bevat datum, bedragen, ontvanger en status — geen wachtwoord of inlogdata.',
   gdpr_csv_succes: 'CSV gedownload.',
+
+  // ── Tour herstart in Profiel (Verbetering VV) ────────────────────────────
+  profiel_tour_kop: 'Tour opnieuw bekijken',
+  profiel_tour_uitleg: 'Vergeten hoe iets werkt? Bekijk de 5-staps tour van de app opnieuw.',
+  profiel_tour_knop: 'Start tour',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',
