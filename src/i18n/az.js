@@ -962,6 +962,21 @@ export const az = {
   quick_resend_subtitel: 'son alıcılar',
   quick_resend_naar: 'Yenidən göndər',
   quick_resend_actie: 'Yenidən',
+
+  // ── Telegram paylaş (Təkmilləşdirmə RRR) ─────────────────────────────────
+  calc_share_telegram: 'Telegram ilə paylaş',
+
+  // ── Ödəniş qaralaması (Təkmilləşdirmə SSS) ───────────────────────────────
+  payment_draft_doorgaan: 'Yarımçıq köçürməniz var. Davam etmək istəyirsiniz?',
+
+  // ── Klaviatura qısayolları (Təkmilləşdirmə TTT) ──────────────────────────
+  kbd_titel: 'Klaviatura qısayolları',
+  kbd_open_calculator: 'Kalkulyatoru aç',
+  kbd_nieuwe_transactie: 'Yeni köçürmə',
+  kbd_focus_zoek: 'Axtarış zolağına fokuslan',
+  kbd_help: 'Bu köməyi göstər',
+  kbd_sluit: 'Bağla',
+  kbd_hint: 'Bu köməyi yenidən görmək üçün ? düyməsinə basın',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

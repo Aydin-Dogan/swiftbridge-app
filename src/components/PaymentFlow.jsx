@@ -1061,9 +1061,56 @@ export default function PaymentFlow({ token }) {
         if (r.bedrag)      setBedrag(String(r.bedrag));
         if (r.valuta)      setValuta(r.valuta);
         localStorage.removeItem('swiftbridge_repeat_tx');
+        return; // niet ook draft laden
       }
-    } catch {}
+    } catch {/* private mode */}
+
+    // SSS: laad concept (draft) als die bestaat — gebruiker is halverwege
+    // gestopt en komt nu terug. Vraag bevestiging vóór auto-fill.
+    try {
+      const draftRaw = localStorage.getItem('swiftbridge_payment_draft');
+      if (draftRaw) {
+        const d = JSON.parse(draftRaw);
+        // Alleen herstellen als draft <24u oud is — anders mogelijk verouderd
+        const ouderdom = Date.now() - (d.opgeslagen_op || 0);
+        if (ouderdom < 24 * 60 * 60 * 1000) {
+          if (window.confirm(t('payment_draft_doorgaan'))) {
+            if (d.ontvanger) setOntvanger(d.ontvanger);
+            if (d.iban)      setIban(d.iban);
+            if (d.bedrag)    setBedrag(String(d.bedrag));
+            if (d.valuta)    setValuta(d.valuta);
+            if (d.methode)   setMethode(d.methode);
+            if (d.snelheid)  setSnelheid(d.snelheid);
+          } else {
+            localStorage.removeItem('swiftbridge_payment_draft');
+          }
+        } else {
+          localStorage.removeItem('swiftbridge_payment_draft');
+        }
+      }
+    } catch {/* skip */}
   }, []);
+
+  // SSS: auto-save draft bij elke wijziging van core velden (debounced via useEffect)
+  useEffect(() => {
+    // Alleen opslaan als minstens iets is ingevuld (anders pollute we localStorage)
+    if (!bedrag && !ontvanger && !iban) return;
+    // Niet opslaan tijdens stap 3 (verzonden) — flow is dan klaar
+    if (stap === 3) return;
+    try {
+      localStorage.setItem('swiftbridge_payment_draft', JSON.stringify({
+        ontvanger, iban, bedrag, valuta, methode, snelheid,
+        opgeslagen_op: Date.now(),
+      }));
+    } catch {/* private mode */}
+  }, [ontvanger, iban, bedrag, valuta, methode, snelheid, stap]);
+
+  // SSS: wis draft na succesvolle transactie (stap 3 = verzonden)
+  useEffect(() => {
+    if (stap === 3) {
+      try { localStorage.removeItem('swiftbridge_payment_draft'); } catch {/* skip */}
+    }
+  }, [stap]);
 
   // Reset bank wanneer valuta verandert (bv USD -> TRY: ander land = andere banken)
   useEffect(() => {

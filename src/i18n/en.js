@@ -1051,6 +1051,21 @@ export const en = {
   quick_resend_subtitel: 'recent recipients',
   quick_resend_naar: 'Send again to',
   quick_resend_actie: 'Again',
+
+  // ── Telegram share (Improvement RRR) ─────────────────────────────────────
+  calc_share_telegram: 'Share via Telegram',
+
+  // ── Payment draft (Improvement SSS) ──────────────────────────────────────
+  payment_draft_doorgaan: 'You have a transfer in progress. Continue with it?',
+
+  // ── Keyboard shortcuts (Improvement TTT) ─────────────────────────────────
+  kbd_titel: 'Keyboard shortcuts',
+  kbd_open_calculator: 'Open calculator',
+  kbd_nieuwe_transactie: 'New transfer',
+  kbd_focus_zoek: 'Focus search bar',
+  kbd_help: 'Show this help',
+  kbd_sluit: 'Close',
+  kbd_hint: 'Press ? to see this help again',
   recurring_melding_uitvoer_ok: 'Transfer created — see your transaction history.',
   recurring_kaart_bedrag: 'Amount',
   recurring_kaart_frequentie: 'Frequency',

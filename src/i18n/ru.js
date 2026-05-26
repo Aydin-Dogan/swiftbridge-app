@@ -962,6 +962,21 @@ export const ru = {
   quick_resend_subtitel: 'недавние получатели',
   quick_resend_naar: 'Отправить снова',
   quick_resend_actie: 'Снова',
+
+  // ── Telegram share (Улучшение RRR) ───────────────────────────────────────
+  calc_share_telegram: 'Поделиться через Telegram',
+
+  // ── Черновик платежа (Улучшение SSS) ─────────────────────────────────────
+  payment_draft_doorgaan: 'У вас есть незавершённый перевод. Продолжить с ним?',
+
+  // ── Горячие клавиши (Улучшение TTT) ──────────────────────────────────────
+  kbd_titel: 'Горячие клавиши',
+  kbd_open_calculator: 'Открыть калькулятор',
+  kbd_nieuwe_transactie: 'Новый перевод',
+  kbd_focus_zoek: 'Фокус на поиск',
+  kbd_help: 'Показать эту справку',
+  kbd_sluit: 'Закрыть',
+  kbd_hint: 'Нажмите ? для повторного просмотра',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

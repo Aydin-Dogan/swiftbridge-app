@@ -933,6 +933,21 @@ export const nl = {
   quick_resend_subtitel: 'recente ontvangers',
   quick_resend_naar: 'Stuur opnieuw naar',
   quick_resend_actie: 'Opnieuw',
+
+  // ── Telegram share (Verbetering RRR) ─────────────────────────────────────
+  calc_share_telegram: 'Delen via Telegram',
+
+  // ── Payment draft (Verbetering SSS) ──────────────────────────────────────
+  payment_draft_doorgaan: 'Je had een overboeking half ingevuld. Wil je daarmee doorgaan?',
+
+  // ── Keyboard shortcuts (Verbetering TTT) ─────────────────────────────────
+  kbd_titel: 'Sneltoetsen',
+  kbd_open_calculator: 'Open calculator',
+  kbd_nieuwe_transactie: 'Nieuwe overboeking',
+  kbd_focus_zoek: 'Focus zoekbalk',
+  kbd_help: 'Toon deze hulp',
+  kbd_sluit: 'Sluiten',
+  kbd_hint: 'Druk op ? om deze hulp opnieuw te zien',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

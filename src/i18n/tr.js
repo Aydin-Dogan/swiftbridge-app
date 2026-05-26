@@ -1051,6 +1051,21 @@ export const tr = {
   quick_resend_subtitel: 'son alıcılar',
   quick_resend_naar: 'Tekrar gönder',
   quick_resend_actie: 'Tekrar',
+
+  // ── Telegram paylaş (İyileştirme RRR) ────────────────────────────────────
+  calc_share_telegram: 'Telegram ile paylaş',
+
+  // ── Ödeme taslağı (İyileştirme SSS) ──────────────────────────────────────
+  payment_draft_doorgaan: 'Yarım kalmış bir transferiniz var. Devam etmek ister misiniz?',
+
+  // ── Klavye kısayolları (İyileştirme TTT) ─────────────────────────────────
+  kbd_titel: 'Klavye kısayolları',
+  kbd_open_calculator: 'Hesaplayıcıyı aç',
+  kbd_nieuwe_transactie: 'Yeni transfer',
+  kbd_focus_zoek: 'Arama çubuğuna odaklan',
+  kbd_help: 'Bu yardımı göster',
+  kbd_sluit: 'Kapat',
+  kbd_hint: 'Bu yardımı tekrar görmek için ? tuşuna basın',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

@@ -7,8 +7,10 @@ import Login from './pages/Login';
 import TaalKiezer from './components/TaalKiezer';
 import OfflineBanner from './components/OfflineBanner';
 import MaintenanceBanner from './components/MaintenanceBanner';
+import KeyboardShortcuts from './components/KeyboardShortcuts';
 import SupportChat from './components/chat/SupportChat';
 import ErrorBoundary from './components/ErrorBoundary';
+import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi } from './services/api';
 
@@ -305,11 +307,23 @@ function AppShell({ gebruiker, token, onLogout }) {
             <div id="account-menu-wrap" className="relative">
               <button
                 onClick={(e) => { e.stopPropagation(); setAccountMenuOpen(o => !o); }}
-                className="w-10 h-10 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-full flex items-center justify-center text-white text-sm font-bold transition shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold transition shadow-sm hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                style={{ background: gebruiker?.naam ? kleurUitNaam(gebruiker.naam) : '#2563EB' }}
                 aria-label="Account menu"
                 aria-expanded={accountMenuOpen}
               >
-                {gebruiker?.naam?.[0]?.toUpperCase() || 'G'}
+                {/* QQQ — gebruik Avatar component voor consistente initialen-styling */}
+                {gebruiker?.naam ? (
+                  // We renderen direct inline ipv <Avatar /> omdat we de :focus ring
+                  // op de knop willen behouden, niet een nested element.
+                  (() => {
+                    const woorden = gebruiker.naam.trim().split(/\s+/).filter(Boolean);
+                    if (woorden.length >= 2) {
+                      return (woorden[0][0] + woorden[woorden.length - 1][0]).toUpperCase();
+                    }
+                    return (woorden[0] || 'G').slice(0, 2).toUpperCase();
+                  })()
+                ) : 'G'}
               </button>
               {accountMenuOpen && (
                 <div
@@ -446,6 +460,7 @@ export default function App() {
       <BrowserRouter>
         <OfflineBanner />
       <MaintenanceBanner />
+      <KeyboardShortcuts />
         <LaadSpinner />
       </BrowserRouter>
     );
@@ -455,6 +470,7 @@ export default function App() {
     <BrowserRouter>
       <OfflineBanner />
       <MaintenanceBanner />
+      <KeyboardShortcuts />
       {/* Globale ErrorBoundary (Verbetering N) — vangt uncaught JS errors per
           route op zodat we nooit een white screen tonen. Errors loggen naar
           /errors/frontend in productie + console in dev. */}
