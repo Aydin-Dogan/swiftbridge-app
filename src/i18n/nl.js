@@ -916,6 +916,23 @@ export const nl = {
   // ── Favoriete valutas (Verbetering KKK) ──────────────────────────────────
   valuta_favoriet_aria: 'Markeer als favoriet',
   valuta_favoriet_max: 'Maximaal 8 favorieten',
+
+  // ── Referral progress (Verbetering LLL) ──────────────────────────────────
+  referral_progress_volgende: 'tot volgende mijlpaal',
+  referral_progress_nog: 'Nog {aantal} vrienden tot €{mijlpaal} verdiend',
+  referral_progress_mijlpaal_gehaald: '€{mijlpaal} mijlpaal gehaald — top!',
+
+  // ── Dashboard zoek/filter transacties (Verbetering NNN) ──────────────────
+  dashboard_recent_zoek_placeholder: 'Zoek op naam of bedrag...',
+  dashboard_recent_zoek_aria: 'Zoek transacties',
+  dashboard_recent_status_aria: 'Filter op status',
+  dashboard_recent_status_alle: 'Alle status',
+
+  // ── Quick resend op Dashboard (Verbetering PPP) ──────────────────────────
+  quick_resend_titel: 'Snel opnieuw versturen',
+  quick_resend_subtitel: 'recente ontvangers',
+  quick_resend_naar: 'Stuur opnieuw naar',
+  quick_resend_actie: 'Opnieuw',
   recurring_melding_uitvoer_ok: 'Transactie gemaakt — zie je transactiehistorie.',
   recurring_kaart_bedrag: 'Bedrag',
   recurring_kaart_frequentie: 'Frequentie',

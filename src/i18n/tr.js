@@ -1034,6 +1034,23 @@ export const tr = {
   // ── Favori para birimleri (İyileştirme KKK) ──────────────────────────────
   valuta_favoriet_aria: 'Favori olarak işaretle',
   valuta_favoriet_max: 'Maksimum 8 favori',
+
+  // ── Davet ilerlemesi (İyileştirme LLL) ───────────────────────────────────
+  referral_progress_volgende: 'sonraki kilometre taşına',
+  referral_progress_nog: '€{mijlpaal} kazanmak için {aantal} arkadaş daha',
+  referral_progress_mijlpaal_gehaald: '€{mijlpaal} kilometre taşına ulaşıldı — harika!',
+
+  // ── Dashboard arama/filtre (İyileştirme NNN) ─────────────────────────────
+  dashboard_recent_zoek_placeholder: 'İsim veya tutar ara...',
+  dashboard_recent_zoek_aria: 'İşlemleri ara',
+  dashboard_recent_status_aria: 'Duruma göre filtrele',
+  dashboard_recent_status_alle: 'Tüm durumlar',
+
+  // ── Dashboard hızlı tekrar gönder (İyileştirme PPP) ──────────────────────
+  quick_resend_titel: 'Tekrar gönder',
+  quick_resend_subtitel: 'son alıcılar',
+  quick_resend_naar: 'Tekrar gönder',
+  quick_resend_actie: 'Tekrar',
   recurring_melding_uitvoer_ok: 'Transfer oluşturuldu — transfer geçmişinizde görebilirsiniz.',
   recurring_kaart_bedrag: 'Tutar',
   recurring_kaart_frequentie: 'Sıklık',

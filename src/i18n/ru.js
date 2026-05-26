@@ -945,6 +945,23 @@ export const ru = {
   // ── Любимые валюты (Улучшение KKK) ───────────────────────────────────────
   valuta_favoriet_aria: 'Отметить как любимое',
   valuta_favoriet_max: 'Максимум 8 любимых',
+
+  // ── Прогресс рефералов (Улучшение LLL) ───────────────────────────────────
+  referral_progress_volgende: 'до следующей цели',
+  referral_progress_nog: 'Ещё {aantal} друзей до €{mijlpaal}',
+  referral_progress_mijlpaal_gehaald: 'Цель €{mijlpaal} достигнута — отлично!',
+
+  // ── Поиск/фильтр (Улучшение NNN) ─────────────────────────────────────────
+  dashboard_recent_zoek_placeholder: 'Поиск по имени или сумме...',
+  dashboard_recent_zoek_aria: 'Поиск транзакций',
+  dashboard_recent_status_aria: 'Фильтр по статусу',
+  dashboard_recent_status_alle: 'Все статусы',
+
+  // ── Quick resend (Улучшение PPP) ─────────────────────────────────────────
+  quick_resend_titel: 'Быстро отправить снова',
+  quick_resend_subtitel: 'недавние получатели',
+  quick_resend_naar: 'Отправить снова',
+  quick_resend_actie: 'Снова',
   recurring_melding_uitvoer_ok: 'Перевод создан — смотрите историю транзакций.',
   recurring_kaart_bedrag: 'Сумма',
   recurring_kaart_frequentie: 'Частота',

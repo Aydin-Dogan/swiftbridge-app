@@ -2,7 +2,7 @@
  * TransactieReceipt.jsx — Volledige kwitantie met status timeline (Remitly-stijl)
  * Toont 4-stappen voortgang met tijdstempels + print/PDF functionaliteit
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Vlag from './Vlag';
 import { formatBedrag, getValuta } from '../services/currencies';
 import { API_URL } from '../services/api';
@@ -233,6 +233,77 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
             🔁 Opnieuw versturen
           </button>
         </div>
+
+        {/* Vertel-een-vriend CTA (Verbetering OOO) — alleen tonen na
+            voltooide transactie, motiveert referral op het juiste moment. */}
+        {isVoltooid && (
+          <ReferralCtaInReceipt />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Mini-component dat alleen verschijnt na voltooide transactie.
+ * Toont referral-aanbieding met copy-knop. Lazy-load van apiFetch om
+ * geen extra werk te doen bij iedere modal-open.
+ */
+function ReferralCtaInReceipt() {
+  const [data, setData] = useState(null);
+  const [gekopieerd, setGekopieerd] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    import('../services/api').then(({ apiFetch }) => {
+      apiFetch('/referral/mijn')
+        .then(d => { if (!cancelled) setData(d); })
+        .catch(() => {/* niet kritiek */});
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  if (!data?.deelUrl) return null;
+
+  async function kopieer() {
+    try {
+      await navigator.clipboard.writeText(data.deelUrl);
+      setGekopieerd(true);
+      setTimeout(() => setGekopieerd(false), 2500);
+    } catch {/* silent */}
+  }
+
+  function whatsapp() {
+    const bericht = `Ik gebruik SwiftBridge voor geld sturen naar Türkiye — snel én goedkoop. Doe je mee? ${data.deelUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(bericht)}`, '_blank', 'noopener,noreferrer');
+  }
+
+  return (
+    <div className="mt-3 bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-xl p-3 print:hidden">
+      <div className="flex items-start gap-2 mb-2">
+        <span className="text-xl flex-shrink-0" aria-hidden="true">🎁</span>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-emerald-900 text-sm">
+            Verdien €{data.beloningPerVriendEur} per uitnodiging
+          </p>
+          <p className="text-xs text-emerald-800 mt-0.5">
+            Vertel een vriend over SwiftBridge — jullie krijgen allebei een bonus.
+          </p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          onClick={kopieer}
+          className="text-xs font-semibold text-emerald-700 bg-white hover:bg-emerald-50 border border-emerald-200 rounded-lg py-2 transition"
+        >
+          {gekopieerd ? '✓ Gekopieerd' : '📋 Kopieer link'}
+        </button>
+        <button
+          onClick={whatsapp}
+          className="text-xs font-bold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-lg py-2 transition"
+        >
+          💬 WhatsApp
+        </button>
       </div>
     </div>
   );

@@ -84,9 +84,27 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
   const { t } = useTaal();
   const [detailTx, setDetailTx] = useState(null);
 
-  const recent = [...transacties]
+  // Zoek + filter state (Verbetering NNN)
+  // Toon zoekbalk pas vanaf 5 transacties (anders overbodig).
+  const [zoekTerm, setZoekTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('alle');
+
+  const gefilterd = transacties.filter(tx => {
+    if (statusFilter !== 'alle' && tx.status !== statusFilter) return false;
+    if (zoekTerm) {
+      const term = zoekTerm.toLowerCase().trim();
+      const naam = (tx.ontvangerNaam || tx.ontvanger_naam || '').toLowerCase();
+      const bedrag = String(tx.eurBedrag || '');
+      if (!naam.includes(term) && !bedrag.includes(term)) return false;
+    }
+    return true;
+  });
+
+  const recent = [...gefilterd]
     .sort((a, b) => new Date(b.aangemaaktOp || b.datum || 0) - new Date(a.aangemaaktOp || a.datum || 0))
     .slice(0, 5);
+
+  const toonFilter = transacties.length >= 5;
 
   // Lege state — rijke empty state met SVG-illustratie, 3-staps preview
   // en dubbele CTA (start meteen / bereken eerst).
@@ -169,9 +187,34 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
           {t('dashboard_recent_titel')}
         </h3>
         <span className="text-[11px] text-slate-400 font-medium">
-          {transacties.length}
+          {gefilterd.length}{gefilterd.length !== transacties.length && ` / ${transacties.length}`}
         </span>
       </div>
+
+      {/* Zoek + filter (Verbetering NNN) — alleen vanaf 5 transacties */}
+      {toonFilter && !laden && (
+        <div className="px-4 py-2.5 bg-slate-50/50 border-b border-slate-100 flex gap-2 items-center">
+          <input
+            type="search"
+            value={zoekTerm}
+            onChange={(e) => setZoekTerm(e.target.value)}
+            placeholder={t('dashboard_recent_zoek_placeholder')}
+            className="flex-1 text-xs border border-slate-200 bg-white rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            aria-label={t('dashboard_recent_zoek_aria')}
+          />
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="text-xs border border-slate-200 bg-white rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            aria-label={t('dashboard_recent_status_aria')}
+          >
+            <option value="alle">{t('dashboard_recent_status_alle')}</option>
+            <option value="voltooid">{t('status_voltooid')}</option>
+            <option value="in_behandeling">{t('status_in_behandeling')}</option>
+            <option value="mislukt">{t('status_mislukt')}</option>
+          </select>
+        </div>
+      )}
 
       {laden ? (
         <div className="divide-y divide-slate-50">

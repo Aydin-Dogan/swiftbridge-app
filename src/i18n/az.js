@@ -945,6 +945,23 @@ export const az = {
   // ── Sevimli valyutalar (Təkmilləşdirmə KKK) ──────────────────────────────
   valuta_favoriet_aria: 'Sevimli olaraq qeyd et',
   valuta_favoriet_max: 'Maksimum 8 sevimli',
+
+  // ── Dəvət irəliləyişi (Təkmilləşdirmə LLL) ───────────────────────────────
+  referral_progress_volgende: 'növbəti mərhələyə',
+  referral_progress_nog: '€{mijlpaal} qazanmaq üçün daha {aantal} dost',
+  referral_progress_mijlpaal_gehaald: '€{mijlpaal} mərhələsinə çatdı — əla!',
+
+  // ── Dashboard axtarış (Təkmilləşdirmə NNN) ───────────────────────────────
+  dashboard_recent_zoek_placeholder: 'Ad və ya məbləğ axtar...',
+  dashboard_recent_zoek_aria: 'Əməliyyatları axtar',
+  dashboard_recent_status_aria: 'Statusa görə süz',
+  dashboard_recent_status_alle: 'Bütün statuslar',
+
+  // ── Sürətli yenidən göndər (Təkmilləşdirmə PPP) ──────────────────────────
+  quick_resend_titel: 'Sürətli yenidən göndər',
+  quick_resend_subtitel: 'son alıcılar',
+  quick_resend_naar: 'Yenidən göndər',
+  quick_resend_actie: 'Yenidən',
   recurring_melding_uitvoer_ok: 'Köçürmə yaradıldı — köçürmə tarixçənizə baxın.',
   recurring_kaart_bedrag: 'Məbləğ',
   recurring_kaart_frequentie: 'Tezlik',

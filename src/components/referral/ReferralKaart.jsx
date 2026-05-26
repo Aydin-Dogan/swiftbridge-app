@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { useTaal } from '../../i18n';
 import { apiFetch, parseError } from '../../services/api';
 import ReferralLeaderboard from './ReferralLeaderboard';
+import ReferralProgress from './ReferralProgress';
 
 // SVG iconen — vervangen emoji's voor consistentie met matte-modern stijl
 const IconWhatsApp = () => (
@@ -228,6 +229,11 @@ export default function ReferralKaart() {
             </svg>
             {gekopieerd === 'knop' ? t('referral_gekopieerd') : t('referral_deel_kopieer')}
           </button>
+        </div>
+
+        {/* Progress widget (LLL) — mijlpaal voortgang */}
+        <div className="mt-4">
+          <ReferralProgress />
         </div>
 
         {/* Statistieken */}

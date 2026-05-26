@@ -38,6 +38,7 @@ import RecentTransacties from './dashboard/RecentTransacties';
 import InsightsCard from './dashboard/InsightsCard';
 import Spaardoelen from './dashboard/Spaardoelen';
 import MaandOverzicht from './dashboard/MaandOverzicht';
+import QuickResend from './dashboard/QuickResend';
 
 // Onboarding wizard voor nieuwe gebruikers
 import OnboardingModal from './onboarding/OnboardingModal';
@@ -424,6 +425,10 @@ export default function Dashboard({ gebruiker }) {
       {/* MaandOverzicht widget (Verbetering EEE) — verbergt zichzelf als
           0 voltooide transacties. Hergebruikt al-opgehaalde transacties prop. */}
       <MaandOverzicht transacties={transacties} />
+
+      {/* QuickResend (Verbetering PPP) — 3 laatste ontvangers voor 1-tap
+          herhaal-overboeking. Verbergt zichzelf als <2 voltooide transacties. */}
+      <QuickResend transacties={transacties} />
 
       {/* 5. Quick Actions */}
       <QuickActions />
