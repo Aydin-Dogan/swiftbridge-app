@@ -145,7 +145,22 @@ export default function Spaardoelen() {
                 onVerwijder={() => setVerwijderId(item.id)}
                 bewerkActief={bewerkId === item.id}
                 onSluitBewerk={() => setBewerkId(null)}
-                onNaarOverboeking={() => navigate('/app')}
+                onNaarOverboeking={() => {
+                  // XXX — smart prefill: ontvanger uit doel + suggested bedrag.
+                  // suggested = min(suggestedPerWeek, resterendEur) — week-bijdrage tenzij doel al binnen 1 transactie
+                  const resterend = Math.max(0, Number(item.doel_bedrag_eur) - Number(item.huidig_bedrag_eur || 0));
+                  const bedrag = item.suggestedPerWeek
+                    ? Math.min(item.suggestedPerWeek, resterend || item.suggestedPerWeek)
+                    : (resterend || 100);
+                  try {
+                    localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
+                      ontvanger: item.ontvanger_naam || '',
+                      bedrag,
+                      valuta: item.valuta_doel || 'TRY',
+                    }));
+                  } catch {/* private mode */}
+                  window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+                }}
               />
             ))}
             {formOpen && (

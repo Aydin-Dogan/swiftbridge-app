@@ -269,6 +269,85 @@ function OntvangerModal({ onKies, onSluit }) {
 }
 
 // ── Stap 0: Bedrag ────────────────────────────────────────────────────────────
+// ── BeneficiaryAutocomplete (Verbetering WWW) ────────────────────────────
+// Input voor ontvanger-naam met live suggesties uit /beneficiaries.
+// Op klik op suggestie → vult IBAN + bank + label automatisch in.
+// Vereist >=2 karakters om suggesties te tonen.
+function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setOntvangerLabel }) {
+  const [alle, setAlle] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!token) return;
+    let cancelled = false;
+    fetch(`${API}/beneficiaries`, {
+      credentials: 'include',
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (!cancelled && d) setAlle(d.beneficiaries || []); })
+      .catch(() => {/* geen autocomplete is OK */});
+    return () => { cancelled = true; };
+  }, [token]);
+
+  const term = (ontvanger || '').trim().toLowerCase();
+  const suggesties = !alle || term.length < 2
+    ? []
+    : alle.filter(b => {
+        const naam = (b.naam || '').toLowerCase();
+        const bijnaam = (b.bijnaam || '').toLowerCase();
+        return naam.includes(term) || bijnaam.includes(term);
+      }).slice(0, 5);
+
+  function kies(b) {
+    setOntvanger(b.naam);
+    if (b.iban && setIban) setIban(b.iban);
+    if (b.bank && setOntvangerBank) setOntvangerBank(b.bank);
+    if (b.bijnaam && setOntvangerLabel) setOntvangerLabel(b.bijnaam);
+    setOpen(false);
+  }
+
+  return (
+    <div className="relative">
+      <input
+        value={ontvanger}
+        onChange={(e) => { setOntvanger(e.target.value); setOpen(true); }}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setTimeout(() => setOpen(false), 200)}
+        placeholder="Mehmet Yilmaz"
+        className="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition"
+        autoComplete="off"
+      />
+      {open && suggesties.length > 0 && (
+        <ul className="absolute z-20 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto">
+          {suggesties.map(b => (
+            <li key={b.id}>
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()} /* voorkom blur vóór click */
+                onClick={() => kies(b)}
+                className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-blue-50 transition border-b border-gray-50 last:border-b-0"
+              >
+                <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center flex-shrink-0">
+                  {(b.naam || '?').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase()}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-semibold text-gray-900 truncate">
+                    {b.bijnaam || b.naam}
+                  </div>
+                  <div className="text-xs text-gray-500 truncate">
+                    {b.iban?.slice(0, 4)} •••• {b.iban?.slice(-4)} · {b.bank || ''}
+                  </div>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet }) {
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
@@ -459,9 +538,14 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               className="text-xs text-blue-600 font-medium hover:underline">📋 Kies opgeslagen</button>
           )}
         </div>
-        <input value={ontvanger} onChange={e => setOntvanger(e.target.value)}
-          placeholder="Mehmet Yilmaz"
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" />
+        <BeneficiaryAutocomplete
+          token={token}
+          ontvanger={ontvanger}
+          setOntvanger={setOntvanger}
+          setIban={setIban}
+          setOntvangerBank={setOntvangerBank}
+          setOntvangerLabel={setOntvangerLabel}
+        />
 
         {/* Bewaar als favoriete ontvanger checkbox */}
         {ontvanger && iban && (
@@ -712,7 +796,7 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
 }
 
 // ── Stap 2: Bevestiging ───────────────────────────────────────────────────────
-function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug }) {
+function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie }) {
   const { t } = useTaal();
   const valutaInfo = getValuta(valuta);
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
@@ -780,6 +864,24 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* VVV — optionele notitie voor eigen administratie */}
+      {setNotitie && (
+        <div className="rounded-xl bg-gray-50 border border-gray-200 p-3">
+          <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+            📝 Persoonlijke notitie <span className="text-gray-400 font-normal">(optioneel, alleen voor jou zichtbaar)</span>
+          </label>
+          <input
+            type="text"
+            value={notitie || ''}
+            onChange={(e) => setNotitie(e.target.value.slice(0, 200))}
+            placeholder="Bv. 'Verjaardag Moeder' of 'Huur juni'"
+            maxLength={200}
+            className="w-full text-sm border border-gray-200 bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <div className="text-[10px] text-gray-400 text-right mt-1">{(notitie || '').length}/200</div>
         </div>
       )}
 
@@ -1033,6 +1135,7 @@ export default function PaymentFlow({ token }) {
   const [paparaIdentifier,    setPaparaIdentifier]    = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
   const [methode,        setMethode       ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
+  const [notitie,        setNotitie       ] = useState(''); // VVV — persoonlijke notitie per transactie
   const [ontvangerBank,  setOntvangerBank ] = useState('Ziraat Bankası');
   const [liveKoersTry,   setLiveKoersTry  ] = useState(null);
   const [transactie,     setTransactie    ] = useState(null);
@@ -1197,6 +1300,20 @@ export default function PaymentFlow({ token }) {
         return;
       }
 
+      // VVV — als gebruiker een notitie heeft ingevuld, PATCH naar backend.
+      // Best-effort: faalt niet de transactie.
+      if (notitie && notitie.trim()) {
+        fetch(`${API}/transactions/${data.transactie.id}/notitie`, {
+          method: 'PATCH',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({ notitie: notitie.trim() }),
+        }).catch(err => console.warn('Notitie opslaan faalde:', err.message));
+      }
+
       // Bereken ontvangen bedrag in gekozen valuta
       const valutaInfo = getValuta(valuta);
       const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
@@ -1314,7 +1431,7 @@ export default function PaymentFlow({ token }) {
 
       {stap === 0 && <StapBedrag token={token} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => setStap(1)} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} token={token} />}
 
       {/* PaymentLoadingOverlay (Verbetering W) — full-screen feedback tijdens

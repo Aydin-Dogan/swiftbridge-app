@@ -234,6 +234,9 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
           </button>
         </div>
 
+        {/* Persoonlijke notitie (Verbetering VVV) — inline edit */}
+        <NotitieSectie tx={tx} />
+
         {/* Vertel-een-vriend CTA (Verbetering OOO) — alleen tonen na
             voltooide transactie, motiveert referral op het juiste moment. */}
         {isVoltooid && (
@@ -305,6 +308,97 @@ function ReferralCtaInReceipt() {
           💬 WhatsApp
         </button>
       </div>
+    </div>
+  );
+}
+
+/**
+ * NotitieSectie — inline weergave + edit van persoonlijke notitie per tx (VVV).
+ * Optimistisch: laat nieuwe waarde direct zien, rollback bij API-fout.
+ */
+function NotitieSectie({ tx }) {
+  const [notitie, setNotitie] = useState(tx?.notitie || '');
+  const [bewerk, setBewerk] = useState(false);
+  const [bezig, setBezig] = useState(false);
+  const [fout, setFout] = useState('');
+  const oudeWaardeRef = tx?.notitie || '';
+
+  async function opslaan() {
+    setBezig(true);
+    setFout('');
+    try {
+      const res = await fetch(`${API_URL}/transactions/${tx.id}/notitie`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notitie: notitie.trim() || null }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setFout(data.error || `HTTP ${res.status}`);
+        setNotitie(oudeWaardeRef); // rollback
+        return;
+      }
+      setBewerk(false);
+    } catch (err) {
+      setFout(err.message);
+      setNotitie(oudeWaardeRef);
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  if (!tx) return null;
+
+  return (
+    <div className="mt-3 p-3 rounded-xl bg-gray-50 border border-gray-200 print:hidden">
+      <div className="flex items-center justify-between mb-1.5">
+        <span className="text-xs font-semibold text-gray-600">📝 Persoonlijke notitie</span>
+        {!bewerk && (
+          <button
+            onClick={() => setBewerk(true)}
+            className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+            disabled={bezig}
+          >
+            {notitie ? 'Bewerken' : '+ Toevoegen'}
+          </button>
+        )}
+      </div>
+      {bewerk ? (
+        <div className="space-y-2">
+          <input
+            type="text"
+            value={notitie}
+            onChange={(e) => setNotitie(e.target.value.slice(0, 200))}
+            placeholder="Bv. 'Verjaardag Moeder'"
+            maxLength={200}
+            className="w-full text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            autoFocus
+            disabled={bezig}
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={opslaan}
+              disabled={bezig}
+              className="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-lg px-3 py-1.5"
+            >
+              {bezig ? '...' : 'Opslaan'}
+            </button>
+            <button
+              onClick={() => { setNotitie(oudeWaardeRef); setBewerk(false); setFout(''); }}
+              disabled={bezig}
+              className="text-xs text-gray-500 hover:text-gray-700 px-2"
+            >
+              Annuleren
+            </button>
+          </div>
+          {fout && <div className="text-xs text-red-600">{fout}</div>}
+        </div>
+      ) : (
+        <p className="text-sm text-gray-700 italic">
+          {notitie || <span className="text-gray-400">Geen notitie — klik "Toevoegen" om een herinnering aan deze transactie toe te voegen.</span>}
+        </p>
+      )}
     </div>
   );
 }
