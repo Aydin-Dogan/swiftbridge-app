@@ -24,6 +24,8 @@ export default function Login({ onLogin }) {
 
   // 2FA state
   const [twofaUserId, setTwofaUserId] = useState(null);
+  // F7 fix (Cursor review): pendingToken is nieuwe primaire identifier
+  const [twofaPendingToken, setTwofaPendingToken] = useState(null);
   const [twofaCode,   setTwofaCode  ] = useState('');
   const [twofaLaden,  setTwofaLaden ] = useState(false);
   const [twofaFout,   setTwofaFout  ] = useState('');
@@ -85,6 +87,7 @@ export default function Login({ onLogin }) {
       // 2FA tussenstap
       if (data.tweeFactor) {
         setTwofaUserId(data.userId);
+        setTwofaPendingToken(data.pendingToken || null); // F7: primaire identifier
         return;
       }
 
@@ -139,9 +142,15 @@ export default function Login({ onLogin }) {
     setTwofaLaden(true);
     setTwofaFout('');
     try {
+      // F7 fix (Cursor review): primair pendingToken sturen — userId blijft
+      // mee voor backward-compat tijdens transitie (backend prefereert token).
       await apiFetch('/auth/2fa-verifieer', {
         method: 'POST',
-        body: { userId: twofaUserId, code: twofaCode },
+        body: {
+          ...(twofaPendingToken ? { pendingToken: twofaPendingToken } : {}),
+          userId: twofaUserId,
+          code: twofaCode,
+        },
       });
       // Cookie is gezet — haal profiel op via /auth/me
       const profiel = await haalProfiel();
@@ -228,7 +237,7 @@ export default function Login({ onLogin }) {
               className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {twofaLaden ? '⏳ Bezig...' : '🔓 Verifieer & inloggen'}
             </button>
-            <button type="button" onClick={() => { setTwofaUserId(null); setTwofaCode(''); setTwofaFout(''); }}
+            <button type="button" onClick={() => { setTwofaUserId(null); setTwofaPendingToken(null); setTwofaCode(''); setTwofaFout(''); }}
               className="w-full text-gray-500 text-sm hover:text-gray-700">
               ← Terug naar inloggen
             </button>
