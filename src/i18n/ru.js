@@ -245,7 +245,8 @@ export const ru = {
   landing_hero_subline: 'В 10 раз дешевле, чем в банках. На счёт вашей семьи менее чем за 5 минут. Тарифы от 0,8% — без скрытых платежей.',
   landing_hero_cta_primary: 'Начать бесплатно',
   landing_hero_cta_secondary: 'Посмотреть, как это работает',
-  landing_trust_dnb: 'Под контролем Wwft / DNB',
+  // F23 fix (Cursor review): через EMI-партнёра qualifier
+  landing_trust_dnb: 'Wwft · через EMI-партнёра под надзором DNB',
   landing_trust_ideal: 'iDEAL и iDIN',
   landing_trust_encrypted: '256-битное шифрование',
   landing_trust_reviews: '4,8★ — 1 240 отзывов',

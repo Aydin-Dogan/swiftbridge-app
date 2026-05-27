@@ -261,7 +261,8 @@ export const nl = {
   landing_hero_subline: '10x goedkoper dan banken. Binnen 5 minuten op de rekening van je familie. Tarieven vanaf 0,8% — geen verborgen kosten.',
   landing_hero_cta_primary: 'Gratis starten',
   landing_hero_cta_secondary: 'Bekijk hoe het werkt',
-  landing_trust_dnb: 'Wwft / DNB-toezicht',
+  // F23 fix (Cursor review): qualifier "via EMI-partner" ingebed in label zelf
+  landing_trust_dnb: 'Wwft · via DNB-EMI-partner',
   landing_trust_ideal: 'iDEAL & iDIN',
   landing_trust_encrypted: '256-bit versleuteld',
   landing_trust_reviews: '4,8★ uit 1.240 reviews',

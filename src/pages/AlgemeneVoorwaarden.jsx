@@ -57,7 +57,7 @@ export default function AlgemeneVoorwaarden() {
                 <li>Bij registratie verstrekt de Gebruiker correcte, actuele en volledige informatie.</li>
                 <li>Elk account is strikt persoonlijk en mag niet worden overgedragen aan derden.</li>
                 <li>De Gebruiker is verantwoordelijk voor alle activiteiten die plaatsvinden onder zijn/haar account.</li>
-                <li>Bij vermoed misbruik of ongeautoriseerde toegang dient de Gebruiker SwiftBridge onmiddellijk te informeren via support@swiftbridge.nl.</li>
+                <li>Bij vermoed misbruik of ongeautoriseerde toegang dient de Gebruiker SwiftBridge onmiddellijk te informeren via support@swiftbridge.tr.</li>
                 <li>SwiftBridge mag een account opschorten of beëindigen bij schending van deze voorwaarden.</li>
               </ul>
             </section>
@@ -122,7 +122,7 @@ export default function AlgemeneVoorwaarden() {
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Artikel 10 — Klachten</h2>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Klachten kunnen worden ingediend via support@swiftbridge.nl.</li>
+                <li>Klachten kunnen worden ingediend via support@swiftbridge.tr.</li>
                 <li>SwiftBridge streeft ernaar klachten binnen 5 werkdagen te beantwoorden.</li>
                 <li>Indien de klacht niet naar tevredenheid wordt opgelost, kan de Gebruiker zich wenden tot het Kifid (Klachteninstituut Financiële Dienstverlening) of de Autoriteit Financiële Markten (AFM).</li>
               </ul>
@@ -137,7 +137,7 @@ export default function AlgemeneVoorwaarden() {
             </section>
 
             <section className="border-t pt-6">
-              <p className="text-sm text-gray-500">SwiftBridge B.V. — support@swiftbridge.nl — swiftbridge.nl</p>
+              <p className="text-sm text-gray-500">SwiftBridge B.V. — support@swiftbridge.tr — swiftbridge.tr</p>
               <p className="text-sm text-gray-500 mt-1">Versie 1.0, mei 2026. Onderworpen aan periodieke herziening.</p>
             </section>
           </div>

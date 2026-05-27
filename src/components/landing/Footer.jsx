@@ -159,7 +159,8 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-xs text-gray-500">
-            © {jaar} SwiftBridge B.V. · {t('landing_footer_rechten')}
+            {/* F32 fix: "B.V." weggehaald tot KvK-inschrijving rond is. */}
+            © {jaar} SwiftBridge · {t('landing_footer_rechten')}
           </p>
           <p className="text-[11px] text-gray-600 max-w-xl text-center md:text-right leading-relaxed">
             {t('landing_footer_dnb_disclaimer')}

@@ -92,7 +92,7 @@ export default function GdprBeheer({ token }) {
   }
 
   async function bevestigAnonimiseren() {
-    if (bevestiging.trim() !== 'IK BEGRIJP HET') {
+    if (bevestiging.trim() !== 'VERWIJDER') {
       setFout(t('gdpr_typ_fout'));
       return;
     }
@@ -106,7 +106,7 @@ export default function GdprBeheer({ token }) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ bevestiging: 'IK BEGRIJP HET' }),
+        body: JSON.stringify({ bevestiging: 'VERWIJDER' }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -260,12 +260,12 @@ export default function GdprBeheer({ token }) {
 
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                {t('gdpr_modal_typ_label')} <span className="font-mono text-rose-600">IK BEGRIJP HET</span> {t('gdpr_modal_typ_om')}
+                {t('gdpr_modal_typ_label')} <span className="font-mono text-rose-600">VERWIJDER</span> {t('gdpr_modal_typ_om')}
               </label>
               <input
                 value={bevestiging}
                 onChange={(e) => setBevestiging(e.target.value)}
-                placeholder="IK BEGRIJP HET"
+                placeholder="VERWIJDER"
                 className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-rose-500 font-mono"
                 disabled={bezigAnoniem}
                 autoFocus
@@ -288,7 +288,7 @@ export default function GdprBeheer({ token }) {
               </button>
               <button
                 onClick={bevestigAnonimiseren}
-                disabled={bezigAnoniem || bevestiging.trim() !== 'IK BEGRIJP HET'}
+                disabled={bezigAnoniem || bevestiging.trim() !== 'VERWIJDER'}
                 className="flex-1 py-2.5 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {bezigAnoniem ? `⏳ ${t('gdpr_modal_bezig')}` : t('gdpr_modal_bevestig')}

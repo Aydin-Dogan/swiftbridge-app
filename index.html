@@ -11,12 +11,17 @@
          Deze meta-tags bieden bescherming bij offline/cached loads en oude proxies. -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.tr https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
+    <!-- F22 fix (Cursor review): script-src 'unsafe-inline' verwijderd uit meta-CSP.
+         Was: regressie bij cached load via service-worker — meta-CSP zou inline scripts
+         toestaan terwijl server-CSP dat niet doet. Nu beide consistent strikt. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.tr https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
 
     <!-- ═══ SEO ═══ -->
     <title>SwiftBridge — Geld naar Türkiye in 5 minuten | Vanaf 0,8%</title>
     <meta name="description" content="Stuur geld vanuit Nederland naar Turkije en 6 Turkic landen. Vanaf 0,8% per overboeking met staffel-tarief, binnen 5 minuten op de rekening. Onder DNB-toezicht via EMI-partner." />
-    <meta name="author" content="SwiftBridge B.V." />
+    <!-- F32 fix (Cursor review): "B.V." weggehaald tot KvK-inschrijving rond is.
+         Wordt teruggezet zodra notaris BV-akte rondbrengt. -->
+    <meta name="author" content="SwiftBridge" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://swiftbridge.tr/" />
 
@@ -77,9 +82,12 @@
     <!-- ═══ Performance ═══ -->
     <link rel="preconnect" href="https://api.swiftbridge.tr" crossorigin />
     <link rel="dns-prefetch" href="https://api.swiftbridge.tr" />
-    <!-- Wise koers-feed is third-party — DNS prefetch om eerste fetch te versnellen -->
-    <link rel="dns-prefetch" href="https://wise.com" />
-    <link rel="preconnect" href="https://wise.com" crossorigin />
+    <!-- F27 fix (Cursor review): wise.com preconnect/dns-prefetch verwijderd.
+         Reden: (1) elke landing-bezoeker triggerde DNS-query naar concurrent →
+         traffic-volume lek naar Wise's CDN. (2) Wise wordt alleen op /status
+         pagina gebruikt — daar regelt de browser DNS on-demand. (3) Privacy:
+         elke bezoeker's ISP zag een wise.com lookup, ongerelateerd verkeer-
+         correlatie mogelijk. -->
     <!-- Preload het hero-logo om LCP te verbeteren (kritiek above-the-fold asset) -->
     <link rel="preload" as="image" href="/icon-192.png" fetchpriority="high" />
 
@@ -134,7 +142,7 @@
         {"@type":"Question","name":"Hoe snel komt geld aan in Türkiye?","acceptedAnswer":{"@type":"Answer","text":"Binnen 5 minuten via iDEAL. SwiftBridge gebruikt directe banktransfers naar Turkse banken."}},
         {"@type":"Question","name":"Wat zijn de kosten van SwiftBridge?","acceptedAnswer":{"@type":"Answer","text":"Staffel-tarief: 2,0% voor kleine bedragen (€10-200) tot 0,8% voor €2.500+. Op €500 betaal je 1,5% (€7,50). Volledige tariefkaart staat op de landing-pagina."}},
         {"@type":"Question","name":"Is SwiftBridge veilig?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge werkt onder DNB-toezicht via een EMI-partner. We volgen Wwft en AVG, gebruiken 256-bit encryptie en 2FA, en screenen alle transacties tegen EU sanctielijsten."}},
-        {"@type":"Question","name":"Welke Turkse banken ondersteunen jullie?","acceptedAnswer":{"@type":"Answer","text":"Alle grote Turkse banken: Garanti BBVA, Akbank, İş Bankası, Ziraat Bankası, Yapı Kredi, Halkbank, Vakıfbank, QNB Finansbank, ING Türkiye en 100+ andere. Ook Papara wallet via TerraPay."}},
+        {"@type":"Question","name":"Welke Turkse banken ondersteunen jullie?","acceptedAnswer":{"@type":"Answer","text":"Alle grote Turkse banken: Garanti BBVA, Akbank, İş Bankası, Ziraat Bankası, Yapı Kredi, Halkbank, Vakıfbank, QNB Finansbank, ING Türkiye en 100+ andere."}},
         {"@type":"Question","name":"Hoe werkt iDIN identificatie?","acceptedAnswer":{"@type":"Answer","text":"iDIN gebruikt je Nederlandse bank-app om je identiteit te verifiëren — geen scans of selfies nodig. Werkt met ING, Rabobank, ABN AMRO, SNS, ASN, Triodos, Knab, Bunq, RegioBank en meer. Duurt ~60 seconden."}},
         {"@type":"Question","name":"Wat zijn de limieten per maand of dag?","acceptedAnswer":{"@type":"Answer","text":"In de eerste 90 dagen na KYC-goedkeuring geldt een weeklimiet van €5.000. Daarna automatisch verhoogd op basis van transactie-historie. Op aanvraag tot €25.000 per transactie."}},
         {"@type":"Question","name":"Hoe verhoudt SwiftBridge zich tot Wise?","acceptedAnswer":{"@type":"Answer","text":"Wise is wereldwijd; SwiftBridge specialiseert in EUR→TRY corridor. Sneller (vaak <5 min) met betere Turkse-bank-ondersteuning. Tarief €1-2 boven Wise op €500."}},

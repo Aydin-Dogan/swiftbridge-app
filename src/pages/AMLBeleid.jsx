@@ -11,8 +11,16 @@ export default function AMLBeleid() {
           <p className="text-gray-600 mb-1">Anti-Money Laundering & Counter-Terrorist Financing Policy</p>
           <p className="text-sm text-gray-500 mb-8">Versie 1.0 — Datum: mei 2026</p>
 
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8 text-sm text-red-800">
-            <strong>🔒 Intern beleidsdocument:</strong> Dit document beschrijft de maatregelen die SwiftBridge neemt om witwassen van geld en financiering van terrorisme te voorkomen, conform de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft) en de EU Anti-witwasrichtlijnen (AMLD).
+          {/* F31 fix (Cursor review): "Intern beleidsdocument" tekst verwijderd —
+              dit document is publiek toegankelijk voor transparantie. */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 text-sm text-blue-900">
+            <strong>📘 Publiek beleidsdocument:</strong> Dit document beschrijft hoe SwiftBridge witwassen van geld en financiering van terrorisme voorkomt, conform de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft) en EU Anti-witwasrichtlijnen (AMLD).
+          </div>
+
+          {/* F23 fix (Cursor review): expliciet maken dat SwiftBridge agent is van
+              een EMI-partner — voorkomt indruk dat we zelf DNB-vergunning hebben. */}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-sm text-amber-900">
+            <strong>⚖️ Toezichtsstructuur:</strong> Betaaldiensten worden geleverd door onze EMI-partner, een door DNB gelicentieerde Elektronische Geld-Instelling. SwiftBridge handelt als agent en past onderstaand AML/CTF-beleid toe in opdracht van — en onder toezicht van — de EMI-partner. SwiftBridge beschikt zelf <strong>niet</strong> over een eigen DNB-vergunning.
           </div>
 
           <div className="space-y-8 text-gray-700 leading-relaxed">
@@ -195,7 +203,7 @@ export default function AMLBeleid() {
                 <li>De Compliance Officer rapporteert direct aan de directie.</li>
                 <li>Alle medewerkers met klantcontact volgen verplicht AML-training bij indiensttreding en jaarlijks daarna.</li>
                 <li>Dit beleid wordt minimaal jaarlijks herzien en aangepast aan nieuwe wet- en regelgeving.</li>
-                <li>Interne meldingen van vermoedens kunnen anoniem via compliance@swiftbridge.nl.</li>
+                <li>Interne meldingen van vermoedens kunnen anoniem via compliance@swiftbridge.tr.</li>
               </ul>
             </section>
 
@@ -210,7 +218,7 @@ export default function AMLBeleid() {
             </section>
 
             <section className="border-t pt-6">
-              <p className="text-sm text-gray-500">SwiftBridge B.V. — compliance@swiftbridge.nl</p>
+              <p className="text-sm text-gray-500">SwiftBridge B.V. — compliance@swiftbridge.tr</p>
               <p className="text-sm text-gray-500 mt-1">Versie 1.0, mei 2026. Goedgekeurd door directie. Jaarlijkse herziening vereist.</p>
               <p className="text-sm text-gray-500 mt-1">Wettelijke basis: Wwft, 6e AMLD, FATF-aanbevelingen, Sanctiewet 1977.</p>
             </section>

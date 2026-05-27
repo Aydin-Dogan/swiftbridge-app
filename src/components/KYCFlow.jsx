@@ -419,7 +419,7 @@ function KYCGeblokkeerd() {
       </div>
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 space-y-2">
         <p className="font-bold">📞 Contact klantenservice</p>
-        <p>E-mail: <strong>support@swiftbridge.nl</strong></p>
+        <p>E-mail: <strong>support@swiftbridge.tr</strong></p>
         <p className="text-xs text-red-500">Vermeld je e-mailadres en de reden van je verzoek.</p>
       </div>
     </div>

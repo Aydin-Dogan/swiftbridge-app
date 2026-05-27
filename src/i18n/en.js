@@ -260,7 +260,8 @@ export const en = {
   landing_hero_subline: '10x cheaper than banks. On your family\'s account in under 5 minutes. From 0.8% per transfer — no hidden costs.',
   landing_hero_cta_primary: 'Start for free',
   landing_hero_cta_secondary: 'See how it works',
-  landing_trust_dnb: 'Wwft / DNB-supervised',
+  // F23 fix (Cursor review): qualifier embedded in label
+  landing_trust_dnb: 'Wwft · via DNB EMI-partner',
   landing_trust_ideal: 'iDEAL & iDIN',
   landing_trust_encrypted: '256-bit encryption',
   landing_trust_reviews: '4.8★ from 1,240 reviews',

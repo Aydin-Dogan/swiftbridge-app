@@ -260,7 +260,8 @@ export const tr = {
   landing_hero_subline: 'Bankalardan 10 kat daha ucuz. 5 dakika içinde ailenizin hesabında. Tarifeler %0,8\'den başlıyor — gizli masraf yok.',
   landing_hero_cta_primary: 'Ücretsiz başla',
   landing_hero_cta_secondary: 'Nasıl çalıştığını gör',
-  landing_trust_dnb: 'Wwft / DNB denetimi',
+  // F23 fix (Cursor review): EMI ortağı qualifier eklendi
+  landing_trust_dnb: 'Wwft · DNB EMI ortağı üzerinden',
   landing_trust_ideal: 'iDEAL ve iDIN',
   landing_trust_encrypted: '256-bit şifreli',
   landing_trust_reviews: '4,8★ — 1.240 yorum',
