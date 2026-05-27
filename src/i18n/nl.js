@@ -941,6 +941,11 @@ export const nl = {
   // ── Payment draft (Verbetering SSS) ──────────────────────────────────────
   payment_draft_doorgaan: 'Je had een overboeking half ingevuld. Wil je daarmee doorgaan?',
 
+  // ── F37: simulatie-banner (tot EMI-partner live) ─────────────────────────
+  simulatie_banner_kort: 'Test-modus',
+  simulatie_banner_titel: 'Test-modus: geen echte overboeking',
+  simulatie_banner_bericht: 'SwiftBridge draait momenteel in simulatie-modus tot onze EMI-partner-integratie live gaat. Je iDEAL-betaling wordt NIET daadwerkelijk doorgestuurd naar de ontvanger — dit is alleen voor tests. Gebruik geen echt geld dat je niet wilt verliezen.',
+
   // ── Keyboard shortcuts (Verbetering TTT) ─────────────────────────────────
   kbd_titel: 'Sneltoetsen',
   kbd_open_calculator: 'Open calculator',

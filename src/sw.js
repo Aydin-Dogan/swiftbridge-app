@@ -8,6 +8,7 @@
 import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 import { registerRoute, NavigationRoute } from 'workbox-routing';
 import { NetworkFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
 
 // ── Precaching (door Vite ingevoegd) ────────────────────────────────────────
 precacheAndRoute(self.__WB_MANIFEST || []);
@@ -25,11 +26,22 @@ const navigationRoute = new NavigationRoute(
 registerRoute(navigationRoute);
 
 // API caching (FX koersen)
+// F81 fix (Cursor review Ronde 4): max 5 min stale cache. Voorheen kon SW
+// uur-oude koers serveren zonder hint aan de UI — UI doet er berekeningen
+// op die afwijken van werkelijke markt. Plus maxEntries om unbounded growth
+// te voorkomen.
 registerRoute(
   /^https:\/\/.*\.up\.railway\.app\/transactions\/koersen/,
   new NetworkFirst({
     cacheName: 'fx-koersen',
     networkTimeoutSeconds: 5,
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 5 * 60, // 5 minuten
+        maxEntries: 50,
+        purgeOnQuotaError: true,
+      }),
+    ],
   })
 );
 

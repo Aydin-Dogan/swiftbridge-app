@@ -1059,6 +1059,11 @@ export const tr = {
   // ── Ödeme taslağı (İyileştirme SSS) ──────────────────────────────────────
   payment_draft_doorgaan: 'Yarım kalmış bir transferiniz var. Devam etmek ister misiniz?',
 
+  // ── F37: simülasyon modu banner (EMI-partner canlıya geçene kadar) ──────
+  simulatie_banner_kort: 'Test modu',
+  simulatie_banner_titel: 'Test modu: gerçek transfer yok',
+  simulatie_banner_bericht: 'SwiftBridge, EMI-partner entegrasyonumuz canlıya geçene kadar simülasyon modunda çalışıyor. iDEAL ödemeniz aslında alıcıya iletilmeyecek — bu yalnızca test içindir. Kaybetmeyi göze alamayacağınız parayı kullanmayın.',
+
   // ── Klavye kısayolları (İyileştirme TTT) ─────────────────────────────────
   kbd_titel: 'Klavye kısayolları',
   kbd_open_calculator: 'Hesaplayıcıyı aç',

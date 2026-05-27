@@ -970,6 +970,11 @@ export const az = {
   // ── Ödəniş qaralaması (Təkmilləşdirmə SSS) ───────────────────────────────
   payment_draft_doorgaan: 'Yarımçıq köçürməniz var. Davam etmək istəyirsiniz?',
 
+  // ── F37: simulyasiya rejimi banneri (EMI-partner canlı olana qədər) ─────
+  simulatie_banner_kort: 'Test rejimi',
+  simulatie_banner_titel: 'Test rejimi: əsl köçürmə yoxdur',
+  simulatie_banner_bericht: 'SwiftBridge EMI-partner inteqrasiyamız işə düşənə qədər simulyasiya rejimində işləyir. iDEAL ödənişiniz əslində alıcıya göndərilməyəcək — bu yalnız test üçündür. İtkisini özünüzə yetkilənə bilməyəcəyiniz pulu istifadə etməyin.',
+
   // ── Klaviatura qısayolları (Təkmilləşdirmə TTT) ──────────────────────────
   kbd_titel: 'Klaviatura qısayolları',
   kbd_open_calculator: 'Kalkulyatoru aç',

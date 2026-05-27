@@ -18,6 +18,7 @@
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.15.0",
     "serve": "^14.2.6",
+    "workbox-expiration": "^7.4.1",
     "workbox-precaching": "^7.4.1",
     "workbox-routing": "^7.4.1",
     "workbox-strategies": "^7.4.1"

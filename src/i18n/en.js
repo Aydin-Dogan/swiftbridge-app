@@ -1059,6 +1059,11 @@ export const en = {
   // ── Payment draft (Improvement SSS) ──────────────────────────────────────
   payment_draft_doorgaan: 'You have a transfer in progress. Continue with it?',
 
+  // ── F37: simulation-mode banner (until EMI-partner live) ─────────────────
+  simulatie_banner_kort: 'Test mode',
+  simulatie_banner_titel: 'Test mode: no real transfer',
+  simulatie_banner_bericht: 'SwiftBridge runs in simulation mode until our EMI-partner integration goes live. Your iDEAL payment will NOT actually be forwarded to the recipient — this is only for testing. Do not use real money you cannot afford to lose.',
+
   // ── Keyboard shortcuts (Improvement TTT) ─────────────────────────────────
   kbd_titel: 'Keyboard shortcuts',
   kbd_open_calculator: 'Open calculator',

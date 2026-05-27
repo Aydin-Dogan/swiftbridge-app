@@ -18,6 +18,7 @@ import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services
 import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
 import { Bank, Card, Wallet, Euro, Globe } from './icons/Icons';
 import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
+import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -1414,6 +1415,9 @@ export default function PaymentFlow({ token }) {
 
   return (
     <div className="max-w-md mx-auto">
+      {/* F37: simulatie-banner zolang EMI-partner-integratie niet live */}
+      <SimulatieBanner />
+
       {/* Stap indicator */}
       <div className="flex items-center justify-center mb-6">
         {STAPPEN.map((s, i) => (
