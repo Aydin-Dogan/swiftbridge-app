@@ -37,12 +37,19 @@ export default class ErrorBoundary extends Component {
     // Stuur naar backend in productie — silent fail als endpoint niet bestaat
     if (import.meta.env.PROD) {
       try {
+        // F2 fix (Cursor review Ronde 1): strip querystring + hash van URL
+        // voor we 'm naar de backend sturen. Anders lekken reset-tokens,
+        // verify-tokens en andere query-secrets in de error-database.
+        let safeUrl = '';
+        if (typeof window !== 'undefined') {
+          safeUrl = `${window.location.origin}${window.location.pathname}`;
+        }
         const payload = {
           errorId: this.state.errorId,
           message: error?.message || String(error),
           stack: (error?.stack || '').slice(0, 2000),
           componentStack: (errorInfo?.componentStack || '').slice(0, 2000),
-          url: typeof window !== 'undefined' ? window.location.href : '',
+          url: safeUrl,
           userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
           timestamp: new Date().toISOString(),
         };
