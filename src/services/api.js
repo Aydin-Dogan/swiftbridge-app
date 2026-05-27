@@ -5,11 +5,26 @@
 
 export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+// F58 fix (Cursor review Ronde 3): CSRF double-submit pattern.
+// Backend CSRF-middleware eist X-CSRF-Token header op alle muterende
+// werkwoorden zodra sb_csrf cookie is gezet (na login). Voorheen stuurde
+// alleen een paar componenten dit handmatig — apiFetch deed het niet,
+// waardoor admin endpoints + /recurring stilletjes 403 retourneerden of
+// CSRF-bypass actief was als cookie ontbrak.
+function leesCsrfCookie() {
+  if (typeof document === 'undefined') return null;
+  const m = document.cookie.match(/(?:^|;\s*)sb_csrf=([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+const MUTERENDE_METHODES = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
+
 /**
  * Wrapper rondom fetch die:
  *  - automatisch de juiste base URL prefixt
  *  - `credentials: 'include'` zet zodat de sb_token cookie wordt meegestuurd
  *  - JSON content-type zet als er een body is en hij niet al overschreven is
+ *  - X-CSRF-Token header toevoegt op muterende requests (F58)
  *  - response JSON parsed en bij !ok een error throwt met server-error message
  */
 export async function apiFetch(path, opties = {}) {
@@ -23,6 +38,13 @@ export async function apiFetch(path, opties = {}) {
       finaleHeaders['Content-Type'] = finaleHeaders['Content-Type'] || 'application/json';
       finaleBody = JSON.stringify(body);
     }
+  }
+
+  // F58: voeg CSRF-token toe op muterende methodes (caller mag override door
+  // expliciet X-CSRF-Token header mee te geven).
+  if (MUTERENDE_METHODES.has(String(method).toUpperCase()) && !finaleHeaders['X-CSRF-Token']) {
+    const csrf = leesCsrfCookie();
+    if (csrf) finaleHeaders['X-CSRF-Token'] = csrf;
   }
 
   const res = await fetch(`${API_URL}${path}`, {

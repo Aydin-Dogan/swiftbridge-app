@@ -1168,50 +1168,55 @@ export default function PaymentFlow({ token }) {
       }
     } catch {/* private mode */}
 
-    // SSS: laad concept (draft) als die bestaat — gebruiker is halverwege
-    // gestopt en komt nu terug. Vraag bevestiging vóór auto-fill.
+    // SSS+F42 (Cursor review Ronde 3): laad concept als die bestaat.
+    // BELANGRIJK: draft bevat GEEN IBAN of ontvanger-naam meer — die
+    // zijn PII en mochten zichtbaar worden voor de volgende gebruiker
+    // op een gedeeld apparaat (familie-PC, internetcafé). Alleen niet-
+    // gevoelige UI-state (bedrag/valuta/methode/snelheid) wordt herstelt.
+    // Plus: sessionStorage ipv localStorage — tab-close = wis.
     try {
-      const draftRaw = localStorage.getItem('swiftbridge_payment_draft');
+      const draftRaw = sessionStorage.getItem('swiftbridge_payment_draft_v2');
       if (draftRaw) {
         const d = JSON.parse(draftRaw);
         // Alleen herstellen als draft <24u oud is — anders mogelijk verouderd
         const ouderdom = Date.now() - (d.opgeslagen_op || 0);
         if (ouderdom < 24 * 60 * 60 * 1000) {
-          if (window.confirm(t('payment_draft_doorgaan'))) {
-            if (d.ontvanger) setOntvanger(d.ontvanger);
-            if (d.iban)      setIban(d.iban);
-            if (d.bedrag)    setBedrag(String(d.bedrag));
-            if (d.valuta)    setValuta(d.valuta);
-            if (d.methode)   setMethode(d.methode);
-            if (d.snelheid)  setSnelheid(d.snelheid);
-          } else {
-            localStorage.removeItem('swiftbridge_payment_draft');
-          }
+          // Geen window.confirm meer — silent restore want geen PII
+          if (d.bedrag)    setBedrag(String(d.bedrag));
+          if (d.valuta)    setValuta(d.valuta);
+          if (d.methode)   setMethode(d.methode);
+          if (d.snelheid)  setSnelheid(d.snelheid);
         } else {
-          localStorage.removeItem('swiftbridge_payment_draft');
+          sessionStorage.removeItem('swiftbridge_payment_draft_v2');
         }
       }
+      // Cleanup oude PII-bevattende draft uit localStorage (migratie van v1)
+      localStorage.removeItem('swiftbridge_payment_draft');
     } catch {/* skip */}
   }, []);
 
-  // SSS: auto-save draft bij elke wijziging van core velden (debounced via useEffect)
+  // SSS+F42: auto-save draft bij elke wijziging van NIET-PII velden.
+  // IBAN + ontvanger-naam worden NIET meer opgeslagen.
   useEffect(() => {
-    // Alleen opslaan als minstens iets is ingevuld (anders pollute we localStorage)
-    if (!bedrag && !ontvanger && !iban) return;
+    // Alleen opslaan als minstens iets is ingevuld
+    if (!bedrag) return;
     // Niet opslaan tijdens stap 3 (verzonden) — flow is dan klaar
     if (stap === 3) return;
     try {
-      localStorage.setItem('swiftbridge_payment_draft', JSON.stringify({
-        ontvanger, iban, bedrag, valuta, methode, snelheid,
+      sessionStorage.setItem('swiftbridge_payment_draft_v2', JSON.stringify({
+        bedrag, valuta, methode, snelheid,
         opgeslagen_op: Date.now(),
       }));
     } catch {/* private mode */}
-  }, [ontvanger, iban, bedrag, valuta, methode, snelheid, stap]);
+  }, [bedrag, valuta, methode, snelheid, stap]);
 
-  // SSS: wis draft na succesvolle transactie (stap 3 = verzonden)
+  // SSS+F42: wis draft na succesvolle transactie (stap 3 = verzonden)
   useEffect(() => {
     if (stap === 3) {
-      try { localStorage.removeItem('swiftbridge_payment_draft'); } catch {/* skip */}
+      try {
+        sessionStorage.removeItem('swiftbridge_payment_draft_v2');
+        localStorage.removeItem('swiftbridge_payment_draft'); // legacy
+      } catch {/* skip */}
     }
   }, [stap]);
 
