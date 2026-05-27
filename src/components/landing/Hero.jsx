@@ -11,6 +11,9 @@ import { berekenKosten } from '../../services/kosten';
 import Vlag from '../Vlag';
 import { API_URL } from '../../services/api';
 import { ShieldCheck, Bank, Lock, ArrowRight } from '../icons/Icons';
+// F3 fix (Cursor review): KoersSparkline import behouden voor toekomstig
+// gebruik wanneer echte /fx/historie endpoint bestaat. Niet gerenderd nu.
+// eslint-disable-next-line no-unused-vars
 import KoersSparkline from './KoersSparkline';
 
 // Trust signals — geen emoji's, SVG-iconen
@@ -216,13 +219,13 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* Mini sparkline laatste 7 dagen (Verbetering X) — alleen tonen
-                  als we daadwerkelijk een koers hebben. */}
-              {liveKoersen !== null && (
-                <div className="mb-4">
-                  <KoersSparkline huidigeKoers={huidigeKoers} valuta={valuta} />
-                </div>
-              )}
+              {/* F3 fix (Cursor review Ronde 1, KRITIEK):
+                  KoersSparkline VERBORGEN tot we echte /fx/historie endpoint
+                  hebben. Mock random-walk data + groene/oranje % badge =
+                  misleidende koersgrafiek voor consumenten op landing-pagina.
+                  AFM-richtlijn: koersdisplay moet representatief zijn voor
+                  echte marktdata. Liever weglaten dan misleiden.
+                  Component blijft in repo voor toekomstige reactivering. */}
 
               <button
                 onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
