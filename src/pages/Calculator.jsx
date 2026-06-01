@@ -11,7 +11,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useTaal } from '../i18n';
-import { VALUTAS } from '../services/currencies';
+import { VALUTAS, getValuta } from '../services/currencies';
+import CurrencySelector from '../components/CurrencySelector';
 import {
   berekenKosten,
   TARIEF_MATRIX,
@@ -73,9 +74,8 @@ export default function Calculator() {
     return () => { geannuleerd = true; };
   }, []);
 
-  // Selecteer alleen TR + Turkse landen voor valuta (consistent met Hero)
-  const valutaOpties = VALUTAS.filter(v => v.groep === 'turkije' || v.groep === 'turks');
-  const valutaInfo = VALUTAS.find(v => v.code === valuta) ?? VALUTAS[0];
+  // Wereldwijde valuta-keuze via CurrencySelector (consistent met Hero)
+  const valutaInfo = getValuta(valuta);
   const huidigeKoers = liveKoersen?.[valuta] ?? valutaInfo.koers;
   const bedragNum = Math.max(0, Number(bedrag) || 0);
 
@@ -195,29 +195,18 @@ export default function Calculator() {
               </div>
             </div>
 
-            {/* Valuta + land */}
+            {/* Valuta + land — wereldwijde searchable selector */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 shadow-soft-sm">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 {t('calc_valuta_label')}
               </label>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                {valutaOpties.map(v => (
-                  <button
-                    key={v.code}
-                    type="button"
-                    onClick={() => setValuta(v.code)}
-                    className={`flex flex-col items-center justify-center py-2.5 px-2 rounded-lg text-xs font-semibold transition-colors active:scale-95 ${
-                      valuta === v.code
-                        ? 'bg-brand-600 text-white'
-                        : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200/70'
-                    }`}
-                    title={v.naam}
-                  >
-                    <Vlag land={v.landCode} size={22} decorative />
-                    <span className="mt-1">{v.code}</span>
-                  </button>
-                ))}
-              </div>
+              <CurrencySelector value={valuta} onChange={setValuta} />
+              {valutaInfo.status === 'binnenkort' && (
+                <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-3 text-[11px] text-amber-800 leading-snug">
+                  <span aria-hidden="true">🔔</span>
+                  <span>{t('landing_widget_binnenkort', { land: valutaInfo.land })}</span>
+                </div>
+              )}
             </div>
 
             {/* Betaalmethode */}

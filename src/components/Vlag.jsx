@@ -1,135 +1,56 @@
 /**
- * Vlag.jsx — Inline SVG vlaggen die op alle apparaten werken
- * (vervangt emoji flags die op Windows niet altijd renderen)
+ * Vlag.jsx — Wereldwijde landvlaggen via flag-icons (alle ISO 3166-1 landen).
+ *
+ * Global herpositionering: voorheen 12 handmatige inline SVG's (alleen de
+ * Turkse corridor). Nu schaalbaar naar elk land via de flag-icons CSS-library
+ * — cross-platform SVG's, geen emoji-renderproblemen op Windows.
+ *
+ * API ongewijzigd: <Vlag land="TR" size={20} decorative={false} />
  */
+import 'flag-icons/css/flag-icons.min.css';
 
-const FLAGS = {
-  NL: (s) => (
-    <svg viewBox="0 0 9 6" width={s} height={(s * 6) / 9} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="9" height="6" fill="#FFFFFF" />
-      <rect width="9" height="2" fill="#AE1C28" />
-      <rect y="4" width="9" height="2" fill="#21468B" />
-    </svg>
-  ),
-  TR: (s) => (
-    <svg viewBox="0 0 30 20" width={s} height={(s * 20) / 30} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="30" height="20" fill="#E30A17" />
-      <circle cx="12" cy="10" r="4.5" fill="#FFFFFF" />
-      <circle cx="13.5" cy="10" r="3.6" fill="#E30A17" />
-      <polygon points="17.5,10 15.5,11.4 16.3,9.1 14.3,7.8 16.7,7.8 17.5,5.5 18.3,7.8 20.7,7.8 18.7,9.1 19.5,11.4" fill="#FFFFFF" />
-    </svg>
-  ),
-  AZ: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#FFFFFF" />
-      <rect width="12" height="2.67" fill="#00B5E2" />
-      <rect width="12" height="2.67" y="2.67" fill="#EF3340" />
-      <rect width="12" height="2.66" y="5.34" fill="#00AF66" />
-    </svg>
-  ),
-  KZ: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#00AFCA" />
-      <circle cx="6" cy="4" r="1.5" fill="#FEC50C" />
-    </svg>
-  ),
-  UZ: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#FFFFFF" />
-      <rect width="12" height="2.5" fill="#1EB53A" />
-      <rect width="12" height="2.5" y="5.5" fill="#0099B5" />
-    </svg>
-  ),
-  TM: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#00853E" />
-      <rect width="2.5" height="8" fill="#C1272D" />
-    </svg>
-  ),
-  KG: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#E8112D" />
-      <circle cx="6" cy="4" r="1.5" fill="#FFEF00" />
-    </svg>
-  ),
-  US: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#FFFFFF" />
-      {[0, 2, 4, 6].map(y => <rect key={y} width="12" height="0.7" y={y * 1.05 + 0.5} fill="#B22234" />)}
-      <rect width="5" height="4.2" fill="#3C3B6E" />
-    </svg>
-  ),
-  GB: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#012169" />
-      <path d="M0,0 L12,8 M12,0 L0,8" stroke="#FFFFFF" strokeWidth="1" />
-      <path d="M6,0 V8 M0,4 H12" stroke="#FFFFFF" strokeWidth="2" />
-      <path d="M6,0 V8 M0,4 H12" stroke="#C8102E" strokeWidth="1" />
-    </svg>
-  ),
-  EU: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#003399" />
-      <circle cx="6" cy="4" r="2" fill="none" stroke="#FFCC00" strokeWidth="0.3" strokeDasharray="0.3 1.0" />
-    </svg>
-  ),
-  MA: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="12" height="8" fill="#C1272D" />
-      <polygon points="6,3 6.6,4.5 8,4.5 6.9,5.4 7.3,6.8 6,6 4.7,6.8 5.1,5.4 4,4.5 5.4,4.5" fill="none" stroke="#006233" strokeWidth="0.2" />
-    </svg>
-  ),
-  BE: (s) => (
-    <svg viewBox="0 0 12 8" width={s} height={(s * 8) / 12} style={{ display: 'inline-block', verticalAlign: 'middle', borderRadius: 2 }}>
-      <rect width="4" height="8" fill="#000000" />
-      <rect width="4" height="8" x="4" fill="#FAE042" />
-      <rect width="4" height="8" x="8" fill="#ED2939" />
-    </svg>
-  ),
-};
-
-// Volledige landnamen voor a11y / SEO (alt-equivalent op SVG-vlaggen)
+// Volledige landnamen voor a11y / SEO. Niet exhaustief — onbekende codes
+// vallen terug op "Vlag van {CODE}". Belangrijkste corridors expliciet.
 const LANDNAMEN = {
-  NL: 'Vlag van Nederland',
-  TR: 'Vlag van Türkiye',
-  AZ: 'Vlag van Azerbeidzjan',
-  KZ: 'Vlag van Kazachstan',
-  UZ: 'Vlag van Oezbekistan',
-  TM: 'Vlag van Turkmenistan',
-  KG: 'Vlag van Kirgizië',
-  US: 'Vlag van de Verenigde Staten',
-  GB: 'Vlag van het Verenigd Koninkrijk',
-  EU: 'Vlag van de Europese Unie',
-  MA: 'Vlag van Marokko',
-  BE: 'Vlag van België',
+  NL: 'Nederland', BE: 'België', DE: 'Duitsland', FR: 'Frankrijk', GB: 'Verenigd Koninkrijk',
+  EU: 'Europese Unie', US: 'Verenigde Staten', TR: 'Türkiye', MA: 'Marokko',
+  AZ: 'Azerbeidzjan', KZ: 'Kazachstan', UZ: 'Oezbekistan', TM: 'Turkmenistan',
+  KG: 'Kirgizië', TJ: 'Tadzjikistan', IN: 'India', PK: 'Pakistan', BD: 'Bangladesh',
+  PH: 'Filipijnen', ID: 'Indonesië', VN: 'Vietnam', TH: 'Thailand', CN: 'China',
+  NG: 'Nigeria', GH: 'Ghana', KE: 'Kenia', EG: 'Egypte', ZA: 'Zuid-Afrika',
+  MX: 'Mexico', BR: 'Brazilië', CO: 'Colombia', AR: 'Argentinië', PE: 'Peru',
+  ES: 'Spanje', IT: 'Italië', PT: 'Portugal', PL: 'Polen', RO: 'Roemenië',
+  UA: 'Oekraïne', RU: 'Rusland', GE: 'Georgië', AM: 'Armenië', LB: 'Libanon',
+  AE: 'Verenigde Arabische Emiraten', SA: 'Saoedi-Arabië', LK: 'Sri Lanka',
+  NP: 'Nepal', AU: 'Australië', CA: 'Canada', CH: 'Zwitserland', SE: 'Zweden',
+  NO: 'Noorwegen', DK: 'Denemarken', JP: 'Japan', KR: 'Zuid-Korea',
 };
 
 export default function Vlag({ land = 'NL', size = 20, decorative = false }) {
-  const code = land?.toUpperCase();
-  const flag = FLAGS[code];
-  if (!flag) {
-    // Fallback: gewoon de letters
-    return (
-      <span
-        style={{ fontWeight: 'bold', fontSize: size * 0.6 }}
-        role={decorative ? 'presentation' : 'img'}
-        aria-label={decorative ? undefined : land}
-      >
-        {land}
-      </span>
-    );
-  }
-  // Wrap de SVG in een element met role + aria-label voor screen-readers.
-  // Bij `decorative={true}` (bv. naast tekstuele land-naam): verberg voor
-  // screen-readers met aria-hidden om dubbele uitspraak te voorkomen.
+  const raw = (land || 'NL').toString().toLowerCase();
+  // EU is geen ISO-land in flag-icons; map naar de speciale 'eu' code (bestaat wel)
+  const code = raw;
+  const naam = LANDNAMEN[code.toUpperCase()] || code.toUpperCase();
+
+  // flag-icons rendert een span met background-image. We forceren een vaste
+  // pixel-grootte (4:3 ratio) + lichte radius voor de nette pill-look.
+  const h = Math.round((size * 3) / 4);
+
   return (
     <span
+      className={`fi fi-${code}`}
       role={decorative ? 'presentation' : 'img'}
-      aria-label={decorative ? undefined : (LANDNAMEN[code] || `Vlag ${code}`)}
+      aria-label={decorative ? undefined : `Vlag van ${naam}`}
       aria-hidden={decorative ? 'true' : undefined}
-      style={{ display: 'inline-block', lineHeight: 0 }}
-    >
-      {flag(size)}
-    </span>
+      style={{
+        display: 'inline-block',
+        width: `${size}px`,
+        height: `${h}px`,
+        borderRadius: 2,
+        backgroundSize: 'cover',
+        verticalAlign: 'middle',
+        flexShrink: 0,
+      }}
+    />
   );
 }

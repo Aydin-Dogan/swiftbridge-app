@@ -1,22 +1,31 @@
 /**
- * Hero.jsx — landing hero met live currency widget.
- * Sprint 2: matte-modern, soft-shadows, 1 brand-kleur, SVG icons,
- * echte fee-berekening via berekenKosten() (sync met tariefkaart).
+ * Hero.jsx — Wereldwijde landing hero met live currency widget.
+ *
+ * Global herpositionering: van NL→TR corridor-framing naar wereldwijde
+ * geld-overboekingen. Echte from→to currency selector (45+ valuta),
+ * globe-uitstraling, corridor-agnostische copy. Eerlijk corridor-model:
+ * calculator werkt wereldwijd, uitbetaling alleen waar 'live'.
  */
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../../i18n';
-import { VALUTAS } from '../../services/currencies';
+import { getValuta, VALUTAS } from '../../services/currencies';
 import { berekenKosten } from '../../services/kosten';
 import Vlag from '../Vlag';
+import CurrencySelector from '../CurrencySelector';
 import { API_URL } from '../../services/api';
 import { ShieldCheck, Bank, Lock, ArrowRight } from '../icons/Icons';
-// F3 fix (Cursor review): KoersSparkline import behouden voor toekomstig
-// gebruik wanneer echte /fx/historie endpoint bestaat. Niet gerenderd nu.
-// eslint-disable-next-line no-unused-vars
-import KoersSparkline from './KoersSparkline';
 
-// Trust signals — geen emoji's, SVG-iconen
+function GlobeIcon({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// Trust signals — globaal, geen emoji's
 function TrustRow({ t }) {
   const items = [
     { Icon: ShieldCheck, tekst: t('landing_trust_dnb') },
@@ -47,28 +56,30 @@ export default function Hero() {
     let geannuleerd = false;
     async function haal() {
       try {
+        // 8s timeout — bij trage/offline API niet eeuwig op het skeleton blijven
         const res = await fetch(`${API_URL}/transactions/koersen`, {
           credentials: 'include',
+          signal: AbortSignal.timeout(8000),
         });
-        if (!res.ok) return;
+        if (!res.ok) throw new Error('koersen niet ok');
         const data = await res.json();
         if (!geannuleerd && data?.koersen) setLiveKoersen(data.koersen);
+        else if (!geannuleerd) setLiveKoersen({}); // val terug op statische koers
       } catch {
-        // stil terugvallen op statische koers
+        // Stil terugvallen op statische koers: lege map → skeleton verdwijnt,
+        // huidigeKoers gebruikt valutaInfo.koers (?? fallback).
+        if (!geannuleerd) setLiveKoersen({});
       }
     }
     haal();
-    return () => {
-      geannuleerd = true;
-    };
+    return () => { geannuleerd = true; };
   }, []);
 
-  const valutaInfo = VALUTAS.find(v => v.code === valuta) ?? VALUTAS[0];
+  const valutaInfo = getValuta(valuta);
   const huidigeKoers = liveKoersen?.[valuta] ?? valutaInfo.koers;
   const bedragNum = Math.max(0, Number(bedrag) || 0);
+  const isBinnenkort = valutaInfo.status === 'binnenkort';
 
-  // Gebruik de échte berekenKosten() — bron-of-truth voor pricing (sync
-  // met Tariefkaart op landing en checkout). Default methode iDEAL Express.
   const kosten = berekenKosten(bedragNum, 'ideal', 'express', huidigeKoers);
   const ontvangenFmt = (kosten.ontvangenBedrag || 0).toLocaleString(valutaInfo.locale, {
     minimumFractionDigits: valutaInfo.decimals,
@@ -82,21 +93,26 @@ export default function Hero() {
     setBedrag(Math.max(0, n));
   }
 
-  // Toon alleen Turkse + Turkstalige landen in de quick selector
-  const valutaOpties = VALUTAS.filter(
-    v => v.groep === 'turkije' || v.groep === 'turks',
-  );
+  const aantalLanden = VALUTAS.length;
 
   return (
     <section className="relative overflow-hidden text-white bg-brand-hero">
+      {/* Subtiele globe-grid achtergrond voor wereldwijde uitstraling */}
+      <div
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 20% 30%, white 0, transparent 45%), radial-gradient(circle at 85% 60%, white 0, transparent 40%)',
+        }}
+        aria-hidden="true"
+      />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 md:pt-20 md:pb-24">
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Linker kolom — copy + CTA */}
           <div className="text-center md:text-left animate-fade-up">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 text-xs font-semibold mb-5">
-              <Vlag land="NL" size={16} />
-              <span>{t('landing_pill_route')}</span>
-              <Vlag land="TR" size={16} />
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3.5 py-1.5 text-xs font-semibold mb-5">
+              <GlobeIcon className="w-4 h-4 text-accent-300" />
+              <span>{t('landing_pill_wereldwijd', { landen: aantalLanden })}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-5">
@@ -109,7 +125,6 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
-              {/* Primary CTA: rekenen zonder account (Sprint 4 conversie-fix) */}
               <button
                 onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
                 className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-semibold text-brand-800 bg-white hover:bg-blue-50 transition-colors duration-150 active:scale-[0.98] inline-flex items-center justify-center gap-2"
@@ -141,7 +156,7 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* Bedrag input */}
+              {/* Bedrag input — jij verstuurt (EUR) */}
               <label className="block text-xs font-medium text-gray-500 mb-1.5">
                 {t('landing_widget_jij_verstuurt')}
               </label>
@@ -154,7 +169,7 @@ export default function Hero() {
                   step="10"
                   value={bedrag}
                   onChange={e => setBedragSafe(e.target.value)}
-                  className="flex-1 text-2xl font-bold text-gray-900 outline-none bg-transparent"
+                  className="flex-1 text-2xl font-bold text-gray-900 outline-none bg-transparent w-full"
                   aria-label={t('landing_widget_jij_verstuurt')}
                 />
                 <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-gray-500 font-medium border border-gray-200 rounded-lg px-2 py-1">
@@ -162,40 +177,22 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* Valuta selector — alleen TR + Turkse landen */}
-              <label className="block text-xs font-medium text-gray-500 mb-1.5">
-                {t('landing_widget_ontvanger_in')}
-              </label>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 mb-4">
-                {valutaOpties.map(v => (
-                  <button
-                    key={v.code}
-                    type="button"
-                    onClick={() => setValuta(v.code)}
-                    className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-semibold transition-colors active:scale-95 ${
-                      valuta === v.code
-                        ? 'bg-brand-600 text-white'
-                        : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200/70'
-                    }`}
-                    title={v.naam}
-                  >
-                    <Vlag land={v.landCode} size={18} />
-                    <span className="text-[10px] mt-0.5">{v.code}</span>
-                  </button>
-                ))}
-              </div>
+              {/* Wereldwijde valuta selector — ontvanger krijgt */}
+              <CurrencySelector
+                value={valuta}
+                onChange={setValuta}
+                label={t('landing_widget_ontvanger_in')}
+              />
 
-              <div className="bg-brand-50 border border-brand-100 rounded-xl px-4 py-3.5 mb-3 flex justify-between items-center">
+              <div className="bg-brand-50 border border-brand-100 rounded-xl px-4 py-3.5 mt-4 mb-3 flex justify-between items-center">
                 <span className="text-sm font-medium text-gray-700">
                   {t('landing_widget_ontvanger_krijgt')}
                 </span>
                 {liveKoersen === null ? (
-                  // Skeleton tijdens koers-fetch (eerste 0,5-2 sec)
                   <span className="h-7 w-32 rounded-md animate-shimmer" aria-label="Bezig met laden..." />
                 ) : (
                   <span className="text-2xl font-bold text-brand-700">
-                    {valutaInfo.symbool}
-                    {ontvangenFmt}
+                    {valutaInfo.symbool}{ontvangenFmt}
                   </span>
                 )}
               </div>
@@ -219,13 +216,14 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* F3 fix (Cursor review Ronde 1, KRITIEK):
-                  KoersSparkline VERBORGEN tot we echte /fx/historie endpoint
-                  hebben. Mock random-walk data + groene/oranje % badge =
-                  misleidende koersgrafiek voor consumenten op landing-pagina.
-                  AFM-richtlijn: koersdisplay moet representatief zijn voor
-                  echte marktdata. Liever weglaten dan misleiden.
-                  Component blijft in repo voor toekomstige reactivering. */}
+              {/* Eerlijk corridor-model: bij 'binnenkort' tonen we dat uitbetaling
+                  nog niet live is, maar de calculator werkt wel. */}
+              {isBinnenkort && (
+                <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mb-3 text-[11px] text-amber-800 leading-snug">
+                  <span aria-hidden="true">🔔</span>
+                  <span>{t('landing_widget_binnenkort', { land: valutaInfo.land })}</span>
+                </div>
+              )}
 
               <button
                 onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}

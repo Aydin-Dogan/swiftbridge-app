@@ -19,6 +19,7 @@ import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
 import { Bank, Card, Wallet, Euro, Globe } from './icons/Icons';
 import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
 import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
+import CurrencySelector from './CurrencySelector'; // Global herpositionering
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -449,24 +450,13 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-2">Ontvanger krijgt in</label>
-        <div className="grid grid-cols-5 gap-1.5 max-h-32 overflow-y-auto">
-          {VALUTAS.map(v => (
-            <button
-              key={v.code}
-              type="button"
-              onClick={() => setValuta(v.code)}
-              className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-bold transition-all active:scale-95 ${
-                valuta === v.code
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-              title={`${v.naam} (${v.land})`}
-            >
-              <Vlag land={v.landCode} size={20} />
-              <span className="text-[10px] mt-0.5">{v.code}</span>
-            </button>
-          ))}
-        </div>
+        <CurrencySelector value={valuta} onChange={setValuta} />
+        {valutaInfo.status === 'binnenkort' && (
+          <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-2 text-[11px] text-amber-800 leading-snug">
+            <span aria-hidden="true">🔔</span>
+            <span>Uitbetaling naar {valutaInfo.land} komt binnenkort. Bereken alvast — je kunt je op de wachtlijst zetten.</span>
+          </div>
+        )}
       </div>
 
       {ontvangenNetto !== null && (

@@ -240,9 +240,10 @@ export const ru = {
 
   // Hero
   landing_pill_route: 'Нидерланды → Türkiye',
-  landing_hero_titel_1: 'Деньги быстро и безопасно из Нидерландов в',
-  landing_hero_titel_2: 'Türkiye',
-  landing_hero_subline: 'В 10 раз дешевле, чем в банках. На счёт вашей семьи менее чем за 5 минут. Тарифы от 0,8% — без скрытых платежей.',
+  landing_pill_wereldwijd: 'Курсы онлайн · {landen}+ валют по всему миру',
+  landing_hero_titel_1: 'Отправляйте деньги близким,',
+  landing_hero_titel_2: 'в любую точку мира',
+  landing_hero_subline: 'Курсы онлайн для 45+ валют. Отправка в растущую сеть стран — сегодня в Türkiye и Центральную Азию, новые направления добавляются постоянно. Честные тарифы, без скрытых платежей.',
   landing_hero_cta_primary: 'Начать бесплатно',
   landing_hero_cta_secondary: 'Посмотреть, как это работает',
   // F23 fix (Cursor review): через EMI-партнёра qualifier
@@ -260,13 +261,14 @@ export const ru = {
   landing_widget_koers: 'Обменный курс',
   landing_widget_fee: 'От 0,8% за перевод',
   landing_widget_no_account_needed: 'Кредитная карта для начала не нужна',
+  landing_widget_binnenkort: 'Выплата в {land} скоро появится. Рассчитайте перевод уже сейчас — можно записаться в лист ожидания.',
 
   // Features
   landing_features_eyebrow: 'Почему SwiftBridge',
   landing_features_titel: 'Быстро, прозрачно и безопасно',
-  landing_features_subtitel: 'Создано для турецкой общины в Нидерландах — людьми, которые знают, как больно платить за дорогие банковские переводы.',
+  landing_features_subtitel: 'Для всех, кто поддерживает близких за границей — создано людьми, которые знают, как больно платить за дорогие банковские переводы.',
   landing_feature_snel_titel: 'Молниеносно',
-  landing_feature_snel_tekst: 'Деньги на турецком банковском счёте в течение 5 минут — также в выходные и вне рабочего времени.',
+  landing_feature_snel_tekst: 'Деньги на счёте ваших близких в течение 5 минут — также в выходные и вне рабочего времени, на наших живых коридорах.',
   landing_feature_goedkoop_titel: 'Честные цены',
   landing_feature_goedkoop_tekst: 'Справедливые многоуровневые тарифы от 0,8% за перевод. Чем больше отправляешь, тем ниже тариф. Полная таблица тарифов видна заранее.',
   landing_feature_veilig_titel: 'Безопасно и под надзором',
@@ -274,7 +276,7 @@ export const ru = {
 
   // How it works
   landing_how_eyebrow: 'Как это работает',
-  landing_how_titel: 'В Türkiye за 4 шага',
+  landing_how_titel: 'По всему миру за 4 шага',
   landing_how_subtitel: 'Быстрая регистрация, одноразовая идентификация — затем отправка денег за секунды.',
   landing_step_account_titel: 'Создайте аккаунт',
   landing_step_account_tekst: 'Регистрация за 2 минуты — только электронная почта и пароль.',
@@ -328,7 +330,7 @@ export const ru = {
   // Country support
   landing_landen_eyebrow: 'Направления',
   landing_landen_titel: 'Банки в 7 тюркоязычных странах',
-  landing_landen_subtitel: 'Более {banken} банков в {landen} странах — от Türkiye до Центральной Азии.',
+  landing_landen_subtitel: 'Курсы онлайн для {landen}+ валют по всему миру — от Европы и Азии до Африки и Америк. Выплаты начинаются с Türkiye и Центральной Азии, новые направления добавляются регулярно.',
   landing_landen_banken: 'банков',
 
   // FAQ
@@ -553,7 +555,7 @@ export const ru = {
   landing_cta_bullet_geen_account_sub: 'Сначала рассчитать, потом регистрация',
 
   // Footer
-  landing_footer_slogan: 'Быстрые и доступные денежные переводы из Нидерландов в Türkiye и все тюркоязычные страны — на счёт в течение 5 минут.',
+  landing_footer_slogan: 'Быстрые и доступные денежные переводы вашим близким по всему миру — курсы онлайн, честные тарифы, на счёт в течение 5 минут на наших живых коридорах.',
   landing_footer_product: 'Продукт',
   landing_footer_juridisch: 'Юридическая информация',
   landing_footer_contact: 'Контакты',

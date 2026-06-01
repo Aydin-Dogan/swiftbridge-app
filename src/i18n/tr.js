@@ -255,9 +255,10 @@ export const tr = {
 
   // Hero
   landing_pill_route: 'Hollanda → Türkiye',
-  landing_hero_titel_1: 'Hollanda\'dan hızlı ve güvenli para gönder',
-  landing_hero_titel_2: 'Türkiye\'ye',
-  landing_hero_subline: 'Bankalardan 10 kat daha ucuz. 5 dakika içinde ailenizin hesabında. Tarifeler %0,8\'den başlıyor — gizli masraf yok.',
+  landing_pill_wereldwijd: 'Canlı kurlar · dünya çapında {landen}+ para birimi',
+  landing_hero_titel_1: 'Sevdiklerinize para gönderin,',
+  landing_hero_titel_2: 'dünyanın her yerine',
+  landing_hero_subline: '45+ para birimi için canlı döviz kurları. Büyüyen bir ülke ağına gönderin — bugün Türkiye ve Orta Asya, sürekli yeni koridorlar ekleniyor. Adil tarifeler, gizli masraf yok.',
   landing_hero_cta_primary: 'Ücretsiz başla',
   landing_hero_cta_secondary: 'Nasıl çalıştığını gör',
   // F23 fix (Cursor review): EMI ortağı qualifier eklendi
@@ -275,13 +276,14 @@ export const tr = {
   landing_widget_koers: 'Döviz kuru',
   landing_widget_fee: 'İşlem başına %0,8\'den itibaren',
   landing_widget_no_account_needed: 'Başlamak için kredi kartı gerekmez',
+  landing_widget_binnenkort: '{land} ülkesine ödeme yakında geliyor. Transferinizi şimdiden hesaplayın — bekleme listesine katılabilirsiniz.',
 
   // Features
   landing_features_eyebrow: 'Neden SwiftBridge',
   landing_features_titel: 'Hızlı, şeffaf ve güvenli',
-  landing_features_subtitel: 'Hollanda\'daki Türk topluluğu için — pahalı banka transferlerinin acısını bilen insanlar tarafından geliştirildi.',
+  landing_features_subtitel: 'Sınır ötesinde sevdiklerine destek olan herkes için — pahalı banka transferlerinin acısını bilen insanlar tarafından geliştirildi.',
   landing_feature_snel_titel: 'Şimşek hızında',
-  landing_feature_snel_tekst: 'Türk banka hesabına 5 dakika içinde para — hafta sonları ve mesai dışı saatlerde de.',
+  landing_feature_snel_tekst: 'Sevdiklerinizin hesabına 5 dakika içinde para — hafta sonları ve mesai dışı dahil, canlı koridorlarımızda.',
   landing_feature_goedkoop_titel: 'Adil fiyatlı',
   landing_feature_goedkoop_tekst: 'Adil kademeli tarife, işlem başına %0,8\'den başlayan. Ne kadar çok gönderirsen, o kadar düşük tarife. Tam tarife kartı önceden görünür.',
   landing_feature_veilig_titel: 'Güvenli ve denetimli',
@@ -289,7 +291,7 @@ export const tr = {
 
   // How it works
   landing_how_eyebrow: 'Nasıl çalışır',
-  landing_how_titel: '4 adımda Türkiye\'ye',
+  landing_how_titel: '4 adımda dünyaya gönderin',
   landing_how_subtitel: 'Hızlı kayıt, tek seferlik kimlik doğrulama — sonrasında saniyeler içinde para gönder.',
   landing_step_account_titel: 'Hesabını oluştur',
   landing_step_account_tekst: '2 dakikada kayıt — sadece e-posta ve şifre.',
@@ -343,7 +345,7 @@ export const tr = {
   // Country support
   landing_landen_eyebrow: 'Varış noktaları',
   landing_landen_titel: '7 Türk dilli ülkede bankalar',
-  landing_landen_subtitel: '{landen} ülkede {banken}+ banka — Türkiye\'den Orta Asya\'ya.',
+  landing_landen_subtitel: 'Dünya çapında {landen}+ para birimi için canlı kurlar — Avrupa\'dan Asya\'ya, Afrika\'dan Amerika\'lara. Ödemeler Türkiye ve Orta Asya\'da başlıyor, yeni koridorlar düzenli olarak ekleniyor.',
   landing_landen_banken: 'banka',
 
   // FAQ
@@ -568,7 +570,7 @@ export const tr = {
   landing_cta_bullet_geen_account_sub: 'Önce hesapla, sonra kaydol',
 
   // Footer
-  landing_footer_slogan: 'Hollanda\'dan Türkiye\'ye ve tüm Türk dilli ülkelere hızlı ve ucuz para transferi — 5 dakika içinde hesapta.',
+  landing_footer_slogan: 'Sevdiklerinize dünya çapında hızlı ve ucuz para transferi — canlı kurlar, adil tarifeler, canlı koridorlarımızda 5 dakika içinde hesapta.',
   landing_footer_product: 'Ürün',
   landing_footer_juridisch: 'Yasal',
   landing_footer_contact: 'İletişim',

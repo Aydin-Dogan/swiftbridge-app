@@ -256,9 +256,10 @@ export const nl = {
 
   // Hero
   landing_pill_route: 'Nederland → Türkiye',
-  landing_hero_titel_1: 'Geld snel & veilig van Nederland naar',
-  landing_hero_titel_2: 'Türkiye',
-  landing_hero_subline: '10x goedkoper dan banken. Binnen 5 minuten op de rekening van je familie. Tarieven vanaf 0,8% — geen verborgen kosten.',
+  landing_pill_wereldwijd: 'Live koersen · {landen}+ valuta wereldwijd',
+  landing_hero_titel_1: 'Stuur geld naar je dierbaren,',
+  landing_hero_titel_2: 'overal ter wereld',
+  landing_hero_subline: 'Live wisselkoersen voor 45+ valuta. Versturen naar een groeiend netwerk van landen — vandaag al naar Türkiye en Centraal-Azië, en steeds meer corridors erbij. Eerlijke tarieven, geen verborgen kosten.',
   landing_hero_cta_primary: 'Gratis starten',
   landing_hero_cta_secondary: 'Bekijk hoe het werkt',
   // F23 fix (Cursor review): qualifier "via EMI-partner" ingebed in label zelf
@@ -276,13 +277,14 @@ export const nl = {
   landing_widget_koers: 'Wisselkoers',
   landing_widget_fee: 'Vanaf 0,8% per overboeking',
   landing_widget_no_account_needed: 'Geen creditcard nodig om te beginnen',
+  landing_widget_binnenkort: 'Uitbetaling naar {land} komt binnenkort. Bereken alvast je overboeking — je kunt je op de wachtlijst zetten.',
 
   // Features
   landing_features_eyebrow: 'Waarom SwiftBridge',
   landing_features_titel: 'Snel, transparant en veilig',
-  landing_features_subtitel: 'Gebouwd voor de Turkse gemeenschap in Nederland — door mensen die de pijn kennen van te dure bankoverboekingen.',
+  landing_features_subtitel: 'Voor iedereen die dierbaren over de grens steunt — gebouwd door mensen die de pijn kennen van te dure bankoverboekingen.',
   landing_feature_snel_titel: 'Razendsnel',
-  landing_feature_snel_tekst: 'Geld op de Turkse bankrekening binnen 5 minuten — ook in het weekend en buiten kantooruren.',
+  landing_feature_snel_tekst: 'Geld op de rekening van je dierbaren binnen 5 minuten — ook in het weekend en buiten kantooruren, op onze live corridors.',
   landing_feature_goedkoop_titel: 'Eerlijk geprijsd',
   landing_feature_goedkoop_tekst: 'Eerlijke staffel-tarieven vanaf 0,8% per overboeking. Hoe meer je stuurt, hoe lager je tarief. Volledige tariefkaart vooraf zichtbaar.',
   landing_feature_veilig_titel: 'Veilig & gereguleerd',
@@ -290,7 +292,7 @@ export const nl = {
 
   // How it works
   landing_how_eyebrow: 'Zo werkt het',
-  landing_how_titel: 'In 4 stappen naar Türkiye',
+  landing_how_titel: 'In 4 stappen wereldwijd verstuurd',
   landing_how_subtitel: 'Snel registreren, één keer identificeren — daarna in seconden geld versturen.',
   landing_step_account_titel: 'Maak je account aan',
   landing_step_account_tekst: 'Registratie in 2 minuten — alleen e-mail en wachtwoord.',
@@ -344,7 +346,7 @@ export const nl = {
   // Country support
   landing_landen_eyebrow: 'Bestemmingen',
   landing_landen_titel: 'Banken in 7 Turkstalige landen',
-  landing_landen_subtitel: 'Meer dan {banken} banken in {landen} landen — van Türkiye tot Centraal-Azië.',
+  landing_landen_subtitel: 'Live koersen voor {landen}+ valuta wereldwijd — van Europa en Azië tot Afrika en de Amerika\'s. Uitbetaling begint bij Türkiye en Centraal-Azië, nieuwe corridors komen er steeds bij.',
   landing_landen_banken: 'banken',
 
   // FAQ
@@ -569,7 +571,7 @@ export const nl = {
   landing_cta_bullet_geen_account_sub: 'Bereken eerst, registreer later',
 
   // Footer
-  landing_footer_slogan: 'Snel en goedkoop geld overmaken van Nederland naar Türkiye en alle Turkstalige landen — binnen 5 minuten op rekening.',
+  landing_footer_slogan: 'Snel en goedkoop geld overmaken naar je dierbaren wereldwijd — live koersen, eerlijke tarieven, binnen 5 minuten op rekening waar onze corridor live is.',
   landing_footer_product: 'Product',
   landing_footer_juridisch: 'Juridisch',
   landing_footer_contact: 'Contact',

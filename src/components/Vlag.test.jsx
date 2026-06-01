@@ -27,9 +27,14 @@ describe('Vlag', () => {
     expect(wrapper.getAttribute('aria-label')).toBeNull();
   });
 
-  test('onbekende landcode: fallback met land-code als text', () => {
-    render(<Vlag land="XX" />);
-    expect(screen.getByText('XX')).toBeInTheDocument();
+  test('onbekende landcode: aria-label valt terug op de code zelf', () => {
+    // Global herpositionering: Vlag.jsx gebruikt nu flag-icons CSS i.p.v.
+    // handmatige SVG's met text-fallback. Bij onbekende code rendert het
+    // nog steeds een geldige img-role span met informatieve aria-label.
+    const { container } = render(<Vlag land="XX" />);
+    const wrapper = container.querySelector('[role="img"]');
+    expect(wrapper).toBeInTheDocument();
+    expect(wrapper.getAttribute('aria-label')).toMatch(/XX/);
   });
 
   test('case-insensitive landcode (lowercase werkt ook)', () => {

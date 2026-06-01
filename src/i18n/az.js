@@ -240,9 +240,10 @@ export const az = {
 
   // Hero
   landing_pill_route: 'Hollandiya → Türkiyə',
-  landing_hero_titel_1: 'Hollandiyadan sürətli və təhlükəsiz pul göndər',
-  landing_hero_titel_2: 'Türkiyəyə',
-  landing_hero_subline: 'Banklardan 10 dəfə ucuz. 5 dəqiqədən az müddətdə ailənizin hesabında. Tariflər 0,8%-dən başlayır — gizli xərclər yoxdur.',
+  landing_pill_wereldwijd: 'Canlı məzənnələr · dünya üzrə {landen}+ valyuta',
+  landing_hero_titel_1: 'Sevdiklərinizə pul göndərin,',
+  landing_hero_titel_2: 'dünyanın istənilən yerinə',
+  landing_hero_subline: '45+ valyuta üçün canlı məzənnələr. Böyüyən ölkə şəbəkəsinə göndərin — bu gün Türkiyə və Mərkəzi Asiya, daim yeni koridorlar əlavə olunur. Ədalətli tariflər, gizli xərclər yoxdur.',
   landing_hero_cta_primary: 'Pulsuz başla',
   landing_hero_cta_secondary: 'Necə işlədiyinə bax',
   // F23 fix (Cursor review): EMI tərəfdaşı qualifier əlavə edildi
@@ -260,13 +261,14 @@ export const az = {
   landing_widget_koers: 'Mübadilə kursu',
   landing_widget_fee: 'Köçürmə başına 0,8%-dən başlayan tarif',
   landing_widget_no_account_needed: 'Başlamaq üçün kredit kartı tələb olunmur',
+  landing_widget_binnenkort: '{land} ölkəsinə ödəniş tezliklə gəlir. Köçürmənizi indidən hesablayın — gözləmə siyahısına yazıla bilərsiniz.',
 
   // Features
   landing_features_eyebrow: 'Nə üçün SwiftBridge',
   landing_features_titel: 'Sürətli, şəffaf və təhlükəsiz',
-  landing_features_subtitel: 'Hollandiyadakı türk icması üçün yaradılıb — bahalı bank köçürmələrinin ağrısını bilən insanlar tərəfindən.',
+  landing_features_subtitel: 'Sərhəd ötəsində sevdiklərini dəstəkləyən hər kəs üçün — bahalı bank köçürmələrinin ağrısını bilən insanlar tərəfindən yaradılıb.',
   landing_feature_snel_titel: 'Şimşək sürətində',
-  landing_feature_snel_tekst: 'Türk bank hesabına 5 dəqiqə ərzində pul — həftə sonları və iş saatlarından kənar da.',
+  landing_feature_snel_tekst: 'Sevdiklərinizin hesabına 5 dəqiqə ərzində pul — həftə sonları və iş saatlarından kənar da, canlı koridorlarımızda.',
   landing_feature_goedkoop_titel: 'Ədalətli qiymət',
   landing_feature_goedkoop_tekst: 'Ədalətli pilləli tarif, köçürmə başına 0,8%-dən başlayan. Nə qədər çox göndərsən, bir o qədər aşağı tarif. Tam tarif cədvəli əvvəlcədən görünür.',
   landing_feature_veilig_titel: 'Təhlükəsiz və tənzimlənən',
@@ -274,7 +276,7 @@ export const az = {
 
   // How it works
   landing_how_eyebrow: 'Necə işləyir',
-  landing_how_titel: '4 addımda Türkiyəyə',
+  landing_how_titel: '4 addımda dünyaya göndərin',
   landing_how_subtitel: 'Sürətli qeydiyyat, bir dəfəlik identifikasiya — sonra saniyələr içində pul göndərin.',
   landing_step_account_titel: 'Hesabınızı yaradın',
   landing_step_account_tekst: '2 dəqiqədə qeydiyyat — yalnız e-poçt və şifrə.',
@@ -328,7 +330,7 @@ export const az = {
   // Country support
   landing_landen_eyebrow: 'Təyinatlar',
   landing_landen_titel: '7 türkdilli ölkədə banklar',
-  landing_landen_subtitel: '{landen} ölkədə {banken}+ bank — Türkiyədən Mərkəzi Asiyaya qədər.',
+  landing_landen_subtitel: 'Dünya üzrə {landen}+ valyuta üçün canlı məzənnələr — Avropa və Asiyadan Afrika və Amerikalara qədər. Ödənişlər Türkiyə və Mərkəzi Asiyada başlayır, yeni koridorlar mütəmadi əlavə olunur.',
   landing_landen_banken: 'bank',
 
   // FAQ
@@ -553,7 +555,7 @@ export const az = {
   landing_cta_bullet_geen_account_sub: 'Əvvəlcə hesabla, sonra qeydiyyat',
 
   // Footer
-  landing_footer_slogan: 'Hollandiyadan Türkiyəyə və bütün türkdilli ölkələrə sürətli və ucuz pul köçürmələri — 5 dəqiqə ərzində hesabda.',
+  landing_footer_slogan: 'Sevdiklərinizə dünya çapında sürətli və ucuz pul köçürmələri — canlı məzənnələr, ədalətli tariflər, canlı koridorlarımızda 5 dəqiqə ərzində hesabda.',
   landing_footer_product: 'Məhsul',
   landing_footer_juridisch: 'Hüquqi',
   landing_footer_contact: 'Əlaqə',

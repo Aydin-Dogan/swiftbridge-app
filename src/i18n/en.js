@@ -255,9 +255,10 @@ export const en = {
 
   // Hero
   landing_pill_route: 'Netherlands → Türkiye',
-  landing_hero_titel_1: 'Send money fast & safe from the Netherlands to',
-  landing_hero_titel_2: 'Türkiye',
-  landing_hero_subline: '10x cheaper than banks. On your family\'s account in under 5 minutes. From 0.8% per transfer — no hidden costs.',
+  landing_pill_wereldwijd: 'Live rates · {landen}+ currencies worldwide',
+  landing_hero_titel_1: 'Send money to your loved ones,',
+  landing_hero_titel_2: 'anywhere in the world',
+  landing_hero_subline: 'Live exchange rates for 45+ currencies. Send to a growing network of countries — today to Türkiye and Central Asia, with more corridors added all the time. Fair rates, no hidden costs.',
   landing_hero_cta_primary: 'Start for free',
   landing_hero_cta_secondary: 'See how it works',
   // F23 fix (Cursor review): qualifier embedded in label
@@ -275,13 +276,14 @@ export const en = {
   landing_widget_koers: 'Exchange rate',
   landing_widget_fee: 'From 0.8% per transfer',
   landing_widget_no_account_needed: 'No credit card needed to start',
+  landing_widget_binnenkort: 'Payout to {land} is coming soon. Calculate your transfer now — you can join the waitlist.',
 
   // Features
   landing_features_eyebrow: 'Why SwiftBridge',
   landing_features_titel: 'Fast, transparent and secure',
-  landing_features_subtitel: 'Built for the Turkish community in the Netherlands — by people who know the pain of expensive bank transfers.',
+  landing_features_subtitel: 'For anyone supporting loved ones across borders — built by people who know the pain of expensive bank transfers.',
   landing_feature_snel_titel: 'Lightning fast',
-  landing_feature_snel_tekst: 'Money on the Turkish bank account within 5 minutes — including weekends and outside business hours.',
+  landing_feature_snel_tekst: 'Money on your loved one\'s account within 5 minutes — including weekends and outside business hours, on our live corridors.',
   landing_feature_goedkoop_titel: 'Fairly priced',
   landing_feature_goedkoop_tekst: 'Fair tiered pricing from 0.8% per transfer. The more you send, the lower your rate. Full pricing table upfront.',
   landing_feature_veilig_titel: 'Secure & regulated',
@@ -289,7 +291,7 @@ export const en = {
 
   // How it works
   landing_how_eyebrow: 'How it works',
-  landing_how_titel: 'To Türkiye in 4 steps',
+  landing_how_titel: 'Sent worldwide in 4 steps',
   landing_how_subtitel: 'Quick sign-up, one-time identification — after that send money in seconds.',
   landing_step_account_titel: 'Create your account',
   landing_step_account_tekst: 'Sign up in 2 minutes — email and password only.',
@@ -343,7 +345,7 @@ export const en = {
   // Country support
   landing_landen_eyebrow: 'Destinations',
   landing_landen_titel: 'Banks in 7 Turkic countries',
-  landing_landen_subtitel: 'Over {banken} banks across {landen} countries — from Türkiye to Central Asia.',
+  landing_landen_subtitel: 'Live rates for {landen}+ currencies worldwide — from Europe and Asia to Africa and the Americas. Payouts starting in Türkiye and Central Asia, with new corridors added regularly.',
   landing_landen_banken: 'banks',
 
   // FAQ
@@ -568,7 +570,7 @@ export const en = {
   landing_cta_bullet_geen_account_sub: 'Calculate first, register later',
 
   // Footer
-  landing_footer_slogan: 'Fast and affordable money transfers from the Netherlands to Türkiye and all Turkic countries — on the account within 5 minutes.',
+  landing_footer_slogan: 'Fast and affordable money transfers to your loved ones worldwide — live rates, fair pricing, on the account within 5 minutes on our live corridors.',
   landing_footer_product: 'Product',
   landing_footer_juridisch: 'Legal',
   landing_footer_contact: 'Contact',
