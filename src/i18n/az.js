@@ -243,7 +243,7 @@ export const az = {
   landing_pill_wereldwijd: 'Canlı məzənnələr · dünya üzrə {landen}+ valyuta',
   landing_hero_titel_1: 'Sevdiklərinizə pul göndərin,',
   landing_hero_titel_2: 'dünyanın istənilən yerinə',
-  landing_hero_subline: '45+ valyuta üçün canlı məzənnələr. Böyüyən ölkə şəbəkəsinə göndərin — bu gün Türkiyə və Mərkəzi Asiya, daim yeni koridorlar əlavə olunur. Ədalətli tariflər, gizli xərclər yoxdur.',
+  landing_hero_subline: '{landen}+ valyuta üçün canlı məzənnələr. Böyüyən ölkə şəbəkəsinə göndərin — bu gün Türkiyə və Mərkəzi Asiya, daim yeni koridorlar əlavə olunur. Ədalətli tariflər, gizli xərclər yoxdur.',
   landing_hero_cta_primary: 'Pulsuz başla',
   landing_hero_cta_secondary: 'Necə işlədiyinə bax',
   // F23 fix (Cursor review): EMI tərəfdaşı qualifier əlavə edildi
@@ -329,7 +329,7 @@ export const az = {
 
   // Country support
   landing_landen_eyebrow: 'Təyinatlar',
-  landing_landen_titel: '7 türkdilli ölkədə banklar',
+  landing_landen_titel: 'Bu gün 7 ölkədə canlı',
   landing_landen_subtitel: 'Dünya üzrə {landen}+ valyuta üçün canlı məzənnələr — Avropa və Asiyadan Afrika və Amerikalara qədər. Ödənişlər Türkiyə və Mərkəzi Asiyada başlayır, yeni koridorlar mütəmadi əlavə olunur.',
   landing_landen_banken: 'bank',
 

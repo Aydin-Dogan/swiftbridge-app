@@ -258,7 +258,7 @@ export const tr = {
   landing_pill_wereldwijd: 'Canlı kurlar · dünya çapında {landen}+ para birimi',
   landing_hero_titel_1: 'Sevdiklerinize para gönderin,',
   landing_hero_titel_2: 'dünyanın her yerine',
-  landing_hero_subline: '45+ para birimi için canlı döviz kurları. Büyüyen bir ülke ağına gönderin — bugün Türkiye ve Orta Asya, sürekli yeni koridorlar ekleniyor. Adil tarifeler, gizli masraf yok.',
+  landing_hero_subline: '{landen}+ para birimi için canlı döviz kurları. Büyüyen bir ülke ağına gönderin — bugün Türkiye ve Orta Asya, sürekli yeni koridorlar ekleniyor. Adil tarifeler, gizli masraf yok.',
   landing_hero_cta_primary: 'Ücretsiz başla',
   landing_hero_cta_secondary: 'Nasıl çalıştığını gör',
   // F23 fix (Cursor review): EMI ortağı qualifier eklendi
@@ -344,7 +344,7 @@ export const tr = {
 
   // Country support
   landing_landen_eyebrow: 'Varış noktaları',
-  landing_landen_titel: '7 Türk dilli ülkede bankalar',
+  landing_landen_titel: 'Bugün 7 ülkede canlı',
   landing_landen_subtitel: 'Dünya çapında {landen}+ para birimi için canlı kurlar — Avrupa\'dan Asya\'ya, Afrika\'dan Amerika\'lara. Ödemeler Türkiye ve Orta Asya\'da başlıyor, yeni koridorlar düzenli olarak ekleniyor.',
   landing_landen_banken: 'banka',
 

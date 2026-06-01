@@ -243,7 +243,7 @@ export const ru = {
   landing_pill_wereldwijd: 'Курсы онлайн · {landen}+ валют по всему миру',
   landing_hero_titel_1: 'Отправляйте деньги близким,',
   landing_hero_titel_2: 'в любую точку мира',
-  landing_hero_subline: 'Курсы онлайн для 45+ валют. Отправка в растущую сеть стран — сегодня в Türkiye и Центральную Азию, новые направления добавляются постоянно. Честные тарифы, без скрытых платежей.',
+  landing_hero_subline: 'Курсы онлайн для {landen}+ валют. Отправка в растущую сеть стран — сегодня в Türkiye и Центральную Азию, новые направления добавляются постоянно. Честные тарифы, без скрытых платежей.',
   landing_hero_cta_primary: 'Начать бесплатно',
   landing_hero_cta_secondary: 'Посмотреть, как это работает',
   // F23 fix (Cursor review): через EMI-партнёра qualifier
@@ -329,7 +329,7 @@ export const ru = {
 
   // Country support
   landing_landen_eyebrow: 'Направления',
-  landing_landen_titel: 'Банки в 7 тюркоязычных странах',
+  landing_landen_titel: 'Уже доступно в 7 странах',
   landing_landen_subtitel: 'Курсы онлайн для {landen}+ валют по всему миру — от Европы и Азии до Африки и Америк. Выплаты начинаются с Türkiye и Центральной Азии, новые направления добавляются регулярно.',
   landing_landen_banken: 'банков',
 

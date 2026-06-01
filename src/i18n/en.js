@@ -258,7 +258,7 @@ export const en = {
   landing_pill_wereldwijd: 'Live rates · {landen}+ currencies worldwide',
   landing_hero_titel_1: 'Send money to your loved ones,',
   landing_hero_titel_2: 'anywhere in the world',
-  landing_hero_subline: 'Live exchange rates for 45+ currencies. Send to a growing network of countries — today to Türkiye and Central Asia, with more corridors added all the time. Fair rates, no hidden costs.',
+  landing_hero_subline: 'Live exchange rates for {landen}+ currencies. Send to a growing network of countries — today to Türkiye and Central Asia, with more corridors added all the time. Fair rates, no hidden costs.',
   landing_hero_cta_primary: 'Start for free',
   landing_hero_cta_secondary: 'See how it works',
   // F23 fix (Cursor review): qualifier embedded in label
@@ -344,7 +344,7 @@ export const en = {
 
   // Country support
   landing_landen_eyebrow: 'Destinations',
-  landing_landen_titel: 'Banks in 7 Turkic countries',
+  landing_landen_titel: 'Live in 7 countries today',
   landing_landen_subtitel: 'Live rates for {landen}+ currencies worldwide — from Europe and Asia to Africa and the Americas. Payouts starting in Türkiye and Central Asia, with new corridors added regularly.',
   landing_landen_banken: 'banks',
 

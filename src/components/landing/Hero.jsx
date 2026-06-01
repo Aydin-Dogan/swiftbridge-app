@@ -121,7 +121,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-blue-100/90 text-base sm:text-lg max-w-xl md:max-w-none mx-auto md:mx-0 mb-7 leading-relaxed">
-              {t('landing_hero_subline')}
+              {t('landing_hero_subline', { landen: aantalLanden })}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">

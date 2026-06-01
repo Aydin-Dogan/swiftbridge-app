@@ -259,7 +259,7 @@ export const nl = {
   landing_pill_wereldwijd: 'Live koersen · {landen}+ valuta wereldwijd',
   landing_hero_titel_1: 'Stuur geld naar je dierbaren,',
   landing_hero_titel_2: 'overal ter wereld',
-  landing_hero_subline: 'Live wisselkoersen voor 45+ valuta. Versturen naar een groeiend netwerk van landen — vandaag al naar Türkiye en Centraal-Azië, en steeds meer corridors erbij. Eerlijke tarieven, geen verborgen kosten.',
+  landing_hero_subline: 'Live wisselkoersen voor {landen}+ valuta. Versturen naar een groeiend netwerk van landen — vandaag al naar Türkiye en Centraal-Azië, en steeds meer corridors erbij. Eerlijke tarieven, geen verborgen kosten.',
   landing_hero_cta_primary: 'Gratis starten',
   landing_hero_cta_secondary: 'Bekijk hoe het werkt',
   // F23 fix (Cursor review): qualifier "via EMI-partner" ingebed in label zelf
@@ -345,7 +345,7 @@ export const nl = {
 
   // Country support
   landing_landen_eyebrow: 'Bestemmingen',
-  landing_landen_titel: 'Banken in 7 Turkstalige landen',
+  landing_landen_titel: 'Vandaag al live in 7 landen',
   landing_landen_subtitel: 'Live koersen voor {landen}+ valuta wereldwijd — van Europa en Azië tot Afrika en de Amerika\'s. Uitbetaling begint bij Türkiye en Centraal-Azië, nieuwe corridors komen er steeds bij.',
   landing_landen_banken: 'banken',
 
