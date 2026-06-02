@@ -22,6 +22,28 @@ import { API_URL } from '../services/api';
 const REFRESH_INTERVAL_MS = 30_000;
 const TIMEOUT_MS = 8000;
 
+// Vriendelijke labels voor de breaker-keys uit /health/dependencies
+const BREAKER_LABELS = {
+  'fx-api-fetch':            { name: 'Wisselkoersen API',     desc: 'Live EUR-koers (open.er-api.com)' },
+  'eu-sanctielijst-fetch':   { name: 'EU sanctielijst',        desc: 'Wwft Art. 33 screening (webgate.ec.europa.eu)' },
+  'resend-email':            { name: 'E-mail verzending',      desc: 'Transactionele mails via Resend' },
+  'mollie-payments-create':  { name: 'Mollie betaling starten', desc: 'iDEAL / Bancontact / Card initiatie' },
+  'mollie-payments-get':     { name: 'Mollie betaling status',  desc: 'Status-polling fallback voor webhook' },
+  'mollie-methods-list':     { name: 'Mollie methodes',         desc: 'Beschikbare betaalmethodes lijst' },
+};
+
+// Map breaker-state → Status-page status-key
+function breakerToStatus(breaker) {
+  if (!breaker) return 'checking';
+  if (breaker.state === 'open') return 'down';
+  if (breaker.state === 'half-open') return 'degraded';
+  // closed maar success rate < 90% = degraded
+  if (breaker.state === 'closed' && breaker.stats?.successRate < 90 && breaker.stats?.fires >= 5) {
+    return 'degraded';
+  }
+  return 'up';
+}
+
 // Eén checker per dienst — returnt { status, responseMs, message }
 async function checkUrl(url, options = {}) {
   const start = performance.now();
@@ -130,22 +152,28 @@ export default function Status() {
     database: null,
     rates: null,
   });
+  // RES-6: per-dependency breakers + DB + jobQueue uit /health/dependencies
+  const [deps, setDeps] = useState(null);
   const [lastCheckedAt, setLastCheckedAt] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
   const runChecks = useCallback(async () => {
     setRefreshing(true);
-    const [api, database, rates] = await Promise.all([
+    const [api, database, rates, depsRes] = await Promise.all([
       checkUrl(`${API_URL}/health`),
       checkUrl(`${API_URL}/readyz`),
-      // Wise-public-api voor EUR→TRY — bewuste keuze: zelfde upstream
-      // als de live koers-fetch op de Hero. Als deze down is, faalt onze
-      // calculator-koers ook.
+      // Wise-public-api voor EUR→TRY — externe diversification, naast
+      // onze eigen FX-API check (die zit in /health/dependencies).
       checkUrl('https://wise.com/rates/live?source=EUR&target=TRY', {
-        mode: 'no-cors', // simpele liveness check, response onleesbaar maar dat is ok
+        mode: 'no-cors',
       }),
+      // RES-6: gedetailleerde per-service status incl. breaker-states
+      fetch(`${API_URL}/health/dependencies`, {
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      }).then(r => r.json()).catch(() => null),
     ]);
     setResults({ api, database, rates });
+    setDeps(depsRes);
     setLastCheckedAt(new Date());
     setRefreshing(false);
   }, []);
@@ -202,8 +230,11 @@ export default function Status() {
           </div>
         </div>
 
-        {/* Services */}
-        <div className="space-y-3 mb-6">
+        {/* Kernservices */}
+        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
+          Kernservices
+        </h2>
+        <div className="space-y-3 mb-8">
           <ServiceRow
             name={t('status_svc_api_name')}
             description={t('status_svc_api_desc')}
@@ -220,6 +251,92 @@ export default function Status() {
             result={results.rates}
           />
         </div>
+
+        {/* RES-6: Externe afhankelijkheden met circuit-breaker state */}
+        {deps?.checks?.breakers && Object.keys(deps.checks.breakers).length > 0 && (
+          <>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+              Externe afhankelijkheden
+            </h2>
+            <p className="text-xs text-gray-500 mb-3">
+              Live status van circuit breakers rond externe APIs.
+              Bij meer dan 50% fouten in 60s opent de breaker en wordt verkeer
+              tijdelijk omgeleid — voorkomt timeout-wait bij outage.
+            </p>
+            <div className="space-y-3 mb-8">
+              {Object.entries(deps.checks.breakers).map(([key, breaker]) => {
+                const label = BREAKER_LABELS[key] || { name: key, desc: '' };
+                const status = breakerToStatus(breaker);
+                const successRate = breaker.stats?.successRate ?? 100;
+                const meta = STATUS_META[status];
+                return (
+                  <div key={key} className={`border rounded-xl p-4 sm:p-5 ${meta.color}`}>
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <StatusDot status={status} />
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-bold text-base text-gray-900">{label.name}</h3>
+                          <p className="text-sm text-gray-600 mt-0.5">{label.desc}</p>
+                        </div>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <div className="text-sm font-bold capitalize">{breaker.state}</div>
+                        <div className="text-xs text-gray-500 mt-0.5">
+                          {successRate}% succes
+                        </div>
+                      </div>
+                    </div>
+                    {breaker.stats?.fires > 0 && (
+                      <div className="mt-3 grid grid-cols-4 gap-2 text-[10px] uppercase tracking-wider text-gray-500">
+                        <div><span className="font-bold text-gray-700 text-sm block">{breaker.stats.successes}</span>OK</div>
+                        <div><span className="font-bold text-gray-700 text-sm block">{breaker.stats.failures}</span>Fouten</div>
+                        <div><span className="font-bold text-gray-700 text-sm block">{breaker.stats.timeouts}</span>Timeouts</div>
+                        <div><span className="font-bold text-gray-700 text-sm block">{breaker.stats.rejects}</span>Geblokt</div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Database + job queue als laatste 2 service-rows */}
+            <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
+              Interne infrastructuur
+            </h2>
+            <div className="space-y-3 mb-6">
+              <div className={`border rounded-xl p-4 sm:p-5 ${STATUS_META[deps.checks.db?.state === 'up' ? 'up' : 'down'].color}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-3 flex-1">
+                    <StatusDot status={deps.checks.db?.state === 'up' ? 'up' : 'down'} />
+                    <div>
+                      <h3 className="font-bold text-base text-gray-900">Database</h3>
+                      <p className="text-sm text-gray-600 mt-0.5">PostgreSQL via Neon — primaire opslag</p>
+                    </div>
+                  </div>
+                  <div className="text-sm font-bold text-right">
+                    {deps.checks.db?.state === 'up' ? 'Werkt' : 'Probleem'}
+                    <div className="text-xs text-gray-500 mt-0.5">{deps.checks.db?.type || '—'}</div>
+                  </div>
+                </div>
+              </div>
+              <div className={`border rounded-xl p-4 sm:p-5 ${STATUS_META[deps.checks.jobQueue?.state === 'up' ? 'up' : 'degraded'].color}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-3 flex-1">
+                    <StatusDot status={deps.checks.jobQueue?.state === 'up' ? 'up' : 'degraded'} />
+                    <div>
+                      <h3 className="font-bold text-base text-gray-900">Job queue</h3>
+                      <p className="text-sm text-gray-600 mt-0.5">Async taken (e-mails, push, retentie)</p>
+                    </div>
+                  </div>
+                  <div className="text-sm font-bold text-right">
+                    {deps.checks.jobQueue?.state === 'up' ? 'Werkt' : 'Probleem'}
+                    <div className="text-xs text-gray-500 mt-0.5">{deps.checks.jobQueue?.mode || '—'}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Refresh + last-checked */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-gray-100">
