@@ -1066,6 +1066,20 @@ export const en = {
   simulatie_banner_titel: 'Test mode: no real transfer',
   simulatie_banner_bericht: 'SwiftBridge runs in simulation mode until our EMI-partner integration goes live. Your iDEAL payment will NOT actually be forwarded to the recipient — this is only for testing. Do not use real money you cannot afford to lose.',
 
+  // Waitlist modal for "coming soon" corridors (WL-2)
+  wachtlijst_titel: 'Payouts to {land} are coming',
+  wachtlijst_subtitel: 'In {valuta} — payout corridor in preparation',
+  wachtlijst_uitleg: 'We roll out new corridors step by step. Add your email to the waitlist and you\'ll be the first to know once you can send to this country — often within a few weeks.',
+  wachtlijst_email_label: 'Email address for notification',
+  wachtlijst_cta: 'Join the waitlist',
+  wachtlijst_annuleer: 'Cancel',
+  wachtlijst_bezig: 'Saving…',
+  wachtlijst_privacy: 'We\'ll only use your email to notify you when this corridor goes live. One-click unsubscribe.',
+  wachtlijst_succes_titel: 'You\'re on the waitlist! 🎉',
+  wachtlijst_reeds_ingeschreven_titel: 'You\'re already on the waitlist',
+  wachtlijst_sluit: 'Close',
+  wachtlijst_fout_algemeen: 'Signup failed. Please try again later.',
+
   // ── Keyboard shortcuts (Improvement TTT) ─────────────────────────────────
   kbd_titel: 'Keyboard shortcuts',
   kbd_open_calculator: 'Open calculator',

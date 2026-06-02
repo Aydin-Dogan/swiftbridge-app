@@ -20,6 +20,7 @@ import { Bank, Card, Wallet, Euro, Globe } from './icons/Icons';
 import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
 import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
 import CurrencySelector from './CurrencySelector'; // Global herpositionering
+import WachtlijstModal from './WachtlijstModal'; // WL-2: binnenkort-corridor opt-in
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -1116,6 +1117,8 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
 export default function PaymentFlow({ token }) {
   const { t } = useTaal();
   const [stap,           setStap          ] = useState(0);
+  // WL-2: wachtlijst-modal voor binnenkort-corridors
+  const [wachtlijstOpen, setWachtlijstOpen] = useState(false);
   const [bedrag,         setBedrag        ] = useState('500');
   const [valuta,         setValuta        ] = useState('TRY');
   const [snelheid,       setSnelheid      ] = useState('express'); // express | economy
@@ -1428,7 +1431,15 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag token={token} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => setStap(1)} />}
+      {stap === 0 && <StapBedrag token={token} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
+        // WL-2: bij binnenkort-valuta open de wachtlijst-modal i.p.v. door
+        // naar betaling. Voorkomt dat klant iDEAL betaalt voor onmogelijke uitbetaling.
+        if (getValuta(valuta)?.status === 'binnenkort') {
+          setWachtlijstOpen(true);
+        } else {
+          setStap(1);
+        }
+      }} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
       {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} token={token} />}
@@ -1437,6 +1448,15 @@ export default function PaymentFlow({ token }) {
           de transactie-aanmaak → Mollie payment-start → redirect sequence.
           Voorkomt verwarring tijdens 1-4s wachttijd, plus blokkeert dubbele klik. */}
       <PaymentLoadingOverlay open={laden && stap === 2} />
+
+      {/* WL-2: wachtlijst-modal voor binnenkort-corridors */}
+      <WachtlijstModal
+        open={wachtlijstOpen}
+        valuta={getValuta(valuta)}
+        eurBedrag={bedrag}
+        gebruikerEmail={null /* PaymentFlow heeft geen direct toegang tot profiel-email — anoniem-flow */}
+        onSluit={() => setWachtlijstOpen(false)}
+      />
     </div>
   );
 }

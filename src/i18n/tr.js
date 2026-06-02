@@ -1066,6 +1066,20 @@ export const tr = {
   simulatie_banner_titel: 'Test modu: gerçek transfer yok',
   simulatie_banner_bericht: 'SwiftBridge, EMI-partner entegrasyonumuz canlıya geçene kadar simülasyon modunda çalışıyor. iDEAL ödemeniz aslında alıcıya iletilmeyecek — bu yalnızca test içindir. Kaybetmeyi göze alamayacağınız parayı kullanmayın.',
 
+  // "Yakında" koridorları için bekleme listesi modalı (WL-2)
+  wachtlijst_titel: '{land} ülkesine ödeme yakında',
+  wachtlijst_subtitel: '{valuta} para birimi — ödeme koridoru hazırlanıyor',
+  wachtlijst_uitleg: 'Yeni koridorları adım adım yayınlıyoruz. E-posta adresinizi bekleme listesine ekleyin, bu transfer doğrudan yapılabildiğinde size kişisel olarak haber verelim — genellikle birkaç hafta içinde.',
+  wachtlijst_email_label: 'Bildirim için e-posta adresi',
+  wachtlijst_cta: 'Bekleme listesine ekle',
+  wachtlijst_annuleer: 'İptal',
+  wachtlijst_bezig: 'Kaydediliyor…',
+  wachtlijst_privacy: 'E-postanızı yalnızca bu koridor yayında olduğunda sizi bilgilendirmek için kullanırız. Tek tıkla abonelikten çıkın.',
+  wachtlijst_succes_titel: 'Bekleme listesindesiniz! 🎉',
+  wachtlijst_reeds_ingeschreven_titel: 'Zaten bekleme listesindesiniz',
+  wachtlijst_sluit: 'Kapat',
+  wachtlijst_fout_algemeen: 'Kayıt başarısız oldu. Lütfen daha sonra tekrar deneyin.',
+
   // ── Klavye kısayolları (İyileştirme TTT) ─────────────────────────────────
   kbd_titel: 'Klavye kısayolları',
   kbd_open_calculator: 'Hesaplayıcıyı aç',

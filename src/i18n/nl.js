@@ -948,6 +948,20 @@ export const nl = {
   simulatie_banner_titel: 'Test-modus: geen echte overboeking',
   simulatie_banner_bericht: 'SwiftBridge draait momenteel in simulatie-modus tot onze EMI-partner-integratie live gaat. Je iDEAL-betaling wordt NIET daadwerkelijk doorgestuurd naar de ontvanger — dit is alleen voor tests. Gebruik geen echt geld dat je niet wilt verliezen.',
 
+  // ── Wachtlijst-modal voor 'binnenkort'-corridors (WL-2) ──────────────────
+  wachtlijst_titel: 'Uitbetaling naar {land} komt eraan',
+  wachtlijst_subtitel: 'In {valuta} — uitbetaling-corridor wordt nu voorbereid',
+  wachtlijst_uitleg: 'We rollen nieuwe corridors stap voor stap uit. Zet je e-mailadres op de wachtlijst en je krijgt een persoonlijk bericht zodra je deze overboeking direct kunt doen — vaak binnen enkele weken.',
+  wachtlijst_email_label: 'E-mailadres voor bericht',
+  wachtlijst_cta: 'Zet me op de wachtlijst',
+  wachtlijst_annuleer: 'Annuleer',
+  wachtlijst_bezig: 'Bezig…',
+  wachtlijst_privacy: 'Wij gebruiken je e-mail alleen om je te berichten zodra deze corridor live is. Uitschrijven kan met één klik.',
+  wachtlijst_succes_titel: 'Je staat op de wachtlijst! 🎉',
+  wachtlijst_reeds_ingeschreven_titel: 'Je staat al op de wachtlijst',
+  wachtlijst_sluit: 'Sluiten',
+  wachtlijst_fout_algemeen: 'Inschrijving mislukt. Probeer het later opnieuw.',
+
   // ── Keyboard shortcuts (Verbetering TTT) ─────────────────────────────────
   kbd_titel: 'Sneltoetsen',
   kbd_open_calculator: 'Open calculator',

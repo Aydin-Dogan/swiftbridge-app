@@ -977,6 +977,20 @@ export const az = {
   simulatie_banner_titel: 'Test rejimi: əsl köçürmə yoxdur',
   simulatie_banner_bericht: 'SwiftBridge EMI-partner inteqrasiyamız işə düşənə qədər simulyasiya rejimində işləyir. iDEAL ödənişiniz əslində alıcıya göndərilməyəcək — bu yalnız test üçündür. İtkisini özünüzə yetkilənə bilməyəcəyiniz pulu istifadə etməyin.',
 
+  // "Tezliklə" koridorları üçün gözləmə siyahısı modalı (WL-2)
+  wachtlijst_titel: '{land} ölkəsinə ödənişlər yaxınlaşır',
+  wachtlijst_subtitel: '{valuta} valyutasında — ödəniş koridoru hazırlanır',
+  wachtlijst_uitleg: 'Yeni koridorları addım-addım yayımlayırıq. E-poçtunuzu gözləmə siyahısına əlavə edin və bu köçürməni birbaşa edə bildiyinizdə sizə şəxsi xəbər verəcəyik — adətən bir neçə həftə içində.',
+  wachtlijst_email_label: 'Bildiriş üçün e-poçt',
+  wachtlijst_cta: 'Gözləmə siyahısına yaz',
+  wachtlijst_annuleer: 'Ləğv et',
+  wachtlijst_bezig: 'Yadda saxlanır…',
+  wachtlijst_privacy: 'E-poçtunuzu yalnız bu koridor canlı olduğunda bildirmək üçün istifadə edirik. Bir kliklə imtina.',
+  wachtlijst_succes_titel: 'Gözləmə siyahısındasınız! 🎉',
+  wachtlijst_reeds_ingeschreven_titel: 'Artıq gözləmə siyahısındasınız',
+  wachtlijst_sluit: 'Bağla',
+  wachtlijst_fout_algemeen: 'Qeydiyyat alınmadı. Sonra yenidən cəhd edin.',
+
   // ── Klaviatura qısayolları (Təkmilləşdirmə TTT) ──────────────────────────
   kbd_titel: 'Klaviatura qısayolları',
   kbd_open_calculator: 'Kalkulyatoru aç',
