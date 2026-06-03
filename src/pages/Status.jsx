@@ -156,10 +156,13 @@ export default function Status() {
   const [deps, setDeps] = useState(null);
   const [lastCheckedAt, setLastCheckedAt] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  // FF: real-time SSE-stream voor breakers (geen polling-lag bij state changes)
+  const [streamLive, setStreamLive] = useState(false);
 
+  // Lichte checks die NIET via SSE komen (api, db, rates)
   const runChecks = useCallback(async () => {
     setRefreshing(true);
-    const [api, database, rates, depsRes] = await Promise.all([
+    const [api, database, rates] = await Promise.all([
       checkUrl(`${API_URL}/health`),
       checkUrl(`${API_URL}/readyz`),
       // Wise-public-api voor EUR→TRY — externe diversification, naast
@@ -167,24 +170,103 @@ export default function Status() {
       checkUrl('https://wise.com/rates/live?source=EUR&target=TRY', {
         mode: 'no-cors',
       }),
-      // RES-6: gedetailleerde per-service status incl. breaker-states
-      fetch(`${API_URL}/health/dependencies`, {
-        signal: AbortSignal.timeout(TIMEOUT_MS),
-      }).then(r => r.json()).catch(() => null),
     ]);
     setResults({ api, database, rates });
-    setDeps(depsRes);
     setLastCheckedAt(new Date());
     setRefreshing(false);
   }, []);
 
+  // Fallback: één-shot fetch van /health/dependencies als SSE niet werkt
+  const fetchDepsOnce = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_URL}/health/dependencies`, {
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      const json = await res.json();
+      setDeps(json);
+    } catch { /* stil — UI toont wat het had */ }
+  }, []);
+
   useEffect(() => {
-    // Page title + meta
     document.title = `${t('status_page_title')} — SwiftBridge`;
     runChecks();
     const interval = setInterval(runChecks, REFRESH_INTERVAL_MS);
     return () => clearInterval(interval);
   }, [runChecks, t]);
+
+  // FF: SSE-stream voor breakers + jobQueue + DB-status
+  useEffect(() => {
+    // Detect EventSource support; sommige oudere browsers / privacy-mode hebben 'em niet
+    if (typeof window === 'undefined' || typeof window.EventSource === 'undefined') {
+      // Fallback: poll dependencies
+      fetchDepsOnce();
+      const i = setInterval(fetchDepsOnce, REFRESH_INTERVAL_MS);
+      return () => clearInterval(i);
+    }
+
+    let es;
+    let reconnectTimer;
+    let reconnectAttempts = 0;
+    let stopped = false;
+
+    function connect() {
+      if (stopped) return;
+      try {
+        es = new EventSource(`${API_URL}/health/dependencies/stream`);
+      } catch (e) {
+        // CSP / netwerk / cors — fallback polling
+        fetchDepsOnce();
+        return;
+      }
+      es.addEventListener('open', () => {
+        reconnectAttempts = 0;
+        setStreamLive(true);
+      });
+      function applySnapshot(ev) {
+        try {
+          const payload = JSON.parse(ev.data);
+          // Update alleen het breakers-deel; DB/jobQueue komen nog uit polling
+          setDeps((huidig) => {
+            const basis = huidig || { status: 'up', checks: {} };
+            return {
+              ...basis,
+              checks: { ...basis.checks, breakers: payload.breakers || {} },
+              timestamp: payload.at,
+              source: 'sse',
+            };
+          });
+          setLastCheckedAt(new Date());
+        } catch {/* malformed event */}
+      }
+      es.addEventListener('snapshot', applySnapshot);
+      es.addEventListener('change', applySnapshot);
+
+      es.addEventListener('error', () => {
+        setStreamLive(false);
+        // Auto-reconnect EventSource doet zelf — maar bij hard close moeten we
+        // opnieuw connect. Backoff 2s, 4s, 8s, cap 30s.
+        if (es.readyState === EventSource.CLOSED) {
+          try { es.close(); } catch {}
+          const wait = Math.min(30_000, 2_000 * 2 ** reconnectAttempts);
+          reconnectAttempts++;
+          reconnectTimer = setTimeout(connect, wait);
+          // Fallback poll terwijl SSE-stream weg is
+          fetchDepsOnce();
+        }
+      });
+    }
+
+    // Initiele depsRes via fetch zodat UI direct iets toont
+    fetchDepsOnce();
+    connect();
+
+    return () => {
+      stopped = true;
+      if (reconnectTimer) clearTimeout(reconnectTimer);
+      try { es?.close(); } catch {}
+      setStreamLive(false);
+    };
+  }, [fetchDepsOnce]);
 
   // Overall status = slechtste van de individuele statussen
   const statuses = Object.values(results).map((r) => r?.status).filter(Boolean);
