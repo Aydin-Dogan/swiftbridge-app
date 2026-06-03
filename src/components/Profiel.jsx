@@ -15,6 +15,7 @@ import AccountantBeheer from './AccountantBeheer';
 import NotificatieVoorkeuren from './NotificatieVoorkeuren';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
+import EmailWijzigenModal from './EmailWijzigenModal';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -156,6 +157,8 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
     whatsappOptIn: true,
   });
   const [profiel, setProfiel] = useState(null);
+  // SS: e-mail wijzigen modal
+  const [emailWijzigOpen, setEmailWijzigOpen] = useState(false);
 
   async function laad() {
     setLaden(true);
@@ -330,12 +333,21 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">E-mailadres</label>
+            <label className="block text-xs font-semibold text-gray-600 mb-1 flex items-center justify-between">
+              <span>E-mailadres</span>
+              <button
+                type="button"
+                onClick={() => setEmailWijzigOpen(true)}
+                className="text-blue-600 hover:underline text-[11px] font-medium"
+              >
+                {t('email_wijzig_knop') || 'Wijzigen'}
+              </button>
+            </label>
             <input
               value={profiel?.email || ''}
               disabled
               className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none bg-gray-50 text-gray-500 cursor-not-allowed"
-              title="E-mail kan niet gewijzigd worden"
+              title={t('email_wijzig_tooltip') || 'Klik op "Wijzigen" om je e-mailadres aan te passen'}
             />
           </div>
           <div>
@@ -531,6 +543,14 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </p>
       </div>
       <ReferralKaart />
+
+      {/* SS: E-mail wijzigen modal */}
+      <EmailWijzigenModal
+        open={emailWijzigOpen}
+        huidigEmail={profiel?.email || ''}
+        token={token}
+        onSluit={() => setEmailWijzigOpen(false)}
+      />
     </div>
   );
 }

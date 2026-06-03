@@ -26,6 +26,7 @@ const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
 const AdminPanel          = lazy(() => import('./pages/AdminPanel'));
 const AdminCompliance     = lazy(() => import('./pages/AdminCompliance'));
 const VerifyEmail         = lazy(() => import('./pages/VerifyEmail'));
+const EmailWijzigen       = lazy(() => import('./pages/EmailWijzigen'));
 const Recurring           = lazy(() => import('./pages/Recurring'));
 
 // SEO landings (Sprint 3 deel 2) — long-tail Google traffic per query.
@@ -538,6 +539,17 @@ export default function App() {
           } />
           <Route path="/r/:code" element={<ReferralRedirect />} />
           <Route path="/verifieer-email" element={<VerifyEmail />} />
+          {/* SS: E-mail wijzigen bevestig + intrek links (AVG art. 16) */}
+          <Route path="/email-wijzigen-bevestigen" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <EmailWijzigen modus="bevestigen" />
+            </Suspense>
+          } />
+          <Route path="/email-wijzigen-intrekken" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <EmailWijzigen modus="intrekken" />
+            </Suspense>
+          } />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacybeleid" element={<Privacybeleid />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />
