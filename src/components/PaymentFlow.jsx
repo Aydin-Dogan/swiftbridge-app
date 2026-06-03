@@ -21,6 +21,7 @@ import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
 import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
 import CurrencySelector from './CurrencySelector'; // Global herpositionering
 import WachtlijstModal from './WachtlijstModal'; // WL-2: binnenkort-corridor opt-in
+import { useFavorieteValutas } from '../services/favorieteValutas'; // MMM
 
 const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -451,7 +452,12 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-2">Ontvanger krijgt in</label>
-        <CurrencySelector value={valuta} onChange={setValuta} />
+        <CurrencySelector
+          value={valuta}
+          onChange={setValuta}
+          favorieten={favorieten}
+          onToggleFavoriet={toggleFavoriet}
+        />
         {valutaInfo.status === 'binnenkort' && (
           <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-2 text-[11px] text-amber-800 leading-snug">
             <span aria-hidden="true">🔔</span>
@@ -1116,6 +1122,9 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function PaymentFlow({ token }) {
   const { t } = useTaal();
+  // MMM: favoriete valutas — server-sync via cookie-auth (PaymentFlow is
+  // alleen bereikbaar voor ingelogde users via ProtectedRoute).
+  const { favorieten, toggleFavoriet } = useFavorieteValutas();
   const [stap,           setStap          ] = useState(0);
   // WL-2: wachtlijst-modal voor binnenkort-corridors
   const [wachtlijstOpen, setWachtlijstOpen] = useState(false);

@@ -6,11 +6,13 @@
  * badges. Herbruikbaar in Hero, Calculator en PaymentFlow.
  *
  * Props:
- *   value      — geselecteerde valuta-code (bv 'TRY')
- *   onChange   — (code) => void
- *   valutas    — lijst om uit te kiezen (default: alle VALUTAS)
- *   label      — optioneel label boven de trigger
- *   compact    — kleinere trigger (voor inline gebruik)
+ *   value             — geselecteerde valuta-code (bv 'TRY')
+ *   onChange          — (code) => void
+ *   valutas           — lijst om uit te kiezen (default: alle VALUTAS)
+ *   label             — optioneel label boven de trigger
+ *   compact           — kleinere trigger (voor inline gebruik)
+ *   favorieten        — (MMM) array van favoriete codes ['TRY','EUR',...]
+ *   onToggleFavoriet  — (MMM) (code) => void; ster-klik handler
  */
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Vlag from './Vlag';
@@ -24,7 +26,26 @@ function ChevronDown({ className }) {
   );
 }
 
-export default function CurrencySelector({ value, onChange, valutas = VALUTAS, label, compact = false }) {
+// MMM: ster-icoon — gevuld bij favoriet, outline anders
+function SterIcoon({ gevuld, className }) {
+  return (
+    <svg viewBox="0 0 20 20" className={className} aria-hidden="true"
+      fill={gevuld ? 'currentColor' : 'none'}
+      stroke="currentColor" strokeWidth={gevuld ? 0 : 1.6} strokeLinejoin="round">
+      <path d="M10 2.5l2.36 4.79 5.29.77-3.83 3.73.9 5.26L10 14.55l-4.73 2.5.9-5.26L2.35 8.06l5.29-.77L10 2.5z" />
+    </svg>
+  );
+}
+
+export default function CurrencySelector({
+  value,
+  onChange,
+  valutas = VALUTAS,
+  label,
+  compact = false,
+  favorieten = [],
+  onToggleFavoriet,
+}) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const wrapRef = useRef(null);
@@ -49,10 +70,24 @@ export default function CurrencySelector({ value, onChange, valutas = VALUTAS, l
     };
   }, [open]);
 
+  const favSet = useMemo(
+    () => new Set((favorieten || []).map(c => String(c).toUpperCase())),
+    [favorieten]
+  );
+
   const secties = useMemo(() => {
     const gefilterd = zoekValuta(query, valutas);
     return valutasPerRegio(gefilterd);
   }, [query, valutas]);
+
+  // MMM: Favorieten-sectie (alleen tonen als er favs zijn EN ze in het
+  // filter-resultaat zitten — anders verwart een "Favorieten" sectie met
+  // 0 items de gebruiker als hij zoekt).
+  const favorietenRijen = useMemo(() => {
+    if (!favSet.size) return [];
+    const gefilterd = zoekValuta(query, valutas);
+    return gefilterd.filter(v => favSet.has(v.code));
+  }, [favSet, query, valutas]);
 
   const totaalGevonden = useMemo(() => zoekValuta(query, valutas).length, [query, valutas]);
 
@@ -118,52 +153,109 @@ export default function CurrencySelector({ value, onChange, valutas = VALUTAS, l
                 Geen valuta gevonden voor "{query}"
               </p>
             )}
+
+            {/* MMM: Favorieten sectie bovenaan — alleen als er favs zijn in
+                de huidige filter-resultaten. Zelfde rij-render als de
+                regio-secties, alleen ander label. */}
+            {favorietenRijen.length > 0 && (
+              <div>
+                <div className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 flex items-center gap-1">
+                  <SterIcoon gevuld className="w-3 h-3" />
+                  Favorieten
+                </div>
+                {favorietenRijen.map(v => (
+                  <ValutaRij
+                    key={`fav-${v.code}`}
+                    v={v}
+                    actief={v.code === value}
+                    isFavoriet={true}
+                    onKies={kies}
+                    onToggleFavoriet={onToggleFavoriet}
+                  />
+                ))}
+              </div>
+            )}
+
             {secties.map(({ regio, valutas: rijen }) => (
               <div key={regio}>
                 <div className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400">
                   {regio}
                 </div>
-                {rijen.map(v => {
-                  const actief = v.code === value;
-                  return (
-                    <button
-                      key={v.code}
-                      type="button"
-                      role="option"
-                      aria-selected={actief}
-                      onClick={() => kies(v.code)}
-                      className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition
-                        ${actief ? 'bg-brand-50' : 'hover:bg-gray-50'}`}
-                    >
-                      <Vlag land={v.landCode} size={26} />
-                      <span className="flex-1 min-w-0">
-                        <span className="flex items-center gap-2">
-                          <span className="font-semibold text-gray-900 text-sm">{v.code}</span>
-                          {v.status === 'binnenkort' && (
-                            <span className="text-[9px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 border border-amber-200 rounded-full px-1.5 py-0.5">
-                              Binnenkort
-                            </span>
-                          )}
-                          {v.status === 'live' && (
-                            <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wide text-success-700 bg-success-50 border border-success-100 rounded-full px-1.5 py-0.5">
-                              <span className="w-1 h-1 rounded-full bg-success-500" /> Live
-                            </span>
-                          )}
-                        </span>
-                        <span className="block text-[11px] text-gray-500 truncate">{v.naam} · {v.land}</span>
-                      </span>
-                      {actief && (
-                        <svg viewBox="0 0 20 20" className="w-4 h-4 text-brand-600 flex-shrink-0" fill="currentColor" aria-hidden="true">
-                          <path d="M8 13l-3-3 1.4-1.4L8 10.2l5.6-5.6L15 6z" />
-                        </svg>
-                      )}
-                    </button>
-                  );
-                })}
+                {rijen.map(v => (
+                  <ValutaRij
+                    key={v.code}
+                    v={v}
+                    actief={v.code === value}
+                    isFavoriet={favSet.has(v.code)}
+                    onKies={kies}
+                    onToggleFavoriet={onToggleFavoriet}
+                  />
+                ))}
               </div>
             ))}
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+// MMM: één valuta-rij — rechts naast de chevron/check een ster-knop
+// die als sub-button werkt (stopPropagation zodat klik op ster niet
+// ook de valuta selecteert).
+function ValutaRij({ v, actief, isFavoriet, onKies, onToggleFavoriet }) {
+  return (
+    <div
+      className={`group w-full flex items-center gap-3 px-4 py-2.5 text-left transition
+        ${actief ? 'bg-brand-50' : 'hover:bg-gray-50'}`}
+    >
+      <button
+        type="button"
+        role="option"
+        aria-selected={actief}
+        onClick={() => onKies(v.code)}
+        className="flex items-center gap-3 flex-1 min-w-0 text-left"
+      >
+        <Vlag land={v.landCode} size={26} />
+        <span className="flex-1 min-w-0">
+          <span className="flex items-center gap-2">
+            <span className="font-semibold text-gray-900 text-sm">{v.code}</span>
+            {v.status === 'binnenkort' && (
+              <span className="text-[9px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 border border-amber-200 rounded-full px-1.5 py-0.5">
+                Binnenkort
+              </span>
+            )}
+            {v.status === 'live' && (
+              <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wide text-success-700 bg-success-50 border border-success-100 rounded-full px-1.5 py-0.5">
+                <span className="w-1 h-1 rounded-full bg-success-500" /> Live
+              </span>
+            )}
+          </span>
+          <span className="block text-[11px] text-gray-500 truncate">{v.naam} · {v.land}</span>
+        </span>
+        {actief && (
+          <svg viewBox="0 0 20 20" className="w-4 h-4 text-brand-600 flex-shrink-0" fill="currentColor" aria-hidden="true">
+            <path d="M8 13l-3-3 1.4-1.4L8 10.2l5.6-5.6L15 6z" />
+          </svg>
+        )}
+      </button>
+      {onToggleFavoriet && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleFavoriet(v.code);
+          }}
+          aria-label={isFavoriet ? `Verwijder ${v.code} uit favorieten` : `Voeg ${v.code} toe aan favorieten`}
+          title={isFavoriet ? 'Verwijder uit favorieten' : 'Voeg toe aan favorieten'}
+          className={`p-1.5 rounded-md transition ${
+            isFavoriet
+              ? 'text-amber-500 hover:text-amber-600'
+              : 'text-gray-300 hover:text-amber-500 opacity-60 group-hover:opacity-100'
+          }`}
+        >
+          <SterIcoon gevuld={isFavoriet} className="w-4 h-4" />
+        </button>
       )}
     </div>
   );

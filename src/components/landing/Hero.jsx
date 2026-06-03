@@ -13,6 +13,7 @@ import { getValuta, VALUTAS } from '../../services/currencies';
 import { berekenKosten } from '../../services/kosten';
 import Vlag from '../Vlag';
 import CurrencySelector from '../CurrencySelector';
+import { useFavorieteValutas } from '../../services/favorieteValutas'; // MMM
 import { API_URL } from '../../services/api';
 import { ShieldCheck, Bank, Lock, ArrowRight } from '../icons/Icons';
 
@@ -47,6 +48,8 @@ function TrustRow({ t }) {
 export default function Hero() {
   const navigate = useNavigate();
   const { t } = useTaal();
+  // MMM: favorieten — werkt anoniem via localStorage, sync naar server bij login
+  const { favorieten, toggleFavoriet } = useFavorieteValutas();
 
   const [bedrag, setBedrag] = useState(500);
   const [valuta, setValuta] = useState('TRY');
@@ -182,6 +185,8 @@ export default function Hero() {
                 value={valuta}
                 onChange={setValuta}
                 label={t('landing_widget_ontvanger_in')}
+                favorieten={favorieten}
+                onToggleFavoriet={toggleFavoriet}
               />
 
               <div className="bg-brand-50 border border-brand-100 rounded-xl px-4 py-3.5 mt-4 mb-3 flex justify-between items-center">
