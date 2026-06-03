@@ -22,12 +22,13 @@ function tijdGeleden(iso) {
 }
 
 function StatusBadge({ status }) {
+  const { t } = useTaal();
   const map = {
-    in_behandeling: { kleur: 'bg-amber-100 text-amber-700 border-amber-200',  label: '⏳ In behandeling' },
-    goedgekeurd:    { kleur: 'bg-green-100 text-green-700 border-green-200',   label: '✅ Goedgekeurd'    },
-    afgewezen:      { kleur: 'bg-red-100 text-red-700 border-red-200',         label: '❌ Afgewezen'      },
-    geblokkeerd:    { kleur: 'bg-gray-200 text-gray-700 border-gray-300',      label: '🔒 Geblokkeerd'    },
-    niet_ingediend: { kleur: 'bg-blue-100 text-blue-700 border-blue-200',      label: '📋 Niet ingediend' },
+    in_behandeling: { kleur: 'bg-amber-100 text-amber-700 border-amber-200',  label: `⏳ ${t('admin_status_in_behandeling') || 'In behandeling'}` },
+    goedgekeurd:    { kleur: 'bg-green-100 text-green-700 border-green-200',   label: `✅ ${t('admin_status_goedgekeurd') || 'Goedgekeurd'}` },
+    afgewezen:      { kleur: 'bg-red-100 text-red-700 border-red-200',         label: `❌ ${t('admin_status_afgewezen') || 'Afgewezen'}` },
+    geblokkeerd:    { kleur: 'bg-gray-200 text-gray-700 border-gray-300',      label: `🔒 ${t('admin_status_geblokkeerd') || 'Geblokkeerd'}` },
+    niet_ingediend: { kleur: 'bg-blue-100 text-blue-700 border-blue-200',      label: `📋 ${t('admin_status_niet_ingediend') || 'Niet ingediend'}` },
   };
   const s = map[status] || map.niet_ingediend;
   return (
@@ -85,12 +86,12 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
 
       <div className="grid grid-cols-2 gap-2 text-sm">
         {[
-          ['Document', aanvraag.document_type],
-          ['Nummer',   aanvraag.document_nummer],
-          ['Geboortedatum', aanvraag.geboortedatum],
-          ['Nationaliteit', aanvraag.nationaliteit || 'TR'],
-          ['Ingediend', tijdGeleden(aanvraag.ingediend_op)],
-          ['Beoordeeld', tijdGeleden(aanvraag.beoordeeld_op)],
+          [t('admin_kyc_document') || 'Document', aanvraag.document_type],
+          [t('admin_kyc_nummer') || 'Nummer',   aanvraag.document_nummer],
+          [t('admin_kyc_geboortedatum') || 'Geboortedatum', aanvraag.geboortedatum],
+          [t('admin_kyc_nationaliteit') || 'Nationaliteit', aanvraag.nationaliteit || 'TR'],
+          [t('admin_kyc_ingediend') || 'Ingediend', tijdGeleden(aanvraag.ingediend_op)],
+          [t('admin_kyc_beoordeeld') || 'Beoordeeld', tijdGeleden(aanvraag.beoordeeld_op)],
         ].map(([label, waarde]) => (
           <div key={label} className="bg-gray-50 rounded-xl px-3 py-2">
             <div className="text-xs text-gray-400">{label}</div>
@@ -105,19 +106,19 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
             onClick={() => beoordeel('goedgekeurd')}
             disabled={laden}
             className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm">
-            {bezig === 'goedgekeurd' ? '⏳' : '✅'} Goedkeuren
+            {bezig === 'goedgekeurd' ? '⏳' : '✅'} {t('admin_actie_goedkeuren') || 'Goedkeuren'}
           </button>
           <button
             onClick={() => beoordeel('afgewezen')}
             disabled={laden}
             className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm">
-            {bezig === 'afgewezen' ? '⏳' : '❌'} Afwijzen
+            {bezig === 'afgewezen' ? '⏳' : '❌'} {t('admin_actie_afwijzen') || 'Afwijzen'}
           </button>
           <button
             onClick={() => beoordeel('geblokkeerd')}
             disabled={laden}
             className="px-3 bg-gray-700 hover:bg-gray-800 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm"
-            title="Account blokkeren">
+            title={t('admin_actie_blokkeren_tooltip') || 'Account blokkeren'}>
             {bezig === 'geblokkeerd' ? '⏳' : '🔒'}
           </button>
         </div>
@@ -128,13 +129,13 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
           {aanvraag.status !== 'goedgekeurd' && (
             <button onClick={() => beoordeel('goedgekeurd')} disabled={laden}
               className="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2 rounded-xl transition text-sm">
-              ✅ Alsnog goedkeuren
+              ✅ {t('admin_actie_alsnog_goedkeuren') || 'Alsnog goedkeuren'}
             </button>
           )}
           {aanvraag.status !== 'geblokkeerd' && (
             <button onClick={() => beoordeel('geblokkeerd')} disabled={laden}
               className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 rounded-xl transition text-sm">
-              🔒 Blokkeren
+              🔒 {t('admin_actie_blokkeren') || 'Blokkeren'}
             </button>
           )}
         </div>
@@ -208,8 +209,8 @@ export default function AdminPanel() {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white rounded-2xl p-8 text-center shadow max-w-sm w-full">
           <div className="text-4xl mb-4">🔐</div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Admin toegang vereist</h2>
-          <p className="text-gray-500 text-sm">Voeg <code className="bg-gray-100 px-1 rounded">?secret=...</code> toe aan de URL.</p>
+          <h2 className="text-xl font-bold text-gray-800 mb-2">{t('admin_toegang_titel') || 'Admin toegang vereist'}</h2>
+          <p className="text-gray-500 text-sm">{t('admin_toegang_uitleg_1') || 'Voeg'} <code className="bg-gray-100 px-1 rounded">?secret=...</code> {t('admin_toegang_uitleg_2') || 'toe aan de URL.'}</p>
         </div>
       </div>
     );
@@ -223,11 +224,11 @@ export default function AdminPanel() {
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/')} className="text-2xl">⚡</button>
             <div>
-              <div className="font-extrabold text-gray-900 leading-none">SwiftBridge Admin</div>
-              <div className="text-xs text-amber-600 font-semibold">🔐 Beveiligd paneel</div>
+              <div className="font-extrabold text-gray-900 leading-none">{t('admin_titel') || 'SwiftBridge Admin'}</div>
+              <div className="text-xs text-amber-600 font-semibold">🔐 {t('admin_beveiligd') || 'Beveiligd paneel'}</div>
             </div>
           </div>
-          <button onClick={laadData} className="text-gray-400 hover:text-blue-600 text-xl transition" title="Vernieuwen">🔄</button>
+          <button onClick={laadData} className="text-gray-400 hover:text-blue-600 text-xl transition" title={t('admin_vernieuwen') || 'Vernieuwen'}>🔄</button>
         </div>
       </header>
 
@@ -249,12 +250,12 @@ export default function AdminPanel() {
             <span className="text-2xl">{integriteit.geldig ? '🔒' : '⚠️'}</span>
             <div>
               <div className="font-bold text-sm">
-                {integriteit.geldig ? 'Audit log intact' : 'Audit log AANGETAST!'}
+                {integriteit.geldig ? (t('admin_audit_intact') || 'Audit log intact') : (t('admin_audit_aangetast') || 'Audit log AANGETAST!')}
               </div>
               <div className="text-xs mt-0.5">
                 {integriteit.geldig
-                  ? `${integriteit.totaal} log entries — hash chain volledig geldig ✅`
-                  : `Gebroken bij log ID ${integriteit.gebroken?.id} (${integriteit.gebroken?.actie})`}
+                  ? `${integriteit.totaal} ${t('admin_audit_entries_ok') || 'log entries — hash chain volledig geldig'} ✅`
+                  : `${t('admin_audit_gebroken_bij') || 'Gebroken bij log ID'} ${integriteit.gebroken?.id} (${integriteit.gebroken?.actie})`}
               </div>
             </div>
           </div>
@@ -263,10 +264,10 @@ export default function AdminPanel() {
         {/* Statistieken */}
         {stats && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatKaart icoon="👥" label="Gebruikers"        waarde={stats.gebruikers}                         kleur="text-blue-600"   />
-            <StatKaart icoon="⏳" label="KYC in behandeling" waarde={stats.kyc?.in_behandeling || 0}           kleur="text-amber-600"  />
-            <StatKaart icoon="✅" label="KYC goedgekeurd"    waarde={stats.kyc?.goedgekeurd || 0}              kleur="text-green-600"  />
-            <StatKaart icoon="💶" label="Totaal verstuurd"
+            <StatKaart icoon="👥" label={t('admin_stat_gebruikers') || 'Gebruikers'}        waarde={stats.gebruikers}                         kleur="text-blue-600"   />
+            <StatKaart icoon="⏳" label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0}           kleur="text-amber-600"  />
+            <StatKaart icoon="✅" label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'}    waarde={stats.kyc?.goedgekeurd || 0}              kleur="text-green-600"  />
+            <StatKaart icoon="💶" label={t('admin_stat_totaal_verstuurd') || 'Totaal verstuurd'}
               waarde={`€${((stats.transacties?.voltooid?.totaal || 0)).toLocaleString('nl-NL', { maximumFractionDigits: 0 })}`}
               kleur="text-purple-600" />
           </div>
@@ -274,14 +275,14 @@ export default function AdminPanel() {
 
         {/* Filters */}
         <div>
-          <h2 className="text-lg font-bold text-gray-800 mb-3">KYC Aanvragen</h2>
+          <h2 className="text-lg font-bold text-gray-800 mb-3">{t('admin_kyc_aanvragen') || 'KYC Aanvragen'}</h2>
           <div className="flex flex-wrap gap-2">
             {[
-              { id: 'in_behandeling', label: `⏳ In behandeling (${aanvragen.filter(a => a.status === 'in_behandeling').length})` },
-              { id: 'goedgekeurd',    label: `✅ Goedgekeurd (${aanvragen.filter(a => a.status === 'goedgekeurd').length})` },
-              { id: 'afgewezen',      label: `❌ Afgewezen (${aanvragen.filter(a => a.status === 'afgewezen').length})` },
-              { id: 'geblokkeerd',    label: `🔒 Geblokkeerd (${aanvragen.filter(a => a.status === 'geblokkeerd').length})` },
-              { id: 'alle',           label: `📋 Alle (${aanvragen.length})` },
+              { id: 'in_behandeling', label: `⏳ ${t('admin_status_in_behandeling') || 'In behandeling'} (${aanvragen.filter(a => a.status === 'in_behandeling').length})` },
+              { id: 'goedgekeurd',    label: `✅ ${t('admin_status_goedgekeurd') || 'Goedgekeurd'} (${aanvragen.filter(a => a.status === 'goedgekeurd').length})` },
+              { id: 'afgewezen',      label: `❌ ${t('admin_status_afgewezen') || 'Afgewezen'} (${aanvragen.filter(a => a.status === 'afgewezen').length})` },
+              { id: 'geblokkeerd',    label: `🔒 ${t('admin_status_geblokkeerd') || 'Geblokkeerd'} (${aanvragen.filter(a => a.status === 'geblokkeerd').length})` },
+              { id: 'alle',           label: `📋 ${t('admin_status_alle') || 'Alle'} (${aanvragen.length})` },
             ].map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)}
                 className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
@@ -297,12 +298,12 @@ export default function AdminPanel() {
         {laden ? (
           <div className="text-center py-12 text-gray-400">
             <div className="text-3xl animate-pulse mb-2">⏳</div>
-            <p>Laden...</p>
+            <p>{t('laden') || 'Laden...'}</p>
           </div>
         ) : gefilterd.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-400">
             <div className="text-3xl mb-2">📭</div>
-            <p>Geen aanvragen gevonden voor dit filter</p>
+            <p>{t('admin_geen_aanvragen') || 'Geen aanvragen gevonden voor dit filter'}</p>
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
