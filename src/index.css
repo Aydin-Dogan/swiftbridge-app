@@ -10,16 +10,46 @@
  *
  * Bestaande .card-glass / .header-glass-light classes blijven werken
  * (backward-compat) maar zijn lichter en zonder backdrop-blur.
+ *
+ * EE/UU: semantische CSS variables. Tailwind tokens bg-surface, text-ink-1
+ * etc. lezen uit deze vars zodat dark-mode toggle één class-swap is
+ * (.dark op <html>). Componenten hoeven geen dark:* prefixes te krijgen
+ * — de variabele swap doet het werk.
  */
+
+:root {
+  /* Light mode (default) — RGB triplets voor alpha-syntax in Tailwind */
+  --surface:        255 255 255;   /* witte cards/modals */
+  --surface-2:      250 251 252;   /* page background */
+  --surface-3:      244 246 248;   /* subtle elevated panel */
+  --ink-1:          15 23 42;      /* slate-900 */
+  --ink-2:          71 85 105;     /* slate-600 */
+  --ink-3:          148 163 184;   /* slate-400 — muted/placeholder */
+  --border:         226 232 240;   /* slate-200 */
+  --border-strong:  203 213 225;   /* slate-300 */
+}
+
+.dark {
+  /* Dark mode — bewust een tikje warmer dan pure black voor leesbaarheid */
+  --surface:        17 24 39;      /* slate-900-ish (echt panel) */
+  --surface-2:      9 14 24;       /* page background, donkerder dan cards */
+  --surface-3:      30 41 59;      /* slate-800 elevated panel */
+  --ink-1:          241 245 249;   /* slate-100 */
+  --ink-2:          203 213 225;   /* slate-300 */
+  --ink-3:          148 163 184;   /* slate-400 */
+  --border:         51 65 85;      /* slate-700 */
+  --border-strong:  71 85 105;     /* slate-600 */
+}
 
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-  /* Subtiele, niet-distracterende achtergrond */
-  background: #fafbfc;
+  /* Subtiele, niet-distracterende achtergrond via semantische token */
+  background: rgb(var(--surface-2));
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'cv11', 'ss01', 'ss03';
-  color: #0f172a;
+  color: rgb(var(--ink-1));
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 #root {

@@ -1115,6 +1115,13 @@ export const tr = {
   email_wijzig_naar_login: 'Giriş sayfasına git',
   email_wijzig_naar_wachtwoord_reset: 'Şifre değiştir',
 
+  // ── Tema (UU) — açık/koyu/sistem ────────────────────────────────────────
+  thema_kies: 'Tema seç',
+  thema_huidig: 'Geçerli',
+  thema_licht: 'Açık',
+  thema_donker: 'Koyu',
+  thema_systeem: 'Sistem',
+
   // ── Klavye kısayolları (İyileştirme TTT) ─────────────────────────────────
   kbd_titel: 'Klavye kısayolları',
   kbd_open_calculator: 'Hesaplayıcıyı aç',

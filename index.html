@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#2563eb" />
 
+    <!-- UU: theme init vóór CSS load — zet .dark class voor FOUC-preventie.
+         Externe file ipv inline ivm strict CSP. -->
+    <script src="/theme-init.js"></script>
+
     <!-- ═══ Security (client-side defense-in-depth) ═══ -->
     <!-- De server stuurt de definitieve, strengere headers (Helmet + eigen middleware).
          Deze meta-tags bieden bescherming bij offline/cached loads en oude proxies. -->

@@ -1026,6 +1026,13 @@ export const az = {
   email_wijzig_naar_login: 'Giriş səhifəsinə',
   email_wijzig_naar_wachtwoord_reset: 'Parolu dəyişdir',
 
+  // ── Mövzu (UU) — açıq/qaranlıq/sistem ───────────────────────────────
+  thema_kies: 'Mövzu seç',
+  thema_huidig: 'Hazırkı',
+  thema_licht: 'Açıq',
+  thema_donker: 'Qaranlıq',
+  thema_systeem: 'Sistem',
+
   // ── Klaviatura qısayolları (Təkmilləşdirmə TTT) ──────────────────────────
   kbd_titel: 'Klaviatura qısayolları',
   kbd_open_calculator: 'Kalkulyatoru aç',

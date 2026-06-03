@@ -997,6 +997,13 @@ export const nl = {
   email_wijzig_naar_login: 'Naar inlogpagina',
   email_wijzig_naar_wachtwoord_reset: 'Wachtwoord wijzigen',
 
+  // ── Thema (UU) — light/dark/system ───────────────────────────────────────
+  thema_kies: 'Thema kiezen',
+  thema_huidig: 'Huidig',
+  thema_licht: 'Licht',
+  thema_donker: 'Donker',
+  thema_systeem: 'Systeem',
+
   // ── Keyboard shortcuts (Verbetering TTT) ─────────────────────────────────
   kbd_titel: 'Sneltoetsen',
   kbd_open_calculator: 'Open calculator',

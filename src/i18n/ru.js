@@ -1026,6 +1026,13 @@ export const ru = {
   email_wijzig_naar_login: 'Войти',
   email_wijzig_naar_wachtwoord_reset: 'Сменить пароль',
 
+  // ── Тема (UU) — светлая/тёмная/системная ─────────────────────────────
+  thema_kies: 'Выбор темы',
+  thema_huidig: 'Текущая',
+  thema_licht: 'Светлая',
+  thema_donker: 'Тёмная',
+  thema_systeem: 'Системная',
+
   // ── Горячие клавиши (Улучшение TTT) ──────────────────────────────────────
   kbd_titel: 'Горячие клавиши',
   kbd_open_calculator: 'Открыть калькулятор',

@@ -15,6 +15,9 @@
 //
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
+  // UU: dark-mode via .dark class op <html>. Toggle bewaart light/dark/system
+  // in localStorage en zet de class voor de app rendert.
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -46,6 +49,22 @@ export default {
           600: '#d97706',
         },
         // ── Neutrals — gebruik gewoon Tailwind's gray-* ────────────────────
+
+        // ── Semantische tokens (EE) — wijzig licht/donker via CSS vars
+        //    in index.css, niet hier. Gebruik in JSX:
+        //      bg-surface  text-ink-1  border-border
+        //      bg-surface-2 text-ink-2 text-ink-3
+        //    Vermijd hard-coded white/gray-* in nieuwe componenten.
+        surface:    'rgb(var(--surface) / <alpha-value>)',
+        'surface-2':'rgb(var(--surface-2) / <alpha-value>)',
+        'surface-3':'rgb(var(--surface-3) / <alpha-value>)',
+        ink: {
+          1: 'rgb(var(--ink-1) / <alpha-value>)',  // primary text
+          2: 'rgb(var(--ink-2) / <alpha-value>)',  // secondary text
+          3: 'rgb(var(--ink-3) / <alpha-value>)',  // muted / placeholder
+        },
+        border: 'rgb(var(--border) / <alpha-value>)',
+        'border-strong': 'rgb(var(--border-strong) / <alpha-value>)',
       },
       // Soft shadow-system (vervangt glassmorphism)
       boxShadow: {

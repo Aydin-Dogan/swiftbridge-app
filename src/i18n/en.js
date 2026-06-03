@@ -1115,6 +1115,13 @@ export const en = {
   email_wijzig_naar_login: 'Go to login',
   email_wijzig_naar_wachtwoord_reset: 'Change password',
 
+  // ── Theme (UU) — light/dark/system ───────────────────────────────────────
+  thema_kies: 'Choose theme',
+  thema_huidig: 'Current',
+  thema_licht: 'Light',
+  thema_donker: 'Dark',
+  thema_systeem: 'System',
+
   // ── Keyboard shortcuts (Improvement TTT) ─────────────────────────────────
   kbd_titel: 'Keyboard shortcuts',
   kbd_open_calculator: 'Open calculator',

@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LiveKoersTicker from '../components/LiveKoersTicker';
 import TaalKiezer from '../components/TaalKiezer';
+import ThemeToggle from '../components/ThemeToggle'; // UU
 import CookieConsent from '../components/CookieConsent';
 import { useTaal } from '../i18n';
 
@@ -115,6 +116,7 @@ export default function Landing() {
           </div>
 
           <div className="flex items-center gap-1.5">
+            <ThemeToggle />
             <TaalKiezer />
             <button
               onClick={() => navigate('/login')}

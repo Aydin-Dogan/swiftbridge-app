@@ -5,6 +5,8 @@ import LiveKoersTicker from './components/LiveKoersTicker';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import TaalKiezer from './components/TaalKiezer';
+import ThemeToggle from './components/ThemeToggle'; // UU
+import { startThemeWatcher, pasThemeToe } from './services/theme'; // UU
 import OfflineBanner from './components/OfflineBanner';
 import MaintenanceBanner from './components/MaintenanceBanner';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
@@ -304,6 +306,7 @@ function AppShell({ gebruiker, token, onLogout }) {
                 <span aria-hidden="true">⚠️</span> KYC
               </button>
             )}
+            <ThemeToggle />
             <TaalKiezer />
             <div id="account-menu-wrap" className="relative">
               <button
@@ -448,6 +451,15 @@ export default function App() {
   // `gebruiker === null` = uitgelogd, `gebruiker === undefined` = nog niet gecheckt
   const [gebruiker, setGebruiker] = useState(undefined);
   const token = gebruiker ? TOKEN_SENTINEL : null;
+
+  // UU: zorg dat theme bij mount al toegepast is (theme-init.js heeft
+  // het al gedaan, maar bij hot-reload tijdens dev kan dat verloren gaan)
+  // en watch op OS-prefers-color-scheme wijzigingen wanneer keuze='system'.
+  useEffect(() => {
+    pasThemeToe();
+    const stop = startThemeWatcher();
+    return stop;
+  }, []);
 
   // Bij opstarten: vraag /auth/me — als 401, dan niet ingelogd
   useEffect(() => {
