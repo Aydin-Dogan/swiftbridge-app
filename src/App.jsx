@@ -420,6 +420,30 @@ function ReferralRedirect() {
 // downstream fetch calls sturen straks gewoon `credentials: 'include'`.
 const TOKEN_SENTINEL = 'cookie';
 
+// PATCH-3 — Gevoelige client-side storage die bij logout/401 gewist moet worden.
+// Voorkomt dat na uitloggen IBAN-keys, tx-drafts en user-cache achterblijven
+// in localStorage (privacy + AVG art. 32 verantwoording).
+const GEVOELIGE_STORAGE_KEYS = [
+  'ONTV_KEY',                 // F50 — ontvanger-key (e2e crypto)
+  'TX_KEY',                   // F50 — transactie-key
+  'sb_user',                  // gecachede gebruikersdata
+  'sb_prefs',                 // gebruikersvoorkeuren
+  'sb_token',                 // legacy — voor de zekerheid
+  'sb_refresh',               // legacy
+  'sb_gebruiker',             // legacy
+  'payment_draft',            // F42 — draft tx data
+  'favoriete_valutas_cache',  // KKK — kan PII reveal als per-user
+];
+
+function wisGevoeligeStorage() {
+  try {
+    GEVOELIGE_STORAGE_KEYS.forEach((key) => {
+      try { localStorage.removeItem(key); } catch { /* quota of disabled */ }
+    });
+    try { sessionStorage.clear(); } catch { /* idem */ }
+  } catch { /* alle storage failure best-effort */ }
+}
+
 export default function App() {
   // `gebruiker === null` = uitgelogd, `gebruiker === undefined` = nog niet gecheckt
   const [gebruiker, setGebruiker] = useState(undefined);
@@ -427,20 +451,26 @@ export default function App() {
 
   // Bij opstarten: vraag /auth/me — als 401, dan niet ingelogd
   useEffect(() => {
-    // Eenmalige opruimactie: oude tokens uit localStorage verwijderen.
-    try {
-      localStorage.removeItem('sb_token');
-      localStorage.removeItem('sb_refresh');
-      localStorage.removeItem('sb_gebruiker');
-    } catch {}
-
     let geannuleerd = false;
     haalProfiel()
       .then(g => {
         if (geannuleerd) return;
-        setGebruiker(g && g.id ? g : null);
+        if (g && g.id) {
+          setGebruiker(g);
+        } else {
+          // Geen geldige sessie: storage ook leeg maken
+          wisGevoeligeStorage();
+          setGebruiker(null);
+        }
       })
-      .catch(() => { if (!geannuleerd) setGebruiker(null); });
+      .catch((err) => {
+        if (geannuleerd) return;
+        // PATCH-3: bij 401 (sessie verlopen of elders uitgelogd) ook lokale
+        // storage leegmaken — niet alleen state.
+        const is401 = err?.status === 401 || /401|unauthorized/i.test(String(err?.message || ''));
+        if (is401) wisGevoeligeStorage();
+        setGebruiker(null);
+      });
     return () => { geannuleerd = true; };
   }, []);
 
@@ -449,9 +479,13 @@ export default function App() {
     setGebruiker(g);
   }
 
-  function handleLogout() {
-    // Vertel server dat refresh token ingetrokken moet worden (cookie wordt server-side gewist)
-    logoutApi();
+  async function handleLogout() {
+    // PATCH-3: server-call best-effort, lokale cleanup altijd uitvoeren
+    // (ook bij netwerk-fout zodat client zeker uitgelogd is).
+    try {
+      await logoutApi();
+    } catch { /* best-effort */ }
+    wisGevoeligeStorage();
     setGebruiker(null);
   }
 
