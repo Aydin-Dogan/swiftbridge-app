@@ -17,28 +17,99 @@
  * — de variabele swap doet het werk.
  */
 
+/*
+ * ────────────────────────────────────────────────────────────────────────────
+ * 3-LAAGS DESIGN TOKEN SYSTEEM (EE+, juni 2026)
+ *
+ * Geïnspireerd door ING design-system review. We nemen de waardevolle
+ * patterns over (uitgebreide semantic-rol-set, fg/border/surface families)
+ * maar slaan de component-token-laag (1000+ tokens) over — onze schaal
+ * vereist dat niet en het wordt anders onmogelijk te onderhouden door 2 mensen.
+ *
+ * Layer 1 — Raw palette (Tailwind brand-, success-, accent- in config)
+ *          → onveranderd via theme.extend.colors
+ *
+ * Layer 2 — Semantic tokens (hieronder als CSS vars)
+ *          → fg-, surface-, border- met functionele namen
+ *          → wisselt automatisch in dark mode via .dark class swap
+ *
+ * Layer 3 — Component tokens
+ *          → NIET geïmplementeerd; componenten gebruiken Layer-2 direct
+ *
+ * Gebruik in JSX (via Tailwind tokens, gedefinieerd in tailwind.config.js):
+ *   text-ink-1          (primary tekst)
+ *   text-ink-2          (secondary)
+ *   text-fg-disabled    (uitgeschakelde tekst)
+ *   text-fg-on-color    (tekst op gekleurde achtergrond, bv binnen knop)
+ *   text-fg-primary     (brand-actie tekst zoals links)
+ *   bg-surface          (cards/modals)
+ *   bg-surface-2        (page-background)
+ *   bg-surface-3        (elevated panel)
+ *   border-border       (default rand)
+ *   border-border-subtle    (zeer subtiel)
+ *   border-border-emphasis  (hover/focus benadrukking)
+ *   border-border-focus     (a11y outline)
+ *   border-border-error     (error state)
+ * ────────────────────────────────────────────────────────────────────────────
+ */
 :root {
-  /* Light mode (default) — RGB triplets voor alpha-syntax in Tailwind */
-  --surface:        255 255 255;   /* witte cards/modals */
-  --surface-2:      250 251 252;   /* page background */
-  --surface-3:      244 246 248;   /* subtle elevated panel */
-  --ink-1:          15 23 42;      /* slate-900 */
-  --ink-2:          71 85 105;     /* slate-600 */
-  --ink-3:          148 163 184;   /* slate-400 — muted/placeholder */
-  --border:         226 232 240;   /* slate-200 */
-  --border-strong:  203 213 225;   /* slate-300 */
+  /* Surfaces — backgrounds van containers */
+  --surface:          255 255 255;   /* witte cards/modals */
+  --surface-2:        250 251 252;   /* page background */
+  --surface-3:        244 246 248;   /* subtle elevated panel */
+  --surface-inverse:  15 23 42;      /* zoals dark surface — voor licht-op-donker pills */
+
+  /* Foreground (text/icon kleuren) — uitgebreide ING-stijl rollenset */
+  --ink-1:            15 23 42;      /* primary tekst (slate-900) */
+  --ink-2:            71 85 105;     /* secondary tekst (slate-600) */
+  --ink-3:            148 163 184;   /* muted/placeholder (slate-400) */
+  --fg-disabled:      203 213 225;   /* disabled tekst (slate-300) */
+  --fg-on-color:      255 255 255;   /* tekst op brand-kleur achtergrond */
+  --fg-inverse:       15 23 42;      /* contrast-tekst bij dark mode → blijft donker op pills */
+  --fg-primary:       37 99 235;     /* brand-actie tekst (brand-500) */
+  --fg-success:       16 185 129;    /* success tekst (success-500) */
+  --fg-warning:       217 119 6;     /* warning tekst (accent-600) */
+  --fg-error:         220 38 38;     /* error tekst (red-600) */
+  --fg-info:          14 165 233;    /* info tekst (sky-500) */
+
+  /* Border family — semantic borderkleuren */
+  --border:           226 232 240;   /* default (slate-200) */
+  --border-strong:    203 213 225;   /* sterke rand (slate-300) */
+  --border-subtle:    241 245 249;   /* very subtle (slate-100) */
+  --border-emphasis:  100 116 139;   /* hover/focus indicator (slate-500) */
+  --border-focus:     37 99 235;     /* a11y focus-outline (brand-500) */
+  --border-error:     239 68 68;     /* error state border (red-500) */
+  --border-success:   16 185 129;    /* success state border */
+  --border-warning:   245 158 11;    /* warning state (accent-500) */
 }
 
 .dark {
-  /* Dark mode — bewust een tikje warmer dan pure black voor leesbaarheid */
-  --surface:        17 24 39;      /* slate-900-ish (echt panel) */
-  --surface-2:      9 14 24;       /* page background, donkerder dan cards */
-  --surface-3:      30 41 59;      /* slate-800 elevated panel */
-  --ink-1:          241 245 249;   /* slate-100 */
-  --ink-2:          203 213 225;   /* slate-300 */
-  --ink-3:          148 163 184;   /* slate-400 */
-  --border:         51 65 85;      /* slate-700 */
-  --border-strong:  71 85 105;     /* slate-600 */
+  /* Dark mode — bewust iets warmer dan pure black voor leesbaarheid */
+  --surface:          17 24 39;      /* slate-900-ish (echt panel) */
+  --surface-2:        9 14 24;       /* page background, donkerder dan cards */
+  --surface-3:        30 41 59;      /* slate-800 elevated panel */
+  --surface-inverse:  248 250 252;   /* slate-50 — voor licht-op-donker pills */
+
+  --ink-1:            241 245 249;   /* slate-100 */
+  --ink-2:            203 213 225;   /* slate-300 */
+  --ink-3:            148 163 184;   /* slate-400 */
+  --fg-disabled:      71 85 105;     /* slate-600 */
+  --fg-on-color:      255 255 255;   /* tekst op brand-kleur blijft wit */
+  --fg-inverse:       15 23 42;      /* donker (voor licht-op-donker accents) */
+  --fg-primary:       96 165 250;    /* brand-400 (iets lichter in dark) */
+  --fg-success:       52 211 153;    /* emerald-400 */
+  --fg-warning:       251 191 36;    /* amber-400 */
+  --fg-error:         248 113 113;   /* red-400 */
+  --fg-info:          56 189 248;    /* sky-400 */
+
+  --border:           51 65 85;      /* slate-700 */
+  --border-strong:    71 85 105;     /* slate-600 */
+  --border-subtle:    30 41 59;      /* slate-800 — zelfs subtieler in dark */
+  --border-emphasis:  148 163 184;   /* slate-400 */
+  --border-focus:     96 165 250;    /* brand-400 */
+  --border-error:     248 113 113;   /* red-400 */
+  --border-success:   52 211 153;    /* emerald-400 */
+  --border-warning:   251 191 36;    /* amber-400 */
 }
 
 body {
@@ -47,10 +118,94 @@ body {
   /* Subtiele, niet-distracterende achtergrond via semantische token */
   background: rgb(var(--surface-2));
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  /* EE+: 'tnum' = tabular numerals — EUR/TRY-bedragen lijnen netjes uit
+     onder elkaar in transactielijsten. Inter ondersteunt dit van huis uit.
+     cv11/ss01/ss03 zijn Inter's stylistische sets voor mooiere cijfers. */
+  font-feature-settings: 'cv11', 'ss01', 'ss03', 'tnum';
   color: rgb(var(--ink-1));
   transition: background-color 200ms ease, color 200ms ease;
 }
+
+/*
+ * ────────────────────────────────────────────────────────────────────────────
+ * UU/EE+ — DARK MODE CASCADE OVERRIDES (pragmatic compatibility layer)
+ *
+ * Probleem: 100+ bestaande componenten gebruiken hard-coded Tailwind kleur-
+ * utilities (bg-white, text-gray-900, border-gray-200). Migreren naar
+ * semantic tokens zou per stuk een nieuwe edit zijn — onhaalbaar bij onze
+ * schaal (2 maintainers).
+ *
+ * Oplossing: een dunne layer overrides in dark mode. Bestaande utilities
+ * blijven in light mode hun originele Tailwind-waarde houden, in dark mode
+ * lezen ze uit onze semantische CSS variabelen.
+ *
+ * Trade-off: minder fijn-mazig dan per-component dark:* prefixes, maar 95%
+ * van de app krijgt direct een correcte dark mode zonder JSX-edits.
+ *
+ * Voor NIEUWE componenten: gebruik liever de semantische tokens direct
+ * (bg-surface, text-ink-1, border-border) — die wisselen sowieso automatisch.
+ * ────────────────────────────────────────────────────────────────────────────
+ */
+.dark .bg-white          { background-color: rgb(var(--surface)); }
+.dark .bg-gray-50        { background-color: rgb(var(--surface-2)); }
+.dark .bg-gray-100       { background-color: rgb(var(--surface-3)); }
+.dark .bg-slate-50       { background-color: rgb(var(--surface-2)); }
+.dark .bg-slate-100      { background-color: rgb(var(--surface-3)); }
+
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-slate-900,
+.dark .text-slate-800    { color: rgb(var(--ink-1)); }
+
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-slate-700,
+.dark .text-slate-600,
+.dark .text-slate-500    { color: rgb(var(--ink-2)); }
+
+.dark .text-gray-400,
+.dark .text-gray-300,
+.dark .text-slate-400,
+.dark .text-slate-300    { color: rgb(var(--ink-3)); }
+
+.dark .border-gray-100,
+.dark .border-slate-100  { border-color: rgb(var(--border-subtle)); }
+
+.dark .border-gray-200,
+.dark .border-slate-200  { border-color: rgb(var(--border)); }
+
+.dark .border-gray-300,
+.dark .border-slate-300  { border-color: rgb(var(--border-strong)); }
+
+/* Brand tint-bg's lichtjes aanpassen zodat ze niet "felblauw op zwart" worden */
+.dark .bg-blue-50        { background-color: rgb(30 58 138 / 0.25); }
+.dark .bg-blue-100       { background-color: rgb(30 58 138 / 0.35); }
+.dark .bg-amber-50       { background-color: rgb(120 53 15 / 0.25); }
+.dark .bg-amber-100      { background-color: rgb(120 53 15 / 0.35); }
+.dark .bg-green-50       { background-color: rgb(6 78 59 / 0.25); }
+.dark .bg-green-100      { background-color: rgb(6 78 59 / 0.35); }
+.dark .bg-red-50         { background-color: rgb(127 29 29 / 0.25); }
+.dark .bg-red-100        { background-color: rgb(127 29 29 / 0.35); }
+
+/* Tekstkleuren op tint-bg's: behoud accent maar iets lichter */
+.dark .text-blue-600,
+.dark .text-blue-700,
+.dark .text-blue-800     { color: rgb(96 165 250); }
+.dark .text-amber-700,
+.dark .text-amber-800,
+.dark .text-amber-900    { color: rgb(251 191 36); }
+.dark .text-green-700,
+.dark .text-green-800    { color: rgb(52 211 153); }
+.dark .text-red-600,
+.dark .text-red-700,
+.dark .text-red-800      { color: rgb(248 113 113); }
+
+/* Form input borders + focus in dark */
+.dark input,
+.dark textarea,
+.dark select             { color-scheme: dark; }
 
 #root {
   width: 100%;

@@ -50,21 +50,44 @@ export default {
         },
         // ── Neutrals — gebruik gewoon Tailwind's gray-* ────────────────────
 
-        // ── Semantische tokens (EE) — wijzig licht/donker via CSS vars
-        //    in index.css, niet hier. Gebruik in JSX:
-        //      bg-surface  text-ink-1  border-border
-        //      bg-surface-2 text-ink-2 text-ink-3
-        //    Vermijd hard-coded white/gray-* in nieuwe componenten.
-        surface:    'rgb(var(--surface) / <alpha-value>)',
-        'surface-2':'rgb(var(--surface-2) / <alpha-value>)',
-        'surface-3':'rgb(var(--surface-3) / <alpha-value>)',
+        // ── Semantische tokens (EE/EE+) — wijzig licht/donker via CSS vars
+        //    in index.css, niet hier. Drielagig token-systeem geinspireerd
+        //    op ING analyse, schaal-aangepast op SwiftBridge (2 maintainers).
+        //
+        //    Vermijd hard-coded white/gray-*/blue-* in nieuwe componenten.
+
+        // — Surfaces (achtergrond containers) —
+        surface:           'rgb(var(--surface) / <alpha-value>)',
+        'surface-2':       'rgb(var(--surface-2) / <alpha-value>)',
+        'surface-3':       'rgb(var(--surface-3) / <alpha-value>)',
+        'surface-inverse': 'rgb(var(--surface-inverse) / <alpha-value>)',
+
+        // — Foreground / ink (tekst + iconen) —
         ink: {
-          1: 'rgb(var(--ink-1) / <alpha-value>)',  // primary text
-          2: 'rgb(var(--ink-2) / <alpha-value>)',  // secondary text
-          3: 'rgb(var(--ink-3) / <alpha-value>)',  // muted / placeholder
+          1: 'rgb(var(--ink-1) / <alpha-value>)',
+          2: 'rgb(var(--ink-2) / <alpha-value>)',
+          3: 'rgb(var(--ink-3) / <alpha-value>)',
         },
-        border: 'rgb(var(--border) / <alpha-value>)',
-        'border-strong': 'rgb(var(--border-strong) / <alpha-value>)',
+        fg: {
+          disabled: 'rgb(var(--fg-disabled) / <alpha-value>)',
+          'on-color': 'rgb(var(--fg-on-color) / <alpha-value>)',
+          inverse: 'rgb(var(--fg-inverse) / <alpha-value>)',
+          primary: 'rgb(var(--fg-primary) / <alpha-value>)',
+          success: 'rgb(var(--fg-success) / <alpha-value>)',
+          warning: 'rgb(var(--fg-warning) / <alpha-value>)',
+          error:   'rgb(var(--fg-error) / <alpha-value>)',
+          info:    'rgb(var(--fg-info) / <alpha-value>)',
+        },
+
+        // — Borders —
+        border:           'rgb(var(--border) / <alpha-value>)',
+        'border-strong':  'rgb(var(--border-strong) / <alpha-value>)',
+        'border-subtle':  'rgb(var(--border-subtle) / <alpha-value>)',
+        'border-emphasis':'rgb(var(--border-emphasis) / <alpha-value>)',
+        'border-focus':   'rgb(var(--border-focus) / <alpha-value>)',
+        'border-error':   'rgb(var(--border-error) / <alpha-value>)',
+        'border-success': 'rgb(var(--border-success) / <alpha-value>)',
+        'border-warning': 'rgb(var(--border-warning) / <alpha-value>)',
       },
       // Soft shadow-system (vervangt glassmorphism)
       boxShadow: {
