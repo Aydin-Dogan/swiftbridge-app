@@ -72,6 +72,29 @@
   --fg-error:         220 38 38;     /* error tekst (red-600) */
   --fg-info:          14 165 233;    /* info tekst (sky-500) */
 
+  /* EE++ Financial semantics (ING-patroon) — voor bedragen NIET status.
+     - minus = uitgaande betaling (geld weg)   bv. "-€500" in tx-lijst
+     - plus  = inkomende betaling (geld erbij) bv. "+€10 referral"
+     Onderscheid met error/success: rode 'error' = mislukt, rode 'minus' = OK uitgaand.
+     Beide kleuren komen direct uit ING's eigen palet (#d70000 / #349651). */
+  --fg-minus:         215 0 0;       /* sterke minus (ING #d70000) */
+  --fg-minus-soft:    225 66 66;     /* zachte minus (ING #e14242) */
+  --fg-plus:          52 150 81;     /* sterke plus (ING #349651) */
+  --fg-plus-soft:     174 213 185;   /* zachte plus tint (ING #aed5b9) */
+
+  /* EE++ Opacity tokens — voorkomt ad-hoc /20 /30 /60 spagaat */
+  --opacity-10:       0.1;
+  --opacity-20:       0.2;
+  --opacity-40:       0.4;
+  --opacity-60:       0.6;
+
+  /* EE++ Layout tokens — anchor-points voor sticky elements + scroll-padding.
+     MaintenanceBanner kan --banner-height runtime overschrijven via JS;
+     dan groeit page-offset-top automatisch mee. */
+  --topbar-height:    64px;
+  --banner-height:    0px;
+  --page-offset-top:  calc(var(--topbar-height) + var(--banner-height));
+
   /* Border family — semantic borderkleuren */
   --border:           226 232 240;   /* default (slate-200) */
   --border-strong:    203 213 225;   /* sterke rand (slate-300) */
@@ -102,6 +125,12 @@
   --fg-error:         248 113 113;   /* red-400 */
   --fg-info:          56 189 248;    /* sky-400 */
 
+  /* Financial in dark — iets lichter voor contrast op donkere achtergrond */
+  --fg-minus:         248 113 113;   /* red-400 — leesbaar op donker */
+  --fg-minus-soft:    220 38 38;     /* iets dieper */
+  --fg-plus:          110 231 183;   /* emerald-300 — leesbaar op donker */
+  --fg-plus-soft:     16 185 129;    /* iets dieper */
+
   --border:           51 65 85;      /* slate-700 */
   --border-strong:    71 85 105;     /* slate-600 */
   --border-subtle:    30 41 59;      /* slate-800 — zelfs subtieler in dark */
@@ -110,6 +139,13 @@
   --border-error:     248 113 113;   /* red-400 */
   --border-success:   52 211 153;    /* emerald-400 */
   --border-warning:   251 191 36;    /* amber-400 */
+}
+
+html {
+  /* EE++ scroll-padding-top zodat anchor-links (#sectie) niet achter
+     sticky topbar/banner verdwijnen. Token wordt automatisch herrekend
+     als banner-height runtime wijzigt (zie MaintenanceBanner). */
+  scroll-padding-top: var(--page-offset-top);
 }
 
 body {

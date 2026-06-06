@@ -255,10 +255,18 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
                   </div>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <div className="font-bold text-slate-900 text-sm font-mono">
-                    {fmtEur(tx.eurBedrag)}
+                  {/* EE++ ING-stijl financial semantics:
+                      - EUR-bedrag = uitgaand (geld weg) → fg-minus met '−' prefix
+                        bij voltooide tx. Bij andere statussen neutraal (geen
+                        '−' want is nog niet weg).
+                      - Ontvangen bedrag = wat ontvanger krijgt → fg-plus
+                        (positieve framing voor de gebruiker). */}
+                  <div className={`font-bold text-sm font-mono tabular-nums ${
+                    tx.status === 'voltooid' ? 'text-fg-minus' : 'text-ink-1'
+                  }`}>
+                    {tx.status === 'voltooid' ? '−' : ''}{fmtEur(tx.eurBedrag)}
                   </div>
-                  <div className="text-[11px] text-emerald-600 font-semibold font-mono">
+                  <div className="text-[11px] text-fg-plus font-semibold font-mono tabular-nums">
                     {fmtOntvangen(tx)}
                   </div>
                 </div>

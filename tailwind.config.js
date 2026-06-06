@@ -77,6 +77,11 @@ export default {
           warning: 'rgb(var(--fg-warning) / <alpha-value>)',
           error:   'rgb(var(--fg-error) / <alpha-value>)',
           info:    'rgb(var(--fg-info) / <alpha-value>)',
+          // EE++ financiële tokens — voor bedragen NIET status
+          minus:        'rgb(var(--fg-minus) / <alpha-value>)',
+          'minus-soft': 'rgb(var(--fg-minus-soft) / <alpha-value>)',
+          plus:         'rgb(var(--fg-plus) / <alpha-value>)',
+          'plus-soft':  'rgb(var(--fg-plus-soft) / <alpha-value>)',
         },
 
         // — Borders —
