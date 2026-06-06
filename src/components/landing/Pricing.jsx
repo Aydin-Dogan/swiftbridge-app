@@ -51,7 +51,7 @@ const CONCURRENT_DATA = [
 /**
  * @param {object} props
  * @param {boolean} [props.embedded=false] - als true: render zonder outer
- *   section + heading (voor gebruik binnen PricingSection wrapper).
+ * section + heading (voor gebruik binnen PricingSection wrapper).
  */
 export default function Pricing({ embedded = false }) {
   const { t } = useTaal();
@@ -214,7 +214,7 @@ export default function Pricing({ embedded = false }) {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="font-bold text-gray-900">
-                  {r.highlight && '⚡ '}
+                  {r.highlight && ''}
                   {r.naam}
                 </div>
                 {r.highlight && (

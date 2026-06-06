@@ -3,12 +3,12 @@
  *
  * Wordt bovenaan de message list getoond zolang de gebruiker nog niet
  * heeft getypt. Klikken op een knop stuurt:
- *  1. De vraagtekst als user-bericht
- *  2. Een mock support-antwoord (instant feedback, geen netwerkcall nodig)
+ * 1. De vraagtekst als user-bericht
+ * 2. Een mock support-antwoord (instant feedback, geen netwerkcall nodig)
  *
  * Props:
- *  - onKies(actie): callback met { vraag, antwoord, id }
- *  - t: vertaalfunctie van useTaal()
+ * - onKies(actie): callback met { vraag, antwoord, id }
+ * - t: vertaalfunctie van useTaal()
  */
 export default function QuickActions({ onKies, t }) {
   const acties = [

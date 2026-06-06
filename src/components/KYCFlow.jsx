@@ -18,15 +18,15 @@ const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const STAPPEN = [
   { titel: 'Persoonlijk', icoon: '👤' },
-  { titel: 'Document',    icoon: '🪪' },
-  { titel: 'Selfie',      icoon: '🤳' },
-  { titel: 'Klaar',       icoon: '✅' },
+  { titel: 'Document', icoon: '🪪' },
+  { titel: 'Selfie', icoon: '🤳' },
+  { titel: 'Klaar', icoon: '✅' },
 ];
 
 const DOC_TYPES = [
-  { value: 'kimlik',    label: '🇹🇷 Turks Kimlik (TC)',   sub: 'Turkse identiteitskaart'    },
-  { value: 'paspoort',  label: '📘 Paspoort',              sub: 'Nederlands of Turks paspoort'},
-  { value: 'rijbewijs', label: '🚗 Rijbewijs',             sub: 'EU rijbewijs'                },
+  { value: 'kimlik', label: '🇹🇷 Turks Kimlik (TC)', sub: 'Turkse identiteitskaart' },
+  { value: 'paspoort', label: '📘 Paspoort', sub: 'Nederlands of Turks paspoort'},
+  { value: 'rijbewijs', label: '🚗 Rijbewijs', sub: 'EU rijbewijs' },
 ];
 
 // ── Upload veld component ──────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
         {preview ? (
           <div className="space-y-2">
             <img src={preview} alt="Preview" className="h-32 mx-auto rounded-xl object-cover shadow" loading="lazy" decoding="async" />
-            <p className="text-green-600 font-semibold text-sm">✅ Foto geüpload</p>
+            <p className="text-green-600 font-semibold text-sm">Foto geüpload</p>
             <p className="text-gray-400 text-xs">Klik om te wijzigen</p>
           </div>
         ) : (
@@ -84,12 +84,12 @@ function StapPersoonlijk({ form, update, onVolgende }) {
   return (
     <div className="bg-white rounded-2xl shadow p-6 space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">👤 Persoonlijke gegevens</h2>
+        <h2 className="text-xl font-bold text-gray-800">Persoonlijke gegevens</h2>
         <p className="text-gray-500 text-sm mt-1">KYC-procedure conform Wwft en AML-richtlijnen (uitgevoerd via licentiepartner bij commerciële livegang).</p>
       </div>
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
-        <strong>⚠️ Bèta:</strong> Tijdens de testfase worden je documentfoto's lokaal verwerkt en niet permanent opgeslagen.
+        <strong>Bèta:</strong> Tijdens de testfase worden je documentfoto's lokaal verwerkt en niet permanent opgeslagen.
         Bij commerciële livegang verloopt KYC via onze licentiepartner met versleutelde opslag.
       </div>
 
@@ -133,7 +133,7 @@ function StapPersoonlijk({ form, update, onVolgende }) {
       </div>
 
       <div className="bg-blue-50 rounded-xl p-3 text-xs text-blue-700">
-        🔒 Je gegevens zijn versleuteld en worden alleen gebruikt voor verificatie. Wij delen niets met derden.
+        Je gegevens zijn versleuteld en worden alleen gebruikt voor verificatie. Wij delen niets met derden.
       </div>
 
       <button onClick={onVolgende} disabled={!geldig}
@@ -151,7 +151,7 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
   return (
     <div className="bg-white rounded-2xl shadow p-6 space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">🪪 Identiteitsbewijs</h2>
+        <h2 className="text-xl font-bold text-gray-800">Identiteitsbewijs</h2>
         <p className="text-gray-500 text-sm mt-1">SwiftBridge accepteert het Turkse kimlik!</p>
       </div>
 
@@ -242,7 +242,7 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
         <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm transition">← Terug</button>
         <button onClick={onIndienen} disabled={!selfieFoto || laden}
           className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition text-sm">
-          {laden ? '⏳ Indienen...' : '✓ Indienen'}
+          {laden ? 'Indienen...' : '✓ Indienen'}
         </button>
       </div>
     </div>
@@ -268,7 +268,7 @@ function StapKlaar({ form }) {
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
-          <span className="font-semibold text-amber-600">⏳ In beoordeling</span>
+          <span className="font-semibold text-amber-600">In beoordeling</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Verwacht klaar</span>
@@ -283,7 +283,7 @@ function StapKlaar({ form }) {
   );
 }
 
-// ── ✅ Al goedgekeurd scherm ──────────────────────────────────────────────────
+// ── Al goedgekeurd scherm ──────────────────────────────────────────────────
 function KYCGoedgekeurd({ naam }) {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
@@ -293,7 +293,7 @@ function KYCGoedgekeurd({ naam }) {
       <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
-          <span className="font-bold text-green-600">✅ Goedgekeurd</span>
+          <span className="font-bold text-green-600">Goedgekeurd</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Toegang</span>
@@ -309,13 +309,13 @@ function KYCGoedgekeurd({ naam }) {
         </div>
       </div>
       <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700">
-        💸 Ga naar het tabblad <strong>Overmaken</strong> om een betaling te starten.
+        Ga naar het tabblad <strong>Overmaken</strong> om een betaling te starten.
       </div>
     </div>
   );
 }
 
-// ── ⏳ In behandeling scherm ──────────────────────────────────────────────────
+// ── In behandeling scherm ──────────────────────────────────────────────────
 function KYCInBehandeling({ naam }) {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
@@ -329,7 +329,7 @@ function KYCInBehandeling({ naam }) {
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
-          <span className="font-bold text-amber-600">⏳ In beoordeling</span>
+          <span className="font-bold text-amber-600">In beoordeling</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Ingediend</span>
@@ -353,7 +353,7 @@ function KYCInBehandeling({ naam }) {
   );
 }
 
-// ── ❌ Afgewezen scherm (Verbetering MM polish) ──────────────────────────────
+// ── Afgewezen scherm (Verbetering MM polish) ──────────────────────────────
 function KYCAfgewezen({ naam, onOpnieuw }) {
   const { t } = useTaal();
   return (
@@ -398,7 +398,7 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
   );
 }
 
-// ── 🔒 Geblokkeerd scherm ─────────────────────────────────────────────────────
+// ── Geblokkeerd scherm ─────────────────────────────────────────────────────
 function KYCGeblokkeerd() {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
@@ -410,7 +410,7 @@ function KYCGeblokkeerd() {
       <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
-          <span className="font-bold text-gray-700">🔒 Geblokkeerd</span>
+          <span className="font-bold text-gray-700">Geblokkeerd</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Toegang</span>
@@ -430,17 +430,17 @@ function KYCGeblokkeerd() {
 export default function KYCFlow({ token, gebruiker }) {
   const { t } = useTaal();
   const taal = (typeof navigator !== 'undefined' && navigator.language || 'nl').slice(0, 2);
-  const [stap,      setStap     ] = useState(0);
-  const [opnieuw,   setOpnieuw  ] = useState(false);
-  const [form,      setForm     ] = useState({
+  const [stap, setStap ] = useState(0);
+  const [opnieuw, setOpnieuw ] = useState(false);
+  const [form, setForm ] = useState({
     voornaam: '', achternaam: '', geboortedatum: '',
     nationaliteit: 'TR', documentType: 'kimlik',
     documentNummer: '', telefoon: '',
   });
-  const [docFoto,   setDocFoto  ] = useState(null);
+  const [docFoto, setDocFoto ] = useState(null);
   const [selfieFoto,setSelfieFoto] = useState(null);
-  const [laden,     setLaden    ] = useState(false);
-  const [fout,      setFout     ] = useState('');
+  const [laden, setLaden ] = useState(false);
+  const [fout, setFout ] = useState('');
   // Onfido SDK state — alleen gezet als backend KYC_PROVIDER=onfido draait
   const [onfidoToken, setOnfidoToken] = useState(null);
 
@@ -450,7 +450,7 @@ export default function KYCFlow({ token, gebruiker }) {
     setLaden(true);
     setFout('');
     try {
-      // ⚠️ BÈTA: documentfoto's worden nu NIET naar de server gestuurd, alleen flags.
+      // BÈTA: documentfoto's worden nu NIET naar de server gestuurd, alleen flags.
       // Voor productie-livegang moet hier echte file upload naar S3/encrypted storage komen
       // met virusscan + face-matching tegen documentfoto. Zonder dat is dit geen
       // AML/DNB-waardige KYC-flow. Zie BUSINESS_PLAN.md §7.
@@ -460,12 +460,12 @@ export default function KYCFlow({ token, gebruiker }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
-          documentType:   form.documentType,
+          documentType: form.documentType,
           documentNummer: form.documentNummer,
-          geboortedatum:  form.geboortedatum,
-          nationaliteit:  form.nationaliteit,
-          heeftDocFoto:   !!docFoto,
-          heeftSelfie:    !!selfieFoto,
+          geboortedatum: form.geboortedatum,
+          nationaliteit: form.nationaliteit,
+          heeftDocFoto: !!docFoto,
+          heeftSelfie: !!selfieFoto,
         }),
       });
       if (!res.ok) {
@@ -514,10 +514,10 @@ export default function KYCFlow({ token, gebruiker }) {
 
   // Toon statusscherm op basis van huidige KYC status (tenzij gebruiker opnieuw wil indienen)
   if (!opnieuw) {
-    if (kycStatus === 'goedgekeurd')    return <KYCGoedgekeurd naam={gebruiker.naam} />;
+    if (kycStatus === 'goedgekeurd') return <KYCGoedgekeurd naam={gebruiker.naam} />;
     if (kycStatus === 'in_behandeling') return <KYCInBehandeling naam={gebruiker.naam} />;
-    if (kycStatus === 'afgewezen')      return <KYCAfgewezen naam={gebruiker.naam} onOpnieuw={startOpnieuw} />;
-    if (kycStatus === 'geblokkeerd')    return <KYCGeblokkeerd />;
+    if (kycStatus === 'afgewezen') return <KYCAfgewezen naam={gebruiker.naam} onOpnieuw={startOpnieuw} />;
+    if (kycStatus === 'geblokkeerd') return <KYCGeblokkeerd />;
   }
 
   return (
@@ -532,7 +532,7 @@ export default function KYCFlow({ token, gebruiker }) {
         {STAPPEN.map((s, i) => (
           <div key={i} className="flex flex-col items-center z-10">
             <div className={`w-9 h-9 rounded-full flex items-center justify-center text-base border-2 transition ${
-              i < stap  ? 'bg-blue-600 border-blue-600 text-white' :
+              i < stap ? 'bg-blue-600 border-blue-600 text-white' :
               i === stap ? 'bg-white border-blue-600 shadow-sm' :
                            'bg-white border-gray-300 text-gray-400'}`}>
               {i < stap ? '✓' : s.icoon}
@@ -599,7 +599,7 @@ function DocumentUploadFallback() {
         <div id="doc-upload-paneel" className="border-t border-gray-100 p-5 bg-gray-50">
           {klaar ? (
             <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
-              ✅ {t('kyc_upload_succes_omschrijving')}
+              {t('kyc_upload_succes_omschrijving')}
             </div>
           ) : (
             <Suspense fallback={

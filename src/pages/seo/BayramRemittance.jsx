@@ -1,7 +1,7 @@
 /**
  * SEO landing: /bayram-remittance
  * Target query: "bayram para gönder", "ramazan bayrami remittance",
- *               "geld sturen voor bayram"
+ * "geld sturen voor bayram"
  *
  * Seizoenspiek tijdens Ramazan + Kurban Bayramı — hoog zoekvolume in de
  * NL Turkse diaspora. Een dedicated landing tijdens deze pieken kan
@@ -34,10 +34,10 @@ export default function BayramRemittance() {
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 my-4 text-sm">
             <p className="font-semibold text-gray-900 mb-2">Belangrijke Bayram-datums:</p>
             <ul className="space-y-1.5 text-gray-700">
-              <li>📅 <strong>Ramazan Bayramı (Şeker Bayramı) 2026:</strong> 20-22 maart 2026</li>
-              <li>📅 <strong>Kurban Bayramı 2026:</strong> 27-30 mei 2026</li>
-              <li>📅 <strong>Ramazan Bayramı 2027:</strong> 9-11 maart 2027 (geschat)</li>
-              <li>📅 <strong>Kurban Bayramı 2027:</strong> 16-19 mei 2027 (geschat)</li>
+              <li><strong>Ramazan Bayramı (Şeker Bayramı) 2026:</strong> 20-22 maart 2026</li>
+              <li><strong>Kurban Bayramı 2026:</strong> 27-30 mei 2026</li>
+              <li><strong>Ramazan Bayramı 2027:</strong> 9-11 maart 2027 (geschat)</li>
+              <li><strong>Kurban Bayramı 2027:</strong> 16-19 mei 2027 (geschat)</li>
             </ul>
             <p className="text-xs text-gray-500 mt-3">
               Exacte data zijn afhankelijk van de maanstand — controleer kort voor de

@@ -42,17 +42,17 @@ function valideerIban(iban) {
 }
 
 const LANDEN = [
-  { code: 'TR', naam: 'Türkiye',      valuta: 'TRY' },
+  { code: 'TR', naam: 'Türkiye', valuta: 'TRY' },
   { code: 'AZ', naam: 'Azerbeidzjan', valuta: 'AZN' },
-  { code: 'KZ', naam: 'Kazachstan',   valuta: 'KZT' },
-  { code: 'UZ', naam: 'Oezbekistan',  valuta: 'UZS' },
+  { code: 'KZ', naam: 'Kazachstan', valuta: 'KZT' },
+  { code: 'UZ', naam: 'Oezbekistan', valuta: 'UZS' },
   { code: 'TM', naam: 'Turkmenistan', valuta: 'TMT' },
-  { code: 'KG', naam: 'Kirgizië',     valuta: 'KGS' },
-  { code: 'NL', naam: 'Nederland',    valuta: 'EUR' },
-  { code: 'BE', naam: 'België',       valuta: 'EUR' },
-  { code: 'DE', naam: 'Duitsland',    valuta: 'EUR' },
-  { code: 'FR', naam: 'Frankrijk',    valuta: 'EUR' },
-  { code: 'GB', naam: 'VK',           valuta: 'GBP' },
+  { code: 'KG', naam: 'Kirgizië', valuta: 'KGS' },
+  { code: 'NL', naam: 'Nederland', valuta: 'EUR' },
+  { code: 'BE', naam: 'België', valuta: 'EUR' },
+  { code: 'DE', naam: 'Duitsland', valuta: 'EUR' },
+  { code: 'FR', naam: 'Frankrijk', valuta: 'EUR' },
+  { code: 'GB', naam: 'VK', valuta: 'GBP' },
 ];
 
 export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnnuleer, onOpslaan }) {
@@ -249,14 +249,14 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
             />
             {form.iban && ibanCheck && (
               <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
-                {ibanCheck.geldig ? `✅ ${t('benef_iban_geldig')}` : `❌ ${ibanCheck.fout}`}
+                {ibanCheck.geldig ? `${t('benef_iban_geldig')}` : `${ibanCheck.fout}`}
               </p>
             )}
           </div>
 
           {(fout || lokaleFout) && (
             <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
-              ❌ {fout || lokaleFout}
+              {fout || lokaleFout}
             </div>
           )}
         </div>
@@ -274,7 +274,7 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
             disabled={bezig}
             className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-2 rounded-xl transition"
           >
-            {bezig ? `⏳ ${t('laden')}` : `💾 ${t('opslaan')}`}
+            {bezig ? `${t('laden')}` : `💾 ${t('opslaan')}`}
           </button>
         </div>
       </div>

@@ -23,10 +23,10 @@ import CurrencySelector from './CurrencySelector'; // Global herpositionering
 import WachtlijstModal from './WachtlijstModal'; // WL-2: binnenkort-corridor opt-in
 import { useFavorieteValutas } from '../services/favorieteValutas'; // MMM
 
-const API       = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
-const TX_KEY    = 'swiftbridge_transacties';
-const ONTV_KEY  = 'swiftbridge_ontvangers';
+const TX_KEY = 'swiftbridge_transacties';
+const ONTV_KEY = 'swiftbridge_ontvangers';
 
 const STAPPEN = ['Bedrag', 'Betaalmethode', 'Bevestiging', 'Verzonden'];
 const SNELLE_BEDRAGEN = [100, 250, 500, 1000, 2000];
@@ -37,86 +37,86 @@ const SNELLE_BEDRAGEN = [100, 250, 500, 1000, 2000];
 const BETAALMETHODEN = [
   // ── Aanbevolen (NL klanten) ──
   {
-    id:    'ideal',
+    id: 'ideal',
     label: 'iDEAL',
     iconType: 'icon', Icon: Bank,
-    desc:  'Direct via je Nederlandse bank',
-    sub:   'Meest gekozen · vanaf 0,8%',
+    desc: 'Direct via je Nederlandse bank',
+    sub: 'Meest gekozen · vanaf 0,8%',
   },
   {
-    id:    'creditcard',
+    id: 'creditcard',
     label: 'Credit/Debit kaart',
     iconType: 'icon', Icon: Card,
-    desc:  'Visa, Mastercard',
-    sub:   'Wereldwijd',
+    desc: 'Visa, Mastercard',
+    sub: 'Wereldwijd',
   },
   {
-    id:    'paypal',
+    id: 'paypal',
     label: 'PayPal',
     iconType: 'icon', Icon: Wallet,
-    desc:  'Betalen met je PayPal account',
-    sub:   'Internationaal',
+    desc: 'Betalen met je PayPal account',
+    sub: 'Internationaal',
   },
   {
-    id:    'banktransfer',
+    id: 'banktransfer',
     label: 'SEPA bankoverboeking',
     iconType: 'icon', Icon: Euro,
-    desc:  'Standaard bankoverboeking',
-    sub:   '1-2 dagen · goedkoopste optie',
+    desc: 'Standaard bankoverboeking',
+    sub: '1-2 dagen · goedkoopste optie',
   },
   // ── BE klanten — vlag als logo ──
   {
-    id:    'bancontact',
+    id: 'bancontact',
     label: 'Bancontact',
     iconType: 'vlag', land: 'BE',
-    desc:  'Direct via Belgische bank',
-    sub:   'Voor BE klanten',
+    desc: 'Direct via Belgische bank',
+    sub: 'Voor BE klanten',
   },
   {
-    id:    'kbc',
+    id: 'kbc',
     label: 'KBC/CBC',
     iconType: 'vlag', land: 'BE',
-    desc:  'KBC of CBC bank knop',
-    sub:   'Belgische banken',
+    desc: 'KBC of CBC bank knop',
+    sub: 'Belgische banken',
   },
   {
-    id:    'belfius',
+    id: 'belfius',
     label: 'Belfius Pay',
     iconType: 'vlag', land: 'BE',
-    desc:  'Belfius bank app',
-    sub:   'Voor Belfius klanten',
+    desc: 'Belfius bank app',
+    sub: 'Voor Belfius klanten',
   },
   // ── UK ──
   {
-    id:    'paybybank',
+    id: 'paybybank',
     label: 'Pay By Bank',
     iconType: 'vlag', land: 'GB',
-    desc:  'UK Open Banking',
-    sub:   'Voor UK klanten',
+    desc: 'UK Open Banking',
+    sub: 'Voor UK klanten',
   },
   // ── B2B ──
   {
-    id:    'billie',
+    id: 'billie',
     label: 'Billie (factuur)',
     iconType: 'icon', Icon: Globe,
-    desc:  'Pay by Invoice voor zakelijk',
-    sub:   'Achteraf betalen',
+    desc: 'Pay by Invoice voor zakelijk',
+    sub: 'Achteraf betalen',
   },
   // ── Nog te activeren ──
   {
-    id:    'applepay',
+    id: 'applepay',
     label: 'Apple Pay',
     iconType: 'icon', Icon: Card,
-    desc:  'Activeer eerst in Mollie',
-    sub:   'Touch/Face ID',
+    desc: 'Activeer eerst in Mollie',
+    sub: 'Touch/Face ID',
     disabled: true,
   },
   {
-    id:    'klarna',
+    id: 'klarna',
     label: 'Klarna',
     iconType: 'icon', Icon: Card,
-    desc:  'Activeer eerst in Mollie',
-    sub:   'Achteraf betalen',
+    desc: 'Activeer eerst in Mollie',
+    sub: 'Achteraf betalen',
     disabled: true,
   },
 ];
@@ -147,18 +147,18 @@ function valideerIBAN(iban) {
 
 // ── Emotionele labels voor begunstigden (familie-focus) ───────────────────────
 const FAMILIE_LABELS = [
-  { id: 'mama',    label: 'Mama',       emoji: '👩‍🦳' },
-  { id: 'papa',    label: 'Papa',       emoji: '👨‍🦳' },
-  { id: 'oma',     label: 'Oma',        emoji: '👵' },
-  { id: 'opa',     label: 'Opa',        emoji: '👴' },
-  { id: 'broer',   label: 'Broer',      emoji: '👨' },
-  { id: 'zus',     label: 'Zus',        emoji: '👩' },
-  { id: 'oom',     label: 'Oom',        emoji: '🧓' },
-  { id: 'tante',   label: 'Tante',      emoji: '👩‍🦰' },
-  { id: 'partner', label: 'Partner',    emoji: '💑' },
-  { id: 'kind',    label: 'Kind',       emoji: '🧒' },
-  { id: 'vriend',  label: 'Vriend(in)', emoji: '👥' },
-  { id: 'anders',  label: 'Anders',     emoji: '👤' },
+  { id: 'mama', label: 'Mama', emoji: '👩‍🦳' },
+  { id: 'papa', label: 'Papa', emoji: '👨‍🦳' },
+  { id: 'oma', label: 'Oma', emoji: '👵' },
+  { id: 'opa', label: 'Opa', emoji: '👴' },
+  { id: 'broer', label: 'Broer', emoji: '👨' },
+  { id: 'zus', label: 'Zus', emoji: '👩' },
+  { id: 'oom', label: 'Oom', emoji: '🧓' },
+  { id: 'tante', label: 'Tante', emoji: '👩‍🦰' },
+  { id: 'partner', label: 'Partner', emoji: '💑' },
+  { id: 'kind', label: 'Kind', emoji: '🧒' },
+  { id: 'vriend', label: 'Vriend(in)', emoji: '👥' },
+  { id: 'anders', label: 'Anders', emoji: '👤' },
 ];
 
 // ── localStorage helpers ──────────────────────────────────────────────────────
@@ -169,7 +169,7 @@ function laadOntvangers() {
 
 function slaOntvangerOp(naam, iban, label = null) {
   const bestaand = laadOntvangers();
-  const bestaat  = bestaand.some(o => o.iban === iban);
+  const bestaat = bestaand.some(o => o.iban === iban);
   if (!bestaat && naam && iban) {
     const bijgewerkt = [{
       naam, iban,
@@ -371,7 +371,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
     return k.klantBetaaltFee;
   }
 
-  const ibanCheck  = iban.length > 4 ? valideerIBAN(iban) : null;
+  const ibanCheck = iban.length > 4 ? valideerIBAN(iban) : null;
   const ibanGeldig = !iban || (ibanCheck?.geldig === true);
   const ontvangerInfoOK = uitbetaalMethode === 'papara'
     ? !!paparaIdentifier
@@ -380,7 +380,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
   return (
     <div className="card-glass p-6 space-y-5 animate-fade-up">
-      <h2 className="text-xl font-bold text-gray-800 tracking-tight">💸 Geld overmaken</h2>
+      <h2 className="text-xl font-bold text-gray-800 tracking-tight">Geld overmaken</h2>
 
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-2">Bedrag (EUR)</label>
@@ -476,7 +476,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         >
           {/* PSD2 transparante kostenweergave — vereist door EU 2019/518 */}
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">💰 Servicekosten</span>
+            <span className="text-gray-600">Servicekosten</span>
             <span className="font-mono font-semibold text-gray-800">€{kosten.klantBetaaltFee.toFixed(2)}</span>
           </div>
 
@@ -486,7 +486,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           </div>
 
           <div className="border-t border-blue-200 pt-2 flex justify-between text-sm font-bold text-rose-700">
-            <span>💸 Totale kosten</span>
+            <span>Totale kosten</span>
             <span className="font-mono">€{kosten.totaleKostenEur.toFixed(2)} ({kosten.totaleKostenPct}%)</span>
           </div>
 
@@ -506,7 +506,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           </div>
 
           <div className="border-t border-blue-200 pt-2 flex justify-between font-bold text-blue-700">
-            <span>✅ Ontvanger krijgt</span>
+            <span>Ontvanger krijgt</span>
             <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
           </div>
 
@@ -533,7 +533,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           <label className="block text-sm font-medium text-gray-600">Naam ontvanger</label>
           {ontvangers.length > 0 && (
             <button onClick={() => setToonOntvangers(true)}
-              className="text-xs text-blue-600 font-medium hover:underline">📋 Kies opgeslagen</button>
+              className="text-xs text-blue-600 font-medium hover:underline">Kies opgeslagen</button>
           )}
         </div>
         <BeneficiaryAutocomplete
@@ -647,7 +647,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
                   const banken = (groups[catKey] || []).filter(b => catKey !== 'wallet');
                   if (!banken.length) return null;
                   return (
-                    <optgroup key={catKey} label={`${catInfo.icon}  ${catInfo.naam}`}>
+                    <optgroup key={catKey} label={`${catInfo.icon} ${catInfo.naam}`}>
                       {banken.map(b => (
                         <option key={b.id} value={b.naam}>{b.naam}</option>
                       ))}
@@ -657,7 +657,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               })()}
             </select>
             <p className="text-[10px] text-gray-400 mt-1">
-              💡 Banken passen automatisch aan op de gekozen valuta
+              Banken passen automatisch aan op de gekozen valuta
             </p>
           </div>
           <div>
@@ -670,7 +670,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               }`} />
             {iban && ibanCheck && (
               <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
-                {ibanCheck.geldig ? '✅ Geldig IBAN' : `❌ ${ibanCheck.fout}`}
+                {ibanCheck.geldig ? 'Geldig IBAN' : `${ibanCheck.fout}`}
               </p>
             )}
           </div>
@@ -685,8 +685,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           <div className="grid grid-cols-3 gap-1.5">
             {[
               { type: 'papara_nummer', label: 'Papara #', placeholder: 'PL1234567890' },
-              { type: 'telefoon',      label: 'Telefoon',  placeholder: '+90...' },
-              { type: 'email',         label: 'Email',     placeholder: 'naam@x.com' },
+              { type: 'telefoon', label: 'Telefoon', placeholder: '+90...' },
+              { type: 'email', label: 'Email', placeholder: 'naam@x.com' },
             ].map(opt => (
               <button
                 key={opt.type}
@@ -777,7 +777,7 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
 
       {methode === 'sepa' && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-700 space-y-1">
-          <p className="font-bold">🏛️ Maak over naar SwiftBridge:</p>
+          <p className="font-bold">Maak over naar SwiftBridge:</p>
           <p className="font-mono text-xs">IBAN: NL12SWFT0000000001</p>
           <p className="font-mono text-xs">BIC: SWFTNL2A</p>
           <p className="text-xs text-amber-600 mt-1">Vermeld je e-mailadres als omschrijving.</p>
@@ -805,20 +805,20 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
 
   return (
     <div className="card-glass p-6 space-y-5 animate-fade-up">
-      <h2 className="text-xl font-bold text-gray-800 tracking-tight">✅ Bevestig overmaken</h2>
+      <h2 className="text-xl font-bold text-gray-800 tracking-tight">Bevestig overmaken</h2>
       <div className="bg-gray-50 rounded-xl p-4 space-y-3">
         {[
-          ['Van',              `€${bedragNum.toFixed(2)}`],
-          ['Betaalmethode',    methodeObj?.label || methode],
-          ['Naar',             ontvanger],
-          ['IBAN',             `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
-          ['Servicekosten',    `€${kosten.klantBetaaltFee.toFixed(2)}`],
+          ['Van', `€${bedragNum.toFixed(2)}`],
+          ['Betaalmethode', methodeObj?.label || methode],
+          ['Naar', ontvanger],
+          ['IBAN', `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
+          ['Servicekosten', `€${kosten.klantBetaaltFee.toFixed(2)}`],
           [`Wisselkoers marge (${kosten.fxAfwijkingPct}%)`, `€${kosten.fxKostenEur.toFixed(2)}`],
-          ['Totale kosten',    `€${kosten.totaleKostenEur.toFixed(2)} (${kosten.totaleKostenPct}%)`],
+          ['Totale kosten', `€${kosten.totaleKostenEur.toFixed(2)} (${kosten.totaleKostenPct}%)`],
           ['Mid-market koers (ECB)', `1 EUR = ${kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],
-          ['Onze wisselkoers',  `1 EUR = ${kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
-          ['Ontvanger krijgt',  formatBedrag(kosten.ontvangenBedrag, valuta)],
-          ['Aankomsttijd',      methode === 'ideal' ? '< 5 minuten ⚡' : '1–2 werkdagen'],
+          ['Onze wisselkoers', `1 EUR = ${kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
+          ['Ontvanger krijgt', formatBedrag(kosten.ontvangenBedrag, valuta)],
+          ['Aankomsttijd', methode === 'ideal' ? '< 5 minuten ⚡' : '1–2 werkdagen'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
             <span className="text-gray-500 text-sm">{label}</span>
@@ -843,8 +843,8 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
                 className="text-red-700 hover:text-red-900 font-bold underline text-sm disabled:opacity-50"
               >
                 {resendLaden
-                  ? `⏳ ${t('laden')}`
-                  : `📨 ${t('payment_email_resend_link')}`}
+                  ? `${t('laden')}`
+                  : `${t('payment_email_resend_link')}`}
               </button>
               {resendBericht && (
                 <div
@@ -856,7 +856,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
                       : 'text-red-700 bg-red-50 border-red-200'
                   }`}
                 >
-                  {resendOk ? '✅ ' : '⚠️ '}
+                  {resendOk ? '' : ''}
                   {resendBericht}
                 </div>
               )}
@@ -892,7 +892,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
         <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition">← Terug</button>
         <button onClick={onVerstuur} disabled={laden}
           className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl transition">
-          {laden ? '⏳ Verwerken...' : '✓ Bevestigen & betalen'}
+          {laden ? 'Verwerken...' : '✓ Bevestigen & betalen'}
         </button>
       </div>
     </div>
@@ -1047,7 +1047,7 @@ function TrackingShareCard({ trackingToken }) {
           onClick={kopieer}
           className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg py-2.5 transition"
         >
-          {gekopieerd ? '✓ Gekopieerd' : '📋 Kopieer'}
+          {gekopieerd ? '✓ Gekopieerd' : 'Kopieer'}
         </button>
         <button
           onClick={deelWhatsApp}
@@ -1089,10 +1089,10 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
         }}
       >
         {[
-          ['Verstuurd',        `€${transactie?.eurBedrag?.toFixed(2)}`],
+          ['Verstuurd', `€${transactie?.eurBedrag?.toFixed(2)}`],
           ['Ontvanger krijgt', `${valutaInfo.vlag} ${formatBedrag(ontvangenBedrag, valuta)}`],
-          ['Methode',          methodeObj?.label || methode],
-          ['Transactie ID',    transactie?.id?.slice(0,16) + '…'],
+          ['Methode', methodeObj?.label || methode],
+          ['Transactie ID', transactie?.id?.slice(0,16) + '…'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between text-sm">
             <span className="text-gray-500">{label}</span>
@@ -1125,31 +1125,31 @@ export default function PaymentFlow({ token }) {
   // MMM: favoriete valutas — server-sync via cookie-auth (PaymentFlow is
   // alleen bereikbaar voor ingelogde users via ProtectedRoute).
   const { favorieten, toggleFavoriet } = useFavorieteValutas();
-  const [stap,           setStap          ] = useState(0);
+  const [stap, setStap ] = useState(0);
   // WL-2: wachtlijst-modal voor binnenkort-corridors
   const [wachtlijstOpen, setWachtlijstOpen] = useState(false);
-  const [bedrag,         setBedrag        ] = useState('500');
-  const [valuta,         setValuta        ] = useState('TRY');
-  const [snelheid,       setSnelheid      ] = useState('express'); // express | economy
-  const [ontvanger,      setOntvanger     ] = useState('');
+  const [bedrag, setBedrag ] = useState('500');
+  const [valuta, setValuta ] = useState('TRY');
+  const [snelheid, setSnelheid ] = useState('express'); // express | economy
+  const [ontvanger, setOntvanger ] = useState('');
   const [ontvangerLabel, setOntvangerLabel] = useState(null);
-  const [iban,           setIban          ] = useState('');
-  const [uitbetaalMethode,    setUitbetaalMethode]    = useState('bank'); // bank | papara
-  const [paparaIdentifier,    setPaparaIdentifier]    = useState('');
+  const [iban, setIban ] = useState('');
+  const [uitbetaalMethode, setUitbetaalMethode] = useState('bank'); // bank | papara
+  const [paparaIdentifier, setPaparaIdentifier] = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
-  const [methode,        setMethode       ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
-  const [notitie,        setNotitie       ] = useState(''); // VVV — persoonlijke notitie per transactie
-  const [ontvangerBank,  setOntvangerBank ] = useState('Ziraat Bankası');
-  const [liveKoersTry,   setLiveKoersTry  ] = useState(null);
-  const [transactie,     setTransactie    ] = useState(null);
-  const [laden,          setLaden         ] = useState(false);
-  const [fout,           setFout          ] = useState('');
+  const [methode, setMethode ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
+  const [notitie, setNotitie ] = useState(''); // VVV — persoonlijke notitie per transactie
+  const [ontvangerBank, setOntvangerBank ] = useState('Ziraat Bankası');
+  const [liveKoersTry, setLiveKoersTry ] = useState(null);
+  const [transactie, setTransactie ] = useState(null);
+  const [laden, setLaden ] = useState(false);
+  const [fout, setFout ] = useState('');
   const [bewaarAlsFavoriet, setBewaarAlsFavoriet] = useState(false);
   // Email verificatie — bij EMAIL_NIET_GEVERIFIEERD tonen we een resend-link
   const [emailNietGeverifieerd, setEmailNietGeverifieerd] = useState(false);
-  const [resendLaden,     setResendLaden    ] = useState(false);
-  const [resendBericht,   setResendBericht  ] = useState('');
-  const [resendOk,        setResendOk       ] = useState(false);
+  const [resendLaden, setResendLaden ] = useState(false);
+  const [resendBericht, setResendBericht ] = useState('');
+  const [resendOk, setResendOk ] = useState(false);
 
   useEffect(() => {
     fetch(`${SWIFTNEWS}/api/forex`)
@@ -1162,10 +1162,10 @@ export default function PaymentFlow({ token }) {
       const repeatRaw = localStorage.getItem('swiftbridge_repeat_tx');
       if (repeatRaw) {
         const r = JSON.parse(repeatRaw);
-        if (r.ontvanger)   setOntvanger(r.ontvanger);
-        if (r.iban)        setIban(r.iban);
-        if (r.bedrag)      setBedrag(String(r.bedrag));
-        if (r.valuta)      setValuta(r.valuta);
+        if (r.ontvanger) setOntvanger(r.ontvanger);
+        if (r.iban) setIban(r.iban);
+        if (r.bedrag) setBedrag(String(r.bedrag));
+        if (r.valuta) setValuta(r.valuta);
         localStorage.removeItem('swiftbridge_repeat_tx');
         return; // niet ook draft laden
       }
@@ -1185,10 +1185,10 @@ export default function PaymentFlow({ token }) {
         const ouderdom = Date.now() - (d.opgeslagen_op || 0);
         if (ouderdom < 24 * 60 * 60 * 1000) {
           // Geen window.confirm meer — silent restore want geen PII
-          if (d.bedrag)    setBedrag(String(d.bedrag));
-          if (d.valuta)    setValuta(d.valuta);
-          if (d.methode)   setMethode(d.methode);
-          if (d.snelheid)  setSnelheid(d.snelheid);
+          if (d.bedrag) setBedrag(String(d.bedrag));
+          if (d.valuta) setValuta(d.valuta);
+          if (d.methode) setMethode(d.methode);
+          if (d.snelheid) setSnelheid(d.snelheid);
         } else {
           sessionStorage.removeItem('swiftbridge_payment_draft_v2');
         }
@@ -1397,7 +1397,7 @@ export default function PaymentFlow({ token }) {
       setTransactie(tx);
 
       await stuurPushNotificatie(
-        '✅ SwiftBridge — Betaling verstuurd!',
+        'SwiftBridge — Betaling verstuurd!',
         `€${tx.eurBedrag.toFixed(2)} → ${formatBedrag(ontvangenBedrag, valuta)} voor ${ontvanger}`
       );
 
@@ -1425,7 +1425,7 @@ export default function PaymentFlow({ token }) {
         {STAPPEN.map((s, i) => (
           <div key={i} className="flex items-center">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition ${
-              i < stap   ? 'bg-blue-600 text-white' :
+              i < stap ? 'bg-blue-600 text-white' :
               i === stap ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-500' :
                            'bg-gray-100 text-gray-400'}`}>
               {i < stap ? '✓' : i + 1}

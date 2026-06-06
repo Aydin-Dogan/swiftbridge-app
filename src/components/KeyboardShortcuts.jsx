@@ -2,10 +2,10 @@
  * KeyboardShortcuts.jsx — globale keyboard shortcuts (Verbetering TTT).
  *
  * Listent op document keydown en biedt:
- *   - Ctrl/Cmd+K  → open Calculator
- *   - Ctrl/Cmd+N  → naar Overmaken-tab (nieuwe transactie)
- *   - /           → focus eerste search-input op pagina
- *   - ?           → toon Help-overlay met alle shortcuts
+ * - Ctrl/Cmd+K → open Calculator
+ * - Ctrl/Cmd+N → naar Overmaken-tab (nieuwe transactie)
+ * - / → focus eerste search-input op pagina
+ * - ? → toon Help-overlay met alle shortcuts
  *
  * Negeert keys tijdens typing in input/textarea (anders raakt user gefrustreerd).
  */
@@ -74,9 +74,9 @@ export default function KeyboardShortcuts() {
   const shortcuts = [
     { keys: [mod, 'K'], label: t('kbd_open_calculator') },
     { keys: [mod, 'N'], label: t('kbd_nieuwe_transactie') },
-    { keys: ['/'],      label: t('kbd_focus_zoek') },
-    { keys: ['?'],      label: t('kbd_help') },
-    { keys: ['Esc'],    label: t('kbd_sluit') },
+    { keys: ['/'], label: t('kbd_focus_zoek') },
+    { keys: ['?'], label: t('kbd_help') },
+    { keys: ['Esc'], label: t('kbd_sluit') },
   ];
 
   return (

@@ -2,10 +2,10 @@
  * StatistiekCards.jsx — Hero stats grid (4 boxes) voor dashboard
  *
  * Toont:
- *  - Totaal overgemaakt deze maand (€)
- *  - Aantal transacties
- *  - Gemiddelde aankomsttijd (mock 4 min)
- *  - Besparing tov bank (mock berekening: 2.5% extra marge gemiddelde bank)
+ * - Totaal overgemaakt deze maand (€)
+ * - Aantal transacties
+ * - Gemiddelde aankomsttijd (mock 4 min)
+ * - Besparing tov bank (mock berekening: 2.5% extra marge gemiddelde bank)
  *
  * Glassmorphism cards met gradient accents. Mobile-first: 2×2 op <md, 4×1 op md+.
  * Laat skeletons zien tijdens loading. Cards animeren in met staggered fade-up.

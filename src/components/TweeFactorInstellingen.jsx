@@ -2,10 +2,10 @@
  * TweeFactorInstellingen — Full TOTP self-service flow
  *
  * Status badge (AAN / UIT) + acties:
- *   - Aanzetten: modal met QR code + secret string + 6-cijferige bevestiging
- *     → na bevestig: 10 backup codes (eenmalig getoond, download/copy)
- *   - Uitzetten: modal met wachtwoord + huidige 2FA code
- *   - Backup codes regenereren: modal met wachtwoord → toon nieuwe 10
+ * - Aanzetten: modal met QR code + secret string + 6-cijferige bevestiging
+ * → na bevestig: 10 backup codes (eenmalig getoond, download/copy)
+ * - Uitzetten: modal met wachtwoord + huidige 2FA code
+ * - Backup codes regenereren: modal met wachtwoord → toon nieuwe 10
  *
  * Compatible met Google Authenticator, Authy, 1Password, Microsoft Authenticator.
  */
@@ -29,7 +29,7 @@ function Modal({ open, onClose, titel, children }) {
       >
         <div className="sticky top-0 bg-white/95 backdrop-blur-xl border-b border-gray-100 px-5 py-4 flex items-center justify-between rounded-t-3xl">
           <h3 className="font-bold text-gray-800 text-lg flex items-center gap-2">
-            🔐 {titel}
+            {titel}
           </h3>
           <button
             onClick={onClose}
@@ -116,7 +116,7 @@ function BackupCodesPaneel({ codes }) {
     <p class="subtitle">Gegenereerd op ${datum} · swiftbridge.tr</p>
   </header>
   <div class="warning">
-    <strong>⚠ Bewaar deze codes veilig.</strong> Gebruik ze alleen als je geen toegang
+    <strong>Bewaar deze codes veilig.</strong> Gebruik ze alleen als je geen toegang
     meer hebt tot je authenticator-app. Elke code is <strong>één keer</strong> bruikbaar.
     Print of bewaar dit document op een fysiek veilige plek (kluis, papier-archief).
   </div>
@@ -174,7 +174,7 @@ function BackupCodesPaneel({ codes }) {
           onClick={copy}
           className="px-3 py-3 rounded-xl border-2 border-blue-500 text-blue-600 text-xs font-bold hover:bg-blue-50 transition active:scale-95"
         >
-          {gekopieerd ? '✓ Gekopieerd' : '📋 Kopiëren'}
+          {gekopieerd ? '✓ Gekopieerd' : 'Kopiëren'}
         </button>
         <button
           onClick={download}
@@ -383,7 +383,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
 
       {fout && !aanModal && !uitModal && !regenModal && (
         <div className="text-xs text-rose-700 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
-          ❌ {fout}
+          {fout}
         </div>
       )}
 
@@ -394,7 +394,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
             disabled={bezig}
             className="btn-primary py-3 text-sm disabled:opacity-50"
           >
-            {bezig ? '⏳ Bezig...' : '🔐 2FA aanzetten →'}
+            {bezig ? 'Bezig...' : '2FA aanzetten →'}
           </button>
         ) : (
           <>
@@ -408,7 +408,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               onClick={() => setUitModal(true)}
               className="px-4 py-3 rounded-xl border-2 border-rose-300 text-rose-600 text-sm font-bold hover:bg-rose-50 transition active:scale-95"
             >
-              🔓 2FA uitzetten
+              2FA uitzetten
             </button>
           </>
         )}
@@ -445,7 +445,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
                 }}
                 className="text-xs text-blue-600 mt-1 hover:underline"
               >
-                📋 Kopieer secret
+                Kopieer secret
               </button>
             </div>
 
@@ -468,7 +468,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
 
             {fout && (
               <div className="text-xs text-rose-700 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
-                ❌ {fout}
+                {fout}
               </div>
             )}
 
@@ -477,7 +477,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               disabled={bezig || code.length !== 6}
               className="btn-primary w-full py-3 disabled:opacity-50"
             >
-              {bezig ? '⏳ Bezig...' : '✓ Bevestigen en activeren'}
+              {bezig ? 'Bezig...' : '✓ Bevestigen en activeren'}
             </button>
           </>
         )}
@@ -485,7 +485,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
         {stap === 'codes' && backupCodes && (
           <>
             <p className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
-              ✅ 2-staps verificatie is geactiveerd!
+              2-staps verificatie is geactiveerd!
             </p>
             <BackupCodesPaneel codes={backupCodes} />
             <button
@@ -529,7 +529,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
 
         {fout && (
           <div className="text-xs text-rose-700 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
-            ❌ {fout}
+            {fout}
           </div>
         )}
 
@@ -538,7 +538,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
           disabled={bezig}
           className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-500 to-red-600 text-white font-bold hover:opacity-90 transition disabled:opacity-50"
         >
-          {bezig ? '⏳ Bezig...' : '🔓 Definitief uitzetten'}
+          {bezig ? 'Bezig...' : 'Definitief uitzetten'}
         </button>
       </Modal>
 
@@ -568,7 +568,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
 
             {fout && (
               <div className="text-xs text-rose-700 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
-                ❌ {fout}
+                {fout}
               </div>
             )}
 
@@ -577,7 +577,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               disabled={bezig}
               className="btn-primary w-full py-3 disabled:opacity-50"
             >
-              {bezig ? '⏳ Bezig...' : '🔄 Genereer 10 nieuwe codes'}
+              {bezig ? 'Bezig...' : '🔄 Genereer 10 nieuwe codes'}
             </button>
           </>
         ) : (

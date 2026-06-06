@@ -3,17 +3,17 @@
  * naar /errors/frontend zijn gepost (Verbetering Z).
  *
  * Auth:
- *   - Vereist ingelogde admin (cookie-based JWT)
- *   - X-Admin-Secret header via ?secret= query (legacy pad)
+ * - Vereist ingelogde admin (cookie-based JWT)
+ * - X-Admin-Secret header via ?secret= query (legacy pad)
  *
  * Filtering:
- *   - ?errorId=ERR-XXXX  (exact match)
- *   - ?days=7            (default 7, max 90)
+ * - ?errorId=ERR-XXXX (exact match)
+ * - ?days=7 (default 7, max 90)
  *
  * UX:
- *   - Tabel met error-ID, message, URL, time
- *   - Klik op rij → toon details (stack + componentStack) inline
- *   - Refresh-knop + copy-error-ID knop
+ * - Tabel met error-ID, message, URL, time
+ * - Klik op rij → toon details (stack + componentStack) inline
+ * - Refresh-knop + copy-error-ID knop
  */
 import { useState, useEffect, useCallback, Fragment } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';

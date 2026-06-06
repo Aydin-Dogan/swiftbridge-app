@@ -15,35 +15,36 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi } from './services/api';
+import { Home, Send, Bell, User, IdCard, X as XIcon, AlertTriangle, Lock } from './components/icons/Icons';
 
 // Lazy load zware paginas (code splitting)
-const PaymentFlow         = lazy(() => import('./components/PaymentFlow'));
-const KYCFlow             = lazy(() => import('./components/KYCFlow'));
-const Calculator          = lazy(() => import('./pages/Calculator'));
-const KoersAlerts         = lazy(() => import('./components/KoersAlerts'));
-const Profiel             = lazy(() => import('./components/Profiel'));
+const PaymentFlow = lazy(() => import('./components/PaymentFlow'));
+const KYCFlow = lazy(() => import('./components/KYCFlow'));
+const Calculator = lazy(() => import('./pages/Calculator'));
+const KoersAlerts = lazy(() => import('./components/KoersAlerts'));
+const Profiel = lazy(() => import('./components/Profiel'));
 const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
-const Privacybeleid       = lazy(() => import('./pages/Privacybeleid'));
-const AMLBeleid           = lazy(() => import('./pages/AMLBeleid'));
-const AdminPanel          = lazy(() => import('./pages/AdminPanel'));
-const AdminCompliance     = lazy(() => import('./pages/AdminCompliance'));
-const VerifyEmail         = lazy(() => import('./pages/VerifyEmail'));
-const EmailWijzigen       = lazy(() => import('./pages/EmailWijzigen'));
-const Recurring           = lazy(() => import('./pages/Recurring'));
+const Privacybeleid = lazy(() => import('./pages/Privacybeleid'));
+const AMLBeleid = lazy(() => import('./pages/AMLBeleid'));
+const AdminPanel = lazy(() => import('./pages/AdminPanel'));
+const AdminCompliance = lazy(() => import('./pages/AdminCompliance'));
+const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
+const EmailWijzigen = lazy(() => import('./pages/EmailWijzigen'));
+const Recurring = lazy(() => import('./pages/Recurring'));
 
 // SEO landings (Sprint 3 deel 2) — long-tail Google traffic per query.
 // Code-split zodat ze geen bundle-size toevoegen aan de hoofdroute.
-const SeoWiseAlternatief    = lazy(() => import('./pages/seo/WiseAlternatief'));
-const SeoWiseVsSwiftbridge  = lazy(() => import('./pages/seo/WiseVsSwiftbridge'));
+const SeoWiseAlternatief = lazy(() => import('./pages/seo/WiseAlternatief'));
+const SeoWiseVsSwiftbridge = lazy(() => import('./pages/seo/WiseVsSwiftbridge'));
 const SeoGarantiOverboeking = lazy(() => import('./pages/seo/GarantiOverboeking'));
-const SeoPaparaYukleme      = lazy(() => import('./pages/seo/PaparaYukleme'));
-const SeoBayramRemittance   = lazy(() => import('./pages/seo/BayramRemittance'));
-const NotFound              = lazy(() => import('./pages/NotFound'));
-const LocaleLanding         = lazy(() => import('./pages/LocaleLanding'));
-const Status                = lazy(() => import('./pages/Status'));
-const AdminErrors           = lazy(() => import('./pages/AdminErrors'));
-const TransactieTracking    = lazy(() => import('./pages/TransactieTracking'));
-const AdminOverzicht        = lazy(() => import('./pages/AdminOverzicht'));
+const SeoPaparaYukleme = lazy(() => import('./pages/seo/PaparaYukleme'));
+const SeoBayramRemittance = lazy(() => import('./pages/seo/BayramRemittance'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const LocaleLanding = lazy(() => import('./pages/LocaleLanding'));
+const Status = lazy(() => import('./pages/Status'));
+const AdminErrors = lazy(() => import('./pages/AdminErrors'));
+const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
+const AdminOverzicht = lazy(() => import('./pages/AdminOverzicht'));
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -64,10 +65,10 @@ function isInStandaloneMode() {
 
 // ── PWA Install Banner (Verbetering AA) ───────────────────────────────────────
 // Verbeteringen:
-//   - Toont pas vanaf 2e bezoek (minder opdringerig, geen "instant pitch")
-//   - 3-voordelen lijst legt de waarde uit (sneller, offline, push)
-//   - i18n via useTaal() — alle 5 talen
-//   - "Niet nu" / "Niet meer vragen" twee-trap dismissal
+// - Toont pas vanaf 2e bezoek (minder opdringerig, geen "instant pitch")
+// - 3-voordelen lijst legt de waarde uit (sneller, offline, push)
+// - i18n via useTaal() — alle 5 talen
+// - "Niet nu" / "Niet meer vragen" twee-trap dismissal
 function InstallBanner() {
   const { t } = useTaal();
   const [prompt, setPrompt] = useState(null);
@@ -167,10 +168,10 @@ function InstallBanner() {
           </div>
           <button
             onClick={() => verberg(false)}
-            className="text-gray-500 hover:text-white text-xl leading-none flex-shrink-0"
+            className="text-gray-500 hover:text-white leading-none flex-shrink-0 p-1"
             aria-label={t('install_sluit')}
           >
-            ✕
+            <XIcon className="w-5 h-5" />
           </button>
         </div>
         <Voordelen />
@@ -204,10 +205,10 @@ function InstallBanner() {
           </div>
           <button
             onClick={() => verberg(false)}
-            className="text-gray-500 hover:text-white text-xl leading-none flex-shrink-0"
+            className="text-gray-500 hover:text-white leading-none flex-shrink-0 p-1"
             aria-label={t('install_sluit')}
           >
-            ✕
+            <XIcon className="w-5 h-5" />
           </button>
         </div>
         <Voordelen />
@@ -267,11 +268,11 @@ function AppShell({ gebruiker, token, onLogout }) {
   }, []);
 
   const tabs = [
-    { id: 'dashboard', label: t('tab_dashboard'),    icoon: '📊' },
-    { id: 'betaling',  label: t('tab_overmaken'),    icoon: '💸' },
-    { id: 'alerts',    label: t('tab_alerts'),       icoon: '🔔' },
-    { id: 'profiel',   label: t('tab_profiel'),      icoon: '👤' },
-    { id: 'kyc',       label: t('tab_verificatie'),  icoon: '🪪' },
+    { id: 'dashboard', label: t('tab_dashboard'), Icoon: Home },
+    { id: 'betaling', label: t('tab_overmaken'), Icoon: Send },
+    { id: 'alerts', label: t('tab_alerts'), Icoon: Bell },
+    { id: 'profiel', label: t('tab_profiel'), Icoon: User },
+    { id: 'kyc', label: t('tab_verificatie'), Icoon: IdCard },
   ];
 
   const kycGoedgekeurd = gebruiker?.kycStatus === 'goedgekeurd';
@@ -303,7 +304,7 @@ function AppShell({ gebruiker, token, onLogout }) {
               <button onClick={() => setActief('kyc')}
                 aria-label="KYC verificatie nog vereist - klik om te starten"
                 className="text-xs bg-amber-100 hover:bg-amber-200 active:bg-amber-300 text-amber-800 font-semibold px-3 py-2 min-h-[36px] rounded-full transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400 inline-flex items-center gap-1">
-                <span aria-hidden="true">⚠️</span> KYC
+                <AlertTriangle className="w-3.5 h-3.5" /> KYC
               </button>
             )}
             <ThemeToggle />
@@ -342,13 +343,13 @@ function AppShell({ gebruiker, token, onLogout }) {
                     onClick={() => { setAccountMenuOpen(false); setActief('profiel'); }}
                     className="w-full text-left text-sm text-gray-700 hover:bg-gray-50 px-3 py-2.5 rounded-lg font-medium flex items-center gap-2"
                   >
-                    <span>👤</span> {t('tab_profiel')}
+                    <User className="w-4 h-4" /> {t('tab_profiel')}
                   </button>
                   <button
                     onClick={() => { setAccountMenuOpen(false); onLogout(); }}
                     className="w-full text-left text-sm text-red-600 hover:bg-red-50 px-3 py-2.5 rounded-lg font-medium flex items-center gap-2 mt-1"
                   >
-                    <span>🚪</span> {t('uitloggen')}
+                    <Lock className="w-4 h-4" /> {t('uitloggen')}
                   </button>
                 </div>
               )}
@@ -366,7 +367,9 @@ function AppShell({ gebruiker, token, onLogout }) {
               ? <PaymentFlow token={token} />
               : (
                 <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-                  <div className="text-4xl mb-3">🪪</div>
+                  <div className="mx-auto w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-3">
+                    <IdCard className="w-8 h-8 text-amber-600" />
+                  </div>
                   <h3 className="font-bold text-gray-800 mb-2">KYC verificatie vereist</h3>
                   <p className="text-gray-500 text-sm mb-4">Je moet eerst je identiteit verifiëren voordat je geld kunt overmaken.</p>
                   <button onClick={() => setActief('kyc')}
@@ -389,8 +392,8 @@ function AppShell({ gebruiker, token, onLogout }) {
             <button key={tab.id} onClick={() => setActief(tab.id)}
               className={`flex-1 flex flex-col items-center py-3 px-1 transition active:scale-95
                 ${actief === tab.id ? 'text-blue-600' : 'text-gray-400'}`}>
-              <span className={`text-2xl transition-transform ${actief === tab.id ? 'scale-110' : ''}`}>
-                {tab.icoon}
+              <span className={`transition-transform ${actief === tab.id ? 'scale-110' : ''}`}>
+                <tab.Icoon className="w-6 h-6" />
               </span>
               <span className={`text-xs font-medium mt-0.5 ${actief === tab.id ? 'text-blue-600' : 'text-gray-500'}`}>
                 {tab.label}
@@ -427,15 +430,15 @@ const TOKEN_SENTINEL = 'cookie';
 // Voorkomt dat na uitloggen IBAN-keys, tx-drafts en user-cache achterblijven
 // in localStorage (privacy + AVG art. 32 verantwoording).
 const GEVOELIGE_STORAGE_KEYS = [
-  'ONTV_KEY',                 // F50 — ontvanger-key (e2e crypto)
-  'TX_KEY',                   // F50 — transactie-key
-  'sb_user',                  // gecachede gebruikersdata
-  'sb_prefs',                 // gebruikersvoorkeuren
-  'sb_token',                 // legacy — voor de zekerheid
-  'sb_refresh',               // legacy
-  'sb_gebruiker',             // legacy
-  'payment_draft',            // F42 — draft tx data
-  'favoriete_valutas_cache',  // KKK — kan PII reveal als per-user
+  'ONTV_KEY', // F50 — ontvanger-key (e2e crypto)
+  'TX_KEY', // F50 — transactie-key
+  'sb_user', // gecachede gebruikersdata
+  'sb_prefs', // gebruikersvoorkeuren
+  'sb_token', // legacy — voor de zekerheid
+  'sb_refresh', // legacy
+  'sb_gebruiker', // legacy
+  'payment_draft', // F42 — draft tx data
+  'favoriete_valutas_cache', // KKK — kan PII reveal als per-user
 ];
 
 function wisGevoeligeStorage() {
@@ -644,10 +647,10 @@ export default function App() {
 
 // ── SupportChat wrapper ─────────────────────────────────────────────────────
 // Toont de chat widget:
-//  - na login (token aanwezig) op alle interne paginas
-//  - op de publieke landing
-//  - NIET op /login en /admin* om de focus daar zuiver te houden
-//  - auto-hide als window.__sb_kyc_scan_active__ === true (KYC camera flow)
+// - na login (token aanwezig) op alle interne paginas
+// - op de publieke landing
+// - NIET op /login en /admin* om de focus daar zuiver te houden
+// - auto-hide als window.__sb_kyc_scan_active__ === true (KYC camera flow)
 function SupportChatGlobal({ gebruiker, token }) {
   const [pad, setPad] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
   const [kycScanActief, setKycScanActief] = useState(false);

@@ -6,8 +6,8 @@
  * gebruiker richting iDEAL gaat voor een corridor die nog niet kan uitbetalen.
  *
  * Modes:
- *   - ingelogd: email uit profiel pre-fill
- *   - anoniem (landing): email handmatig invullen
+ * - ingelogd: email uit profiel pre-fill
+ * - anoniem (landing): email handmatig invullen
  *
  * Backend: POST /wachtlijst. UNIQUE(email, valuta_code) maakt het idempotent.
  */
@@ -15,6 +15,7 @@ import { useState } from 'react';
 import Vlag from './Vlag';
 import { apiFetch } from '../services/api';
 import { useTaal } from '../i18n';
+import { CheckCircle } from './icons/Icons';
 
 export default function WachtlijstModal({ open, valuta, eurBedrag, gebruikerEmail, onSluit }) {
   const { t } = useTaal();
@@ -113,7 +114,7 @@ export default function WachtlijstModal({ open, valuta, eurBedrag, gebruikerEmai
                   disabled={bezig || !email}
                   className="flex-1 btn-primary py-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {bezig ? '⏳ ' + t('wachtlijst_bezig') : '🔔 ' + t('wachtlijst_cta')}
+                  {bezig ? '' + t('wachtlijst_bezig') : '' + t('wachtlijst_cta')}
                 </button>
               </div>
             </form>
@@ -125,8 +126,8 @@ export default function WachtlijstModal({ open, valuta, eurBedrag, gebruikerEmai
         ) : (
           <>
             <div className="text-center py-3">
-              <div className="w-16 h-16 mx-auto rounded-full bg-green-50 border-2 border-green-200 flex items-center justify-center text-3xl mb-4">
-                ✅
+              <div className="w-16 h-16 mx-auto rounded-full bg-green-50 border-2 border-green-200 flex items-center justify-center mb-4">
+                <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
               <h2 className="text-lg font-extrabold text-gray-900 mb-2">
                 {resultaat.nieuw ? t('wachtlijst_succes_titel') : t('wachtlijst_reeds_ingeschreven_titel')}

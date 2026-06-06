@@ -4,9 +4,9 @@
  * Route: /verifieer-email?token=XXX (public, geen auth)
  *
  * Flow:
- *   1. ⏳ Bij mount: extracteer token uit URL en doe GET /auth/verifieer-email?token={token}
- *   2. ✅ Success → na 2s auto-redirect naar /login
- *   3. ❌ Fout → toon uitleg + form om opnieuw te versturen
+ * 1. Bij mount: extracteer token uit URL en doe GET /auth/verifieer-email?token={token}
+ * 2. Success → na 2s auto-redirect naar /login
+ * 3. Fout → toon uitleg + form om opnieuw te versturen
  *
  * Stijl: glassmorphism, matched met Login.jsx
  */
@@ -195,7 +195,7 @@ export default function VerifyEmail() {
                           : 'text-red-600 bg-red-50 border-red-200'
                       }`}
                     >
-                      {resendOk ? '✅ ' : '⚠️ '}
+                      {resendOk ? '' : ''}
                       {resendBericht}
                     </p>
                   )}
@@ -204,7 +204,7 @@ export default function VerifyEmail() {
                     disabled={resendLaden || !resendEmail}
                     className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {resendLaden ? `⏳ ${t('laden')}` : `📧 ${t('verify_email_resend_knop')}`}
+                    {resendLaden ? `${t('laden')}` : `${t('verify_email_resend_knop')}`}
                   </button>
                 </form>
                 <button
@@ -219,7 +219,7 @@ export default function VerifyEmail() {
         </div>
 
         <p className="text-center text-blue-200 text-xs mt-6">
-          🔒 {t('verify_email_beveiligd_voet')}
+          {t('verify_email_beveiligd_voet')}
         </p>
       </div>
     </div>

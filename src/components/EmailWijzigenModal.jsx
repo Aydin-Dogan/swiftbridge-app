@@ -5,10 +5,10 @@
  * + EE++ semantic tokens. Dark-mode automatisch correct.
  *
  * 3-staps flow:
- *  1. Gebruiker vult huidig wachtwoord + nieuw e-mailadres in
- *  2. Backend verstuurt verificatielink naar nieuwe adres
- *     (en waarschuwingsmail met intrek-link naar oude adres)
- *  3. Gebruiker klikt link in nieuwe mailbox -> EmailWijzigenBevestigen page
+ * 1. Gebruiker vult huidig wachtwoord + nieuw e-mailadres in
+ * 2. Backend verstuurt verificatielink naar nieuwe adres
+ * (en waarschuwingsmail met intrek-link naar oude adres)
+ * 3. Gebruiker klikt link in nieuwe mailbox -> EmailWijzigenBevestigen page
  *
  * Compliance: AVG art. 16 (recht op rectificatie).
  */
@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { apiFetch } from '../services/api';
 import { useTaal } from '../i18n';
 import { Card, Knop, VeldGroep } from './ui';
+import { Mail } from './icons/Icons';
 
 export default function EmailWijzigenModal({ open, huidigEmail, token, onSluit }) {
   const { t } = useTaal();
@@ -98,7 +99,7 @@ export default function EmailWijzigenModal({ open, huidigEmail, token, onSluit }
             <div className="flex items-start justify-between mb-4">
               <div className="min-w-0">
                 <h2 id="email-wijzig-titel" className="text-xl font-bold text-ink-1">
-                  ✉️ {t('email_wijzig_titel') || 'E-mailadres wijzigen'}
+                  {t('email_wijzig_titel') || 'E-mailadres wijzigen'}
                 </h2>
                 <p className="text-xs text-ink-3 mt-1 truncate">
                   {t('email_wijzig_huidig') || 'Huidig'}: <span className="font-mono">{huidigEmail}</span>
@@ -144,7 +145,7 @@ export default function EmailWijzigenModal({ open, huidigEmail, token, onSluit }
                   amber-tint via custom className. */}
               <Card variant="default" size="sm" className="!bg-amber-50 !border-amber-200 dark:!bg-amber-900/20 dark:!border-amber-800/40">
                 <p className="font-medium text-xs text-amber-900 dark:text-amber-200 mb-1">
-                  ⚠ {t('email_wijzig_waarschuwing_titel') || 'Wat gaat er gebeuren?'}
+                  {t('email_wijzig_waarschuwing_titel') || 'Wat gaat er gebeuren?'}
                 </p>
                 <ul className="list-disc pl-4 space-y-0.5 text-xs text-amber-800 dark:text-amber-300">
                   <li>{t('email_wijzig_waarschuwing_1') || 'Je krijgt een bevestigingslink op het nieuwe adres (1 uur geldig).'}</li>
@@ -183,7 +184,9 @@ export default function EmailWijzigenModal({ open, huidigEmail, token, onSluit }
           </>
         ) : (
           <div className="text-center py-4">
-            <div className="text-5xl mb-3">📬</div>
+            <div className="mx-auto w-16 h-16 rounded-full bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center mb-3">
+              <Mail className="w-8 h-8 text-brand-600 dark:text-brand-300" />
+            </div>
             <h2 className="text-xl font-bold text-ink-1 mb-2">
               {t('email_wijzig_succes_titel') || 'Check je nieuwe mailbox'}
             </h2>
@@ -193,7 +196,7 @@ export default function EmailWijzigenModal({ open, huidigEmail, token, onSluit }
             </p>
             <Card variant="accent" size="sm" className="mb-4">
               <p className="text-xs font-medium text-brand-700 dark:text-brand-300">
-                💡 {t('email_wijzig_succes_tip') || 'Geen mail ontvangen? Check je spam-map.'}
+                {t('email_wijzig_succes_tip') || 'Geen mail ontvangen? Check je spam-map.'}
               </p>
             </Card>
             <Knop variant="primary" fullWidth onClick={sluit}>

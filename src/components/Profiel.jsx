@@ -21,14 +21,14 @@ const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 // ── iDIN verificatie via NL bank ─────────────────────────────────────
 const NL_BANKEN_IDIN = [
-  { code: 'INGBNL2A', naam: 'ING',          kleur: '#FF6200' },
-  { code: 'RABONL2U', naam: 'Rabobank',     kleur: '#005EB8' },
-  { code: 'ABNANL2A', naam: 'ABN AMRO',     kleur: '#00A551' },
-  { code: 'SNSBNL2A', naam: 'SNS Bank',     kleur: '#003D7E' },
-  { code: 'BUNQNL2A', naam: 'bunq',         kleur: '#2A2F37' },
-  { code: 'KNABNL2H', naam: 'Knab',         kleur: '#FFCC00' },
-  { code: 'ASNBNL21', naam: 'ASN Bank',     kleur: '#1B8B47' },
-  { code: 'RBRBNL21', naam: 'RegioBank',    kleur: '#005EB8' },
+  { code: 'INGBNL2A', naam: 'ING', kleur: '#FF6200' },
+  { code: 'RABONL2U', naam: 'Rabobank', kleur: '#005EB8' },
+  { code: 'ABNANL2A', naam: 'ABN AMRO', kleur: '#00A551' },
+  { code: 'SNSBNL2A', naam: 'SNS Bank', kleur: '#003D7E' },
+  { code: 'BUNQNL2A', naam: 'bunq', kleur: '#2A2F37' },
+  { code: 'KNABNL2H', naam: 'Knab', kleur: '#FFCC00' },
+  { code: 'ASNBNL21', naam: 'ASN Bank', kleur: '#1B8B47' },
+  { code: 'RBRBNL21', naam: 'RegioBank', kleur: '#005EB8' },
   { code: 'TRIONL2U', naam: 'Triodos Bank', kleur: '#00853E' },
 ];
 
@@ -69,7 +69,7 @@ function IdinKnop({ token, onSucces }) {
           setFout(parseError({ ...vRes, status: voltooi.status }, t));
           return;
         }
-        alert(`✅ Mock iDIN gelukt!\nNaam: ${vRes.geverifieerd.naam}\nAdres: ${vRes.geverifieerd.adres}`);
+        alert(`Mock iDIN gelukt!\nNaam: ${vRes.geverifieerd.naam}\nAdres: ${vRes.geverifieerd.adres}`);
         onSucces?.();
       } else {
         // Echte flow: stuur door naar bank
@@ -115,7 +115,7 @@ function IdinKnop({ token, onSucces }) {
                   </button>
                 ))}
               </div>
-              {fout && <div className="text-xs text-rose-600 bg-rose-50 p-2 rounded-lg">❌ {fout}</div>}
+              {fout && <div className="text-xs text-rose-600 bg-rose-50 p-2 rounded-lg">{fout}</div>}
               <button
                 onClick={() => setOpen(false)}
                 className="text-xs text-gray-500 hover:text-gray-700"
@@ -217,7 +217,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         setFout(parseError({ ...data, status: res.status }, t));
         return;
       }
-      setBericht('✅ Profiel bijgewerkt');
+      setBericht('Profiel bijgewerkt');
       setProfiel(data.gebruiker);
       onUpdate?.(data.gebruiker);
       setTimeout(() => setBericht(null), 3000);
@@ -267,12 +267,12 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             <p className="text-xs text-gray-500 truncate">{profiel?.email}</p>
             <div className="flex items-center gap-2 mt-1">
               {kycOk ? (
-                <span className="pill-success">✅ KYC goedgekeurd</span>
+                <span className="pill-success">KYC goedgekeurd</span>
               ) : (
-                <span className="pill-warning">⏳ KYC vereist</span>
+                <span className="pill-warning">KYC vereist</span>
               )}
               {profiel?.twofaIngeschakeld && (
-                <span className="pill-success">🔒 2FA</span>
+                <span className="pill-success">2FA</span>
               )}
             </div>
           </div>
@@ -315,7 +315,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       {/* Profiel formulier */}
       <form onSubmit={opslaan} className="card-glass p-5 space-y-4 animate-fade-up">
         <h3 className="font-bold text-gray-800 flex items-center gap-2">
-          👤 Persoonlijke gegevens
+          Persoonlijke gegevens
         </h3>
 
         <div>
@@ -365,7 +365,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </div>
 
         <h3 className="font-bold text-gray-800 flex items-center gap-2 pt-2 border-t border-gray-100">
-          🏠 Adres
+          Adres
         </h3>
 
         <div className="grid grid-cols-3 gap-2">
@@ -470,7 +470,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
         {fout && (
           <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
-            ❌ {fout}
+            {fout}
           </div>
         )}
         {bericht && (
@@ -484,7 +484,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           disabled={!kycOk || bezig}
           className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {bezig ? '⏳ Opslaan...' : '💾 Opslaan'}
+          {bezig ? 'Opslaan...' : '💾 Opslaan'}
         </button>
       </form>
 

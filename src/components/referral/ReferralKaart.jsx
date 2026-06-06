@@ -2,10 +2,10 @@
  * ReferralKaart.jsx — toont de eigen referral code, deel-knoppen en statistieken.
  *
  * UX:
- *   - Code + URL klikbaar om te kopiëren (toont "Gekopieerd!" feedback)
- *   - Drie deel-knoppen: WhatsApp, E-mail, Kopieer
- *   - Tellertje "X vrienden uitgenodigd, €Y verdiend"
- *   - Uitleg-blok onder de hoofdkaart
+ * - Code + URL klikbaar om te kopiëren (toont "Gekopieerd!" feedback)
+ * - Drie deel-knoppen: WhatsApp, E-mail, Kopieer
+ * - Tellertje "X vrienden uitgenodigd, €Y verdiend"
+ * - Uitleg-blok onder de hoofdkaart
  *
  * Werkt op /referral/mijn — laadt zelf wanneer gemount.
  */
@@ -168,7 +168,7 @@ export default function ReferralKaart() {
               {referralCode}
             </span>
             <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
-              {gekopieerd === 'code' ? `✅ ${t('referral_gekopieerd')}` : `📋 ${t('referral_kopieer')}`}
+              {gekopieerd === 'code' ? `${t('referral_gekopieerd')}` : `${t('referral_kopieer')}`}
             </span>
           </button>
         </div>
@@ -187,7 +187,7 @@ export default function ReferralKaart() {
               {deelUrl}
             </span>
             <span className="text-xs text-blue-600 font-semibold whitespace-nowrap">
-              {gekopieerd === 'url' ? `✅ ${t('referral_gekopieerd')}` : `📋 ${t('referral_kopieer')}`}
+              {gekopieerd === 'url' ? `${t('referral_gekopieerd')}` : `${t('referral_kopieer')}`}
             </span>
           </button>
         </div>

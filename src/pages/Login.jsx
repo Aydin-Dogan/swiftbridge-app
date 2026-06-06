@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import TaalKiezer from '../components/TaalKiezer';
 import { useTaal } from '../i18n';
 import { apiFetch, haalProfiel } from '../services/api';
+import { Mail, Lock, Zap, AlertTriangle } from '../components/icons/Icons';
 
 export default function Login({ onLogin }) {
   const [params] = useSearchParams();
@@ -26,9 +27,9 @@ export default function Login({ onLogin }) {
   const [twofaUserId, setTwofaUserId] = useState(null);
   // F7 fix (Cursor review): pendingToken is nieuwe primaire identifier
   const [twofaPendingToken, setTwofaPendingToken] = useState(null);
-  const [twofaCode,   setTwofaCode  ] = useState('');
-  const [twofaLaden,  setTwofaLaden ] = useState(false);
-  const [twofaFout,   setTwofaFout  ] = useState('');
+  const [twofaCode, setTwofaCode ] = useState('');
+  const [twofaLaden, setTwofaLaden ] = useState(false);
+  const [twofaFout, setTwofaFout ] = useState('');
 
   // Wachtwoord reset via link (?reset=TOKEN)
   const resetToken = params.get('reset');
@@ -111,9 +112,9 @@ export default function Login({ onLogin }) {
         method: 'POST',
         body: { email: vergetenEmail },
       });
-      setVergetenBericht('✅ ' + (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
+      setVergetenBericht('' + (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
     } catch (e) {
-      setVergetenBericht('❌ ' + (e.message || 'Geen verbinding met server. Probeer opnieuw.'));
+      setVergetenBericht('' + (e.message || 'Geen verbinding met server. Probeer opnieuw.'));
     } finally {
       setVergetenLaden(false);
     }
@@ -128,10 +129,10 @@ export default function Login({ onLogin }) {
         method: 'POST',
         body: { token: resetToken, nieuwWachtwoord },
       });
-      setResetBericht('✅ Wachtwoord gewijzigd! Je kunt nu inloggen.');
+      setResetBericht('Wachtwoord gewijzigd! Je kunt nu inloggen.');
       setTimeout(() => setToonReset(false), 2000);
     } catch (e) {
-      setResetBericht('❌ ' + e.message);
+      setResetBericht('' + e.message);
     } finally {
       setResetLaden(false);
     }
@@ -188,7 +189,9 @@ export default function Login({ onLogin }) {
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
         <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
           <div className="text-center">
-            <div className="text-4xl mb-2">📧</div>
+            <div className="mx-auto w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-3">
+              <Mail className="w-7 h-7 text-blue-600" />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">Inlogcode</h2>
             <p className="text-gray-500 text-sm">We hebben een 6-cijferige code naar je e-mail gestuurd. Check ook spam folder.</p>
           </div>
@@ -228,14 +231,14 @@ export default function Login({ onLogin }) {
               onClick={plakUitKlembord}
               className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2.5 rounded-xl transition-all active:scale-95 text-sm flex items-center justify-center gap-2"
             >
-              📋 Plak code uit klembord
+              Plak code uit klembord
             </button>
             {twofaFout && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">❌ {twofaFout}</p>
+              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">{twofaFout}</p>
             )}
             <button type="submit" disabled={twofaLaden || twofaCode.length !== 6}
               className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
-              {twofaLaden ? '⏳ Bezig...' : '🔓 Verifieer & inloggen'}
+              {twofaLaden ? 'Bezig...' : 'Verifieer & inloggen'}
             </button>
             <button type="button" onClick={() => { setTwofaUserId(null); setTwofaPendingToken(null); setTwofaCode(''); setTwofaFout(''); }}
               className="w-full text-gray-500 text-sm hover:text-gray-700">
@@ -243,7 +246,7 @@ export default function Login({ onLogin }) {
             </button>
           </form>
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-2.5 text-[10px] text-blue-800 leading-snug">
-            💡 <strong>Tip:</strong> Op iPhone (iOS 12+) verschijnt de code automatisch boven het toetsenbord wanneer je deze in Mail ziet. Tap erop om in te vullen.
+            <strong>Tip:</strong> Op iPhone (iOS 12+) verschijnt de code automatisch boven het toetsenbord wanneer je deze in Mail ziet. Tap erop om in te vullen.
           </div>
         </div>
       </div>
@@ -256,7 +259,9 @@ export default function Login({ onLogin }) {
       <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
         <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
           <div className="text-center">
-            <div className="text-4xl mb-2">🔐</div>
+            <div className="mx-auto w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-3">
+              <Lock className="w-7 h-7 text-blue-600" />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">Nieuw wachtwoord</h2>
             <p className="text-gray-500 text-sm">Kies een nieuw wachtwoord voor je account</p>
           </div>
@@ -273,7 +278,7 @@ export default function Login({ onLogin }) {
             )}
             <button type="submit" disabled={resetLaden}
               className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
-              {resetLaden ? '⏳ Bezig...' : '🔑 Wachtwoord opslaan'}
+              {resetLaden ? 'Bezig...' : 'Wachtwoord opslaan'}
             </button>
           </form>
         </div>
@@ -288,7 +293,9 @@ export default function Login({ onLogin }) {
         <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
           <button onClick={() => setToonVergeten(false)} className="text-gray-400 text-sm">← Terug</button>
           <div className="text-center">
-            <div className="text-4xl mb-2">📧</div>
+            <div className="mx-auto w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-3">
+              <Mail className="w-7 h-7 text-blue-600" />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">Wachtwoord vergeten</h2>
             <p className="text-gray-500 text-sm">Voer je e-mailadres in — je ontvangt een reset link</p>
           </div>
@@ -308,7 +315,7 @@ export default function Login({ onLogin }) {
             )}
             <button type="submit" disabled={vergetenLaden}
               className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
-              {vergetenLaden ? '⏳ Bezig...' : '📧 Stuur reset link'}
+              {vergetenLaden ? 'Bezig...' : 'Stuur reset link'}
             </button>
           </form>
         </div>
@@ -322,7 +329,7 @@ export default function Login({ onLogin }) {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <button onClick={() => navigate('/')} className="inline-flex items-center gap-2 text-white">
-            <span className="text-4xl">⚡</span>
+            <Zap className="w-10 h-10 text-brand-500" />
             <div className="text-left">
               <div className="text-2xl font-extrabold">SwiftBridge</div>
               <div className="text-blue-200 text-xs">NL → TR in &lt;5 minuten</div>
@@ -336,7 +343,7 @@ export default function Login({ onLogin }) {
               <button key={t} onClick={() => setTab(t)}
                 className={`flex-1 py-4 font-bold text-sm transition
                   ${tab === t ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-400 hover:text-gray-600'}`}>
-                {t === 'login' ? '🔑 Inloggen' : '🚀 Registreren'}
+                {t === 'login' ? 'Inloggen' : 'Registreren'}
               </button>
             ))}
           </div>
@@ -377,16 +384,16 @@ export default function Login({ onLogin }) {
                     }`}
                   />
                   {refValidatie.status === 'bezig' && (
-                    <p className="text-[11px] text-gray-500 mt-1">⏳ {t('registreer_referral_check')}</p>
+                    <p className="text-[11px] text-gray-500 mt-1">{t('registreer_referral_check')}</p>
                   )}
                   {refValidatie.status === 'geldig' && (
                     <p className="text-[11px] text-emerald-700 mt-1 font-semibold">
-                      ✅ {t('registreer_referral_geldig', { naam: refValidatie.uitnodigerNaam })}
+                      {t('registreer_referral_geldig', { naam: refValidatie.uitnodigerNaam })}
                     </p>
                   )}
                   {refValidatie.status === 'ongeldig' && form.referralCode && (
                     <p className="text-[11px] text-rose-600 mt-1">
-                      ⚠️ {t('registreer_referral_ongeldig')}
+                      {t('registreer_referral_ongeldig')}
                     </p>
                   )}
                 </div>
@@ -422,19 +429,19 @@ export default function Login({ onLogin }) {
 
             {fout && (
               <div role="alert" aria-live="assertive" className="bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-xl flex items-start gap-2">
-                <span aria-hidden="true">⚠️</span><span>{fout}</span>
+                <AlertTriangle className="w-4 h-4 shrink-0" /><span>{fout}</span>
               </div>
             )}
 
             <button type="submit" disabled={laden}
               className="btn-primary w-full py-3.5 mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
-              {laden ? '⏳ Bezig...' : tab === 'login' ? '🔑 Inloggen' : '🚀 Account aanmaken'}
+              {laden ? 'Bezig...' : tab === 'login' ? 'Inloggen' : 'Account aanmaken'}
             </button>
           </form>
         </div>
 
         <p className="text-center text-blue-200 text-xs mt-6">
-          🔒 Beveiligd via JWT · Rate limited · End-to-end versleuteld
+          Beveiligd via JWT · Rate limited · End-to-end versleuteld
         </p>
       </div>
     </div>

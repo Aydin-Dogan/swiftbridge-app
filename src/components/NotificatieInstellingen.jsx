@@ -8,10 +8,10 @@ import {
 } from '../services/pushNotificatie';
 
 export default function NotificatieInstellingen({ token }) {
-  const [aan,      setAan     ] = useState(false);
-  const [laden,    setLaden   ] = useState(true);
-  const [bezig,    setBezig   ] = useState(false);
-  const [bericht,  setBericht ] = useState('');
+  const [aan, setAan ] = useState(false);
+  const [laden, setLaden ] = useState(true);
+  const [bezig, setBezig ] = useState(false);
+  const [bericht, setBericht ] = useState('');
   const beschikbaar = pushBeschikbaar();
   const permissie = permissieStatus();
 
@@ -31,10 +31,10 @@ export default function NotificatieInstellingen({ token }) {
       } else {
         await pushInschakelen(token);
         setAan(true);
-        setBericht('✅ Push notificaties ingeschakeld!');
+        setBericht('Push notificaties ingeschakeld!');
       }
     } catch (e) {
-      setBericht('❌ ' + e.message);
+      setBericht('' + e.message);
     } finally {
       setBezig(false);
     }
@@ -47,7 +47,7 @@ export default function NotificatieInstellingen({ token }) {
       await stuurTestNotificatie(token);
       setBericht('🧪 Test verstuurd! Check je notificaties.');
     } catch (e) {
-      setBericht('❌ ' + e.message);
+      setBericht('' + e.message);
     } finally {
       setBezig(false);
     }

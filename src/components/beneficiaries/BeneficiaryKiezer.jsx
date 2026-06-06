@@ -102,12 +102,12 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
           />
 
           {laden && (
-            <p className="text-xs text-gray-500 text-center py-3">⏳ {t('laden')}</p>
+            <p className="text-xs text-gray-500 text-center py-3">{t('laden')}</p>
           )}
 
           {!laden && fout && (
             <div className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-2 py-1.5">
-              ❌ {fout}
+              {fout}
             </div>
           )}
 

@@ -2,16 +2,16 @@
  * kosten.js — Pricing model met hidden FX margin
  *
  * MODEL (18 mei 2026):
- *  1. Zichtbare fee = percentage uit TARIEF_MATRIX (bedrag × methode-kolom).
- *     Gebaseerd op tariefkaart §4.4 uit KOSTEN_TARIEF_OVERZICHT.md.
- *     Minimum fee = €1,99 (express) / €0,99 (economy) — voor micro-bedragen.
- *  2. HIDDEN_FX_MARGIN — ALTIJD aan, klant ziet alleen applied rate.
- *     Express 1,2%, Economy 0,5%.
+ * 1. Zichtbare fee = percentage uit TARIEF_MATRIX (bedrag × methode-kolom).
+ * Gebaseerd op tariefkaart §4.4 uit KOSTEN_TARIEF_OVERZICHT.md.
+ * Minimum fee = €1,99 (express) / €0,99 (economy) — voor micro-bedragen.
+ * 2. HIDDEN_FX_MARGIN — ALTIJD aan, klant ziet alleen applied rate.
+ * Express 1,2%, Economy 0,5%.
  *
  * PSD2 compliance:
- *  - De applied rate wordt getoond (klant ziet wat hij krijgt)
- *  - Totale kosten worden getoond (klant kan rekenen)
- *  - Mid-market rate wordt getoond als referentie
+ * - De applied rate wordt getoond (klant ziet wat hij krijgt)
+ * - Totale kosten worden getoond (klant kan rekenen)
+ * - Mid-market rate wordt getoond als referentie
  */
 
 // ── Verborgen FX margin (geheim — alleen in interne berekening) ────────────
@@ -27,10 +27,10 @@ const MIN_FEE_ECONOMY = 0.99;
 export const TARIEF_TIER_GRENZEN = [200, 500, 1000, 2500];
 
 export const TARIEF_MATRIX = {
-  ideal:  [0.020, 0.015, 0.012, 0.010, 0.008], // iDEAL / Wero / Bancontact
-  card:   [0.035, 0.035, 0.032, 0.030, 0.028], // Card / Apple Pay
+  ideal: [0.020, 0.015, 0.012, 0.010, 0.008], // iDEAL / Wero / Bancontact
+  card: [0.035, 0.035, 0.032, 0.030, 0.028], // Card / Apple Pay
   klarna: [0.050, 0.050, 0.045, 0.040, 0.035],
-  sepa:   [0.012, 0.009, 0.007, 0.005, 0.004], // SEPA economy
+  sepa: [0.012, 0.009, 0.007, 0.005, 0.004], // SEPA economy
 };
 
 // ── Vaste operationele kosten (ook achter de schermen) ─────────────────
@@ -45,13 +45,13 @@ export function methodeNaarTariefKolom(methode) {
   switch (methode) {
     case 'ideal':
     case 'wero':
-    case 'bancontact':  return 'ideal';
+    case 'bancontact': return 'ideal';
     case 'card':
     case 'creditcard':
-    case 'applepay':    return 'card';
-    case 'klarna':      return 'klarna';
-    case 'sepa':        return 'sepa';
-    default:            return 'ideal';
+    case 'applepay': return 'card';
+    case 'klarna': return 'klarna';
+    case 'sepa': return 'sepa';
+    default: return 'ideal';
   }
 }
 
@@ -144,25 +144,25 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
   return {
     bedrag,
     // KLANT ZIET DEZE
-    klantBetaaltFee:  round(klantBetaaltFee, 2),
-    zichtbarePct:     round(zichtPct * 100, 2),    // matrix-percentage (excl. minimum-bumping)
-    appliedRate:      round(appliedRate),
-    midMarketRate:    round(midMarketRate),
-    fxKostenEur:      round(fxKostenInEur, 2),
-    totaleKostenEur:  round(totaleKostenEur, 2),
-    totaleKostenPct:  round(totaleKostenPct, 2),
-    fxAfwijkingPct:   round(fxAfwijkingPct, 2),
-    ontvangenBedrag:  round(ontvangenBedrag, 2),
-    effectievePct:    bedrag > 0 ? round(((bedrag - ontvangenBedrag / midMarketRate) / bedrag) * 100, 2) : 0,
+    klantBetaaltFee: round(klantBetaaltFee, 2),
+    zichtbarePct: round(zichtPct * 100, 2), // matrix-percentage (excl. minimum-bumping)
+    appliedRate: round(appliedRate),
+    midMarketRate: round(midMarketRate),
+    fxKostenEur: round(fxKostenInEur, 2),
+    totaleKostenEur: round(totaleKostenEur, 2),
+    totaleKostenPct: round(totaleKostenPct, 2),
+    fxAfwijkingPct: round(fxAfwijkingPct, 2),
+    ontvangenBedrag: round(ontvangenBedrag, 2),
+    effectievePct: bedrag > 0 ? round(((bedrag - ontvangenBedrag / midMarketRate) / bedrag) * 100, 2) : 0,
     // INTERN (toon NIET aan klant — alleen voor admin reporting)
     _intern: {
       verborgenFxOmzet: round(verborgenFxOmzet, 2),
       swiftbridgeOmzet: round(swiftbridgeOmzet, 2),
       werkelijkeKosten: round(werkelijkeKosten, 2),
-      werkelijkeWinst:  round(werkelijkeWinst, 2),
-      hiddenMarginPct:  margin,
-      tariefTier:       tariefTier(bedrag),
-      tariefKolom:      methodeNaarTariefKolom(methode),
+      werkelijkeWinst: round(werkelijkeWinst, 2),
+      hiddenMarginPct: margin,
+      tariefTier: tariefTier(bedrag),
+      tariefKolom: methodeNaarTariefKolom(methode),
     },
   };
 }

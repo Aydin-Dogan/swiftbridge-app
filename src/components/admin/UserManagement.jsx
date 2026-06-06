@@ -2,18 +2,18 @@
  * UserManagement.jsx — Admin user management tab
  *
  * Functionaliteit:
- *   - Zoek users op email / naam / telefoon (300ms debounce)
- *   - Paginatie via offset/limit
- *   - Klik op user → details drawer (rechts) met tabs: Profiel / Transacties / KYC / Audit / Acties
- *   - Acties: KYC status wijzigen, account suspenderen/heractiveren, wachtwoord reset triggeren
- *   - Bevestigings-modals voor destructieve acties
+ * - Zoek users op email / naam / telefoon (300ms debounce)
+ * - Paginatie via offset/limit
+ * - Klik op user → details drawer (rechts) met tabs: Profiel / Transacties / KYC / Audit / Acties
+ * - Acties: KYC status wijzigen, account suspenderen/heractiveren, wachtwoord reset triggeren
+ * - Bevestigings-modals voor destructieve acties
  *
  * Backend endpoints:
- *   GET    /admin/users?q=&limit=&offset=
- *   GET    /admin/users/:id
- *   PATCH  /admin/users/:id/kyc-status
- *   PATCH  /admin/users/:id/status
- *   POST   /admin/users/:id/wachtwoord-reset
+ * GET /admin/users?q=&limit=&offset=
+ * GET /admin/users/:id
+ * PATCH /admin/users/:id/kyc-status
+ * PATCH /admin/users/:id/status
+ * POST /admin/users/:id/wachtwoord-reset
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { apiFetch, parseError } from '../../services/api';
@@ -39,8 +39,8 @@ function shortId(id) {
 // ── Status badges ─────────────────────────────────────────────────────────────
 function KycBadge({ status }) {
   const map = {
-    goedgekeurd:    'bg-green-500/20 border-green-300/30 text-green-200',
-    afgekeurd:      'bg-red-500/20 border-red-300/30 text-red-200',
+    goedgekeurd: 'bg-green-500/20 border-green-300/30 text-green-200',
+    afgekeurd: 'bg-red-500/20 border-red-300/30 text-red-200',
     in_behandeling: 'bg-amber-500/20 border-amber-300/30 text-amber-200',
     niet_ingediend: 'bg-white/10 border-white/20 text-white/60',
   };
@@ -54,9 +54,9 @@ function KycBadge({ status }) {
 
 function AccountBadge({ status }) {
   const map = {
-    actief:         'bg-green-500/20 border-green-300/30 text-green-200',
-    gesuspendeerd:  'bg-red-500/20 border-red-300/30 text-red-200',
-    verwijderd:     'bg-gray-500/20 border-gray-300/30 text-gray-200',
+    actief: 'bg-green-500/20 border-green-300/30 text-green-200',
+    gesuspendeerd: 'bg-red-500/20 border-red-300/30 text-red-200',
+    verwijderd: 'bg-gray-500/20 border-gray-300/30 text-gray-200',
   };
   const cls = map[status] || map.actief;
   return (
@@ -131,11 +131,11 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
 // ── User Detail Drawer ───────────────────────────────────────────────────────
 function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
   const { t } = useTaal();
-  const [data, setData]     = useState(null);
-  const [laden, setLaden]   = useState(true);
-  const [fout, setFout]     = useState('');
-  const [tab, setTab]       = useState('profiel');
-  const [modal, setModal]   = useState(null); // { soort: 'kyc'|'status'|'reset' }
+  const [data, setData] = useState(null);
+  const [laden, setLaden] = useState(true);
+  const [fout, setFout] = useState('');
+  const [tab, setTab] = useState('profiel');
+  const [modal, setModal] = useState(null); // { soort: 'kyc'|'status'|'reset' }
   const [actieBezig, setActieBezig] = useState(false);
   const [actieMelding, setActieMelding] = useState(null); // {soort:'ok'|'fout', tekst}
 
@@ -236,11 +236,11 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
 
             <div className="px-5 pt-4 flex gap-1 overflow-x-auto border-b border-white/10">
               {[
-                { id: 'profiel',    label: 'Profiel',       icoon: '👤' },
-                { id: 'transacties',label: 'Transacties',   icoon: '💸' },
-                { id: 'kyc',        label: 'KYC',           icoon: '🛂' },
-                { id: 'audit',      label: 'Audit',         icoon: '📋' },
-                { id: 'acties',     label: 'Acties',        icoon: '⚙️' },
+                { id: 'profiel', label: 'Profiel', icoon: '👤' },
+                { id: 'transacties',label: 'Transacties', icoon: '💸' },
+                { id: 'kyc', label: 'KYC', icoon: '🛂' },
+                { id: 'audit', label: 'Audit', icoon: '📋' },
+                { id: 'acties', label: 'Acties', icoon: '⚙️' },
               ].map((tt) => (
                 <button
                   key={tt.id}
@@ -438,8 +438,8 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
               naam: 'status', label: 'Nieuwe status', type: 'select',
               default: 'goedgekeurd',
               opties: [
-                { id: 'goedgekeurd',    label: 'Goedgekeurd' },
-                { id: 'afgekeurd',      label: 'Afgekeurd' },
+                { id: 'goedgekeurd', label: 'Goedgekeurd' },
+                { id: 'afgekeurd', label: 'Afgekeurd' },
                 { id: 'in_behandeling', label: 'In behandeling' },
               ],
             },
@@ -530,11 +530,11 @@ function ActieKaart({ icoon, titel, beschrijving, knop, knopKleur = 'bg-amber-60
 export default function UserManagement() {
   const { t } = useTaal();
   const [zoekterm, setZoekterm] = useState('');
-  const [users, setUsers]     = useState([]);
-  const [totaal, setTotaal]   = useState(0);
-  const [offset, setOffset]   = useState(0);
-  const [laden, setLaden]     = useState(false);
-  const [fout, setFout]       = useState('');
+  const [users, setUsers] = useState([]);
+  const [totaal, setTotaal] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const [laden, setLaden] = useState(false);
+  const [fout, setFout] = useState('');
   const [actieveUser, setActieveUser] = useState(null);
   const limit = 20;
   const debounceRef = useRef(null);

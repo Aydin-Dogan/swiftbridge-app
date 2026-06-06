@@ -2,19 +2,19 @@
  * DocumentUploadFlow.jsx — Document-based KYC wizard (fallback voor users zonder NL bank/iDIN)
  *
  * Stappen:
- *   1. Document type kiezen (Paspoort / ID-kaart / Rijbewijs)
- *   2. Document info (nummer, geboortedatum, nationaliteit)
- *   3. Foto voorkant (file input + drag-drop)
- *   4. Foto achterkant (alleen ID-kaart + Rijbewijs)
- *   5. Selfie (file input OF camera via getUserMedia)
- *   6. Review + verzenden
+ * 1. Document type kiezen (Paspoort / ID-kaart / Rijbewijs)
+ * 2. Document info (nummer, geboortedatum, nationaliteit)
+ * 3. Foto voorkant (file input + drag-drop)
+ * 4. Foto achterkant (alleen ID-kaart + Rijbewijs)
+ * 5. Selfie (file input OF camera via getUserMedia)
+ * 6. Review + verzenden
  *
  * Submit: multipart/form-data POST /kyc/upload-document met credentials:'include'.
  * Backend zet kyc_records.bron='document_upload', status='in_behandeling'.
  *
  * Client-side validatie:
- *  - max 5MB per file
- *  - alleen image/jpeg + image/png
+ * - max 5MB per file
+ * - alleen image/jpeg + image/png
  *
  * A11y: labels op alle inputs, aria-describedby voor instructies.
  */
@@ -28,9 +28,9 @@ const TOEGESTANE_TYPES = ['image/jpeg', 'image/png'];
 
 // ── Document types ────────────────────────────────────────────────────────────
 const DOC_TYPES = [
-  { value: 'paspoort',  icoon: '📘', tKey: 'kyc_doc_paspoort',  heeftAchterkant: false },
-  { value: 'id_kaart',  icoon: '🪪', tKey: 'kyc_doc_id_kaart',  heeftAchterkant: true  },
-  { value: 'rijbewijs', icoon: '🚗', tKey: 'kyc_doc_rijbewijs', heeftAchterkant: true  },
+  { value: 'paspoort', icoon: '📘', tKey: 'kyc_doc_paspoort', heeftAchterkant: false },
+  { value: 'id_kaart', icoon: '🪪', tKey: 'kyc_doc_id_kaart', heeftAchterkant: true },
+  { value: 'rijbewijs', icoon: '🚗', tKey: 'kyc_doc_rijbewijs', heeftAchterkant: true },
 ];
 
 // Top 50 landen (focus op diaspora-relevante landen)
@@ -219,7 +219,7 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
         />
       </div>
       {fout && (
-        <p role="alert" className="mt-2 text-sm text-red-600">⚠️ {fout}</p>
+        <p role="alert" className="mt-2 text-sm text-red-600">{fout}</p>
       )}
     </div>
   );
@@ -291,7 +291,7 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
   if (fout) {
     return (
       <div className="bg-red-50 border border-red-200 rounded-2xl p-4 space-y-3">
-        <p className="text-sm text-red-700 font-semibold">⚠️ {t('kyc_camera_fout')}</p>
+        <p className="text-sm text-red-700 font-semibold">{t('kyc_camera_fout')}</p>
         <p className="text-xs text-red-600">{fout}</p>
         <button
           type="button"
@@ -388,7 +388,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
   }
 
   function volgende() { setStap((s) => Math.min(s + 1, stappen.length - 1)); }
-  function vorige()  { setStap((s) => Math.max(s - 1, 0)); }
+  function vorige() { setStap((s) => Math.max(s - 1, 0)); }
 
   // Bij wissel doc-type: reset achterkant
   useEffect(() => {
@@ -454,7 +454,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
         <h2 className="text-xl font-bold text-gray-800">{t('kyc_upload_succes_titel')}</h2>
         <p className="text-gray-600 text-sm">{t('kyc_upload_succes_omschrijving')}</p>
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-700 text-left">
-          📧 {t('kyc_upload_succes_email_info')}
+          {t('kyc_upload_succes_email_info')}
         </div>
         {onSuccess && (
           <button
@@ -485,7 +485,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
       {huidige === 'type' && (
         <div className="space-y-3">
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-800">
-            🔒 {t('kyc_upload_privacy_disclaimer')}
+            {t('kyc_upload_privacy_disclaimer')}
           </div>
           <fieldset className="space-y-2">
             <legend className="text-sm font-semibold text-gray-700 mb-1">
@@ -750,7 +750,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
           </div>
           {serverFout && (
             <div role="alert" className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-700">
-              ⚠️ {serverFout}
+              {serverFout}
             </div>
           )}
           {bezig && (

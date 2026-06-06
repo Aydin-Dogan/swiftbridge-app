@@ -2,25 +2,25 @@
  * Dashboard.jsx — Premium dashboard voor SwiftBridge
  *
  * Layout (van boven naar beneden):
- *   1. SaldoCard          — welcome header met KYC status pill
- *   2. Welkomst-deal      — gratis eerste transactie banner (indien van toepassing)
- *   3. KYC waarschuwing   — als KYC nog niet goedgekeurd is
- *   4. StatistiekCards    — 4 hero stat boxes (deze maand)
- *   5. QuickActions       — 3 CTA knoppen
- *   6. KoersChart         — EUR→TRY live + sparkline 7d
- *   7. FeestKalender      — Bayram/Ramadan herinneringen (alleen na KYC)
- *   8. RecentTransacties  — laatste 5 transacties met badge + detail modal
- *   9. InsightsCard       — "Wist je dat?" tip rotatie
- *  10. WeeklimietBalk     — alleen na KYC
- *  11. 2FA + Notificaties — beveiliging & instellingen
+ * 1. SaldoCard — welcome header met KYC status pill
+ * 2. Welkomst-deal — gratis eerste transactie banner (indien van toepassing)
+ * 3. KYC waarschuwing — als KYC nog niet goedgekeurd is
+ * 4. StatistiekCards — 4 hero stat boxes (deze maand)
+ * 5. QuickActions — 3 CTA knoppen
+ * 6. KoersChart — EUR→TRY live + sparkline 7d
+ * 7. FeestKalender — Bayram/Ramadan herinneringen (alleen na KYC)
+ * 8. RecentTransacties — laatste 5 transacties met badge + detail modal
+ * 9. InsightsCard — "Wist je dat?" tip rotatie
+ * 10. WeeklimietBalk — alleen na KYC
+ * 11. 2FA + Notificaties — beveiliging & instellingen
  *
  * Behoudt:
- *   - a11y verbeteringen vorige polish ronde (refresh aria-label, 44px touch,
- *     lege-state CTA, KYC waarschuwing)
- *   - Live FX via /transactions/koersen elke 60s
- *   - Transactiehistorie via /transactions met credentials:'include' (cookie auth)
- *   - localStorage fallback
- *   - Custom event 'swiftbridge_navigate' voor in-app navigatie
+ * - a11y verbeteringen vorige polish ronde (refresh aria-label, 44px touch,
+ * lege-state CTA, KYC waarschuwing)
+ * - Live FX via /transactions/koersen elke 60s
+ * - Transactiehistorie via /transactions met credentials:'include' (cookie auth)
+ * - localStorage fallback
+ * - Custom event 'swiftbridge_navigate' voor in-app navigatie
  */
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -50,15 +50,15 @@ import BannerLijst from './banners/BannerLijst';
 // API helper voor email verificatie resend
 import { apiFetch, parseError } from '../services/api';
 
-const API    = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
 const ONB_DISMISS_KEY = 'sb_onboarding_dismissed';
 
 // Bepaal of we de onboarding modal moeten tonen.
 // Voorwaarden:
-//   - gebruiker.aangemeldOp < 24u geleden (verse accounts)
-//   - kycStatus !== 'goedgekeurd' (KYC nudge nog relevant) OF nog niet dismissed
-//   - localStorage 'sb_onboarding_dismissed' niet gezet
+// - gebruiker.aangemeldOp < 24u geleden (verse accounts)
+// - kycStatus !== 'goedgekeurd' (KYC nudge nog relevant) OF nog niet dismissed
+// - localStorage 'sb_onboarding_dismissed' niet gezet
 // Robust voor missende `aangemeldOp` op de backend: als veld ontbreekt vallen we
 // terug op alleen de KYC-staat zodat we de wizard niet voor elke bestaande
 // gebruiker forceren te zien.
@@ -197,7 +197,7 @@ function EmailVerificatieBanner({ email }) {
                   : 'text-red-700 bg-red-50 border-red-200'
               }`}
             >
-              {ok ? '✅ ' : '⚠️ '}
+              {ok ? '' : ''}
               {bericht}
             </div>
           )}
@@ -206,7 +206,7 @@ function EmailVerificatieBanner({ email }) {
             disabled={laden}
             className="mt-3 inline-flex items-center gap-1 bg-amber-600 hover:bg-amber-700 disabled:bg-gray-300 text-white text-xs font-bold px-4 py-2 rounded-xl transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400"
           >
-            {laden ? `⏳ ${t('laden')}` : `📨 ${t('email_banner_resend_knop')}`}
+            {laden ? `${t('laden')}` : `${t('email_banner_resend_knop')}`}
           </button>
         </div>
       </div>
@@ -258,12 +258,12 @@ function RecurringBadge() {
 // ── Hoofdcomponent ───────────────────────────────────────────────────────────
 export default function Dashboard({ gebruiker }) {
   const { t } = useTaal();
-  const [koers,         setKoers        ] = useState(null);
+  const [koers, setKoers ] = useState(null);
   const [koersGisteren, setKoersGisteren] = useState(null);
-  const [ladenKoers,    setLadenKoers   ] = useState(true);
-  const [transacties,   setTransacties  ] = useState([]);
-  const [ladenTx,       setLadenTx      ] = useState(true);
-  const [weekData,      setWeekData     ] = useState({ weekTotaal: 0, weekLimiet: 5000 });
+  const [ladenKoers, setLadenKoers ] = useState(true);
+  const [transacties, setTransacties ] = useState([]);
+  const [ladenTx, setLadenTx ] = useState(true);
+  const [weekData, setWeekData ] = useState({ weekTotaal: 0, weekLimiet: 5000 });
 
   // Onboarding modal — toon één keer voor verse accounts die nog niet door KYC heen zijn
   const [onboardingOpen, setOnboardingOpen] = useState(() => moetOnboardingTonen(gebruiker));
@@ -294,7 +294,7 @@ export default function Dashboard({ gebruiker }) {
   const haalKoers = useCallback(async () => {
     setLadenKoers(true);
     try {
-      const res  = await fetch(`${API}/transactions/koersen`, { credentials: 'include' });
+      const res = await fetch(`${API}/transactions/koersen`, { credentials: 'include' });
       const json = await res.json();
       if (json.koersen?.TRY) {
         setKoers(prev => {
@@ -311,7 +311,7 @@ export default function Dashboard({ gebruiker }) {
   const haalTransacties = useCallback(async () => {
     setLadenTx(true);
     try {
-      const res  = await fetch(`${API}/transactions`, { credentials: 'include' });
+      const res = await fetch(`${API}/transactions`, { credentials: 'include' });
       if (!res.ok) throw new Error('Niet ingelogd');
       const json = await res.json();
       setTransacties(json.transacties || []);
@@ -394,7 +394,7 @@ export default function Dashboard({ gebruiker }) {
             onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
             className="w-full mt-3 bg-white/20 hover:bg-white/30 text-white font-bold py-2.5 rounded-xl text-sm active:scale-95"
           >
-            💸 Verstuur je eerste gratis transactie →
+            Verstuur je eerste gratis transactie →
           </button>
         </div>
       )}

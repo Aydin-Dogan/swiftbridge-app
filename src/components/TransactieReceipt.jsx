@@ -21,10 +21,10 @@ function maskIBAN(iban) {
 }
 
 const MILESTONES = [
-  { id: 'initiated',          label: 'Jouw bank',          icon: '🏦', veld: 'milestoneInitiated' },
-  { id: 'betaling_ontvangen', label: 'SwiftBridge',        icon: '🌉', veld: 'milestoneBetalingOntvangen' },
-  { id: 'tr_bank_verzonden',  label: 'Bank ontvanger',     icon: '🏛️', veld: 'milestoneTrBankVerzonden' },
-  { id: 'uitbetaald',         label: 'Rekening ontvanger', icon: '✅', veld: 'milestoneUitbetaald' },
+  { id: 'initiated', label: 'Jouw bank', icon: '🏦', veld: 'milestoneInitiated' },
+  { id: 'betaling_ontvangen', label: 'SwiftBridge', icon: '🌉', veld: 'milestoneBetalingOntvangen' },
+  { id: 'tr_bank_verzonden', label: 'Bank ontvanger', icon: '🏛️', veld: 'milestoneTrBankVerzonden' },
+  { id: 'uitbetaald', label: 'Rekening ontvanger', icon: '✅', veld: 'milestoneUitbetaald' },
 ];
 
 export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
@@ -189,13 +189,13 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
 
         {/* Aklınızda olsun / Houd er rekening mee */}
         <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 text-[11px] text-blue-800 leading-snug">
-          <strong>💡 Houd er rekening mee:</strong> de bank van de ontvanger kan het geld tot 3 werkdagen vasthouden voordat het beschikbaar is.
+          <strong>Houd er rekening mee:</strong> de bank van de ontvanger kan het geld tot 3 werkdagen vasthouden voordat het beschikbaar is.
         </div>
 
         {/* PDF foutmelding */}
         {pdfFout && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-[11px] text-red-800 print:hidden">
-            ⚠️ {pdfFout}
+            {pdfFout}
           </div>
         )}
 
@@ -230,7 +230,7 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
             onClick={() => onHerhaal?.(tx)}
             className="btn-primary py-3 text-sm col-span-2"
           >
-            🔁 Opnieuw versturen
+            Opnieuw versturen
           </button>
         </div>
 
@@ -299,7 +299,7 @@ function ReferralCtaInReceipt() {
           onClick={kopieer}
           className="text-xs font-semibold text-emerald-700 bg-white hover:bg-emerald-50 border border-emerald-200 rounded-lg py-2 transition"
         >
-          {gekopieerd ? '✓ Gekopieerd' : '📋 Kopieer link'}
+          {gekopieerd ? '✓ Gekopieerd' : 'Kopieer link'}
         </button>
         <button
           onClick={whatsapp}

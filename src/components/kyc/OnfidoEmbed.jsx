@@ -6,11 +6,11 @@
  * meegeeft in de /kyc/submit-response.
  *
  * Props:
- *  - sdkToken: string — door backend uitgegeven (vervalt na 90 min)
- *  - taal:     'nl' | 'tr' | 'en' | 'ru' | 'az'
- *  - onComplete: () => void — user heeft alle stappen doorlopen (document + selfie)
- *  - onError:    (msg: string) => void — SDK kon niet laden of crashte
- *  - onAnnuleer: () => void — user klikte op "annuleren / terug"
+ * - sdkToken: string — door backend uitgegeven (vervalt na 90 min)
+ * - taal: 'nl' | 'tr' | 'en' | 'ru' | 'az'
+ * - onComplete: () => void — user heeft alle stappen doorlopen (document + selfie)
+ * - onError: (msg: string) => void — SDK kon niet laden of crashte
+ * - onAnnuleer: () => void — user klikte op "annuleren / terug"
  *
  * Resultaat van de verificatie komt NIET hier binnen — die loopt via de
  * server-side webhook (POST /kyc/webhook) van Onfido. Wij weten alleen dat
@@ -22,7 +22,7 @@ import { useEffect, useRef, useState } from 'react';
 // Pin een specifieke SDK versie zodat updates niet stilletjes ons UI breken.
 // Bij major upgrade hier handmatig versie verhogen + integration testen.
 const ONFIDO_SDK_VERSION = '14.30.0';
-const ONFIDO_JS_URL  = `https://assets.onfido.com/web-sdk-releases/${ONFIDO_SDK_VERSION}/onfido.min.js`;
+const ONFIDO_JS_URL = `https://assets.onfido.com/web-sdk-releases/${ONFIDO_SDK_VERSION}/onfido.min.js`;
 const ONFIDO_CSS_URL = `https://assets.onfido.com/web-sdk-releases/${ONFIDO_SDK_VERSION}/style.css`;
 
 // Map onze i18n taalcodes naar Onfido's ondersteunde locales
@@ -144,7 +144,7 @@ export default function OnfidoEmbed({ sdkToken, taal = 'nl', onComplete, onError
   if (status === 'fout') {
     return (
       <div className="bg-red-50 border border-red-200 rounded-2xl p-5 text-sm text-red-700 space-y-3">
-        <p className="font-bold">⚠️ Verificatie kan nu niet starten</p>
+        <p className="font-bold">Verificatie kan nu niet starten</p>
         <p>{foutMsg}</p>
         <p className="text-xs text-red-500">
           Je documenten zijn wel bij ons aangekomen. Een medewerker controleert ze handmatig

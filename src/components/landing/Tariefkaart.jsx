@@ -20,9 +20,9 @@ const TIERS = [
 // Klarna écht beschikbaar is, niet in publieke tariefkaart tonen (anders
 // misleidende reclame). Voeg Klarna weer toe zodra Mollie het activeert.
 const METHODEN = [
-  { key: 'ideal',  icon: '🏦', i18n: 'tariefkaart_methode_ideal' },
-  { key: 'card',   icon: '💳', i18n: 'tariefkaart_methode_card' },
-  { key: 'sepa',   icon: '🏛️', i18n: 'tariefkaart_methode_sepa' },
+  { key: 'ideal', icon: '🏦', i18n: 'tariefkaart_methode_ideal' },
+  { key: 'card', icon: '💳', i18n: 'tariefkaart_methode_card' },
+  { key: 'sepa', icon: '🏛️', i18n: 'tariefkaart_methode_sepa' },
 ];
 
 function pct(v) {
@@ -33,7 +33,7 @@ function pct(v) {
 /**
  * @param {object} props
  * @param {boolean} [props.embedded=false] - render zonder outer section/header
- *   (voor gebruik binnen PricingSection wrapper).
+ * (voor gebruik binnen PricingSection wrapper).
  */
 export default function Tariefkaart({ embedded = false }) {
   const { t } = useTaal();

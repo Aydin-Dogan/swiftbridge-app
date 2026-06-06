@@ -244,11 +244,11 @@ function SpaardoelKaart({ item, onUpdate, onBewerk, onVerwijder, bewerkActief, o
       {item.deadline && !item.bereikt && (
         <div className="mt-2 text-xs text-gray-600 space-y-0.5">
           <div>
-            📅 {fmtDeadline(item.deadline, t)} · <span className="font-semibold">{item.dagenResterend} {t('spaardoel_dagen_resterend')}</span>
+            {fmtDeadline(item.deadline, t)} · <span className="font-semibold">{item.dagenResterend} {t('spaardoel_dagen_resterend')}</span>
           </div>
           {item.suggestedPerWeek > 0 && (
             <div className="text-emerald-700 font-medium">
-              💡 {t('spaardoel_suggest_week', { bedrag: item.suggestedPerWeek })}
+              {t('spaardoel_suggest_week', { bedrag: item.suggestedPerWeek })}
             </div>
           )}
         </div>
@@ -295,7 +295,7 @@ function SpaardoelKaart({ item, onUpdate, onBewerk, onVerwijder, bewerkActief, o
               onClick={onNaarOverboeking}
               className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded px-2.5 py-1.5 transition"
             >
-              💸 {t('spaardoel_stuur_nu')}
+              {t('spaardoel_stuur_nu')}
             </button>
           )}
         </div>
@@ -423,7 +423,7 @@ function SpaardoelForm({ onSluit, onAangemaakt }) {
         disabled={bezig || !naam.trim()}
         className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold text-sm py-2.5 rounded-lg transition"
       >
-        {bezig ? '⏳ ...' : t('spaardoel_form_aanmaken')}
+        {bezig ? '...' : t('spaardoel_form_aanmaken')}
       </button>
     </form>
   );

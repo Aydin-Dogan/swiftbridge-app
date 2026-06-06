@@ -1,9 +1,9 @@
 /**
  * QuickActions.jsx — 3 prominente CTA knoppen onder de welcome header
  *
- * - 🚀 Nieuwe overboeking (primary, blauw gradient)
- * - 📊 Bekijk koersen
- * - 💡 Maak alert
+ * - Nieuwe overboeking (primary, blauw gradient)
+ * - Bekijk koersen
+ * - Maak alert
  *
  * Communiceert met App via een custom event ('swiftbridge_navigate' met tab id),
  * conform de bestaande Dashboard.jsx en FeestKalender patronen.

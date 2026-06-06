@@ -2,18 +2,18 @@
  * RecurringFormulier.jsx — Modal voor het aanmaken van een terugkerende overboeking.
  *
  * Velden:
- *  - Naam (label)
- *  - Bedrag (EUR)
- *  - Ontvanger naam, IBAN, optionele bank
- *  - FrequentiePicker (sub-component)
- *  - Startdatum
- *  - Optionele einddatum
+ * - Naam (label)
+ * - Bedrag (EUR)
+ * - Ontvanger naam, IBAN, optionele bank
+ * - FrequentiePicker (sub-component)
+ * - Startdatum
+ * - Optionele einddatum
  *
  * Validatie:
- *  - Bedrag €10 – €5000
- *  - IBAN niet leeg (server doet mod-97; we doen lichte client check)
- *  - Naam ≥ 2 tekens
- *  - Startdatum verplicht en niet in het verleden
+ * - Bedrag €10 – €5000
+ * - IBAN niet leeg (server doet mod-97; we doen lichte client check)
+ * - Naam ≥ 2 tekens
+ * - Startdatum verplicht en niet in het verleden
  *
  * Bij succes: roept onAangemaakt(nieuw) en sluit modal.
  */
@@ -93,7 +93,7 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
         startOp: new Date(startOp).toISOString(),
       };
       if (frequentie === 'maandelijks') body.dagVanMaand = dagVanMaand;
-      if (frequentie === 'wekelijks')   body.dagVanWeek  = dagVanWeek;
+      if (frequentie === 'wekelijks') body.dagVanWeek = dagVanWeek;
       if (eindigtOp) body.eindigtOp = new Date(eindigtOp).toISOString();
 
       const res = await apiFetch('/recurring', { method: 'POST', body });

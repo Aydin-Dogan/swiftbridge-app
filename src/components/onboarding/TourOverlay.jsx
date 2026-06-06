@@ -7,16 +7,16 @@
  * Profiel / KYC).
  *
  * Trigger:
- *   - 1× automatisch na sluiting van OnboardingWizard
- *   - handmatig via "Tour starten" knop in Profiel
+ * - 1× automatisch na sluiting van OnboardingWizard
+ * - handmatig via "Tour starten" knop in Profiel
  *
  * State: localStorage `sb_tour_done`.
  *
  * UX:
- *   - 5 stappen, één per tab
- *   - Skip-knop zichtbaar op elk moment
- *   - Pijl wijst naar gerelateerde tab onderaan
- *   - Esc-toets sluit
+ * - 5 stappen, één per tab
+ * - Skip-knop zichtbaar op elk moment
+ * - Pijl wijst naar gerelateerde tab onderaan
+ * - Esc-toets sluit
  */
 import { useState, useEffect } from 'react';
 import { useTaal } from '../../i18n';
@@ -26,9 +26,9 @@ const TOUR_KEY = 'sb_tour_done';
 const STAPPEN = [
   { id: 'dashboard', icoon: '📊' },
   { id: 'overmaken', icoon: '💸' },
-  { id: 'alerts',    icoon: '🔔' },
-  { id: 'profiel',   icoon: '👤' },
-  { id: 'kyc',       icoon: '🪪' },
+  { id: 'alerts', icoon: '🔔' },
+  { id: 'profiel', icoon: '👤' },
+  { id: 'kyc', icoon: '🪪' },
 ];
 
 export function moetTourTonen() {

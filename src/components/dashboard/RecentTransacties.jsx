@@ -4,7 +4,7 @@
  * - Tabel/lijst: ontvanger, bedrag EUR, ontvangen valuta, status badge, datum
  * - Status badges (groen/amber/rood) via .pill-* classes in index.css
  * - "Bekijk alle" link onderaan (navigeert naar betaling tab — later kan dit een
- *   eigen historie pagina worden)
+ * eigen historie pagina worden)
  * - Lege state: uitnodigende CTA "Begin je eerste overboeking" (a11y CTA behouden)
  * - Klik op rij → opent de bestaande TransactieReceipt modal
  * - Skeleton loaders tijdens laden
@@ -13,6 +13,7 @@ import { useState } from 'react';
 import TransactieReceipt from '../TransactieReceipt';
 import { formatBedrag } from '../../services/currencies';
 import { useTaal } from '../../i18n';
+import { CheckCircle, Clock, XCircle, X as XIcon, Zap } from '../icons/Icons';
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
@@ -44,16 +45,16 @@ function relatieveTijd(iso, t) {
 
 function StatusBadge({ status, t }) {
   const map = {
-    voltooid:       { pill: 'pill-success', icoon: '✅', label: t('status_voltooid') },
-    in_behandeling: { pill: 'pill-warning', icoon: '⏳', label: t('status_in_behandeling') },
-    wacht_op_betaling: { pill: 'pill-warning', icoon: '⏳', label: t('status_in_behandeling') },
-    mislukt:        { pill: 'pill-error',   icoon: '❌', label: t('status_mislukt') },
-    geannuleerd:    { pill: 'pill-neutral', icoon: '🚫', label: t('status_geannuleerd') },
+    voltooid: { pill: 'pill-success', Icoon: CheckCircle, label: t('status_voltooid') },
+    in_behandeling: { pill: 'pill-warning', Icoon: Clock, label: t('status_in_behandeling') },
+    wacht_op_betaling: { pill: 'pill-warning', Icoon: Clock, label: t('status_in_behandeling') },
+    mislukt: { pill: 'pill-error', Icoon: XCircle, label: t('status_mislukt') },
+    geannuleerd: { pill: 'pill-neutral', Icoon: XIcon, label: t('status_geannuleerd') },
   };
   const s = map[status] || map.in_behandeling;
   return (
     <span className={`inline-flex items-center gap-1 ${s.pill}`}>
-      <span aria-hidden="true">{s.icoon}</span>
+      <s.Icoon className="w-3.5 h-3.5" />
       <span className="hidden sm:inline">{s.label}</span>
     </span>
   );
@@ -123,17 +124,17 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
           aria-hidden="true"
           className="mx-auto mb-4"
         >
-          {/* NL flag circle */}
-          <circle cx="25" cy="40" r="20" fill="#fef3c7" />
-          <text x="25" y="46" textAnchor="middle" fontSize="20">🇳🇱</text>
+          {/* Bron — EUR circle (Wise-stijl met currency-code ipv vlag) */}
+          <circle cx="25" cy="40" r="20" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5" />
+          <text x="25" y="46" textAnchor="middle" fontSize="14" fill="#2563eb" fontWeight="bold">EUR</text>
           {/* Pijl met euro */}
           <path d="M 50 40 L 105 40" stroke="#2563EB" strokeWidth="2" strokeDasharray="3 3" />
           <polygon points="105,35 115,40 105,45" fill="#2563EB" />
           <circle cx="80" cy="40" r="14" fill="#fff" stroke="#2563EB" strokeWidth="2" />
           <text x="80" y="46" textAnchor="middle" fontSize="14" fill="#2563EB" fontWeight="bold">€</text>
-          {/* TR flag circle */}
-          <circle cx="135" cy="40" r="20" fill="#fee2e2" />
-          <text x="135" y="46" textAnchor="middle" fontSize="20">🇹🇷</text>
+          {/* Bestemming — TRY circle */}
+          <circle cx="135" cy="40" r="20" fill="#fef2f2" stroke="#fecaca" strokeWidth="1.5" />
+          <text x="135" y="46" textAnchor="middle" fontSize="14" fill="#dc2626" fontWeight="bold">TRY</text>
         </svg>
 
         <h3 className="font-bold text-slate-800 mb-1 text-lg">
@@ -183,7 +184,7 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
     >
       <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
         <h3 className="font-bold text-slate-800 text-sm">
-          <span aria-hidden="true">⚡ </span>
+          <span aria-hidden="true"></span>
           {t('dashboard_recent_titel')}
         </h3>
         <span className="text-[11px] text-slate-400 font-medium">
@@ -240,7 +241,10 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
                     }`}
                     aria-hidden="true"
                   >
-                    {tx.status === 'voltooid' ? '✅' : tx.status === 'mislukt' ? '❌' : tx.status === 'geannuleerd' ? '🚫' : '⏳'}
+                    {tx.status === 'voltooid' ? <CheckCircle className="w-5 h-5 text-green-600" /> :
+                     tx.status === 'mislukt' ? <XCircle className="w-5 h-5 text-red-600" /> :
+                     tx.status === 'geannuleerd' ? <XIcon className="w-5 h-5 text-slate-500" /> :
+                     <Clock className="w-5 h-5 text-amber-600" />}
                   </div>
                   <div className="min-w-0">
                     <div className="font-semibold text-slate-800 text-sm truncate">

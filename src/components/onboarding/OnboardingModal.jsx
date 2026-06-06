@@ -2,18 +2,18 @@
  * OnboardingModal.jsx — Full screen wizard voor nieuwe SwiftBridge gebruikers
  *
  * 4 stappen:
- *   1. Welkom + 3-punt overzicht
- *   2. KYC nudge → /verificatie
- *   3. KYC bevestiging + welkomstdeal (alleen als KYC al goedgekeurd)
- *   4. Klaar — quick tips + CTA naar overboeking
+ * 1. Welkom + 3-punt overzicht
+ * 2. KYC nudge → /verificatie
+ * 3. KYC bevestiging + welkomstdeal (alleen als KYC al goedgekeurd)
+ * 4. Klaar — quick tips + CTA naar overboeking
  *
  * Logica:
- *   - Start op stap 1 voor verse gebruikers
- *   - Start op stap 3 als KYC al voltooid is (gebruiker kwam terug)
- *   - Sluiten via X knop of "Sla over voor nu" → onDismiss callback
- *   - ESC sluit modal
- *   - Body scroll lock terwijl modal open is
- *   - Slide animatie op stap-transitions
+ * - Start op stap 1 voor verse gebruikers
+ * - Start op stap 3 als KYC al voltooid is (gebruiker kwam terug)
+ * - Sluiten via X knop of "Sla over voor nu" → onDismiss callback
+ * - ESC sluit modal
+ * - Body scroll lock terwijl modal open is
+ * - Slide animatie op stap-transitions
  */
 import { useEffect, useState } from 'react';
 import { useTaal } from '../../i18n';

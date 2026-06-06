@@ -2,9 +2,9 @@
  * BannerBeheer.jsx — Admin UI voor het beheren van app-wide banners.
  *
  * Functies:
- *   - Lijst van alle banners (incl. inactief) via GET /admin/banners
- *   - "Nieuwe banner" knop → modal met formulier (POST /admin/banners)
- *   - Per rij: edit (PATCH), toggle actief/inactief, delete (soft via DELETE)
+ * - Lijst van alle banners (incl. inactief) via GET /admin/banners
+ * - "Nieuwe banner" knop → modal met formulier (POST /admin/banners)
+ * - Per rij: edit (PATCH), toggle actief/inactief, delete (soft via DELETE)
  *
  * Geldige types: info, success, warning, error
  */
@@ -13,10 +13,10 @@ import { apiFetch, parseError } from '../../services/api';
 import { useTaal } from '../../i18n';
 
 const TYPES = [
-  { id: 'info',    label: 'Info',    emoji: 'ℹ️',  kleur: 'text-blue-200'    },
-  { id: 'success', label: 'Succes',  emoji: '✅', kleur: 'text-emerald-200' },
+  { id: 'info', label: 'Info', emoji: 'ℹ️', kleur: 'text-blue-200' },
+  { id: 'success', label: 'Succes', emoji: '✅', kleur: 'text-emerald-200' },
   { id: 'warning', label: 'Waarschuwing', emoji: '⚠️', kleur: 'text-amber-200' },
-  { id: 'error',   label: 'Fout',    emoji: '❌', kleur: 'text-rose-200'    },
+  { id: 'error', label: 'Fout', emoji: '❌', kleur: 'text-rose-200' },
 ];
 
 function fmtDatum(iso) {
@@ -28,15 +28,15 @@ function fmtDatum(iso) {
 
 function leegFormulier() {
   return {
-    id:         '',
-    titel:      '',
-    bericht:    '',
-    type:       'info',
-    sluitbaar:  true,
-    actief:     true,
-    cta_tekst:  '',
-    cta_url:    '',
-    start_op:   '',
+    id: '',
+    titel: '',
+    bericht: '',
+    type: 'info',
+    sluitbaar: true,
+    actief: true,
+    cta_tekst: '',
+    cta_url: '',
+    start_op: '',
     eindigt_op: '',
   };
 }
@@ -200,9 +200,9 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
 export default function BannerBeheer() {
   const { t } = useTaal();
   const [banners, setBanners] = useState([]);
-  const [laden, setLaden]     = useState(true);
-  const [fout, setFout]       = useState('');
-  const [modal, setModal]     = useState(null);  // null | {} | banner
+  const [laden, setLaden] = useState(true);
+  const [fout, setFout] = useState('');
+  const [modal, setModal] = useState(null); // null | {} | banner
   const [opslaan, setOpslaan] = useState(false);
   const [modalFout, setModalFout] = useState('');
 
@@ -220,36 +220,36 @@ export default function BannerBeheer() {
 
   useEffect(() => { laad(); }, [laad]);
 
-  function openNieuw()         { setModalFout(''); setModal(leegFormulier()); }
-  function openBewerken(b)     {
+  function openNieuw() { setModalFout(''); setModal(leegFormulier()); }
+  function openBewerken(b) {
     setModalFout('');
     setModal({
-      id:         b.id,
-      titel:      b.titel,
-      bericht:    b.bericht,
-      type:       b.type,
-      actief:     b.actief,
-      sluitbaar:  b.sluitbaar,
-      cta_tekst:  b.ctaTekst || '',
-      cta_url:    b.ctaUrl   || '',
-      start_op:   b.startOp   ? b.startOp.slice(0, 16)   : '',
+      id: b.id,
+      titel: b.titel,
+      bericht: b.bericht,
+      type: b.type,
+      actief: b.actief,
+      sluitbaar: b.sluitbaar,
+      cta_tekst: b.ctaTekst || '',
+      cta_url: b.ctaUrl || '',
+      start_op: b.startOp ? b.startOp.slice(0, 16) : '',
       eindigt_op: b.eindigtOp ? b.eindigtOp.slice(0, 16) : '',
     });
   }
-  function sluitModal()        { setModal(null); setModalFout(''); }
+  function sluitModal() { setModal(null); setModalFout(''); }
 
   async function opslaanForm(form) {
     setOpslaan(true); setModalFout('');
     try {
       const body = {
-        titel:      form.titel,
-        bericht:    form.bericht,
-        type:       form.type,
-        actief:     !!form.actief,
-        sluitbaar:  !!form.sluitbaar,
-        cta_tekst:  form.cta_tekst || null,
-        cta_url:    form.cta_url   || null,
-        start_op:   form.start_op   || null,
+        titel: form.titel,
+        bericht: form.bericht,
+        type: form.type,
+        actief: !!form.actief,
+        sluitbaar: !!form.sluitbaar,
+        cta_tekst: form.cta_tekst || null,
+        cta_url: form.cta_url || null,
+        start_op: form.start_op || null,
         eindigt_op: form.eindigt_op || null,
       };
       if (form.id) {

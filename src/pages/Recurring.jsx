@@ -4,11 +4,11 @@
  * Route: /app/recurring
  *
  * Layout:
- *  - Header met titel + uitleg
- *  - "+ Nieuwe terugkerende overboeking" knop (opent RecurringFormulier)
- *  - Lijst met RecurringKaart's (sorted: actief eerst, dan volgende_uitvoering ASC)
- *  - Lege state met CTA als nog niets bestaat
- *  - KYC / email-verificatie melding als API 403 geeft
+ * - Header met titel + uitleg
+ * - "+ Nieuwe terugkerende overboeking" knop (opent RecurringFormulier)
+ * - Lijst met RecurringKaart's (sorted: actief eerst, dan volgende_uitvoering ASC)
+ * - Lege state met CTA als nog niets bestaat
+ * - KYC / email-verificatie melding als API 403 geeft
  *
  * State management: dit is een client-only page met fetch on mount.
  */

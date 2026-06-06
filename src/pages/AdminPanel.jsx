@@ -14,7 +14,7 @@ function tijdGeleden(iso) {
   if (!iso) return '—';
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 1)  return 'zojuist';
+  if (m < 1) return 'zojuist';
   if (m < 60) return `${m} min geleden`;
   const h = Math.floor(m / 60);
   if (h < 24) return `${h} uur geleden`;
@@ -24,11 +24,11 @@ function tijdGeleden(iso) {
 function StatusBadge({ status }) {
   const { t } = useTaal();
   const map = {
-    in_behandeling: { kleur: 'bg-amber-100 text-amber-700 border-amber-200',  label: `⏳ ${t('admin_status_in_behandeling') || 'In behandeling'}` },
-    goedgekeurd:    { kleur: 'bg-green-100 text-green-700 border-green-200',   label: `✅ ${t('admin_status_goedgekeurd') || 'Goedgekeurd'}` },
-    afgewezen:      { kleur: 'bg-red-100 text-red-700 border-red-200',         label: `❌ ${t('admin_status_afgewezen') || 'Afgewezen'}` },
-    geblokkeerd:    { kleur: 'bg-gray-200 text-gray-700 border-gray-300',      label: `🔒 ${t('admin_status_geblokkeerd') || 'Geblokkeerd'}` },
-    niet_ingediend: { kleur: 'bg-blue-100 text-blue-700 border-blue-200',      label: `📋 ${t('admin_status_niet_ingediend') || 'Niet ingediend'}` },
+    in_behandeling: { kleur: 'bg-amber-100 text-amber-700 border-amber-200', label: `${t('admin_status_in_behandeling') || 'In behandeling'}` },
+    goedgekeurd: { kleur: 'bg-green-100 text-green-700 border-green-200', label: `${t('admin_status_goedgekeurd') || 'Goedgekeurd'}` },
+    afgewezen: { kleur: 'bg-red-100 text-red-700 border-red-200', label: `${t('admin_status_afgewezen') || 'Afgewezen'}` },
+    geblokkeerd: { kleur: 'bg-gray-200 text-gray-700 border-gray-300', label: `${t('admin_status_geblokkeerd') || 'Geblokkeerd'}` },
+    niet_ingediend: { kleur: 'bg-blue-100 text-blue-700 border-blue-200', label: `${t('admin_status_niet_ingediend') || 'Niet ingediend'}` },
   };
   const s = map[status] || map.niet_ingediend;
   return (
@@ -87,7 +87,7 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
       <div className="grid grid-cols-2 gap-2 text-sm">
         {[
           [t('admin_kyc_document') || 'Document', aanvraag.document_type],
-          [t('admin_kyc_nummer') || 'Nummer',   aanvraag.document_nummer],
+          [t('admin_kyc_nummer') || 'Nummer', aanvraag.document_nummer],
           [t('admin_kyc_geboortedatum') || 'Geboortedatum', aanvraag.geboortedatum],
           [t('admin_kyc_nationaliteit') || 'Nationaliteit', aanvraag.nationaliteit || 'TR'],
           [t('admin_kyc_ingediend') || 'Ingediend', tijdGeleden(aanvraag.ingediend_op)],
@@ -129,13 +129,13 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
           {aanvraag.status !== 'goedgekeurd' && (
             <button onClick={() => beoordeel('goedgekeurd')} disabled={laden}
               className="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2 rounded-xl transition text-sm">
-              ✅ {t('admin_actie_alsnog_goedkeuren') || 'Alsnog goedkeuren'}
+              {t('admin_actie_alsnog_goedkeuren') || 'Alsnog goedkeuren'}
             </button>
           )}
           {aanvraag.status !== 'geblokkeerd' && (
             <button onClick={() => beoordeel('geblokkeerd')} disabled={laden}
               className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 rounded-xl transition text-sm">
-              🔒 {t('admin_actie_blokkeren') || 'Blokkeren'}
+              {t('admin_actie_blokkeren') || 'Blokkeren'}
             </button>
           )}
         </div>
@@ -160,14 +160,14 @@ export default function AdminPanel() {
   const { t } = useTaal();
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const secret   = params.get('secret') || '';
+  const secret = params.get('secret') || '';
 
-  const [aanvragen,    setAanvragen   ] = useState([]);
-  const [stats,        setStats       ] = useState(null);
-  const [integriteit,  setIntegriteit ] = useState(null);
-  const [filter,       setFilter      ] = useState('in_behandeling');
-  const [laden,        setLaden       ] = useState(true);
-  const [fout,         setFout        ] = useState('');
+  const [aanvragen, setAanvragen ] = useState([]);
+  const [stats, setStats ] = useState(null);
+  const [integriteit, setIntegriteit ] = useState(null);
+  const [filter, setFilter ] = useState('in_behandeling');
+  const [laden, setLaden ] = useState(true);
+  const [fout, setFout ] = useState('');
 
   const laadData = useCallback(async () => {
     setLaden(true);
@@ -186,9 +186,9 @@ export default function AdminPanel() {
         const d = await kycRes.json().catch(() => ({}));
         throw Object.assign(new Error(d.error || 'Geen toegang'), { errorCode: d.errorCode || d.code, data: d });
       }
-      const kycData          = await kycRes.json();
-      const statsData        = statsRes.ok ? await statsRes.json() : null;
-      const integriteitData  = integriteitRes.ok ? await integriteitRes.json() : null;
+      const kycData = await kycRes.json();
+      const statsData = statsRes.ok ? await statsRes.json() : null;
+      const integriteitData = integriteitRes.ok ? await integriteitRes.json() : null;
 
       setAanvragen(kycData.aanvragen || []);
       setStats(statsData);
@@ -225,7 +225,7 @@ export default function AdminPanel() {
             <button onClick={() => navigate('/')} className="text-2xl">⚡</button>
             <div>
               <div className="font-extrabold text-gray-900 leading-none">{t('admin_titel') || 'SwiftBridge Admin'}</div>
-              <div className="text-xs text-amber-600 font-semibold">🔐 {t('admin_beveiligd') || 'Beveiligd paneel'}</div>
+              <div className="text-xs text-amber-600 font-semibold">{t('admin_beveiligd') || 'Beveiligd paneel'}</div>
             </div>
           </div>
           <button onClick={laadData} className="text-gray-400 hover:text-blue-600 text-xl transition" title={t('admin_vernieuwen') || 'Vernieuwen'}>🔄</button>
@@ -237,7 +237,7 @@ export default function AdminPanel() {
         {/* Fout */}
         {fout && (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-red-700 font-medium text-center">
-            ❌ {fout}
+            {fout}
           </div>
         )}
 
@@ -264,9 +264,9 @@ export default function AdminPanel() {
         {/* Statistieken */}
         {stats && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatKaart icoon="👥" label={t('admin_stat_gebruikers') || 'Gebruikers'}        waarde={stats.gebruikers}                         kleur="text-blue-600"   />
-            <StatKaart icoon="⏳" label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0}           kleur="text-amber-600"  />
-            <StatKaart icoon="✅" label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'}    waarde={stats.kyc?.goedgekeurd || 0}              kleur="text-green-600"  />
+            <StatKaart icoon="👥" label={t('admin_stat_gebruikers') || 'Gebruikers'} waarde={stats.gebruikers} kleur="text-blue-600" />
+            <StatKaart icoon="⏳" label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0} kleur="text-amber-600" />
+            <StatKaart icoon="✅" label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'} waarde={stats.kyc?.goedgekeurd || 0} kleur="text-green-600" />
             <StatKaart icoon="💶" label={t('admin_stat_totaal_verstuurd') || 'Totaal verstuurd'}
               waarde={`€${((stats.transacties?.voltooid?.totaal || 0)).toLocaleString('nl-NL', { maximumFractionDigits: 0 })}`}
               kleur="text-purple-600" />
@@ -278,11 +278,11 @@ export default function AdminPanel() {
           <h2 className="text-lg font-bold text-gray-800 mb-3">{t('admin_kyc_aanvragen') || 'KYC Aanvragen'}</h2>
           <div className="flex flex-wrap gap-2">
             {[
-              { id: 'in_behandeling', label: `⏳ ${t('admin_status_in_behandeling') || 'In behandeling'} (${aanvragen.filter(a => a.status === 'in_behandeling').length})` },
-              { id: 'goedgekeurd',    label: `✅ ${t('admin_status_goedgekeurd') || 'Goedgekeurd'} (${aanvragen.filter(a => a.status === 'goedgekeurd').length})` },
-              { id: 'afgewezen',      label: `❌ ${t('admin_status_afgewezen') || 'Afgewezen'} (${aanvragen.filter(a => a.status === 'afgewezen').length})` },
-              { id: 'geblokkeerd',    label: `🔒 ${t('admin_status_geblokkeerd') || 'Geblokkeerd'} (${aanvragen.filter(a => a.status === 'geblokkeerd').length})` },
-              { id: 'alle',           label: `📋 ${t('admin_status_alle') || 'Alle'} (${aanvragen.length})` },
+              { id: 'in_behandeling', label: `${t('admin_status_in_behandeling') || 'In behandeling'} (${aanvragen.filter(a => a.status === 'in_behandeling').length})` },
+              { id: 'goedgekeurd', label: `${t('admin_status_goedgekeurd') || 'Goedgekeurd'} (${aanvragen.filter(a => a.status === 'goedgekeurd').length})` },
+              { id: 'afgewezen', label: `${t('admin_status_afgewezen') || 'Afgewezen'} (${aanvragen.filter(a => a.status === 'afgewezen').length})` },
+              { id: 'geblokkeerd', label: `${t('admin_status_geblokkeerd') || 'Geblokkeerd'} (${aanvragen.filter(a => a.status === 'geblokkeerd').length})` },
+              { id: 'alle', label: `${t('admin_status_alle') || 'Alle'} (${aanvragen.length})` },
             ].map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)}
                 className={`px-4 py-2 rounded-full text-sm font-semibold transition ${

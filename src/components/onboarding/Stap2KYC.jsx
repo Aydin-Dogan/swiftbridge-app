@@ -10,9 +10,9 @@ import { useState } from 'react';
 import { useTaal } from '../../i18n';
 
 const BANK_LOGOS = [
-  { naam: 'ING',       kleur: 'bg-orange-500' },
-  { naam: 'ABN AMRO',  kleur: 'bg-emerald-700' },
-  { naam: 'Rabobank',  kleur: 'bg-blue-700' },
+  { naam: 'ING', kleur: 'bg-orange-500' },
+  { naam: 'ABN AMRO', kleur: 'bg-emerald-700' },
+  { naam: 'Rabobank', kleur: 'bg-blue-700' },
 ];
 
 export default function Stap2KYC({ onStartKYC, onLater, onTerug }) {

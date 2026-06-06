@@ -30,8 +30,8 @@ function GlobeIcon({ className }) {
 function TrustRow({ t }) {
   const items = [
     { Icon: ShieldCheck, tekst: t('landing_trust_dnb') },
-    { Icon: Bank,        tekst: t('landing_trust_ideal') },
-    { Icon: Lock,        tekst: t('landing_trust_encrypted') },
+    { Icon: Bank, tekst: t('landing_trust_ideal') },
+    { Icon: Lock, tekst: t('landing_trust_encrypted') },
   ];
   return (
     <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-x-5 gap-y-2.5 text-sm text-blue-100">

@@ -172,14 +172,14 @@ export default function KoersAlerts({ token }) {
           {fout && <div className="text-rose-600 text-sm">{fout}</div>}
 
           <button type="submit" disabled={bezig} className="btn-primary w-full py-3">
-            {bezig ? '⏳ Aanmaken...' : '🔔 Alert aanmaken'}
+            {bezig ? 'Aanmaken...' : 'Alert aanmaken'}
           </button>
         </form>
       </div>
 
       <div className="card-glass p-5 animate-fade-up">
         <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-          📋 Mijn alerts
+          Mijn alerts
           <span className="pill-neutral">{alerts.length}</span>
         </h3>
 
@@ -216,7 +216,7 @@ export default function KoersAlerts({ token }) {
                       </div>
                       <div className="text-[11px] text-gray-500">
                         {isGetriggerd ? (
-                          <>✅ Behaald op {new Date(a.getriggerd_op).toLocaleString('nl-NL')}</>
+                          <>Behaald op {new Date(a.getriggerd_op).toLocaleString('nl-NL')}</>
                         ) : a.laatste_koers ? (
                           <>Huidig: <span className="font-mono">{Number(a.laatste_koers).toFixed(4)}</span></>
                         ) : (

@@ -2,15 +2,15 @@
  * AccountantBeheer.jsx — beheer read-only deel-links voor accountant (ZZ).
  *
  * Routes (backend):
- *   POST   /accountant/tokens          — nieuwe token aanmaken
- *   GET    /accountant/tokens          — lijst eigen tokens
- *   DELETE /accountant/tokens/:id      — intrekken
+ * POST /accountant/tokens — nieuwe token aanmaken
+ * GET /accountant/tokens — lijst eigen tokens
+ * DELETE /accountant/tokens/:id — intrekken
  *
  * UX:
- *   - Form: naam + geldigheid (30/60/90 dagen)
- *   - Lijst van eigen tokens met status, deel-URL, intrek-knop
- *   - "Net aangemaakt" token toont URL prominent + copy + WhatsApp
- *   - ConfirmDialog bij intrekken
+ * - Form: naam + geldigheid (30/60/90 dagen)
+ * - Lijst van eigen tokens met status, deel-URL, intrek-knop
+ * - "Net aangemaakt" token toont URL prominent + copy + WhatsApp
+ * - ConfirmDialog bij intrekken
  */
 import { useState, useEffect, useCallback } from 'react';
 import { API_URL, apiFetch, parseError } from '../services/api';
@@ -139,7 +139,7 @@ export default function AccountantBeheer() {
               onClick={() => kopieer(urlVoor(recent.token))}
               className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg py-2 transition"
             >
-              {gekopieerd ? `✓ ${t('accountant_gekopieerd')}` : `📋 ${t('accountant_kopieer')}`}
+              {gekopieerd ? `✓ ${t('accountant_gekopieerd')}` : `${t('accountant_kopieer')}`}
             </button>
             <button
               onClick={() => whatsapp(urlVoor(recent.token))}
@@ -186,7 +186,7 @@ export default function AccountantBeheer() {
           disabled={bezig}
           className="w-full bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-bold text-sm py-2.5 rounded-lg transition mt-2"
         >
-          {bezig ? `⏳ ${t('accountant_bezig')}` : t('accountant_form_knop')}
+          {bezig ? `${t('accountant_bezig')}` : t('accountant_form_knop')}
         </button>
       </form>
 

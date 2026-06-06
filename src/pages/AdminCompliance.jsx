@@ -2,13 +2,13 @@
  * AdminCompliance.jsx — Compliance dashboard voor DNB-toezicht
  *
  * Tabs:
- *   1. Stats — kerncijfers
- *   2. Gebruikers — user management
- *   3. Audit logs — paginated met filter
- *   4. Sanctie matches — Wwft Art. 33
- *   5. GDPR acties — AVG Art. 15/17
- *   6. Transactie monitoring — geanonimiseerd
- *   7. Banners — app-wide announcement banners beheren
+ * 1. Stats — kerncijfers
+ * 2. Gebruikers — user management
+ * 3. Audit logs — paginated met filter
+ * 4. Sanctie matches — Wwft Art. 33
+ * 5. GDPR acties — AVG Art. 15/17
+ * 6. Transactie monitoring — geanonimiseerd
+ * 7. Banners — app-wide announcement banners beheren
  *
  * Toegang: gebruiker moet ingelogd zijn EN in ADMIN_EMAILS staan
  * (backend check in src/middleware/admin.js).
@@ -21,7 +21,7 @@ import { useTaal } from '../i18n';
 // Lazy load heavy admin sub-components — alleen ophalen wanneer tab geopend wordt.
 // Houdt de initial AdminCompliance bundle ~1MB+ kleiner (UserManagement 664 LOC + BannerBeheer 412 LOC).
 const UserManagement = lazy(() => import('../components/admin/UserManagement'));
-const BannerBeheer   = lazy(() => import('../components/admin/BannerBeheer'));
+const BannerBeheer = lazy(() => import('../components/admin/BannerBeheer'));
 const KYCReviewQueue = lazy(() => import('../components/admin/KYCReviewQueue'));
 
 // Lichtgewicht fallback voor lazy admin tabs
@@ -142,26 +142,26 @@ function StatsTab({ stats, chain }) {
 
 // ── Tab 2: Audit logs ─────────────────────────────────────────────────────────
 const ACTIE_OPTIES = [
-  { id: '',                  label: 'Alle acties' },
-  { id: 'kyc_ingediend',     label: 'KYC ingediend' },
-  { id: 'kyc_goedgekeurd',   label: 'KYC goedgekeurd' },
-  { id: 'kyc_afgewezen',     label: 'KYC afgewezen' },
-  { id: 'kyc_geblokkeerd',   label: 'KYC geblokkeerd' },
+  { id: '', label: 'Alle acties' },
+  { id: 'kyc_ingediend', label: 'KYC ingediend' },
+  { id: 'kyc_goedgekeurd', label: 'KYC goedgekeurd' },
+  { id: 'kyc_afgewezen', label: 'KYC afgewezen' },
+  { id: 'kyc_geblokkeerd', label: 'KYC geblokkeerd' },
   { id: 'sanctie_screening', label: 'Sanctie screening' },
-  { id: 'gdpr_export',       label: 'GDPR export' },
-  { id: 'gdpr_anonimiseer',  label: 'GDPR anonimiseer' },
+  { id: 'gdpr_export', label: 'GDPR export' },
+  { id: 'gdpr_anonimiseer', label: 'GDPR anonimiseer' },
   { id: 'profiel_bijgewerkt', label: 'Profiel bijgewerkt' },
-  { id: 'login',             label: 'Login' },
+  { id: 'login', label: 'Login' },
 ];
 
 function AuditTab() {
   const { t } = useTaal();
-  const [logs, setLogs]     = useState([]);
+  const [logs, setLogs] = useState([]);
   const [totaal, setTotaal] = useState(0);
-  const [actie, setActie]   = useState('');
+  const [actie, setActie] = useState('');
   const [offset, setOffset] = useState(0);
-  const [laden, setLaden]   = useState(false);
-  const [fout, setFout]     = useState('');
+  const [laden, setLaden] = useState(false);
+  const [fout, setFout] = useState('');
   const limit = 50;
 
   const laden_ = useCallback(async () => {
@@ -263,8 +263,8 @@ function AuditTab() {
 function SanctieTab() {
   const { t } = useTaal();
   const [matches, setMatches] = useState([]);
-  const [laden, setLaden]     = useState(true);
-  const [fout, setFout]       = useState('');
+  const [laden, setLaden] = useState(true);
+  const [fout, setFout] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -281,7 +281,7 @@ function SanctieTab() {
   }, [t]);
 
   if (laden) return <div className="text-center text-white/60 py-12">Laden…</div>;
-  if (fout)   return <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>;
+  if (fout) return <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>;
   if (matches.length === 0) {
     return (
       <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
@@ -295,7 +295,7 @@ function SanctieTab() {
   return (
     <div className="space-y-3">
       <div className="bg-red-500/10 border border-red-300/30 rounded-2xl p-4 text-red-100 text-sm">
-        <strong>⚠️ {matches.length} sanctie-hit{matches.length !== 1 ? 's' : ''}</strong> — Wwft Art. 33 vereist directe melding bij DNB/FIU-NL.
+        <strong>{matches.length} sanctie-hit{matches.length !== 1 ? 's' : ''}</strong> — Wwft Art. 33 vereist directe melding bij DNB/FIU-NL.
       </div>
       {matches.map((m) => (
         <div key={m.id} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-5 space-y-3">
@@ -328,8 +328,8 @@ function SanctieTab() {
 function GdprTab() {
   const { t } = useTaal();
   const [acties, setActies] = useState([]);
-  const [laden, setLaden]   = useState(true);
-  const [fout, setFout]     = useState('');
+  const [laden, setLaden] = useState(true);
+  const [fout, setFout] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -346,7 +346,7 @@ function GdprTab() {
   }, [t]);
 
   if (laden) return <div className="text-center text-white/60 py-12">Laden…</div>;
-  if (fout)   return <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>;
+  if (fout) return <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>;
   if (acties.length === 0) {
     return (
       <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
@@ -398,10 +398,10 @@ function GdprTab() {
 // ── Tab 5: Transactie monitoring ──────────────────────────────────────────────
 function TransactieTab() {
   const { t } = useTaal();
-  const [tx, setTx]         = useState([]);
+  const [tx, setTx] = useState([]);
   const [status, setStatus] = useState('');
-  const [laden, setLaden]   = useState(true);
-  const [fout, setFout]     = useState('');
+  const [laden, setLaden] = useState(true);
+  const [fout, setFout] = useState('');
 
   const laad = useCallback(async () => {
     setLaden(true); setFout('');
@@ -499,11 +499,11 @@ function TransactieTab() {
 export default function AdminCompliance() {
   const { t } = useTaal();
   const navigate = useNavigate();
-  const [tab, setTab]       = useState('stats');
-  const [stats, setStats]   = useState(null);
-  const [chain, setChain]   = useState(null);
-  const [fout, setFout]     = useState('');
-  const [laden, setLaden]   = useState(true);
+  const [tab, setTab] = useState('stats');
+  const [stats, setStats] = useState(null);
+  const [chain, setChain] = useState(null);
+  const [fout, setFout] = useState('');
+  const [laden, setLaden] = useState(true);
 
   const laadStats = useCallback(async () => {
     setLaden(true); setFout('');
@@ -524,14 +524,14 @@ export default function AdminCompliance() {
   useEffect(() => { laadStats(); }, [laadStats]);
 
   const tabs = [
-    { id: 'stats',      label: 'Overzicht',         icoon: '📊' },
-    { id: 'users',      label: 'Gebruikers',         icoon: '👥' },
-    { id: 'kycreview',  label: 'KYC Review',         icoon: '🪪' },
-    { id: 'audit',      label: 'Audit logs',         icoon: '📋' },
-    { id: 'sanctie',    label: 'Sanctie matches',    icoon: '🛂' },
-    { id: 'gdpr',       label: 'GDPR acties',        icoon: '📜' },
-    { id: 'tx',         label: 'Transacties',        icoon: '💸' },
-    { id: 'banners',    label: 'Banners',            icoon: '📣' },
+    { id: 'stats', label: 'Overzicht', icoon: '📊' },
+    { id: 'users', label: 'Gebruikers', icoon: '👥' },
+    { id: 'kycreview', label: 'KYC Review', icoon: '🪪' },
+    { id: 'audit', label: 'Audit logs', icoon: '📋' },
+    { id: 'sanctie', label: 'Sanctie matches', icoon: '🛂' },
+    { id: 'gdpr', label: 'GDPR acties', icoon: '📜' },
+    { id: 'tx', label: 'Transacties', icoon: '💸' },
+    { id: 'banners', label: 'Banners', icoon: '📣' },
   ];
 
   if (fout && !stats) {
@@ -598,14 +598,14 @@ export default function AdminCompliance() {
 
       <main className="max-w-7xl mx-auto px-4 py-6">
         <Suspense fallback={<AdminLazyFallback />}>
-          {tab === 'stats'     && <StatsTab stats={stats} chain={chain} />}
-          {tab === 'users'     && <UserManagement />}
+          {tab === 'stats' && <StatsTab stats={stats} chain={chain} />}
+          {tab === 'users' && <UserManagement />}
           {tab === 'kycreview' && <KYCReviewQueue />}
-          {tab === 'audit'     && <AuditTab />}
-          {tab === 'sanctie'   && <SanctieTab />}
-          {tab === 'gdpr'      && <GdprTab />}
-          {tab === 'tx'        && <TransactieTab />}
-          {tab === 'banners'   && <BannerBeheer />}
+          {tab === 'audit' && <AuditTab />}
+          {tab === 'sanctie' && <SanctieTab />}
+          {tab === 'gdpr' && <GdprTab />}
+          {tab === 'tx' && <TransactieTab />}
+          {tab === 'banners' && <BannerBeheer />}
         </Suspense>
       </main>
     </div>

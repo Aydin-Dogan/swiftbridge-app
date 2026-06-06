@@ -6,9 +6,9 @@
  * approve/reject knoppen.
  *
  * Backend:
- *   GET   /admin/kyc/review-queue       — { records: [...] }
- *   GET   /admin/kyc/:id/document/:type — bytes (image/jpeg|png)
- *   PATCH /admin/kyc/:id/beoordeel      — { status, opmerking? }
+ * GET /admin/kyc/review-queue — { records: [...] }
+ * GET /admin/kyc/:id/document/:type — bytes (image/jpeg|png)
+ * PATCH /admin/kyc/:id/beoordeel — { status, opmerking? }
  */
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch, parseError, API_URL } from '../../services/api';
@@ -152,7 +152,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
 
         {fout && (
           <div role="alert" className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-xl p-3 text-sm mb-3">
-            ⚠️ {fout}
+            {fout}
           </div>
         )}
 
@@ -182,7 +182,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
                 disabled={bezig || !opmerking.trim()}
                 className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40"
               >
-                {bezig ? t('laden') : `🚫 ${t('kyc_review_definitief_afkeuren')}`}
+                {bezig ? t('laden') : `${t('kyc_review_definitief_afkeuren')}`}
               </button>
             </div>
           </div>
@@ -200,7 +200,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
               disabled={bezig}
               className="px-4 py-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-sm text-white font-semibold disabled:opacity-40"
             >
-              🚫 {t('kyc_review_afkeuren')}
+              {t('kyc_review_afkeuren')}
             </button>
             <button
               onClick={() => {
@@ -211,7 +211,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
               disabled={bezig}
               className="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-sm text-white font-semibold disabled:opacity-40"
             >
-              {bezig ? t('laden') : `✅ ${t('kyc_review_goedkeuren')}`}
+              {bezig ? t('laden') : `${t('kyc_review_goedkeuren')}`}
             </button>
           </div>
         )}

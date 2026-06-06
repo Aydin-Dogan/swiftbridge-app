@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 
 export default function OfflineBanner() {
-  const [offline,     setOffline    ] = useState(!navigator.onLine);
+  const [offline, setOffline ] = useState(!navigator.onLine);
   const [terugOnline, setTerugOnline] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function OfflineBanner() {
   if (terugOnline) {
     return (
       <div className="fixed top-0 left-0 right-0 z-[200] bg-green-600 text-white px-4 py-2 text-center text-sm font-semibold shadow-lg transition">
-        ✅ Verbinding hersteld
+        Verbinding hersteld
       </div>
     );
   }

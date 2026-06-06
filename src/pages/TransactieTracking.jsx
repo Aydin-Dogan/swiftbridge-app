@@ -4,10 +4,10 @@
  * Route: /tx/:token (geen auth vereist)
  *
  * Toont minimal info aan ontvanger:
- *   - Status (in behandeling / voltooid / mislukt)
- *   - Bedrag in lokale valuta
- *   - ETA / aankomstdatum
- *   - Betaalmethode
+ * - Status (in behandeling / voltooid / mislukt)
+ * - Bedrag in lokale valuta
+ * - ETA / aankomstdatum
+ * - Betaalmethode
  *
  * GEEN PII: geen naam, IBAN, of zender-info.
  *

@@ -2,14 +2,14 @@
  * Banner.jsx — Eén app-wide announcement banner.
  *
  * Props:
- *   - banner: { id, titel, bericht, type, sluitbaar, ctaTekst, ctaUrl, ... }
- *   - onDismiss: () => void   (alleen aangeroepen als sluitbaar=true)
+ * - banner: { id, titel, bericht, type, sluitbaar, ctaTekst, ctaUrl, ... }
+ * - onDismiss: () => void (alleen aangeroepen als sluitbaar=true)
  *
  * Styling per type:
- *   info     → blauwe gradient, ℹ️
- *   success  → groene gradient, ✓
- *   warning  → oranje gradient, ⚠️
- *   error    → rode gradient, ❌
+ * info → blauwe gradient, ℹ️
+ * success → groene gradient, ✓
+ * warning → oranje gradient, ⚠️
+ * error → rode gradient, ❌
  *
  * Layout: glassmorphism kaart, optionele CTA-knop rechts, dismiss × rechtsboven.
  */

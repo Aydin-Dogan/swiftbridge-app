@@ -5,10 +5,10 @@
  * Auth: admin (?secret= header of authMiddleware + isAdmin)
  *
  * Toont realtime KPIs uit /admin/stats endpoint:
- *   - Gebruikers totaal + KYC funnel
- *   - Transacties 7d / 30d (aantal + volume EUR)
- *   - Totaal volume EUR
- *   - Sanctie hits + GDPR acties
+ * - Gebruikers totaal + KYC funnel
+ * - Transacties 7d / 30d (aantal + volume EUR)
+ * - Totaal volume EUR
+ * - Sanctie hits + GDPR acties
  *
  * Auto-refresh elke 60s. Quick-links naar admin sub-pagina's.
  */
@@ -191,7 +191,7 @@ export default function AdminOverzicht() {
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {[
-                  ['/admin/errors',     t('admin_ov_link_errors')],
+                  ['/admin/errors', t('admin_ov_link_errors')],
                   ['/admin/compliance', t('admin_ov_link_compliance')],
                   [`/admin?secret=${encodeURIComponent(secret)}`, t('admin_ov_link_kyc')],
                 ].map(([url, label]) => (

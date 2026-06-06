@@ -2,8 +2,8 @@
  * EmailWijzigen.jsx — Publieke landingpagina voor SS bevestig+intrek links.
  *
  * Routes:
- *   /email-wijzigen-bevestigen?token=XXX   -> POST /users/me/email-wijzig-bevestigen
- *   /email-wijzigen-intrekken?token=XXX    -> POST /users/me/email-wijzig-intrekken
+ * /email-wijzigen-bevestigen?token=XXX -> POST /users/me/email-wijzig-bevestigen
+ * /email-wijzigen-intrekken?token=XXX -> POST /users/me/email-wijzig-intrekken
  *
  * Beide endpoints zijn anoniem (token IS auth). Bij succes van bevestiging
  * is de gebruiker uitgelogd op alle apparaten -> redirect naar /login.

@@ -26,16 +26,16 @@ function StarRating({ rating = 5 }) {
 // in i18n keys leeg te laten als we geen echte reviews hebben.
 const TESTIMONIALS = [];
 
-// ⚠️ HARDE REGEL: geen verzonnen statistieken op landing. Tot we échte data
+// HARDE REGEL: geen verzonnen statistieken op landing. Tot we échte data
 // hebben (geverifieerd via admin/stats endpoint of Trustpilot-koppeling)
 // gebruiken we feitelijke beschrijvingen — geen aantallen.
 const STATS = [
-  { key: 'banken', getal: '100+' },        // echt — turkstaligeBanken.js
-  { key: 'talen', getal: '5' },             // echt — i18n/{nl,en,tr,ru,az}
-  { key: 'snelheid', getal: '<5 min' },     // echt — gemiddeld via iDEAL
+  { key: 'banken', getal: '100+' }, // echt — turkstaligeBanken.js
+  { key: 'talen', getal: '5' }, // echt — i18n/{nl,en,tr,ru,az}
+  { key: 'snelheid', getal: '<5 min' }, // echt — gemiddeld via iDEAL
   // F24 fix (Cursor review): "vanaf 0,8%" AFM-richtlijn problematisch.
   // Concretere framing: staffel vermeld zodat verwachting reëel is.
-  { key: 'fee', getal: '0,8% - 2,0%' },     // staffel — tariefkaart §4.4
+  { key: 'fee', getal: '0,8% - 2,0%' }, // staffel — tariefkaart §4.4
 ];
 
 export default function SocialProof() {

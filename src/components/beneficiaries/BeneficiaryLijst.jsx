@@ -52,7 +52,7 @@ function BevestigDelete({ beneficiary, bezig, onAnnuleer, onBevestig }) {
               disabled={bezig}
               className="flex-1 bg-rose-600 hover:bg-rose-700 disabled:bg-gray-300 text-white font-bold py-2 rounded-xl"
             >
-              {bezig ? `⏳ ${t('laden')}` : `🗑️ ${t('benef_verwijder')}`}
+              {bezig ? `${t('laden')}` : `🗑️ ${t('benef_verwijder')}`}
             </button>
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function BeneficiaryLijst({ token }) {
       {/* Error */}
       {!laden && fout && (
         <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm flex items-center justify-between gap-2">
-          <span>❌ {fout}</span>
+          <span>{fout}</span>
           <button onClick={laad} className="text-xs underline whitespace-nowrap">🔄 {t('vernieuwen')}</button>
         </div>
       )}

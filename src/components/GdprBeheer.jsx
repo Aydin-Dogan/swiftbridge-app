@@ -176,17 +176,17 @@ export default function GdprBeheer({ token }) {
           disabled={bezigExport}
           className="w-full py-2.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         >
-          {bezigExport ? `⏳ ${t('gdpr_download_bezig')}` : t('gdpr_download_knop')}
+          {bezigExport ? `${t('gdpr_download_bezig')}` : t('gdpr_download_knop')}
         </button>
         <p className="text-[11px] text-gray-500 leading-snug pt-1">
-          🔐 {t('gdpr_download_subtekst')}
+          {t('gdpr_download_subtekst')}
         </p>
       </div>
 
       {/* CSV export voor accountant (Verbetering TT) — naast JSON-volledig */}
       <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-4 space-y-2">
         <h4 className="font-bold text-sm text-gray-800 flex items-center gap-1.5">
-          <span>📊 {t('gdpr_csv_titel')}</span>
+          <span>{t('gdpr_csv_titel')}</span>
         </h4>
         <p className="text-xs text-gray-600 leading-relaxed">
           {t('gdpr_csv_uitleg')}
@@ -196,10 +196,10 @@ export default function GdprBeheer({ token }) {
           disabled={bezigCsv}
           className="w-full py-2.5 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         >
-          {bezigCsv ? `⏳ ${t('gdpr_download_bezig')}` : t('gdpr_csv_knop')}
+          {bezigCsv ? `${t('gdpr_download_bezig')}` : t('gdpr_csv_knop')}
         </button>
         <p className="text-[11px] text-gray-500 leading-snug pt-1">
-          📋 {t('gdpr_csv_subtekst')}
+          {t('gdpr_csv_subtekst')}
         </p>
       </div>
 
@@ -221,12 +221,12 @@ export default function GdprBeheer({ token }) {
 
       {fout && (
         <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
-          ❌ {fout}
+          {fout}
         </div>
       )}
       {bericht && (
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl px-3 py-2 text-sm">
-          ✅ {bericht}
+          {bericht}
         </div>
       )}
 
@@ -291,7 +291,7 @@ export default function GdprBeheer({ token }) {
                 disabled={bezigAnoniem || bevestiging.trim() !== 'VERWIJDER'}
                 className="flex-1 py-2.5 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {bezigAnoniem ? `⏳ ${t('gdpr_modal_bezig')}` : t('gdpr_modal_bevestig')}
+                {bezigAnoniem ? `${t('gdpr_modal_bezig')}` : t('gdpr_modal_bevestig')}
               </button>
             </div>
           </div>
