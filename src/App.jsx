@@ -14,8 +14,9 @@ import SupportChat from './components/chat/SupportChat';
 import ErrorBoundary from './components/ErrorBoundary';
 import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
-import { haalProfiel, logout as logoutApi } from './services/api';
+import { haalProfiel, logout as logoutApi, apiFetch } from './services/api';
 import { Home, Send, Bell, User, IdCard, X as XIcon, AlertTriangle, Lock } from './components/icons/Icons';
+import AppLockScherm from './components/pin/AppLockScherm';
 
 // Lazy load zware paginas (code splitting)
 const PaymentFlow = lazy(() => import('./components/PaymentFlow'));
@@ -455,6 +456,12 @@ export default function App() {
   const [gebruiker, setGebruiker] = useState(undefined);
   const token = gebruiker ? TOKEN_SENTINEL : null;
 
+  // PIN-1: app-lock state.
+  // pinIngeschakeld = backend status; ontgrendeld = sessie deze bezoek al PIN-gevalideerd?
+  const [pinIngeschakeld, setPinIngeschakeld] = useState(null); // null = onbekend, true/false = bekend
+  const [pinOntgrendeld, setPinOntgrendeld] = useState(false);
+  const AUTO_LOCK_MS = 5 * 60 * 1000; // 5 min inactivity -> her-lock
+
   // UU: zorg dat theme bij mount al toegepast is (theme-init.js heeft
   // het al gedaan, maar bij hot-reload tijdens dev kan dat verloren gaan)
   // en watch op OS-prefers-color-scheme wijzigingen wanneer keuze='system'.
@@ -463,6 +470,51 @@ export default function App() {
     const stop = startThemeWatcher();
     return stop;
   }, []);
+
+  // PIN-1: bij login → check of PIN aan staat
+  useEffect(() => {
+    if (!gebruiker?.id) {
+      setPinIngeschakeld(null);
+      setPinOntgrendeld(false);
+      return;
+    }
+    apiFetch('/auth/pin/status')
+      .then((data) => {
+        const aan = !!data?.ingeschakeld;
+        setPinIngeschakeld(aan);
+        // Als geen PIN aan: meteen "ontgrendeld" — geen lock-screen
+        setPinOntgrendeld(!aan);
+      })
+      .catch(() => {
+        // Bij fout (bv backend down): geen lock — anders kan gebruiker niet in app
+        setPinIngeschakeld(false);
+        setPinOntgrendeld(true);
+      });
+  }, [gebruiker?.id]);
+
+  // PIN-1: auto-lock na inactivity + bij window blur (zoals ING/Wise)
+  useEffect(() => {
+    if (!pinIngeschakeld || !pinOntgrendeld) return;
+    let timer = setTimeout(lockApp, AUTO_LOCK_MS);
+
+    function lockApp() {
+      setPinOntgrendeld(false);
+    }
+    function resetTimer() {
+      clearTimeout(timer);
+      timer = setTimeout(lockApp, AUTO_LOCK_MS);
+    }
+    // User-activity events
+    const events = ['mousedown', 'keydown', 'touchstart', 'scroll'];
+    events.forEach((e) => window.addEventListener(e, resetTimer, { passive: true }));
+    // Bij window blur direct locken (browser-tab wegklikken)
+    window.addEventListener('blur', lockApp);
+    return () => {
+      clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, resetTimer));
+      window.removeEventListener('blur', lockApp);
+    };
+  }, [pinIngeschakeld, pinOntgrendeld]);
 
   // Bij opstarten: vraag /auth/me — als 401, dan niet ingelogd
   useEffect(() => {
@@ -502,6 +554,9 @@ export default function App() {
     } catch { /* best-effort */ }
     wisGevoeligeStorage();
     setGebruiker(null);
+    // PIN-1: reset lock-state zodat volgende login opnieuw checkt
+    setPinIngeschakeld(null);
+    setPinOntgrendeld(false);
   }
 
   // Toon spinner terwijl /auth/me nog loopt — voorkomt flash van /login bij refresh
@@ -516,8 +571,18 @@ export default function App() {
     );
   }
 
+  // PIN-1: als ingelogd + PIN aan + nog niet ontgrendeld → lock-screen rendert
+  // ALLES afdekkend. App is dan visueel hidden tot succesvolle PIN.
+  const moetLocken = gebruiker?.id && pinIngeschakeld === true && !pinOntgrendeld;
+
   return (
     <BrowserRouter>
+      {moetLocken && (
+        <AppLockScherm
+          doel="app_lock"
+          onSucces={() => setPinOntgrendeld(true)}
+        />
+      )}
       <OfflineBanner />
       <MaintenanceBanner />
       <KeyboardShortcuts />

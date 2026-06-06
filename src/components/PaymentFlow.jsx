@@ -22,6 +22,7 @@ import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
 import CurrencySelector from './CurrencySelector'; // Global herpositionering
 import WachtlijstModal from './WachtlijstModal'; // WL-2: binnenkort-corridor opt-in
 import { useFavorieteValutas } from '../services/favorieteValutas'; // MMM
+import AppLockScherm from './pin/AppLockScherm'; // PIN-1: tx-confirm
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -1255,7 +1256,28 @@ export default function PaymentFlow({ token }) {
     }
   }
 
-  async function verstuur() {
+  // PIN-1: tx-confirm — wordt geset door PIN-prompt onSucces. Single-use token.
+  const [txConfirmToken, setTxConfirmToken] = useState(null);
+  const [pinPromptOpen, setPinPromptOpen] = useState(false);
+  const [pinStatusVoorTx, setPinStatusVoorTx] = useState(null); // null/true/false
+
+  // PIN-status laden bij component-mount zodat we kunnen voorzien of prompt nodig is
+  useEffect(() => {
+    if (!token) return;
+    apiFetch('/auth/pin/status').then((d) => setPinStatusVoorTx(!!d?.ingeschakeld))
+      .catch(() => setPinStatusVoorTx(false));
+  }, [token]);
+
+  // Wrapper die de PIN-prompt eventueel toont vóór verstuur()
+  async function startVerstuur() {
+    if (pinStatusVoorTx === true && !txConfirmToken) {
+      setPinPromptOpen(true);
+      return;
+    }
+    await verstuur(txConfirmToken);
+  }
+
+  async function verstuur(passedConfirmToken) {
     setLaden(true);
     setFout('');
     setEmailNietGeverifieerd(false);
@@ -1286,6 +1308,8 @@ export default function PaymentFlow({ token }) {
           uitbetaalMethode,
           paparaIdentifier: uitbetaalMethode === 'papara' ? paparaIdentifier : null,
           paparaIdentifierType: uitbetaalMethode === 'papara' ? paparaIdentifierType : null,
+          // PIN-1: tx-confirm JWT (5min single-use). Backend eist dit als pin_ingeschakeld.
+          txConfirmToken: passedConfirmToken || txConfirmToken || undefined,
         }),
       });
 
@@ -1450,7 +1474,22 @@ export default function PaymentFlow({ token }) {
         }
       }} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={verstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
+
+      {/* PIN-1: tx-confirm PIN-prompt voor Mollie-redirect */}
+      {pinPromptOpen && (
+        <AppLockScherm
+          doel="tx_confirm"
+          onAnnuleer={() => setPinPromptOpen(false)}
+          onSucces={async (newToken) => {
+            setTxConfirmToken(newToken);
+            setPinPromptOpen(false);
+            await verstuur(newToken);
+            // Token-cleanup na verzending (single-use)
+            setTxConfirmToken(null);
+          }}
+        />
+      )}
       {stap === 3 && <StapVerzonden transactie={transactie} methode={methode} onNieuw={reset} token={token} />}
 
       {/* PaymentLoadingOverlay (Verbetering W) — full-screen feedback tijdens

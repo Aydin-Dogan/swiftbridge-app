@@ -9,6 +9,7 @@ import { parseError } from '../services/api';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
+import PinInstellingen from './pin/PinInstellingen'; // PIN-1
 import LoginHistory from './LoginHistory';
 import TourOverlay, { resetTour } from './onboarding/TourOverlay';
 import AccountantBeheer from './AccountantBeheer';
@@ -487,6 +488,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           {bezig ? 'Opslaan...' : '💾 Opslaan'}
         </button>
       </form>
+
+      {/* PIN-1: app-PIN voor lock-screen + tx-confirm */}
+      <PinInstellingen />
 
       {/* 2-staps verificatie (TOTP) */}
       <TweeFactorInstellingen
