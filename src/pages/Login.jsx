@@ -21,6 +21,7 @@ export default function Login({ onLogin }) {
   const [toonVergeten, setToonVergeten] = useState(false);
   const [vergetenEmail, setVergetenEmail] = useState('');
   const [vergetenBericht, setVergetenBericht] = useState('');
+  const [vergetenOk, setVergetenOk] = useState(false); // succes-state ipv ✅ prefix check
   const [vergetenLaden, setVergetenLaden] = useState(false);
 
   // 2FA state
@@ -36,6 +37,7 @@ export default function Login({ onLogin }) {
   const [toonReset, setToonReset] = useState(!!resetToken);
   const [nieuwWachtwoord, setNieuwWachtwoord] = useState('');
   const [resetBericht, setResetBericht] = useState('');
+  const [resetOk, setResetOk] = useState(false);
   const [resetLaden, setResetLaden] = useState(false);
 
   useEffect(() => { setFout(''); }, [tab]);
@@ -112,9 +114,11 @@ export default function Login({ onLogin }) {
         method: 'POST',
         body: { email: vergetenEmail },
       });
-      setVergetenBericht('' + (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
+      setVergetenBericht(data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.');
+      setVergetenOk(true);
     } catch (e) {
-      setVergetenBericht('' + (e.message || 'Geen verbinding met server. Probeer opnieuw.'));
+      setVergetenBericht(e.message || 'Geen verbinding met server. Probeer opnieuw.');
+      setVergetenOk(false);
     } finally {
       setVergetenLaden(false);
     }
@@ -130,9 +134,11 @@ export default function Login({ onLogin }) {
         body: { token: resetToken, nieuwWachtwoord },
       });
       setResetBericht('Wachtwoord gewijzigd! Je kunt nu inloggen.');
+      setResetOk(true);
       setTimeout(() => setToonReset(false), 2000);
     } catch (e) {
-      setResetBericht('' + e.message);
+      setResetBericht(e.message);
+      setResetOk(false);
     } finally {
       setResetLaden(false);
     }
@@ -274,7 +280,7 @@ export default function Login({ onLogin }) {
               className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500"
             />
             {resetBericht && (
-              <p className={`text-sm ${resetBericht.startsWith('✅') ? 'text-green-600' : 'text-red-500'}`}>{resetBericht}</p>
+              <p className={`text-sm ${resetOk ? 'text-green-600' : 'text-red-500'}`}>{resetBericht}</p>
             )}
             <button type="submit" disabled={resetLaden}
               className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -308,7 +314,7 @@ export default function Login({ onLogin }) {
             />
             {vergetenBericht && (
               <p className={`text-sm rounded-xl p-3 border ${
-                vergetenBericht.startsWith('✅')
+                vergetenOk
                   ? 'text-green-700 bg-green-50 border-green-200'
                   : 'text-red-600 bg-red-50 border-red-200'
               }`}>{vergetenBericht}</p>

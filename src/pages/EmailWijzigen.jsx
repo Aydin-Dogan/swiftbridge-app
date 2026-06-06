@@ -13,6 +13,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import TaalKiezer from '../components/TaalKiezer';
 import { useTaal } from '../i18n';
 import { apiFetch, parseError } from '../services/api';
+import { Clock, CheckCircle, AlertTriangle, Refresh } from '../components/icons/Icons';
 
 export default function EmailWijzigen({ modus }) {
   const [params] = useSearchParams();
@@ -79,7 +80,9 @@ export default function EmailWijzigen({ modus }) {
       <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl max-w-md w-full p-8 border border-white/40">
         {status === 'bezig' && (
           <div className="text-center py-6">
-            <div className="text-5xl mb-4 animate-pulse">⏳</div>
+            <div className="mx-auto w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-4 animate-pulse">
+              <Clock className="w-8 h-8 text-blue-600" />
+            </div>
             <h1 className="text-xl font-bold text-gray-900 mb-2">{titelBezig}</h1>
             <p className="text-sm text-gray-600">{t('email_wijzig_even_geduld') || 'Een ogenblik geduld...'}</p>
           </div>
@@ -87,7 +90,13 @@ export default function EmailWijzigen({ modus }) {
 
         {status === 'succes' && (
           <div className="text-center py-4">
-            <div className="text-5xl mb-3">{isBevestigen ? '✅' : '↩️'}</div>
+            <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-3 ${
+              isBevestigen ? 'bg-green-50' : 'bg-blue-50'
+            }`}>
+              {isBevestigen
+                ? <CheckCircle className="w-8 h-8 text-green-600" />
+                : <Refresh className="w-8 h-8 text-blue-600" />}
+            </div>
             <h1 className="text-xl font-bold text-gray-900 mb-3">{titelSucces}</h1>
             <p className="text-sm text-gray-700 leading-relaxed mb-5">{uitlegSucces}</p>
             {!isBevestigen && (
@@ -111,7 +120,9 @@ export default function EmailWijzigen({ modus }) {
 
         {status === 'fout' && (
           <div className="text-center py-4">
-            <div className="text-5xl mb-3">⚠️</div>
+            <div className="mx-auto w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-3">
+              <AlertTriangle className="w-8 h-8 text-amber-600" />
+            </div>
             <h1 className="text-xl font-bold text-gray-900 mb-3">
               {t('email_wijzig_fout_titel') || 'Er ging iets mis'}
             </h1>

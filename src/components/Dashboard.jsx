@@ -39,6 +39,7 @@ import InsightsCard from './dashboard/InsightsCard';
 import Spaardoelen from './dashboard/Spaardoelen';
 import MaandOverzicht from './dashboard/MaandOverzicht';
 import QuickResend from './dashboard/QuickResend';
+import { Mail, Refresh, Gift, IdCard, Lock, Zap, Banknote } from './icons/Icons';
 
 // Onboarding wizard voor nieuwe gebruikers
 import OnboardingModal from './onboarding/OnboardingModal';
@@ -110,7 +111,7 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
     <div className="card-glass p-4 space-y-3 animate-fade-up">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-lg">📊</span>
+          <Banknote className="w-5 h-5 text-brand-600" />
           <span className="font-semibold text-gray-800 text-sm">{t('weeklimiet')}</span>
         </div>
         <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">{t('weeklimiet_resets')}</span>
@@ -179,7 +180,9 @@ function EmailVerificatieBanner({ email }) {
       className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-4 animate-fade-up shadow-sm"
     >
       <div className="flex gap-3 items-start">
-        <span className="text-3xl flex-shrink-0" aria-hidden="true">📧</span>
+        <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+          <Mail className="w-5 h-5 text-amber-700" />
+        </div>
         <div className="flex-1 min-w-0">
           <div className="font-bold text-amber-900 text-sm">
             {t('email_banner_titel')}
@@ -237,7 +240,9 @@ function RecurringBadge() {
       onClick={() => navigate('/app/recurring')}
       className="w-full bg-white/80 backdrop-blur-lg border border-white/70 rounded-2xl p-4 text-left shadow-sm hover:shadow-md transition active:scale-[0.99] flex items-center gap-3 animate-fade-up"
     >
-      <span className="text-2xl flex-shrink-0 w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center" aria-hidden="true">🔁</span>
+      <span className="flex-shrink-0 w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center" aria-hidden="true">
+        <Refresh className="w-5 h-5 text-indigo-600" />
+      </span>
       <div className="flex-1 min-w-0">
         <div className="font-bold text-sm text-slate-900 leading-tight">
           {t('dashboard_recurring_titel')}
@@ -384,7 +389,9 @@ export default function Dashboard({ gebruiker }) {
       {gebruiker?.gratisEersteTx && kycGoedgekeurd && (
         <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 rounded-2xl p-4 text-white shadow-lg animate-fade-up">
           <div className="flex items-center gap-3">
-            <div className="text-4xl flex-shrink-0" aria-hidden="true">🎁</div>
+            <div className="w-12 h-12 rounded-full bg-white/25 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+              <Gift className="w-7 h-7 text-white" />
+            </div>
             <div className="flex-1 min-w-0">
               <div className="font-bold text-sm">Welkomst-deal: 1e transactie GRATIS!</div>
               <div className="text-xs text-white/90 mt-0.5">Geen servicekosten op je eerste overboeking (tot €800)</div>
@@ -405,7 +412,7 @@ export default function Dashboard({ gebruiker }) {
           role="alert"
           className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3 items-start animate-fade-up"
         >
-          <span className="text-2xl" aria-hidden="true">🪪</span>
+          <IdCard className="w-6 h-6 text-amber-700 flex-shrink-0" aria-hidden="true" />
           <div className="flex-1">
             <div className="font-bold text-amber-800 text-sm">{t('dashboard_kyc_vereist')}</div>
             <div className="text-amber-700 text-xs mt-1">{t('dashboard_kyc_uitleg')}</div>
@@ -469,7 +476,7 @@ export default function Dashboard({ gebruiker }) {
       {/* 11. Beveiliging — 2FA + Notificaties */}
       <div className="space-y-3 pt-2">
         <h3 className="font-bold text-slate-700 text-sm px-1 flex items-center gap-2">
-          <span aria-hidden="true">🔒</span> Beveiliging
+          <Lock className="w-4 h-4" aria-hidden="true" /> Beveiliging
         </h3>
         <TweeFactorInstellingen
           token="cookie"
@@ -482,12 +489,14 @@ export default function Dashboard({ gebruiker }) {
       {/* Info balk — vertrouwenssignalen */}
       <div className="grid grid-cols-3 gap-2 text-center pt-1">
         {[
-          { icoon: '⚡', tekst: '< 5 min aankomst' },
-          { icoon: '🔒', tekst: 'Veilig via licentiepartner' },
-          { icoon: '💶', tekst: '2,0–2,5% alles-in' },
-        ].map(({ icoon, tekst }) => (
+          { Icoon: Zap,      tekst: '< 5 min aankomst',         kleur: 'text-brand-600' },
+          { Icoon: Lock,     tekst: 'Veilig via licentiepartner', kleur: 'text-green-600' },
+          { Icoon: Banknote, tekst: '2,0–2,5% alles-in',         kleur: 'text-amber-600' },
+        ].map(({ Icoon, tekst, kleur }) => (
           <div key={tekst} className="bg-white/70 backdrop-blur-md rounded-xl border border-white/60 p-3">
-            <div className="text-xl mb-1" aria-hidden="true">{icoon}</div>
+            <div className={`flex justify-center mb-1 ${kleur}`} aria-hidden="true">
+              <Icoon className="w-5 h-5" />
+            </div>
             <div className="text-xs text-slate-500 font-medium">{tekst}</div>
           </div>
         ))}

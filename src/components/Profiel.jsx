@@ -17,6 +17,7 @@ import NotificatieVoorkeuren from './NotificatieVoorkeuren';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 import EmailWijzigenModal from './EmailWijzigenModal';
+import { IdCard, Bank, AlertTriangle, Refresh, Bell, MessageCircle, Download } from './icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -86,7 +87,7 @@ function IdinKnop({ token, onSucces }) {
   return (
     <div className="card-glass p-5 border-l-4 border-blue-500 animate-fade-up">
       <div className="flex items-start gap-3">
-        <div className="text-3xl flex-shrink-0">🪪</div>
+        <IdCard className="w-7 h-7 flex-shrink-0 text-amber-700" />
         <div className="flex-1 min-w-0">
           <h3 className="font-bold text-gray-800">Verifieer met je bank (iDIN)</h3>
           <p className="text-xs text-gray-600 mt-1 mb-3">
@@ -96,9 +97,9 @@ function IdinKnop({ token, onSucces }) {
           {!open ? (
             <button
               onClick={() => setOpen(true)}
-              className="btn-primary w-full py-3 text-sm"
+              className="btn-primary w-full py-3 text-sm inline-flex items-center justify-center gap-2"
             >
-              🏦 Kies mijn bank →
+              <Bank className="w-4 h-4" /> Kies mijn bank →
             </button>
           ) : (
             <div className="space-y-2">
@@ -243,11 +244,13 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
   if (fout && !profiel) {
     return (
       <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center space-y-3">
-        <div className="text-4xl">⚠️</div>
+        <div className="mx-auto w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center">
+          <AlertTriangle className="w-6 h-6 text-rose-700" />
+        </div>
         <h2 className="font-bold text-rose-800">Profiel kon niet geladen worden</h2>
         <p className="text-sm text-rose-700">{fout}</p>
-        <button onClick={laad} className="btn-primary text-sm">
-          🔄 Opnieuw proberen
+        <button onClick={laad} className="btn-primary text-sm inline-flex items-center gap-2">
+          <Refresh className="w-4 h-4" /> Opnieuw proberen
         </button>
       </div>
     );
@@ -435,7 +438,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </div>
 
         <h3 className="font-bold text-gray-800 flex items-center gap-2 pt-2 border-t border-gray-100">
-          📲 Notificaties
+          <Bell className="w-5 h-5" /> Notificaties
         </h3>
 
         <label className={`flex items-start gap-3 cursor-pointer p-4 rounded-xl border-2 transition ${
@@ -462,7 +465,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             </div>
             {(!form.telefoon) && (
               <div className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded-lg px-2 py-1 inline-flex items-center gap-1">
-                <span>📞</span>
+                <MessageCircle className="w-3 h-3" />
                 <span className="font-medium">{t('profiel_whatsapp_geen_telefoon')}</span>
               </div>
             )}
@@ -483,9 +486,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         <button
           type="submit"
           disabled={!kycOk || bezig}
-          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
         >
-          {bezig ? 'Opslaan...' : '💾 Opslaan'}
+          {bezig ? 'Opslaan...' : (<><Download className="w-4 h-4" /> Opslaan</>)}
         </button>
       </form>
 

@@ -386,20 +386,23 @@ function AppShell({ gebruiker, token, onLogout }) {
         </Suspense>
       </main>
 
-      {/* Bottom navigatie — mobiel geoptimaliseerd */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-inset-bottom">
+      {/* Bottom navigatie — mobiel geoptimaliseerd, monochroom Wise-stijl.
+          Iconen erven currentColor: inactive = ink-3, active = fg-primary.
+          Dark mode automatisch correct via semantic tokens. */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-50 safe-area-inset-bottom">
         <div className="max-w-2xl mx-auto flex">
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActief(tab.id)}
+              aria-current={actief === tab.id ? 'page' : undefined}
               className={`flex-1 flex flex-col items-center py-3 px-1 transition active:scale-95
-                ${actief === tab.id ? 'text-blue-600' : 'text-gray-400'}`}>
+                ${actief === tab.id ? 'text-fg-primary' : 'text-ink-3 hover:text-ink-2'}`}>
               <span className={`transition-transform ${actief === tab.id ? 'scale-110' : ''}`}>
                 <tab.Icoon className="w-6 h-6" />
               </span>
-              <span className={`text-xs font-medium mt-0.5 ${actief === tab.id ? 'text-blue-600' : 'text-gray-500'}`}>
+              <span className="text-xs font-medium mt-0.5">
                 {tab.label}
               </span>
-              {actief === tab.id && <div className="w-4 h-0.5 bg-blue-600 rounded-full mt-1" />}
+              {actief === tab.id && <div className="w-4 h-0.5 bg-fg-primary rounded-full mt-1" />}
             </button>
           ))}
         </div>
