@@ -6,6 +6,7 @@ import {
   pushBeschikbaar, permissieStatus, isIngeschakeld,
   pushInschakelen, pushUitschakelen, stuurTestNotificatie
 } from '../services/pushNotificatie';
+import { Bell } from './icons/Icons';
 
 export default function NotificatieInstellingen({ token }) {
   const [aan, setAan ] = useState(false);
@@ -45,7 +46,7 @@ export default function NotificatieInstellingen({ token }) {
     setBericht('');
     try {
       await stuurTestNotificatie(token);
-      setBericht('🧪 Test verstuurd! Check je notificaties.');
+      setBericht('Test verstuurd! Check je notificaties.');
     } catch (e) {
       setBericht('' + e.message);
     } finally {
@@ -56,7 +57,7 @@ export default function NotificatieInstellingen({ token }) {
   if (!beschikbaar) {
     return (
       <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm text-gray-500">
-        ℹ️ Push notificaties worden niet ondersteund in deze browser.
+        Push notificaties worden niet ondersteund in deze browser.
       </div>
     );
   }
@@ -64,7 +65,7 @@ export default function NotificatieInstellingen({ token }) {
   if (permissie === 'denied') {
     return (
       <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm text-amber-700">
-        🔕 Notificaties zijn uitgeschakeld in je browserinstellingen.<br/>
+        Notificaties zijn uitgeschakeld in je browserinstellingen.<br/>
         Schakel ze in via je browser om push berichten te ontvangen.
       </div>
     );
@@ -74,7 +75,7 @@ export default function NotificatieInstellingen({ token }) {
     <div className="bg-white border border-gray-200 rounded-2xl p-5 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">{aan ? '🔔' : '🔕'}</span>
+          <Bell className={`w-6 h-6 flex-shrink-0 ${aan ? 'text-blue-600' : 'text-gray-400'}`} />
           <div>
             <p className="font-bold text-gray-800 text-sm">Push notificaties</p>
             <p className="text-xs text-gray-500">Ontvang berichten bij transactie updates en KYC.</p>
@@ -95,12 +96,14 @@ export default function NotificatieInstellingen({ token }) {
           onClick={test}
           disabled={bezig}
           className="w-full text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2 rounded-lg transition">
-          🧪 Test notificatie sturen
+          Test notificatie sturen
         </button>
       )}
 
+      {/* NB: vergelijking op het kruis-teken (U+274C) bewust behouden via
+          unicode-escape — service-foutberichten zouden hiermee kunnen beginnen. */}
       {bericht && (
-        <p className={`text-xs ${bericht.startsWith('❌') ? 'text-red-600' : 'text-green-600'}`}>
+        <p className={`text-xs ${bericht.startsWith('\u{274C}') ? 'text-red-600' : 'text-green-600'}`}>
           {bericht}
         </p>
       )}

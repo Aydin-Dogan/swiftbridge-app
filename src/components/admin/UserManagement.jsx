@@ -18,6 +18,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { apiFetch, parseError } from '../../services/api';
 import { useTaal } from '../../i18n';
+import {
+  User, Banknote, IdCard, Clipboard, Settings, XCircle, CheckCircle, Lock, Search, X, Check,
+} from '../icons/Icons';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmtEur(n) {
@@ -216,7 +219,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
             <div className="text-xs text-white/50">User detail</div>
             <div className="font-bold text-white">{u?.naam || 'Laden…'}</div>
           </div>
-          <button onClick={onClose} className="text-white/70 hover:text-white text-2xl">✕</button>
+          <button onClick={onClose} className="text-white/70 hover:text-white"><X className="w-6 h-6" /></button>
         </div>
 
         {laden && <div className="p-8 text-center text-white/60">Laden…</div>}
@@ -236,11 +239,11 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
 
             <div className="px-5 pt-4 flex gap-1 overflow-x-auto border-b border-white/10">
               {[
-                { id: 'profiel', label: 'Profiel', icoon: '👤' },
-                { id: 'transacties',label: 'Transacties', icoon: '💸' },
-                { id: 'kyc', label: 'KYC', icoon: '🛂' },
-                { id: 'audit', label: 'Audit', icoon: '📋' },
-                { id: 'acties', label: 'Acties', icoon: '⚙️' },
+                { id: 'profiel', label: 'Profiel', icoon: User },
+                { id: 'transacties',label: 'Transacties', icoon: Banknote },
+                { id: 'kyc', label: 'KYC', icoon: IdCard },
+                { id: 'audit', label: 'Audit', icoon: Clipboard },
+                { id: 'acties', label: 'Acties', icoon: Settings },
               ].map((tt) => (
                 <button
                   key={tt.id}
@@ -249,7 +252,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     tab === tt.id ? 'text-white bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <span>{tt.icoon}</span><span>{tt.label}</span>
+                  {tt.icoon && <tt.icoon className="w-4 h-4" />}<span>{tt.label}</span>
                   {tab === tt.id && (
                     <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 rounded-full" />
                   )}
@@ -387,7 +390,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
               {tab === 'acties' && (
                 <div className="space-y-3">
                   <ActieKaart
-                    icoon="🛂"
+                    icoon={IdCard}
                     titel="KYC status wijzigen"
                     beschrijving="Manueel goedkeuren, afkeuren of terugzetten naar in behandeling. Genereert een email naar de gebruiker."
                     knop="KYC wijzigen"
@@ -395,7 +398,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                   />
                   {u.accountStatus !== 'gesuspendeerd' ? (
                     <ActieKaart
-                      icoon="⛔"
+                      icoon={XCircle}
                       titel="Account suspenderen"
                       beschrijving="Blokkeer toegang. Refresh tokens worden ingetrokken, gebruiker wordt geforceerd uitgelogd."
                       knop="Suspenderen"
@@ -404,7 +407,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     />
                   ) : (
                     <ActieKaart
-                      icoon="✅"
+                      icoon={CheckCircle}
                       titel="Account heractiveren"
                       beschrijving="Hef de blokkade op. Gebruiker kan weer inloggen."
                       knop="Activeren"
@@ -413,7 +416,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     />
                   )}
                   <ActieKaart
-                    icoon="🔐"
+                    icoon={Lock}
                     titel="Wachtwoord reset forceren"
                     beschrijving="Stuur een 1-uur geldige reset link naar het e-mailadres van de gebruiker."
                     knop="Reset triggeren"
@@ -506,11 +509,11 @@ function Veld({ label, waarde, mono }) {
   );
 }
 
-function ActieKaart({ icoon, titel, beschrijving, knop, knopKleur = 'bg-amber-600 hover:bg-amber-700', onClick }) {
+function ActieKaart({ icoon: Icoon, titel, beschrijving, knop, knopKleur = 'bg-amber-600 hover:bg-amber-700', onClick }) {
   return (
     <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
       <div className="flex items-start gap-3">
-        <div className="text-3xl">{icoon}</div>
+        {Icoon && <Icoon className="w-7 h-7 text-white/70 flex-shrink-0" />}
         <div className="flex-1">
           <div className="font-bold text-white">{titel}</div>
           <div className="text-xs text-white/60 mt-1">{beschrijving}</div>
@@ -579,7 +582,7 @@ export default function UserManagement() {
             placeholder="Zoek op email, naam of telefoon…"
             className="w-full bg-white/10 border border-white/20 backdrop-blur-lg rounded-xl pl-10 pr-3 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">🔍</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"><Search className="w-4 h-4" /></span>
         </div>
         <div className="text-xs text-white/60">
           {totaal} resultaten · pagina {pagina} / {aantalPaginas}
@@ -636,7 +639,7 @@ export default function UserManagement() {
                   <td className="px-4 py-3"><KycBadge status={u.kycStatus} /></td>
                   <td className="px-4 py-3"><AccountBadge status={u.accountStatus} /></td>
                   <td className="px-4 py-3 text-right text-white/80">{u.aantalTransacties}</td>
-                  <td className="px-4 py-3 text-xs text-white/70">{u.twofaIngeschakeld ? '✓' : '—'}</td>
+                  <td className="px-4 py-3 text-xs text-white/70">{u.twofaIngeschakeld ? <Check className="w-4 h-4 text-green-400" /> : '—'}</td>
                   <td className="px-4 py-3 text-xs text-white/60">{fmtDatum(u.aangemeldOp)}</td>
                   <td className="px-4 py-3 text-right">
                     <button className="text-white/60 hover:text-white text-sm">→</button>

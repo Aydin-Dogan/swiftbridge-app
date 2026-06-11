@@ -14,6 +14,7 @@ import { useTaal } from '../../i18n';
 import { apiFetch, parseError } from '../../services/api';
 import ReferralLeaderboard from './ReferralLeaderboard';
 import ReferralProgress from './ReferralProgress';
+import { AlertTriangle } from '../icons/Icons';
 
 // SVG iconen — vervangen emoji's voor consistentie met matte-modern stijl
 const IconWhatsApp = () => (
@@ -122,7 +123,7 @@ export default function ReferralKaart() {
   if (fout && !data) {
     return (
       <div className="bg-rose-50 border border-rose-200 rounded-2xl p-5 text-center space-y-2">
-        <div className="text-3xl">⚠️</div>
+        <div className="flex justify-center"><AlertTriangle className="w-8 h-8 text-rose-500" /></div>
         <p className="text-sm text-rose-700">{fout}</p>
         <button onClick={laad} className="text-sm text-rose-700 underline">
           {t('vernieuwen')}

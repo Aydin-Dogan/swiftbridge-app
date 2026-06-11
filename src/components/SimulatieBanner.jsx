@@ -10,6 +10,7 @@
  * (na EMI-contract + integratie).
  */
 import { useTaal } from '../i18n';
+import { AlertTriangle } from './icons/Icons';
 
 export default function SimulatieBanner({ kort = false }) {
   const { t } = useTaal();
@@ -23,7 +24,7 @@ export default function SimulatieBanner({ kort = false }) {
         aria-live="polite"
         className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300"
       >
-        <span aria-hidden="true">🧪</span>
+        <AlertTriangle className="w-3 h-3" aria-hidden="true" />
         {t('simulatie_banner_kort') || 'Test-modus'}
       </div>
     );
@@ -36,7 +37,7 @@ export default function SimulatieBanner({ kort = false }) {
       className="rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-yellow-50 p-4 sm:p-5 mb-4"
     >
       <div className="flex items-start gap-3">
-        <div className="text-2xl flex-shrink-0" aria-hidden="true">🧪</div>
+        <div className="flex-shrink-0 text-amber-700" aria-hidden="true"><AlertTriangle className="w-6 h-6" /></div>
         <div className="flex-1 min-w-0">
           <h3 className="font-bold text-amber-900 text-sm sm:text-base">
             {t('simulatie_banner_titel') || 'Test-modus: geen echte overboeking'}

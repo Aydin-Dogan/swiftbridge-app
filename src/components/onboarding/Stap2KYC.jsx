@@ -8,6 +8,7 @@
  */
 import { useState } from 'react';
 import { useTaal } from '../../i18n';
+import { IdCard, MessageCircle, ChevronDown } from '../icons/Icons.jsx';
 
 const BANK_LOGOS = [
   { naam: 'ING', kleur: 'bg-orange-500' },
@@ -23,7 +24,7 @@ export default function Stap2KYC({ onStartKYC, onLater, onTerug }) {
     <div className="space-y-5 animate-fade-up">
       {/* Header */}
       <div className="text-center space-y-2">
-        <div className="text-5xl mb-2" aria-hidden="true">🪪</div>
+        <div className="mb-2" aria-hidden="true"><IdCard className="w-12 h-12 mx-auto text-blue-600" /></div>
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
           {t('onb_kyc_titel')}
         </h2>
@@ -57,10 +58,10 @@ export default function Stap2KYC({ onStartKYC, onLater, onTerug }) {
           aria-expanded={expandOpen}
         >
           <span className="text-sm font-bold text-slate-800 flex items-center gap-2">
-            <span aria-hidden="true">💬</span> {t('onb_kyc_waarom_titel')}
+            <MessageCircle className="w-4 h-4 text-blue-600" aria-hidden="true" /> {t('onb_kyc_waarom_titel')}
           </span>
-          <span className={`text-slate-400 text-sm transition-transform ${expandOpen ? 'rotate-180' : ''}`} aria-hidden="true">
-            ▼
+          <span className={`text-slate-400 transition-transform ${expandOpen ? 'rotate-180' : ''}`} aria-hidden="true">
+            <ChevronDown className="w-4 h-4" />
           </span>
         </button>
         {expandOpen && (

@@ -20,15 +20,16 @@
  */
 import { useState, useEffect } from 'react';
 import { useTaal } from '../../i18n';
+import { Home, Send, Bell, User, IdCard, X } from '../icons/Icons';
 
 const TOUR_KEY = 'sb_tour_done';
 
 const STAPPEN = [
-  { id: 'dashboard', icoon: '📊' },
-  { id: 'overmaken', icoon: '💸' },
-  { id: 'alerts', icoon: '🔔' },
-  { id: 'profiel', icoon: '👤' },
-  { id: 'kyc', icoon: '🪪' },
+  { id: 'dashboard', Icoon: Home },
+  { id: 'overmaken', Icoon: Send },
+  { id: 'alerts', Icoon: Bell },
+  { id: 'profiel', Icoon: User },
+  { id: 'kyc', Icoon: IdCard },
 ];
 
 export function moetTourTonen() {
@@ -97,7 +98,7 @@ export default function TourOverlay({ open, onSluit }) {
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-2xl" aria-hidden="true">{huidige.icoon}</span>
+            <huidige.Icoon className="w-6 h-6 text-blue-600 flex-shrink-0" />
             <h2 id="tour-titel" className="font-bold text-gray-900 text-base">
               {t(`tour_${huidige.id}_titel`)}
             </h2>
@@ -107,7 +108,7 @@ export default function TourOverlay({ open, onSluit }) {
             className="text-gray-400 hover:text-gray-600 text-xl leading-none"
             aria-label={t('tour_sluit')}
           >
-            ✕
+            <X className="w-5 h-5" />
           </button>
         </div>
 

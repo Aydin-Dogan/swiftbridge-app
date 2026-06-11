@@ -12,6 +12,7 @@
 import { useState, useEffect } from 'react';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
+import { AlertTriangle, Check, Download, Refresh, Shield, ShieldCheck } from './icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -146,7 +147,7 @@ function BackupCodesPaneel({ codes }) {
     <div className="space-y-3">
       <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4">
         <div className="flex items-start gap-2">
-          <span className="text-2xl">⚠️</span>
+          <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0" />
           <div>
             <p className="font-bold text-amber-900 text-sm">Bewaar deze codes veilig!</p>
             <p className="text-xs text-amber-800 mt-1">
@@ -174,20 +175,22 @@ function BackupCodesPaneel({ codes }) {
           onClick={copy}
           className="px-3 py-3 rounded-xl border-2 border-blue-500 text-blue-600 text-xs font-bold hover:bg-blue-50 transition active:scale-95"
         >
-          {gekopieerd ? '✓ Gekopieerd' : 'Kopiëren'}
+          {gekopieerd ? (
+            <span className="inline-flex items-center justify-center gap-1"><Check className="w-3.5 h-3.5" /> Gekopieerd</span>
+          ) : 'Kopiëren'}
         </button>
         <button
           onClick={download}
           className="px-3 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition active:scale-95"
         >
-          💾 .txt
+          <span className="inline-flex items-center justify-center gap-1"><Download className="w-3.5 h-3.5" /> .txt</span>
         </button>
         <button
           onClick={printPdf}
           className="px-3 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold hover:opacity-90 transition active:scale-95"
           title="Print of opslaan als PDF"
         >
-          🖨️ PDF
+          PDF
         </button>
       </div>
       <p className="text-[11px] text-gray-500 text-center mt-1">
@@ -362,7 +365,9 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
     <div id="tweefactor" className="card-glass p-5 space-y-4 animate-fade-up">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
-          <span className="text-3xl flex-shrink-0">{twofaIngeschakeld ? '🔐' : '🔓'}</span>
+          {twofaIngeschakeld
+            ? <ShieldCheck className="w-8 h-8 text-emerald-600 flex-shrink-0" />
+            : <Shield className="w-8 h-8 text-gray-400 flex-shrink-0" />}
           <div className="min-w-0">
             <p className="font-bold text-gray-800 text-sm flex items-center gap-2">
               2-staps verificatie
@@ -402,7 +407,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               onClick={() => setRegenModal(true)}
               className="px-4 py-3 rounded-xl border-2 border-blue-500 text-blue-600 text-sm font-bold hover:bg-blue-50 transition active:scale-95"
             >
-              🔄 Backup codes regenereren
+              <span className="inline-flex items-center justify-center gap-1.5"><Refresh className="w-4 h-4" /> Backup codes regenereren</span>
             </button>
             <button
               onClick={() => setUitModal(true)}
@@ -477,7 +482,9 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               disabled={bezig || code.length !== 6}
               className="btn-primary w-full py-3 disabled:opacity-50"
             >
-              {bezig ? 'Bezig...' : '✓ Bevestigen en activeren'}
+              {bezig ? 'Bezig...' : (
+                <span className="inline-flex items-center justify-center gap-1.5"><Check className="w-4 h-4" /> Bevestigen en activeren</span>
+              )}
             </button>
           </>
         )}
@@ -492,7 +499,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               onClick={() => setAanModal(false)}
               className="btn-primary w-full py-3"
             >
-              ✓ Klaar — ik heb mijn codes opgeslagen
+              <span className="inline-flex items-center justify-center gap-1.5"><Check className="w-4 h-4" /> Klaar — ik heb mijn codes opgeslagen</span>
             </button>
           </>
         )}
@@ -577,7 +584,9 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               disabled={bezig}
               className="btn-primary w-full py-3 disabled:opacity-50"
             >
-              {bezig ? 'Bezig...' : '🔄 Genereer 10 nieuwe codes'}
+              {bezig ? 'Bezig...' : (
+                <span className="inline-flex items-center justify-center gap-1.5"><Refresh className="w-4 h-4" /> Genereer 10 nieuwe codes</span>
+              )}
             </button>
           </>
         ) : (
@@ -587,7 +596,7 @@ export default function TweeFactorInstellingen({ token, twofaIngeschakeld, onCha
               onClick={() => setRegenModal(false)}
               className="btn-primary w-full py-3"
             >
-              ✓ Klaar — ik heb mijn codes opgeslagen
+              <span className="inline-flex items-center justify-center gap-1.5"><Check className="w-4 h-4" /> Klaar — ik heb mijn codes opgeslagen</span>
             </button>
           </>
         )}

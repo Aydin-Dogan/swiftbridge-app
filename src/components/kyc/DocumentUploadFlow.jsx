@@ -21,6 +21,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { API_URL, parseError } from '../../services/api';
 import { useTaal } from '../../i18n';
+import { IdCard, Card, Check, CheckCircle, Plus } from '../icons/Icons.jsx';
 
 const MAX_FILE_MB = 5;
 const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
@@ -28,63 +29,63 @@ const TOEGESTANE_TYPES = ['image/jpeg', 'image/png'];
 
 // ── Document types ────────────────────────────────────────────────────────────
 const DOC_TYPES = [
-  { value: 'paspoort', icoon: '📘', tKey: 'kyc_doc_paspoort', heeftAchterkant: false },
-  { value: 'id_kaart', icoon: '🪪', tKey: 'kyc_doc_id_kaart', heeftAchterkant: true },
-  { value: 'rijbewijs', icoon: '🚗', tKey: 'kyc_doc_rijbewijs', heeftAchterkant: true },
+  { value: 'paspoort', icoon: IdCard, tKey: 'kyc_doc_paspoort', heeftAchterkant: false },
+  { value: 'id_kaart', icoon: IdCard, tKey: 'kyc_doc_id_kaart', heeftAchterkant: true },
+  { value: 'rijbewijs', icoon: Card, tKey: 'kyc_doc_rijbewijs', heeftAchterkant: true },
 ];
 
 // Top 50 landen (focus op diaspora-relevante landen)
 const LANDEN = [
-  { code: 'TR', vlag: '🇹🇷', naam: 'Türkiye' },
-  { code: 'NL', vlag: '🇳🇱', naam: 'Nederland' },
-  { code: 'MA', vlag: '🇲🇦', naam: 'Marokko' },
-  { code: 'SY', vlag: '🇸🇾', naam: 'Syrië' },
-  { code: 'AF', vlag: '🇦🇫', naam: 'Afghanistan' },
-  { code: 'IR', vlag: '🇮🇷', naam: 'Iran' },
-  { code: 'IQ', vlag: '🇮🇶', naam: 'Irak' },
-  { code: 'PK', vlag: '🇵🇰', naam: 'Pakistan' },
-  { code: 'AZ', vlag: '🇦🇿', naam: 'Azerbeidzjan' },
-  { code: 'UZ', vlag: '🇺🇿', naam: 'Oezbekistan' },
-  { code: 'KZ', vlag: '🇰🇿', naam: 'Kazachstan' },
-  { code: 'TM', vlag: '🇹🇲', naam: 'Turkmenistan' },
-  { code: 'KG', vlag: '🇰🇬', naam: 'Kirgizië' },
-  { code: 'TJ', vlag: '🇹🇯', naam: 'Tadzjikistan' },
-  { code: 'DE', vlag: '🇩🇪', naam: 'Duitsland' },
-  { code: 'BE', vlag: '🇧🇪', naam: 'België' },
-  { code: 'FR', vlag: '🇫🇷', naam: 'Frankrijk' },
-  { code: 'IT', vlag: '🇮🇹', naam: 'Italië' },
-  { code: 'ES', vlag: '🇪🇸', naam: 'Spanje' },
-  { code: 'PT', vlag: '🇵🇹', naam: 'Portugal' },
-  { code: 'PL', vlag: '🇵🇱', naam: 'Polen' },
-  { code: 'RO', vlag: '🇷🇴', naam: 'Roemenië' },
-  { code: 'BG', vlag: '🇧🇬', naam: 'Bulgarije' },
-  { code: 'GR', vlag: '🇬🇷', naam: 'Griekenland' },
-  { code: 'AL', vlag: '🇦🇱', naam: 'Albanië' },
-  { code: 'MK', vlag: '🇲🇰', naam: 'Noord-Macedonië' },
-  { code: 'RS', vlag: '🇷🇸', naam: 'Servië' },
-  { code: 'BA', vlag: '🇧🇦', naam: 'Bosnië en Herzegovina' },
-  { code: 'XK', vlag: '🇽🇰', naam: 'Kosovo' },
-  { code: 'GE', vlag: '🇬🇪', naam: 'Georgië' },
-  { code: 'AM', vlag: '🇦🇲', naam: 'Armenië' },
-  { code: 'RU', vlag: '🇷🇺', naam: 'Rusland' },
-  { code: 'UA', vlag: '🇺🇦', naam: 'Oekraïne' },
-  { code: 'BY', vlag: '🇧🇾', naam: 'Wit-Rusland' },
-  { code: 'MD', vlag: '🇲🇩', naam: 'Moldavië' },
-  { code: 'EG', vlag: '🇪🇬', naam: 'Egypte' },
-  { code: 'DZ', vlag: '🇩🇿', naam: 'Algerije' },
-  { code: 'TN', vlag: '🇹🇳', naam: 'Tunesië' },
-  { code: 'LB', vlag: '🇱🇧', naam: 'Libanon' },
-  { code: 'JO', vlag: '🇯🇴', naam: 'Jordanië' },
-  { code: 'PS', vlag: '🇵🇸', naam: 'Palestina' },
-  { code: 'SO', vlag: '🇸🇴', naam: 'Somalië' },
-  { code: 'SD', vlag: '🇸🇩', naam: 'Soedan' },
-  { code: 'ER', vlag: '🇪🇷', naam: 'Eritrea' },
-  { code: 'ET', vlag: '🇪🇹', naam: 'Ethiopië' },
-  { code: 'IN', vlag: '🇮🇳', naam: 'India' },
-  { code: 'BD', vlag: '🇧🇩', naam: 'Bangladesh' },
-  { code: 'GB', vlag: '🇬🇧', naam: 'Verenigd Koninkrijk' },
-  { code: 'US', vlag: '🇺🇸', naam: 'Verenigde Staten' },
-  { code: 'OTHER', vlag: '🌍', naam: 'Anders' },
+  { code: 'TR', naam: 'Türkiye' },
+  { code: 'NL', naam: 'Nederland' },
+  { code: 'MA', naam: 'Marokko' },
+  { code: 'SY', naam: 'Syrië' },
+  { code: 'AF', naam: 'Afghanistan' },
+  { code: 'IR', naam: 'Iran' },
+  { code: 'IQ', naam: 'Irak' },
+  { code: 'PK', naam: 'Pakistan' },
+  { code: 'AZ', naam: 'Azerbeidzjan' },
+  { code: 'UZ', naam: 'Oezbekistan' },
+  { code: 'KZ', naam: 'Kazachstan' },
+  { code: 'TM', naam: 'Turkmenistan' },
+  { code: 'KG', naam: 'Kirgizië' },
+  { code: 'TJ', naam: 'Tadzjikistan' },
+  { code: 'DE', naam: 'Duitsland' },
+  { code: 'BE', naam: 'België' },
+  { code: 'FR', naam: 'Frankrijk' },
+  { code: 'IT', naam: 'Italië' },
+  { code: 'ES', naam: 'Spanje' },
+  { code: 'PT', naam: 'Portugal' },
+  { code: 'PL', naam: 'Polen' },
+  { code: 'RO', naam: 'Roemenië' },
+  { code: 'BG', naam: 'Bulgarije' },
+  { code: 'GR', naam: 'Griekenland' },
+  { code: 'AL', naam: 'Albanië' },
+  { code: 'MK', naam: 'Noord-Macedonië' },
+  { code: 'RS', naam: 'Servië' },
+  { code: 'BA', naam: 'Bosnië en Herzegovina' },
+  { code: 'XK', naam: 'Kosovo' },
+  { code: 'GE', naam: 'Georgië' },
+  { code: 'AM', naam: 'Armenië' },
+  { code: 'RU', naam: 'Rusland' },
+  { code: 'UA', naam: 'Oekraïne' },
+  { code: 'BY', naam: 'Wit-Rusland' },
+  { code: 'MD', naam: 'Moldavië' },
+  { code: 'EG', naam: 'Egypte' },
+  { code: 'DZ', naam: 'Algerije' },
+  { code: 'TN', naam: 'Tunesië' },
+  { code: 'LB', naam: 'Libanon' },
+  { code: 'JO', naam: 'Jordanië' },
+  { code: 'PS', naam: 'Palestina' },
+  { code: 'SO', naam: 'Somalië' },
+  { code: 'SD', naam: 'Soedan' },
+  { code: 'ER', naam: 'Eritrea' },
+  { code: 'ET', naam: 'Ethiopië' },
+  { code: 'IN', naam: 'India' },
+  { code: 'BD', naam: 'Bangladesh' },
+  { code: 'GB', naam: 'Verenigd Koninkrijk' },
+  { code: 'US', naam: 'Verenigde Staten' },
+  { code: 'OTHER', naam: 'Anders' },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -115,7 +116,7 @@ function StappenIndicator({ huidigeStap, totaal }) {
             }`}
             aria-label={`Stap ${i + 1} van ${totaal}`}
           >
-            {i < huidigeStap ? '✓' : i + 1}
+            {i < huidigeStap ? <Check className="w-4 h-4" /> : i + 1}
           </div>
           {i < totaal - 1 && (
             <div
@@ -198,7 +199,7 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
           </div>
         ) : (
           <div>
-            <div className="text-4xl mb-2" aria-hidden="true">📷</div>
+            <div className="mb-2" aria-hidden="true"><Plus className="w-10 h-10 mx-auto text-gray-400" /></div>
             <p className="text-gray-700 font-semibold text-sm">
               {drag ? t('kyc_upload_drop_hier') : t('kyc_upload_klik_of_drop')}
             </p>
@@ -345,7 +346,7 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
           disabled={!klaar}
           className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
         >
-          📸 {t('kyc_camera_maak_foto')}
+          {t('kyc_camera_maak_foto')}
         </button>
       </div>
     </div>
@@ -450,7 +451,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
   if (klaar) {
     return (
       <div className="bg-white rounded-2xl shadow p-6 text-center space-y-4">
-        <div className="text-6xl" aria-hidden="true">✅</div>
+        <div aria-hidden="true"><CheckCircle className="w-16 h-16 mx-auto text-green-500" /></div>
         <h2 className="text-xl font-bold text-gray-800">{t('kyc_upload_succes_titel')}</h2>
         <p className="text-gray-600 text-sm">{t('kyc_upload_succes_omschrijving')}</p>
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-700 text-left">
@@ -473,7 +474,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
   return (
     <div className="bg-white rounded-2xl shadow p-5 sm:p-6 space-y-5 max-w-lg mx-auto">
       <div>
-        <h2 className="text-lg font-bold text-gray-800">📄 {t('kyc_upload_wizard_titel')}</h2>
+        <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><IdCard className="w-5 h-5 text-blue-600" /> {t('kyc_upload_wizard_titel')}</h2>
         <p className="text-gray-500 text-xs mt-1">
           {t('kyc_upload_wizard_subtitel', { huidig: stap + 1, totaal: stappen.length })}
         </p>
@@ -508,7 +509,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
                   onChange={(e) => update('documentType', e.target.value)}
                   className="mr-3 accent-blue-600"
                 />
-                <div className="text-2xl mr-3" aria-hidden="true">{d.icoon}</div>
+                <div className="mr-3 text-blue-600" aria-hidden="true"><d.icoon className="w-6 h-6" /></div>
                 <div>
                   <div className="font-semibold text-gray-800 text-sm">{t(d.tKey)}</div>
                   <div className="text-xs text-gray-500">{t(`${d.tKey}_sub`)}</div>
@@ -582,7 +583,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             >
               {LANDEN.map((l) => (
                 <option key={l.code} value={l.code}>
-                  {l.vlag} {l.naam}
+                  {l.naam}
                 </option>
               ))}
             </select>
@@ -693,7 +694,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
                 onClick={() => setToonCamera(true)}
                 className="w-full border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-3 rounded-xl text-sm"
               >
-                📸 {t('kyc_upload_selfie_camera_starten')}
+                {t('kyc_upload_selfie_camera_starten')}
               </button>
             </>
           )}
@@ -737,7 +738,6 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             <div className="flex justify-between">
               <span className="text-gray-500">{t('kyc_upload_nationaliteit')}</span>
               <span>
-                {LANDEN.find((l) => l.code === form.nationaliteit)?.vlag}{' '}
                 {LANDEN.find((l) => l.code === form.nationaliteit)?.naam}
               </span>
             </div>
@@ -783,7 +783,11 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
               disabled={bezig || !voorkant || !selfie}
               className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
             >
-              {bezig ? t('laden') : `✓ ${t('kyc_upload_verzenden')}`}
+              {bezig ? t('laden') : (
+                <span className="inline-flex items-center justify-center gap-1.5">
+                  <Check className="w-4 h-4" /> {t('kyc_upload_verzenden')}
+                </span>
+              )}
             </button>
           </div>
         </div>

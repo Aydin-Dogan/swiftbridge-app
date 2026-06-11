@@ -15,6 +15,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import TaalKiezer from '../components/TaalKiezer';
 import { useTaal } from '../i18n';
 import { apiFetch, parseError } from '../services/api';
+import { Zap, Clock, CheckCircle, XCircle } from '../components/icons/Icons';
 
 export default function VerifyEmail() {
   const [params] = useSearchParams();
@@ -91,7 +92,7 @@ export default function VerifyEmail() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <button onClick={() => navigate('/')} className="inline-flex items-center gap-2 text-white">
-            <span className="text-4xl" aria-hidden="true">⚡</span>
+            <Zap className="w-9 h-9" aria-hidden="true" />
             <div className="text-left">
               <div className="text-2xl font-extrabold">SwiftBridge</div>
               <div className="text-blue-200 text-xs">NL → TR in &lt;5 minuten</div>
@@ -107,7 +108,9 @@ export default function VerifyEmail() {
           {/* ── Laden ── */}
           {status === 'bezig' && (
             <div className="text-center space-y-3">
-              <div className="text-5xl mb-2" aria-hidden="true">⏳</div>
+              <div className="flex justify-center mb-2" aria-hidden="true">
+                <Clock className="w-12 h-12 text-blue-500" />
+              </div>
               <h2 className="text-xl font-bold text-gray-800">
                 {t('verify_email_laden_titel')}
               </h2>
@@ -127,7 +130,7 @@ export default function VerifyEmail() {
                 className="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mb-2"
                 aria-hidden="true"
               >
-                <span className="text-5xl">✅</span>
+                <CheckCircle className="w-10 h-10 text-emerald-600" />
               </div>
               <h2 className="text-xl font-bold text-emerald-700">
                 {t('verify_email_succes_titel')}
@@ -160,7 +163,7 @@ export default function VerifyEmail() {
                   className="inline-flex items-center justify-center w-20 h-20 bg-rose-100 rounded-full mb-3"
                   aria-hidden="true"
                 >
-                  <span className="text-5xl">❌</span>
+                  <XCircle className="w-10 h-10 text-rose-600" />
                 </div>
                 <h2 className="text-xl font-bold text-rose-700">
                   {t('verify_email_fout_titel')}

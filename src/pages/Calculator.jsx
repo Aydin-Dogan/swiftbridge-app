@@ -23,7 +23,7 @@ import { API_URL } from '../services/api';
 import Vlag from '../components/Vlag';
 import TaalKiezer from '../components/TaalKiezer';
 import {
-  Bank, Card, Zap, Clock, ShieldCheck, ArrowRight, CheckCircle,
+  Bank, Card, Zap, Clock, ShieldCheck, ArrowRight, CheckCircle, Bell,
 } from '../components/icons/Icons';
 
 // Snelle bedragknoppen
@@ -211,7 +211,7 @@ export default function Calculator() {
               />
               {valutaInfo.status === 'binnenkort' && (
                 <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-3 text-[11px] text-amber-800 leading-snug">
-                  <span aria-hidden="true">🔔</span>
+                  <Bell className="w-4 h-4 flex-shrink-0" />
                   <span>{t('landing_widget_binnenkort', { land: valutaInfo.land })}</span>
                 </div>
               )}

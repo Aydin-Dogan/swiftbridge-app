@@ -22,6 +22,7 @@ import Stap1Welkom from './Stap1Welkom';
 import Stap2KYC from './Stap2KYC';
 import Stap3Bevestig from './Stap3Bevestig';
 import Stap4Klaar from './Stap4Klaar';
+import { X } from '../icons/Icons';
 
 const TOTAAL_STAPPEN = 4;
 
@@ -106,7 +107,7 @@ export default function OnboardingModal({ gebruiker, open, onDismiss }) {
               aria-label={t('onb_sla_over')}
               title={t('onb_sla_over')}
             >
-              <span aria-hidden="true" className="text-lg leading-none">✕</span>
+              <X className="w-5 h-5" />
             </button>
           </div>
           <StappenIndicator huidigeStap={stap} totaalStappen={TOTAAL_STAPPEN} labels={stapLabels} />

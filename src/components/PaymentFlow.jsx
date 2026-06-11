@@ -9,14 +9,14 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
-import { berekenKosten, KOSTEN_LABELS, zichtbarePercentage } from '../services/kosten';
+import { berekenKosten, zichtbarePercentage } from '../services/kosten';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
 import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
 import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
 import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
-import { Bank, Card, Wallet, Euro, Globe } from './icons/Icons';
+import { Bank, Card, Wallet, Euro, Globe, Zap, Clock, Bell, Check, X, Send, Sparkles, AlertTriangle } from './icons/Icons';
 import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
 import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
 import CurrencySelector from './CurrencySelector'; // Global herpositionering
@@ -148,18 +148,18 @@ function valideerIBAN(iban) {
 
 // ── Emotionele labels voor begunstigden (familie-focus) ───────────────────────
 const FAMILIE_LABELS = [
-  { id: 'mama', label: 'Mama', emoji: '👩‍🦳' },
-  { id: 'papa', label: 'Papa', emoji: '👨‍🦳' },
-  { id: 'oma', label: 'Oma', emoji: '👵' },
-  { id: 'opa', label: 'Opa', emoji: '👴' },
-  { id: 'broer', label: 'Broer', emoji: '👨' },
-  { id: 'zus', label: 'Zus', emoji: '👩' },
-  { id: 'oom', label: 'Oom', emoji: '🧓' },
-  { id: 'tante', label: 'Tante', emoji: '👩‍🦰' },
-  { id: 'partner', label: 'Partner', emoji: '💑' },
-  { id: 'kind', label: 'Kind', emoji: '🧒' },
-  { id: 'vriend', label: 'Vriend(in)', emoji: '👥' },
-  { id: 'anders', label: 'Anders', emoji: '👤' },
+  { id: 'mama', label: 'Mama' },
+  { id: 'papa', label: 'Papa' },
+  { id: 'oma', label: 'Oma' },
+  { id: 'opa', label: 'Opa' },
+  { id: 'broer', label: 'Broer' },
+  { id: 'zus', label: 'Zus' },
+  { id: 'oom', label: 'Oom' },
+  { id: 'tante', label: 'Tante' },
+  { id: 'partner', label: 'Partner' },
+  { id: 'kind', label: 'Kind' },
+  { id: 'vriend', label: 'Vriend(in)' },
+  { id: 'anders', label: 'Anders' },
 ];
 
 // ── localStorage helpers ──────────────────────────────────────────────────────
@@ -233,7 +233,7 @@ function OntvangerModal({ onKies, onSluit }) {
       <div className="bg-white rounded-2xl w-full max-w-sm">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <h3 className="font-bold text-gray-800">Kies ontvanger</h3>
-          <button onClick={onSluit} className="text-gray-400 text-xl">✕</button>
+          <button onClick={onSluit} className="text-gray-400 hover:text-gray-600" aria-label="Sluiten"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-3 space-y-2 max-h-72 overflow-y-auto">
           {ontvangers.length === 0 && (
@@ -246,8 +246,8 @@ function OntvangerModal({ onKies, onSluit }) {
             return (
               <button key={i} onClick={() => onKies(o)}
                 className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition text-left">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-2xl flex-shrink-0">
-                  {labelInfo?.emoji || o.naam[0]}
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-lg font-bold text-blue-700 flex-shrink-0">
+                  {o.naam[0].toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
@@ -424,7 +424,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             }`}
           >
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-lg">⚡</span>
+              <Zap className="w-4 h-4" />
               <span className="font-bold text-sm">Express</span>
             </div>
             <div className={`text-[10px] ${snelheid === 'express' ? 'text-blue-100' : 'text-gray-500'}`}>
@@ -441,7 +441,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             }`}
           >
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-lg">🐢</span>
+              <Clock className="w-4 h-4" />
               <span className="font-bold text-sm">Economy</span>
             </div>
             <div className={`text-[10px] ${snelheid === 'economy' ? 'text-emerald-100' : 'text-gray-500'}`}>
@@ -461,7 +461,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         />
         {valutaInfo.status === 'binnenkort' && (
           <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-2 text-[11px] text-amber-800 leading-snug">
-            <span aria-hidden="true">🔔</span>
+            <Bell className="w-4 h-4 flex-shrink-0" />
             <span>Uitbetaling naar {valutaInfo.land} komt binnenkort. Bereken alvast — je kunt je op de wachtlijst zetten.</span>
           </div>
         )}
@@ -482,7 +482,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           </div>
 
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">💱 Wisselkoers marge ({kosten.fxAfwijkingPct}%)</span>
+            <span className="text-gray-600">Wisselkoers marge ({kosten.fxAfwijkingPct}%)</span>
             <span className="font-mono font-semibold text-gray-800">€{kosten.fxKostenEur.toFixed(2)}</span>
           </div>
 
@@ -555,7 +555,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               onChange={e => setBewaarAlsFavoriet?.(e.target.checked)}
               className="h-4 w-4 accent-blue-600"
             />
-            <span>💾 Bewaar als favoriete ontvanger</span>
+            <span>Bewaar als favoriete ontvanger</span>
           </label>
         )}
 
@@ -572,7 +572,6 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-700'
                   }`}>
-                  <span>{l.emoji}</span>
                   <span>{l.label}</span>
                 </button>
               ))}
@@ -595,7 +594,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             }`}
           >
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-lg">🏦</span>
+              <Bank className="w-4 h-4" />
               <span className="font-bold text-sm">Bankrekening</span>
             </div>
             <div className={`text-[10px] ${uitbetaalMethode === 'bank' ? 'text-blue-100' : 'text-gray-500'}`}>
@@ -613,7 +612,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           >
             <span className="absolute top-1 right-1 text-[8px] bg-amber-400 text-amber-900 font-bold px-1 rounded">SOON</span>
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-lg">💜</span>
+              <Wallet className="w-4 h-4" />
               <span className="font-bold text-sm">Papara wallet</span>
             </div>
             <div className={`text-[10px] ${uitbetaalMethode === 'papara' ? 'text-pink-100' : 'text-gray-500'}`}>
@@ -648,7 +647,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
                   const banken = (groups[catKey] || []).filter(b => catKey !== 'wallet');
                   if (!banken.length) return null;
                   return (
-                    <optgroup key={catKey} label={`${catInfo.icon} ${catInfo.naam}`}>
+                    <optgroup key={catKey} label={catInfo.naam}>
                       {banken.map(b => (
                         <option key={b.id} value={b.naam}>{b.naam}</option>
                       ))}
@@ -679,7 +678,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
       ) : (
         <div className="space-y-2">
           <div className="bg-purple-50 border border-purple-200 rounded-xl p-2.5 text-[11px] text-purple-800 flex items-start gap-1.5">
-            <span>🚧</span>
+            <AlertTriangle className="w-4 h-4 flex-shrink-0" />
             <span><strong>Coming soon:</strong> Papara wallet uitbetaling is in ontwikkeling (live verwacht Q3 2026). Voor nu kun je het bestellen — wij betalen handmatig uit zodra je transactie gelukt is.</span>
           </div>
           <label className="block text-sm font-medium text-gray-600">Hoe wil je sturen?</label>
@@ -819,7 +818,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
           ['Mid-market koers (ECB)', `1 EUR = ${kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],
           ['Onze wisselkoers', `1 EUR = ${kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
           ['Ontvanger krijgt', formatBedrag(kosten.ontvangenBedrag, valuta)],
-          ['Aankomsttijd', methode === 'ideal' ? '< 5 minuten ⚡' : '1–2 werkdagen'],
+          ['Aankomsttijd', methode === 'ideal' ? '< 5 minuten' : '1–2 werkdagen'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
             <span className="text-gray-500 text-sm">{label}</span>
@@ -870,7 +869,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
       {setNotitie && (
         <div className="rounded-xl bg-gray-50 border border-gray-200 p-3">
           <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-            📝 Persoonlijke notitie <span className="text-gray-400 font-normal">(optioneel, alleen voor jou zichtbaar)</span>
+            Persoonlijke notitie <span className="text-gray-400 font-normal">(optioneel, alleen voor jou zichtbaar)</span>
           </label>
           <input
             type="text"
@@ -893,7 +892,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
         <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition">← Terug</button>
         <button onClick={onVerstuur} disabled={laden}
           className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl transition">
-          {laden ? 'Verwerken...' : '✓ Bevestigen & betalen'}
+          {laden ? 'Verwerken...' : 'Bevestigen & betalen'}
         </button>
       </div>
     </div>
@@ -950,7 +949,7 @@ function PushOptInCard({ token }) {
   if (resultaat === 'ok') {
     return (
       <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-700 flex items-center gap-2">
-        <span aria-hidden="true">✓</span>
+        <Check className="w-4 h-4 flex-shrink-0" />
         Notificaties aangezet — je krijgt bericht bij aankomst.
       </div>
     );
@@ -959,7 +958,7 @@ function PushOptInCard({ token }) {
   return (
     <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-left">
       <div className="flex items-start gap-3">
-        <span className="text-2xl flex-shrink-0" aria-hidden="true">🔔</span>
+        <Bell className="w-6 h-6 text-blue-600 flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="font-bold text-blue-900 text-sm">Krijg bericht bij aankomst?</p>
           <p className="text-xs text-blue-800 mt-0.5">
@@ -1032,7 +1031,7 @@ function TrackingShareCard({ trackingToken }) {
   return (
     <div className="bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-left space-y-3">
       <div className="flex items-start gap-3">
-        <span className="text-2xl flex-shrink-0" aria-hidden="true">🔗</span>
+        <Send className="w-6 h-6 text-indigo-600 flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="font-bold text-indigo-900 text-sm">Deel tracking-link met ontvanger</p>
           <p className="text-xs text-indigo-800 mt-0.5">
@@ -1048,7 +1047,7 @@ function TrackingShareCard({ trackingToken }) {
           onClick={kopieer}
           className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg py-2.5 transition"
         >
-          {gekopieerd ? '✓ Gekopieerd' : 'Kopieer'}
+          {gekopieerd ? 'Gekopieerd' : 'Kopieer'}
         </button>
         <button
           onClick={deelWhatsApp}
@@ -1060,7 +1059,7 @@ function TrackingShareCard({ trackingToken }) {
           onClick={deelNative}
           className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg py-2.5 transition"
         >
-          🔗 Delen
+          Delen
         </button>
       </div>
     </div>
@@ -1075,7 +1074,9 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
   const ontvangenBedrag = transactie?.ontvangenBedrag ?? transactie?.tryBedrag ?? 0;
   return (
     <div className="card-glass p-6 text-center space-y-5 animate-fade-up">
-      <div className="text-6xl">🎉</div>
+      <div className="w-16 h-16 mx-auto bg-emerald-100 rounded-full flex items-center justify-center">
+        <Sparkles className="w-8 h-8 text-emerald-600" />
+      </div>
       <h2 className="text-2xl font-bold text-emerald-600 tracking-tight">Geld onderweg!</h2>
       <p className="text-gray-500 text-sm">
         {methode === 'ideal'
@@ -1091,7 +1092,7 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
       >
         {[
           ['Verstuurd', `€${transactie?.eurBedrag?.toFixed(2)}`],
-          ['Ontvanger krijgt', `${valutaInfo.vlag} ${formatBedrag(ontvangenBedrag, valuta)}`],
+          ['Ontvanger krijgt', formatBedrag(ontvangenBedrag, valuta)],
           ['Methode', methodeObj?.label || methode],
           ['Transactie ID', transactie?.id?.slice(0,16) + '…'],
         ].map(([label, value]) => (
@@ -1452,7 +1453,7 @@ export default function PaymentFlow({ token }) {
               i < stap ? 'bg-blue-600 text-white' :
               i === stap ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-500' :
                            'bg-gray-100 text-gray-400'}`}>
-              {i < stap ? '✓' : i + 1}
+              {i < stap ? <Check className="w-4 h-4" /> : i + 1}
             </div>
             <span className={`mx-1 text-xs font-medium hidden sm:block ${i <= stap ? 'text-blue-600' : 'text-gray-400'}`}>
               {s}

@@ -1,10 +1,12 @@
+import { Zap } from '../components/icons/Icons';
+
 export default function AMLBeleid() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="bg-white rounded-2xl shadow-sm p-8 md:p-12">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl">⚡</span>
+            <Zap className="w-8 h-8 text-blue-600" />
             <span className="font-bold text-xl text-blue-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">AML-beleid</h1>
@@ -14,13 +16,13 @@ export default function AMLBeleid() {
           {/* F31 fix (Cursor review): "Intern beleidsdocument" tekst verwijderd —
               dit document is publiek toegankelijk voor transparantie. */}
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 text-sm text-blue-900">
-            <strong>📘 Publiek beleidsdocument:</strong> Dit document beschrijft hoe SwiftBridge witwassen van geld en financiering van terrorisme voorkomt, conform de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft) en EU Anti-witwasrichtlijnen (AMLD).
+            <strong>Publiek beleidsdocument:</strong> Dit document beschrijft hoe SwiftBridge witwassen van geld en financiering van terrorisme voorkomt, conform de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft) en EU Anti-witwasrichtlijnen (AMLD).
           </div>
 
           {/* F23 fix (Cursor review): expliciet maken dat SwiftBridge agent is van
               een EMI-partner — voorkomt indruk dat we zelf DNB-vergunning hebben. */}
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-sm text-amber-900">
-            <strong>⚖️ Toezichtsstructuur:</strong> Betaaldiensten worden geleverd door onze EMI-partner, een door DNB gelicentieerde Elektronische Geld-Instelling. SwiftBridge handelt als agent en past onderstaand AML/CTF-beleid toe in opdracht van — en onder toezicht van — de EMI-partner. SwiftBridge beschikt zelf <strong>niet</strong> over een eigen DNB-vergunning.
+            <strong>Toezichtsstructuur:</strong> Betaaldiensten worden geleverd door onze EMI-partner, een door DNB gelicentieerde Elektronische Geld-Instelling. SwiftBridge handelt als agent en past onderstaand AML/CTF-beleid toe in opdracht van — en onder toezicht van — de EMI-partner. SwiftBridge beschikt zelf <strong>niet</strong> over een eigen DNB-vergunning.
           </div>
 
           <div className="space-y-8 text-gray-700 leading-relaxed">
@@ -42,7 +44,10 @@ export default function AMLBeleid() {
               <p className="mb-3">SwiftBridge hanteert een risicogebaseerde aanpak (Risk-Based Approach). Klanten en transacties worden ingedeeld in drie risicocategorieën:</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-                  <div className="font-semibold text-green-800 mb-2">🟢 Laag Risico</div>
+                  <div className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500" aria-hidden="true" />
+                    Laag Risico
+                  </div>
                   <ul className="text-sm text-green-700 space-y-1">
                     <li>• NL-ingezetene, EU-burger</li>
                     <li>• Kleine transacties (&lt;€1.000)</li>
@@ -51,7 +56,10 @@ export default function AMLBeleid() {
                   </ul>
                 </div>
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                  <div className="font-semibold text-amber-800 mb-2">🟡 Gemiddeld Risico</div>
+                  <div className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" aria-hidden="true" />
+                    Gemiddeld Risico
+                  </div>
                   <ul className="text-sm text-amber-700 space-y-1">
                     <li>• Transacties €1.000–€5.000</li>
                     <li>• Verhoogde frequentie</li>
@@ -60,7 +68,10 @@ export default function AMLBeleid() {
                   </ul>
                 </div>
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                  <div className="font-semibold text-red-800 mb-2">🔴 Hoog Risico</div>
+                  <div className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" aria-hidden="true" />
+                    Hoog Risico
+                  </div>
                   <ul className="text-sm text-red-700 space-y-1">
                     <li>• PEP of familielid PEP</li>
                     <li>• Transacties &gt;€5.000</li>

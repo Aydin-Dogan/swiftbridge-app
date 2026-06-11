@@ -18,6 +18,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { API_URL } from '../services/api';
 import { useTaal } from '../i18n';
+import { Zap, Search, CheckCircle, XCircle, Clock } from '../components/icons/Icons';
 
 function statusLabel(status, t) {
   if (status === 'voltooid') return t('track_status_voltooid');
@@ -104,7 +105,7 @@ export default function TransactieTracking() {
         {/* Header */}
         <div className="flex items-center gap-2 mb-6">
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl" aria-hidden="true">⚡</span>
+            <Zap className="w-6 h-6 text-blue-600" />
             <span className="font-extrabold text-gray-900 text-lg">SwiftBridge</span>
           </Link>
         </div>
@@ -116,7 +117,7 @@ export default function TransactieTracking() {
           </div>
         ) : fout ? (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center">
-            <div className="text-4xl mb-3" aria-hidden="true">❓</div>
+            <Search className="w-10 h-10 text-red-400 mx-auto mb-3" />
             <h2 className="font-bold text-red-900 mb-2">{t('track_niet_gevonden')}</h2>
             <p className="text-sm text-red-700">{fout}</p>
             <Link to="/" className="inline-block mt-4 text-sm font-semibold text-blue-600 hover:underline">
@@ -127,8 +128,8 @@ export default function TransactieTracking() {
           <div className="space-y-4">
             {/* Status hero */}
             <div className={`rounded-2xl border-2 p-6 text-center ${statusKleur(info.status)}`}>
-              <div className="text-5xl mb-3" aria-hidden="true">
-                {info.status === 'voltooid' ? '✅' : info.status === 'mislukt' || info.status === 'geannuleerd' ? '❌' : '⏳'}
+              <div className="flex justify-center mb-3" aria-hidden="true">
+                {info.status === 'voltooid' ? <CheckCircle className="w-12 h-12" /> : info.status === 'mislukt' || info.status === 'geannuleerd' ? <XCircle className="w-12 h-12" /> : <Clock className="w-12 h-12" />}
               </div>
               <h1 className="text-xl font-extrabold mb-1">{statusLabel(info.status, t)}</h1>
               <p className="text-2xl font-bold mt-3">

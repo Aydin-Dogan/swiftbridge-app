@@ -136,12 +136,12 @@ export const LAND_INFO = {
 };
 
 export const CATEGORIE_LABELS = {
-  publiek: { naam: 'Publieke banken', icon: '🏛️', volgorde: 1 },
-  prive: { naam: 'Particuliere banken', icon: '🏦', volgorde: 2 },
-  buitenlands: { naam: 'Buitenlandse banken', icon: '🌍', volgorde: 3 },
-  deelname: { naam: 'Katılım (Islamitisch)', icon: '☪', volgorde: 4 },
-  digitaal: { naam: 'Digitale banken', icon: '📱', volgorde: 5 },
-  wallet: { naam: 'Wallets / E-money', icon: '👛', volgorde: 6 },
+  publiek: { naam: 'Publieke banken', volgorde: 1 },
+  prive: { naam: 'Particuliere banken', volgorde: 2 },
+  buitenlands: { naam: 'Buitenlandse banken', volgorde: 3 },
+  deelname: { naam: 'Katılım (Islamitisch)', volgorde: 4 },
+  digitaal: { naam: 'Digitale banken', volgorde: 5 },
+  wallet: { naam: 'Wallets / E-money', volgorde: 6 },
 };
 
 export function bankenPerLand(landCode) {

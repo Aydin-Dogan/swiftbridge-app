@@ -12,6 +12,7 @@
  */
 import { useMemo } from 'react';
 import { useTaal } from '../../i18n';
+import { Euro, Zap, Clock, Banknote } from '../icons/Icons';
 
 function fmtEur(n, maxFractie = 0) {
   return new Intl.NumberFormat('nl-NL', {
@@ -49,7 +50,7 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
 
   const boxes = [
     {
-      icoon: '💶',
+      Icoon: Euro,
       label: t('dashboard_stats_overgemaakt'),
       waarde: stats ? fmtEur(stats.totaal) : null,
       gradient: 'from-blue-500/20 to-indigo-500/10',
@@ -57,7 +58,7 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
       ring: 'ring-blue-300/40',
     },
     {
-      icoon: '⚡',
+      Icoon: Zap,
       label: t('dashboard_stats_aantal_tx'),
       waarde: stats ? String(stats.aantal) : null,
       gradient: 'from-violet-500/20 to-fuchsia-500/10',
@@ -65,7 +66,7 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
       ring: 'ring-violet-300/40',
     },
     {
-      icoon: '⏱️',
+      Icoon: Clock,
       label: t('dashboard_stats_gem_tijd'),
       waarde: stats ? `${stats.gemTijd} ${t('dashboard_stats_min')}` : null,
       gradient: 'from-amber-500/20 to-orange-500/10',
@@ -73,7 +74,7 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
       ring: 'ring-amber-300/40',
     },
     {
-      icoon: '💰',
+      Icoon: Banknote,
       label: t('dashboard_stats_bespaard'),
       waarde: stats ? fmtEur(stats.bespaard) : null,
       gradient: 'from-emerald-500/20 to-teal-500/10',
@@ -101,7 +102,9 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
             {/* Inner ring accent */}
             <div className={`absolute -top-6 -right-6 w-20 h-20 rounded-full ${box.ring} ring-8 opacity-30 pointer-events-none`} aria-hidden="true" />
             <div className="relative">
-              <div className="text-xl mb-2" aria-hidden="true">{box.icoon}</div>
+              <div className={`mb-2 ${box.accent}`} aria-hidden="true">
+                <box.Icoon className="w-5 h-5" />
+              </div>
               {laden ? (
                 <div className="space-y-2">
                   <div className="h-5 w-20 rounded-md animate-shimmer" />

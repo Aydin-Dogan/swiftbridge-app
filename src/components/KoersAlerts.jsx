@@ -8,6 +8,7 @@ import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
 import ConfirmDialog from './ConfirmDialog';
+import { Bell, Trash } from './icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -105,7 +106,7 @@ export default function KoersAlerts({ token }) {
     <div className="space-y-4">
       <div className="card-glass p-5 animate-fade-up">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🔔</span>
+          <Bell className="w-6 h-6 text-blue-600" />
           <h2 className="text-xl font-bold text-gray-800">Koers Alerts</h2>
         </div>
         <p className="text-sm text-gray-500 mb-4">
@@ -233,14 +234,14 @@ export default function KoersAlerts({ token }) {
                           a.actief ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'
                         }`}
                       >
-                        {a.actief ? '⏸️ Pauze' : '▶️ Aan'}
+                        {a.actief ? 'Pauze' : 'Aan'}
                       </button>
                     )}
                     <button
                       onClick={() => vraagVerwijderAlert(a.id)}
                       className="text-xs px-2 py-1 rounded-lg bg-rose-100 text-rose-700 hover:bg-rose-200"
                     >
-                      🗑️
+                      <Trash className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>

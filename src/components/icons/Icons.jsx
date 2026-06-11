@@ -232,7 +232,7 @@ export const Refresh = (p) => (
   </Icon>
 );
 
-// ── Info / lightbulb (vervangt 💡) ─────────────────────────────────────────
+// ── Info / lightbulb (vervangt lightbulb-emoji) ─────────────────────────────────────────
 export const Info = (p) => (
   <Icon {...p}>
     <circle cx="12" cy="12" r="10" />
@@ -249,7 +249,7 @@ export const Lightbulb = (p) => (
   </Icon>
 );
 
-// ── Sparkles (success/celebrate vervangt 🎉) ───────────────────────────────
+// ── Sparkles (success/celebrate vervangt party-emoji) ───────────────────────────────
 export const Sparkles = (p) => (
   <Icon {...p}>
     <path d="M12 3v3M5 8H2M22 8h-3M12 13v3M9 8l-3 3M15 8l3 3M12 8a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
@@ -265,7 +265,7 @@ export const Key = (p) => (
   </Icon>
 );
 
-// ── Banknote (geld vervangt 💸 💰) ─────────────────────────────────────────
+// ── Banknote (geld vervangt flying-money-emoji moneybag-emoji) ─────────────────────────────────────────
 export const Banknote = (p) => (
   <Icon {...p}>
     <rect x="2" y="6" width="20" height="12" rx="2" />
@@ -274,7 +274,7 @@ export const Banknote = (p) => (
   </Icon>
 );
 
-// ── Gift (referral vervangt 🎁) ────────────────────────────────────────────
+// ── Gift (referral vervangt gift-emoji) ────────────────────────────────────────────
 export const Gift = (p) => (
   <Icon {...p}>
     <polyline points="20 12 20 22 4 22 4 12" />
@@ -285,7 +285,7 @@ export const Gift = (p) => (
   </Icon>
 );
 
-// ── Hand / wave (vervangt 👋) ──────────────────────────────────────────────
+// ── Hand / wave (vervangt wave-emoji) ──────────────────────────────────────────────
 export const Hand = (p) => (
   <Icon {...p}>
     <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0" />
@@ -295,7 +295,7 @@ export const Hand = (p) => (
   </Icon>
 );
 
-// ── Clipboard / list (vervangt 📋) ─────────────────────────────────────────
+// ── Clipboard / list (vervangt clipboard-emoji) ─────────────────────────────────────────
 export const Clipboard = (p) => (
   <Icon {...p}>
     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />

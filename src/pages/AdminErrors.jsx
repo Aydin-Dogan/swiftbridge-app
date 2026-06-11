@@ -19,6 +19,7 @@ import { useState, useEffect, useCallback, Fragment } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { API_URL } from '../services/api';
 import { useTaal } from '../i18n';
+import { CheckCircle } from '../components/icons/Icons';
 
 function formatTime(iso) {
   if (!iso) return '—';
@@ -185,7 +186,7 @@ export default function AdminErrors() {
             </div>
           ) : errors.length === 0 ? (
             <div className="p-12 text-center">
-              <div className="text-4xl mb-3" aria-hidden="true">✨</div>
+              <CheckCircle className="w-10 h-10 mx-auto mb-3 text-green-500" aria-hidden="true" />
               <h3 className="font-bold text-gray-800 mb-1">{t('admin_errors_leeg_titel')}</h3>
               <p className="text-sm text-gray-500">{t('admin_errors_leeg_subtitel')}</p>
             </div>

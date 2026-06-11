@@ -2,26 +2,29 @@
  * Stap1Welkom.jsx — Eerste stap: welkomstheet + 3-punt overzicht
  *
  * - Persoonlijke begroeting met voornaam
- * - 3 checklist punten (account ✓, KYC pending, eerste tx gratis)
+ * - 3 checklist punten (account gereed, KYC pending, eerste tx gratis)
  * - CTA "Laten we beginnen" → naar volgende stap
  */
 import { useTaal } from '../../i18n';
+import { Check, Lightbulb, Rocket, Sparkles } from '../icons/Icons';
 
 export default function Stap1Welkom({ gebruiker, onVolgende }) {
   const { t } = useTaal();
   const voornaam = gebruiker?.naam?.split(' ')[0] || '';
 
   const punten = [
-    { icoon: '✓', kleur: 'bg-emerald-100 text-emerald-700 border-emerald-200', tekst: t('onb_welkom_punt_1') },
-    { icoon: '💡', kleur: 'bg-blue-100 text-blue-700 border-blue-200', tekst: t('onb_welkom_punt_2') },
-    { icoon: '🚀', kleur: 'bg-amber-100 text-amber-700 border-amber-200', tekst: t('onb_welkom_punt_3') },
+    { Icoon: Check, kleur: 'bg-emerald-100 text-emerald-700 border-emerald-200', tekst: t('onb_welkom_punt_1') },
+    { Icoon: Lightbulb, kleur: 'bg-blue-100 text-blue-700 border-blue-200', tekst: t('onb_welkom_punt_2') },
+    { Icoon: Rocket, kleur: 'bg-amber-100 text-amber-700 border-amber-200', tekst: t('onb_welkom_punt_3') },
   ];
 
   return (
     <div className="space-y-5 animate-fade-up">
       {/* Header */}
       <div className="text-center space-y-2">
-        <div className="text-5xl mb-2" aria-hidden="true">🎉</div>
+        <div className="mb-2 flex justify-center" aria-hidden="true">
+          <Sparkles className="w-12 h-12 text-blue-600" />
+        </div>
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
           {t('onb_welkom_titel', { naam: voornaam })}
         </h2>
@@ -37,7 +40,7 @@ export default function Stap1Welkom({ gebruiker, onVolgende }) {
             key={i}
             className={`flex items-start gap-3 p-3 rounded-xl border ${p.kleur}`}
           >
-            <span className="text-xl flex-shrink-0 leading-none mt-0.5" aria-hidden="true">{p.icoon}</span>
+            <p.Icoon className="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <span className="text-sm font-medium leading-snug">{p.tekst}</span>
           </li>
         ))}

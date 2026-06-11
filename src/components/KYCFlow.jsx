@@ -8,6 +8,10 @@
 import { useState, useRef, useCallback, lazy, Suspense } from 'react';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
+import {
+  User, IdCard, Eye, Check, CheckCircle, Plus, Lightbulb, Sparkles, Bell,
+  Clock, Refresh, Lock, Mail, Globe, ChevronDown,
+} from './icons/Icons.jsx';
 
 // Lazy load document upload wizard (alleen relevant voor users zonder NL bank).
 const DocumentUploadFlow = lazy(() => import('./kyc/DocumentUploadFlow'));
@@ -17,16 +21,16 @@ const OnfidoEmbed = lazy(() => import('./kyc/OnfidoEmbed'));
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const STAPPEN = [
-  { titel: 'Persoonlijk', icoon: '👤' },
-  { titel: 'Document', icoon: '🪪' },
-  { titel: 'Selfie', icoon: '🤳' },
-  { titel: 'Klaar', icoon: '✅' },
+  { titel: 'Persoonlijk', icoon: User },
+  { titel: 'Document', icoon: IdCard },
+  { titel: 'Selfie', icoon: Eye },
+  { titel: 'Klaar', icoon: CheckCircle },
 ];
 
 const DOC_TYPES = [
-  { value: 'kimlik', label: '🇹🇷 Turks Kimlik (TC)', sub: 'Turkse identiteitskaart' },
-  { value: 'paspoort', label: '📘 Paspoort', sub: 'Nederlands of Turks paspoort'},
-  { value: 'rijbewijs', label: '🚗 Rijbewijs', sub: 'EU rijbewijs' },
+  { value: 'kimlik', label: 'Turks Kimlik (TC)', sub: 'Turkse identiteitskaart' },
+  { value: 'paspoort', label: 'Paspoort', sub: 'Nederlands of Turks paspoort'},
+  { value: 'rijbewijs', label: 'Rijbewijs', sub: 'EU rijbewijs' },
 ];
 
 // ── Upload veld component ──────────────────────────────────────────────────────
@@ -60,7 +64,7 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
           </div>
         ) : (
           <div>
-            <div className="text-4xl mb-2">📷</div>
+            <div className="mb-2"><Plus className="w-10 h-10 mx-auto text-gray-400" /></div>
             <p className="text-gray-700 font-semibold text-sm">{sublabel || 'Klik om foto te uploaden'}</p>
             <p className="text-gray-400 text-xs mt-1">JPG, PNG of PDF · Max 10MB</p>
           </div>
@@ -118,10 +122,10 @@ function StapPersoonlijk({ form, update, onVolgende }) {
         <label className="block text-xs font-medium text-gray-600 mb-1">Nationaliteit</label>
         <select value={form.nationaliteit} onChange={e => update('nationaliteit', e.target.value)}
           className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition bg-white">
-          <option value="TR">🇹🇷 Turks</option>
-          <option value="NL">🇳🇱 Nederlands</option>
-          <option value="DUAL">🇹🇷🇳🇱 Dubbele nationaliteit</option>
-          <option value="OTHER">🌍 Anders</option>
+          <option value="TR">Turks</option>
+          <option value="NL">Nederlands</option>
+          <option value="DUAL">Dubbele nationaliteit</option>
+          <option value="OTHER">Anders</option>
         </select>
       </div>
 
@@ -189,7 +193,7 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
       />
 
       {!geldig && form.documentNummer && !docFoto && (
-        <p className="text-amber-600 text-xs">📸 Upload nog een foto van je document</p>
+        <p className="text-amber-600 text-xs">Upload nog een foto van je document</p>
       )}
 
       <div className="flex gap-3">
@@ -208,7 +212,7 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
   return (
     <div className="bg-white rounded-2xl shadow p-6 space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">🤳 Selfie verificatie</h2>
+        <h2 className="text-xl font-bold text-gray-800">Selfie verificatie</h2>
         <p className="text-gray-500 text-sm mt-1">
           Houd je identiteitsbewijs naast je gezicht en maak een foto. Zorg voor goede belichting.
         </p>
@@ -217,12 +221,12 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
       {/* Tips */}
       <div className="grid grid-cols-3 gap-2">
         {[
-          { icoon: '☀️', tekst: 'Goede belichting' },
-          { icoon: '👁️', tekst: 'Kijk recht in camera' },
-          { icoon: '🪪', tekst: 'Document zichtbaar' },
+          { icoon: Lightbulb, tekst: 'Goede belichting' },
+          { icoon: Eye, tekst: 'Kijk recht in camera' },
+          { icoon: IdCard, tekst: 'Document zichtbaar' },
         ].map(t => (
           <div key={t.tekst} className="bg-blue-50 rounded-xl p-2 text-center">
-            <div className="text-xl mb-1">{t.icoon}</div>
+            <div className="mb-1 text-blue-600"><t.icoon className="w-5 h-5 mx-auto" /></div>
             <div className="text-xs text-blue-700 font-medium">{t.tekst}</div>
           </div>
         ))}
@@ -242,7 +246,11 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
         <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm transition">← Terug</button>
         <button onClick={onIndienen} disabled={!selfieFoto || laden}
           className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition text-sm">
-          {laden ? 'Indienen...' : '✓ Indienen'}
+          {laden ? 'Indienen...' : (
+            <span className="inline-flex items-center justify-center gap-1.5">
+              <Check className="w-4 h-4" /> Indienen
+            </span>
+          )}
         </button>
       </div>
     </div>
@@ -253,7 +261,7 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
 function StapKlaar({ form }) {
   return (
     <div className="bg-white rounded-2xl shadow p-6 text-center space-y-5">
-      <div className="text-6xl">🎉</div>
+      <div><Sparkles className="w-16 h-16 mx-auto text-blue-600" /></div>
       <h2 className="text-2xl font-bold text-gray-800">KYC ingediend!</h2>
       <p className="text-gray-500 text-sm">Je aanvraag is ontvangen en wordt binnen 5 minuten beoordeeld.</p>
 
@@ -276,8 +284,9 @@ function StapKlaar({ form }) {
         </div>
       </div>
 
-      <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700">
-        📱 Je ontvangt een notificatie zodra je KYC is goedgekeurd. Daarna kun je direct geld overmaken.
+      <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700 flex items-start gap-2">
+        <Bell className="w-4 h-4 mt-0.5 flex-shrink-0" />
+        <span>Je ontvangt een notificatie zodra je KYC is goedgekeurd. Daarna kun je direct geld overmaken.</span>
       </div>
     </div>
   );
@@ -287,7 +296,7 @@ function StapKlaar({ form }) {
 function KYCGoedgekeurd({ naam }) {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
-      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto text-4xl">✅</div>
+      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto"><CheckCircle className="w-10 h-10 text-green-600" /></div>
       <h2 className="text-2xl font-bold text-gray-800">Verificatie voltooid!</h2>
       <p className="text-gray-500 text-sm">Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken naar Turkije.</p>
       <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-left space-y-3">
@@ -320,7 +329,7 @@ function KYCInBehandeling({ naam }) {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
       <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto">
-        <span className="text-4xl animate-pulse">⏳</span>
+        <Clock className="w-10 h-10 text-amber-600 animate-pulse" />
       </div>
       <h2 className="text-2xl font-bold text-gray-800">Aanvraag in behandeling</h2>
       <p className="text-gray-500 text-sm">
@@ -341,9 +350,9 @@ function KYCInBehandeling({ naam }) {
         </div>
       </div>
       <div className="space-y-2">
-        {['Documenten ontvangen ✅', 'Identiteitscontrole bezig... 🔍', 'AML/compliance check...'].map((stap, i) => (
+        {['Documenten ontvangen', 'Identiteitscontrole bezig...', 'AML/compliance check...'].map((stap, i) => (
           <div key={i} className={`flex items-center gap-3 p-3 rounded-xl text-sm ${i === 0 ? 'bg-green-50 text-green-700' : i === 1 ? 'bg-amber-50 text-amber-700' : 'bg-gray-50 text-gray-400'}`}>
-            <span>{i === 0 ? '✅' : i === 1 ? '🔄' : '⬜'}</span>
+            <span>{i === 0 ? <CheckCircle className="w-4 h-4" /> : i === 1 ? <Refresh className="w-4 h-4" /> : <Clock className="w-4 h-4" />}</span>
             <span className={i < 2 ? 'font-medium' : ''}>{stap}</span>
           </div>
         ))}
@@ -402,7 +411,7 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
 function KYCGeblokkeerd() {
   return (
     <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
-      <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto text-4xl">🔒</div>
+      <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto"><Lock className="w-10 h-10 text-gray-600" /></div>
       <h2 className="text-2xl font-bold text-gray-800">Account geblokkeerd</h2>
       <p className="text-gray-500 text-sm">
         Je account is tijdelijk geblokkeerd. Neem contact op met onze klantenservice.
@@ -418,7 +427,7 @@ function KYCGeblokkeerd() {
         </div>
       </div>
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 space-y-2">
-        <p className="font-bold">📞 Contact klantenservice</p>
+        <p className="font-bold flex items-center gap-1.5"><Mail className="w-4 h-4" /> Contact klantenservice</p>
         <p>E-mail: <strong>support@swiftbridge.tr</strong></p>
         <p className="text-xs text-red-500">Vermeld je e-mailadres en de reden van je verzoek.</p>
       </div>
@@ -531,11 +540,11 @@ export default function KYCFlow({ token, gebruiker }) {
         />
         {STAPPEN.map((s, i) => (
           <div key={i} className="flex flex-col items-center z-10">
-            <div className={`w-9 h-9 rounded-full flex items-center justify-center text-base border-2 transition ${
+            <div className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition ${
               i < stap ? 'bg-blue-600 border-blue-600 text-white' :
-              i === stap ? 'bg-white border-blue-600 shadow-sm' :
+              i === stap ? 'bg-white border-blue-600 text-blue-600 shadow-sm' :
                            'bg-white border-gray-300 text-gray-400'}`}>
-              {i < stap ? '✓' : s.icoon}
+              {i < stap ? <Check className="w-4 h-4" /> : <s.icoon className="w-4 h-4" />}
             </div>
             <span className={`text-xs mt-1 font-medium ${i <= stap ? 'text-blue-600' : 'text-gray-400'}`}>
               {s.titel}
@@ -583,7 +592,7 @@ function DocumentUploadFallback() {
         className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition"
       >
         <div className="flex items-center gap-3">
-          <div className="text-2xl" aria-hidden="true">🌍</div>
+          <div className="text-blue-600" aria-hidden="true"><Globe className="w-6 h-6" /></div>
           <div>
             <div className="font-bold text-gray-800 text-sm">
               {t('kyc_fallback_titel')}
@@ -593,7 +602,7 @@ function DocumentUploadFallback() {
             </div>
           </div>
         </div>
-        <div className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true">▼</div>
+        <div className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true"><ChevronDown className="w-4 h-4" /></div>
       </button>
       {open && (
         <div id="doc-upload-paneel" className="border-t border-gray-100 p-5 bg-gray-50">

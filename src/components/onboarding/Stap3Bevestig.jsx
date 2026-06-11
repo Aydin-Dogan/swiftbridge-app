@@ -7,6 +7,7 @@
  * - CTA naar Stap 4
  */
 import { useTaal } from '../../i18n';
+import { Sparkles, Check } from '../icons/Icons';
 
 const PROMO_CODE = 'WELKOM800';
 
@@ -17,9 +18,11 @@ export default function Stap3Bevestig({ onVolgende }) {
     <div className="space-y-5 animate-fade-up">
       {/* Header */}
       <div className="text-center space-y-2">
-        <div className="text-5xl mb-2" aria-hidden="true">🎊</div>
+        <div className="mb-2 flex justify-center" aria-hidden="true">
+          <Sparkles className="w-12 h-12 text-blue-600" />
+        </div>
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
-          {t('onb_bevestig_titel')} <span className="text-emerald-600">✓</span>
+          {t('onb_bevestig_titel')} <Check className="w-6 h-6 inline text-emerald-600" />
         </h2>
         <p className="text-sm text-slate-600 max-w-md mx-auto">
           {t('onb_bevestig_subtitel')}

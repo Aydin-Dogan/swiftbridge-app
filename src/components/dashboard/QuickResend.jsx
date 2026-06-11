@@ -10,6 +10,7 @@
 import { useMemo } from 'react';
 import { useTaal } from '../../i18n';
 import Avatar from '../Avatar';
+import { Zap } from '../icons/Icons';
 
 export default function QuickResend({ transacties = [] }) {
   const { t } = useTaal();
@@ -56,7 +57,7 @@ export default function QuickResend({ transacties = [] }) {
     >
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-          <span aria-hidden="true">⚡</span>
+          <Zap className="w-4 h-4 text-amber-500" aria-hidden="true" />
           {t('quick_resend_titel')}
         </h3>
         <span className="text-[11px] text-slate-400">

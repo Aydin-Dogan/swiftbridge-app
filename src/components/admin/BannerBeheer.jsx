@@ -11,12 +11,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiFetch, parseError } from '../../services/api';
 import { useTaal } from '../../i18n';
+import { Info, CheckCircle, AlertTriangle, XCircle, Plus, Trash } from '../icons/Icons';
 
 const TYPES = [
-  { id: 'info', label: 'Info', emoji: 'ℹ️', kleur: 'text-blue-200' },
-  { id: 'success', label: 'Succes', emoji: '✅', kleur: 'text-emerald-200' },
-  { id: 'warning', label: 'Waarschuwing', emoji: '⚠️', kleur: 'text-amber-200' },
-  { id: 'error', label: 'Fout', emoji: '❌', kleur: 'text-rose-200' },
+  { id: 'info', label: 'Info', icoon: Info, kleur: 'text-blue-200' },
+  { id: 'success', label: 'Succes', icoon: CheckCircle, kleur: 'text-emerald-200' },
+  { id: 'warning', label: 'Waarschuwing', icoon: AlertTriangle, kleur: 'text-amber-200' },
+  { id: 'error', label: 'Fout', icoon: XCircle, kleur: 'text-rose-200' },
 ];
 
 function fmtDatum(iso) {
@@ -60,7 +61,7 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
       className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl p-5 space-y-3 text-white max-h-[85vh] overflow-y-auto"
     >
       <div className="font-extrabold text-lg flex items-center gap-2">
-        <span>{form.id ? '✏️ Banner bewerken' : '➕ Nieuwe banner'}</span>
+        <span>{form.id ? 'Banner bewerken' : 'Nieuwe banner'}</span>
       </div>
 
       <label className="block">
@@ -99,7 +100,7 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
           >
             {TYPES.map((tp) => (
               <option key={tp.id} value={tp.id} className="text-gray-900">
-                {tp.emoji} {tp.label}
+                {tp.label}
               </option>
             ))}
           </select>
@@ -302,9 +303,9 @@ export default function BannerBeheer() {
         </div>
         <button
           onClick={openNieuw}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-sm transition active:scale-95"
+          className="inline-flex items-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-sm transition active:scale-95"
         >
-          ➕ Nieuwe banner
+          <Plus className="w-4 h-4" /> Nieuwe banner
         </button>
       </div>
 
@@ -338,7 +339,7 @@ export default function BannerBeheer() {
                   <tr key={b.id} className="hover:bg-white/5 transition">
                     <td className="px-4 py-3">
                       <span className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full border border-white/20 bg-white/5 ${tp.kleur}`}>
-                        <span aria-hidden="true">{tp.emoji}</span>
+                        <tp.icoon className="w-3.5 h-3.5" aria-hidden="true" />
                         <span>{tp.label}</span>
                       </span>
                     </td>
@@ -371,13 +372,13 @@ export default function BannerBeheer() {
                         onClick={() => openBewerken(b)}
                         className="text-blue-200 hover:text-white text-xs font-semibold px-2 py-1 rounded hover:bg-white/10 transition"
                       >
-                        ✏️ Bewerk
+                        Bewerk
                       </button>
                       <button
                         onClick={() => verwijder(b)}
-                        className="ml-1 text-rose-200 hover:text-white text-xs font-semibold px-2 py-1 rounded hover:bg-white/10 transition"
+                        className="ml-1 inline-flex items-center gap-1 text-rose-200 hover:text-white text-xs font-semibold px-2 py-1 rounded hover:bg-white/10 transition"
                       >
-                        🗑 Verwijder
+                        <Trash className="w-3.5 h-3.5" /> Verwijder
                       </button>
                     </td>
                   </tr>

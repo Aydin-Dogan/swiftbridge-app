@@ -12,6 +12,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../i18n';
+import { X } from './icons/Icons';
 
 function isTypingTarget(target) {
   if (!target) return false;
@@ -93,14 +94,14 @@ export default function KeyboardShortcuts() {
       >
         <div className="flex items-center justify-between mb-4">
           <h2 id="kbd-help-title" className="font-bold text-gray-900 text-lg">
-            ⌨ {t('kbd_titel')}
+            {t('kbd_titel')}
           </h2>
           <button
             onClick={() => setHelpOpen(false)}
             className="text-gray-400 hover:text-gray-600 text-xl leading-none"
             aria-label={t('kbd_sluit')}
           >
-            ✕
+            <X className="w-5 h-5" />
           </button>
         </div>
 

@@ -92,10 +92,12 @@ export function useTaal() {
   return useContext(TaalContext);
 }
 
+// `vlag` is een ISO-landcode — rendering gebeurt via de <Vlag /> component
+// (SVG flag-icons), geen emoji meer (fintech-look + Windows-renderproblemen).
 export const TALEN = [
-  { code: 'nl', vlag: '🇳🇱', naam: 'Nederlands' },
-  { code: 'tr', vlag: '🇹🇷', naam: 'Türkçe'    },
-  { code: 'en', vlag: '🇬🇧', naam: 'English'   },
-  { code: 'ru', vlag: '🇷🇺', naam: 'Русский'   },
-  { code: 'az', vlag: '🇦🇿', naam: 'Azərbaycan' },
+  { code: 'nl', vlag: 'NL', naam: 'Nederlands' },
+  { code: 'tr', vlag: 'TR', naam: 'Türkçe'    },
+  { code: 'en', vlag: 'GB', naam: 'English'   },
+  { code: 'ru', vlag: 'RU', naam: 'Русский'   },
+  { code: 'az', vlag: 'AZ', naam: 'Azərbaycan' },
 ];

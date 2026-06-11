@@ -170,5 +170,5 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
 function round(n, dec = 4) { return Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec); }
 
 export const KOSTEN_LABELS = {
-  fee: { label: 'Servicekosten', icon: '💰', uitleg: 'Variabele kosten gebaseerd op bedrag en methode' },
+  fee: { label: 'Servicekosten', uitleg: 'Variabele kosten gebaseerd op bedrag en methode' },
 };

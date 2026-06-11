@@ -21,7 +21,7 @@ export default function Login({ onLogin }) {
   const [toonVergeten, setToonVergeten] = useState(false);
   const [vergetenEmail, setVergetenEmail] = useState('');
   const [vergetenBericht, setVergetenBericht] = useState('');
-  const [vergetenOk, setVergetenOk] = useState(false); // succes-state ipv ✅ prefix check
+  const [vergetenOk, setVergetenOk] = useState(false); // succes-state ipv emoji-prefix check
   const [vergetenLaden, setVergetenLaden] = useState(false);
 
   // 2FA state

@@ -62,7 +62,7 @@ export default function Footer() {
           {/* Branding */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl" aria-hidden="true">⚡</span>
+              <Zap className="w-6 h-6 text-blue-400" aria-hidden="true" />
               <span className="font-extrabold text-white text-lg tracking-tight">
                 SwiftBridge
               </span>

@@ -9,6 +9,7 @@ import { useTaal } from '../../i18n';
 import { parseError } from '../../services/api';
 import BeneficiaryKaart from './BeneficiaryKaart';
 import BeneficiaryFormulier from './BeneficiaryFormulier';
+import { Trash, Refresh, Users } from '../icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -34,7 +35,7 @@ function BevestigDelete({ beneficiary, bezig, onAnnuleer, onBevestig }) {
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
       <div className="bg-white/95 backdrop-blur-lg border border-white/30 rounded-2xl w-full max-w-sm p-5 shadow-xl">
         <div className="text-center space-y-3">
-          <div className="text-4xl">🗑️</div>
+          <div className="flex justify-center"><Trash className="w-10 h-10 text-rose-500" /></div>
           <h3 className="font-bold text-gray-800">{t('benef_verwijder_titel')}</h3>
           <p className="text-sm text-gray-600">
             {t('benef_verwijder_vraag', { naam: beneficiary.naam })}
@@ -52,7 +53,9 @@ function BevestigDelete({ beneficiary, bezig, onAnnuleer, onBevestig }) {
               disabled={bezig}
               className="flex-1 bg-rose-600 hover:bg-rose-700 disabled:bg-gray-300 text-white font-bold py-2 rounded-xl"
             >
-              {bezig ? `${t('laden')}` : `🗑️ ${t('benef_verwijder')}`}
+              {bezig ? `${t('laden')}` : (
+                <span className="inline-flex items-center justify-center gap-1.5"><Trash className="w-4 h-4" /> {t('benef_verwijder')}</span>
+              )}
             </button>
           </div>
         </div>
@@ -192,14 +195,14 @@ export default function BeneficiaryLijst({ token }) {
       {!laden && fout && (
         <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm flex items-center justify-between gap-2">
           <span>{fout}</span>
-          <button onClick={laad} className="text-xs underline whitespace-nowrap">🔄 {t('vernieuwen')}</button>
+          <button onClick={laad} className="text-xs underline whitespace-nowrap inline-flex items-center gap-1"><Refresh className="w-3 h-3" /> {t('vernieuwen')}</button>
         </div>
       )}
 
       {/* Empty state */}
       {!laden && !fout && lijst.length === 0 && (
         <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 text-center space-y-3">
-          <div className="text-4xl">👥</div>
+          <div className="flex justify-center"><Users className="w-10 h-10 text-gray-400" /></div>
           <p className="text-sm text-gray-600">{t('benef_leeg_uitleg')}</p>
           <button
             onClick={() => { setEditTarget(null); setFormFout(''); setFormOpen(true); }}

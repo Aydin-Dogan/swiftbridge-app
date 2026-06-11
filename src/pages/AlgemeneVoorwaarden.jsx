@@ -1,10 +1,12 @@
+import { Zap } from '../components/icons/Icons';
+
 export default function AlgemeneVoorwaarden() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="bg-white rounded-2xl shadow-sm p-8 md:p-12">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl">⚡</span>
+            <Zap className="w-8 h-8 text-blue-600" />
             <span className="font-bold text-xl text-blue-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Algemene Voorwaarden</h1>

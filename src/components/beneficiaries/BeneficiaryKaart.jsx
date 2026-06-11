@@ -6,6 +6,7 @@
 import { useTaal } from '../../i18n';
 import Vlag from '../Vlag';
 import { getValuta } from '../../services/currencies';
+import { Bank, Settings, Trash } from '../icons/Icons';
 
 // IBAN masking: toon eerste 4 + laatste 4 chars: "NL12 **** **** 5678"
 export function maskeerIban(iban) {
@@ -53,8 +54,9 @@ export default function BeneficiaryKaart({ beneficiary, onBewerk, onVerwijder })
 
           <div className="flex items-center gap-2 mt-1">
             {beneficiary?.bank && (
-              <span className="text-[11px] text-gray-600 truncate max-w-[140px]" title={beneficiary.bank}>
-                🏦 {beneficiary.bank}
+              <span className="text-[11px] text-gray-600 max-w-[140px] inline-flex items-center gap-1 min-w-0" title={beneficiary.bank}>
+                <Bank className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">{beneficiary.bank}</span>
               </span>
             )}
             {valutaInfo && (
@@ -81,7 +83,7 @@ export default function BeneficiaryKaart({ beneficiary, onBewerk, onVerwijder })
               title={t('benef_bewerk')}
               aria-label={t('benef_bewerk')}
             >
-              ✏️
+              <Settings className="w-4 h-4" />
             </button>
           )}
           {onVerwijder && (
@@ -91,7 +93,7 @@ export default function BeneficiaryKaart({ beneficiary, onBewerk, onVerwijder })
               title={t('benef_verwijder')}
               aria-label={t('benef_verwijder')}
             >
-              🗑️
+              <Trash className="w-4 h-4" />
             </button>
           )}
         </div>

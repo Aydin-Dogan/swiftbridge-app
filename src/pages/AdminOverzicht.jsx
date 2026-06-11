@@ -16,8 +16,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { API_URL } from '../services/api';
 import { useTaal } from '../i18n';
+import { Users, IdCard, Banknote, Calendar, Euro, Shield, Lock, Clock } from '../components/icons/Icons';
 
-function KpiCard({ titel, waarde, sub, kleur = 'blue', icon }) {
+function KpiCard({ titel, waarde, sub, kleur = 'blue', icon: Icon }) {
   const kleurMap = {
     blue: 'from-blue-50 to-sky-50 border-blue-200 text-blue-900',
     green: 'from-emerald-50 to-teal-50 border-emerald-200 text-emerald-900',
@@ -29,7 +30,7 @@ function KpiCard({ titel, waarde, sub, kleur = 'blue', icon }) {
     <div className={`rounded-xl border-2 p-4 bg-gradient-to-br ${kleurMap[kleur]}`}>
       <div className="flex items-start justify-between mb-2">
         <span className="text-xs font-semibold uppercase tracking-wider opacity-70">{titel}</span>
-        {icon && <span className="text-xl opacity-60" aria-hidden="true">{icon}</span>}
+        {Icon && <Icon className="w-5 h-5 opacity-60" aria-hidden="true" />}
       </div>
       <div className="text-3xl font-extrabold">{waarde}</div>
       {sub && <div className="text-xs opacity-70 mt-1">{sub}</div>}
@@ -131,56 +132,56 @@ export default function AdminOverzicht() {
                 waarde={stats.gebruikers}
                 sub={`${stats.kycGoedgekeurd} ${t('admin_ov_goedgekeurd')}`}
                 kleur="blue"
-                icon="👥"
+                icon={Users}
               />
               <KpiCard
                 titel={t('admin_ov_kyc_funnel')}
                 waarde={`${conversieFunnel.toFixed(1)}%`}
                 sub={`${stats.kycInBehandeling} ${t('admin_ov_wacht')}`}
                 kleur="amber"
-                icon="🪪"
+                icon={IdCard}
               />
               <KpiCard
                 titel={t('admin_ov_tx_7d')}
                 waarde={stats.transacties7d.aantal}
                 sub={fmtEur(stats.transacties7d.totaalEur)}
                 kleur="green"
-                icon="💸"
+                icon={Banknote}
               />
               <KpiCard
                 titel={t('admin_ov_tx_30d')}
                 waarde={stats.transacties30d.aantal}
                 sub={fmtEur(stats.transacties30d.totaalEur)}
                 kleur="green"
-                icon="📈"
+                icon={Calendar}
               />
               <KpiCard
                 titel={t('admin_ov_volume')}
                 waarde={fmtEur(stats.totaalVolumeEur)}
                 sub={t('admin_ov_volume_sub')}
                 kleur="purple"
-                icon="💰"
+                icon={Euro}
               />
               <KpiCard
                 titel={t('admin_ov_sanctie')}
                 waarde={stats.sanctieHits}
                 sub={t('admin_ov_sanctie_sub')}
                 kleur={stats.sanctieHits > 0 ? 'red' : 'green'}
-                icon="🛡️"
+                icon={Shield}
               />
               <KpiCard
                 titel={t('admin_ov_gdpr')}
                 waarde={stats.gdprActies}
                 sub={t('admin_ov_gdpr_sub')}
                 kleur="blue"
-                icon="🔐"
+                icon={Lock}
               />
               <KpiCard
                 titel={t('admin_ov_kyc_in_bh')}
                 waarde={stats.kycInBehandeling}
                 sub={t('admin_ov_actie_vereist')}
                 kleur={stats.kycInBehandeling > 0 ? 'amber' : 'green'}
-                icon="⏳"
+                icon={Clock}
               />
             </div>
 

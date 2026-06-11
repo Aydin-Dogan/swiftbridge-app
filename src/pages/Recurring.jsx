@@ -19,6 +19,7 @@ import { apiFetch, parseError } from '../services/api';
 import RecurringKaart from '../components/recurring/RecurringKaart';
 import RecurringFormulier from '../components/recurring/RecurringFormulier';
 import ConfirmDialog from '../components/ConfirmDialog';
+import { Refresh } from '../components/icons/Icons';
 
 export default function Recurring() {
   const { t } = useTaal();
@@ -176,7 +177,7 @@ export default function Recurring() {
         </div>
       ) : items.length === 0 ? (
         <div className="bg-white border border-gray-200 rounded-2xl p-6 text-center">
-          <div className="text-4xl mb-3">🔁</div>
+          <Refresh className="w-10 h-10 text-gray-300 mx-auto mb-3" />
           <h3 className="font-bold text-gray-800">{t('recurring_leeg_titel')}</h3>
           <p className="text-gray-500 text-sm mt-1 mb-4">{t('recurring_leeg_uitleg')}</p>
           <button

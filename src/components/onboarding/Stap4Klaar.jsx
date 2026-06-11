@@ -7,6 +7,7 @@
  */
 import { useEffect, useState } from 'react';
 import { useTaal } from '../../i18n';
+import { Download, Bell, Users, Rocket } from '../icons/Icons';
 
 export default function Stap4Klaar({ onNaarOverboeking }) {
   const { t } = useTaal();
@@ -31,19 +32,19 @@ export default function Stap4Klaar({ onNaarOverboeking }) {
 
   const tips = [
     {
-      icoon: '📱',
+      Icoon: Download,
       titel: t('onb_klaar_tip_pwa_titel'),
       tekst: t('onb_klaar_tip_pwa_tekst'),
       actie: pwaPrompt ? installeerPWA : null,
       actie_label: pwaPrompt ? t('onb_klaar_tip_pwa_knop') : null,
     },
     {
-      icoon: '🔔',
+      Icoon: Bell,
       titel: t('onb_klaar_tip_notif_titel'),
       tekst: t('onb_klaar_tip_notif_tekst'),
     },
     {
-      icoon: '👥',
+      Icoon: Users,
       titel: t('onb_klaar_tip_deel_titel'),
       tekst: t('onb_klaar_tip_deel_tekst'),
     },
@@ -53,7 +54,9 @@ export default function Stap4Klaar({ onNaarOverboeking }) {
     <div className="space-y-5 animate-fade-up">
       {/* Header */}
       <div className="text-center space-y-2">
-        <div className="text-5xl mb-2" aria-hidden="true">🚀</div>
+        <div className="mb-2 flex justify-center" aria-hidden="true">
+          <Rocket className="w-12 h-12 text-blue-600" />
+        </div>
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
           {t('onb_klaar_titel')}
         </h2>
@@ -69,7 +72,9 @@ export default function Stap4Klaar({ onNaarOverboeking }) {
             key={i}
             className="bg-white border border-slate-200 rounded-2xl p-3.5 flex flex-col text-center shadow-sm"
           >
-            <div className="text-3xl mb-2" aria-hidden="true">{tip.icoon}</div>
+            <div className="mb-2 flex justify-center" aria-hidden="true">
+              <tip.Icoon className="w-7 h-7 text-blue-600" />
+            </div>
             <p className="font-bold text-slate-800 text-xs leading-snug mb-1">{tip.titel}</p>
             <p className="text-[11px] text-slate-500 leading-snug flex-1">{tip.tekst}</p>
             {tip.actie && (

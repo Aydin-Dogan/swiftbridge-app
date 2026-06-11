@@ -3,6 +3,7 @@
  * Target query: "wise vs swiftbridge", "swiftbridge of wise", comparison
  */
 import SeoLanding from './SeoLanding';
+import { Check } from '../../components/icons/Icons';
 
 export default function WiseVsSwiftbridge() {
   return (
@@ -81,7 +82,7 @@ export default function WiseVsSwiftbridge() {
 
           <div className="space-y-4 my-6">
             <div className="bg-success-50 border border-success-100 rounded-xl p-4">
-              <p className="font-semibold text-success-900 mb-1">✓ SwiftBridge sterke punten</p>
+              <p className="font-semibold text-success-900 mb-1 flex items-center gap-1.5"><Check className="w-4 h-4" /> SwiftBridge sterke punten</p>
               <ul className="text-sm text-gray-700 space-y-1">
                 <li>Native iDEAL → directe overboeking, &lt;5 min op TR-bank</li>
                 <li>Nederlandstalige support die Turkse banken kent</li>
@@ -91,7 +92,7 @@ export default function WiseVsSwiftbridge() {
             </div>
 
             <div className="bg-brand-50 border border-brand-100 rounded-xl p-4">
-              <p className="font-semibold text-brand-900 mb-1">✓ Wise sterke punten</p>
+              <p className="font-semibold text-brand-900 mb-1 flex items-center gap-1.5"><Check className="w-4 h-4" /> Wise sterke punten</p>
               <ul className="text-sm text-gray-700 space-y-1">
                 <li>Mid-market rate zonder marge (transparant 100%)</li>
                 <li>Multi-currency wallet — handig voor reizen</li>

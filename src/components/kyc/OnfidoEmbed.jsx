@@ -18,6 +18,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import { Refresh } from '../icons/Icons.jsx';
 
 // Pin een specifieke SDK versie zodat updates niet stilletjes ons UI breken.
 // Bij major upgrade hier handmatig versie verhogen + integration testen.
@@ -167,7 +168,7 @@ export default function OnfidoEmbed({ sdkToken, taal = 'nl', onComplete, onError
     <div className="bg-white rounded-2xl shadow p-4 space-y-3">
       {status === 'loading' && (
         <div className="text-center py-8 text-gray-500 text-sm">
-          <div className="text-3xl mb-2 animate-pulse">📸</div>
+          <div className="mb-2"><Refresh className="w-8 h-8 mx-auto text-gray-400 animate-spin" /></div>
           <p className="font-medium">Verificatie-module wordt geladen...</p>
           <p className="text-xs text-gray-400 mt-1">via beveiligde verbinding met Onfido</p>
         </div>

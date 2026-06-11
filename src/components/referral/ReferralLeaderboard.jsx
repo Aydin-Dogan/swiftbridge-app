@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { apiFetch, parseError } from '../../services/api';
 import { useTaal } from '../../i18n';
 import Avatar from '../Avatar';
+import { Star } from '../icons/Icons';
 
 export default function ReferralLeaderboard() {
   const { t } = useTaal();
@@ -43,7 +44,7 @@ export default function ReferralLeaderboard() {
   return (
     <div className="card-glass p-4 animate-fade-up border-l-4 border-amber-400">
       <h4 className="font-bold text-gray-800 text-sm flex items-center gap-2 mb-1">
-        <span aria-hidden="true">🏆</span>
+        <Star className="w-4 h-4 text-amber-500" aria-hidden="true" />
         {t('referral_leaderboard_titel')}
       </h4>
       <p className="text-xs text-gray-600 mb-3 leading-relaxed">
@@ -66,7 +67,7 @@ export default function ReferralLeaderboard() {
               item.rang === 3 ? 'text-orange-600' :
               'text-gray-400'
             }`}>
-              {item.rang === 1 ? '🥇' : item.rang === 2 ? '🥈' : item.rang === 3 ? '🥉' : `#${item.rang}`}
+              {item.rang === 1 ? '1e' : item.rang === 2 ? '2e' : item.rang === 3 ? '3e' : `#${item.rang}`}
             </span>
             <Avatar naam={item.naam} size="xs" />
             <span className="flex-1 text-sm font-medium text-gray-800 truncate">

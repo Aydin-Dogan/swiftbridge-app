@@ -17,6 +17,10 @@ import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
+import {
+  Users, Clock, CheckCircle, Euro, Calendar, Shield, Clipboard, Lock,
+  AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh,
+} from '../components/icons/Icons';
 
 // Lazy load heavy admin sub-components — alleen ophalen wanneer tab geopend wordt.
 // Houdt de initial AdminCompliance bundle ~1MB+ kleiner (UserManagement 664 LOC + BannerBeheer 412 LOC).
@@ -51,10 +55,10 @@ function shortId(id) {
 }
 
 // ── StatCard ──────────────────────────────────────────────────────────────────
-function StatCard({ icoon, label, waarde, sub, kleur = 'text-white' }) {
+function StatCard({ icoon: Icoon, label, waarde, sub, kleur = 'text-white' }) {
   return (
     <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-5 shadow-lg">
-      <div className="text-3xl mb-2">{icoon}</div>
+      {Icoon && <Icoon className="w-7 h-7 mb-2 text-white/70" />}
       <div className={`text-2xl font-extrabold ${kleur}`}>{waarde}</div>
       <div className="text-xs text-white/70 mt-1">{label}</div>
       {sub && <div className="text-xs text-white/50 mt-0.5">{sub}</div>}
@@ -71,14 +75,14 @@ function ChainStatus({ resultaat }) {
       ok ? 'bg-green-500/10 border-green-300/30 text-green-100'
          : 'bg-red-500/10 border-red-300/40 text-red-100'
     }`}>
-      <span className="text-2xl">{ok ? '🔒' : '⚠️'}</span>
+      {ok ? <Lock className="w-6 h-6 flex-shrink-0" /> : <AlertTriangle className="w-6 h-6 flex-shrink-0" />}
       <div>
         <div className="font-bold text-sm">
           {ok ? 'Audit log hash-chain intact' : 'Audit log AANGETAST!'}
         </div>
         <div className="text-xs mt-0.5 opacity-80">
           {ok
-            ? `${resultaat.totaal} entries geverifieerd — chain is consistent ✅`
+            ? `${resultaat.totaal} entries geverifieerd — chain is consistent`
             : `Gebroken bij log ID ${resultaat.gebroken?.id} (${resultaat.gebroken?.actie})`}
         </div>
       </div>
@@ -96,36 +100,36 @@ function StatsTab({ stats, chain }) {
       <ChainStatus resultaat={chain} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard icoon="👥" label="Gebruikers totaal" waarde={stats.gebruikers} />
-        <StatCard icoon="⏳" label="KYC in behandeling" waarde={stats.kycInBehandeling} kleur="text-amber-300" />
-        <StatCard icoon="✅" label="KYC goedgekeurd" waarde={stats.kycGoedgekeurd} kleur="text-green-300" />
-        <StatCard icoon="💶" label="Totaal volume" waarde={fmtEur(stats.totaalVolumeEur)} kleur="text-purple-300" />
+        <StatCard icoon={Users} label="Gebruikers totaal" waarde={stats.gebruikers} />
+        <StatCard icoon={Clock} label="KYC in behandeling" waarde={stats.kycInBehandeling} kleur="text-amber-300" />
+        <StatCard icoon={CheckCircle} label="KYC goedgekeurd" waarde={stats.kycGoedgekeurd} kleur="text-green-300" />
+        <StatCard icoon={Euro} label="Totaal volume" waarde={fmtEur(stats.totaalVolumeEur)} kleur="text-purple-300" />
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
-          icoon="📅"
+          icoon={Calendar}
           label="Laatste 7 dagen"
           waarde={fmtEur(stats.transacties7d?.totaalEur)}
           sub={`${stats.transacties7d?.aantal || 0} transacties`}
           kleur="text-blue-300"
         />
         <StatCard
-          icoon="🗓️"
+          icoon={Calendar}
           label="Laatste 30 dagen"
           waarde={fmtEur(stats.transacties30d?.totaalEur)}
           sub={`${stats.transacties30d?.aantal || 0} transacties`}
           kleur="text-blue-200"
         />
         <StatCard
-          icoon="🛂"
+          icoon={Shield}
           label="Sanctie hits"
           waarde={stats.sanctieHits}
           sub="Wwft Art. 33"
           kleur={stats.sanctieHits > 0 ? 'text-red-300' : 'text-white'}
         />
         <StatCard
-          icoon="📜"
+          icoon={Clipboard}
           label="GDPR acties"
           waarde={stats.gdprActies}
           sub="AVG Art. 15/17"
@@ -285,7 +289,7 @@ function SanctieTab() {
   if (matches.length === 0) {
     return (
       <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
-        <div className="text-4xl mb-3">🛂</div>
+        <Shield className="w-10 h-10 mx-auto mb-3 text-white/60" />
         <p className="font-semibold">Geen sanctie hits</p>
         <p className="text-xs text-white/50 mt-2">Wwft Art. 33 — alle screenings hebben geen match opgeleverd.</p>
       </div>
@@ -350,7 +354,7 @@ function GdprTab() {
   if (acties.length === 0) {
     return (
       <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
-        <div className="text-4xl mb-3">📜</div>
+        <Clipboard className="w-10 h-10 mx-auto mb-3 text-white/60" />
         <p className="font-semibold">Geen GDPR acties gelogd</p>
         <p className="text-xs text-white/50 mt-2">AVG Art. 15 (inzage) en Art. 17 (vergetelheid) worden hier zichtbaar als gebruikers ze uitvoeren.</p>
       </div>
@@ -468,7 +472,7 @@ function TransactieTab() {
                   <td className="px-4 py-3 font-mono text-xs text-white/60">{t.userIdMasked}</td>
                   <td className="px-4 py-3 text-right text-white font-semibold">
                     {fmtEur(t.eurBedrag)}
-                    {t.suspicious && <span className="ml-1 text-amber-300" title="Suspicious: ≥€2000">⚠️</span>}
+                    {t.suspicious && <span className="ml-1 text-amber-300 inline-block align-text-bottom" title="Suspicious: ≥€2000"><AlertTriangle className="w-4 h-4" /></span>}
                   </td>
                   <td className="px-4 py-3 text-right text-white/70">{fmtEur(t.feeEur)}</td>
                   <td className="px-4 py-3 text-right text-white/70">
@@ -524,21 +528,21 @@ export default function AdminCompliance() {
   useEffect(() => { laadStats(); }, [laadStats]);
 
   const tabs = [
-    { id: 'stats', label: 'Overzicht', icoon: '📊' },
-    { id: 'users', label: 'Gebruikers', icoon: '👥' },
-    { id: 'kycreview', label: 'KYC Review', icoon: '🪪' },
-    { id: 'audit', label: 'Audit logs', icoon: '📋' },
-    { id: 'sanctie', label: 'Sanctie matches', icoon: '🛂' },
-    { id: 'gdpr', label: 'GDPR acties', icoon: '📜' },
-    { id: 'tx', label: 'Transacties', icoon: '💸' },
-    { id: 'banners', label: 'Banners', icoon: '📣' },
+    { id: 'stats', label: 'Overzicht', icoon: null },
+    { id: 'users', label: 'Gebruikers', icoon: Users },
+    { id: 'kycreview', label: 'KYC Review', icoon: IdCard },
+    { id: 'audit', label: 'Audit logs', icoon: Clipboard },
+    { id: 'sanctie', label: 'Sanctie matches', icoon: Shield },
+    { id: 'gdpr', label: 'GDPR acties', icoon: Lock },
+    { id: 'tx', label: 'Transacties', icoon: Banknote },
+    { id: 'banners', label: 'Banners', icoon: Bell },
   ];
 
   if (fout && !stats) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
         <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 max-w-md text-center text-white">
-          <div className="text-5xl mb-4">🔐</div>
+          <Lock className="w-12 h-12 mx-auto mb-4 text-white/80" />
           <h2 className="text-xl font-bold mb-2">Geen admin toegang</h2>
           <p className="text-white/70 text-sm mb-6">{fout}</p>
           <button
@@ -558,7 +562,7 @@ export default function AdminCompliance() {
       <header className="bg-white/5 backdrop-blur-lg border-b border-white/10 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/app')} className="text-2xl">⚡</button>
+            <button onClick={() => navigate('/app')} className="text-white"><Zap className="w-7 h-7" /></button>
             <div>
               <div className="font-extrabold text-white leading-none">SwiftBridge Compliance</div>
               <div className="text-xs text-amber-300 font-semibold">DNB toezicht · Wwft · AVG</div>
@@ -567,10 +571,10 @@ export default function AdminCompliance() {
           <button
             onClick={laadStats}
             disabled={laden}
-            className="text-white/70 hover:text-white text-xl disabled:opacity-40 transition"
+            className="text-white/70 hover:text-white disabled:opacity-40 transition"
             title="Vernieuwen"
           >
-            🔄
+            <Refresh className="w-5 h-5" />
           </button>
         </div>
 
@@ -586,7 +590,7 @@ export default function AdminCompliance() {
                   : 'text-white/60 hover:text-white hover:bg-white/5'
               }`}
             >
-              <span>{tt.icoon}</span>
+              {tt.icoon && <tt.icoon className="w-4 h-4" />}
               <span>{tt.label}</span>
               {tab === tt.id && (
                 <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 rounded-full" />

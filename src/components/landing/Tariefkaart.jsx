@@ -7,6 +7,7 @@
  */
 import { useTaal } from '../../i18n';
 import { TARIEF_MATRIX } from '../../services/kosten';
+import { Bank, Card } from '../icons/Icons';
 
 const TIERS = [
   { label: '€10 – €200' },
@@ -20,9 +21,9 @@ const TIERS = [
 // Klarna écht beschikbaar is, niet in publieke tariefkaart tonen (anders
 // misleidende reclame). Voeg Klarna weer toe zodra Mollie het activeert.
 const METHODEN = [
-  { key: 'ideal', icon: '🏦', i18n: 'tariefkaart_methode_ideal' },
-  { key: 'card', icon: '💳', i18n: 'tariefkaart_methode_card' },
-  { key: 'sepa', icon: '🏛️', i18n: 'tariefkaart_methode_sepa' },
+  { key: 'ideal', Icon: Bank, i18n: 'tariefkaart_methode_ideal' },
+  { key: 'card', Icon: Card, i18n: 'tariefkaart_methode_card' },
+  { key: 'sepa', Icon: Bank, i18n: 'tariefkaart_methode_sepa' },
 ];
 
 function pct(v) {
@@ -48,8 +49,10 @@ export default function Tariefkaart({ embedded = false }) {
                 <th className="px-6 py-4 text-left">{t('tariefkaart_col_bedrag')}</th>
                 {METHODEN.map((m) => (
                   <th key={m.key} className="px-4 py-4 text-center">
-                    <span className="mr-1" aria-hidden="true">{m.icon}</span>
-                    {t(m.i18n)}
+                    <span className="inline-flex items-center gap-1.5 justify-center">
+                      <m.Icon className="w-4 h-4" aria-hidden="true" />
+                      {t(m.i18n)}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -89,7 +92,7 @@ export default function Tariefkaart({ embedded = false }) {
               className="rounded-2xl p-5 bg-white border border-gray-200 shadow-sm"
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xl" aria-hidden="true">{m.icon}</span>
+                <m.Icon className="w-5 h-5 text-gray-700" aria-hidden="true" />
                 <div className="font-bold text-gray-900">{t(m.i18n)}</div>
               </div>
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">

@@ -15,7 +15,7 @@ import Vlag from '../Vlag';
 import CurrencySelector from '../CurrencySelector';
 import { useFavorieteValutas } from '../../services/favorieteValutas'; // MMM
 import { API_URL } from '../../services/api';
-import { ShieldCheck, Bank, Lock, ArrowRight } from '../icons/Icons';
+import { ShieldCheck, Bank, Lock, ArrowRight, Bell } from '../icons/Icons';
 
 function GlobeIcon({ className }) {
   return (
@@ -225,7 +225,7 @@ export default function Hero() {
                   nog niet live is, maar de calculator werkt wel. */}
               {isBinnenkort && (
                 <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mb-3 text-[11px] text-amber-800 leading-snug">
-                  <span aria-hidden="true">🔔</span>
+                  <Bell className="w-4 h-4 flex-shrink-0" />
                   <span>{t('landing_widget_binnenkort', { land: valutaInfo.land })}</span>
                 </div>
               )}

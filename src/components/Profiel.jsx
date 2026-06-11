@@ -305,7 +305,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       {!kycOk && (
         <div className="card-glass p-4 border-l-4 border-amber-500">
           <div className="flex items-start gap-2">
-            <span className="text-2xl">🪪</span>
+            <IdCard className="w-6 h-6 text-amber-600 flex-shrink-0" />
             <div>
               <h3 className="font-bold text-gray-800 text-sm">KYC verificatie nodig</h3>
               <p className="text-xs text-gray-600 mt-1">

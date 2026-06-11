@@ -6,36 +6,37 @@
  * - onDismiss: () => void (alleen aangeroepen als sluitbaar=true)
  *
  * Styling per type:
- * info → blauwe gradient, ℹ️
- * success → groene gradient, ✓
- * warning → oranje gradient, ⚠️
- * error → rode gradient, ❌
+ * info → blauwe gradient, Info-icoon
+ * success → groene gradient, CheckCircle-icoon
+ * warning → oranje gradient, AlertTriangle-icoon
+ * error → rode gradient, XCircle-icoon
  *
  * Layout: glassmorphism kaart, optionele CTA-knop rechts, dismiss × rechtsboven.
  */
 import { useTaal } from '../../i18n';
+import { Info, CheckCircle, AlertTriangle, XCircle } from '../icons/Icons';
 
 const STIJLEN = {
   info: {
-    icoon: 'ℹ️',
+    icoon: Info,
     gradient: 'from-blue-500/80 via-blue-600/80 to-cyan-500/80',
     border: 'border-blue-300/40',
     ringHover: 'hover:ring-blue-300/30',
   },
   success: {
-    icoon: '✅',
+    icoon: CheckCircle,
     gradient: 'from-emerald-500/80 via-green-500/80 to-teal-500/80',
     border: 'border-emerald-300/40',
     ringHover: 'hover:ring-emerald-300/30',
   },
   warning: {
-    icoon: '⚠️',
+    icoon: AlertTriangle,
     gradient: 'from-amber-500/80 via-orange-500/80 to-yellow-500/80',
     border: 'border-amber-300/50',
     ringHover: 'hover:ring-amber-300/40',
   },
   error: {
-    icoon: '❌',
+    icoon: XCircle,
     gradient: 'from-rose-500/80 via-red-600/80 to-pink-500/80',
     border: 'border-rose-300/40',
     ringHover: 'hover:ring-rose-300/30',
@@ -60,8 +61,8 @@ export default function Banner({ banner, onDismiss }) {
                   ring-1 ring-white/10 ${stijl.ringHover} transition`}
     >
       <div className="flex items-start gap-3">
-        <div className="text-2xl flex-shrink-0 leading-none mt-0.5" aria-hidden="true">
-          {stijl.icoon}
+        <div className="flex-shrink-0 mt-0.5" aria-hidden="true">
+          <stijl.icoon className="w-6 h-6" />
         </div>
         <div className="flex-1 min-w-0 pr-7">
           <div className="font-bold text-sm md:text-base leading-tight">

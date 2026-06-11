@@ -13,6 +13,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch, parseError, API_URL } from '../../services/api';
 import { useTaal } from '../../i18n';
+import { X, Refresh, Mail } from '../icons/Icons';
 
 function fmtDatum(iso) {
   if (!iso) return '—';
@@ -114,10 +115,10 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
           </div>
           <button
             onClick={onClose}
-            className="text-white/70 hover:text-white text-2xl"
+            className="text-white/70 hover:text-white"
             aria-label={t('sluiten')}
           >
-            ✕
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -257,11 +258,11 @@ export default function KYCReviewQueue() {
         <button
           onClick={laad}
           disabled={laden}
-          className="text-white/70 hover:text-white text-xl disabled:opacity-40"
+          className="text-white/70 hover:text-white disabled:opacity-40"
           title={t('vernieuwen')}
           aria-label={t('vernieuwen')}
         >
-          🔄
+          <Refresh className="w-5 h-5" />
         </button>
       </div>
 
@@ -275,7 +276,7 @@ export default function KYCReviewQueue() {
         <div className="text-center text-white/60 py-10">{t('laden')}</div>
       ) : records.length === 0 ? (
         <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
-          <div className="text-4xl mb-3">📭</div>
+          <Mail className="w-10 h-10 mx-auto mb-3 text-white/60" />
           <p className="font-semibold">{t('kyc_review_leeg_titel')}</p>
           <p className="text-xs text-white/50 mt-2">{t('kyc_review_leeg_subtitel')}</p>
         </div>

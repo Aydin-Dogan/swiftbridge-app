@@ -7,6 +7,7 @@
  * - Subtle gradient achtergrond
  */
 import { useTaal } from '../../i18n';
+import { Check, Clock, AlertTriangle, IdCard, Refresh } from '../icons/Icons';
 
 function begroetingKey(uur) {
   if (uur < 12) return 'dashboard_goedemorgen';
@@ -21,7 +22,7 @@ function kycPill(status, t) {
         kleur: 'bg-emerald-100 text-emerald-800 border-emerald-200',
         dot: 'bg-emerald-500',
         label: t('dashboard_kyc_status_goedgekeurd'),
-        icoon: '✓',
+        Icoon: Check,
       };
     case 'in_behandeling':
     case 'ingediend':
@@ -29,7 +30,7 @@ function kycPill(status, t) {
         kleur: 'bg-amber-100 text-amber-800 border-amber-200',
         dot: 'bg-amber-500 animate-pulse',
         label: t('dashboard_kyc_status_in_behandeling'),
-        icoon: '⏳',
+        Icoon: Clock,
       };
     case 'afgewezen':
     case 'geblokkeerd':
@@ -37,14 +38,14 @@ function kycPill(status, t) {
         kleur: 'bg-rose-100 text-rose-800 border-rose-200',
         dot: 'bg-rose-500',
         label: t('dashboard_kyc_status_afgewezen'),
-        icoon: '⚠️',
+        Icoon: AlertTriangle,
       };
     default:
       return {
         kleur: 'bg-slate-100 text-slate-700 border-slate-200',
         dot: 'bg-slate-400',
         label: t('dashboard_kyc_status_geen'),
-        icoon: '🪪',
+        Icoon: IdCard,
       };
   }
 }
@@ -90,7 +91,7 @@ export default function SaldoCard({ gebruiker, onVernieuw }) {
               className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${pill.kleur}`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${pill.dot}`} aria-hidden="true" />
-              <span aria-hidden="true">{pill.icoon}</span>
+              <pill.Icoon className="w-3.5 h-3.5" aria-hidden="true" />
               <span>{pill.label}</span>
             </span>
           </div>
@@ -104,7 +105,7 @@ export default function SaldoCard({ gebruiker, onVernieuw }) {
             title={t('vernieuwen')}
             aria-label={t('vernieuwen')}
           >
-            <span aria-hidden="true">🔄</span>
+            <Refresh className="w-5 h-5" aria-hidden="true" />
           </button>
         )}
       </div>

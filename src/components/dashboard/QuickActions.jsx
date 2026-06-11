@@ -9,6 +9,7 @@
  * conform de bestaande Dashboard.jsx en FeestKalender patronen.
  */
 import { useTaal } from '../../i18n';
+import { Send, Euro, Bell } from '../icons/Icons';
 
 function navigeer(tab) {
   window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: tab }));
@@ -20,21 +21,21 @@ export default function QuickActions() {
   const acties = [
     {
       tab: 'betaling',
-      icoon: '🚀',
+      Icoon: Send,
       titel: t('dashboard_quick_nieuwe_tx'),
       sub: t('dashboard_quick_nieuwe_tx_sub'),
       primary: true,
     },
     {
       tab: 'alerts',
-      icoon: '📊',
+      Icoon: Euro,
       titel: t('dashboard_quick_koersen'),
       sub: t('dashboard_quick_koersen_sub'),
       primary: false,
     },
     {
       tab: 'alerts',
-      icoon: '💡',
+      Icoon: Bell,
       titel: t('dashboard_quick_alert'),
       sub: t('dashboard_quick_alert_sub'),
       primary: false,
@@ -63,12 +64,12 @@ export default function QuickActions() {
           )}
           <div className="relative flex items-center gap-3">
             <span
-              className={`text-2xl flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center ${
-                a.primary ? 'bg-white/20' : 'bg-blue-50'
+              className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center ${
+                a.primary ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'
               }`}
               aria-hidden="true"
             >
-              {a.icoon}
+              <a.Icoon className="w-5 h-5" />
             </span>
             <div className="min-w-0 flex-1">
               <div className={`font-bold text-sm leading-tight ${a.primary ? '' : 'text-slate-900'}`}>

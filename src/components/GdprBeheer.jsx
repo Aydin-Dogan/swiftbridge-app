@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
+import { Shield, AlertTriangle, Clipboard } from './icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -147,7 +148,7 @@ export default function GdprBeheer({ token }) {
     <div className="card-glass p-5 space-y-4 animate-fade-up border-l-4 border-slate-400">
       <div>
         <h3 className="font-bold text-gray-800 flex items-center gap-2">
-          <span className="text-xl">🛡️</span>
+          <Shield className="w-5 h-5 text-slate-600" />
           <span>{t('gdpr_titel')}</span>
         </h3>
         <p className="text-xs text-gray-600 mt-1 leading-relaxed">
@@ -157,7 +158,7 @@ export default function GdprBeheer({ token }) {
 
       {/* Wwft disclaimer — prominent geel info box bovenaan */}
       <div className="rounded-xl border-2 border-amber-300 bg-amber-50 p-3 flex items-start gap-2">
-        <span className="text-lg flex-shrink-0">⚠️</span>
+        <AlertTriangle className="w-5 h-5 flex-shrink-0 text-amber-700" />
         <p className="text-xs text-amber-900 leading-relaxed">
           {t('gdpr_wwft_disclaimer')}
         </p>
@@ -241,7 +242,7 @@ export default function GdprBeheer({ token }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl">⚠️</span>
+              <AlertTriangle className="w-6 h-6 text-rose-600 flex-shrink-0" />
               <h3 className="font-bold text-lg text-rose-900">{t('gdpr_modal_titel')}</h3>
             </div>
             <div className="text-sm text-gray-700 space-y-2">
@@ -253,7 +254,7 @@ export default function GdprBeheer({ token }) {
                 <li>{t('gdpr_modal_li_login')}</li>
               </ul>
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-900 flex gap-1.5">
-                <span>📋</span>
+                <Clipboard className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span>{t('gdpr_modal_wwft_note')}</span>
               </div>
             </div>

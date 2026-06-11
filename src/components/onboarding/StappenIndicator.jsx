@@ -6,6 +6,8 @@
  * - Subtle connector lijntje tussen dots
  * - A11y: aria-current="step" op de actieve dot
  */
+import { Check } from '../icons/Icons';
+
 export default function StappenIndicator({ huidigeStap, totaalStappen = 4, labels = [] }) {
   return (
     <div className="w-full" role="progressbar" aria-valuemin={1} aria-valuemax={totaalStappen} aria-valuenow={huidigeStap}>
@@ -27,7 +29,7 @@ export default function StappenIndicator({ huidigeStap, totaalStappen = 4, label
                         ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-600/40 scale-110'
                         : 'bg-white border-slate-300 text-slate-400'}`}
                 >
-                  {isVoltooid ? <span aria-hidden="true">✓</span> : stap}
+                  {isVoltooid ? <Check className="w-4 h-4" /> : stap}
                 </span>
                 {labels[idx] && (
                   <span

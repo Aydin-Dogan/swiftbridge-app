@@ -10,23 +10,25 @@
  * - onKies(actie): callback met { vraag, antwoord, id }
  * - t: vertaalfunctie van useTaal()
  */
+import { IdCard, Euro, Clock } from '../icons/Icons';
+
 export default function QuickActions({ onKies, t }) {
   const acties = [
     {
       id: 'kyc',
-      icoon: '🪪',
+      Icoon: IdCard,
       vraag: t('support_qa_kyc_vraag'),
       antwoord: t('support_qa_kyc_antwoord'),
     },
     {
       id: 'kosten',
-      icoon: '💶',
+      Icoon: Euro,
       vraag: t('support_qa_kosten_vraag'),
       antwoord: t('support_qa_kosten_antwoord'),
     },
     {
       id: 'tx_status',
-      icoon: '⏱️',
+      Icoon: Clock,
       vraag: t('support_qa_status_vraag'),
       antwoord: t('support_qa_status_antwoord'),
     },
@@ -45,7 +47,7 @@ export default function QuickActions({ onKies, t }) {
             onClick={() => onKies(a)}
             className="text-left text-sm bg-white hover:bg-blue-50 active:bg-blue-100 border border-gray-200 hover:border-blue-300 text-gray-700 hover:text-blue-700 rounded-xl px-3 py-2.5 transition flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
-            <span className="text-base" aria-hidden="true">{a.icoon}</span>
+            <a.Icoon className="w-4 h-4 text-gray-500 flex-shrink-0" aria-hidden="true" />
             <span className="flex-1">{a.vraag}</span>
             <span className="text-gray-300" aria-hidden="true">›</span>
           </button>

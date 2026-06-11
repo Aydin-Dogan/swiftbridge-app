@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { useTaal } from '../../i18n';
 import { berekenKosten } from '../../services/kosten';
 import { API_URL } from '../../services/api';
+import { Zap } from '../icons/Icons';
 
 // Voorbeeldbedrag voor de vergelijking
 const BEDRAG = 500;
@@ -167,9 +168,7 @@ export default function Pricing({ embedded = false }) {
                         }`}
                       >
                         {r.highlight && (
-                          <span className="mr-1.5" aria-hidden="true">
-                            ⚡
-                          </span>
+                          <Zap className="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5" aria-hidden="true" />
                         )}
                         {r.naam}
                       </span>

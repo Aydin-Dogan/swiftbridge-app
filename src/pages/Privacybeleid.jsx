@@ -1,17 +1,19 @@
+import { Zap, Eye, Refresh, Trash, Download, XCircle, Lock } from '../components/icons/Icons';
+
 export default function Privacybeleid() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="bg-white rounded-2xl shadow-sm p-8 md:p-12">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-3xl">⚡</span>
+            <Zap className="w-8 h-8 text-blue-600" />
             <span className="font-bold text-xl text-blue-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacybeleid</h1>
           <p className="text-sm text-gray-500 mb-8">Versie 1.0 — Datum: mei 2026 — AVG/GDPR compliant</p>
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 text-sm text-blue-800">
-            <strong>ℹ️ Samenvatting:</strong> Wij verzamelen alleen de gegevens die nodig zijn om u veilig geld te laten overmaken. Wij verkopen uw gegevens nooit aan derden. U heeft altijd het recht uw gegevens in te zien, te corrigeren of te laten verwijderen.
+            <strong>Samenvatting:</strong> Wij verzamelen alleen de gegevens die nodig zijn om u veilig geld te laten overmaken. Wij verkopen uw gegevens nooit aan derden. U heeft altijd het recht uw gegevens in te zien, te corrigeren of te laten verwijderen.
           </div>
 
           <div className="space-y-8 text-gray-700 leading-relaxed">
@@ -142,16 +144,16 @@ export default function Privacybeleid() {
               <p className="mb-3">U heeft de volgende rechten, die u kunt uitoefenen via privacy@swiftbridge.tr:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
-                  { icon: '👁️', title: 'Inzagerecht', desc: 'U kunt opvragen welke gegevens wij van u verwerken.' },
-                  { icon: '✏️', title: 'Correctierecht', desc: 'U kunt onjuiste gegevens laten corrigeren.' },
-                  { icon: '🗑️', title: 'Recht op vergetelheid', desc: 'U kunt verzoeken uw gegevens te verwijderen (m.u.v. wettelijke bewaarplicht).' },
-                  { icon: '📦', title: 'Dataportabiliteit', desc: 'U kunt uw gegevens in een leesbaar formaat opvragen.' },
-                  { icon: '🚫', title: 'Bezwaarrecht', desc: 'U kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang.' },
-                  { icon: '⏸️', title: 'Recht op beperking', desc: 'U kunt verzoeken de verwerking tijdelijk te beperken.' },
+                  { Icoon: Eye, title: 'Inzagerecht', desc: 'U kunt opvragen welke gegevens wij van u verwerken.' },
+                  { Icoon: Refresh, title: 'Correctierecht', desc: 'U kunt onjuiste gegevens laten corrigeren.' },
+                  { Icoon: Trash, title: 'Recht op vergetelheid', desc: 'U kunt verzoeken uw gegevens te verwijderen (m.u.v. wettelijke bewaarplicht).' },
+                  { Icoon: Download, title: 'Dataportabiliteit', desc: 'U kunt uw gegevens in een leesbaar formaat opvragen.' },
+                  { Icoon: XCircle, title: 'Bezwaarrecht', desc: 'U kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang.' },
+                  { Icoon: Lock, title: 'Recht op beperking', desc: 'U kunt verzoeken de verwerking tijdelijk te beperken.' },
                 ].map((r, i) => (
                   <div key={i} className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-1">
-                      <span>{r.icon}</span>
+                      <r.Icoon className="w-4 h-4 text-gray-600 flex-shrink-0" />
                       <strong className="text-sm">{r.title}</strong>
                     </div>
                     <p className="text-sm text-gray-600">{r.desc}</p>

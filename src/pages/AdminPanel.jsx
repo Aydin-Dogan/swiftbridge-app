@@ -7,6 +7,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
+import {
+  Users, Clock, CheckCircle, XCircle, Euro, Lock, AlertTriangle, Zap, Refresh, Mail,
+} from '../components/icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -106,20 +109,20 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
             onClick={() => beoordeel('goedgekeurd')}
             disabled={laden}
             className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm">
-            {bezig === 'goedgekeurd' ? '⏳' : '✅'} {t('admin_actie_goedkeuren') || 'Goedkeuren'}
+            {bezig === 'goedgekeurd' ? <Clock className="w-4 h-4 inline-block align-text-bottom" /> : <CheckCircle className="w-4 h-4 inline-block align-text-bottom" />} {t('admin_actie_goedkeuren') || 'Goedkeuren'}
           </button>
           <button
             onClick={() => beoordeel('afgewezen')}
             disabled={laden}
             className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm">
-            {bezig === 'afgewezen' ? '⏳' : '❌'} {t('admin_actie_afwijzen') || 'Afwijzen'}
+            {bezig === 'afgewezen' ? <Clock className="w-4 h-4 inline-block align-text-bottom" /> : <XCircle className="w-4 h-4 inline-block align-text-bottom" />} {t('admin_actie_afwijzen') || 'Afwijzen'}
           </button>
           <button
             onClick={() => beoordeel('geblokkeerd')}
             disabled={laden}
             className="px-3 bg-gray-700 hover:bg-gray-800 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm"
             title={t('admin_actie_blokkeren_tooltip') || 'Account blokkeren'}>
-            {bezig === 'geblokkeerd' ? '⏳' : '🔒'}
+            {bezig === 'geblokkeerd' ? <Clock className="w-4 h-4 inline-block align-text-bottom" /> : <Lock className="w-4 h-4 inline-block align-text-bottom" />}
           </button>
         </div>
       )}
@@ -145,10 +148,10 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
 }
 
 // ── Stat kaartje ──────────────────────────────────────────────────────────────
-function StatKaart({ icoon, label, waarde, kleur }) {
+function StatKaart({ icoon: Icoon, label, waarde, kleur }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
-      <div className="text-2xl mb-2">{icoon}</div>
+      {Icoon && <Icoon className="w-6 h-6 mb-2 text-gray-400" />}
       <div className={`text-2xl font-bold ${kleur}`}>{waarde}</div>
       <div className="text-xs text-gray-500 mt-0.5">{label}</div>
     </div>
@@ -208,7 +211,7 @@ export default function AdminPanel() {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white rounded-2xl p-8 text-center shadow max-w-sm w-full">
-          <div className="text-4xl mb-4">🔐</div>
+          <Lock className="w-10 h-10 mx-auto mb-4 text-gray-400" />
           <h2 className="text-xl font-bold text-gray-800 mb-2">{t('admin_toegang_titel') || 'Admin toegang vereist'}</h2>
           <p className="text-gray-500 text-sm">{t('admin_toegang_uitleg_1') || 'Voeg'} <code className="bg-gray-100 px-1 rounded">?secret=...</code> {t('admin_toegang_uitleg_2') || 'toe aan de URL.'}</p>
         </div>
@@ -222,13 +225,13 @@ export default function AdminPanel() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/')} className="text-2xl">⚡</button>
+            <button onClick={() => navigate('/')} className="text-blue-600"><Zap className="w-7 h-7" /></button>
             <div>
               <div className="font-extrabold text-gray-900 leading-none">{t('admin_titel') || 'SwiftBridge Admin'}</div>
               <div className="text-xs text-amber-600 font-semibold">{t('admin_beveiligd') || 'Beveiligd paneel'}</div>
             </div>
           </div>
-          <button onClick={laadData} className="text-gray-400 hover:text-blue-600 text-xl transition" title={t('admin_vernieuwen') || 'Vernieuwen'}>🔄</button>
+          <button onClick={laadData} className="text-gray-400 hover:text-blue-600 transition" title={t('admin_vernieuwen') || 'Vernieuwen'}><Refresh className="w-5 h-5" /></button>
         </div>
       </header>
 
@@ -247,14 +250,14 @@ export default function AdminPanel() {
             integriteit.geldig
               ? 'bg-green-50 border-green-200 text-green-800'
               : 'bg-red-50 border-red-200 text-red-800'}`}>
-            <span className="text-2xl">{integriteit.geldig ? '🔒' : '⚠️'}</span>
+            {integriteit.geldig ? <Lock className="w-6 h-6 flex-shrink-0" /> : <AlertTriangle className="w-6 h-6 flex-shrink-0" />}
             <div>
               <div className="font-bold text-sm">
                 {integriteit.geldig ? (t('admin_audit_intact') || 'Audit log intact') : (t('admin_audit_aangetast') || 'Audit log AANGETAST!')}
               </div>
               <div className="text-xs mt-0.5">
                 {integriteit.geldig
-                  ? `${integriteit.totaal} ${t('admin_audit_entries_ok') || 'log entries — hash chain volledig geldig'} ✅`
+                  ? `${integriteit.totaal} ${t('admin_audit_entries_ok') || 'log entries — hash chain volledig geldig'}`
                   : `${t('admin_audit_gebroken_bij') || 'Gebroken bij log ID'} ${integriteit.gebroken?.id} (${integriteit.gebroken?.actie})`}
               </div>
             </div>
@@ -264,10 +267,10 @@ export default function AdminPanel() {
         {/* Statistieken */}
         {stats && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatKaart icoon="👥" label={t('admin_stat_gebruikers') || 'Gebruikers'} waarde={stats.gebruikers} kleur="text-blue-600" />
-            <StatKaart icoon="⏳" label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0} kleur="text-amber-600" />
-            <StatKaart icoon="✅" label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'} waarde={stats.kyc?.goedgekeurd || 0} kleur="text-green-600" />
-            <StatKaart icoon="💶" label={t('admin_stat_totaal_verstuurd') || 'Totaal verstuurd'}
+            <StatKaart icoon={Users} label={t('admin_stat_gebruikers') || 'Gebruikers'} waarde={stats.gebruikers} kleur="text-blue-600" />
+            <StatKaart icoon={Clock} label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0} kleur="text-amber-600" />
+            <StatKaart icoon={CheckCircle} label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'} waarde={stats.kyc?.goedgekeurd || 0} kleur="text-green-600" />
+            <StatKaart icoon={Euro} label={t('admin_stat_totaal_verstuurd') || 'Totaal verstuurd'}
               waarde={`€${((stats.transacties?.voltooid?.totaal || 0)).toLocaleString('nl-NL', { maximumFractionDigits: 0 })}`}
               kleur="text-purple-600" />
           </div>
@@ -297,12 +300,12 @@ export default function AdminPanel() {
         {/* KYC lijst */}
         {laden ? (
           <div className="text-center py-12 text-gray-400">
-            <div className="text-3xl animate-pulse mb-2">⏳</div>
+            <Clock className="w-8 h-8 mx-auto animate-pulse mb-2" />
             <p>{t('laden') || 'Laden...'}</p>
           </div>
         ) : gefilterd.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-400">
-            <div className="text-3xl mb-2">📭</div>
+            <Mail className="w-8 h-8 mx-auto mb-2" />
             <p>{t('admin_geen_aanvragen') || 'Geen aanvragen gevonden voor dit filter'}</p>
           </div>
         ) : (

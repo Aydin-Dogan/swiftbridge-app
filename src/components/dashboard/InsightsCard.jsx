@@ -7,6 +7,7 @@
  */
 import { useEffect, useState, useMemo } from 'react';
 import { useTaal } from '../../i18n';
+import { ChevronUp, Banknote, Zap, Bell, Lock } from '../icons/Icons';
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', {
@@ -25,7 +26,7 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
       const pct = ((koers - koersGisteren) / koersGisteren) * 100;
       if (pct > 0.1) {
         lijst.push({
-          icoon: '📈',
+          Icoon: ChevronUp,
           tekst: t('dashboard_tip_1', { pct: pct.toFixed(1) }),
           accent: 'from-emerald-500/20 to-teal-500/10',
         });
@@ -33,23 +34,23 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
     }
     if (totaalBesparing > 0) {
       lijst.push({
-        icoon: '💰',
+        Icoon: Banknote,
         tekst: t('dashboard_tip_2', { bedrag: fmtEur(totaalBesparing) }),
         accent: 'from-amber-500/20 to-orange-500/10',
       });
     }
     lijst.push({
-      icoon: '⚡',
+      Icoon: Zap,
       tekst: t('dashboard_tip_3'),
       accent: 'from-blue-500/20 to-indigo-500/10',
     });
     lijst.push({
-      icoon: '🔔',
+      Icoon: Bell,
       tekst: t('dashboard_tip_4'),
       accent: 'from-violet-500/20 to-fuchsia-500/10',
     });
     lijst.push({
-      icoon: '🔒',
+      Icoon: Lock,
       tekst: t('dashboard_tip_5'),
       accent: 'from-slate-500/20 to-slate-400/10',
     });
@@ -78,7 +79,7 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
         aria-hidden="true"
       />
       <div className="relative flex items-start gap-3">
-        <span className="text-2xl flex-shrink-0" aria-hidden="true">{huidige.icoon}</span>
+        <huidige.Icoon className="w-6 h-6 text-slate-600 flex-shrink-0" />
         <div className="min-w-0 flex-1">
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">
             {t('dashboard_tips_titel')}

@@ -8,6 +8,7 @@ import { useTaal } from '../../i18n';
 import { VALUTAS, getValuta } from '../../services/currencies';
 import { LAND_INFO, bankenPerLand } from '../../services/turkstaligeBanken';
 import Vlag from '../Vlag';
+import { X } from '../icons/Icons';
 
 // ── IBAN landcode mapping (eerste 2 chars) ──────────────────────────────────
 const IBAN_LANDCODES = {
@@ -148,7 +149,7 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
           <h3 className="font-bold text-gray-800">
             {initial ? t('benef_bewerk_titel') : t('benef_toevoeg_titel')}
           </h3>
-          <button onClick={onAnnuleer} className="text-gray-400 text-xl hover:text-gray-700" aria-label={t('sluiten')}>✕</button>
+          <button onClick={onAnnuleer} className="text-gray-400 hover:text-gray-700" aria-label={t('sluiten')}><X className="w-5 h-5" /></button>
         </div>
 
         <div className="p-4 space-y-3">
@@ -274,7 +275,7 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
             disabled={bezig}
             className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-2 rounded-xl transition"
           >
-            {bezig ? `${t('laden')}` : `💾 ${t('opslaan')}`}
+            {bezig ? `${t('laden')}` : `${t('opslaan')}`}
           </button>
         </div>
       </div>

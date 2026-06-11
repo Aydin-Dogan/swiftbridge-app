@@ -9,6 +9,7 @@ import { parseError } from '../../services/api';
 import { maskeerIban } from './BeneficiaryKaart';
 import { getValuta } from '../../services/currencies';
 import Vlag from '../Vlag';
+import { Users, Bank, ChevronDown } from '../icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -85,10 +86,10 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
         className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-white/10 transition"
       >
         <span className="flex items-center gap-2">
-          <span className="text-lg">👥</span>
+          <Users className="w-5 h-5 text-gray-600" />
           <span className="text-sm font-semibold text-gray-700">{t('benef_kies_bestaande')}</span>
         </span>
-        <span className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`}>▼</span>
+        <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
@@ -146,7 +147,12 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
                         {maskeerIban(b.iban || '')}
                       </div>
                       <div className="flex items-center gap-2 text-[10px] text-gray-500">
-                        {b.bank && <span className="truncate">🏦 {b.bank}</span>}
+                        {b.bank && (
+                          <span className="inline-flex items-center gap-1 min-w-0">
+                            <Bank className="w-3 h-3 flex-shrink-0" />
+                            <span className="truncate">{b.bank}</span>
+                          </span>
+                        )}
                         {valutaInfo && (
                           <span className="flex items-center gap-1">
                             <Vlag land={valutaInfo.landCode} size={10} />

@@ -3,6 +3,8 @@
  */
 import { useState, useEffect, useRef } from 'react';
 import { useTaal, TALEN } from '../i18n';
+import Vlag from './Vlag';
+import { Check } from './icons/Icons';
 
 export default function TaalKiezer({ donker = false }) {
   const { taal, zetTaal } = useTaal();
@@ -31,7 +33,7 @@ export default function TaalKiezer({ donker = false }) {
         }`}
         title="Kies taal"
       >
-        <span className="text-base">{huidige.vlag}</span>
+        <Vlag land={huidige.vlag} size={18} decorative />
         <span className="hidden sm:inline">{huidige.code.toUpperCase()}</span>
         <span className="text-xs">▾</span>
       </button>
@@ -46,9 +48,9 @@ export default function TaalKiezer({ donker = false }) {
                 l.code === taal ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700'
               }`}
             >
-              <span className="text-lg">{l.vlag}</span>
+              <Vlag land={l.vlag} size={20} decorative />
               <span className="flex-1">{l.naam}</span>
-              {l.code === taal && <span className="text-blue-600">✓</span>}
+              {l.code === taal && <Check className="w-4 h-4 text-blue-600" />}
             </button>
           ))}
         </div>

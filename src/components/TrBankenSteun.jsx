@@ -41,7 +41,6 @@ export default function TrBankenSteun({ titel, ondertitel, size = 'sm', toonCate
             return (
               <div key={catKey} className="text-left">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-base">{catInfo.icon}</span>
                   <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wider">{catInfo.naam}</span>
                   <span className="text-[10px] text-gray-400">({banken.length})</span>
                 </div>

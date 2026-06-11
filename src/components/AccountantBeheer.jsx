@@ -16,6 +16,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { API_URL, apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import ConfirmDialog from './ConfirmDialog';
+import { Check } from './icons/Icons';
 
 function formatTime(iso) {
   if (!iso) return '—';
@@ -129,7 +130,7 @@ export default function AccountantBeheer() {
       {recent && (
         <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 space-y-3">
           <p className="text-sm font-bold text-emerald-900">
-            ✓ {t('accountant_aangemaakt')}
+            <Check className="w-4 h-4 inline-block align-text-bottom" /> {t('accountant_aangemaakt')}
           </p>
           <div className="bg-white rounded-lg px-3 py-2 text-xs font-mono text-gray-700 truncate">
             {urlVoor(recent.token)}
@@ -139,7 +140,7 @@ export default function AccountantBeheer() {
               onClick={() => kopieer(urlVoor(recent.token))}
               className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg py-2 transition"
             >
-              {gekopieerd ? `✓ ${t('accountant_gekopieerd')}` : `${t('accountant_kopieer')}`}
+              {gekopieerd ? <><Check className="w-3.5 h-3.5 inline-block align-text-bottom" /> {t('accountant_gekopieerd')}</> : `${t('accountant_kopieer')}`}
             </button>
             <button
               onClick={() => whatsapp(urlVoor(recent.token))}

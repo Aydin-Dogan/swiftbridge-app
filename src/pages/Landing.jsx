@@ -11,6 +11,7 @@ import TaalKiezer from '../components/TaalKiezer';
 import ThemeToggle from '../components/ThemeToggle'; // UU
 import CookieConsent from '../components/CookieConsent';
 import { useTaal } from '../i18n';
+import { Zap } from '../components/icons/Icons';
 
 // Landing-specific sections
 import Hero from '../components/landing/Hero';
@@ -89,12 +90,10 @@ export default function Landing() {
       <nav className="header-glass-light sticky top-0 z-50 safe-top">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <a href="#top" className="flex items-center gap-2 group">
-            <span
-              className="text-2xl transition-transform group-hover:scale-110"
+            <Zap
+              className="w-6 h-6 text-blue-600 transition-transform group-hover:scale-110"
               aria-hidden="true"
-            >
-              ⚡
-            </span>
+            />
             <span className="text-xl font-extrabold text-gray-900 tracking-tight">
               SwiftBridge
             </span>

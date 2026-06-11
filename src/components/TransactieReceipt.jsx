@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Vlag from './Vlag';
 import { formatBedrag, getValuta } from '../services/currencies';
 import { API_URL } from '../services/api';
+import { X, Check, CheckCircle, Gift, Download, Bank, Zap } from './icons/Icons';
 
 function formatTime(iso) {
   if (!iso) return null;
@@ -21,10 +22,10 @@ function maskIBAN(iban) {
 }
 
 const MILESTONES = [
-  { id: 'initiated', label: 'Jouw bank', icon: '🏦', veld: 'milestoneInitiated' },
-  { id: 'betaling_ontvangen', label: 'SwiftBridge', icon: '🌉', veld: 'milestoneBetalingOntvangen' },
-  { id: 'tr_bank_verzonden', label: 'Bank ontvanger', icon: '🏛️', veld: 'milestoneTrBankVerzonden' },
-  { id: 'uitbetaald', label: 'Rekening ontvanger', icon: '✅', veld: 'milestoneUitbetaald' },
+  { id: 'initiated', label: 'Jouw bank', Icon: Bank, veld: 'milestoneInitiated' },
+  { id: 'betaling_ontvangen', label: 'SwiftBridge', Icon: Zap, veld: 'milestoneBetalingOntvangen' },
+  { id: 'tr_bank_verzonden', label: 'Bank ontvanger', Icon: Bank, veld: 'milestoneTrBankVerzonden' },
+  { id: 'uitbetaald', label: 'Rekening ontvanger', Icon: CheckCircle, veld: 'milestoneUitbetaald' },
 ];
 
 export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
@@ -83,13 +84,13 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-100 pb-3 print:hidden">
           <h3 className="font-bold text-gray-800 text-lg">Transactie kwitantie</h3>
-          <button onClick={onSluit} className="text-gray-400 hover:text-gray-600 text-xl w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center">✕</button>
+          <button onClick={onSluit} aria-label="Sluiten" className="text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center"><X className="w-5 h-5" /></button>
         </div>
 
         {/* Welkomst deal badge */}
         {tx.welkomstDeal && (
           <div className="bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-300 rounded-xl p-3 text-amber-900 text-xs font-semibold flex items-center gap-2">
-            <span className="text-base">🎁</span>
+            <Gift className="w-4 h-4 flex-shrink-0" />
             <span>Welkomst-deal toegepast — fee gratis op deze transactie!</span>
           </div>
         )}
@@ -134,7 +135,7 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${
                     done ? 'bg-emerald-500 text-white' : 'bg-gray-200 text-gray-400'
                   }`}>
-                    {done ? '✓' : i + 1}
+                    {done ? <Check className="w-3.5 h-3.5" /> : i + 1}
                   </div>
                   {!isLast && (
                     <div className={`w-0.5 h-8 ${done ? 'bg-emerald-300' : 'bg-gray-200'}`} />
@@ -142,8 +143,9 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
                 </div>
                 {/* Tekst */}
                 <div className="flex-1 pb-3">
-                  <div className={`text-sm font-semibold ${done ? 'text-gray-800' : 'text-gray-400'}`}>
-                    {m.icon} {m.label}
+                  <div className={`text-sm font-semibold flex items-center gap-1.5 ${done ? 'text-gray-800' : 'text-gray-400'}`}>
+                    <m.Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                    {m.label}
                   </div>
                   {done && (
                     <div className="text-[10px] text-emerald-600 font-mono mt-0.5">
@@ -172,7 +174,7 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
           <div className="flex justify-between">
             <span className="text-gray-500">Servicekosten</span>
             <span className={`font-mono font-semibold ${tx.welkomstDeal ? 'text-emerald-600' : 'text-gray-800'}`}>
-              {tx.welkomstDeal ? 'GRATIS 🎁' : `€${(tx.feeEur || tx.fee_eur || 0).toFixed(2)}`}
+              {tx.welkomstDeal ? 'GRATIS' : `€${(tx.feeEur || tx.fee_eur || 0).toFixed(2)}`}
             </span>
           </div>
           <div className="flex justify-between">
@@ -205,7 +207,7 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
             onClick={() => window.print()}
             className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl text-sm transition active:scale-95"
           >
-            🖨️ Print
+            Print
           </button>
           <button
             onClick={downloadPdf}
@@ -223,7 +225,7 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
                 Bezig…
               </>
             ) : (
-              <>📄 Download PDF</>
+              <><Download className="w-4 h-4" />Download PDF</>
             )}
           </button>
           <button
@@ -284,7 +286,7 @@ function ReferralCtaInReceipt() {
   return (
     <div className="mt-3 bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-xl p-3 print:hidden">
       <div className="flex items-start gap-2 mb-2">
-        <span className="text-xl flex-shrink-0" aria-hidden="true">🎁</span>
+        <Gift className="w-5 h-5 text-emerald-600 flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="font-bold text-emerald-900 text-sm">
             Verdien €{data.beloningPerVriendEur} per uitnodiging
@@ -299,13 +301,13 @@ function ReferralCtaInReceipt() {
           onClick={kopieer}
           className="text-xs font-semibold text-emerald-700 bg-white hover:bg-emerald-50 border border-emerald-200 rounded-lg py-2 transition"
         >
-          {gekopieerd ? '✓ Gekopieerd' : 'Kopieer link'}
+          {gekopieerd ? 'Gekopieerd' : 'Kopieer link'}
         </button>
         <button
           onClick={whatsapp}
           className="text-xs font-bold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-lg py-2 transition"
         >
-          💬 WhatsApp
+          WhatsApp
         </button>
       </div>
     </div>
@@ -353,7 +355,7 @@ function NotitieSectie({ tx }) {
   return (
     <div className="mt-3 p-3 rounded-xl bg-gray-50 border border-gray-200 print:hidden">
       <div className="flex items-center justify-between mb-1.5">
-        <span className="text-xs font-semibold text-gray-600">📝 Persoonlijke notitie</span>
+        <span className="text-xs font-semibold text-gray-600">Persoonlijke notitie</span>
         {!bewerk && (
           <button
             onClick={() => setBewerk(true)}
