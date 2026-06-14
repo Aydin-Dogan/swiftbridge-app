@@ -405,3 +405,26 @@ input, select, textarea {
   .delay-200 { animation-delay: 0.2s; }
   .delay-300 { animation-delay: 0.3s; }
 }
+
+/* ── Institutionele laag (bank-stijl restyling, juni 2026) ──────────────────
+ * Toegevoegd naast (niet in plaats van) btn-primary/secondary: bestaande
+ * dashboard-schermen blijven exact zoals ze waren. Alleen de landing
+ * gebruikt deze klassen. Kleuren = bestaande brand/accent tokens.
+ */
+@layer components {
+  /* Rechthoekige bank-knop — zelfde brand-blauw als btn-primary */
+  .btn-inst {
+    @apply inline-flex items-center justify-center px-7 py-3 rounded-[3px] text-[0.7rem] font-medium uppercase tracking-[0.22em] text-white transition-colors duration-150 active:scale-[0.99];
+    background-color: #2563eb; /* brand-500 */
+  }
+  .btn-inst:hover  { background-color: #1d4ed8; } /* brand-600 */
+  .btn-inst:active { background-color: #1e40af; } /* brand-700 */
+
+  /* Variant op donkere hero-band — accent-amber in de "goud"-rol */
+  .btn-inst-ondark {
+    @apply px-7 py-3.5 rounded-[3px] text-[0.7rem] font-medium uppercase tracking-[0.22em] transition-colors duration-150 active:scale-[0.99];
+    background-color: #fbbf24; /* accent-400 */
+    color: #172554;            /* brand-900 */
+  }
+  .btn-inst-ondark:hover { background-color: #f59e0b; } /* accent-500 */
+}

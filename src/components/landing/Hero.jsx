@@ -113,12 +113,12 @@ export default function Hero() {
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Linker kolom — copy + CTA */}
           <div className="text-center md:text-left animate-fade-up">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3.5 py-1.5 text-xs font-semibold mb-5">
+            <div className="inline-flex items-center gap-2.5 text-accent-300 text-[0.68rem] font-medium uppercase tracking-[0.26em] mb-6">
               <GlobeIcon className="w-4 h-4 text-accent-300" />
               <span>{t('landing_pill_wereldwijd', { landen: aantalLanden })}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-5">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.6rem] font-medium leading-[1.12] mb-6">
               {t('landing_hero_titel_1')}{' '}
               <span className="text-accent-400">{t('landing_hero_titel_2')}</span>
             </h1>
@@ -130,7 +130,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
               <button
                 onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-semibold text-brand-800 bg-white hover:bg-blue-50 transition-colors duration-150 active:scale-[0.98] inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto btn-inst-ondark inline-flex items-center justify-center gap-2"
               >
                 {t('landing_hero_cta_primary')}
                 <ArrowRight className="w-4 h-4" />
@@ -148,9 +148,9 @@ export default function Hero() {
 
           {/* Rechter kolom — currency widget */}
           <div className="animate-fade-up" style={{ animationDelay: '0.15s' }}>
-            <div className="bg-white text-gray-800 rounded-2xl p-5 sm:p-6 shadow-soft-xl">
+            <div className="bg-white text-gray-800 rounded-md border border-gray-200 p-5 sm:p-6 shadow-soft-xl">
               <div className="flex items-center justify-between mb-5">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <span className="text-[0.66rem] font-medium text-gray-500 uppercase tracking-[0.24em]">
                   {t('landing_widget_titel')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-success-700 bg-success-50 border border-success-100 rounded-full px-2 py-0.5">
@@ -163,7 +163,7 @@ export default function Hero() {
               <label className="block text-xs font-medium text-gray-500 mb-1.5">
                 {t('landing_widget_jij_verstuurt')}
               </label>
-              <div className="flex items-center border border-gray-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-100 rounded-xl px-4 py-3 mb-4 transition">
+              <div className="flex items-center border border-gray-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-100 rounded-md px-4 py-3 mb-4 transition">
                 <span className="text-xl font-semibold text-gray-400 mr-2">€</span>
                 <input
                   type="number"
@@ -189,14 +189,14 @@ export default function Hero() {
                 onToggleFavoriet={toggleFavoriet}
               />
 
-              <div className="bg-brand-50 border border-brand-100 rounded-xl px-4 py-3.5 mt-4 mb-3 flex justify-between items-center">
+              <div className="bg-brand-50 border border-brand-100 rounded-md px-4 py-3.5 mt-4 mb-3 flex justify-between items-center">
                 <span className="text-sm font-medium text-gray-700">
                   {t('landing_widget_ontvanger_krijgt')}
                 </span>
                 {liveKoersen === null ? (
                   <span className="h-7 w-32 rounded-md animate-shimmer" aria-label="Bezig met laden..." />
                 ) : (
-                  <span className="text-2xl font-bold text-brand-700">
+                  <span className="font-display text-3xl font-medium text-brand-700">
                     {valutaInfo.symbool}{ontvangenFmt}
                   </span>
                 )}
@@ -224,7 +224,7 @@ export default function Hero() {
               {/* Eerlijk corridor-model: bij 'binnenkort' tonen we dat uitbetaling
                   nog niet live is, maar de calculator werkt wel. */}
               {isBinnenkort && (
-                <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mb-3 text-[11px] text-amber-800 leading-snug">
+                <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-md px-3 py-2.5 mb-3 text-[11px] text-amber-800 leading-snug">
                   <Bell className="w-4 h-4 flex-shrink-0" />
                   <span>{t('landing_widget_binnenkort', { land: valutaInfo.land })}</span>
                 </div>
@@ -232,7 +232,7 @@ export default function Hero() {
 
               <button
                 onClick={() => navigate(`/calculator?bedrag=${bedragNum}&valuta=${valuta}`)}
-                className="btn-primary w-full py-3.5 text-sm"
+                className="btn-inst w-full py-3.5"
               >
                 {t('landing_hero_cta_primary')}
                 <ArrowRight className="w-4 h-4 ml-1.5" />

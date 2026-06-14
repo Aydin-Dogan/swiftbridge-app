@@ -94,6 +94,11 @@ export default {
         'border-success': 'rgb(var(--border-success) / <alpha-value>)',
         'border-warning': 'rgb(var(--border-warning) / <alpha-value>)',
       },
+      // Display-serif voor koppen (bank-stijl) — systeemstack, geen externe
+      // fonts nodig dus CSP (font-src 'self') blijft ongewijzigd.
+      fontFamily: {
+        display: ["'Iowan Old Style'", "'Palatino Linotype'", 'Palatino', 'Georgia', "'Times New Roman'", 'serif'],
+      },
       // Soft shadow-system (vervangt glassmorphism)
       boxShadow: {
         'soft-sm':  '0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06)',
