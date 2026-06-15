@@ -6,11 +6,12 @@ NODE_ENV = "production"
 [phases.setup]
 nixPkgs = ["nodejs_22"]
 
-# `npm install` ipv `npm ci`, en --omit=optional om platform-specifieke
-# esbuild binaries (zoals @esbuild/netbsd-arm64) over te slaan die per
-# ongeluk in package-lock.json zijn beland tijdens cross-platform install.
+# `npm install` (ipv `npm ci`) zodat npm de platform-correcte optionele
+# binaries pakt. GEEN --omit=optional meer: dat sloeg ook Rollup's vereiste
+# @rollup/rollup-linux-x64-gnu over -> `vite build` crashte (Deploy failed).
+# npm slaat niet-passende optionals (bv. @esbuild/netbsd-arm64) vanzelf over op os/cpu.
 [phases.install]
-cmds = ["npm install --no-audit --no-fund --omit=optional"]
+cmds = ["npm install --no-audit --no-fund"]
 
 [phases.build]
 cmds = ["npm run build"]
