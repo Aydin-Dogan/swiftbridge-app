@@ -108,15 +108,15 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
   const glowColor = pct >= 90 ? 'rgba(244,63,94,0.5)' : pct >= 70 ? 'rgba(245,158,11,0.5)' : 'rgba(16,185,129,0.5)';
 
   return (
-    <div className="card-glass p-4 space-y-3 animate-fade-up">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-4 space-y-3 animate-fade-up">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Banknote className="w-5 h-5 text-brand-600" />
-          <span className="font-semibold text-gray-800 text-sm">{t('weeklimiet')}</span>
+          <span className="font-display font-medium text-ink-1 text-sm">{t('weeklimiet')}</span>
         </div>
-        <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">{t('weeklimiet_resets')}</span>
+        <span className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">{t('weeklimiet_resets')}</span>
       </div>
-      <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden relative">
+      <div className="w-full bg-surface-2 rounded-full h-3 overflow-hidden relative">
         <div
           className="h-3 rounded-full transition-all duration-700 ease-out"
           style={{
@@ -129,14 +129,14 @@ function WeeklimietBalk({ weekTotaal, weekLimiet }) {
       <div className="flex justify-between text-xs text-gray-600">
         <span>
           {t('weeklimiet_gebruikt_label')}{' '}
-          <strong className="text-gray-800 font-mono">{fmtEur(weekTotaal)}</strong>
+          <strong className="text-ink-1 font-display tabular-nums">{fmtEur(weekTotaal)}</strong>
         </span>
         <span>
           {t('weeklimiet_beschikbaar_label')}{' '}
-          <strong className={`font-mono ${resterend < 500 ? 'text-rose-600' : 'text-emerald-600'}`}>{fmtEur(resterend)}</strong>
+          <strong className={`font-display tabular-nums ${resterend < 500 ? 'text-fg-error' : 'text-success-600'}`}>{fmtEur(resterend)}</strong>
         </span>
       </div>
-      <div className="text-right text-[10px] text-gray-400 uppercase tracking-wider">{t('weeklimiet_limiet', { bedrag: fmtEur(weekLimiet) })}</div>
+      <div className="text-right text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em]">{t('weeklimiet_limiet', { bedrag: fmtEur(weekLimiet) })}</div>
     </div>
   );
 }
@@ -177,27 +177,27 @@ function EmailVerificatieBanner({ email }) {
     <div
       role="alert"
       aria-live="polite"
-      className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-4 animate-fade-up shadow-sm"
+      className="bg-surface border border-accent-400 rounded-md p-4 animate-fade-up shadow-soft"
     >
       <div className="flex gap-3 items-start">
-        <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0" aria-hidden="true">
-          <Mail className="w-5 h-5 text-amber-700" />
+        <div className="w-10 h-10 rounded-md bg-accent-400/15 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+          <Mail className="w-5 h-5 text-accent-600" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-bold text-amber-900 text-sm">
+          <div className="font-display font-medium text-ink-1 text-sm">
             {t('email_banner_titel')}
           </div>
-          <div className="text-amber-800 text-xs mt-1">
+          <div className="text-gray-600 text-xs mt-1">
             {t('email_banner_uitleg', { email: email || '' })}
           </div>
           {bericht && (
             <div
               role="status"
               aria-live="polite"
-              className={`mt-2 text-xs rounded-lg px-2.5 py-2 border ${
+              className={`mt-2 text-xs rounded-md px-2.5 py-2 border ${
                 ok
-                  ? 'text-green-700 bg-green-50 border-green-200'
-                  : 'text-red-700 bg-red-50 border-red-200'
+                  ? 'text-success-700 bg-success-50 border-success-100'
+                  : 'text-fg-error bg-surface border-border-error'
               }`}
             >
               {ok ? '' : ''}
@@ -207,7 +207,7 @@ function EmailVerificatieBanner({ email }) {
           <button
             onClick={stuurOpnieuw}
             disabled={laden}
-            className="mt-3 inline-flex items-center gap-1 bg-amber-600 hover:bg-amber-700 disabled:bg-gray-300 text-white text-xs font-bold px-4 py-2 rounded-xl transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400"
+            className="mt-3 btn-inst text-xs px-4 py-2 disabled:opacity-50"
           >
             {laden ? `${t('laden')}` : `${t('email_banner_resend_knop')}`}
           </button>
@@ -238,16 +238,16 @@ function RecurringBadge() {
     <button
       type="button"
       onClick={() => navigate('/app/recurring')}
-      className="w-full bg-white/80 backdrop-blur-lg border border-white/70 rounded-2xl p-4 text-left shadow-sm hover:shadow-md transition active:scale-[0.99] flex items-center gap-3 animate-fade-up"
+      className="w-full bg-surface border border-border rounded-md p-4 text-left shadow-soft hover:shadow-soft-md transition flex items-center gap-3 animate-fade-up"
     >
-      <span className="flex-shrink-0 w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center" aria-hidden="true">
-        <Refresh className="w-5 h-5 text-indigo-600" />
+      <span className="flex-shrink-0 w-11 h-11 rounded-md bg-brand-50 flex items-center justify-center" aria-hidden="true">
+        <Refresh className="w-5 h-5 text-brand-600" />
       </span>
       <div className="flex-1 min-w-0">
-        <div className="font-bold text-sm text-slate-900 leading-tight">
+        <div className="font-display font-medium text-sm text-ink-1 leading-tight">
           {t('dashboard_recurring_titel')}
         </div>
-        <div className="text-xs text-slate-500 mt-0.5">
+        <div className="text-xs text-gray-500 mt-0.5">
           {aantal == null
             ? t('dashboard_recurring_subtitel_laden')
             : aantal === 0
@@ -255,7 +255,7 @@ function RecurringBadge() {
               : t('dashboard_recurring_subtitel_n', { n: aantal })}
         </div>
       </div>
-      <span className="text-lg flex-shrink-0 text-slate-400" aria-hidden="true">→</span>
+      <span className="text-lg flex-shrink-0 text-gray-400" aria-hidden="true">→</span>
     </button>
   );
 }
@@ -387,19 +387,19 @@ export default function Dashboard({ gebruiker }) {
 
       {/* 2. Welkomst-deal — eerste transactie gratis */}
       {gebruiker?.gratisEersteTx && kycGoedgekeurd && (
-        <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 rounded-2xl p-4 text-white shadow-lg animate-fade-up">
+        <div className="bg-surface border border-accent-400 rounded-md p-4 shadow-soft animate-fade-up">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white/25 flex items-center justify-center flex-shrink-0" aria-hidden="true">
-              <Gift className="w-7 h-7 text-white" />
+            <div className="w-12 h-12 rounded-md bg-accent-400/15 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+              <Gift className="w-7 h-7 text-accent-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-sm">Welkomst-deal: 1e transactie GRATIS!</div>
-              <div className="text-xs text-white/90 mt-0.5">Geen servicekosten op je eerste overboeking (tot €800)</div>
+              <div className="font-display font-medium text-sm text-ink-1">Welkomst-deal: 1e transactie GRATIS!</div>
+              <div className="text-xs text-gray-600 mt-0.5">Geen servicekosten op je eerste overboeking (tot €800)</div>
             </div>
           </div>
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
-            className="w-full mt-3 bg-white/20 hover:bg-white/30 text-white font-bold py-2.5 rounded-xl text-sm active:scale-95"
+            className="btn-inst w-full mt-3 py-2.5 text-sm"
           >
             Verstuur je eerste gratis transactie →
           </button>
@@ -410,15 +410,15 @@ export default function Dashboard({ gebruiker }) {
       {!kycGoedgekeurd && (
         <div
           role="alert"
-          className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3 items-start animate-fade-up"
+          className="bg-surface border border-accent-400 rounded-md shadow-soft p-4 flex gap-3 items-start animate-fade-up"
         >
-          <IdCard className="w-6 h-6 text-amber-700 flex-shrink-0" aria-hidden="true" />
+          <IdCard className="w-6 h-6 text-accent-600 flex-shrink-0" aria-hidden="true" />
           <div className="flex-1">
-            <div className="font-bold text-amber-800 text-sm">{t('dashboard_kyc_vereist')}</div>
-            <div className="text-amber-700 text-xs mt-1">{t('dashboard_kyc_uitleg')}</div>
+            <div className="font-display font-medium text-ink-1 text-sm">{t('dashboard_kyc_vereist')}</div>
+            <div className="text-gray-600 text-xs mt-1">{t('dashboard_kyc_uitleg')}</div>
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'kyc' }))}
-              className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-amber-900 hover:underline focus:outline-none focus:underline"
+              className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:underline underline-offset-4 focus:outline-none focus:underline"
             >
               {t('kyc_titel')} →
             </button>
@@ -475,7 +475,7 @@ export default function Dashboard({ gebruiker }) {
 
       {/* 11. Beveiliging — 2FA + Notificaties */}
       <div className="space-y-3 pt-2">
-        <h3 className="font-bold text-slate-700 text-sm px-1 flex items-center gap-2">
+        <h3 className="font-display font-medium text-ink-1 text-sm px-1 flex items-center gap-2">
           <Lock className="w-4 h-4" aria-hidden="true" /> Beveiliging
         </h3>
         <TweeFactorInstellingen
@@ -490,14 +490,14 @@ export default function Dashboard({ gebruiker }) {
       <div className="grid grid-cols-3 gap-2 text-center pt-1">
         {[
           { Icoon: Zap,      tekst: '< 5 min aankomst',         kleur: 'text-brand-600' },
-          { Icoon: Lock,     tekst: 'Veilig via licentiepartner', kleur: 'text-green-600' },
-          { Icoon: Banknote, tekst: '2,0–2,5% alles-in',         kleur: 'text-amber-600' },
+          { Icoon: Lock,     tekst: 'Veilig via licentiepartner', kleur: 'text-success-600' },
+          { Icoon: Banknote, tekst: '2,0–2,5% alles-in',         kleur: 'text-accent-600' },
         ].map(({ Icoon, tekst, kleur }) => (
-          <div key={tekst} className="bg-white/70 backdrop-blur-md rounded-xl border border-white/60 p-3">
+          <div key={tekst} className="bg-surface rounded-md border border-border shadow-soft p-3">
             <div className={`flex justify-center mb-1 ${kleur}`} aria-hidden="true">
               <Icoon className="w-5 h-5" />
             </div>
-            <div className="text-xs text-slate-500 font-medium">{tekst}</div>
+            <div className="text-xs text-gray-500 font-medium">{tekst}</div>
           </div>
         ))}
       </div>

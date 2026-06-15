@@ -144,48 +144,48 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white/95 backdrop-blur-lg border border-white/30 rounded-2xl w-full max-w-md shadow-xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-lg z-10">
-          <h3 className="font-bold text-gray-800">
+      <div className="bg-surface border border-border rounded-md w-full max-w-md shadow-soft-xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-4 border-b border-border sticky top-0 bg-surface z-10">
+          <h3 className="font-display font-medium text-ink-1">
             {initial ? t('benef_bewerk_titel') : t('benef_toevoeg_titel')}
           </h3>
-          <button onClick={onAnnuleer} className="text-gray-400 hover:text-gray-700" aria-label={t('sluiten')}><X className="w-5 h-5" /></button>
+          <button onClick={onAnnuleer} className="text-ink-3 hover:text-ink-1" aria-label={t('sluiten')}><X className="w-5 h-5" /></button>
         </div>
 
         <div className="p-4 space-y-3">
           {/* Naam */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">{t('benef_naam')} *</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">{t('benef_naam')} *</label>
             <input
               value={form.naam}
               onChange={e => update('naam', e.target.value)}
               placeholder="Mehmet Yilmaz"
               maxLength={100}
-              className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
             />
           </div>
 
           {/* Bijnaam */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">{t('benef_bijnaam')}</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">{t('benef_bijnaam')}</label>
             <input
               value={form.bijnaam}
               onChange={e => update('bijnaam', e.target.value)}
               placeholder={t('benef_bijnaam_placeholder')}
               maxLength={40}
-              className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
             />
           </div>
 
           {/* Land */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">{t('benef_land')}</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">{t('benef_land')}</label>
             <div className="flex items-center gap-2">
               <Vlag land={form.land} size={24} />
               <select
                 value={form.land}
                 onChange={e => kiesLand(e.target.value)}
-                className="flex-1 border-2 border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-blue-500"
+                className="flex-1 border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               >
                 {LANDEN.map(l => (
                   <option key={l.code} value={l.code}>{l.naam} ({l.code})</option>
@@ -196,13 +196,13 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
 
           {/* Valuta */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">{t('benef_valuta')}</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">{t('benef_valuta')}</label>
             <div className="flex items-center gap-2">
               <Vlag land={valutaInfo.landCode} size={24} />
               <select
                 value={form.valuta}
                 onChange={e => update('valuta', e.target.value)}
-                className="flex-1 border-2 border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-blue-500"
+                className="flex-1 border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               >
                 {VALUTAS.map(v => (
                   <option key={v.code} value={v.code}>{v.naam} ({v.code})</option>
@@ -213,12 +213,12 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
 
           {/* Bank */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">{t('benef_bank')}</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">{t('benef_bank')}</label>
             {beschikbareBanken.length > 0 ? (
               <select
                 value={form.bank}
                 onChange={e => update('bank', e.target.value)}
-                className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-blue-500"
+                className="w-full border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               >
                 <option value="">— {t('benef_bank_kies')} —</option>
                 {beschikbareBanken.map(b => (
@@ -231,49 +231,49 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
                 onChange={e => update('bank', e.target.value)}
                 placeholder={t('benef_bank_placeholder')}
                 maxLength={80}
-                className="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-blue-500"
+                className="w-full border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             )}
           </div>
 
           {/* IBAN */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">{t('benef_iban')} *</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">{t('benef_iban')} *</label>
             <input
               value={form.iban}
               onChange={e => update('iban', e.target.value.toUpperCase().replace(/\s/g, ''))}
               placeholder="TR330006100519786457841326"
-              className={`w-full border-2 rounded-xl px-3 py-2 outline-none font-mono text-sm transition ${
-                !form.iban ? 'border-gray-200' :
-                ibanCheck?.geldig ? 'border-green-400 bg-green-50' : 'border-red-300 bg-red-50'
+              className={`w-full border rounded-md px-3 py-2 outline-none font-mono text-sm transition ${
+                !form.iban ? 'border-border' :
+                ibanCheck?.geldig ? 'border-success-500 bg-success-50' : 'border-red-300 bg-red-50'
               }`}
             />
             {form.iban && ibanCheck && (
-              <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
+              <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-success-600' : 'text-red-500'}`}>
                 {ibanCheck.geldig ? `${t('benef_iban_geldig')}` : `${ibanCheck.fout}`}
               </p>
             )}
           </div>
 
           {(fout || lokaleFout) && (
-            <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
+            <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-md px-3 py-2 text-sm">
               {fout || lokaleFout}
             </div>
           )}
         </div>
 
-        <div className="flex gap-2 p-4 border-t border-gray-100 sticky bottom-0 bg-white/95 backdrop-blur-lg">
+        <div className="flex gap-2 p-4 border-t border-border sticky bottom-0 bg-surface">
           <button
             onClick={onAnnuleer}
             disabled={bezig}
-            className="flex-1 border border-gray-200 text-gray-600 font-semibold py-2 rounded-xl hover:bg-gray-50 transition"
+            className="flex-1 border border-border text-ink-2 font-semibold py-2 rounded-md hover:bg-surface-2 transition"
           >
             {t('annuleren')}
           </button>
           <button
             onClick={indien}
             disabled={bezig}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-2 rounded-xl transition"
+            className="flex-1 btn-inst py-3 disabled:opacity-60"
           >
             {bezig ? `${t('laden')}` : `${t('opslaan')}`}
           </button>

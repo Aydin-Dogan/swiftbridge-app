@@ -33,25 +33,25 @@ function BevestigDelete({ beneficiary, bezig, onAnnuleer, onBevestig }) {
   if (!beneficiary) return null;
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white/95 backdrop-blur-lg border border-white/30 rounded-2xl w-full max-w-sm p-5 shadow-xl">
+      <div className="bg-surface border border-border rounded-md w-full max-w-sm p-5 shadow-soft-xl">
         <div className="text-center space-y-3">
           <div className="flex justify-center"><Trash className="w-10 h-10 text-rose-500" /></div>
-          <h3 className="font-bold text-gray-800">{t('benef_verwijder_titel')}</h3>
-          <p className="text-sm text-gray-600">
+          <h3 className="font-display font-medium text-ink-1">{t('benef_verwijder_titel')}</h3>
+          <p className="text-sm text-ink-2">
             {t('benef_verwijder_vraag', { naam: beneficiary.naam })}
           </p>
           <div className="flex gap-2 pt-2">
             <button
               onClick={onAnnuleer}
               disabled={bezig}
-              className="flex-1 border border-gray-200 text-gray-600 font-semibold py-2 rounded-xl hover:bg-gray-50"
+              className="flex-1 border border-border text-ink-2 font-semibold py-2 rounded-md hover:bg-surface-2"
             >
               {t('annuleren')}
             </button>
             <button
               onClick={onBevestig}
               disabled={bezig}
-              className="flex-1 bg-rose-600 hover:bg-rose-700 disabled:bg-gray-300 text-white font-bold py-2 rounded-xl"
+              className="flex-1 bg-rose-600 hover:bg-rose-700 disabled:opacity-60 text-white font-semibold py-2 rounded-md"
             >
               {bezig ? `${t('laden')}` : (
                 <span className="inline-flex items-center justify-center gap-1.5"><Trash className="w-4 h-4" /> {t('benef_verwijder')}</span>
@@ -163,12 +163,12 @@ export default function BeneficiaryLijst({ token }) {
     <div className="space-y-3">
       {/* Header met add knop */}
       <div className="flex items-center justify-between gap-2">
-        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+        <h4 className="text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em]">
           {laden ? '...' : `${lijst.length} ${lijst.length === 1 ? t('benef_eenheid') : t('benef_meervoud')}`}
         </h4>
         <button
           onClick={() => { setEditTarget(null); setFormFout(''); setFormOpen(true); }}
-          className="text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-full transition"
+          className="text-xs font-semibold bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-full transition"
         >
           + {t('benef_toevoegen')}
         </button>
@@ -178,12 +178,12 @@ export default function BeneficiaryLijst({ token }) {
       {laden && (
         <div className="space-y-2">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-4 animate-pulse">
+            <div key={i} className="bg-surface border border-border rounded-md p-4 animate-pulse">
               <div className="flex gap-3">
-                <div className="w-12 h-12 rounded-full bg-gray-200" />
+                <div className="w-12 h-12 rounded-full bg-surface-2" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-3 bg-gray-200 rounded w-1/2" />
-                  <div className="h-3 bg-gray-100 rounded w-3/4" />
+                  <div className="h-3 bg-surface-2 rounded w-1/2" />
+                  <div className="h-3 bg-surface-2 rounded w-3/4" />
                 </div>
               </div>
             </div>
@@ -193,20 +193,20 @@ export default function BeneficiaryLijst({ token }) {
 
       {/* Error */}
       {!laden && fout && (
-        <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm flex items-center justify-between gap-2">
+        <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-md px-3 py-2 text-sm flex items-center justify-between gap-2">
           <span>{fout}</span>
-          <button onClick={laad} className="text-xs underline whitespace-nowrap inline-flex items-center gap-1"><Refresh className="w-3 h-3" /> {t('vernieuwen')}</button>
+          <button onClick={laad} className="text-xs underline underline-offset-4 whitespace-nowrap inline-flex items-center gap-1"><Refresh className="w-3 h-3" /> {t('vernieuwen')}</button>
         </div>
       )}
 
       {/* Empty state */}
       {!laden && !fout && lijst.length === 0 && (
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 text-center space-y-3">
-          <div className="flex justify-center"><Users className="w-10 h-10 text-gray-400" /></div>
-          <p className="text-sm text-gray-600">{t('benef_leeg_uitleg')}</p>
+        <div className="bg-surface border border-border rounded-md p-6 text-center space-y-3 shadow-soft">
+          <div className="flex justify-center"><Users className="w-10 h-10 text-ink-3" /></div>
+          <p className="text-sm text-ink-2">{t('benef_leeg_uitleg')}</p>
           <button
             onClick={() => { setEditTarget(null); setFormFout(''); setFormOpen(true); }}
-            className="btn-primary text-sm px-4 py-2"
+            className="btn-inst"
           >
             + {t('benef_toevoeg_eerste')}
           </button>

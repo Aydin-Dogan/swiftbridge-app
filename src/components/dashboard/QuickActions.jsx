@@ -48,38 +48,31 @@ export default function QuickActions() {
         <button
           key={a.titel}
           onClick={() => navigeer(a.tab)}
-          className={`relative overflow-hidden rounded-2xl p-4 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 min-h-[80px] animate-fade-up ${
+          className={`relative overflow-hidden rounded-md p-4 text-left transition-all duration-200 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 min-h-[80px] animate-fade-up ${
             a.primary
-              ? 'bg-gradient-to-br from-blue-600 via-blue-600 to-indigo-700 text-white shadow-lg hover:shadow-xl focus:ring-blue-400'
-              : 'bg-white/80 backdrop-blur-lg border border-white/70 text-slate-800 shadow-sm hover:shadow-md focus:ring-blue-300'
+              ? 'bg-brand-cta text-white shadow-soft-md hover:shadow-soft-lg focus:ring-brand-400'
+              : 'bg-surface border border-border text-ink-1 shadow-soft hover:shadow-soft-md focus:ring-brand-200'
           }`}
           style={{ animationDelay: `${i * 70}ms` }}
         >
-          {a.primary && (
-            <div
-              className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-30 pointer-events-none"
-              style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%)' }}
-              aria-hidden="true"
-            />
-          )}
           <div className="relative flex items-center gap-3">
             <span
-              className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center ${
-                a.primary ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'
+              className={`flex-shrink-0 w-11 h-11 rounded-md flex items-center justify-center ${
+                a.primary ? 'bg-white/20 text-white' : 'bg-brand-50 text-brand-600'
               }`}
               aria-hidden="true"
             >
               <a.Icoon className="w-5 h-5" />
             </span>
             <div className="min-w-0 flex-1">
-              <div className={`font-bold text-sm leading-tight ${a.primary ? '' : 'text-slate-900'}`}>
+              <div className={`font-display font-medium text-sm leading-tight ${a.primary ? '' : 'text-ink-1'}`}>
                 {a.titel}
               </div>
-              <div className={`text-xs mt-0.5 ${a.primary ? 'text-blue-100' : 'text-slate-500'}`}>
+              <div className={`text-xs mt-0.5 ${a.primary ? 'text-brand-100' : 'text-gray-500'}`}>
                 {a.sub}
               </div>
             </div>
-            <span className={`text-lg flex-shrink-0 ${a.primary ? 'text-white/80' : 'text-slate-400'}`} aria-hidden="true">
+            <span className={`text-lg flex-shrink-0 ${a.primary ? 'text-white/80' : 'text-gray-400'}`} aria-hidden="true">
               →
             </span>
           </div>

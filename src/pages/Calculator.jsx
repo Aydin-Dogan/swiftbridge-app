@@ -119,25 +119,25 @@ export default function Calculator() {
   const tierLabels = ['€10-200', '€200-500', '€500-1.000', '€1.000-2.500', '€2.500+'];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-2">
       {/* Lichte sticky header met taal + back */}
-      <nav className="bg-white border-b border-gray-200 sticky top-0 z-40 safe-top">
+      <nav className="bg-surface border-b border-border sticky top-0 z-40 safe-top">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-gray-700 hover:text-brand-600 transition">
+          <Link to="/" className="flex items-center gap-2 text-ink-2 hover:text-brand-600 transition">
             <Zap className="w-5 h-5 text-brand-600" />
-            <span className="text-lg font-bold text-gray-900 tracking-tight">SwiftBridge</span>
+            <span className="font-display text-lg font-medium text-ink-1 tracking-tight">SwiftBridge</span>
           </Link>
           <div className="flex items-center gap-2">
             <TaalKiezer />
             <button
               onClick={() => navigate('/login')}
-              className="hidden sm:inline-flex text-sm font-semibold text-brand-600 hover:text-brand-700 px-3 py-2 transition"
+              className="hidden sm:inline-flex text-sm font-semibold text-brand-700 hover:underline underline-offset-4 px-3 py-2 transition"
             >
               {t('inloggen')}
             </button>
             <button
               onClick={() => navigate(`/login?tab=register&bedrag=${bedragNum}&valuta=${valuta}&methode=${methode}`)}
-              className="btn-primary text-sm"
+              className="btn-inst"
             >
               {t('registreren')}
             </button>
@@ -148,10 +148,10 @@ export default function Calculator() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Pagina header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
+          <h1 className="font-display text-3xl sm:text-4xl font-medium text-ink-1 tracking-tight mb-3">
             {t('calc_titel')}
           </h1>
-          <p className="text-gray-600 max-w-xl mx-auto">
+          <p className="text-ink-2 max-w-xl mx-auto">
             {t('calc_subtitel')}
           </p>
         </div>
@@ -160,13 +160,13 @@ export default function Calculator() {
           {/* Linker kolom — calculator-inputs */}
           <div className="lg:col-span-2 space-y-5">
             {/* Bedrag */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 shadow-soft-sm">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="bg-surface rounded-md border border-border p-5 sm:p-6 shadow-soft">
+              <label className="block text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em] mb-3">
                 {t('calc_bedrag_label')}
               </label>
 
-              <div className="flex items-center border border-gray-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-100 rounded-xl px-4 py-3 mb-3">
-                <span className="text-2xl font-semibold text-gray-400 mr-2">€</span>
+              <div className="flex items-center border border-border focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-100 rounded-md px-4 py-3 mb-3">
+                <span className="text-2xl font-semibold text-ink-3 mr-2">€</span>
                 <input
                   type="number"
                   inputMode="decimal"
@@ -174,7 +174,7 @@ export default function Calculator() {
                   step="10"
                   value={bedrag}
                   onChange={e => setBedragSafe(e.target.value)}
-                  className="flex-1 text-3xl font-bold text-gray-900 outline-none bg-transparent"
+                  className="flex-1 font-display text-3xl font-medium text-ink-1 tabular-nums outline-none bg-transparent"
                   aria-label={t('calc_bedrag_label')}
                 />
               </div>
@@ -186,10 +186,10 @@ export default function Calculator() {
                     key={b}
                     type="button"
                     onClick={() => setBedrag(b)}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors active:scale-95 ${
+                    className={`px-3 py-1.5 rounded-md text-sm font-semibold tabular-nums transition-colors active:scale-95 ${
                       bedragNum === b
                         ? 'bg-brand-600 text-white'
-                        : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200/70'
+                        : 'bg-surface-2 text-ink-2 hover:bg-surface-3 border border-border'
                     }`}
                   >
                     €{b.toLocaleString('nl-NL')}
@@ -199,8 +199,8 @@ export default function Calculator() {
             </div>
 
             {/* Valuta + land — wereldwijde searchable selector */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 shadow-soft-sm">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="bg-surface rounded-md border border-border p-5 sm:p-6 shadow-soft">
+              <label className="block text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em] mb-3">
                 {t('calc_valuta_label')}
               </label>
               <CurrencySelector
@@ -210,7 +210,7 @@ export default function Calculator() {
                 onToggleFavoriet={toggleFavoriet}
               />
               {valutaInfo.status === 'binnenkort' && (
-                <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-3 text-[11px] text-amber-800 leading-snug">
+                <div className="flex items-start gap-2 bg-accent-400/10 border border-accent-400/30 rounded-md px-3 py-2.5 mt-3 text-[11px] text-accent-600 leading-snug">
                   <Bell className="w-4 h-4 flex-shrink-0" />
                   <span>{t('landing_widget_binnenkort', { land: valutaInfo.land })}</span>
                 </div>
@@ -218,8 +218,8 @@ export default function Calculator() {
             </div>
 
             {/* Betaalmethode */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 shadow-soft-sm">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="bg-surface rounded-md border border-border p-5 sm:p-6 shadow-soft">
+              <label className="block text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em] mb-3">
                 {t('calc_methode_label')}
               </label>
               <div className="space-y-2">
@@ -230,18 +230,18 @@ export default function Calculator() {
                       key={m.id}
                       type="button"
                       onClick={() => setMethode(m.id)}
-                      className={`w-full flex items-center gap-3 p-3.5 rounded-xl text-left transition-colors active:scale-[0.99] ${
+                      className={`w-full flex items-center gap-3 p-3.5 rounded-md text-left transition-colors active:scale-[0.99] ${
                         selected
                           ? 'border-2 border-brand-500 bg-brand-50'
-                          : 'border border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                          : 'border border-border hover:border-border-strong hover:bg-surface-2'
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${selected ? 'bg-brand-600 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                      <div className={`w-10 h-10 rounded-md flex items-center justify-center ${selected ? 'bg-brand-600 text-white' : 'bg-surface-2 text-ink-2'}`}>
                         <m.Icon className="w-5 h-5" />
                       </div>
                       <div className="flex-1">
-                        <div className="font-semibold text-gray-900 text-sm">{m.label}</div>
-                        <div className="text-xs text-gray-500">{m.sub}</div>
+                        <div className="font-semibold text-ink-1 text-sm">{m.label}</div>
+                        <div className="text-xs text-ink-3">{m.sub}</div>
                       </div>
                       {selected && <CheckCircle className="w-5 h-5 text-brand-600" />}
                     </button>
@@ -253,14 +253,14 @@ export default function Calculator() {
 
           {/* Rechter kolom — sticky resultaat-kaart */}
           <div>
-            <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 shadow-soft-md sticky top-20">
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="bg-surface rounded-md border border-border p-5 sm:p-6 shadow-soft-md sticky top-20">
+              <div className="text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em] mb-3">
                 {t('calc_resultaat_label')}
               </div>
 
               {/* Ontvanger krijgt — met skeleton tijdens koers-fetch */}
-              <div className="bg-brand-50 border border-brand-100 rounded-xl px-4 py-4 mb-4">
-                <div className="text-xs text-gray-600 mb-1">{t('calc_ontvanger_krijgt')}</div>
+              <div className="bg-brand-50 border border-brand-100 rounded-md px-4 py-4 mb-4">
+                <div className="text-xs text-ink-2 mb-1">{t('calc_ontvanger_krijgt')}</div>
                 {liveKoersen === null ? (
                   <>
                     <div className="h-9 w-40 rounded-md animate-shimmer mb-1.5" aria-label="Bezig met laden" />
@@ -268,10 +268,10 @@ export default function Calculator() {
                   </>
                 ) : (
                   <>
-                    <div className="text-3xl font-bold text-brand-700">
+                    <div className="font-display text-3xl font-medium text-brand-700 tabular-nums">
                       {valutaInfo.symbool}{ontvangenFmt}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-ink-3 mt-1 tabular-nums">
                       1 € = {Number(huidigeKoers).toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}
                     </div>
                   </>
@@ -281,24 +281,24 @@ export default function Calculator() {
               {/* Breakdown */}
               <dl className="space-y-2 text-sm mb-5">
                 <div className="flex justify-between">
-                  <dt className="text-gray-600">{t('calc_jij_stuurt')}</dt>
-                  <dd className="font-semibold text-gray-900">€{bedragNum.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</dd>
+                  <dt className="text-ink-2">{t('calc_jij_stuurt')}</dt>
+                  <dd className="font-semibold text-ink-1 tabular-nums">€{bedragNum.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-gray-600">{t('calc_servicekosten')}</dt>
-                  <dd className="font-semibold text-gray-900">
+                  <dt className="text-ink-2">{t('calc_servicekosten')}</dt>
+                  <dd className="font-semibold text-ink-1 tabular-nums">
                     €{(kosten.klantBetaaltFee || 0).toFixed(2).replace('.', ',')}
-                    <span className="text-xs text-gray-500 ml-1">
+                    <span className="text-xs text-ink-3 ml-1">
                       ({String(kosten.zichtbarePct || 0).replace('.', ',')}%)
                     </span>
                   </dd>
                 </div>
-                <div className="flex justify-between pt-2 border-t border-gray-100">
-                  <dt className="text-gray-600 inline-flex items-center gap-1.5">
+                <div className="flex justify-between pt-2 border-t border-border">
+                  <dt className="text-ink-2 inline-flex items-center gap-1.5">
                     <Clock className="w-4 h-4" />
                     {t('calc_levertijd')}
                   </dt>
-                  <dd className="font-semibold text-gray-900">
+                  <dd className="font-semibold text-ink-1">
                     {methodeInfo.snelheid === 'express' ? '< 5 min' : '1-2 dagen'}
                   </dd>
                 </div>
@@ -307,7 +307,7 @@ export default function Calculator() {
               {/* CTA — pas hier naar registratie */}
               <button
                 onClick={() => navigate(`/login?tab=register&bedrag=${bedragNum}&valuta=${valuta}&methode=${methode}`)}
-                className="btn-primary w-full py-3.5 inline-flex items-center justify-center gap-2"
+                className="btn-inst w-full py-3.5 inline-flex items-center justify-center gap-2"
               >
                 {t('calc_cta_doorgaan')}
                 <ArrowRight className="w-4 h-4" />
@@ -319,7 +319,7 @@ export default function Calculator() {
               <ShareButton />
 
               {/* Trust signals onder CTA */}
-              <div className="mt-4 grid grid-cols-1 gap-2 text-xs text-gray-500">
+              <div className="mt-4 grid grid-cols-1 gap-2 text-xs text-ink-3">
                 <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-brand-600" /> {t('calc_trust_dnb')}</span>
                 <span className="inline-flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 text-success-600" /> {t('calc_trust_geen_verplichting')}</span>
               </div>
@@ -329,10 +329,10 @@ export default function Calculator() {
 
         {/* Vergelijking met andere methodes */}
         <div className="mt-10">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">{t('calc_vergelijk_titel')}</h2>
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft-sm">
+          <h2 className="font-display text-xl font-medium text-ink-1 mb-4">{t('calc_vergelijk_titel')}</h2>
+          <div className="bg-surface rounded-md border border-border overflow-hidden shadow-soft">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <thead className="bg-surface-2 text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em]">
                 <tr>
                   <th className="px-4 py-3 text-left">{t('calc_vergelijk_kol_methode')}</th>
                   <th className="px-4 py-3 text-right">{t('calc_vergelijk_kol_fee')}</th>
@@ -347,25 +347,25 @@ export default function Calculator() {
                   return (
                     <tr
                       key={v.id}
-                      className={`border-t border-gray-100 cursor-pointer transition-colors ${
-                        isSelected ? 'bg-brand-50' : 'hover:bg-gray-50'
+                      className={`border-t border-border cursor-pointer transition-colors ${
+                        isSelected ? 'bg-brand-50' : 'hover:bg-surface-2'
                       }`}
                       onClick={() => setMethode(v.id)}
                     >
-                      <td className="px-4 py-3 font-semibold text-gray-900 inline-flex items-center gap-2">
+                      <td className="px-4 py-3 font-semibold text-ink-1 inline-flex items-center gap-2">
                         <v.Icon className="w-4 h-4 text-brand-600" />
                         {v.label}
                       </td>
-                      <td className="px-4 py-3 text-right text-gray-700">
+                      <td className="px-4 py-3 text-right text-ink-2 tabular-nums">
                         €{(v.fee || 0).toFixed(2).replace('.', ',')}
                       </td>
-                      <td className="px-4 py-3 text-right text-gray-700">
+                      <td className="px-4 py-3 text-right text-ink-2 tabular-nums">
                         {String(v.zichtbarePct || 0).replace('.', ',')}%
                       </td>
-                      <td className="px-4 py-3 text-right font-semibold text-brand-700">
+                      <td className="px-4 py-3 text-right font-semibold text-brand-700 tabular-nums">
                         {valutaInfo.symbool}{(v.ontvangen || 0).toLocaleString(valutaInfo.locale, { minimumFractionDigits: valutaInfo.decimals, maximumFractionDigits: valutaInfo.decimals })}
                       </td>
-                      <td className="px-4 py-3 text-right text-gray-500 hidden sm:table-cell">
+                      <td className="px-4 py-3 text-right text-ink-3 hidden sm:table-cell">
                         {v.snelheid === 'express' ? '< 5 min' : '1-2 dgn'}
                       </td>
                     </tr>
@@ -378,10 +378,10 @@ export default function Calculator() {
 
         {/* Footer — minimal */}
         <div className="mt-12 text-center">
-          <p className="text-xs text-gray-500 mb-3">
+          <p className="text-xs text-ink-3 mb-3">
             {t('calc_footer_geen_account')}
           </p>
-          <Link to="/" className="text-sm font-semibold text-brand-600 hover:text-brand-700 inline-flex items-center gap-1">
+          <Link to="/" className="text-sm font-semibold text-brand-700 hover:underline underline-offset-4 inline-flex items-center gap-1">
             ← {t('calc_terug_naar_home')}
           </Link>
         </div>
@@ -449,7 +449,7 @@ function ShareButton() {
     <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2" aria-live="polite">
       <button
         onClick={deel}
-        className="text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
+        className="text-sm font-semibold text-ink-2 bg-surface-2 hover:bg-surface-3 rounded-md px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
       >
         {gekopieerd ? (
           <>
@@ -475,7 +475,7 @@ function ShareButton() {
       {/* WhatsApp directe deeplink — meest gebruikte share-kanaal in TR community */}
       <button
         onClick={deelWhatsApp}
-        className="text-sm font-semibold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-xl px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
+        className="text-sm font-semibold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-md px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
         aria-label={t('calc_share_whatsapp')}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -487,7 +487,7 @@ function ShareButton() {
       {/* Telegram (Verbetering RRR) — populair in RU/AZ community */}
       <button
         onClick={deelTelegram}
-        className="text-sm font-semibold text-white bg-[#0088cc] hover:bg-[#0077b3] rounded-xl px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
+        className="text-sm font-semibold text-white bg-[#0088cc] hover:bg-[#0077b3] rounded-md px-4 py-2.5 transition inline-flex items-center justify-center gap-2"
         aria-label={t('calc_share_telegram')}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

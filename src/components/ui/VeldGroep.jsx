@@ -61,7 +61,7 @@ const VeldGroep = forwardRef(function VeldGroep(
 
   const inputClasses =
     `w-full bg-surface text-ink-1 placeholder:text-ink-3 ` +
-    `border-2 rounded-xl px-3 py-2.5 text-sm outline-none transition ` +
+    `border rounded-md px-3 py-2.5 text-sm outline-none transition ` +
     `disabled:bg-surface-2 disabled:text-fg-disabled disabled:cursor-not-allowed ` +
     (heeftFout
       ? `border-border-error focus:border-fg-error focus:ring-2 focus:ring-fg-error/20`
@@ -71,7 +71,7 @@ const VeldGroep = forwardRef(function VeldGroep(
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={id} className="block text-xs font-semibold text-ink-2 mb-1">
+        <label htmlFor={id} className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-ink-2 mb-1">
           {label}
           {verplicht && <span className="text-fg-error ml-0.5" aria-hidden="true">*</span>}
         </label>

@@ -42,10 +42,10 @@ function shortId(id) {
 // ── Status badges ─────────────────────────────────────────────────────────────
 function KycBadge({ status }) {
   const map = {
-    goedgekeurd: 'bg-green-500/20 border-green-300/30 text-green-200',
-    afgekeurd: 'bg-red-500/20 border-red-300/30 text-red-200',
-    in_behandeling: 'bg-amber-500/20 border-amber-300/30 text-amber-200',
-    niet_ingediend: 'bg-white/10 border-white/20 text-white/60',
+    goedgekeurd: 'bg-success-50 border-success-100 text-success-700',
+    afgekeurd: 'bg-red-100 border-red-200 text-red-700',
+    in_behandeling: 'bg-accent-400/15 border-accent-400/30 text-accent-600',
+    niet_ingediend: 'bg-surface-3 border-border text-ink-2',
   };
   const cls = map[status] || map.niet_ingediend;
   return (
@@ -57,9 +57,9 @@ function KycBadge({ status }) {
 
 function AccountBadge({ status }) {
   const map = {
-    actief: 'bg-green-500/20 border-green-300/30 text-green-200',
-    gesuspendeerd: 'bg-red-500/20 border-red-300/30 text-red-200',
-    verwijderd: 'bg-gray-500/20 border-gray-300/30 text-gray-200',
+    actief: 'bg-success-50 border-success-100 text-success-700',
+    gesuspendeerd: 'bg-red-100 border-red-200 text-red-700',
+    verwijderd: 'bg-surface-3 border-border text-ink-2',
   };
   const cls = map[status] || map.actief;
   return (
@@ -75,21 +75,21 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-white/20 rounded-2xl p-6 max-w-md w-full shadow-2xl">
-        <h3 className="text-lg font-bold text-white mb-2">{titel}</h3>
-        <p className="text-sm text-white/70 mb-4">{beschrijving}</p>
+      <div className="bg-surface border border-border rounded-md p-6 max-w-md w-full shadow-soft-xl">
+        <h3 className="font-display text-lg font-medium text-ink-1 mb-2">{titel}</h3>
+        <p className="text-sm text-ink-2 mb-4">{beschrijving}</p>
 
         {velden.map((v) => (
           <div key={v.naam} className="mb-3">
-            <label className="block text-xs font-semibold text-white/80 mb-1">{v.label}</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">{v.label}</label>
             {v.type === 'select' ? (
               <select
                 value={values[v.naam] || v.default || ''}
                 onChange={(e) => setValues({ ...values, [v.naam]: e.target.value })}
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
               >
                 {v.opties.map((o) => (
-                  <option key={o.id} value={o.id} className="text-gray-900">{o.label}</option>
+                  <option key={o.id} value={o.id}>{o.label}</option>
                 ))}
               </select>
             ) : (
@@ -98,7 +98,7 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
                 value={values[v.naam] || ''}
                 placeholder={v.placeholder || ''}
                 onChange={(e) => setValues({ ...values, [v.naam]: e.target.value })}
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
               />
             )}
           </div>
@@ -108,7 +108,7 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
           <button
             onClick={onAnnuleer}
             disabled={bezig}
-            className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white hover:bg-white/20 transition disabled:opacity-40"
+            className="px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 transition disabled:opacity-40"
           >
             Annuleer
           </button>
@@ -121,7 +121,7 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
               onBevestig(final);
             }}
             disabled={bezig}
-            className={`px-4 py-2 rounded-xl text-sm text-white font-semibold transition disabled:opacity-40 ${knopKleur}`}
+            className={`px-4 py-2 rounded-md text-sm text-white font-semibold transition disabled:opacity-40 ${knopKleur}`}
           >
             {bezig ? 'Bezig…' : knopLabel}
           </button>
@@ -213,31 +213,31 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
   return (
     <>
       <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-slate-900 border-l border-white/10 shadow-2xl overflow-y-auto">
-        <div className="sticky top-0 bg-slate-900/95 backdrop-blur-lg border-b border-white/10 px-5 py-4 flex items-center justify-between">
+      <div className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-surface border-l border-border shadow-soft-xl overflow-y-auto">
+        <div className="sticky top-0 bg-surface/95 backdrop-blur-lg border-b border-border px-5 py-4 flex items-center justify-between">
           <div>
-            <div className="text-xs text-white/50">User detail</div>
-            <div className="font-bold text-white">{u?.naam || 'Laden…'}</div>
+            <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500">User detail</div>
+            <div className="font-display font-medium text-ink-1">{u?.naam || 'Laden…'}</div>
           </div>
-          <button onClick={onClose} className="text-white/70 hover:text-white"><X className="w-6 h-6" /></button>
+          <button onClick={onClose} className="text-gray-500 hover:text-ink-1"><X className="w-6 h-6" /></button>
         </div>
 
-        {laden && <div className="p-8 text-center text-white/60">Laden…</div>}
-        {fout && <div className="m-5 bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>}
+        {laden && <div className="p-8 text-center text-ink-2">Laden…</div>}
+        {fout && <div className="m-5 bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>}
 
         {!laden && !fout && u && (
           <>
             {actieMelding && (
-              <div className={`m-5 rounded-2xl p-3 text-sm border ${
+              <div className={`m-5 rounded-md p-3 text-sm border ${
                 actieMelding.soort === 'ok'
-                  ? 'bg-green-500/10 border-green-300/30 text-green-100'
-                  : 'bg-red-500/10 border-red-300/30 text-red-100'
+                  ? 'bg-success-50 border-success-100 text-success-700'
+                  : 'bg-red-50 border-red-200 text-red-700'
               }`}>
                 {actieMelding.tekst}
               </div>
             )}
 
-            <div className="px-5 pt-4 flex gap-1 overflow-x-auto border-b border-white/10">
+            <div className="px-5 pt-4 flex gap-1 overflow-x-auto border-b border-border">
               {[
                 { id: 'profiel', label: 'Profiel', icoon: User },
                 { id: 'transacties',label: 'Transacties', icoon: Banknote },
@@ -248,21 +248,18 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                 <button
                   key={tt.id}
                   onClick={() => setTab(tt.id)}
-                  className={`relative flex items-center gap-2 px-3 py-2 text-sm font-semibold whitespace-nowrap transition rounded-t-xl ${
-                    tab === tt.id ? 'text-white bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'
+                  className={`relative flex items-center gap-2 px-3 py-2 text-[0.7rem] font-medium uppercase tracking-[0.16em] whitespace-nowrap transition border-b-2 -mb-px ${
+                    tab === tt.id ? 'text-brand-700 border-brand-500' : 'text-gray-500 border-transparent hover:text-ink-1'
                   }`}
                 >
                   {tt.icoon && <tt.icoon className="w-4 h-4" />}<span>{tt.label}</span>
-                  {tab === tt.id && (
-                    <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 rounded-full" />
-                  )}
                 </button>
               ))}
             </div>
 
             <div className="p-5 space-y-4">
               {tab === 'profiel' && (
-                <div className="space-y-3 text-sm text-white/90">
+                <div className="space-y-3 text-sm text-ink-1">
                   <div className="grid grid-cols-2 gap-3">
                     <Veld label="Naam" waarde={u.naam} />
                     <Veld label="Email" waarde={u.email} mono />
@@ -278,18 +275,18 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     <Veld label="Push subs" waarde={String(data.pushSubscriptions || 0)} />
                   </div>
 
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <div className="text-xs font-semibold text-white/60 mb-2">Adres</div>
-                    <div className="text-sm text-white/80">
+                  <div className="bg-surface-3 border border-border rounded-md p-3">
+                    <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-2">Adres</div>
+                    <div className="text-sm text-ink-2">
                       {[u.adres?.straat, u.adres?.huisnummer].filter(Boolean).join(' ') || '—'}<br />
                       {[u.adres?.postcode, u.adres?.stad].filter(Boolean).join(' ') || '—'}<br />
                       {u.adres?.land || '—'}
                     </div>
                   </div>
 
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <div className="text-xs font-semibold text-white/60 mb-2">iDIN</div>
-                    <div className="grid grid-cols-2 gap-2 text-xs text-white/80">
+                  <div className="bg-surface-3 border border-border rounded-md p-3">
+                    <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-2">iDIN</div>
+                    <div className="grid grid-cols-2 gap-2 text-xs text-ink-2">
                       <div>Status: <span className="font-mono">{u.idin?.status || '—'}</span></div>
                       <div>Bank: <span className="font-mono">{u.idin?.bank || '—'}</span></div>
                       <div>Geverifieerd: {fmtDatum(u.idin?.geverifieerdOp)}</div>
@@ -297,19 +294,19 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     </div>
                   </div>
 
-                  <div className="text-xs text-white/40 font-mono">ID: {u.id}</div>
+                  <div className="text-xs text-gray-500 font-mono">ID: {u.id}</div>
                 </div>
               )}
 
               {tab === 'transacties' && (
                 <div>
                   {data.transacties.length === 0 ? (
-                    <div className="text-center text-white/50 py-8">Geen transacties</div>
+                    <div className="text-center text-ink-2 py-8">Geen transacties</div>
                   ) : (
-                    <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+                    <div className="bg-surface border border-border rounded-md overflow-hidden">
                       <table className="w-full text-xs">
-                        <thead className="bg-white/10">
-                          <tr className="text-left text-white/80">
+                        <thead className="bg-surface-3 border-b border-border">
+                          <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500">
                             <th className="px-3 py-2">Ref</th>
                             <th className="px-3 py-2 text-right">EUR</th>
                             <th className="px-3 py-2 text-right">TRY</th>
@@ -317,16 +314,16 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                             <th className="px-3 py-2">Datum</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/10">
+                        <tbody className="divide-y divide-border">
                           {data.transacties.map((tr) => (
-                            <tr key={tr.id} className="hover:bg-white/5">
-                              <td className="px-3 py-2 font-mono text-white/80">{tr.referentieNr || shortId(tr.id)}</td>
-                              <td className="px-3 py-2 text-right text-white">{fmtEur(tr.eurBedrag)}</td>
-                              <td className="px-3 py-2 text-right text-white/70">{new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(tr.tryBedrag)}</td>
+                            <tr key={tr.id} className="hover:bg-surface-3">
+                              <td className="px-3 py-2 font-mono text-ink-2">{tr.referentieNr || shortId(tr.id)}</td>
+                              <td className="px-3 py-2 text-right text-ink-1 tabular-nums">{fmtEur(tr.eurBedrag)}</td>
+                              <td className="px-3 py-2 text-right text-ink-2 tabular-nums">{new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(tr.tryBedrag)}</td>
                               <td className="px-3 py-2">
-                                <span className="inline-block bg-white/10 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full border border-white/20">{tr.status}</span>
+                                <span className="inline-block bg-surface-3 text-ink-2 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-border">{tr.status}</span>
                               </td>
-                              <td className="px-3 py-2 text-white/60">{fmtDatum(tr.aangemaaktOp)}</td>
+                              <td className="px-3 py-2 text-ink-2">{fmtDatum(tr.aangemaaktOp)}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -339,19 +336,19 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
               {tab === 'kyc' && (
                 <div>
                   {data.kycRecords.length === 0 ? (
-                    <div className="text-center text-white/50 py-8">Geen KYC records</div>
+                    <div className="text-center text-ink-2 py-8">Geen KYC records</div>
                   ) : (
                     <div className="space-y-3">
                       {data.kycRecords.map((k) => (
-                        <div key={k.id} className="bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white/90">
+                        <div key={k.id} className="bg-surface-3 border border-border rounded-md p-3 text-sm text-ink-1">
                           <div className="flex items-start justify-between gap-2">
                             <div>
                               <div className="font-semibold">{k.documentType} · <span className="font-mono text-xs">{k.documentNummer}</span></div>
-                              <div className="text-xs text-white/60 mt-0.5">Geboortedatum: {k.geboortedatum} · {k.nationaliteit}</div>
+                              <div className="text-xs text-ink-2 mt-0.5">Geboortedatum: {k.geboortedatum} · {k.nationaliteit}</div>
                             </div>
                             <KycBadge status={k.status} />
                           </div>
-                          <div className="text-xs text-white/50 mt-2">
+                          <div className="text-xs text-gray-500 mt-2">
                             Ingediend: {fmtDatum(k.ingediendOp)}
                             {k.beoordeeldOp && <> · Beoordeeld: {fmtDatum(k.beoordeeldOp)}</>}
                           </div>
@@ -365,18 +362,18 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
               {tab === 'audit' && (
                 <div>
                   {data.auditLogs.length === 0 ? (
-                    <div className="text-center text-white/50 py-8">Geen audit logs</div>
+                    <div className="text-center text-ink-2 py-8">Geen audit logs</div>
                   ) : (
                     <div className="space-y-2">
                       {data.auditLogs.map((l) => (
-                        <div key={l.id} className="bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-white/80">
+                        <div key={l.id} className="bg-surface-3 border border-border rounded-md p-3 text-xs text-ink-2">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="inline-block bg-white/10 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full border border-white/20">{l.actie}</span>
-                            <span className="text-white/50">{fmtDatum(l.aangemaaktOp)}</span>
+                            <span className="inline-block bg-surface text-ink-2 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-border">{l.actie}</span>
+                            <span className="text-gray-500">{fmtDatum(l.aangemaaktOp)}</span>
                           </div>
-                          {l.ipAdres && <div className="text-white/40 font-mono text-[10px] mt-1">IP: {l.ipAdres}</div>}
+                          {l.ipAdres && <div className="text-gray-500 font-mono text-[10px] mt-1">IP: {l.ipAdres}</div>}
                           {Object.keys(l.details || {}).length > 0 && (
-                            <pre className="text-[10px] text-white/60 mt-2 bg-black/30 rounded p-2 overflow-x-auto">
+                            <pre className="text-[10px] text-ink-2 mt-2 bg-surface rounded p-2 overflow-x-auto">
                               {JSON.stringify(l.details, null, 2)}
                             </pre>
                           )}
@@ -411,7 +408,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                       titel="Account heractiveren"
                       beschrijving="Hef de blokkade op. Gebruiker kan weer inloggen."
                       knop="Activeren"
-                      knopKleur="bg-green-600 hover:bg-green-700"
+                      knopKleur="bg-success-600 hover:bg-success-700"
                       onClick={() => setModal({ soort: 'activate' })}
                     />
                   )}
@@ -420,7 +417,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     titel="Wachtwoord reset forceren"
                     beschrijving="Stuur een 1-uur geldige reset link naar het e-mailadres van de gebruiker."
                     knop="Reset triggeren"
-                    knopKleur="bg-blue-600 hover:bg-blue-700"
+                    knopKleur="bg-brand-600 hover:bg-brand-700"
                     onClick={() => setModal({ soort: 'reset' })}
                   />
                 </div>
@@ -435,7 +432,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
           titel="KYC status wijzigen"
           beschrijving="Selecteer een nieuwe status. De gebruiker krijgt een notificatie e-mail."
           knopLabel="Bevestigen"
-          knopKleur="bg-amber-600 hover:bg-amber-700"
+          knopKleur="bg-accent-600 hover:bg-accent-500"
           velden={[
             {
               naam: 'status', label: 'Nieuwe status', type: 'select',
@@ -474,7 +471,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
           titel="Account heractiveren"
           beschrijving={`Account van ${u?.naam || u?.email} weer activeren?`}
           knopLabel="Ja, activeren"
-          knopKleur="bg-green-600 hover:bg-green-700"
+          knopKleur="bg-success-600 hover:bg-success-700"
           velden={[
             { naam: 'reden', label: 'Reden (optioneel)', placeholder: 'Bijv. probleem opgelost' },
           ]}
@@ -489,7 +486,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
           titel="Wachtwoord reset forceren"
           beschrijving={`Stuur een reset e-mail naar ${u?.email}? De gebruiker kan zijn wachtwoord wijzigen via de link (1 uur geldig).`}
           knopLabel="Ja, verstuur reset link"
-          knopKleur="bg-blue-600 hover:bg-blue-700"
+          knopKleur="bg-brand-600 hover:bg-brand-700"
           velden={[]}
           onBevestig={bevestigReset}
           onAnnuleer={() => setModal(null)}
@@ -503,25 +500,25 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
 function Veld({ label, waarde, mono }) {
   return (
     <div>
-      <div className="text-xs text-white/50">{label}</div>
-      <div className={`text-sm text-white ${mono ? 'font-mono' : ''}`}>{waarde}</div>
+      <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500">{label}</div>
+      <div className={`text-sm text-ink-1 ${mono ? 'font-mono' : ''}`}>{waarde}</div>
     </div>
   );
 }
 
-function ActieKaart({ icoon: Icoon, titel, beschrijving, knop, knopKleur = 'bg-amber-600 hover:bg-amber-700', onClick }) {
+function ActieKaart({ icoon: Icoon, titel, beschrijving, knop, knopKleur = 'bg-accent-600 hover:bg-accent-500', onClick }) {
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+    <div className="bg-surface-3 border border-border rounded-md p-4">
       <div className="flex items-start gap-3">
-        {Icoon && <Icoon className="w-7 h-7 text-white/70 flex-shrink-0" />}
+        {Icoon && <Icoon className="w-7 h-7 text-gray-500 flex-shrink-0" />}
         <div className="flex-1">
-          <div className="font-bold text-white">{titel}</div>
-          <div className="text-xs text-white/60 mt-1">{beschrijving}</div>
+          <div className="font-display font-medium text-ink-1">{titel}</div>
+          <div className="text-xs text-ink-2 mt-1">{beschrijving}</div>
         </div>
       </div>
       <button
         onClick={onClick}
-        className={`mt-3 ${knopKleur} text-white text-sm font-semibold px-4 py-2 rounded-xl transition`}
+        className={`mt-3 ${knopKleur} text-white text-sm font-semibold px-4 py-2 rounded-md transition`}
       >
         {knop}
       </button>
@@ -580,69 +577,69 @@ export default function UserManagement() {
             value={zoekterm}
             onChange={(e) => { setZoekterm(e.target.value); setOffset(0); }}
             placeholder="Zoek op email, naam of telefoon…"
-            className="w-full bg-white/10 border border-white/20 backdrop-blur-lg rounded-xl pl-10 pr-3 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-surface border border-border rounded-md pl-10 pr-3 py-2.5 text-sm text-ink-1 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
           />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"><Search className="w-4 h-4" /></span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><Search className="w-4 h-4" /></span>
         </div>
-        <div className="text-xs text-white/60">
+        <div className="text-xs text-ink-2 tabular-nums">
           {totaal} resultaten · pagina {pagina} / {aantalPaginas}
         </div>
         <div className="flex-1" />
         <button
           onClick={() => setOffset(Math.max(0, offset - limit))}
           disabled={offset === 0 || laden}
-          className="px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white disabled:opacity-40 hover:bg-white/20 transition"
+          className="px-3 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 disabled:opacity-40 hover:bg-surface-3 transition"
         >
           ← Vorige
         </button>
         <button
           onClick={() => setOffset(offset + limit)}
           disabled={offset + limit >= totaal || laden}
-          className="px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white disabled:opacity-40 hover:bg-white/20 transition"
+          className="px-3 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 disabled:opacity-40 hover:bg-surface-3 transition"
         >
           Volgende →
         </button>
       </div>
 
-      {fout && <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>}
+      {fout && <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>}
 
-      <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-md overflow-hidden shadow-soft">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/10">
-              <tr className="text-left text-white/80">
-                <th className="px-4 py-3 font-semibold">Email</th>
-                <th className="px-4 py-3 font-semibold">Naam</th>
-                <th className="px-4 py-3 font-semibold">Telefoon</th>
-                <th className="px-4 py-3 font-semibold">KYC</th>
-                <th className="px-4 py-3 font-semibold">Account</th>
-                <th className="px-4 py-3 font-semibold text-right">TX</th>
-                <th className="px-4 py-3 font-semibold">2FA</th>
-                <th className="px-4 py-3 font-semibold">Aangemeld</th>
-                <th className="px-4 py-3 font-semibold"></th>
+            <thead className="bg-surface-3 border-b border-border">
+              <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
+                <th className="px-4 py-3">Email</th>
+                <th className="px-4 py-3">Naam</th>
+                <th className="px-4 py-3">Telefoon</th>
+                <th className="px-4 py-3">KYC</th>
+                <th className="px-4 py-3">Account</th>
+                <th className="px-4 py-3 text-right">TX</th>
+                <th className="px-4 py-3">2FA</th>
+                <th className="px-4 py-3">Aangemeld</th>
+                <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10">
+            <tbody className="divide-y divide-border">
               {laden ? (
-                <tr><td colSpan={9} className="px-4 py-8 text-center text-white/60">Laden…</td></tr>
+                <tr><td colSpan={9} className="px-4 py-8 text-center text-ink-2">Laden…</td></tr>
               ) : users.length === 0 ? (
-                <tr><td colSpan={9} className="px-4 py-8 text-center text-white/60">Geen gebruikers gevonden</td></tr>
+                <tr><td colSpan={9} className="px-4 py-8 text-center text-ink-2">Geen gebruikers gevonden</td></tr>
               ) : users.map((u) => (
                 <tr
                   key={u.id}
                   onClick={() => setActieveUser(u.id)}
-                  className="hover:bg-white/5 transition cursor-pointer"
+                  className="hover:bg-surface-3 transition cursor-pointer"
                 >
-                  <td className="px-4 py-3 text-xs text-white/90 font-mono">{u.email}</td>
-                  <td className="px-4 py-3 text-white/90">{u.naam}</td>
-                  <td className="px-4 py-3 text-xs text-white/70 font-mono">{u.telefoon || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-ink-1 font-mono">{u.email}</td>
+                  <td className="px-4 py-3 text-ink-1">{u.naam}</td>
+                  <td className="px-4 py-3 text-xs text-ink-2 font-mono">{u.telefoon || '—'}</td>
                   <td className="px-4 py-3"><KycBadge status={u.kycStatus} /></td>
                   <td className="px-4 py-3"><AccountBadge status={u.accountStatus} /></td>
-                  <td className="px-4 py-3 text-right text-white/80">{u.aantalTransacties}</td>
-                  <td className="px-4 py-3 text-xs text-white/70">{u.twofaIngeschakeld ? <Check className="w-4 h-4 text-green-400" /> : '—'}</td>
-                  <td className="px-4 py-3 text-xs text-white/60">{fmtDatum(u.aangemeldOp)}</td>
+                  <td className="px-4 py-3 text-right text-ink-2 tabular-nums">{u.aantalTransacties}</td>
+                  <td className="px-4 py-3 text-xs text-ink-2">{u.twofaIngeschakeld ? <Check className="w-4 h-4 text-success-600" /> : '—'}</td>
+                  <td className="px-4 py-3 text-xs text-ink-2">{fmtDatum(u.aangemeldOp)}</td>
                   <td className="px-4 py-3 text-right">
-                    <button className="text-white/60 hover:text-white text-sm">→</button>
+                    <button className="text-gray-500 hover:text-ink-1 text-sm">→</button>
                   </td>
                 </tr>
               ))}
@@ -651,7 +648,7 @@ export default function UserManagement() {
         </div>
       </div>
 
-      <div className="text-xs text-white/40">
+      <div className="text-xs text-gray-500">
         Klik op een rij om alle gegevens van die gebruiker te bekijken en beheeracties uit te voeren.
       </div>
 

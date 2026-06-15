@@ -113,7 +113,7 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
     return (
       <section
         aria-label={t('dashboard_recent_titel')}
-        className="rounded-2xl border border-white/60 bg-white/80 backdrop-blur-lg p-6 sm:p-8 text-center shadow-sm animate-fade-up"
+        className="rounded-md border border-border bg-surface p-6 sm:p-8 text-center shadow-soft animate-fade-up"
       >
         {/* SVG illustratie — vriendelijke geld-stroom NL→TR */}
         <svg
@@ -137,21 +137,21 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
           <text x="135" y="46" textAnchor="middle" fontSize="14" fill="#dc2626" fontWeight="bold">TRY</text>
         </svg>
 
-        <h3 className="font-bold text-slate-800 mb-1 text-lg">
+        <h3 className="font-display font-medium text-ink-1 mb-1 text-lg">
           {t('dashboard_recent_leeg_titel')}
         </h3>
-        <p className="text-slate-500 text-sm mb-5 max-w-sm mx-auto">
+        <p className="text-gray-500 text-sm mb-5 max-w-sm mx-auto">
           {t('dashboard_recent_leeg_uitleg')}
         </p>
 
         {/* 3-stappen preview — verlaagt drempel */}
         <ol className="grid grid-cols-3 gap-2 max-w-sm mx-auto mb-6 text-xs">
           {[1, 2, 3].map((n) => (
-            <li key={n} className="bg-slate-50 rounded-xl px-2 py-3">
-              <div className="w-6 h-6 mx-auto mb-1.5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs">
+            <li key={n} className="bg-surface-2 rounded-md px-2 py-3">
+              <div className="w-6 h-6 mx-auto mb-1.5 rounded-full bg-brand-50 text-brand-700 font-medium flex items-center justify-center text-xs">
                 {n}
               </div>
-              <div className="text-slate-700 font-medium leading-tight">
+              <div className="text-ink-2 font-medium leading-tight">
                 {t(`dashboard_recent_leeg_stap${n}`)}
               </div>
             </li>
@@ -161,14 +161,14 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
         <div className="flex flex-col sm:flex-row gap-2 justify-center">
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
-            className="btn-primary inline-flex items-center justify-center gap-2 min-h-[44px]"
+            className="btn-inst inline-flex items-center justify-center gap-2 min-h-[44px]"
             aria-label={t('dashboard_recent_leeg_cta')}
           >
             <span>{t('dashboard_recent_leeg_cta')} →</span>
           </button>
           <a
             href="/calculator"
-            className="text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl px-5 py-3 transition inline-flex items-center justify-center min-h-[44px]"
+            className="text-sm font-semibold text-brand-700 hover:underline underline-offset-4 rounded-md px-5 py-3 transition inline-flex items-center justify-center min-h-[44px]"
           >
             {t('dashboard_recent_leeg_bereken')}
           </a>
@@ -180,33 +180,33 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
   return (
     <section
       aria-label={t('dashboard_recent_titel')}
-      className="rounded-2xl border border-white/60 bg-white/80 backdrop-blur-lg shadow-sm animate-fade-up overflow-hidden"
+      className="rounded-md border border-border bg-surface shadow-soft animate-fade-up overflow-hidden"
     >
-      <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
-        <h3 className="font-bold text-slate-800 text-sm">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-border-subtle">
+        <h3 className="font-display font-medium text-ink-1 text-sm">
           <span aria-hidden="true"></span>
           {t('dashboard_recent_titel')}
         </h3>
-        <span className="text-[11px] text-slate-400 font-medium">
+        <span className="text-[11px] text-gray-400 font-medium">
           {gefilterd.length}{gefilterd.length !== transacties.length && ` / ${transacties.length}`}
         </span>
       </div>
 
       {/* Zoek + filter (Verbetering NNN) — alleen vanaf 5 transacties */}
       {toonFilter && !laden && (
-        <div className="px-4 py-2.5 bg-slate-50/50 border-b border-slate-100 flex gap-2 items-center">
+        <div className="px-4 py-2.5 bg-surface-2 border-b border-border-subtle flex gap-2 items-center">
           <input
             type="search"
             value={zoekTerm}
             onChange={(e) => setZoekTerm(e.target.value)}
             placeholder={t('dashboard_recent_zoek_placeholder')}
-            className="flex-1 text-xs border border-slate-200 bg-white rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 text-xs border border-border bg-surface rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-100"
             aria-label={t('dashboard_recent_zoek_aria')}
           />
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs border border-slate-200 bg-white rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="text-xs border border-border bg-surface rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-100"
             aria-label={t('dashboard_recent_status_aria')}
           >
             <option value="alle">{t('dashboard_recent_status_alle')}</option>
@@ -218,41 +218,41 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
       )}
 
       {laden ? (
-        <div className="divide-y divide-slate-50">
+        <div className="divide-y divide-border-subtle">
           {[0, 1, 2].map(i => <RijSkeleton key={i} delay={i * 80} />)}
         </div>
       ) : (
-        <ul className="divide-y divide-slate-50">
+        <ul className="divide-y divide-border-subtle">
           {recent.map((tx, i) => (
             <li key={tx.id || i}>
               <button
                 onClick={() => setDetailTx(tx)}
-                className="w-full flex items-center justify-between gap-3 px-4 py-3 hover:bg-slate-50 transition text-left focus:outline-none focus:bg-slate-50"
+                className="w-full flex items-center justify-between gap-3 px-4 py-3 hover:bg-surface-2 transition text-left focus:outline-none focus:bg-surface-2"
                 aria-label={`Transactie ${tx.ontvangerNaam || ''} ${fmtEur(tx.eurBedrag)}`}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-base flex-shrink-0 ${
                       tx.status === 'voltooid'
-                        ? 'bg-emerald-100'
+                        ? 'bg-success-50'
                         : tx.status === 'mislukt' || tx.status === 'geannuleerd'
-                          ? 'bg-rose-100'
-                          : 'bg-amber-100'
+                          ? 'bg-surface-2'
+                          : 'bg-accent-400/10'
                     }`}
                     aria-hidden="true"
                   >
-                    {tx.status === 'voltooid' ? <CheckCircle className="w-5 h-5 text-green-600" /> :
-                     tx.status === 'mislukt' ? <XCircle className="w-5 h-5 text-red-600" /> :
-                     tx.status === 'geannuleerd' ? <XIcon className="w-5 h-5 text-slate-500" /> :
-                     <Clock className="w-5 h-5 text-amber-600" />}
+                    {tx.status === 'voltooid' ? <CheckCircle className="w-5 h-5 text-success-600" /> :
+                     tx.status === 'mislukt' ? <XCircle className="w-5 h-5 text-fg-error" /> :
+                     tx.status === 'geannuleerd' ? <XIcon className="w-5 h-5 text-ink-3" /> :
+                     <Clock className="w-5 h-5 text-accent-600" />}
                   </div>
                   <div className="min-w-0">
-                    <div className="font-semibold text-slate-800 text-sm truncate">
+                    <div className="font-semibold text-ink-1 text-sm truncate">
                       {tx.ontvangerNaam || tx.ontvanger_naam || '—'}
                     </div>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <StatusBadge status={tx.status} t={t} />
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[11px] text-gray-400">
                         {relatieveTijd(tx.aangemaaktOp || tx.datum, t)}
                       </span>
                     </div>
@@ -265,12 +265,12 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
                         '−' want is nog niet weg).
                       - Ontvangen bedrag = wat ontvanger krijgt → fg-plus
                         (positieve framing voor de gebruiker). */}
-                  <div className={`font-bold text-sm font-mono tabular-nums ${
+                  <div className={`font-display font-medium text-sm tabular-nums ${
                     tx.status === 'voltooid' ? 'text-fg-minus' : 'text-ink-1'
                   }`}>
                     {tx.status === 'voltooid' ? '−' : ''}{fmtEur(tx.eurBedrag)}
                   </div>
-                  <div className="text-[11px] text-fg-plus font-semibold font-mono tabular-nums">
+                  <div className="text-[11px] text-fg-plus font-semibold font-display tabular-nums">
                     {fmtOntvangen(tx)}
                   </div>
                 </div>
@@ -281,10 +281,10 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
       )}
 
       {!laden && transacties.length > 5 && (
-        <div className="border-t border-slate-100 px-4 py-3">
+        <div className="border-t border-border-subtle px-4 py-3">
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
-            className="w-full text-center text-sm text-blue-600 font-semibold hover:underline focus:outline-none focus:underline"
+            className="w-full text-center text-sm text-brand-700 font-semibold hover:underline underline-offset-4 focus:outline-none focus:underline"
           >
             {t('dashboard_recent_bekijk_alle')}
           </button>

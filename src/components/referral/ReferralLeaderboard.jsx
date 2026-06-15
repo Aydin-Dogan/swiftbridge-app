@@ -26,7 +26,7 @@ export default function ReferralLeaderboard() {
 
   if (laden) {
     return (
-      <div className="card-glass p-4 animate-fade-up space-y-2">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-4 animate-fade-up space-y-2">
         <div className="h-3 w-1/2 rounded animate-shimmer" />
         <div className="space-y-1.5">
           {[0, 1, 2].map(i => (
@@ -42,12 +42,12 @@ export default function ReferralLeaderboard() {
   }
 
   return (
-    <div className="card-glass p-4 animate-fade-up border-l-4 border-amber-400">
-      <h4 className="font-bold text-gray-800 text-sm flex items-center gap-2 mb-1">
-        <Star className="w-4 h-4 text-amber-500" aria-hidden="true" />
+    <div className="bg-surface border border-border rounded-md shadow-soft p-4 animate-fade-up border-l-4 border-l-accent-400">
+      <h4 className="font-display font-medium text-ink-1 text-sm flex items-center gap-2 mb-1">
+        <Star className="w-4 h-4 text-accent-500" aria-hidden="true" />
         {t('referral_leaderboard_titel')}
       </h4>
-      <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+      <p className="text-xs text-ink-2 mb-3 leading-relaxed">
         {t('referral_leaderboard_uitleg')}
       </p>
 
@@ -55,30 +55,30 @@ export default function ReferralLeaderboard() {
         {items.map(item => (
           <li
             key={item.rang}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg transition ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-md transition ${
               item.jij
-                ? 'bg-amber-100 border border-amber-300'
-                : 'bg-white border border-gray-100'
+                ? 'bg-accent-400/15 border border-accent-400/40'
+                : 'bg-surface border border-border'
             }`}
           >
-            <span className={`w-6 text-center text-xs font-bold ${
-              item.rang === 1 ? 'text-amber-600' :
-              item.rang === 2 ? 'text-gray-500' :
-              item.rang === 3 ? 'text-orange-600' :
-              'text-gray-400'
+            <span className={`w-6 text-center text-xs font-bold tabular-nums ${
+              item.rang === 1 ? 'text-accent-600' :
+              item.rang === 2 ? 'text-ink-3' :
+              item.rang === 3 ? 'text-accent-500' :
+              'text-ink-3'
             }`}>
               {item.rang === 1 ? '1e' : item.rang === 2 ? '2e' : item.rang === 3 ? '3e' : `#${item.rang}`}
             </span>
             <Avatar naam={item.naam} size="xs" />
-            <span className="flex-1 text-sm font-medium text-gray-800 truncate">
+            <span className="flex-1 text-sm font-medium text-ink-1 truncate">
               {item.naam}
               {item.jij && (
-                <span className="ml-1.5 text-xs font-bold text-amber-700">
+                <span className="ml-1.5 text-xs font-bold text-accent-600">
                   ({t('referral_leaderboard_jij')})
                 </span>
               )}
             </span>
-            <span className="text-xs font-bold text-gray-600">
+            <span className="text-xs font-bold text-ink-2 tabular-nums">
               {item.aantal} {t('referral_leaderboard_aantal')}
             </span>
           </li>

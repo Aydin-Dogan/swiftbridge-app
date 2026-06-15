@@ -92,22 +92,22 @@ export default function MaandOverzicht({ transacties = [] }) {
   return (
     <section
       aria-label={t('maand_overzicht_titel')}
-      className="rounded-2xl border border-white/60 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 backdrop-blur-lg shadow-sm p-4 animate-fade-up"
+      className="rounded-md border border-border bg-surface shadow-soft p-4 animate-fade-up"
     >
       <div className="flex items-start justify-between mb-3">
         <div>
-          <div className="text-xs font-semibold text-blue-900/70 uppercase tracking-wider">
+          <div className="text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em]">
             {t('maand_overzicht_titel')}
           </div>
-          <div className="text-xs text-blue-800/70 mt-0.5 capitalize">
+          <div className="text-xs text-gray-500 mt-0.5 capitalize">
             {huidigeMaand}
           </div>
         </div>
         {stats.deltaPct !== null && (
-          <div className={`text-xs font-bold px-2 py-1 rounded-full ${
+          <div className={`text-xs font-semibold px-2 py-1 rounded-full tabular-nums ${
             omhoog
-              ? 'bg-emerald-100 text-emerald-700'
-              : 'bg-orange-100 text-orange-700'
+              ? 'bg-success-50 text-success-700'
+              : 'bg-accent-400/10 text-accent-600'
           }`}>
             {omhoog ? '↑' : '↓'} {Math.abs(stats.deltaPct).toFixed(0)}%
           </div>
@@ -115,7 +115,7 @@ export default function MaandOverzicht({ transacties = [] }) {
       </div>
 
       <div className="mb-3">
-        <div className="text-3xl font-extrabold text-gray-900">
+        <div className="font-display text-3xl font-medium text-ink-1 tabular-nums">
           {fmtEur(stats.totaalDezeMaand)}
         </div>
         <div className="text-xs text-gray-600 mt-0.5">
@@ -134,13 +134,13 @@ export default function MaandOverzicht({ transacties = [] }) {
         {stats.perDag.map((v, i) => (
           <div
             key={i}
-            className="flex-1 bg-blue-300/60 rounded-sm hover:bg-blue-400 transition"
+            className="flex-1 bg-brand-200 rounded-sm hover:bg-brand-400 transition"
             style={{ height: `${Math.max(2, (v / stats.max) * 100)}%` }}
             title={`Dag ${30 - i}: ${fmtEur(v)}`}
           />
         ))}
       </div>
-      <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+      <div className="flex justify-between text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mt-1">
         <span>{t('maand_overzicht_30d_geleden')}</span>
         <span>{t('maand_overzicht_vandaag')}</span>
       </div>

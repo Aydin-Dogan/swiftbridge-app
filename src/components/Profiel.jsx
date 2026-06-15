@@ -85,42 +85,42 @@ function IdinKnop({ token, onSucces }) {
   }
 
   return (
-    <div className="card-glass p-5 border-l-4 border-blue-500 animate-fade-up">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-5 border-l-4 border-l-brand-500 animate-fade-up">
       <div className="flex items-start gap-3">
-        <IdCard className="w-7 h-7 flex-shrink-0 text-amber-700" />
+        <IdCard className="w-7 h-7 flex-shrink-0 text-accent-600" />
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-gray-800">Verifieer met je bank (iDIN)</h3>
-          <p className="text-xs text-gray-600 mt-1 mb-3">
+          <h3 className="font-display font-medium text-ink-1">Verifieer met je bank (iDIN)</h3>
+          <p className="text-xs text-ink-2 mt-1 mb-3">
             Snelste manier — log even in bij je bank. Wij krijgen alleen je geverifieerde naam, geboortedatum en adres. Geen wachtwoorden, geen scans.
           </p>
 
           {!open ? (
             <button
               onClick={() => setOpen(true)}
-              className="btn-primary w-full py-3 text-sm inline-flex items-center justify-center gap-2"
+              className="btn-inst w-full py-3 inline-flex items-center justify-center gap-2"
             >
               <Bank className="w-4 h-4" /> Kies mijn bank →
             </button>
           ) : (
             <div className="space-y-2">
-              <p className="text-xs font-semibold text-gray-600">Kies je bank:</p>
+              <p className="text-xs font-semibold text-ink-2">Kies je bank:</p>
               <div className="grid grid-cols-3 gap-1.5">
                 {NL_BANKEN_IDIN.map(b => (
                   <button
                     key={b.code}
                     onClick={() => startVerificatie(b)}
                     disabled={bezig}
-                    className="border-2 rounded-lg py-2 px-1 text-[10px] font-bold transition active:scale-95 disabled:opacity-50"
+                    className="border rounded-md py-2 px-1 text-[10px] font-semibold transition active:scale-[0.99] disabled:opacity-50"
                     style={{ borderColor: b.kleur, color: b.kleur, background: 'white' }}
                   >
-                    {bezig && gekozen?.code === b.code ? '⏳' : b.naam}
+                    {bezig && gekozen?.code === b.code ? <Refresh className="w-3.5 h-3.5 mx-auto animate-spin" /> : b.naam}
                   </button>
                 ))}
               </div>
-              {fout && <div className="text-xs text-rose-600 bg-rose-50 p-2 rounded-lg">{fout}</div>}
+              {fout && <div className="text-xs text-rose-600 bg-rose-50 p-2 rounded-md">{fout}</div>}
               <button
                 onClick={() => setOpen(false)}
-                className="text-xs text-gray-500 hover:text-gray-700"
+                className="text-sm font-semibold text-brand-700 hover:underline underline-offset-4"
               >
                 ← Terug
               </button>
@@ -232,7 +232,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
   if (laden) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-3">
+      <div className="bg-surface rounded-md shadow-soft border border-border p-6 space-y-3">
         <div className="h-6 bg-gray-200 rounded w-1/2 animate-pulse" />
         <div className="h-12 bg-gray-100 rounded animate-pulse" />
         <div className="h-12 bg-gray-100 rounded animate-pulse" />
@@ -243,13 +243,13 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
   if (fout && !profiel) {
     return (
-      <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center space-y-3">
+      <div className="bg-rose-50 border border-rose-200 rounded-md p-6 text-center space-y-3">
         <div className="mx-auto w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center">
           <AlertTriangle className="w-6 h-6 text-rose-700" />
         </div>
-        <h2 className="font-bold text-rose-800">Profiel kon niet geladen worden</h2>
+        <h2 className="font-display font-medium text-rose-800">Profiel kon niet geladen worden</h2>
         <p className="text-sm text-rose-700">{fout}</p>
-        <button onClick={laad} className="btn-primary text-sm inline-flex items-center gap-2">
+        <button onClick={laad} className="btn-inst inline-flex items-center gap-2">
           <Refresh className="w-4 h-4" /> Opnieuw proberen
         </button>
       </div>
@@ -261,13 +261,13 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
   return (
     <div className="space-y-4">
       {/* Profielkaart header */}
-      <div className="card-glass p-5 animate-fade-up">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+          <div className="w-16 h-16 rounded-full bg-brand-hero flex items-center justify-center text-white font-display text-2xl font-medium flex-shrink-0">
             {profiel?.naam?.[0]?.toUpperCase() || 'G'}
           </div>
           <div className="min-w-0 flex-1">
-            <h2 className="text-lg font-bold text-gray-800 truncate">{profiel?.naam}</h2>
+            <h2 className="font-display text-lg font-medium text-ink-1 truncate">{profiel?.naam}</h2>
             <p className="text-xs text-gray-500 truncate">{profiel?.email}</p>
             <div className="flex items-center gap-2 mt-1">
               {kycOk ? (
@@ -283,14 +283,14 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </div>
 
         {profiel?.statistieken && (
-          <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100">
+          <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-border-subtle">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{profiel.statistieken.aantalTransacties}</div>
-              <div className="text-[10px] text-gray-500 uppercase tracking-wider">Transacties</div>
+              <div className="font-display text-2xl font-medium tabular-nums text-brand-700">{profiel.statistieken.aantalTransacties}</div>
+              <div className="text-[0.7rem] text-gray-500 uppercase tracking-[0.2em]">Transacties</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-emerald-600">€{profiel.statistieken.totaalVerstuurdEur.toFixed(0)}</div>
-              <div className="text-[10px] text-gray-500 uppercase tracking-wider">Verstuurd</div>
+              <div className="font-display text-2xl font-medium tabular-nums text-success-600">€{profiel.statistieken.totaalVerstuurdEur.toFixed(0)}</div>
+              <div className="text-[0.7rem] text-gray-500 uppercase tracking-[0.2em]">Verstuurd</div>
             </div>
           </div>
         )}
@@ -303,12 +303,12 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
       {/* KYC check */}
       {!kycOk && (
-        <div className="card-glass p-4 border-l-4 border-amber-500">
+        <div className="bg-surface border border-border rounded-md shadow-soft p-4 border-l-4 border-l-accent-500">
           <div className="flex items-start gap-2">
-            <IdCard className="w-6 h-6 text-amber-600 flex-shrink-0" />
+            <IdCard className="w-6 h-6 text-accent-600 flex-shrink-0" />
             <div>
-              <h3 className="font-bold text-gray-800 text-sm">KYC verificatie nodig</h3>
-              <p className="text-xs text-gray-600 mt-1">
+              <h3 className="font-display font-medium text-ink-1 text-sm">KYC verificatie nodig</h3>
+              <p className="text-xs text-ink-2 mt-1">
                 Voltooi eerst je identiteitsverificatie om je profielgegevens aan te kunnen passen. Gebruik bij voorkeur iDIN hierboven — snelste en veiligste manier via je bank.
               </p>
             </div>
@@ -317,18 +317,18 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       )}
 
       {/* Profiel formulier */}
-      <form onSubmit={opslaan} className="card-glass p-5 space-y-4 animate-fade-up">
-        <h3 className="font-bold text-gray-800 flex items-center gap-2">
+      <form onSubmit={opslaan} className="bg-surface border border-border rounded-md shadow-soft p-5 space-y-4 animate-fade-up">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2">
           Persoonlijke gegevens
         </h3>
 
         <div>
-          <label className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam *</label>
+          <label className="block text-xs font-semibold text-ink-2 mb-1">Volledige naam *</label>
           <input
             value={form.naam}
             onChange={e => update('naam', e.target.value)}
             disabled={!kycOk}
-            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-500"
+            className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3 disabled:text-gray-500"
             required
             minLength={2}
             maxLength={100}
@@ -337,12 +337,12 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1 flex items-center justify-between">
+            <label className="block text-xs font-semibold text-ink-2 mb-1 flex items-center justify-between">
               <span>E-mailadres</span>
               <button
                 type="button"
                 onClick={() => setEmailWijzigOpen(true)}
-                className="text-blue-600 hover:underline text-[11px] font-medium"
+                className="text-brand-700 hover:underline underline-offset-4 text-[11px] font-semibold"
               >
                 {t('email_wijzig_knop') || 'Wijzigen'}
               </button>
@@ -350,76 +350,76 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             <input
               value={profiel?.email || ''}
               disabled
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none bg-gray-50 text-gray-500 cursor-not-allowed"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface-3 text-gray-500 cursor-not-allowed"
               title={t('email_wijzig_tooltip') || 'Klik op "Wijzigen" om je e-mailadres aan te passen'}
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">Telefoon</label>
+            <label className="block text-xs font-semibold text-ink-2 mb-1">Telefoon</label>
             <input
               type="tel"
               value={form.telefoon}
               onChange={e => update('telefoon', e.target.value)}
               disabled={!kycOk}
               placeholder="+31 6 12345678"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3"
             />
             <p className="text-[10px] text-gray-500 mt-1">Vereist voor WhatsApp</p>
           </div>
         </div>
 
-        <h3 className="font-bold text-gray-800 flex items-center gap-2 pt-2 border-t border-gray-100">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 pt-2 border-t border-border-subtle">
           Adres
         </h3>
 
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-2">
-            <label className="block text-xs font-semibold text-gray-600 mb-1">Straat</label>
+            <label className="block text-xs font-semibold text-ink-2 mb-1">Straat</label>
             <input
               value={form.adresStraat}
               onChange={e => update('adresStraat', e.target.value)}
               disabled={!kycOk}
               placeholder="Hoofdstraat"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">Huisnr.</label>
+            <label className="block text-xs font-semibold text-ink-2 mb-1">Huisnr.</label>
             <input
               value={form.adresHuisnummer}
               onChange={e => update('adresHuisnummer', e.target.value)}
               disabled={!kycOk}
               placeholder="12A"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-2">
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-1">Postcode</label>
+            <label className="block text-xs font-semibold text-ink-2 mb-1">Postcode</label>
             <input
               value={form.adresPostcode}
               onChange={e => update('adresPostcode', e.target.value.toUpperCase())}
               disabled={!kycOk}
               placeholder="1234AB"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50 font-mono"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3 font-mono"
             />
           </div>
           <div className="col-span-2">
-            <label className="block text-xs font-semibold text-gray-600 mb-1">Stad</label>
+            <label className="block text-xs font-semibold text-ink-2 mb-1">Stad</label>
             <input
               value={form.adresStad}
               onChange={e => update('adresStad', e.target.value)}
               disabled={!kycOk}
               placeholder="Amsterdam"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-gray-600 mb-1">Land</label>
+          <label className="block text-xs font-semibold text-ink-2 mb-1">Land</label>
           <div className="flex items-center gap-2">
             <div className="flex-shrink-0">
               <Vlag land={form.adresLand} size={28} />
@@ -428,7 +428,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
               value={form.adresLand}
               onChange={e => update('adresLand', e.target.value)}
               disabled={!kycOk}
-              className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 disabled:bg-gray-50"
+              className="flex-1 border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:bg-surface-3"
             >
               {LANDEN.map(l => (
                 <option key={l.code} value={l.code}>{l.naam} ({l.code})</option>
@@ -437,14 +437,14 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           </div>
         </div>
 
-        <h3 className="font-bold text-gray-800 flex items-center gap-2 pt-2 border-t border-gray-100">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 pt-2 border-t border-border-subtle">
           <Bell className="w-5 h-5" /> Notificaties
         </h3>
 
-        <label className={`flex items-start gap-3 cursor-pointer p-4 rounded-xl border-2 transition ${
+        <label className={`flex items-start gap-3 cursor-pointer p-4 rounded-md border transition ${
           form.whatsappOptIn
-            ? 'border-emerald-400 bg-gradient-to-br from-emerald-50 to-green-50 shadow-sm'
-            : 'border-gray-200 bg-white hover:border-emerald-300'
+            ? 'border-success-500 bg-success-50 shadow-soft'
+            : 'border-border bg-surface hover:border-success-500'
         }`}>
           <input
             type="checkbox"
@@ -454,17 +454,17 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             className="mt-0.5 h-5 w-5 accent-emerald-600 disabled:opacity-50"
           />
           <div className="flex-1">
-            <div className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+            <div className="text-sm font-semibold text-ink-1 flex items-center gap-1.5">
               {t('profiel_whatsapp_titel')}
               {form.whatsappOptIn && (
-                <span className="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded-full font-bold">AAN</span>
+                <span className="text-[10px] bg-success-600 text-white px-1.5 py-0.5 rounded-full font-semibold">AAN</span>
               )}
             </div>
-            <div className="text-xs text-gray-600 mt-1 leading-relaxed">
+            <div className="text-xs text-ink-2 mt-1 leading-relaxed">
               {t('profiel_whatsapp_uitleg')}
             </div>
             {(!form.telefoon) && (
-              <div className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded-lg px-2 py-1 inline-flex items-center gap-1">
+              <div className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded-md px-2 py-1 inline-flex items-center gap-1">
                 <MessageCircle className="w-3 h-3" />
                 <span className="font-medium">{t('profiel_whatsapp_geen_telefoon')}</span>
               </div>
@@ -473,12 +473,12 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </label>
 
         {fout && (
-          <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl px-3 py-2 text-sm">
+          <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-md px-3 py-2 text-sm">
             {fout}
           </div>
         )}
         {bericht && (
-          <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl px-3 py-2 text-sm">
+          <div className="bg-success-50 border border-success-100 text-success-700 rounded-md px-3 py-2 text-sm">
             {bericht}
           </div>
         )}
@@ -486,7 +486,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         <button
           type="submit"
           disabled={!kycOk || bezig}
-          className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+          className="btn-inst w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
         >
           {bezig ? 'Opslaan...' : (<><Download className="w-4 h-4" /> Opslaan</>)}
         </button>
@@ -518,20 +518,20 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       <TourRestartSectie />
 
       {/* ── Mijn ontvangers — beneficiaries beheer ─────────────────── */}
-      <div className="card-glass p-5 animate-fade-up border-l-4 border-purple-500 space-y-3">
-        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up border-l-4 border-l-brand-500 space-y-3">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 text-base">
           {t('profiel_benef_kop')}
         </h3>
-        <p className="text-xs text-gray-600 leading-relaxed">{t('profiel_benef_uitleg')}</p>
+        <p className="text-xs text-ink-2 leading-relaxed">{t('profiel_benef_uitleg')}</p>
         <BeneficiaryLijst token={token} />
       </div>
 
       {/* AVG / GDPR beheer — data export + account anonimiseren */}
-      <div className="card-glass p-5 animate-fade-up border-l-4 border-blue-500 space-y-2">
-        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up border-l-4 border-l-brand-500 space-y-2">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 text-base">
           {t('profiel_gdpr_kop')}
         </h3>
-        <p className="text-xs text-gray-600 leading-relaxed">
+        <p className="text-xs text-ink-2 leading-relaxed">
           {t('profiel_gdpr_uitleg')}
         </p>
       </div>
@@ -541,11 +541,11 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       <AccountantBeheer />
 
       {/* ── Vrienden uitnodigen — referral programma ──────────────────── */}
-      <div className="card-glass p-5 animate-fade-up border-l-4 border-emerald-500 space-y-2">
-        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up border-l-4 border-l-success-500 space-y-2">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 text-base">
           {t('profiel_referral_kop')}
         </h3>
-        <p className="text-xs text-gray-600 leading-relaxed">
+        <p className="text-xs text-ink-2 leading-relaxed">
           {t('profiel_referral_uitleg')}
         </p>
       </div>
@@ -575,21 +575,21 @@ function TourRestartSectie() {
   }
 
   return (
-    <div className="card-glass p-5 animate-fade-up border-l-4 border-amber-400">
-      <h3 className="font-bold text-gray-800 flex items-center gap-2">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600" aria-hidden="true">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up border-l-4 border-l-accent-400">
+      <h3 className="font-display font-medium text-ink-1 flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-600" aria-hidden="true">
           <circle cx="12" cy="12" r="10" />
           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
           <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
         {t('profiel_tour_kop')}
       </h3>
-      <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+      <p className="text-xs text-ink-2 mt-1 leading-relaxed">
         {t('profiel_tour_uitleg')}
       </p>
       <button
         onClick={start}
-        className="mt-3 text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg px-4 py-2 transition inline-flex items-center gap-1.5"
+        className="mt-3 text-sm font-semibold text-accent-600 bg-amber-50 hover:bg-amber-100 rounded-md px-4 py-2 transition inline-flex items-center gap-1.5"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polygon points="5 3 19 12 5 21 5 3" />

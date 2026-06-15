@@ -29,15 +29,15 @@ import { forwardRef } from 'react';
 const VARIANTS = {
   default: 'bg-surface border border-border',
   accent:  'bg-brand-50 border border-brand-100 dark:bg-brand-900/20 dark:border-brand-800/40',
-  elevated:'bg-surface border border-border-subtle shadow-soft-md',
+  elevated:'bg-surface border border-border-subtle shadow-soft',
   danger:  'bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800/40',
   success: 'bg-green-50 border border-green-200 dark:bg-green-900/20 dark:border-green-800/40',
 };
 
 const SIZES = {
-  sm: 'p-3 rounded-xl',
-  md: 'p-4 rounded-2xl',
-  lg: 'p-6 rounded-2xl',
+  sm: 'p-3 rounded-md',
+  md: 'p-4 rounded-md',
+  lg: 'p-6 rounded-md',
 };
 
 const Card = forwardRef(function Card(

@@ -90,7 +90,7 @@ export default function KoersChart({ koers, laden = false }) {
 
   if (laden || !heeftData) {
     return (
-      <section className="relative overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-5 text-white shadow-lg animate-fade-up">
+      <section className="relative overflow-hidden rounded-md border border-white/10 bg-brand-hero p-5 text-white shadow-soft-md animate-fade-up">
         <div className="space-y-3">
           <div className="h-3 w-32 rounded-md bg-white/20 animate-pulse" />
           <div className="h-8 w-24 rounded-md bg-white/20 animate-pulse" />
@@ -102,42 +102,35 @@ export default function KoersChart({ koers, laden = false }) {
 
   return (
     <section
-      className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-5 text-white shadow-lg animate-fade-up"
+      className="relative overflow-hidden rounded-md border border-white/10 bg-brand-hero p-5 text-white shadow-soft-md animate-fade-up"
       aria-label={t('dashboard_koers_titel')}
     >
-      {/* Glow decoratie */}
-      <div
-        className="absolute -top-20 -right-20 w-56 h-56 rounded-full opacity-30 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.6), transparent 70%)' }}
-        aria-hidden="true"
-      />
-
       <div className="relative flex items-start justify-between gap-3 mb-3">
         <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">
+          <p className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-brand-100">
             {t('dashboard_koers_titel')}
           </p>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-3xl font-extrabold font-mono">{huidige.toFixed(4)}</span>
-            <span className="text-xs text-blue-200">TRY / EUR</span>
+            <span className="font-display text-3xl font-medium tabular-nums">{huidige.toFixed(4)}</span>
+            <span className="text-xs text-brand-100">TRY / EUR</span>
           </div>
           <div className="flex items-center gap-2 mt-1.5">
             <span
-              className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-md ${
+              className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-md tabular-nums ${
                 omhoog
-                  ? 'bg-emerald-500/20 text-emerald-200 border border-emerald-400/30'
-                  : 'bg-rose-500/20 text-rose-200 border border-rose-400/30'
+                  ? 'bg-success-500/20 text-success-100 border border-success-500/30'
+                  : 'bg-white/10 text-white border border-white/20'
               }`}
             >
               <span aria-hidden="true">{omhoog ? '▲' : '▼'}</span>
               {Math.abs(verschilPct).toFixed(2)}%
             </span>
-            <span className="text-xs text-blue-200">{t('dashboard_koers_vs_gisteren')}</span>
+            <span className="text-xs text-brand-100">{t('dashboard_koers_vs_gisteren')}</span>
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-          <span className="text-xs text-blue-200">live</span>
+          <div className="w-2 h-2 rounded-full bg-success-500 animate-pulse" aria-hidden="true" />
+          <span className="text-xs text-brand-100">live</span>
         </div>
       </div>
 
@@ -197,7 +190,7 @@ export default function KoersChart({ koers, laden = false }) {
       <div className="relative flex items-center justify-end mt-2">
         <button
           onClick={() => navigeer('alerts')}
-          className="text-xs font-semibold text-blue-200 hover:text-white transition focus:outline-none focus:underline"
+          className="text-sm font-semibold text-brand-100 hover:text-white underline-offset-4 hover:underline transition focus:outline-none focus:underline"
         >
           {t('dashboard_koers_meer_valuta')}
         </button>

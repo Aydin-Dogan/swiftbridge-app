@@ -79,45 +79,45 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
   }
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl overflow-hidden">
+    <div className="bg-surface border border-border rounded-md overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-white/10 transition"
+        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-surface-2 transition"
       >
         <span className="flex items-center gap-2">
-          <Users className="w-5 h-5 text-gray-600" />
-          <span className="text-sm font-semibold text-gray-700">{t('benef_kies_bestaande')}</span>
+          <Users className="w-5 h-5 text-ink-2" />
+          <span className="text-sm font-semibold text-ink-2">{t('benef_kies_bestaande')}</span>
         </span>
-        <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-ink-3 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
-        <div className="border-t border-white/20 p-3 space-y-2">
+        <div className="border-t border-border p-3 space-y-2">
           {/* Search */}
           <input
             value={zoek}
             onChange={e => setZoek(e.target.value)}
             placeholder={t('benef_zoek_placeholder')}
-            className="w-full border-2 border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500"
+            className="w-full border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
           />
 
           {laden && (
-            <p className="text-xs text-gray-500 text-center py-3">{t('laden')}</p>
+            <p className="text-xs text-ink-3 text-center py-3">{t('laden')}</p>
           )}
 
           {!laden && fout && (
-            <div className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-2 py-1.5">
+            <div className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-md px-2 py-1.5">
               {fout}
             </div>
           )}
 
           {!laden && !fout && lijst.length === 0 && (
-            <p className="text-xs text-gray-500 text-center py-3">{t('benef_kiezer_leeg')}</p>
+            <p className="text-xs text-ink-3 text-center py-3">{t('benef_kiezer_leeg')}</p>
           )}
 
           {!laden && !fout && lijst.length > 0 && gefilterd.length === 0 && (
-            <p className="text-xs text-gray-500 text-center py-3">{t('benef_geen_match')}</p>
+            <p className="text-xs text-ink-3 text-center py-3">{t('benef_geen_match')}</p>
           )}
 
           {!laden && gefilterd.length > 0 && (
@@ -129,24 +129,24 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
                     key={b.id}
                     type="button"
                     onClick={() => kies(b)}
-                    className="w-full flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 transition text-left"
+                    className="w-full flex items-center gap-3 p-2.5 rounded-md hover:bg-brand-50 transition text-left"
                   >
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-base font-bold text-blue-700 flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center font-display text-base font-medium text-brand-700 flex-shrink-0">
                       {b.naam?.[0]?.toUpperCase() || '?'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-semibold text-gray-800 text-sm truncate">{b.naam}</span>
+                        <span className="font-display font-medium text-ink-1 text-sm truncate">{b.naam}</span>
                         {(b.bijnaam || b.label) && (
-                          <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-bold">
+                          <span className="text-[10px] bg-brand-50 text-brand-700 px-1.5 py-0.5 rounded-full font-semibold">
                             {b.bijnaam || b.label}
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-gray-500 font-mono truncate">
+                      <div className="text-[11px] text-ink-3 font-mono tabular-nums truncate">
                         {maskeerIban(b.iban || '')}
                       </div>
-                      <div className="flex items-center gap-2 text-[10px] text-gray-500">
+                      <div className="flex items-center gap-2 text-[10px] text-ink-3">
                         {b.bank && (
                           <span className="inline-flex items-center gap-1 min-w-0">
                             <Bank className="w-3 h-3 flex-shrink-0" />
@@ -161,7 +161,7 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
                         )}
                       </div>
                     </div>
-                    <span className="text-blue-500 text-sm">→</span>
+                    <span className="text-brand-500 text-sm">→</span>
                   </button>
                 );
               })}

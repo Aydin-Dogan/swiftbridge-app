@@ -14,10 +14,10 @@ import { useTaal } from '../../i18n';
 import { Info, CheckCircle, AlertTriangle, XCircle, Plus, Trash } from '../icons/Icons';
 
 const TYPES = [
-  { id: 'info', label: 'Info', icoon: Info, kleur: 'text-blue-200' },
-  { id: 'success', label: 'Succes', icoon: CheckCircle, kleur: 'text-emerald-200' },
-  { id: 'warning', label: 'Waarschuwing', icoon: AlertTriangle, kleur: 'text-amber-200' },
-  { id: 'error', label: 'Fout', icoon: XCircle, kleur: 'text-rose-200' },
+  { id: 'info', label: 'Info', icoon: Info, kleur: 'text-brand-700' },
+  { id: 'success', label: 'Succes', icoon: CheckCircle, kleur: 'text-success-700' },
+  { id: 'warning', label: 'Waarschuwing', icoon: AlertTriangle, kleur: 'text-accent-600' },
+  { id: 'error', label: 'Fout', icoon: XCircle, kleur: 'text-red-700' },
 ];
 
 function fmtDatum(iso) {
@@ -58,45 +58,45 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
   return (
     <form
       onSubmit={submit}
-      className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl p-5 space-y-3 text-white max-h-[85vh] overflow-y-auto"
+      className="bg-surface border border-border rounded-md p-5 space-y-3 text-ink-1 max-h-[85vh] overflow-y-auto shadow-soft-lg"
     >
-      <div className="font-extrabold text-lg flex items-center gap-2">
+      <div className="font-display font-medium text-lg flex items-center gap-2">
         <span>{form.id ? 'Banner bewerken' : 'Nieuwe banner'}</span>
       </div>
 
       <label className="block">
-        <span className="block text-xs font-semibold text-white/80 mb-1">Titel *</span>
+        <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">Titel *</span>
         <input
           type="text"
           required
           maxLength={200}
           value={form.titel}
           onChange={(e) => update('titel', e.target.value)}
-          className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
           placeholder="Onderhoud zondag 02:00-04:00"
         />
       </label>
 
       <label className="block">
-        <span className="block text-xs font-semibold text-white/80 mb-1">Bericht *</span>
+        <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">Bericht *</span>
         <textarea
           required
           maxLength={1000}
           rows={3}
           value={form.bericht}
           onChange={(e) => update('bericht', e.target.value)}
-          className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+          className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500 resize-none"
           placeholder="Tijdens dit venster zijn overboekingen tijdelijk niet mogelijk."
         />
       </label>
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="block text-xs font-semibold text-white/80 mb-1">Type</span>
+          <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">Type</span>
           <select
             value={form.type}
             onChange={(e) => update('type', e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
           >
             {TYPES.map((tp) => (
               <option key={tp.id} value={tp.id} className="text-gray-900">
@@ -111,7 +111,7 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
               type="checkbox"
               checked={!!form.actief}
               onChange={(e) => update('actief', e.target.checked)}
-              className="w-4 h-4 accent-blue-500"
+              className="w-4 h-4 accent-brand-500"
             />
             <span>Actief</span>
           </label>
@@ -120,7 +120,7 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
               type="checkbox"
               checked={!!form.sluitbaar}
               onChange={(e) => update('sluitbaar', e.target.checked)}
-              className="w-4 h-4 accent-blue-500"
+              className="w-4 h-4 accent-brand-500"
             />
             <span>Sluitbaar (× knop)</span>
           </label>
@@ -129,22 +129,22 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="block text-xs font-semibold text-white/80 mb-1">CTA tekst (optioneel)</span>
+          <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">CTA tekst (optioneel)</span>
           <input
             type="text"
             value={form.cta_tekst || ''}
             onChange={(e) => update('cta_tekst', e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
             placeholder="Meer info"
           />
         </label>
         <label className="block">
-          <span className="block text-xs font-semibold text-white/80 mb-1">CTA URL (optioneel)</span>
+          <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">CTA URL (optioneel)</span>
           <input
             type="text"
             value={form.cta_url || ''}
             onChange={(e) => update('cta_url', e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
             placeholder="/blog/onderhoud of https://…"
           />
         </label>
@@ -152,27 +152,27 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="block text-xs font-semibold text-white/80 mb-1">Start (optioneel)</span>
+          <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">Start (optioneel)</span>
           <input
             type="datetime-local"
             value={form.start_op || ''}
             onChange={(e) => update('start_op', e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
           />
         </label>
         <label className="block">
-          <span className="block text-xs font-semibold text-white/80 mb-1">Eindigt (optioneel)</span>
+          <span className="block text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">Eindigt (optioneel)</span>
           <input
             type="datetime-local"
             value={form.eindigt_op || ''}
             onChange={(e) => update('eindigt_op', e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
           />
         </label>
       </div>
 
       {fout && (
-        <div className="bg-rose-500/10 border border-rose-300/30 text-rose-100 rounded-xl px-3 py-2 text-xs">
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-md px-3 py-2 text-xs">
           {fout}
         </div>
       )}
@@ -181,14 +181,14 @@ function BannerFormulier({ initieel, onOpslaan, onAnnuleren, opslaan, fout }) {
         <button
           type="button"
           onClick={onAnnuleren}
-          className="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold py-2.5 rounded-xl text-sm transition"
+          className="flex-1 bg-surface hover:bg-surface-3 border border-border text-ink-1 font-semibold py-2.5 rounded-md text-sm transition"
         >
           Annuleren
         </button>
         <button
           type="submit"
           disabled={opslaan}
-          className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl text-sm transition active:scale-95"
+          className="flex-1 btn-inst disabled:opacity-50 py-2.5"
         >
           {opslaan ? 'Opslaan…' : (form.id ? 'Bijwerken' : 'Aanmaken')}
         </button>
@@ -295,61 +295,61 @@ export default function BannerBeheer() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <div className="text-sm text-white/70">
+        <div className="text-sm text-ink-2">
           {banners.length} banner{banners.length === 1 ? '' : 's'} ·{' '}
-          <span className="text-emerald-300 font-semibold">
+          <span className="text-success-700 font-semibold">
             {banners.filter((b) => b.actief).length} actief
           </span>
         </div>
         <button
           onClick={openNieuw}
-          className="inline-flex items-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-sm transition active:scale-95"
+          className="btn-inst gap-1.5"
         >
           <Plus className="w-4 h-4" /> Nieuwe banner
         </button>
       </div>
 
       {fout && (
-        <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>
       )}
 
-      <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-md overflow-hidden shadow-soft">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/10">
-              <tr className="text-left text-white/80">
-                <th className="px-4 py-3 font-semibold">Type</th>
-                <th className="px-4 py-3 font-semibold">Titel</th>
-                <th className="px-4 py-3 font-semibold">Bericht</th>
-                <th className="px-4 py-3 font-semibold">Periode</th>
-                <th className="px-4 py-3 font-semibold">Status</th>
-                <th className="px-4 py-3 font-semibold text-right">Acties</th>
+            <thead className="bg-surface-3 border-b border-border">
+              <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
+                <th className="px-4 py-3">Type</th>
+                <th className="px-4 py-3">Titel</th>
+                <th className="px-4 py-3">Bericht</th>
+                <th className="px-4 py-3">Periode</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Acties</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10">
+            <tbody className="divide-y divide-border">
               {laden ? (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-white/60">Laden…</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-ink-2">Laden…</td></tr>
               ) : banners.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-white/60">
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-ink-2">
                   Geen banners. Klik op "Nieuwe banner" om de eerste aan te maken.
                 </td></tr>
               ) : banners.map((b) => {
                 const tp = TYPES.find((t) => t.id === b.type) || TYPES[0];
                 return (
-                  <tr key={b.id} className="hover:bg-white/5 transition">
+                  <tr key={b.id} className="hover:bg-surface-3 transition">
                     <td className="px-4 py-3">
-                      <span className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full border border-white/20 bg-white/5 ${tp.kleur}`}>
+                      <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full border border-border bg-surface-3 ${tp.kleur}`}>
                         <tp.icoon className="w-3.5 h-3.5" aria-hidden="true" />
                         <span>{tp.label}</span>
                       </span>
                     </td>
-                    <td className="px-4 py-3 font-semibold text-white max-w-[200px] truncate" title={b.titel}>
+                    <td className="px-4 py-3 font-semibold text-ink-1 max-w-[200px] truncate" title={b.titel}>
                       {b.titel}
                     </td>
-                    <td className="px-4 py-3 text-xs text-white/70 max-w-[260px] truncate" title={b.bericht}>
+                    <td className="px-4 py-3 text-xs text-ink-2 max-w-[260px] truncate" title={b.bericht}>
                       {b.bericht}
                     </td>
-                    <td className="px-4 py-3 text-xs text-white/60 whitespace-nowrap">
+                    <td className="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
                       {b.startOp || b.eindigtOp
                         ? `${fmtDatum(b.startOp) } → ${ fmtDatum(b.eindigtOp)}`
                         : 'Altijd zichtbaar'}
@@ -358,10 +358,10 @@ export default function BannerBeheer() {
                       <button
                         onClick={() => toggleActief(b)}
                         title="Klik om te togglen"
-                        className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full transition ${
+                        className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full transition ${
                           b.actief
-                            ? 'bg-emerald-500/20 border border-emerald-300/30 text-emerald-200 hover:bg-emerald-500/30'
-                            : 'bg-white/5 border border-white/20 text-white/50 hover:bg-white/10'
+                            ? 'bg-success-50 border border-success-100 text-success-700 hover:bg-success-100'
+                            : 'bg-surface-3 border border-border text-gray-500 hover:bg-surface-2'
                         }`}
                       >
                         {b.actief ? '● Actief' : '○ Inactief'}
@@ -370,13 +370,13 @@ export default function BannerBeheer() {
                     <td className="px-4 py-3 text-right whitespace-nowrap">
                       <button
                         onClick={() => openBewerken(b)}
-                        className="text-blue-200 hover:text-white text-xs font-semibold px-2 py-1 rounded hover:bg-white/10 transition"
+                        className="text-brand-700 hover:underline underline-offset-4 text-xs font-semibold px-2 py-1 rounded transition"
                       >
                         Bewerk
                       </button>
                       <button
                         onClick={() => verwijder(b)}
-                        className="ml-1 inline-flex items-center gap-1 text-rose-200 hover:text-white text-xs font-semibold px-2 py-1 rounded hover:bg-white/10 transition"
+                        className="ml-1 inline-flex items-center gap-1 text-red-700 hover:underline underline-offset-4 text-xs font-semibold px-2 py-1 rounded transition"
                       >
                         <Trash className="w-3.5 h-3.5" /> Verwijder
                       </button>

@@ -53,14 +53,14 @@ export default function QuickResend({ transacties = [] }) {
   return (
     <section
       aria-label={t('quick_resend_titel')}
-      className="rounded-2xl border border-white/60 bg-white/80 backdrop-blur-lg shadow-sm animate-fade-up p-4"
+      className="rounded-md border border-border bg-surface shadow-soft animate-fade-up p-4"
     >
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-          <Zap className="w-4 h-4 text-amber-500" aria-hidden="true" />
+        <h3 className="font-display font-medium text-ink-1 text-sm flex items-center gap-2">
+          <Zap className="w-4 h-4 text-accent-500" aria-hidden="true" />
           {t('quick_resend_titel')}
         </h3>
-        <span className="text-[11px] text-slate-400">
+        <span className="text-[11px] text-gray-400">
           {t('quick_resend_subtitel')}
         </span>
       </div>
@@ -72,19 +72,19 @@ export default function QuickResend({ transacties = [] }) {
             <button
               key={tx.id || naam}
               onClick={() => stuurOpnieuw(tx)}
-              className="flex flex-col items-center gap-2 p-3 rounded-xl bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 transition active:scale-95 group"
+              className="flex flex-col items-center gap-2 p-3 rounded-md bg-surface-2 hover:bg-brand-50 border border-border hover:border-brand-200 transition active:scale-95 group"
               aria-label={`${t('quick_resend_naar')} ${naam}`}
             >
               <Avatar naam={naam} size="lg" />
               <div className="text-center min-w-0 w-full">
-                <div className="text-xs font-semibold text-gray-800 truncate">
+                <div className="text-xs font-semibold text-ink-1 truncate">
                   {naam}
                 </div>
-                <div className="text-[10px] text-gray-500">
+                <div className="text-[10px] text-gray-500 font-display tabular-nums">
                   €{Number(tx.eurBedrag || tx.eur_bedrag || 0).toFixed(0)}
                 </div>
               </div>
-              <span className="text-[10px] font-bold text-blue-600 opacity-0 group-hover:opacity-100 transition">
+              <span className="text-[10px] font-semibold text-brand-700 opacity-0 group-hover:opacity-100 transition">
                 {t('quick_resend_actie')} →
               </span>
             </button>

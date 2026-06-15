@@ -47,26 +47,26 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
 
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-600 mb-2">{label}</label>
+      <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">{label}</label>
       <div
         onClick={() => inputRef.current?.click()}
-        className={`relative border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition ${
+        className={`relative border border-dashed rounded-md p-6 text-center cursor-pointer transition ${
           preview
-            ? 'border-green-400 bg-green-50'
-            : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+            ? 'border-success-500 bg-success-50'
+            : 'border-border hover:border-brand-400 hover:bg-brand-50'
         }`}
       >
         {preview ? (
           <div className="space-y-2">
-            <img src={preview} alt="Preview" className="h-32 mx-auto rounded-xl object-cover shadow" loading="lazy" decoding="async" />
-            <p className="text-green-600 font-semibold text-sm">Foto geüpload</p>
-            <p className="text-gray-400 text-xs">Klik om te wijzigen</p>
+            <img src={preview} alt="Preview" className="h-32 mx-auto rounded-md object-cover shadow-soft" loading="lazy" decoding="async" />
+            <p className="text-success-700 font-semibold text-sm">Foto geüpload</p>
+            <p className="text-gray-500 text-xs">Klik om te wijzigen</p>
           </div>
         ) : (
           <div>
             <div className="mb-2"><Plus className="w-10 h-10 mx-auto text-gray-400" /></div>
-            <p className="text-gray-700 font-semibold text-sm">{sublabel || 'Klik om foto te uploaden'}</p>
-            <p className="text-gray-400 text-xs mt-1">JPG, PNG of PDF · Max 10MB</p>
+            <p className="text-ink-2 font-semibold text-sm">{sublabel || 'Klik om foto te uploaden'}</p>
+            <p className="text-gray-500 text-xs mt-1">JPG, PNG of PDF · Max 10MB</p>
           </div>
         )}
         <input
@@ -86,42 +86,42 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
 function StapPersoonlijk({ form, update, onVolgende }) {
   const geldig = form.voornaam && form.achternaam && form.geboortedatum;
   return (
-    <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Persoonlijke gegevens</h2>
-        <p className="text-gray-500 text-sm mt-1">KYC-procedure conform Wwft en AML-richtlijnen (uitgevoerd via licentiepartner bij commerciële livegang).</p>
+        <h2 className="font-display text-xl font-medium text-ink-1">Persoonlijke gegevens</h2>
+        <p className="text-ink-2 text-sm mt-1">KYC-procedure conform Wwft en AML-richtlijnen (uitgevoerd via licentiepartner bij commerciële livegang).</p>
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
+      <div className="bg-amber-50 border border-amber-200 rounded-md p-3 text-xs text-amber-800">
         <strong>Bèta:</strong> Tijdens de testfase worden je documentfoto's lokaal verwerkt en niet permanent opgeslagen.
         Bij commerciële livegang verloopt KYC via onze licentiepartner met versleutelde opslag.
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">Voornaam *</label>
+          <label className="block text-xs font-semibold text-ink-2 mb-1">Voornaam *</label>
           <input value={form.voornaam} onChange={e => update('voornaam', e.target.value)}
             placeholder="Aydin"
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition" />
+            className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">Achternaam *</label>
+          <label className="block text-xs font-semibold text-ink-2 mb-1">Achternaam *</label>
           <input value={form.achternaam} onChange={e => update('achternaam', e.target.value)}
             placeholder="Dogan"
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition" />
+            className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition" />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Geboortedatum *</label>
+        <label className="block text-xs font-semibold text-ink-2 mb-1">Geboortedatum *</label>
         <input type="date" value={form.geboortedatum} onChange={e => update('geboortedatum', e.target.value)}
           className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition" />
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Nationaliteit</label>
+        <label className="block text-xs font-semibold text-ink-2 mb-1">Nationaliteit</label>
         <select value={form.nationaliteit} onChange={e => update('nationaliteit', e.target.value)}
-          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition bg-white">
+          className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition">
           <option value="TR">Turks</option>
           <option value="NL">Nederlands</option>
           <option value="DUAL">Dubbele nationaliteit</option>
@@ -130,18 +130,18 @@ function StapPersoonlijk({ form, update, onVolgende }) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Telefoonnummer</label>
+        <label className="block text-xs font-semibold text-ink-2 mb-1">Telefoonnummer</label>
         <input value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
           placeholder="+31 6 12345678"
           className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition" />
       </div>
 
-      <div className="bg-blue-50 rounded-xl p-3 text-xs text-blue-700">
+      <div className="bg-brand-50 border border-brand-100 rounded-md p-3 text-xs text-brand-700">
         Je gegevens zijn versleuteld en worden alleen gebruikt voor verificatie. Wij delen niets met derden.
       </div>
 
       <button onClick={onVolgende} disabled={!geldig}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition">
+        className="btn-inst w-full py-3 disabled:bg-gray-300 disabled:cursor-not-allowed">
         Volgende →
       </button>
     </div>
@@ -153,25 +153,25 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
   const geldig = form.documentType && form.documentNummer && docFoto;
 
   return (
-    <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Identiteitsbewijs</h2>
-        <p className="text-gray-500 text-sm mt-1">SwiftBridge accepteert het Turkse kimlik!</p>
+        <h2 className="font-display text-xl font-medium text-ink-1">Identiteitsbewijs</h2>
+        <p className="text-ink-2 text-sm mt-1">SwiftBridge accepteert het Turkse kimlik!</p>
       </div>
 
       <div className="space-y-2">
         {DOC_TYPES.map(d => (
           <label key={d.value}
-            className={`flex items-center p-3 border-2 rounded-xl cursor-pointer transition ${
+            className={`flex items-center p-3 border rounded-md cursor-pointer transition ${
               form.documentType === d.value
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-gray-200 hover:border-gray-300'}`}>
+                ? 'border-brand-500 bg-brand-50'
+                : 'border-border hover:border-gray-300'}`}>
             <input type="radio" name="docType" value={d.value}
               checked={form.documentType === d.value}
               onChange={e => update('documentType', e.target.value)}
-              className="mr-3 accent-blue-600" />
+              className="mr-3 accent-brand-600" />
             <div>
-              <div className="font-semibold text-gray-800 text-sm">{d.label}</div>
+              <div className="font-semibold text-ink-1 text-sm">{d.label}</div>
               <div className="text-xs text-gray-500">{d.sub}</div>
             </div>
           </label>
@@ -179,10 +179,10 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Documentnummer *</label>
+        <label className="block text-xs font-semibold text-ink-2 mb-1">Documentnummer *</label>
         <input value={form.documentNummer} onChange={e => update('documentNummer', e.target.value)}
           placeholder={form.documentType === 'kimlik' ? '12345678901 (11 cijfers)' : 'NL1234567'}
-          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 font-mono transition" />
+          className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 font-mono transition" />
       </div>
 
       <FotoUpload
@@ -197,9 +197,9 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
       )}
 
       <div className="flex gap-3">
-        <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm transition">← Terug</button>
+        <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm transition">← Terug</button>
         <button onClick={onVolgende} disabled={!geldig}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition text-sm">
+          className="flex-1 btn-inst py-3 disabled:bg-gray-300 disabled:cursor-not-allowed">
           Volgende →
         </button>
       </div>
@@ -210,10 +210,10 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
 // ── Stap 2: Selfie ────────────────────────────────────────────────────────────
 function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTerug }) {
   return (
-    <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Selfie verificatie</h2>
-        <p className="text-gray-500 text-sm mt-1">
+        <h2 className="font-display text-xl font-medium text-ink-1">Selfie verificatie</h2>
+        <p className="text-ink-2 text-sm mt-1">
           Houd je identiteitsbewijs naast je gezicht en maak een foto. Zorg voor goede belichting.
         </p>
       </div>
@@ -225,9 +225,9 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
           { icoon: Eye, tekst: 'Kijk recht in camera' },
           { icoon: IdCard, tekst: 'Document zichtbaar' },
         ].map(t => (
-          <div key={t.tekst} className="bg-blue-50 rounded-xl p-2 text-center">
-            <div className="mb-1 text-blue-600"><t.icoon className="w-5 h-5 mx-auto" /></div>
-            <div className="text-xs text-blue-700 font-medium">{t.tekst}</div>
+          <div key={t.tekst} className="bg-brand-50 border border-brand-100 rounded-md p-2 text-center">
+            <div className="mb-1 text-brand-600"><t.icoon className="w-5 h-5 mx-auto" /></div>
+            <div className="text-xs text-brand-700 font-medium">{t.tekst}</div>
           </div>
         ))}
       </div>
@@ -240,12 +240,12 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
         capture="user"
       />
 
-      {fout && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{fout}</div>}
+      {fout && <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-600 text-sm">{fout}</div>}
 
       <div className="flex gap-3">
-        <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm transition">← Terug</button>
+        <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm transition">← Terug</button>
         <button onClick={onIndienen} disabled={!selfieFoto || laden}
-          className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition text-sm">
+          className="flex-1 bg-success-600 hover:bg-success-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-md transition text-sm">
           {laden ? 'Indienen...' : (
             <span className="inline-flex items-center justify-center gap-1.5">
               <Check className="w-4 h-4" /> Indienen
@@ -260,12 +260,12 @@ function StapSelfie({ selfieFoto, setSelfieFoto, laden, fout, onIndienen, onTeru
 // ── Stap 3: Klaar ─────────────────────────────────────────────────────────────
 function StapKlaar({ form }) {
   return (
-    <div className="bg-white rounded-2xl shadow p-6 text-center space-y-5">
-      <div><Sparkles className="w-16 h-16 mx-auto text-blue-600" /></div>
-      <h2 className="text-2xl font-bold text-gray-800">KYC ingediend!</h2>
-      <p className="text-gray-500 text-sm">Je aanvraag is ontvangen en wordt binnen 5 minuten beoordeeld.</p>
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 text-center space-y-5">
+      <div><Sparkles className="w-16 h-16 mx-auto text-brand-600" /></div>
+      <h2 className="font-display text-2xl font-medium text-ink-1">KYC ingediend!</h2>
+      <p className="text-ink-2 text-sm">Je aanvraag is ontvangen en wordt binnen 5 minuten beoordeeld.</p>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left space-y-3">
+      <div className="bg-amber-50 border border-amber-200 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Naam</span>
           <span className="font-semibold">{form.voornaam} {form.achternaam}</span>
@@ -280,11 +280,11 @@ function StapKlaar({ form }) {
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Verwacht klaar</span>
-          <span className="font-semibold text-green-600">&lt; 5 minuten</span>
+          <span className="font-semibold text-success-700">&lt; 5 minuten</span>
         </div>
       </div>
 
-      <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700 flex items-start gap-2">
+      <div className="bg-brand-50 border border-brand-100 rounded-md p-4 text-sm text-brand-700 flex items-start gap-2">
         <Bell className="w-4 h-4 mt-0.5 flex-shrink-0" />
         <span>Je ontvangt een notificatie zodra je KYC is goedgekeurd. Daarna kun je direct geld overmaken.</span>
       </div>
@@ -295,29 +295,29 @@ function StapKlaar({ form }) {
 // ── Al goedgekeurd scherm ──────────────────────────────────────────────────
 function KYCGoedgekeurd({ naam }) {
   return (
-    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
-      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto"><CheckCircle className="w-10 h-10 text-green-600" /></div>
-      <h2 className="text-2xl font-bold text-gray-800">Verificatie voltooid!</h2>
-      <p className="text-gray-500 text-sm">Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken naar Turkije.</p>
-      <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-left space-y-3">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-8 text-center space-y-5">
+      <div className="w-20 h-20 bg-success-100 rounded-full flex items-center justify-center mx-auto"><CheckCircle className="w-10 h-10 text-success-600" /></div>
+      <h2 className="font-display text-2xl font-medium text-ink-1">Verificatie voltooid!</h2>
+      <p className="text-ink-2 text-sm">Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken naar Turkije.</p>
+      <div className="bg-success-50 border border-success-100 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
-          <span className="font-bold text-green-600">Goedgekeurd</span>
+          <span className="font-semibold text-success-700">Goedgekeurd</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Toegang</span>
-          <span className="font-bold text-green-600">Volledige toegang</span>
+          <span className="font-semibold text-success-700">Volledige toegang</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Transactielimiet</span>
-          <span className="font-bold text-gray-800">€10 – €5.000</span>
+          <span className="font-semibold tabular-nums text-ink-1">€10 – €5.000</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Weeklimiet</span>
-          <span className="font-bold text-gray-800">€5.000 per week</span>
+          <span className="font-semibold tabular-nums text-ink-1">€5.000 per week</span>
         </div>
       </div>
-      <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-700">
+      <div className="bg-brand-50 border border-brand-100 rounded-md p-4 text-sm text-brand-700">
         Ga naar het tabblad <strong>Overmaken</strong> om een betaling te starten.
       </div>
     </div>
@@ -327,15 +327,15 @@ function KYCGoedgekeurd({ naam }) {
 // ── In behandeling scherm ──────────────────────────────────────────────────
 function KYCInBehandeling({ naam }) {
   return (
-    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-8 text-center space-y-5">
       <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto">
         <Clock className="w-10 h-10 text-amber-600 animate-pulse" />
       </div>
-      <h2 className="text-2xl font-bold text-gray-800">Aanvraag in behandeling</h2>
-      <p className="text-gray-500 text-sm">
+      <h2 className="font-display text-2xl font-medium text-ink-1">Aanvraag in behandeling</h2>
+      <p className="text-ink-2 text-sm">
         Hoi {naam}, we controleren je documenten. Dit duurt normaal <strong>minder dan 5 minuten</strong>.
       </p>
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left space-y-3">
+      <div className="bg-amber-50 border border-amber-200 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
           <span className="font-bold text-amber-600">In beoordeling</span>
@@ -346,12 +346,12 @@ function KYCInBehandeling({ naam }) {
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Verwacht klaar</span>
-          <span className="font-bold text-green-600">&lt; 5 minuten</span>
+          <span className="font-semibold text-success-700">&lt; 5 minuten</span>
         </div>
       </div>
       <div className="space-y-2">
         {['Documenten ontvangen', 'Identiteitscontrole bezig...', 'AML/compliance check...'].map((stap, i) => (
-          <div key={i} className={`flex items-center gap-3 p-3 rounded-xl text-sm ${i === 0 ? 'bg-green-50 text-green-700' : i === 1 ? 'bg-amber-50 text-amber-700' : 'bg-gray-50 text-gray-400'}`}>
+          <div key={i} className={`flex items-center gap-3 p-3 rounded-md text-sm ${i === 0 ? 'bg-success-50 text-success-700' : i === 1 ? 'bg-amber-50 text-amber-700' : 'bg-gray-50 text-gray-400'}`}>
             <span>{i === 0 ? <CheckCircle className="w-4 h-4" /> : i === 1 ? <Refresh className="w-4 h-4" /> : <Clock className="w-4 h-4" />}</span>
             <span className={i < 2 ? 'font-medium' : ''}>{stap}</span>
           </div>
@@ -366,7 +366,7 @@ function KYCInBehandeling({ naam }) {
 function KYCAfgewezen({ naam, onOpnieuw }) {
   const { t } = useTaal();
   return (
-    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-8 text-center space-y-5">
       <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto" aria-hidden="true">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-red-600">
           <circle cx="12" cy="12" r="10" />
@@ -374,11 +374,11 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
           <line x1="9" y1="9" x2="15" y2="15" />
         </svg>
       </div>
-      <h2 className="text-2xl font-bold text-gray-800">{t('kyc_afgewezen_titel')}</h2>
-      <p className="text-gray-500 text-sm">
+      <h2 className="font-display text-2xl font-medium text-ink-1">{t('kyc_afgewezen_titel')}</h2>
+      <p className="text-ink-2 text-sm">
         {t('kyc_afgewezen_intro', { naam })}
       </p>
-      <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-left space-y-3">
+      <div className="bg-red-50 border border-red-200 rounded-md p-4 text-left space-y-3">
         <p className="font-semibold text-red-700 text-sm mb-2">{t('kyc_afgewezen_redenen_titel')}:</p>
         {[
           t('kyc_afgewezen_reden_1'),
@@ -392,11 +392,11 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
           </div>
         ))}
       </div>
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">
-        {t('kyc_afgewezen_support')} <a href="mailto:support@swiftbridge.tr" className="font-bold underline">support@swiftbridge.tr</a>
+      <div className="bg-amber-50 border border-amber-200 rounded-md p-3 text-sm text-amber-700">
+        {t('kyc_afgewezen_support')} <a href="mailto:support@swiftbridge.tr" className="font-semibold underline underline-offset-4">support@swiftbridge.tr</a>
       </div>
       <button onClick={onOpnieuw}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition inline-flex items-center justify-center gap-2">
+        className="btn-inst w-full py-3 inline-flex items-center justify-center gap-2">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="23 4 23 10 17 10" />
           <path d="M20.49 15A9 9 0 1 1 5.64 5.64L23 10" />
@@ -410,13 +410,13 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
 // ── Geblokkeerd scherm ─────────────────────────────────────────────────────
 function KYCGeblokkeerd() {
   return (
-    <div className="bg-white rounded-2xl shadow p-8 text-center space-y-5">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-8 text-center space-y-5">
       <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto"><Lock className="w-10 h-10 text-gray-600" /></div>
-      <h2 className="text-2xl font-bold text-gray-800">Account geblokkeerd</h2>
-      <p className="text-gray-500 text-sm">
+      <h2 className="font-display text-2xl font-medium text-ink-1">Account geblokkeerd</h2>
+      <p className="text-ink-2 text-sm">
         Je account is tijdelijk geblokkeerd. Neem contact op met onze klantenservice.
       </p>
-      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left space-y-3">
+      <div className="bg-gray-50 border border-gray-200 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
           <span className="font-bold text-gray-700">Geblokkeerd</span>
@@ -426,7 +426,7 @@ function KYCGeblokkeerd() {
           <span className="font-bold text-red-600">Geen toegang</span>
         </div>
       </div>
-      <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 space-y-2">
+      <div className="bg-red-50 border border-red-200 rounded-md p-4 text-sm text-red-700 space-y-2">
         <p className="font-bold flex items-center gap-1.5"><Mail className="w-4 h-4" /> Contact klantenservice</p>
         <p>E-mail: <strong>support@swiftbridge.tr</strong></p>
         <p className="text-xs text-red-500">Vermeld je e-mailadres en de reden van je verzoek.</p>
@@ -535,18 +535,18 @@ export default function KYCFlow({ token, gebruiker }) {
       <div className="flex justify-between mb-8 relative">
         <div className="absolute top-4 left-0 right-0 h-0.5 bg-gray-200 z-0" />
         <div
-          className="absolute top-4 left-0 h-0.5 bg-blue-600 z-0 transition-all duration-500"
+          className="absolute top-4 left-0 h-0.5 bg-brand-600 z-0 transition-all duration-500"
           style={{ width: `${(stap / (STAPPEN.length - 1)) * 100}%` }}
         />
         {STAPPEN.map((s, i) => (
           <div key={i} className="flex flex-col items-center z-10">
             <div className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition ${
-              i < stap ? 'bg-blue-600 border-blue-600 text-white' :
-              i === stap ? 'bg-white border-blue-600 text-blue-600 shadow-sm' :
-                           'bg-white border-gray-300 text-gray-400'}`}>
+              i < stap ? 'bg-brand-600 border-brand-600 text-white' :
+              i === stap ? 'bg-surface border-brand-600 text-brand-600 shadow-soft' :
+                           'bg-surface border-gray-300 text-gray-400'}`}>
               {i < stap ? <Check className="w-4 h-4" /> : <s.icoon className="w-4 h-4" />}
             </div>
-            <span className={`text-xs mt-1 font-medium ${i <= stap ? 'text-blue-600' : 'text-gray-400'}`}>
+            <span className={`text-[0.7rem] mt-1 font-medium uppercase tracking-[0.15em] ${i <= stap ? 'text-brand-700' : 'text-gray-400'}`}>
               {s.titel}
             </span>
           </div>
@@ -583,18 +583,18 @@ function DocumentUploadFallback() {
   const [klaar, setKlaar] = useState(false);
 
   return (
-    <div className="mt-5 bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
+    <div className="mt-5 bg-surface rounded-md shadow-soft border border-border overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls="doc-upload-paneel"
-        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition"
+        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-surface-3 transition"
       >
         <div className="flex items-center gap-3">
-          <div className="text-blue-600" aria-hidden="true"><Globe className="w-6 h-6" /></div>
+          <div className="text-brand-600" aria-hidden="true"><Globe className="w-6 h-6" /></div>
           <div>
-            <div className="font-bold text-gray-800 text-sm">
+            <div className="font-display font-medium text-ink-1 text-sm">
               {t('kyc_fallback_titel')}
             </div>
             <div className="text-xs text-gray-500">
@@ -605,9 +605,9 @@ function DocumentUploadFallback() {
         <div className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true"><ChevronDown className="w-4 h-4" /></div>
       </button>
       {open && (
-        <div id="doc-upload-paneel" className="border-t border-gray-100 p-5 bg-gray-50">
+        <div id="doc-upload-paneel" className="border-t border-border-subtle p-5 bg-surface-2">
           {klaar ? (
-            <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
+            <div className="bg-success-50 border border-success-100 rounded-md p-4 text-sm text-success-700">
               {t('kyc_upload_succes_omschrijving')}
             </div>
           ) : (

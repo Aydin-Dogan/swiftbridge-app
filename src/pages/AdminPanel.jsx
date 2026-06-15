@@ -27,15 +27,15 @@ function tijdGeleden(iso) {
 function StatusBadge({ status }) {
   const { t } = useTaal();
   const map = {
-    in_behandeling: { kleur: 'bg-amber-100 text-amber-700 border-amber-200', label: `${t('admin_status_in_behandeling') || 'In behandeling'}` },
-    goedgekeurd: { kleur: 'bg-green-100 text-green-700 border-green-200', label: `${t('admin_status_goedgekeurd') || 'Goedgekeurd'}` },
+    in_behandeling: { kleur: 'bg-accent-400/15 text-accent-600 border-accent-400/30', label: `${t('admin_status_in_behandeling') || 'In behandeling'}` },
+    goedgekeurd: { kleur: 'bg-success-50 text-success-700 border-success-100', label: `${t('admin_status_goedgekeurd') || 'Goedgekeurd'}` },
     afgewezen: { kleur: 'bg-red-100 text-red-700 border-red-200', label: `${t('admin_status_afgewezen') || 'Afgewezen'}` },
-    geblokkeerd: { kleur: 'bg-gray-200 text-gray-700 border-gray-300', label: `${t('admin_status_geblokkeerd') || 'Geblokkeerd'}` },
-    niet_ingediend: { kleur: 'bg-blue-100 text-blue-700 border-blue-200', label: `${t('admin_status_niet_ingediend') || 'Niet ingediend'}` },
+    geblokkeerd: { kleur: 'bg-surface-3 text-ink-2 border-border', label: `${t('admin_status_geblokkeerd') || 'Geblokkeerd'}` },
+    niet_ingediend: { kleur: 'bg-brand-50 text-brand-700 border-brand-100', label: `${t('admin_status_niet_ingediend') || 'Niet ingediend'}` },
   };
   const s = map[status] || map.niet_ingediend;
   return (
-    <span className={`inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full border ${s.kleur}`}>
+    <span className={`inline-flex items-center text-[0.7rem] font-medium uppercase tracking-[0.16em] px-2.5 py-1 rounded-full border ${s.kleur}`}>
       {s.label}
     </span>
   );
@@ -70,18 +70,18 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
   }
 
   return (
-    <div className={`bg-white rounded-2xl border-2 p-5 space-y-4 ${
-      aanvraag.status === 'in_behandeling' ? 'border-amber-300 shadow-amber-100 shadow-lg' : 'border-gray-100'
+    <div className={`bg-surface rounded-md border p-5 space-y-4 shadow-soft ${
+      aanvraag.status === 'in_behandeling' ? 'border-accent-400/40' : 'border-border'
     }`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl font-bold text-blue-600">
+          <div className="w-12 h-12 bg-brand-50 rounded-full flex items-center justify-center font-display text-xl font-medium text-brand-700">
             {aanvraag.naam?.[0] || '?'}
           </div>
           <div>
-            <div className="font-bold text-gray-800">{aanvraag.naam}</div>
-            <div className="text-sm text-gray-500">{aanvraag.email}</div>
-            {aanvraag.telefoon && <div className="text-xs text-gray-400">{aanvraag.telefoon}</div>}
+            <div className="font-display font-medium text-ink-1">{aanvraag.naam}</div>
+            <div className="text-sm text-ink-2">{aanvraag.email}</div>
+            {aanvraag.telefoon && <div className="text-xs text-ink-3">{aanvraag.telefoon}</div>}
           </div>
         </div>
         <StatusBadge status={aanvraag.status} />
@@ -96,9 +96,9 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
           [t('admin_kyc_ingediend') || 'Ingediend', tijdGeleden(aanvraag.ingediend_op)],
           [t('admin_kyc_beoordeeld') || 'Beoordeeld', tijdGeleden(aanvraag.beoordeeld_op)],
         ].map(([label, waarde]) => (
-          <div key={label} className="bg-gray-50 rounded-xl px-3 py-2">
-            <div className="text-xs text-gray-400">{label}</div>
-            <div className="font-medium text-gray-800 capitalize">{waarde || '—'}</div>
+          <div key={label} className="bg-surface-3 rounded-md px-3 py-2">
+            <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500">{label}</div>
+            <div className="font-medium text-ink-1 capitalize">{waarde || '—'}</div>
           </div>
         ))}
       </div>
@@ -108,19 +108,19 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
           <button
             onClick={() => beoordeel('goedgekeurd')}
             disabled={laden}
-            className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm">
+            className="flex-1 inline-flex items-center justify-center gap-1.5 bg-success-600 hover:bg-success-700 disabled:opacity-50 text-white font-medium uppercase tracking-[0.18em] py-2.5 rounded-md transition text-[0.7rem]">
             {bezig === 'goedgekeurd' ? <Clock className="w-4 h-4 inline-block align-text-bottom" /> : <CheckCircle className="w-4 h-4 inline-block align-text-bottom" />} {t('admin_actie_goedkeuren') || 'Goedkeuren'}
           </button>
           <button
             onClick={() => beoordeel('afgewezen')}
             disabled={laden}
-            className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm">
+            className="flex-1 inline-flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-medium uppercase tracking-[0.18em] py-2.5 rounded-md transition text-[0.7rem]">
             {bezig === 'afgewezen' ? <Clock className="w-4 h-4 inline-block align-text-bottom" /> : <XCircle className="w-4 h-4 inline-block align-text-bottom" />} {t('admin_actie_afwijzen') || 'Afwijzen'}
           </button>
           <button
             onClick={() => beoordeel('geblokkeerd')}
             disabled={laden}
-            className="px-3 bg-gray-700 hover:bg-gray-800 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl transition text-sm"
+            className="px-3 bg-ink-1 hover:opacity-90 disabled:opacity-50 text-white font-medium py-2.5 rounded-md transition text-[0.7rem]"
             title={t('admin_actie_blokkeren_tooltip') || 'Account blokkeren'}>
             {bezig === 'geblokkeerd' ? <Clock className="w-4 h-4 inline-block align-text-bottom" /> : <Lock className="w-4 h-4 inline-block align-text-bottom" />}
           </button>
@@ -131,13 +131,13 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
         <div className="flex gap-2">
           {aanvraag.status !== 'goedgekeurd' && (
             <button onClick={() => beoordeel('goedgekeurd')} disabled={laden}
-              className="flex-1 bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2 rounded-xl transition text-sm">
+              className="flex-1 bg-success-50 hover:bg-success-100 text-success-700 font-semibold py-2 rounded-md transition text-sm">
               {t('admin_actie_alsnog_goedkeuren') || 'Alsnog goedkeuren'}
             </button>
           )}
           {aanvraag.status !== 'geblokkeerd' && (
             <button onClick={() => beoordeel('geblokkeerd')} disabled={laden}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 rounded-xl transition text-sm">
+              className="flex-1 bg-surface-3 hover:bg-surface-2 text-ink-2 font-semibold py-2 rounded-md transition text-sm">
               {t('admin_actie_blokkeren') || 'Blokkeren'}
             </button>
           )}
@@ -150,10 +150,10 @@ function KYCKaart({ aanvraag, secret, onRefresh }) {
 // ── Stat kaartje ──────────────────────────────────────────────────────────────
 function StatKaart({ icoon: Icoon, label, waarde, kleur }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
-      {Icoon && <Icoon className="w-6 h-6 mb-2 text-gray-400" />}
-      <div className={`text-2xl font-bold ${kleur}`}>{waarde}</div>
-      <div className="text-xs text-gray-500 mt-0.5">{label}</div>
+    <div className="bg-surface rounded-md border border-border p-4 shadow-soft">
+      {Icoon && <Icoon className="w-6 h-6 mb-2 text-gray-500" />}
+      <div className={`font-display text-2xl font-medium tabular-nums ${kleur}`}>{waarde}</div>
+      <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mt-1">{label}</div>
     </div>
   );
 }
@@ -209,29 +209,29 @@ export default function AdminPanel() {
 
   if (!secret) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-2xl p-8 text-center shadow max-w-sm w-full">
-          <Lock className="w-10 h-10 mx-auto mb-4 text-gray-400" />
-          <h2 className="text-xl font-bold text-gray-800 mb-2">{t('admin_toegang_titel') || 'Admin toegang vereist'}</h2>
-          <p className="text-gray-500 text-sm">{t('admin_toegang_uitleg_1') || 'Voeg'} <code className="bg-gray-100 px-1 rounded">?secret=...</code> {t('admin_toegang_uitleg_2') || 'toe aan de URL.'}</p>
+      <div className="min-h-screen bg-surface-2 flex items-center justify-center">
+        <div className="bg-surface border border-border rounded-md p-8 text-center shadow-soft max-w-sm w-full">
+          <Lock className="w-10 h-10 mx-auto mb-4 text-gray-500" />
+          <h2 className="font-display text-xl font-medium text-ink-1 mb-2">{t('admin_toegang_titel') || 'Admin toegang vereist'}</h2>
+          <p className="text-ink-2 text-sm">{t('admin_toegang_uitleg_1') || 'Voeg'} <code className="bg-surface-3 px-1 rounded">?secret=...</code> {t('admin_toegang_uitleg_2') || 'toe aan de URL.'}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-2">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="bg-surface border-b border-border sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/')} className="text-blue-600"><Zap className="w-7 h-7" /></button>
+            <button onClick={() => navigate('/')} className="text-brand-600"><Zap className="w-7 h-7" /></button>
             <div>
-              <div className="font-extrabold text-gray-900 leading-none">{t('admin_titel') || 'SwiftBridge Admin'}</div>
-              <div className="text-xs text-amber-600 font-semibold">{t('admin_beveiligd') || 'Beveiligd paneel'}</div>
+              <div className="font-display font-medium text-ink-1 leading-none">{t('admin_titel') || 'SwiftBridge Admin'}</div>
+              <div className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-600">{t('admin_beveiligd') || 'Beveiligd paneel'}</div>
             </div>
           </div>
-          <button onClick={laadData} className="text-gray-400 hover:text-blue-600 transition" title={t('admin_vernieuwen') || 'Vernieuwen'}><Refresh className="w-5 h-5" /></button>
+          <button onClick={laadData} className="text-gray-500 hover:text-brand-600 transition" title={t('admin_vernieuwen') || 'Vernieuwen'}><Refresh className="w-5 h-5" /></button>
         </div>
       </header>
 
@@ -239,20 +239,20 @@ export default function AdminPanel() {
 
         {/* Fout */}
         {fout && (
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-red-700 font-medium text-center">
+          <div className="bg-red-50 border border-red-200 rounded-md p-4 text-red-700 font-medium text-center">
             {fout}
           </div>
         )}
 
         {/* Audit log integriteit */}
         {integriteit && (
-          <div className={`rounded-2xl border p-4 flex items-center gap-3 ${
+          <div className={`rounded-md border p-4 flex items-center gap-3 ${
             integriteit.geldig
-              ? 'bg-green-50 border-green-200 text-green-800'
+              ? 'bg-success-50 border-success-100 text-success-700'
               : 'bg-red-50 border-red-200 text-red-800'}`}>
             {integriteit.geldig ? <Lock className="w-6 h-6 flex-shrink-0" /> : <AlertTriangle className="w-6 h-6 flex-shrink-0" />}
             <div>
-              <div className="font-bold text-sm">
+              <div className="font-semibold text-sm">
                 {integriteit.geldig ? (t('admin_audit_intact') || 'Audit log intact') : (t('admin_audit_aangetast') || 'Audit log AANGETAST!')}
               </div>
               <div className="text-xs mt-0.5">
@@ -267,18 +267,18 @@ export default function AdminPanel() {
         {/* Statistieken */}
         {stats && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatKaart icoon={Users} label={t('admin_stat_gebruikers') || 'Gebruikers'} waarde={stats.gebruikers} kleur="text-blue-600" />
-            <StatKaart icoon={Clock} label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0} kleur="text-amber-600" />
-            <StatKaart icoon={CheckCircle} label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'} waarde={stats.kyc?.goedgekeurd || 0} kleur="text-green-600" />
+            <StatKaart icoon={Users} label={t('admin_stat_gebruikers') || 'Gebruikers'} waarde={stats.gebruikers} kleur="text-brand-700" />
+            <StatKaart icoon={Clock} label={t('admin_stat_kyc_inbeh') || 'KYC in behandeling'} waarde={stats.kyc?.in_behandeling || 0} kleur="text-accent-600" />
+            <StatKaart icoon={CheckCircle} label={t('admin_stat_kyc_ok') || 'KYC goedgekeurd'} waarde={stats.kyc?.goedgekeurd || 0} kleur="text-success-700" />
             <StatKaart icoon={Euro} label={t('admin_stat_totaal_verstuurd') || 'Totaal verstuurd'}
               waarde={`€${((stats.transacties?.voltooid?.totaal || 0)).toLocaleString('nl-NL', { maximumFractionDigits: 0 })}`}
-              kleur="text-purple-600" />
+              kleur="text-ink-1" />
           </div>
         )}
 
         {/* Filters */}
         <div>
-          <h2 className="text-lg font-bold text-gray-800 mb-3">{t('admin_kyc_aanvragen') || 'KYC Aanvragen'}</h2>
+          <h2 className="font-display text-lg font-medium text-ink-1 mb-3">{t('admin_kyc_aanvragen') || 'KYC Aanvragen'}</h2>
           <div className="flex flex-wrap gap-2">
             {[
               { id: 'in_behandeling', label: `${t('admin_status_in_behandeling') || 'In behandeling'} (${aanvragen.filter(a => a.status === 'in_behandeling').length})` },
@@ -289,7 +289,7 @@ export default function AdminPanel() {
             ].map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)}
                 className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
-                  filter === f.id ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-300'
+                  filter === f.id ? 'bg-brand-600 text-white' : 'bg-surface border border-border text-ink-2 hover:border-brand-300'
                 }`}>
                 {f.label}
               </button>
@@ -299,12 +299,12 @@ export default function AdminPanel() {
 
         {/* KYC lijst */}
         {laden ? (
-          <div className="text-center py-12 text-gray-400">
+          <div className="text-center py-12 text-gray-500">
             <Clock className="w-8 h-8 mx-auto animate-pulse mb-2" />
             <p>{t('laden') || 'Laden...'}</p>
           </div>
         ) : gefilterd.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-400">
+          <div className="bg-surface rounded-md border border-border p-8 text-center text-gray-500">
             <Mail className="w-8 h-8 mx-auto mb-2" />
             <p>{t('admin_geen_aanvragen') || 'Geen aanvragen gevonden voor dit filter'}</p>
           </div>

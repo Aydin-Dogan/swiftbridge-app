@@ -50,20 +50,20 @@ export default function RecurringKaart({ item, onPauzeer, onHervat, onUitvoer, o
     : '—';
 
   return (
-    <article className={`rounded-2xl p-4 border shadow-sm transition ${
+    <article className={`rounded-md p-4 border shadow-soft transition ${
       item.actief
-        ? 'bg-white border-gray-200'
-        : 'bg-gray-50 border-gray-200 opacity-80'
+        ? 'bg-surface border-border'
+        : 'bg-surface-2 border-border opacity-80'
     }`}>
       <header className="flex items-start justify-between gap-3 mb-2">
         <div className="min-w-0 flex-1">
-          <h3 className="font-bold text-base text-gray-900 truncate">{item.naam}</h3>
-          <p className="text-xs text-gray-500 mt-0.5 truncate">{item.ontvangerNaam}</p>
+          <h3 className="font-display font-medium text-base text-ink-1 truncate">{item.naam}</h3>
+          <p className="text-xs text-ink-3 mt-0.5 truncate">{item.ontvangerNaam}</p>
         </div>
-        <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-1 rounded-full flex-shrink-0 ${
+        <span className={`text-[10px] font-semibold uppercase tracking-[0.2em] px-2 py-1 rounded-full flex-shrink-0 ${
           item.actief
-            ? 'bg-green-100 text-green-700'
-            : 'bg-gray-200 text-gray-600'
+            ? 'bg-success-100 text-success-700'
+            : 'bg-surface-3 text-ink-2'
         }`}>
           {item.actief ? t('recurring_status_actief') : t('recurring_status_pauze')}
         </span>
@@ -71,33 +71,33 @@ export default function RecurringKaart({ item, onPauzeer, onHervat, onUitvoer, o
 
       <div className="grid grid-cols-2 gap-2 text-xs my-3">
         <div>
-          <div className="text-gray-500">{t('recurring_kaart_bedrag')}</div>
-          <div className="font-bold text-gray-900 text-sm">{fmtEur(item.bedragEur)}</div>
+          <div className="text-ink-3">{t('recurring_kaart_bedrag')}</div>
+          <div className="font-display font-medium text-ink-1 text-sm tabular-nums">{fmtEur(item.bedragEur)}</div>
         </div>
         <div>
-          <div className="text-gray-500">{t('recurring_kaart_frequentie')}</div>
-          <div className="font-medium text-gray-800 text-sm">{freqLabel}{dagInfo ? ` · ${dagInfo}` : ''}</div>
+          <div className="text-ink-3">{t('recurring_kaart_frequentie')}</div>
+          <div className="font-medium text-ink-1 text-sm">{freqLabel}{dagInfo ? ` · ${dagInfo}` : ''}</div>
         </div>
         <div>
-          <div className="text-gray-500">{t('recurring_kaart_volgende')}</div>
-          <div className="font-medium text-gray-800 text-sm">
+          <div className="text-ink-3">{t('recurring_kaart_volgende')}</div>
+          <div className="font-medium text-ink-1 text-sm">
             {volgendeDatum}
-            <span className="text-gray-400 ml-1">({relativeDays(item.volgendeUitvoering)})</span>
+            <span className="text-ink-3 ml-1">({relativeDays(item.volgendeUitvoering)})</span>
           </div>
         </div>
         <div>
-          <div className="text-gray-500">{t('recurring_kaart_uitgevoerd')}</div>
-          <div className="font-medium text-gray-800 text-sm">{item.aantalUitgevoerd || 0}×</div>
+          <div className="text-ink-3">{t('recurring_kaart_uitgevoerd')}</div>
+          <div className="font-medium text-ink-1 text-sm tabular-nums">{item.aantalUitgevoerd || 0}×</div>
         </div>
       </div>
 
-      <footer className="flex flex-wrap gap-2 mt-2 pt-3 border-t border-gray-100">
+      <footer className="flex flex-wrap gap-2 mt-2 pt-3 border-t border-border">
         {item.actief ? (
           <button
             type="button"
             onClick={() => onPauzeer(item.id)}
             disabled={bezig}
-            className="text-xs px-3 py-2 rounded-lg bg-amber-50 text-amber-700 font-medium border border-amber-100 hover:bg-amber-100 active:scale-95 transition disabled:opacity-50"
+            className="text-xs px-3 py-2 rounded-md bg-accent-400/10 text-accent-600 font-medium border border-accent-400/20 hover:bg-accent-400/20 active:scale-95 transition disabled:opacity-50"
           >
             {t('recurring_actie_pauzeer')}
           </button>
@@ -106,7 +106,7 @@ export default function RecurringKaart({ item, onPauzeer, onHervat, onUitvoer, o
             type="button"
             onClick={() => onHervat(item.id)}
             disabled={bezig}
-            className="text-xs px-3 py-2 rounded-lg bg-green-50 text-green-700 font-medium border border-green-100 hover:bg-green-100 active:scale-95 transition disabled:opacity-50"
+            className="text-xs px-3 py-2 rounded-md bg-success-50 text-success-700 font-medium border border-success-100 hover:bg-success-100 active:scale-95 transition disabled:opacity-50"
           >
             {t('recurring_actie_hervat')}
           </button>
@@ -115,14 +115,14 @@ export default function RecurringKaart({ item, onPauzeer, onHervat, onUitvoer, o
           type="button"
           onClick={() => onUitvoer(item.id)}
           disabled={bezig || !item.actief}
-          className="text-xs px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium border border-blue-100 hover:bg-blue-100 active:scale-95 transition disabled:opacity-50"
+          className="text-xs px-3 py-2 rounded-md bg-brand-50 text-brand-700 font-medium border border-brand-100 hover:bg-brand-100 active:scale-95 transition disabled:opacity-50"
         >
           {t('recurring_actie_uitvoer_nu')}
         </button>
         {/* III — calendar export */}
         <a
           href={`${import.meta.env.VITE_API_URL || ''}/recurring/${item.id}/ical`}
-          className="text-xs px-3 py-2 rounded-lg bg-purple-50 text-purple-700 font-medium border border-purple-100 hover:bg-purple-100 active:scale-95 transition inline-flex items-center"
+          className="text-xs px-3 py-2 rounded-md bg-surface-2 text-ink-2 font-medium border border-border hover:bg-surface-3 active:scale-95 transition inline-flex items-center"
           title={t('recurring_ical_tooltip')}
         >
           {t('recurring_ical_knop')}
@@ -131,7 +131,7 @@ export default function RecurringKaart({ item, onPauzeer, onHervat, onUitvoer, o
           type="button"
           onClick={() => onVerwijder(item.id)}
           disabled={bezig}
-          className="text-xs px-3 py-2 rounded-lg bg-red-50 text-red-700 font-medium border border-red-100 hover:bg-red-100 active:scale-95 transition disabled:opacity-50 ml-auto"
+          className="text-xs px-3 py-2 rounded-md bg-red-50 text-red-700 font-medium border border-red-100 hover:bg-red-100 active:scale-95 transition disabled:opacity-50 ml-auto"
         >
           {t('recurring_actie_verwijder')}
         </button>

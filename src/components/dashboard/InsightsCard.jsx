@@ -28,7 +28,6 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
         lijst.push({
           Icoon: ChevronUp,
           tekst: t('dashboard_tip_1', { pct: pct.toFixed(1) }),
-          accent: 'from-emerald-500/20 to-teal-500/10',
         });
       }
     }
@@ -36,23 +35,19 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
       lijst.push({
         Icoon: Banknote,
         tekst: t('dashboard_tip_2', { bedrag: fmtEur(totaalBesparing) }),
-        accent: 'from-amber-500/20 to-orange-500/10',
       });
     }
     lijst.push({
       Icoon: Zap,
       tekst: t('dashboard_tip_3'),
-      accent: 'from-blue-500/20 to-indigo-500/10',
     });
     lijst.push({
       Icoon: Bell,
       tekst: t('dashboard_tip_4'),
-      accent: 'from-violet-500/20 to-fuchsia-500/10',
     });
     lijst.push({
       Icoon: Lock,
       tekst: t('dashboard_tip_5'),
-      accent: 'from-slate-500/20 to-slate-400/10',
     });
     return lijst;
   }, [koers, koersGisteren, totaalBesparing, t]);
@@ -72,19 +67,15 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
   return (
     <section
       aria-label={t('dashboard_tips_titel')}
-      className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 backdrop-blur-lg p-4 shadow-sm animate-fade-up"
+      className="relative overflow-hidden rounded-md border border-border bg-surface p-4 shadow-soft animate-fade-up"
     >
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${huidige.accent} opacity-60 pointer-events-none transition-all duration-500`}
-        aria-hidden="true"
-      />
       <div className="relative flex items-start gap-3">
-        <huidige.Icoon className="w-6 h-6 text-slate-600 flex-shrink-0" />
+        <huidige.Icoon className="w-6 h-6 text-ink-2 flex-shrink-0" />
         <div className="min-w-0 flex-1">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+          <div className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-0.5">
             {t('dashboard_tips_titel')}
           </div>
-          <p className="text-sm text-slate-700 leading-snug">
+          <p className="text-sm text-ink-2 leading-snug">
             {huidige.tekst}
           </p>
         </div>
@@ -94,7 +85,7 @@ export default function InsightsCard({ koers, koersGisteren, totaalBesparing }) 
               <span
                 key={i}
                 className={`block w-1.5 h-1.5 rounded-full transition-all ${
-                  i === idx ? 'bg-slate-700' : 'bg-slate-300'
+                  i === idx ? 'bg-ink-1' : 'bg-ink-3'
                 }`}
               />
             ))}

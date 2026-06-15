@@ -36,14 +36,14 @@ export default function FrequentiePicker({
             key={o.v}
             type="button"
             onClick={() => setFrequentie(o.v)}
-            className={`text-left p-3 rounded-xl border transition active:scale-[0.98] ${
+            className={`text-left p-3 rounded-md border transition active:scale-[0.98] ${
               frequentie === o.v
-                ? 'bg-blue-50 border-blue-500 text-blue-900 shadow-sm'
-                : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300'
+                ? 'bg-brand-50 border-brand-500 text-brand-900 shadow-soft'
+                : 'bg-surface border-border text-ink-2 hover:border-border-strong'
             }`}
             aria-pressed={frequentie === o.v}
           >
-            <div className="font-bold text-sm">{o.label}</div>
+            <div className="font-display font-medium text-sm">{o.label}</div>
             <div className="text-xs opacity-70 mt-0.5">{o.sub}</div>
           </button>
         ))}
@@ -51,13 +51,13 @@ export default function FrequentiePicker({
 
       {frequentie === 'maandelijks' && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-ink-2 mb-1">
             {t('recurring_dag_van_maand')}
           </label>
           <select
             value={dagVanMaand ?? 1}
             onChange={(e) => setDagVanMaand(Number(e.target.value))}
-            className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
           >
             {Array.from({ length: 31 }, (_, i) => i + 1).map(d => (
               <option key={d} value={d}>
@@ -66,7 +66,7 @@ export default function FrequentiePicker({
             ))}
           </select>
           {dagVanMaand >= 29 && (
-            <p className="mt-1 text-xs text-amber-600">
+            <p className="mt-1 text-xs text-accent-600">
               {t('recurring_dag_clamp_uitleg')}
             </p>
           )}
@@ -75,13 +75,13 @@ export default function FrequentiePicker({
 
       {frequentie === 'wekelijks' && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-ink-2 mb-1">
             {t('recurring_dag_van_week')}
           </label>
           <select
             value={dagVanWeek ?? 1}
             onChange={(e) => setDagVanWeek(Number(e.target.value))}
-            className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
           >
             {dagenVanWeek.map((label, i) => (
               <option key={i} value={i}>{label}</option>

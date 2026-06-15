@@ -192,14 +192,14 @@ export default function Login({ onLogin }) {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
+      <div className="min-h-screen bg-brand-hero flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-surface border border-border rounded-md shadow-soft p-6 space-y-4 animate-fade-up">
           <div className="text-center">
-            <div className="mx-auto w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-3">
-              <Mail className="w-7 h-7 text-blue-600" />
+            <div className="mx-auto w-14 h-14 rounded-full bg-brand-50 flex items-center justify-center mb-3">
+              <Mail className="w-7 h-7 text-brand-600" />
             </div>
-            <h2 className="text-xl font-bold text-gray-800">Inlogcode</h2>
-            <p className="text-gray-500 text-sm">We hebben een 6-cijferige code naar je e-mail gestuurd. Check ook spam folder.</p>
+            <h2 className="font-display text-xl font-medium text-ink-1">Inlogcode</h2>
+            <p className="text-ink-2 text-sm">We hebben een 6-cijferige code naar je e-mail gestuurd. Check ook spam folder.</p>
           </div>
           <form id="twofa-form" onSubmit={verifieer2FA} className="space-y-4">
             <input
@@ -230,28 +230,28 @@ export default function Login({ onLogin }) {
               placeholder="123456"
               required
               autoFocus
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-4 text-center text-3xl font-bold tracking-[0.5em] outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-4 py-4 text-center font-display text-3xl font-medium tabular-nums tracking-[0.5em] outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface"
             />
             <button
               type="button"
               onClick={plakUitKlembord}
-              className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2.5 rounded-xl transition-all active:scale-95 text-sm flex items-center justify-center gap-2"
+              className="w-full bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold py-2.5 rounded-md transition-colors text-sm flex items-center justify-center gap-2"
             >
               Plak code uit klembord
             </button>
             {twofaFout && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">{twofaFout}</p>
+              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3">{twofaFout}</p>
             )}
             <button type="submit" disabled={twofaLaden || twofaCode.length !== 6}
-              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
+              className="btn-inst w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {twofaLaden ? 'Bezig...' : 'Verifieer & inloggen'}
             </button>
             <button type="button" onClick={() => { setTwofaUserId(null); setTwofaPendingToken(null); setTwofaCode(''); setTwofaFout(''); }}
-              className="w-full text-gray-500 text-sm hover:text-gray-700">
+              className="w-full text-sm font-semibold text-brand-700 hover:underline underline-offset-4">
               ← Terug naar inloggen
             </button>
           </form>
-          <div className="bg-blue-50 border border-blue-100 rounded-xl p-2.5 text-[10px] text-blue-800 leading-snug">
+          <div className="bg-brand-50 border border-brand-100 rounded-md p-2.5 text-[10px] text-brand-800 leading-snug">
             <strong>Tip:</strong> Op iPhone (iOS 12+) verschijnt de code automatisch boven het toetsenbord wanneer je deze in Mail ziet. Tap erop om in te vullen.
           </div>
         </div>
@@ -262,14 +262,14 @@ export default function Login({ onLogin }) {
   // ── Wachtwoord reset scherm ──
   if (toonReset) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
+      <div className="min-h-screen bg-brand-hero flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-surface border border-border rounded-md shadow-soft p-6 space-y-4 animate-fade-up">
           <div className="text-center">
-            <div className="mx-auto w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-3">
-              <Lock className="w-7 h-7 text-blue-600" />
+            <div className="mx-auto w-14 h-14 rounded-full bg-brand-50 flex items-center justify-center mb-3">
+              <Lock className="w-7 h-7 text-brand-600" />
             </div>
-            <h2 className="text-xl font-bold text-gray-800">Nieuw wachtwoord</h2>
-            <p className="text-gray-500 text-sm">Kies een nieuw wachtwoord voor je account</p>
+            <h2 className="font-display text-xl font-medium text-ink-1">Nieuw wachtwoord</h2>
+            <p className="text-ink-2 text-sm">Kies een nieuw wachtwoord voor je account</p>
           </div>
           <form onSubmit={resetWachtwoord} className="space-y-4">
             <input
@@ -277,13 +277,13 @@ export default function Login({ onLogin }) {
               onChange={e => setNieuwWachtwoord(e.target.value)}
               placeholder="Nieuw wachtwoord (min. 8 tekens)"
               minLength={8} required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface"
             />
             {resetBericht && (
-              <p className={`text-sm ${resetOk ? 'text-green-600' : 'text-red-500'}`}>{resetBericht}</p>
+              <p className={`text-sm ${resetOk ? 'text-success-700' : 'text-red-500'}`}>{resetBericht}</p>
             )}
             <button type="submit" disabled={resetLaden}
-              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
+              className="btn-inst w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {resetLaden ? 'Bezig...' : 'Wachtwoord opslaan'}
             </button>
           </form>
@@ -295,32 +295,32 @@ export default function Login({ onLogin }) {
   // ── Wachtwoord vergeten scherm ──
   if (toonVergeten) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm card-glass p-6 space-y-4 animate-fade-up">
-          <button onClick={() => setToonVergeten(false)} className="text-gray-400 text-sm">← Terug</button>
+      <div className="min-h-screen bg-brand-hero flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-surface border border-border rounded-md shadow-soft p-6 space-y-4 animate-fade-up">
+          <button onClick={() => setToonVergeten(false)} className="text-sm font-semibold text-brand-700 hover:underline underline-offset-4">← Terug</button>
           <div className="text-center">
-            <div className="mx-auto w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-3">
-              <Mail className="w-7 h-7 text-blue-600" />
+            <div className="mx-auto w-14 h-14 rounded-full bg-brand-50 flex items-center justify-center mb-3">
+              <Mail className="w-7 h-7 text-brand-600" />
             </div>
-            <h2 className="text-xl font-bold text-gray-800">Wachtwoord vergeten</h2>
-            <p className="text-gray-500 text-sm">Voer je e-mailadres in — je ontvangt een reset link</p>
+            <h2 className="font-display text-xl font-medium text-ink-1">Wachtwoord vergeten</h2>
+            <p className="text-ink-2 text-sm">Voer je e-mailadres in — je ontvangt een reset link</p>
           </div>
           <form onSubmit={stuurResetLink} className="space-y-4">
             <input
               type="email" value={vergetenEmail}
               onChange={e => setVergetenEmail(e.target.value)}
               placeholder="jouw@email.nl" required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface"
             />
             {vergetenBericht && (
-              <p className={`text-sm rounded-xl p-3 border ${
+              <p className={`text-sm rounded-md p-3 border ${
                 vergetenOk
-                  ? 'text-green-700 bg-green-50 border-green-200'
+                  ? 'text-success-700 bg-success-50 border-success-100'
                   : 'text-red-600 bg-red-50 border-red-200'
               }`}>{vergetenBericht}</p>
             )}
             <button type="submit" disabled={vergetenLaden}
-              className="btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
+              className="btn-inst w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {vergetenLaden ? 'Bezig...' : 'Stuur reset link'}
             </button>
           </form>
@@ -330,25 +330,25 @@ export default function Login({ onLogin }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4 py-10 relative">
+    <div className="min-h-screen bg-brand-hero flex items-center justify-center px-4 py-10 relative">
       <div className="absolute top-4 right-4"><TaalKiezer donker /></div>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <button onClick={() => navigate('/')} className="inline-flex items-center gap-2 text-white">
-            <Zap className="w-10 h-10 text-brand-500" />
+            <Zap className="w-10 h-10 text-accent-400" />
             <div className="text-left">
-              <div className="text-2xl font-extrabold">SwiftBridge</div>
+              <div className="font-display text-2xl font-medium">SwiftBridge</div>
               <div className="text-blue-200 text-xs">NL → TR in &lt;5 minuten</div>
             </div>
           </button>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-surface border border-border rounded-md shadow-soft overflow-hidden">
           <div className="flex">
             {['login', 'register'].map(t => (
               <button key={t} onClick={() => setTab(t)}
-                className={`flex-1 py-4 font-bold text-sm transition
-                  ${tab === t ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-400 hover:text-gray-600'}`}>
+                className={`flex-1 py-4 text-[0.7rem] font-medium uppercase tracking-[0.2em] transition
+                  ${tab === t ? 'text-brand-700 border-b-2 border-brand-600' : 'text-gray-500 hover:text-ink-2'}`}>
                 {t === 'login' ? 'Inloggen' : 'Registreren'}
               </button>
             ))}
@@ -358,19 +358,19 @@ export default function Login({ onLogin }) {
             {tab === 'register' && (
               <>
                 <div>
-                  <label htmlFor="reg-naam" className="block text-xs font-semibold text-gray-600 mb-1">Volledige naam</label>
+                  <label htmlFor="reg-naam" className="block text-xs font-semibold text-ink-2 mb-1">Volledige naam</label>
                   <input id="reg-naam" name="naam" autoComplete="name" value={form.naam} onChange={e => update('naam', e.target.value)}
                     placeholder="Naam" required
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                    className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
                 </div>
                 <div>
-                  <label htmlFor="reg-telefoon" className="block text-xs font-semibold text-gray-600 mb-1">Telefoonnummer</label>
+                  <label htmlFor="reg-telefoon" className="block text-xs font-semibold text-ink-2 mb-1">Telefoonnummer</label>
                   <input id="reg-telefoon" name="telefoon" autoComplete="tel" value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
                     placeholder="+31 6 12345678" type="tel"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                    className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
                 </div>
                 <div>
-                  <label htmlFor="reg-ref" className="block text-xs font-semibold text-gray-600 mb-1">
+                  <label htmlFor="reg-ref" className="block text-xs font-semibold text-ink-2 mb-1">
                     {t('registreer_referral_label')}
                   </label>
                   <input
@@ -381,19 +381,19 @@ export default function Login({ onLogin }) {
                     onChange={e => update('referralCode', e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12))}
                     placeholder={t('registreer_referral_placeholder')}
                     maxLength={12}
-                    className={`w-full border rounded-xl px-4 py-3 text-sm outline-none font-mono tracking-widest focus:ring-2 focus:ring-blue-100 ${
+                    className={`w-full border rounded-md px-4 py-3 text-sm outline-none font-mono tracking-widest bg-surface focus:ring-2 focus:ring-brand-100 ${
                       refValidatie.status === 'geldig'
-                        ? 'border-emerald-500 bg-emerald-50'
+                        ? 'border-success-500 bg-success-50'
                         : refValidatie.status === 'ongeldig'
                         ? 'border-rose-300 bg-rose-50'
-                        : 'border-gray-200 focus:border-blue-500'
+                        : 'border-border focus:border-brand-500'
                     }`}
                   />
                   {refValidatie.status === 'bezig' && (
                     <p className="text-[11px] text-gray-500 mt-1">{t('registreer_referral_check')}</p>
                   )}
                   {refValidatie.status === 'geldig' && (
-                    <p className="text-[11px] text-emerald-700 mt-1 font-semibold">
+                    <p className="text-[11px] text-success-700 mt-1 font-semibold">
                       {t('registreer_referral_geldig', { naam: refValidatie.uitnodigerNaam })}
                     </p>
                   )}
@@ -407,40 +407,40 @@ export default function Login({ onLogin }) {
             )}
 
             <div>
-              <label htmlFor="auth-email" className="block text-xs font-semibold text-gray-600 mb-1">E-mailadres</label>
+              <label htmlFor="auth-email" className="block text-xs font-semibold text-ink-2 mb-1">E-mailadres</label>
               <input id="auth-email" name="email" autoComplete="email" value={form.email} onChange={e => update('email', e.target.value)}
                 placeholder="naam@email.nl" type="email" required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
             </div>
 
             <div>
-              <label htmlFor="auth-password" className="block text-xs font-semibold text-gray-600 mb-1">Wachtwoord</label>
+              <label htmlFor="auth-password" className="block text-xs font-semibold text-ink-2 mb-1">Wachtwoord</label>
               <input id="auth-password" name="password" autoComplete={tab === 'login' ? 'current-password' : 'new-password'} value={form.password} onChange={e => update('password', e.target.value)}
                 placeholder="••••••••" type="password" required minLength={8}
                 aria-describedby={tab === 'register' ? 'pw-hint' : undefined}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
               {tab === 'register' && (
-                <p id="pw-hint" className="text-xs text-gray-400 mt-1">Minimaal 8 tekens</p>
+                <p id="pw-hint" className="text-xs text-gray-500 mt-1">Minimaal 8 tekens</p>
               )}
             </div>
 
             {tab === 'login' && (
               <div className="text-right">
                 <button type="button" onClick={() => setToonVergeten(true)}
-                  className="text-xs text-blue-500 hover:text-blue-700">
+                  className="text-sm font-semibold text-brand-700 hover:underline underline-offset-4">
                   Wachtwoord vergeten?
                 </button>
               </div>
             )}
 
             {fout && (
-              <div role="alert" aria-live="assertive" className="bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-xl flex items-start gap-2">
+              <div role="alert" aria-live="assertive" className="bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-md flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 shrink-0" /><span>{fout}</span>
               </div>
             )}
 
             <button type="submit" disabled={laden}
-              className="btn-primary w-full py-3.5 mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
+              className="btn-inst w-full py-3.5 mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
               {laden ? 'Bezig...' : tab === 'login' ? 'Inloggen' : 'Account aanmaken'}
             </button>
           </form>

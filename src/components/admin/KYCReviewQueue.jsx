@@ -56,16 +56,16 @@ function DocumentBeeld({ recordId, type, label }) {
 
   return (
     <div className="space-y-1">
-      <div className="text-xs font-semibold text-white/70 uppercase tracking-wide">
+      <div className="text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.16em]">
         {label}
       </div>
-      <div className="aspect-[4/3] bg-black/30 rounded-xl overflow-hidden flex items-center justify-center border border-white/10">
+      <div className="aspect-[4/3] bg-surface-3 rounded-md overflow-hidden flex items-center justify-center border border-border">
         {fout ? (
-          <div className="text-xs text-red-300 p-2 text-center">{fout}</div>
+          <div className="text-xs text-red-700 p-2 text-center">{fout}</div>
         ) : src ? (
           <img src={src} alt={label} className="w-full h-full object-contain" loading="lazy" decoding="async" />
         ) : (
-          <div className="text-xs text-white/40 animate-pulse">{t('laden')}</div>
+          <div className="text-xs text-gray-500 animate-pulse">{t('laden')}</div>
         )}
       </div>
     </div>
@@ -103,19 +103,19 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-white/20 rounded-2xl p-5 sm:p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div className="bg-surface border border-border rounded-md p-5 sm:p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-soft-xl">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 className="text-lg font-bold text-white">
+            <h3 className="font-display text-lg font-medium text-ink-1">
               {t('kyc_review_modal_titel')}
             </h3>
-            <p className="text-sm text-white/60 mt-0.5">
+            <p className="text-sm text-ink-2 mt-0.5">
               {record.userNaam || record.userEmail} · {record.documentType}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-white/70 hover:text-white"
+            className="text-gray-500 hover:text-ink-1"
             aria-label={t('sluiten')}
           >
             <X className="w-6 h-6" />
@@ -125,20 +125,20 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
         {/* Document info */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-xs">
           <div>
-            <div className="text-white/50">{t('kyc_upload_document_nummer')}</div>
-            <div className="font-mono text-white">{record.documentNummer}</div>
+            <div className="text-gray-500">{t('kyc_upload_document_nummer')}</div>
+            <div className="font-mono text-ink-1">{record.documentNummer}</div>
           </div>
           <div>
-            <div className="text-white/50">{t('kyc_upload_geboortedatum')}</div>
-            <div className="text-white">{record.geboortedatum}</div>
+            <div className="text-gray-500">{t('kyc_upload_geboortedatum')}</div>
+            <div className="text-ink-1">{record.geboortedatum}</div>
           </div>
           <div>
-            <div className="text-white/50">{t('kyc_upload_nationaliteit')}</div>
-            <div className="text-white">{record.nationaliteit}</div>
+            <div className="text-gray-500">{t('kyc_upload_nationaliteit')}</div>
+            <div className="text-ink-1">{record.nationaliteit}</div>
           </div>
           <div>
-            <div className="text-white/50">{t('kyc_review_ingediend_op')}</div>
-            <div className="text-white">{fmtDatum(record.ingediendOp)}</div>
+            <div className="text-gray-500">{t('kyc_review_ingediend_op')}</div>
+            <div className="text-ink-1">{fmtDatum(record.ingediendOp)}</div>
           </div>
         </div>
 
@@ -152,14 +152,14 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
         </div>
 
         {fout && (
-          <div role="alert" className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-xl p-3 text-sm mb-3">
+          <div role="alert" className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm mb-3">
             {fout}
           </div>
         )}
 
         {toonReject ? (
           <div className="space-y-3">
-            <label htmlFor="rejectReden" className="block text-sm font-semibold text-white">
+            <label htmlFor="rejectReden" className="block text-sm font-semibold text-ink-1">
               {t('kyc_review_reden_label')}
             </label>
             <textarea
@@ -168,20 +168,20 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
               onChange={(e) => setOpmerking(e.target.value)}
               rows={3}
               placeholder={t('kyc_review_reden_placeholder')}
-              className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-400"
+              className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
             />
             <div className="flex gap-2 justify-end">
               <button
                 onClick={() => { setToonReject(false); setFout(''); }}
                 disabled={bezig}
-                className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white hover:bg-white/20 disabled:opacity-40"
+                className="px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40"
               >
                 {t('terug')}
               </button>
               <button
                 onClick={() => beoordeel('afgekeurd')}
                 disabled={bezig || !opmerking.trim()}
-                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40"
+                className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40"
               >
                 {bezig ? t('laden') : `${t('kyc_review_definitief_afkeuren')}`}
               </button>
@@ -192,14 +192,14 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
             <button
               onClick={onClose}
               disabled={bezig}
-              className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white hover:bg-white/20 disabled:opacity-40"
+              className="px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40"
             >
               {t('annuleren')}
             </button>
             <button
               onClick={() => setToonReject(true)}
               disabled={bezig}
-              className="px-4 py-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-sm text-white font-semibold disabled:opacity-40"
+              className="px-4 py-2 rounded-md bg-red-600/90 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40"
             >
               {t('kyc_review_afkeuren')}
             </button>
@@ -210,7 +210,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
                 }
               }}
               disabled={bezig}
-              className="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-sm text-white font-semibold disabled:opacity-40"
+              className="px-4 py-2 rounded-md bg-success-600 hover:bg-success-700 text-sm text-white font-semibold disabled:opacity-40"
             >
               {bezig ? t('laden') : `${t('kyc_review_goedkeuren')}`}
             </button>
@@ -248,17 +248,17 @@ export default function KYCReviewQueue() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">
+          <h2 className="font-display text-lg font-medium text-ink-1">
             {t('kyc_review_queue_titel')}
           </h2>
-          <p className="text-xs text-white/60 mt-0.5">
+          <p className="text-xs text-ink-2 mt-0.5">
             {t('kyc_review_queue_subtitel', { aantal: records.length })}
           </p>
         </div>
         <button
           onClick={laad}
           disabled={laden}
-          className="text-white/70 hover:text-white disabled:opacity-40"
+          className="text-gray-500 hover:text-brand-600 disabled:opacity-40"
           title={t('vernieuwen')}
           aria-label={t('vernieuwen')}
         >
@@ -267,49 +267,49 @@ export default function KYCReviewQueue() {
       </div>
 
       {fout && (
-        <div role="alert" className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">
+        <div role="alert" className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">
           {fout}
         </div>
       )}
 
       {laden ? (
-        <div className="text-center text-white/60 py-10">{t('laden')}</div>
+        <div className="text-center text-ink-2 py-10">{t('laden')}</div>
       ) : records.length === 0 ? (
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
-          <Mail className="w-10 h-10 mx-auto mb-3 text-white/60" />
+        <div className="bg-surface border border-border rounded-md p-8 text-center text-ink-2">
+          <Mail className="w-10 h-10 mx-auto mb-3 text-gray-500" />
           <p className="font-semibold">{t('kyc_review_leeg_titel')}</p>
-          <p className="text-xs text-white/50 mt-2">{t('kyc_review_leeg_subtitel')}</p>
+          <p className="text-xs text-gray-500 mt-2">{t('kyc_review_leeg_subtitel')}</p>
         </div>
       ) : (
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+        <div className="bg-surface border border-border rounded-md overflow-hidden shadow-soft">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-white/10">
-                <tr className="text-left text-white/80">
-                  <th className="px-4 py-3 font-semibold">{t('kyc_review_kol_gebruiker')}</th>
-                  <th className="px-4 py-3 font-semibold">{t('kyc_review_kol_doctype')}</th>
-                  <th className="px-4 py-3 font-semibold">{t('kyc_review_kol_docnummer')}</th>
-                  <th className="px-4 py-3 font-semibold">{t('kyc_review_kol_nationaliteit')}</th>
-                  <th className="px-4 py-3 font-semibold">{t('kyc_review_kol_ingediend')}</th>
-                  <th className="px-4 py-3 font-semibold text-right">{t('kyc_review_kol_actie')}</th>
+              <thead className="bg-surface-3 border-b border-border">
+                <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
+                  <th className="px-4 py-3">{t('kyc_review_kol_gebruiker')}</th>
+                  <th className="px-4 py-3">{t('kyc_review_kol_doctype')}</th>
+                  <th className="px-4 py-3">{t('kyc_review_kol_docnummer')}</th>
+                  <th className="px-4 py-3">{t('kyc_review_kol_nationaliteit')}</th>
+                  <th className="px-4 py-3">{t('kyc_review_kol_ingediend')}</th>
+                  <th className="px-4 py-3 text-right">{t('kyc_review_kol_actie')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10">
+              <tbody className="divide-y divide-border">
                 {records.map((r) => (
-                  <tr key={r.id} className="hover:bg-white/5 transition cursor-pointer" onClick={() => setActief(r)}>
+                  <tr key={r.id} className="hover:bg-surface-3 transition cursor-pointer" onClick={() => setActief(r)}>
                     <td className="px-4 py-3">
-                      <div className="text-white">{r.userNaam || '—'}</div>
-                      <div className="text-xs text-white/50 font-mono">{r.userEmail}</div>
+                      <div className="text-ink-1">{r.userNaam || '—'}</div>
+                      <div className="text-xs text-gray-500 font-mono">{r.userEmail}</div>
                     </td>
-                    <td className="px-4 py-3 text-white/90 capitalize">{r.documentType}</td>
-                    <td className="px-4 py-3 text-white/80 font-mono text-xs">{r.documentNummer}</td>
-                    <td className="px-4 py-3 text-white/80">{r.nationaliteit}</td>
-                    <td className="px-4 py-3 text-white/70 text-xs">{fmtDatum(r.ingediendOp)}</td>
+                    <td className="px-4 py-3 text-ink-1 capitalize">{r.documentType}</td>
+                    <td className="px-4 py-3 text-ink-2 font-mono text-xs">{r.documentNummer}</td>
+                    <td className="px-4 py-3 text-ink-2">{r.nationaliteit}</td>
+                    <td className="px-4 py-3 text-ink-2 text-xs">{fmtDatum(r.ingediendOp)}</td>
                     <td className="px-4 py-3 text-right">
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); setActief(r); }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg"
+                        className="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3 py-1.5 rounded-md"
                       >
                         {t('kyc_review_bekijken')} →
                       </button>
@@ -322,7 +322,7 @@ export default function KYCReviewQueue() {
         </div>
       )}
 
-      <div className="text-xs text-white/40">
+      <div className="text-xs text-gray-500">
         {t('kyc_review_hint')}
       </div>
 

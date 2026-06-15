@@ -30,7 +30,7 @@ import { forwardRef } from 'react';
 
 const VARIANTS = {
   primary:
-    'bg-brand-600 hover:bg-brand-700 text-white shadow-sm ' +
+    'bg-brand-600 hover:bg-brand-700 text-white shadow-soft uppercase tracking-[0.22em] ' +
     'disabled:bg-fg-disabled disabled:cursor-not-allowed ' +
     'focus:outline-none focus:ring-2 focus:ring-brand-500/40',
   secondary:
@@ -49,9 +49,9 @@ const VARIANTS = {
 };
 
 const SIZES = {
-  sm: 'min-h-[32px] px-3 text-xs rounded-lg gap-1.5',
-  md: 'min-h-[40px] px-4 text-sm rounded-xl gap-2',
-  lg: 'min-h-[48px] px-6 text-base rounded-xl gap-2.5',
+  sm: 'min-h-[32px] px-3 text-xs rounded-md gap-1.5',
+  md: 'min-h-[40px] px-4 text-sm rounded-md gap-2',
+  lg: 'min-h-[48px] px-6 text-base rounded-md gap-2.5',
 };
 
 function Spinner({ className = 'w-4 h-4' }) {

@@ -20,20 +20,20 @@ import { Users, IdCard, Banknote, Calendar, Euro, Shield, Lock, Clock } from '..
 
 function KpiCard({ titel, waarde, sub, kleur = 'blue', icon: Icon }) {
   const kleurMap = {
-    blue: 'from-blue-50 to-sky-50 border-blue-200 text-blue-900',
-    green: 'from-emerald-50 to-teal-50 border-emerald-200 text-emerald-900',
-    amber: 'from-amber-50 to-orange-50 border-amber-200 text-amber-900',
-    red: 'from-red-50 to-rose-50 border-red-200 text-red-900',
-    purple: 'from-purple-50 to-violet-50 border-purple-200 text-purple-900',
+    blue: 'text-brand-700',
+    green: 'text-success-700',
+    amber: 'text-accent-600',
+    red: 'text-red-700',
+    purple: 'text-ink-1',
   };
   return (
-    <div className={`rounded-xl border-2 p-4 bg-gradient-to-br ${kleurMap[kleur]}`}>
+    <div className="rounded-md border border-border bg-surface p-4 shadow-soft">
       <div className="flex items-start justify-between mb-2">
-        <span className="text-xs font-semibold uppercase tracking-wider opacity-70">{titel}</span>
-        {Icon && <Icon className="w-5 h-5 opacity-60" aria-hidden="true" />}
+        <span className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">{titel}</span>
+        {Icon && <Icon className="w-5 h-5 text-gray-500" aria-hidden="true" />}
       </div>
-      <div className="text-3xl font-extrabold">{waarde}</div>
-      {sub && <div className="text-xs opacity-70 mt-1">{sub}</div>}
+      <div className={`font-display text-3xl font-medium tabular-nums ${kleurMap[kleur]}`}>{waarde}</div>
+      {sub && <div className="text-xs text-ink-2 mt-1">{sub}</div>}
     </div>
   );
 }
@@ -88,40 +88,40 @@ export default function AdminOverzicht() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-2">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
         <div className="flex items-start justify-between mb-6 flex-wrap gap-3">
           <div>
             <nav className="text-sm mb-2">
-              <Link to="/" className="text-blue-600 hover:underline">SwiftBridge</Link>
-              <span className="text-gray-400 mx-2">/</span>
+              <Link to="/" className="text-brand-700 font-semibold hover:underline underline-offset-4">SwiftBridge</Link>
+              <span className="text-gray-500 mx-2">/</span>
               <span className="text-gray-500">Admin</span>
-              <span className="text-gray-400 mx-2">/</span>
-              <span className="text-gray-700">{t('admin_ov_titel')}</span>
+              <span className="text-gray-500 mx-2">/</span>
+              <span className="text-ink-2">{t('admin_ov_titel')}</span>
             </nav>
-            <h1 className="text-2xl font-extrabold text-gray-900">
+            <h1 className="font-display text-2xl font-medium text-ink-1">
               {t('admin_ov_titel')}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-ink-2 mt-1">
               {t('admin_ov_subtitel')}
             </p>
           </div>
           {lastUpdate && (
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-gray-500">
               {t('admin_ov_laatst_update')}: {lastUpdate.toLocaleTimeString('nl-NL')} · {t('admin_ov_auto_refresh')}
             </span>
           )}
         </div>
 
         {fout ? (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-sm text-red-700">
+          <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4 text-sm text-red-700">
             <strong>{t('admin_ov_fout')}:</strong> {fout}
           </div>
         ) : laden ? (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
             {[0, 1, 2, 3, 4, 5, 6, 7].map(i => (
-              <div key={i} className="rounded-xl border-2 border-gray-200 bg-gray-50 p-4 animate-pulse h-24" />
+              <div key={i} className="rounded-md border border-border bg-surface-3 p-4 animate-pulse h-24" />
             ))}
           </div>
         ) : stats && (
@@ -186,8 +186,8 @@ export default function AdminOverzicht() {
             </div>
 
             {/* Quick-links naar sub-paginas */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <h2 className="font-bold text-gray-900 mb-3 text-sm">
+            <div className="bg-surface rounded-md border border-border p-5 shadow-soft">
+              <h2 className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-3">
                 {t('admin_ov_quick_links')}
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -199,7 +199,7 @@ export default function AdminOverzicht() {
                   <Link
                     key={url}
                     to={url}
-                    className="text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg px-4 py-3 transition flex items-center justify-between"
+                    className="text-sm font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-md px-4 py-3 transition flex items-center justify-between"
                   >
                     {label}
                     <span aria-hidden="true">→</span>

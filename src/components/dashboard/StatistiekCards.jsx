@@ -53,40 +53,32 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
       Icoon: Euro,
       label: t('dashboard_stats_overgemaakt'),
       waarde: stats ? fmtEur(stats.totaal) : null,
-      gradient: 'from-blue-500/20 to-indigo-500/10',
-      accent: 'text-blue-700',
-      ring: 'ring-blue-300/40',
+      accent: 'text-brand-700',
     },
     {
       Icoon: Zap,
       label: t('dashboard_stats_aantal_tx'),
       waarde: stats ? String(stats.aantal) : null,
-      gradient: 'from-violet-500/20 to-fuchsia-500/10',
-      accent: 'text-violet-700',
-      ring: 'ring-violet-300/40',
+      accent: 'text-brand-600',
     },
     {
       Icoon: Clock,
       label: t('dashboard_stats_gem_tijd'),
       waarde: stats ? `${stats.gemTijd} ${t('dashboard_stats_min')}` : null,
-      gradient: 'from-amber-500/20 to-orange-500/10',
-      accent: 'text-amber-700',
-      ring: 'ring-amber-300/40',
+      accent: 'text-accent-600',
     },
     {
       Icoon: Banknote,
       label: t('dashboard_stats_bespaard'),
       waarde: stats ? fmtEur(stats.bespaard) : null,
-      gradient: 'from-emerald-500/20 to-teal-500/10',
-      accent: 'text-emerald-700',
-      ring: 'ring-emerald-300/40',
+      accent: 'text-success-700',
     },
   ];
 
   return (
     <section aria-label={t('dashboard_stats_maand_titel')} className="space-y-2">
       <div className="flex items-center justify-between px-1">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+        <h3 className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
           {t('dashboard_stats_maand_titel')}
         </h3>
       </div>
@@ -94,13 +86,9 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
         {boxes.map((box, i) => (
           <div
             key={box.label}
-            className={`relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 backdrop-blur-lg p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 animate-fade-up`}
+            className={`relative overflow-hidden rounded-md border border-border bg-surface p-4 shadow-soft hover:shadow-soft-md transition-all duration-200 animate-fade-up`}
             style={{ animationDelay: `${i * 60}ms` }}
           >
-            {/* Subtle gradient overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${box.gradient} opacity-60 pointer-events-none`} aria-hidden="true" />
-            {/* Inner ring accent */}
-            <div className={`absolute -top-6 -right-6 w-20 h-20 rounded-full ${box.ring} ring-8 opacity-30 pointer-events-none`} aria-hidden="true" />
             <div className="relative">
               <div className={`mb-2 ${box.accent}`} aria-hidden="true">
                 <box.Icoon className="w-5 h-5" />
@@ -112,10 +100,10 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
                 </div>
               ) : (
                 <>
-                  <div className={`text-lg font-extrabold ${box.accent} font-mono leading-tight`}>
+                  <div className={`font-display text-lg font-medium ${box.accent} tabular-nums leading-tight`}>
                     {box.waarde}
                   </div>
-                  <div className="text-[11px] text-slate-500 mt-0.5 font-medium">
+                  <div className="text-[11px] text-gray-500 mt-0.5 font-medium">
                     {box.label}
                   </div>
                 </>

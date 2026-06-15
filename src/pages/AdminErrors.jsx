@@ -102,29 +102,29 @@ export default function AdminErrors() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-2">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
             <nav className="text-sm mb-2">
-              <Link to="/" className="text-blue-600 hover:underline">SwiftBridge</Link>
-              <span className="text-gray-400 mx-2">/</span>
+              <Link to="/" className="text-brand-700 font-semibold hover:underline underline-offset-4">SwiftBridge</Link>
+              <span className="text-gray-500 mx-2">/</span>
               <span className="text-gray-500">Admin</span>
-              <span className="text-gray-400 mx-2">/</span>
-              <span className="text-gray-700">Errors</span>
+              <span className="text-gray-500 mx-2">/</span>
+              <span className="text-ink-2">Errors</span>
             </nav>
-            <h1 className="text-2xl font-extrabold text-gray-900">
+            <h1 className="font-display text-2xl font-medium text-ink-1">
               {t('admin_errors_titel')}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-ink-2 mt-1">
               {t('admin_errors_subtitel')}
             </p>
           </div>
           <button
             onClick={laad}
             disabled={laden}
-            className="text-sm font-semibold text-blue-600 hover:text-blue-700 disabled:opacity-50 bg-blue-50 hover:bg-blue-100 rounded-lg px-4 py-2 transition inline-flex items-center gap-2"
+            className="text-sm font-semibold text-brand-700 hover:text-brand-800 disabled:opacity-50 bg-brand-50 hover:bg-brand-100 rounded-md px-4 py-2 transition inline-flex items-center gap-2"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={laden ? 'animate-spin' : ''} aria-hidden="true">
               <polyline points="23 4 23 10 17 10" />
@@ -136,9 +136,9 @@ export default function AdminErrors() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4 flex flex-col sm:flex-row gap-3">
+        <div className="bg-surface rounded-md border border-border p-4 mb-4 flex flex-col sm:flex-row gap-3 shadow-soft">
           <div className="flex-1">
-            <label className="block text-xs font-semibold text-gray-500 mb-1">
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">
               {t('admin_errors_filter_id')}
             </label>
             <input
@@ -146,17 +146,17 @@ export default function AdminErrors() {
               value={errorId}
               onChange={(e) => updateFilter('errorId', e.target.value.trim())}
               placeholder="ERR-XXXXXXX"
-              className="w-full text-sm font-mono border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full text-sm font-mono border border-border rounded-md px-3 py-2 bg-surface text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
             />
           </div>
           <div className="sm:w-32">
-            <label className="block text-xs font-semibold text-gray-500 mb-1">
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1">
               {t('admin_errors_filter_days')}
             </label>
             <select
               value={days}
               onChange={(e) => updateFilter('days', e.target.value)}
-              className="w-full text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+              className="w-full text-sm border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500 bg-surface text-ink-1"
             >
               <option value="1">1 dag</option>
               <option value="7">7 dagen</option>
@@ -168,7 +168,7 @@ export default function AdminErrors() {
 
         {/* Status/error */}
         {fout && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-sm text-red-700">
+          <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4 text-sm text-red-700">
             <strong>{t('admin_errors_fout')}:</strong> {fout}
             {fout === t('admin_errors_geen_admin') && (
               <p className="text-xs text-red-600 mt-1">
@@ -179,20 +179,20 @@ export default function AdminErrors() {
         )}
 
         {/* Table */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="bg-surface rounded-md border border-border overflow-hidden shadow-soft">
           {laden ? (
             <div className="p-12 text-center text-gray-500 text-sm">
               {t('admin_errors_laden')}…
             </div>
           ) : errors.length === 0 ? (
             <div className="p-12 text-center">
-              <CheckCircle className="w-10 h-10 mx-auto mb-3 text-green-500" aria-hidden="true" />
-              <h3 className="font-bold text-gray-800 mb-1">{t('admin_errors_leeg_titel')}</h3>
-              <p className="text-sm text-gray-500">{t('admin_errors_leeg_subtitel')}</p>
+              <CheckCircle className="w-10 h-10 mx-auto mb-3 text-success-500" aria-hidden="true" />
+              <h3 className="font-display font-medium text-ink-1 mb-1">{t('admin_errors_leeg_titel')}</h3>
+              <p className="text-sm text-ink-2">{t('admin_errors_leeg_subtitel')}</p>
             </div>
           ) : (
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-200 text-xs font-semibold uppercase tracking-wider text-gray-500">
+              <thead className="bg-surface-3 border-b border-border text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
                 <tr>
                   <th className="text-left px-4 py-3">ID</th>
                   <th className="text-left px-4 py-3">{t('admin_errors_col_message')}</th>
@@ -200,56 +200,56 @@ export default function AdminErrors() {
                   <th className="text-right px-4 py-3 whitespace-nowrap">{t('admin_errors_col_time')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border">
                 {errors.map((err) => (
                   <Fragment key={err.id}>
                     <tr
-                      className="hover:bg-gray-50 cursor-pointer"
+                      className="hover:bg-surface-3 cursor-pointer"
                       onClick={() => setOpenId(openId === err.id ? null : err.id)}
                     >
                       <td className="px-4 py-3 font-mono text-xs">
                         <button
                           onClick={(e) => { e.stopPropagation(); copyId(err.error_id); }}
-                          className="text-blue-600 hover:underline"
+                          className="text-brand-700 hover:underline underline-offset-4"
                           title={t('admin_errors_copy_id')}
                         >
                           {err.error_id}
                         </button>
                       </td>
-                      <td className="px-4 py-3 text-gray-700 break-words max-w-md">
+                      <td className="px-4 py-3 text-ink-2 break-words max-w-md">
                         {truncate(err.message, 120)}
                       </td>
                       <td className="px-4 py-3 text-xs text-gray-500 hidden md:table-cell truncate max-w-xs">
                         {truncate(err.url, 60)}
                       </td>
-                      <td className="px-4 py-3 text-right text-xs text-gray-500 whitespace-nowrap">
+                      <td className="px-4 py-3 text-right text-xs text-gray-500 whitespace-nowrap tabular-nums">
                         {formatTime(err.ontvangen_op)}
                       </td>
                     </tr>
                     {openId === err.id && (
-                      <tr className="bg-gray-50">
+                      <tr className="bg-surface-3">
                         <td colSpan="4" className="px-4 py-4">
                           <dl className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                             <div>
-                              <dt className="font-semibold text-gray-600 mb-1">{t('admin_errors_col_url')}</dt>
-                              <dd className="font-mono text-gray-800 break-all">{err.url || '—'}</dd>
+                              <dt className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">{t('admin_errors_col_url')}</dt>
+                              <dd className="font-mono text-ink-1 break-all">{err.url || '—'}</dd>
                             </div>
                             <div>
-                              <dt className="font-semibold text-gray-600 mb-1">{t('admin_errors_col_ua')}</dt>
-                              <dd className="font-mono text-gray-800 break-words">{err.user_agent || '—'}</dd>
+                              <dt className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">{t('admin_errors_col_ua')}</dt>
+                              <dd className="font-mono text-ink-1 break-words">{err.user_agent || '—'}</dd>
                             </div>
                             <div>
-                              <dt className="font-semibold text-gray-600 mb-1">{t('admin_errors_col_user')}</dt>
-                              <dd className="font-mono text-gray-800">{err.user_id || t('admin_errors_geen_user')}</dd>
+                              <dt className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">{t('admin_errors_col_user')}</dt>
+                              <dd className="font-mono text-ink-1">{err.user_id || t('admin_errors_geen_user')}</dd>
                             </div>
                             <div>
-                              <dt className="font-semibold text-gray-600 mb-1">{t('admin_errors_col_opgetreden')}</dt>
-                              <dd className="font-mono text-gray-800">{formatTime(err.opgetreden_op)}</dd>
+                              <dt className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500 mb-1">{t('admin_errors_col_opgetreden')}</dt>
+                              <dd className="font-mono text-ink-1">{formatTime(err.opgetreden_op)}</dd>
                             </div>
                           </dl>
                           <Link
                             to={`/admin/errors?errorId=${encodeURIComponent(err.error_id)}${secret ? `&secret=${encodeURIComponent(secret)}` : ''}`}
-                            className="inline-block mt-3 text-xs font-semibold text-blue-600 hover:underline"
+                            className="inline-block mt-3 text-xs font-semibold text-brand-700 hover:underline underline-offset-4"
                           >
                             {t('admin_errors_zoek_alle')} →
                           </Link>
@@ -263,7 +263,7 @@ export default function AdminErrors() {
           )}
         </div>
 
-        <p className="text-xs text-gray-400 mt-4 text-center">
+        <p className="text-xs text-gray-500 mt-4 text-center">
           {t('admin_errors_count', { n: errors.length })}
         </p>
       </div>

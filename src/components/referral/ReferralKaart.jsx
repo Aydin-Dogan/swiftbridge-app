@@ -112,20 +112,20 @@ export default function ReferralKaart() {
 
   if (laden) {
     return (
-      <div className="card-glass p-5 space-y-3">
-        <div className="h-6 bg-gray-200 rounded w-1/2 animate-pulse" />
-        <div className="h-12 bg-gray-100 rounded animate-pulse" />
-        <div className="h-12 bg-gray-100 rounded animate-pulse" />
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 space-y-3">
+        <div className="h-6 bg-surface-2 rounded w-1/2 animate-pulse" />
+        <div className="h-12 bg-surface-2 rounded animate-pulse" />
+        <div className="h-12 bg-surface-2 rounded animate-pulse" />
       </div>
     );
   }
 
   if (fout && !data) {
     return (
-      <div className="bg-rose-50 border border-rose-200 rounded-2xl p-5 text-center space-y-2">
+      <div className="bg-rose-50 border border-rose-200 rounded-md p-5 text-center space-y-2">
         <div className="flex justify-center"><AlertTriangle className="w-8 h-8 text-rose-500" /></div>
         <p className="text-sm text-rose-700">{fout}</p>
-        <button onClick={laad} className="text-sm text-rose-700 underline">
+        <button onClick={laad} className="text-sm text-rose-700 underline underline-offset-4">
           {t('vernieuwen')}
         </button>
       </div>
@@ -138,9 +138,9 @@ export default function ReferralKaart() {
 
   return (
     <div className="space-y-4">
-      <div className="card-glass p-5 border-l-4 border-emerald-500 animate-fade-up">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 border-l-4 border-l-success-500 animate-fade-up">
         {/* Prominente earnings-badge bovenaan (Verbetering Y) */}
-        <div className="inline-flex items-center gap-2 bg-emerald-100 border border-emerald-300 rounded-full px-3 py-1 text-xs font-bold text-emerald-800 mb-3">
+        <div className="inline-flex items-center gap-2 bg-success-100 border border-success-500/30 rounded-full px-3 py-1 text-xs font-semibold text-success-700 mb-3">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <line x1="12" y1="1" x2="12" y2="23" />
             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
@@ -148,27 +148,27 @@ export default function ReferralKaart() {
           {t('referral_badge_verdien', { bedrag: beloningPerVriendEur })}
         </div>
 
-        <h3 className="font-bold text-gray-800 flex items-center gap-2 text-base">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 text-base">
           {t('referral_titel')}
         </h3>
-        <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+        <p className="text-xs text-ink-2 mt-1 leading-relaxed">
           {t('referral_intro', { bedrag: beloningPerVriendEur })}
         </p>
 
         {/* Code blok */}
         <div className="mt-4">
-          <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">
+          <label className="block text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em] mb-1">
             {t('referral_jouw_code')}
           </label>
           <button
             onClick={() => kopieer(referralCode, 'code')}
-            className="w-full flex items-center justify-between gap-2 bg-gradient-to-br from-emerald-50 to-green-50 border-2 border-emerald-200 rounded-xl px-4 py-3 hover:border-emerald-400 transition active:scale-[0.98]"
+            className="w-full flex items-center justify-between gap-2 bg-success-50 border border-success-500/30 rounded-md px-4 py-3 hover:border-success-500/60 transition active:scale-[0.98]"
             aria-label={t('referral_kopieer_code')}
           >
-            <span className="font-mono text-xl font-bold text-emerald-700 tracking-[0.2em]">
+            <span className="font-display text-xl font-medium text-success-700 tabular-nums tracking-[0.2em]">
               {referralCode}
             </span>
-            <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
+            <span className="text-xs text-success-700 font-semibold flex items-center gap-1">
               {gekopieerd === 'code' ? `${t('referral_gekopieerd')}` : `${t('referral_kopieer')}`}
             </span>
           </button>
@@ -176,18 +176,18 @@ export default function ReferralKaart() {
 
         {/* Deel URL */}
         <div className="mt-3">
-          <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">
+          <label className="block text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em] mb-1">
             {t('referral_deel_link')}
           </label>
           <button
             onClick={() => kopieer(deelUrl, 'url')}
-            className="w-full flex items-center justify-between gap-2 bg-white border-2 border-gray-200 rounded-xl px-4 py-2.5 hover:border-blue-400 transition active:scale-[0.98]"
+            className="w-full flex items-center justify-between gap-2 bg-surface border border-border rounded-md px-4 py-2.5 hover:border-brand-400 transition active:scale-[0.98]"
             aria-label={t('referral_kopieer_link')}
           >
-            <span className="text-xs text-gray-700 font-mono truncate flex-1 text-left">
+            <span className="text-xs text-ink-2 font-mono truncate flex-1 text-left">
               {deelUrl}
             </span>
-            <span className="text-xs text-blue-600 font-semibold whitespace-nowrap">
+            <span className="text-xs text-brand-600 font-semibold whitespace-nowrap">
               {gekopieerd === 'url' ? `${t('referral_gekopieerd')}` : `${t('referral_kopieer')}`}
             </span>
           </button>
@@ -197,7 +197,7 @@ export default function ReferralKaart() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
           <button
             onClick={deelViaWhatsApp}
-            className="flex flex-col items-center justify-center gap-1 bg-[#25D366] hover:bg-[#1ebe57] text-white rounded-xl py-3 text-xs font-bold transition active:scale-95"
+            className="flex flex-col items-center justify-center gap-1 bg-[#25D366] hover:bg-[#1ebe57] text-white rounded-md py-3 text-xs font-semibold transition active:scale-95"
             aria-label={t('referral_deel_whatsapp')}
           >
             <IconWhatsApp />
@@ -205,7 +205,7 @@ export default function ReferralKaart() {
           </button>
           <button
             onClick={deelViaEmail}
-            className="flex flex-col items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-xs font-bold transition active:scale-95"
+            className="flex flex-col items-center justify-center gap-1 bg-brand-600 hover:bg-brand-700 text-white rounded-md py-3 text-xs font-semibold transition active:scale-95"
             aria-label={t('referral_deel_email')}
           >
             <IconMail />
@@ -213,7 +213,7 @@ export default function ReferralKaart() {
           </button>
           <button
             onClick={deelNative}
-            className="flex flex-col items-center justify-center gap-1 bg-gray-700 hover:bg-gray-800 text-white rounded-xl py-3 text-xs font-bold transition active:scale-95"
+            className="flex flex-col items-center justify-center gap-1 bg-surface-inverse hover:opacity-90 text-fg-on-color rounded-md py-3 text-xs font-semibold transition active:scale-95"
             aria-label={t('referral_deel_meer')}
           >
             <IconShare />
@@ -221,7 +221,7 @@ export default function ReferralKaart() {
           </button>
           <button
             onClick={() => kopieer(deelUrl, 'knop')}
-            className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl py-3 text-xs font-bold transition active:scale-95"
+            className="flex flex-col items-center justify-center gap-1 bg-surface-2 hover:bg-surface-3 text-ink-1 rounded-md py-3 text-xs font-semibold transition active:scale-95"
             aria-label={t('referral_deel_kopieer')}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -238,20 +238,20 @@ export default function ReferralKaart() {
         </div>
 
         {/* Statistieken */}
-        <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100">
+        <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-border">
           <div className="text-center">
-            <div className="text-2xl font-bold text-emerald-600">
+            <div className="font-display text-2xl font-medium text-success-600 tabular-nums">
               {statistieken.aantalUitnodigingen}
             </div>
-            <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+            <div className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">
               {t('referral_stats_vrienden')}
             </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="font-display text-2xl font-medium text-brand-600 tabular-nums">
               €{statistieken.creditEur.toFixed(2)}
             </div>
-            <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+            <div className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">
               {t('referral_stats_verdiend')}
             </div>
           </div>
@@ -259,11 +259,11 @@ export default function ReferralKaart() {
       </div>
 
       {/* Uitleg "Hoe het werkt" */}
-      <div className="card-glass p-4 bg-gradient-to-br from-blue-50 to-emerald-50 animate-fade-up">
-        <h4 className="font-bold text-gray-800 text-sm flex items-center gap-2">
+      <div className="bg-surface-2 border border-border rounded-md p-4 animate-fade-up">
+        <h4 className="font-display font-medium text-ink-1 text-sm flex items-center gap-2">
           {t('referral_hoe_titel')}
         </h4>
-        <ol className="text-xs text-gray-700 mt-2 space-y-1.5 list-decimal list-inside leading-relaxed">
+        <ol className="text-xs text-ink-2 mt-2 space-y-1.5 list-decimal list-inside leading-relaxed">
           <li>{t('referral_hoe_stap1')}</li>
           <li>{t('referral_hoe_stap2')}</li>
           <li>{t('referral_hoe_stap3', { bedrag: beloningPerVriendEur })}</li>

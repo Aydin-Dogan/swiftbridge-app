@@ -38,25 +38,25 @@ export default function ReferralProgress() {
   const benodigdeVrienden = Math.ceil((volgende - verdiend) / beloning);
 
   return (
-    <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-xl p-4">
+    <div className="bg-success-50 border border-success-500/30 rounded-md p-4">
       <div className="flex items-baseline justify-between mb-2">
-        <span className="text-2xl font-extrabold text-emerald-700">
+        <span className="font-display text-2xl font-medium text-success-700 tabular-nums">
           €{verdiend.toFixed(2)}
         </span>
-        <span className="text-xs text-emerald-600 font-medium">
+        <span className="text-xs text-success-600 font-medium tabular-nums">
           / €{volgende} {t('referral_progress_volgende')}
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="w-full h-2 bg-white rounded-full overflow-hidden mb-2">
+      <div className="w-full h-2 bg-surface rounded-full overflow-hidden mb-2">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-green-500 transition-all"
+          className="h-full rounded-full bg-success-500 transition-all"
           style={{ width: `${Math.min(100, procent)}%` }}
         />
       </div>
 
-      <p className="text-xs text-emerald-800 font-medium">
+      <p className="text-xs text-success-700 font-medium">
         {benodigdeVrienden > 0
           ? t('referral_progress_nog', { aantal: benodigdeVrienden, mijlpaal: volgende })
           : t('referral_progress_mijlpaal_gehaald', { mijlpaal: volgende })}

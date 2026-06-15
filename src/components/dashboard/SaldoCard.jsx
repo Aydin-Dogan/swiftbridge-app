@@ -19,31 +19,31 @@ function kycPill(status, t) {
   switch (status) {
     case 'goedgekeurd':
       return {
-        kleur: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-        dot: 'bg-emerald-500',
+        kleur: 'bg-success-50 text-success-700 border-success-100',
+        dot: 'bg-success-500',
         label: t('dashboard_kyc_status_goedgekeurd'),
         Icoon: Check,
       };
     case 'in_behandeling':
     case 'ingediend':
       return {
-        kleur: 'bg-amber-100 text-amber-800 border-amber-200',
-        dot: 'bg-amber-500 animate-pulse',
+        kleur: 'bg-accent-400/10 text-accent-600 border-accent-400/30',
+        dot: 'bg-accent-500 animate-pulse',
         label: t('dashboard_kyc_status_in_behandeling'),
         Icoon: Clock,
       };
     case 'afgewezen':
     case 'geblokkeerd':
       return {
-        kleur: 'bg-rose-100 text-rose-800 border-rose-200',
-        dot: 'bg-rose-500',
+        kleur: 'bg-surface text-fg-error border-border-error',
+        dot: 'bg-fg-error',
         label: t('dashboard_kyc_status_afgewezen'),
         Icoon: AlertTriangle,
       };
     default:
       return {
-        kleur: 'bg-slate-100 text-slate-700 border-slate-200',
-        dot: 'bg-slate-400',
+        kleur: 'bg-surface-2 text-ink-2 border-border',
+        dot: 'bg-ink-3',
         label: t('dashboard_kyc_status_geen'),
         Icoon: IdCard,
       };
@@ -60,26 +60,14 @@ export default function SaldoCard({ gebruiker, onVernieuw }) {
   return (
     <header
       aria-label="Welkom"
-      className="relative overflow-hidden rounded-3xl border border-white/60 bg-white/60 backdrop-blur-xl p-5 shadow-sm animate-fade-up"
+      className="relative overflow-hidden rounded-md border border-border bg-surface p-5 shadow-soft animate-fade-up"
     >
-      {/* Decoratieve gradient blobs */}
-      <div
-        className="absolute -top-16 -right-10 w-48 h-48 rounded-full opacity-40 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.25), transparent 70%)' }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute -bottom-20 -left-10 w-56 h-56 rounded-full opacity-30 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.18), transparent 70%)' }}
-        aria-hidden="true"
-      />
-
       <div className="relative flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <p className="text-[0.7rem] font-medium text-gray-500 uppercase tracking-[0.2em]">
             {begroeting}
           </p>
-          <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 mt-1 truncate">
+          <h2 className="font-display text-xl md:text-2xl font-medium text-ink-1 mt-1 truncate">
             {voornaam
               ? t('dashboard_welkom_terug', { naam: voornaam })
               : t('dashboard_welkom_terug', { naam: '' }).replace(/, $/, '')}
@@ -101,7 +89,7 @@ export default function SaldoCard({ gebruiker, onVernieuw }) {
         {onVernieuw && (
           <button
             onClick={onVernieuw}
-            className="flex-shrink-0 text-slate-400 hover:text-blue-600 active:scale-95 transition text-xl w-11 h-11 rounded-full flex items-center justify-center bg-white/70 border border-white/80 hover:border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="flex-shrink-0 text-gray-400 hover:text-brand-600 active:scale-95 transition text-xl w-11 h-11 rounded-md flex items-center justify-center bg-surface border border-border hover:border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-100"
             title={t('vernieuwen')}
             aria-label={t('vernieuwen')}
           >

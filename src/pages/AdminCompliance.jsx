@@ -32,7 +32,7 @@ const KYCReviewQueue = lazy(() => import('../components/admin/KYCReviewQueue'));
 function AdminLazyFallback() {
   return (
     <div className="flex items-center justify-center py-12">
-      <div className="animate-spin rounded-full h-10 w-10 border-4 border-white/30 border-t-white"></div>
+      <div className="animate-spin rounded-full h-10 w-10 border-4 border-border border-t-brand-500"></div>
     </div>
   );
 }
@@ -55,13 +55,13 @@ function shortId(id) {
 }
 
 // ── StatCard ──────────────────────────────────────────────────────────────────
-function StatCard({ icoon: Icoon, label, waarde, sub, kleur = 'text-white' }) {
+function StatCard({ icoon: Icoon, label, waarde, sub, kleur = 'text-ink-1' }) {
   return (
-    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-5 shadow-lg">
-      {Icoon && <Icoon className="w-7 h-7 mb-2 text-white/70" />}
-      <div className={`text-2xl font-extrabold ${kleur}`}>{waarde}</div>
-      <div className="text-xs text-white/70 mt-1">{label}</div>
-      {sub && <div className="text-xs text-white/50 mt-0.5">{sub}</div>}
+    <div className="bg-surface border border-border rounded-md p-5 shadow-soft">
+      {Icoon && <Icoon className="w-7 h-7 mb-2 text-gray-500" />}
+      <div className={`font-display text-2xl font-medium tabular-nums ${kleur}`}>{waarde}</div>
+      <div className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mt-1">{label}</div>
+      {sub && <div className="text-xs text-ink-3 mt-0.5">{sub}</div>}
     </div>
   );
 }
@@ -71,13 +71,13 @@ function ChainStatus({ resultaat }) {
   if (!resultaat) return null;
   const ok = resultaat.geldig;
   return (
-    <div className={`rounded-2xl border p-4 flex items-center gap-3 backdrop-blur-lg ${
-      ok ? 'bg-green-500/10 border-green-300/30 text-green-100'
-         : 'bg-red-500/10 border-red-300/40 text-red-100'
+    <div className={`rounded-md border p-4 flex items-center gap-3 ${
+      ok ? 'bg-success-50 border-success-100 text-success-700'
+         : 'bg-red-50 border-red-200 text-red-800'
     }`}>
       {ok ? <Lock className="w-6 h-6 flex-shrink-0" /> : <AlertTriangle className="w-6 h-6 flex-shrink-0" />}
       <div>
-        <div className="font-bold text-sm">
+        <div className="font-semibold text-sm">
           {ok ? 'Audit log hash-chain intact' : 'Audit log AANGETAST!'}
         </div>
         <div className="text-xs mt-0.5 opacity-80">
@@ -93,7 +93,7 @@ function ChainStatus({ resultaat }) {
 // ── Tab 1: Stats ──────────────────────────────────────────────────────────────
 function StatsTab({ stats, chain }) {
   if (!stats) {
-    return <div className="text-center text-white/60 py-12">Laden…</div>;
+    return <div className="text-center text-ink-2 py-12">Laden…</div>;
   }
   return (
     <div className="space-y-6">
@@ -101,9 +101,9 @@ function StatsTab({ stats, chain }) {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icoon={Users} label="Gebruikers totaal" waarde={stats.gebruikers} />
-        <StatCard icoon={Clock} label="KYC in behandeling" waarde={stats.kycInBehandeling} kleur="text-amber-300" />
-        <StatCard icoon={CheckCircle} label="KYC goedgekeurd" waarde={stats.kycGoedgekeurd} kleur="text-green-300" />
-        <StatCard icoon={Euro} label="Totaal volume" waarde={fmtEur(stats.totaalVolumeEur)} kleur="text-purple-300" />
+        <StatCard icoon={Clock} label="KYC in behandeling" waarde={stats.kycInBehandeling} kleur="text-accent-600" />
+        <StatCard icoon={CheckCircle} label="KYC goedgekeurd" waarde={stats.kycGoedgekeurd} kleur="text-success-700" />
+        <StatCard icoon={Euro} label="Totaal volume" waarde={fmtEur(stats.totaalVolumeEur)} kleur="text-ink-1" />
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -112,32 +112,32 @@ function StatsTab({ stats, chain }) {
           label="Laatste 7 dagen"
           waarde={fmtEur(stats.transacties7d?.totaalEur)}
           sub={`${stats.transacties7d?.aantal || 0} transacties`}
-          kleur="text-blue-300"
+          kleur="text-brand-700"
         />
         <StatCard
           icoon={Calendar}
           label="Laatste 30 dagen"
           waarde={fmtEur(stats.transacties30d?.totaalEur)}
           sub={`${stats.transacties30d?.aantal || 0} transacties`}
-          kleur="text-blue-200"
+          kleur="text-brand-600"
         />
         <StatCard
           icoon={Shield}
           label="Sanctie hits"
           waarde={stats.sanctieHits}
           sub="Wwft Art. 33"
-          kleur={stats.sanctieHits > 0 ? 'text-red-300' : 'text-white'}
+          kleur={stats.sanctieHits > 0 ? 'text-red-700' : 'text-ink-1'}
         />
         <StatCard
           icoon={Clipboard}
           label="GDPR acties"
           waarde={stats.gdprActies}
           sub="AVG Art. 15/17"
-          kleur="text-cyan-300"
+          kleur="text-brand-600"
         />
       </div>
 
-      <div className="text-xs text-white/40 text-right">
+      <div className="text-xs text-gray-500 text-right">
         Bijgewerkt: {fmtDatum(stats.genereerdOp)}
       </div>
     </div>
@@ -191,66 +191,66 @@ function AuditTab() {
         <select
           value={actie}
           onChange={(e) => { setActie(e.target.value); setOffset(0); }}
-          className="bg-white/10 border border-white/20 backdrop-blur-lg rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
         >
           {ACTIE_OPTIES.map((o) => (
-            <option key={o.id} value={o.id} className="text-gray-900">{o.label}</option>
+            <option key={o.id} value={o.id}>{o.label}</option>
           ))}
         </select>
-        <div className="text-xs text-white/60">
+        <div className="text-xs text-ink-2 tabular-nums">
           {totaal} resultaten · pagina {Math.floor(offset / limit) + 1} / {Math.max(1, Math.ceil(totaal / limit))}
         </div>
         <div className="flex-1" />
         <button
           onClick={() => setOffset(Math.max(0, offset - limit))}
           disabled={offset === 0 || laden}
-          className="px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white disabled:opacity-40 hover:bg-white/20 transition"
+          className="px-3 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 disabled:opacity-40 hover:bg-surface-3 transition"
         >
           ← Vorige
         </button>
         <button
           onClick={() => setOffset(offset + limit)}
           disabled={offset + limit >= totaal || laden}
-          className="px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-sm text-white disabled:opacity-40 hover:bg-white/20 transition"
+          className="px-3 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 disabled:opacity-40 hover:bg-surface-3 transition"
         >
           Volgende →
         </button>
       </div>
 
       {fout && (
-        <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>
       )}
 
-      <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-md overflow-hidden shadow-soft">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/10">
-              <tr className="text-left text-white/80">
-                <th className="px-4 py-3 font-semibold">ID</th>
-                <th className="px-4 py-3 font-semibold">Actie</th>
-                <th className="px-4 py-3 font-semibold">User</th>
-                <th className="px-4 py-3 font-semibold">IP</th>
-                <th className="px-4 py-3 font-semibold">Tijdstip</th>
-                <th className="px-4 py-3 font-semibold">Hash</th>
+            <thead className="bg-surface-3 border-b border-border">
+              <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
+                <th className="px-4 py-3">ID</th>
+                <th className="px-4 py-3">Actie</th>
+                <th className="px-4 py-3">User</th>
+                <th className="px-4 py-3">IP</th>
+                <th className="px-4 py-3">Tijdstip</th>
+                <th className="px-4 py-3">Hash</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10">
+            <tbody className="divide-y divide-border">
               {laden ? (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-white/60">Laden…</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-ink-2">Laden…</td></tr>
               ) : logs.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-white/60">Geen logs gevonden</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-ink-2">Geen logs gevonden</td></tr>
               ) : logs.map((log) => (
-                <tr key={log.id} className="hover:bg-white/5 transition">
-                  <td className="px-4 py-3 font-mono text-xs text-white/70">{log.id}</td>
+                <tr key={log.id} className="hover:bg-surface-3 transition">
+                  <td className="px-4 py-3 font-mono text-xs text-ink-2 tabular-nums">{log.id}</td>
                   <td className="px-4 py-3">
-                    <span className="inline-block bg-white/10 text-white text-xs font-semibold px-2 py-1 rounded-full border border-white/20">
+                    <span className="inline-block bg-surface-3 text-ink-2 text-xs font-semibold px-2 py-1 rounded-full border border-border">
                       {log.actie}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-mono text-xs text-white/70">{log.userId ? shortId(log.userId) : '—'}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-white/50">{log.ipAdres || '—'}</td>
-                  <td className="px-4 py-3 text-xs text-white/70">{fmtDatum(log.aangemaaktOp)}</td>
-                  <td className="px-4 py-3 font-mono text-[10px] text-white/40" title={log.logHash}>
+                  <td className="px-4 py-3 font-mono text-xs text-ink-2">{log.userId ? shortId(log.userId) : '—'}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-gray-500">{log.ipAdres || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-ink-2">{fmtDatum(log.aangemaaktOp)}</td>
+                  <td className="px-4 py-3 font-mono text-[10px] text-gray-500" title={log.logHash}>
                     {log.logHash ? log.logHash.slice(0, 12) + '…' : '—'}
                   </td>
                 </tr>
@@ -284,41 +284,41 @@ function SanctieTab() {
     })();
   }, [t]);
 
-  if (laden) return <div className="text-center text-white/60 py-12">Laden…</div>;
-  if (fout) return <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>;
+  if (laden) return <div className="text-center text-ink-2 py-12">Laden…</div>;
+  if (fout) return <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>;
   if (matches.length === 0) {
     return (
-      <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
-        <Shield className="w-10 h-10 mx-auto mb-3 text-white/60" />
+      <div className="bg-surface border border-border rounded-md p-8 text-center text-ink-2">
+        <Shield className="w-10 h-10 mx-auto mb-3 text-gray-500" />
         <p className="font-semibold">Geen sanctie hits</p>
-        <p className="text-xs text-white/50 mt-2">Wwft Art. 33 — alle screenings hebben geen match opgeleverd.</p>
+        <p className="text-xs text-gray-500 mt-2">Wwft Art. 33 — alle screenings hebben geen match opgeleverd.</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-3">
-      <div className="bg-red-500/10 border border-red-300/30 rounded-2xl p-4 text-red-100 text-sm">
+      <div className="bg-red-50 border border-red-200 rounded-md p-4 text-red-700 text-sm">
         <strong>{matches.length} sanctie-hit{matches.length !== 1 ? 's' : ''}</strong> — Wwft Art. 33 vereist directe melding bij DNB/FIU-NL.
       </div>
       {matches.map((m) => (
-        <div key={m.id} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-5 space-y-3">
+        <div key={m.id} className="bg-surface border border-border rounded-md p-5 space-y-3 shadow-soft">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="font-bold text-white">{m.gecheckteNaam || m.userNaam || '—'}</div>
-              <div className="text-xs text-white/60">{m.userEmail || shortId(m.userId)}</div>
-              <div className="text-xs text-white/50 mt-1">Context: {m.context || '—'} · {m.source || 'EU list'}</div>
+              <div className="font-display font-medium text-ink-1">{m.gecheckteNaam || m.userNaam || '—'}</div>
+              <div className="text-xs text-ink-2">{m.userEmail || shortId(m.userId)}</div>
+              <div className="text-xs text-gray-500 mt-1">Context: {m.context || '—'} · {m.source || 'EU list'}</div>
             </div>
             <div className="text-right">
-              <div className="inline-block bg-red-500/20 border border-red-300/30 text-red-200 text-xs font-bold px-3 py-1 rounded-full">
+              <div className="inline-block bg-red-100 border border-red-200 text-red-700 text-xs font-bold px-3 py-1 rounded-full tabular-nums">
                 Score {m.score != null ? Math.round(m.score * 100) + '%' : '—'}
               </div>
-              <div className="text-xs text-white/40 mt-2">{fmtDatum(m.aangemaaktOp)}</div>
+              <div className="text-xs text-gray-500 mt-2">{fmtDatum(m.aangemaaktOp)}</div>
             </div>
           </div>
           {m.besteMatch && (
-            <div className="bg-black/20 rounded-xl p-3 text-xs text-white/80">
-              <span className="text-white/50">Beste match: </span>
+            <div className="bg-surface-3 rounded-md p-3 text-xs text-ink-2">
+              <span className="text-gray-500">Beste match: </span>
               <span className="font-mono">{m.besteMatch}</span>
             </div>
           )}
@@ -349,47 +349,47 @@ function GdprTab() {
     })();
   }, [t]);
 
-  if (laden) return <div className="text-center text-white/60 py-12">Laden…</div>;
-  if (fout) return <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>;
+  if (laden) return <div className="text-center text-ink-2 py-12">Laden…</div>;
+  if (fout) return <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>;
   if (acties.length === 0) {
     return (
-      <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 text-center text-white/70">
-        <Clipboard className="w-10 h-10 mx-auto mb-3 text-white/60" />
+      <div className="bg-surface border border-border rounded-md p-8 text-center text-ink-2">
+        <Clipboard className="w-10 h-10 mx-auto mb-3 text-gray-500" />
         <p className="font-semibold">Geen GDPR acties gelogd</p>
-        <p className="text-xs text-white/50 mt-2">AVG Art. 15 (inzage) en Art. 17 (vergetelheid) worden hier zichtbaar als gebruikers ze uitvoeren.</p>
+        <p className="text-xs text-gray-500 mt-2">AVG Art. 15 (inzage) en Art. 17 (vergetelheid) worden hier zichtbaar als gebruikers ze uitvoeren.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+    <div className="bg-surface border border-border rounded-md overflow-hidden shadow-soft">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-white/10">
-            <tr className="text-left text-white/80">
-              <th className="px-4 py-3 font-semibold">Type</th>
-              <th className="px-4 py-3 font-semibold">Gebruiker</th>
-              <th className="px-4 py-3 font-semibold">Email</th>
-              <th className="px-4 py-3 font-semibold">IP</th>
-              <th className="px-4 py-3 font-semibold">Tijdstip</th>
+          <thead className="bg-surface-3 border-b border-border">
+            <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
+              <th className="px-4 py-3">Type</th>
+              <th className="px-4 py-3">Gebruiker</th>
+              <th className="px-4 py-3">Email</th>
+              <th className="px-4 py-3">IP</th>
+              <th className="px-4 py-3">Tijdstip</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/10">
+          <tbody className="divide-y divide-border">
             {acties.map((a) => (
-              <tr key={a.id} className="hover:bg-white/5 transition">
+              <tr key={a.id} className="hover:bg-surface-3 transition">
                 <td className="px-4 py-3">
                   <span className={`inline-block text-xs font-semibold px-2 py-1 rounded-full border ${
                     a.type === 'gdpr_anonimiseer'
-                      ? 'bg-red-500/20 border-red-300/30 text-red-200'
-                      : 'bg-blue-500/20 border-blue-300/30 text-blue-200'
+                      ? 'bg-red-100 border-red-200 text-red-700'
+                      : 'bg-brand-50 border-brand-100 text-brand-700'
                   }`}>
                     {a.type === 'gdpr_anonimiseer' ? 'Art. 17 — Vergetelheid' : 'Art. 15 — Inzage'}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-white/80">{a.userNaam || '—'}</td>
-                <td className="px-4 py-3 text-white/70 text-xs">{a.userEmail || shortId(a.userId)}</td>
-                <td className="px-4 py-3 font-mono text-xs text-white/50">{a.ipAdres || '—'}</td>
-                <td className="px-4 py-3 text-xs text-white/70">{fmtDatum(a.aangemaaktOp)}</td>
+                <td className="px-4 py-3 text-ink-2">{a.userNaam || '—'}</td>
+                <td className="px-4 py-3 text-ink-2 text-xs">{a.userEmail || shortId(a.userId)}</td>
+                <td className="px-4 py-3 font-mono text-xs text-gray-500">{a.ipAdres || '—'}</td>
+                <td className="px-4 py-3 text-xs text-ink-2">{fmtDatum(a.aangemaaktOp)}</td>
               </tr>
             ))}
           </tbody>
@@ -431,60 +431,60 @@ function TransactieTab() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="bg-white/10 border border-white/20 backdrop-blur-lg rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:border-brand-500"
         >
-          <option value="" className="text-gray-900">Alle statussen</option>
-          <option value="voltooid" className="text-gray-900">Voltooid</option>
-          <option value="in_behandeling" className="text-gray-900">In behandeling</option>
-          <option value="mislukt" className="text-gray-900">Mislukt</option>
-          <option value="geannuleerd" className="text-gray-900">Geannuleerd</option>
+          <option value="">Alle statussen</option>
+          <option value="voltooid">Voltooid</option>
+          <option value="in_behandeling">In behandeling</option>
+          <option value="mislukt">Mislukt</option>
+          <option value="geannuleerd">Geannuleerd</option>
         </select>
-        <div className="text-xs text-white/60">
-          {tx.length} transacties · {suspiciousCount > 0 && <span className="text-amber-300 font-semibold">{suspiciousCount} verdacht (≥€2000)</span>}
+        <div className="text-xs text-ink-2 tabular-nums">
+          {tx.length} transacties · {suspiciousCount > 0 && <span className="text-accent-600 font-semibold">{suspiciousCount} verdacht (≥€2000)</span>}
         </div>
       </div>
 
-      {fout && <div className="bg-red-500/10 border border-red-300/30 text-red-100 rounded-2xl p-3 text-sm">{fout}</div>}
+      {fout && <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">{fout}</div>}
 
-      <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-md overflow-hidden shadow-soft">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/10">
-              <tr className="text-left text-white/80">
-                <th className="px-4 py-3 font-semibold">Ref</th>
-                <th className="px-4 py-3 font-semibold">User</th>
-                <th className="px-4 py-3 font-semibold text-right">EUR</th>
-                <th className="px-4 py-3 font-semibold text-right">Fee</th>
-                <th className="px-4 py-3 font-semibold text-right">TRY</th>
-                <th className="px-4 py-3 font-semibold">Bank</th>
-                <th className="px-4 py-3 font-semibold">Status</th>
-                <th className="px-4 py-3 font-semibold">Aangemaakt</th>
+            <thead className="bg-surface-3 border-b border-border">
+              <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
+                <th className="px-4 py-3">Ref</th>
+                <th className="px-4 py-3">User</th>
+                <th className="px-4 py-3 text-right">EUR</th>
+                <th className="px-4 py-3 text-right">Fee</th>
+                <th className="px-4 py-3 text-right">TRY</th>
+                <th className="px-4 py-3">Bank</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Aangemaakt</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10">
+            <tbody className="divide-y divide-border">
               {laden ? (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-white/60">Laden…</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-ink-2">Laden…</td></tr>
               ) : tx.length === 0 ? (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-white/60">Geen transacties</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-ink-2">Geen transacties</td></tr>
               ) : tx.map((t) => (
-                <tr key={t.id} className={`hover:bg-white/5 transition ${t.suspicious ? 'bg-amber-500/5' : ''}`}>
-                  <td className="px-4 py-3 font-mono text-xs text-white/70">{t.referentieNr || shortId(t.id)}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-white/60">{t.userIdMasked}</td>
-                  <td className="px-4 py-3 text-right text-white font-semibold">
+                <tr key={t.id} className={`hover:bg-surface-3 transition ${t.suspicious ? 'bg-accent-400/10' : ''}`}>
+                  <td className="px-4 py-3 font-mono text-xs text-ink-2">{t.referentieNr || shortId(t.id)}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-gray-500">{t.userIdMasked}</td>
+                  <td className="px-4 py-3 text-right text-ink-1 font-semibold tabular-nums">
                     {fmtEur(t.eurBedrag)}
-                    {t.suspicious && <span className="ml-1 text-amber-300 inline-block align-text-bottom" title="Suspicious: ≥€2000"><AlertTriangle className="w-4 h-4" /></span>}
+                    {t.suspicious && <span className="ml-1 text-accent-600 inline-block align-text-bottom" title="Suspicious: ≥€2000"><AlertTriangle className="w-4 h-4" /></span>}
                   </td>
-                  <td className="px-4 py-3 text-right text-white/70">{fmtEur(t.feeEur)}</td>
-                  <td className="px-4 py-3 text-right text-white/70">
+                  <td className="px-4 py-3 text-right text-ink-2 tabular-nums">{fmtEur(t.feeEur)}</td>
+                  <td className="px-4 py-3 text-right text-ink-2 tabular-nums">
                     {new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(t.tryBedrag)} {t.valuta || 'TRY'}
                   </td>
-                  <td className="px-4 py-3 text-xs text-white/70">{t.ontvangerBank}</td>
+                  <td className="px-4 py-3 text-xs text-ink-2">{t.ontvangerBank}</td>
                   <td className="px-4 py-3">
-                    <span className="inline-block bg-white/10 text-white text-xs font-semibold px-2 py-1 rounded-full border border-white/20">
+                    <span className="inline-block bg-surface-3 text-ink-2 text-xs font-semibold px-2 py-1 rounded-full border border-border">
                       {t.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-white/60">{fmtDatum(t.aangemaaktOp)}</td>
+                  <td className="px-4 py-3 text-xs text-ink-2">{fmtDatum(t.aangemaaktOp)}</td>
                 </tr>
               ))}
             </tbody>
@@ -492,7 +492,7 @@ function TransactieTab() {
         </div>
       </div>
 
-      <div className="text-xs text-white/40">
+      <div className="text-xs text-gray-500">
         Geen PII (IBAN/ontvanger-namen) zichtbaar — alleen geanonimiseerde monitoring data.
       </div>
     </div>
@@ -540,14 +540,14 @@ export default function AdminCompliance() {
 
   if (fout && !stats) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 max-w-md text-center text-white">
-          <Lock className="w-12 h-12 mx-auto mb-4 text-white/80" />
-          <h2 className="text-xl font-bold mb-2">Geen admin toegang</h2>
-          <p className="text-white/70 text-sm mb-6">{fout}</p>
+      <div className="min-h-screen bg-surface-2 flex items-center justify-center p-4">
+        <div className="bg-surface border border-border rounded-md p-8 max-w-md text-center shadow-soft">
+          <Lock className="w-12 h-12 mx-auto mb-4 text-gray-500" />
+          <h2 className="font-display text-xl font-medium text-ink-1 mb-2">Geen admin toegang</h2>
+          <p className="text-ink-2 text-sm mb-6">{fout}</p>
           <button
             onClick={() => navigate('/app')}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-xl transition"
+            className="btn-inst"
           >
             ← Terug naar app
           </button>
@@ -557,21 +557,21 @@ export default function AdminCompliance() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen bg-surface-2">
       {/* Header */}
-      <header className="bg-white/5 backdrop-blur-lg border-b border-white/10 sticky top-0 z-40">
+      <header className="bg-surface border-b border-border sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/app')} className="text-white"><Zap className="w-7 h-7" /></button>
+            <button onClick={() => navigate('/app')} className="text-brand-600"><Zap className="w-7 h-7" /></button>
             <div>
-              <div className="font-extrabold text-white leading-none">SwiftBridge Compliance</div>
-              <div className="text-xs text-amber-300 font-semibold">DNB toezicht · Wwft · AVG</div>
+              <div className="font-display font-medium text-ink-1 leading-none">SwiftBridge Compliance</div>
+              <div className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-600">DNB toezicht · Wwft · AVG</div>
             </div>
           </div>
           <button
             onClick={laadStats}
             disabled={laden}
-            className="text-white/70 hover:text-white disabled:opacity-40 transition"
+            className="text-gray-500 hover:text-brand-600 disabled:opacity-40 transition"
             title="Vernieuwen"
           >
             <Refresh className="w-5 h-5" />
@@ -579,22 +579,19 @@ export default function AdminCompliance() {
         </div>
 
         {/* Tab strip */}
-        <div className="max-w-7xl mx-auto px-4 pb-1 flex gap-1 overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto -mb-px">
           {tabs.map((tt) => (
             <button
               key={tt.id}
               onClick={() => setTab(tt.id)}
-              className={`relative flex items-center gap-2 px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition rounded-t-xl ${
+              className={`relative flex items-center gap-2 px-4 py-2.5 text-[0.7rem] font-medium uppercase tracking-[0.16em] whitespace-nowrap transition border-b-2 ${
                 tab === tt.id
-                  ? 'text-white bg-white/10'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  ? 'text-brand-700 border-brand-500'
+                  : 'text-gray-500 border-transparent hover:text-ink-1'
               }`}
             >
               {tt.icoon && <tt.icoon className="w-4 h-4" />}
               <span>{tt.label}</span>
-              {tab === tt.id && (
-                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 rounded-full" />
-              )}
             </button>
           ))}
         </div>

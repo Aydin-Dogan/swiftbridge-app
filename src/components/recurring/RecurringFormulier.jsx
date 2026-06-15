@@ -113,14 +113,14 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
       className="fixed inset-0 z-[80] bg-black/40 flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-up"
       onClick={(e) => { if (e.target === e.currentTarget) onSluit && onSluit(); }}
     >
-      <div className="bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
-        <header className="px-5 py-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
-          <h2 className="font-bold text-lg text-gray-900">{t('recurring_form_titel')}</h2>
+      <div className="bg-surface w-full sm:max-w-lg rounded-t-md sm:rounded-md border border-border shadow-soft-xl overflow-hidden flex flex-col max-h-[95vh]">
+        <header className="px-5 py-4 border-b border-border flex items-center justify-between flex-shrink-0">
+          <h2 className="font-display font-medium text-lg text-ink-1">{t('recurring_form_titel')}</h2>
           <button
             type="button"
             onClick={onSluit}
             aria-label={t('sluiten')}
-            className="text-gray-500 hover:text-gray-700 leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
+            className="text-ink-2 hover:text-ink-1 leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-2"
           >
             <X className="w-5 h-5" />
           </button>
@@ -128,13 +128,13 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
 
         <form onSubmit={submit} className="px-5 py-4 space-y-4 overflow-y-auto">
           {fout && (
-            <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm">
               {fout}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-ink-2 mb-1">
               {t('recurring_veld_naam')}
             </label>
             <input
@@ -143,16 +143,16 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
               onChange={(e) => setNaam(e.target.value)}
               placeholder={t('recurring_veld_naam_placeholder')}
               maxLength={100}
-              className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-ink-2 mb-1">
               {t('recurring_veld_bedrag')}
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">€</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-3">€</span>
               <input
                 type="number"
                 value={bedrag}
@@ -161,14 +161,14 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
                 step="0.01"
                 onChange={(e) => setBedrag(e.target.value)}
                 placeholder="100.00"
-                className="w-full pl-8 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full pl-8 p-3 border border-border rounded-md bg-surface tabular-nums focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1">{t('recurring_veld_bedrag_hint')}</p>
+            <p className="text-xs text-ink-3 mt-1">{t('recurring_veld_bedrag_hint')}</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-ink-2 mb-1">
               {t('recurring_veld_ontvanger')}
             </label>
             <input
@@ -176,12 +176,12 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
               value={ontvangerNaam}
               onChange={(e) => setOntvangerNaam(e.target.value)}
               placeholder={t('recurring_veld_ontvanger_placeholder')}
-              className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-ink-2 mb-1">
               {t('recurring_veld_iban')}
             </label>
             <input
@@ -189,13 +189,13 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
               value={iban}
               onChange={(e) => setIban(e.target.value.toUpperCase())}
               placeholder="TR33 0006 1005 1978 6457 8413 26"
-              className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 font-mono"
+              className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 font-mono"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-ink-2 mb-1">
                 {t('recurring_veld_bank')}
               </label>
               <input
@@ -203,17 +203,17 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
                 value={bank}
                 onChange={(e) => setBank(e.target.value)}
                 placeholder="Garanti BBVA"
-                className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-ink-2 mb-1">
                 {t('recurring_veld_valuta')}
               </label>
               <select
                 value={valuta}
                 onChange={(e) => setValuta(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               >
                 <option value="TRY">TRY</option>
                 <option value="EUR">EUR</option>
@@ -224,7 +224,7 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-ink-2 mb-2">
               {t('recurring_veld_frequentie')}
             </label>
             <FrequentiePicker
@@ -239,25 +239,25 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-ink-2 mb-1">
                 {t('recurring_veld_start')}
               </label>
               <input
                 type="date"
                 value={startOp}
                 onChange={(e) => setStartOp(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-ink-2 mb-1">
                 {t('recurring_veld_eind')}
               </label>
               <input
                 type="date"
                 value={eindigtOp}
                 onChange={(e) => setEindigtOp(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             </div>
           </div>
@@ -266,7 +266,7 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
             <button
               type="button"
               onClick={onSluit}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl active:scale-95 transition"
+              className="flex-1 border border-border text-ink-2 font-semibold py-3 rounded-md hover:bg-surface-2 active:scale-95 transition"
               disabled={bezig}
             >
               {t('annuleren')}
@@ -274,7 +274,7 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
             <button
               type="submit"
               disabled={bezig}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl active:scale-95 transition disabled:opacity-60"
+              className="flex-1 btn-inst py-3 active:scale-95 disabled:opacity-60"
             >
               {bezig ? t('laden') : t('recurring_form_opslaan')}
             </button>

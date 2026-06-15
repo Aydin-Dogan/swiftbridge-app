@@ -107,11 +107,11 @@ function StappenIndicator({ huidigeStap, totaal }) {
       {Array.from({ length: totaal }).map((_, i) => (
         <div key={i} className="flex items-center flex-1">
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition ${
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold tabular-nums transition ${
               i < huidigeStap
-                ? 'bg-green-500 text-white'
+                ? 'bg-success-500 text-white'
                 : i === huidigeStap
-                ? 'bg-blue-600 text-white shadow-md'
+                ? 'bg-brand-600 text-white shadow-soft'
                 : 'bg-gray-200 text-gray-400'
             }`}
             aria-label={`Stap ${i + 1} van ${totaal}`}
@@ -121,7 +121,7 @@ function StappenIndicator({ huidigeStap, totaal }) {
           {i < totaal - 1 && (
             <div
               className={`flex-1 h-1 mx-1 rounded-full transition ${
-                i < huidigeStap ? 'bg-green-500' : 'bg-gray-200'
+                i < huidigeStap ? 'bg-success-500' : 'bg-gray-200'
               }`}
             />
           )}
@@ -170,7 +170,7 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
 
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-semibold text-gray-700 mb-2">
+      <label htmlFor={id} className="block text-sm font-semibold text-ink-2 mb-2">
         {label}
       </label>
       <p id={`${id}-help`} className="text-xs text-gray-500 mb-2">{beschrijving}</p>
@@ -179,20 +179,20 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
         onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
         onDragLeave={() => setDrag(false)}
         onDrop={onDrop}
-        className={`relative border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition ${
+        className={`relative border border-dashed rounded-md p-6 text-center cursor-pointer transition ${
           fout
             ? 'border-red-400 bg-red-50'
             : preview
-            ? 'border-green-400 bg-green-50'
+            ? 'border-success-500 bg-success-50'
             : drag
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+            ? 'border-brand-500 bg-brand-50'
+            : 'border-border hover:border-brand-400 hover:bg-brand-50'
         }`}
       >
         {preview ? (
           <div className="space-y-2">
-            <img src={preview} alt={t('kyc_upload_preview_alt')} className="h-36 mx-auto rounded-xl object-cover shadow" loading="lazy" decoding="async" />
-            <p className="text-green-700 font-semibold text-sm">
+            <img src={preview} alt={t('kyc_upload_preview_alt')} className="h-36 mx-auto rounded-md object-cover shadow-soft" loading="lazy" decoding="async" />
+            <p className="text-success-700 font-semibold text-sm">
               {t('kyc_upload_geupload')} ({(file.size / 1024 / 1024).toFixed(2)} MB)
             </p>
             <p className="text-gray-500 text-xs">{t('kyc_upload_klik_wijzig')}</p>
@@ -200,7 +200,7 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
         ) : (
           <div>
             <div className="mb-2" aria-hidden="true"><Plus className="w-10 h-10 mx-auto text-gray-400" /></div>
-            <p className="text-gray-700 font-semibold text-sm">
+            <p className="text-ink-2 font-semibold text-sm">
               {drag ? t('kyc_upload_drop_hier') : t('kyc_upload_klik_of_drop')}
             </p>
             <p className="text-gray-400 text-xs mt-1">
@@ -291,13 +291,13 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
 
   if (fout) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-2xl p-4 space-y-3">
+      <div className="bg-red-50 border border-red-200 rounded-md p-4 space-y-3">
         <p className="text-sm text-red-700 font-semibold">{t('kyc_camera_fout')}</p>
         <p className="text-xs text-red-600">{fout}</p>
         <button
           type="button"
           onClick={annuleer}
-          className="text-sm bg-white border border-red-200 text-red-700 px-4 py-2 rounded-xl hover:bg-red-100"
+          className="text-sm bg-surface border border-red-200 text-red-700 px-4 py-2 rounded-md hover:bg-red-100"
         >
           {t('kyc_camera_terug')}
         </button>
@@ -307,7 +307,7 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
 
   return (
     <div className="space-y-3">
-      <div className="relative rounded-2xl overflow-hidden bg-black aspect-[4/3]">
+      <div className="relative rounded-md overflow-hidden bg-black aspect-[4/3]">
         <video
           ref={videoRef}
           autoPlay
@@ -336,7 +336,7 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
         <button
           type="button"
           onClick={annuleer}
-          className="flex-1 border border-gray-200 text-gray-700 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm"
+          className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm"
         >
           {t('kyc_camera_terug')}
         </button>
@@ -344,7 +344,7 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
           type="button"
           onClick={capture}
           disabled={!klaar}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
+          className="flex-1 btn-inst py-3 disabled:bg-gray-300 text-sm"
         >
           {t('kyc_camera_maak_foto')}
         </button>
@@ -450,17 +450,17 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
 
   if (klaar) {
     return (
-      <div className="bg-white rounded-2xl shadow p-6 text-center space-y-4">
-        <div aria-hidden="true"><CheckCircle className="w-16 h-16 mx-auto text-green-500" /></div>
-        <h2 className="text-xl font-bold text-gray-800">{t('kyc_upload_succes_titel')}</h2>
-        <p className="text-gray-600 text-sm">{t('kyc_upload_succes_omschrijving')}</p>
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-700 text-left">
+      <div className="bg-surface border border-border rounded-md shadow-soft p-6 text-center space-y-4">
+        <div aria-hidden="true"><CheckCircle className="w-16 h-16 mx-auto text-success-500" /></div>
+        <h2 className="font-display text-xl font-medium text-ink-1">{t('kyc_upload_succes_titel')}</h2>
+        <p className="text-ink-2 text-sm">{t('kyc_upload_succes_omschrijving')}</p>
+        <div className="bg-brand-50 border border-brand-100 rounded-md p-4 text-sm text-brand-700 text-left">
           {t('kyc_upload_succes_email_info')}
         </div>
         {onSuccess && (
           <button
             onClick={onAnnuleer}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition"
+            className="btn-inst w-full py-3"
           >
             {t('kyc_upload_sluit')}
           </button>
@@ -472,9 +472,9 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
   const huidige = stappen[stap];
 
   return (
-    <div className="bg-white rounded-2xl shadow p-5 sm:p-6 space-y-5 max-w-lg mx-auto">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-5 sm:p-6 space-y-5 max-w-lg mx-auto">
       <div>
-        <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><IdCard className="w-5 h-5 text-blue-600" /> {t('kyc_upload_wizard_titel')}</h2>
+        <h2 className="font-display text-lg font-medium text-ink-1 flex items-center gap-2"><IdCard className="w-5 h-5 text-brand-600" /> {t('kyc_upload_wizard_titel')}</h2>
         <p className="text-gray-500 text-xs mt-1">
           {t('kyc_upload_wizard_subtitel', { huidig: stap + 1, totaal: stappen.length })}
         </p>
@@ -485,20 +485,20 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
       {/* Stap 1: type kiezen */}
       {huidige === 'type' && (
         <div className="space-y-3">
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-800">
+          <div className="bg-brand-50 border border-brand-100 rounded-md p-3 text-xs text-brand-800">
             {t('kyc_upload_privacy_disclaimer')}
           </div>
           <fieldset className="space-y-2">
-            <legend className="text-sm font-semibold text-gray-700 mb-1">
+            <legend className="text-sm font-semibold text-ink-2 mb-1">
               {t('kyc_upload_kies_doctype')}
             </legend>
             {DOC_TYPES.map((d) => (
               <label
                 key={d.value}
-                className={`flex items-center p-3 border-2 rounded-xl cursor-pointer transition ${
+                className={`flex items-center p-3 border rounded-md cursor-pointer transition ${
                   form.documentType === d.value
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-brand-500 bg-brand-50'
+                    : 'border-border hover:border-gray-300'
                 }`}
               >
                 <input
@@ -507,11 +507,11 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
                   value={d.value}
                   checked={form.documentType === d.value}
                   onChange={(e) => update('documentType', e.target.value)}
-                  className="mr-3 accent-blue-600"
+                  className="mr-3 accent-brand-600"
                 />
-                <div className="mr-3 text-blue-600" aria-hidden="true"><d.icoon className="w-6 h-6" /></div>
+                <div className="mr-3 text-brand-600" aria-hidden="true"><d.icoon className="w-6 h-6" /></div>
                 <div>
-                  <div className="font-semibold text-gray-800 text-sm">{t(d.tKey)}</div>
+                  <div className="font-semibold text-ink-1 text-sm">{t(d.tKey)}</div>
                   <div className="text-xs text-gray-500">{t(`${d.tKey}_sub`)}</div>
                 </div>
               </label>
@@ -521,14 +521,14 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             {onAnnuleer && (
               <button
                 onClick={onAnnuleer}
-                className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm"
+                className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm"
               >
                 {t('annuleren')}
               </button>
             )}
             <button
               onClick={volgende}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm"
+              className="flex-1 btn-inst py-3 text-sm"
             >
               {t('volgende')}
             </button>
@@ -540,7 +540,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
       {huidige === 'info' && (
         <div className="space-y-3">
           <div>
-            <label htmlFor="documentNummer" className="block text-sm font-semibold text-gray-700 mb-1">
+            <label htmlFor="documentNummer" className="block text-sm font-semibold text-ink-2 mb-1">
               {t('kyc_upload_document_nummer')} *
             </label>
             <input
@@ -550,12 +550,12 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
               onChange={(e) => update('documentNummer', e.target.value)}
               placeholder="AB1234567"
               autoComplete="off"
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm font-mono focus:outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-3 py-2.5 text-sm font-mono bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               aria-required="true"
             />
           </div>
           <div>
-            <label htmlFor="geboortedatum" className="block text-sm font-semibold text-gray-700 mb-1">
+            <label htmlFor="geboortedatum" className="block text-sm font-semibold text-ink-2 mb-1">
               {t('kyc_upload_geboortedatum')} *
             </label>
             <input
@@ -565,12 +565,12 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
               value={form.geboortedatum}
               onChange={(e) => update('geboortedatum', e.target.value)}
               max={new Date().toISOString().slice(0, 10)}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-3 py-2.5 text-sm bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               aria-required="true"
             />
           </div>
           <div>
-            <label htmlFor="nationaliteit" className="block text-sm font-semibold text-gray-700 mb-1">
+            <label htmlFor="nationaliteit" className="block text-sm font-semibold text-ink-2 mb-1">
               {t('kyc_upload_nationaliteit')} *
             </label>
             <select
@@ -578,7 +578,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
               name="nationaliteit"
               value={form.nationaliteit}
               onChange={(e) => update('nationaliteit', e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:border-blue-500"
+              className="w-full border border-border rounded-md px-3 py-2.5 text-sm bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               aria-required="true"
             >
               {LANDEN.map((l) => (
@@ -591,14 +591,14 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
           <div className="flex gap-2 pt-1">
             <button
               onClick={vorige}
-              className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm"
+              className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm"
             >
               {t('terug')}
             </button>
             <button
               onClick={volgende}
               disabled={!form.documentNummer || !form.geboortedatum || !form.nationaliteit}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
+              className="flex-1 btn-inst py-3 disabled:bg-gray-300 text-sm"
             >
               {t('volgende')}
             </button>
@@ -621,14 +621,14 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
           <div className="flex gap-2">
             <button
               onClick={vorige}
-              className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm"
+              className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm"
             >
               {t('terug')}
             </button>
             <button
               onClick={volgende}
               disabled={!voorkant || foutVoorkant}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
+              className="flex-1 btn-inst py-3 disabled:bg-gray-300 text-sm"
             >
               {t('volgende')}
             </button>
@@ -651,14 +651,14 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
           <div className="flex gap-2">
             <button
               onClick={vorige}
-              className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm"
+              className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm"
             >
               {t('terug')}
             </button>
             <button
               onClick={volgende}
               disabled={!achterkant || foutAchterkant}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
+              className="flex-1 btn-inst py-3 disabled:bg-gray-300 text-sm"
             >
               {t('volgende')}
             </button>
@@ -692,7 +692,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
               <button
                 type="button"
                 onClick={() => setToonCamera(true)}
-                className="w-full border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-3 rounded-xl text-sm"
+                className="w-full border border-brand-200 bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold py-3 rounded-md text-sm"
               >
                 {t('kyc_upload_selfie_camera_starten')}
               </button>
@@ -702,14 +702,14 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             <div className="flex gap-2">
               <button
                 onClick={vorige}
-                className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm"
+                className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm"
               >
                 {t('terug')}
               </button>
               <button
                 onClick={volgende}
                 disabled={!selfie || foutSelfie}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
+                className="flex-1 btn-inst py-3 disabled:bg-gray-300 text-sm"
               >
                 {t('volgende')}
               </button>
