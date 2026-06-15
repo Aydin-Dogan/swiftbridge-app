@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="nl" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Betrouwbaar Geld Overmaken | SwiftBridge — Onder DNB-toezicht via EMI-partner</title>
+<meta name="description" content="SwiftBridge — zo betrouwbaar als uw bank. Stuur geld naar 45+ landen vanuit Nederland. Express doorgaans &lt;5 minuten. Onder DNB-toezicht via EMI-partner. Volledig transparant."/>
+<link rel="canonical" href="/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="nl_NL"/>
+<meta property="og:site_name" content="SwiftBridge"/>
+<meta property="og:title" content="Betrouwbaar Geld Overmaken | SwiftBridge"/>
+<meta property="og:description" content="Zo betrouwbaar als uw bank. DNB-toezicht via EMI-partner. Express doorgaans &lt;5 min. Volledig transparant."/>
+<meta property="og:url" content="https://swiftbridge.nl/betrouwbaar"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FinancialService","name":"SwiftBridge","url":"https://swiftbridge.nl/","description":"Internationaal geld overmaken vanuit Nederland. Express doorgaans binnen 5 minuten, Economy 1–2 werkdagen. Onder DNB-toezicht via EMI-partner.","areaServed":{"@type":"Country","name":"Netherlands"},"offers":[{"@type":"Offer","name":"Express","priceCurrency":"EUR","price":"7.50"},{"@type":"Offer","name":"Economy","priceCurrency":"EUR","price":"4.50"}],"regulatoryOrganization":{"@type":"GovernmentOrganization","name":"De Nederlandsche Bank","url":"https://www.dnb.nl/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hoe snel komt het geld aan?","acceptedAnswer":{"@type":"Answer","text":"Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen."}},{"@type":"Question","name":"Wat kost een overboeking?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge rekent een transactiefee (€7,50 Express / €4,50 Economy) plus een FX-marge van ca. 1,2% (indicatief). Volledig kostenoverzicht altijd vóór bevestiging."}},{"@type":"Question","name":"Is SwiftBridge veilig en legaal?","acceptedAnswer":{"@type":"Answer","text":"Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wwft en AVG/GDPR-conform. Sanctiescreening bij elke transactie."}}]}
+</script>
+<style>
+/* ============================================================
+   BETROUWBAAR DEFINITIEF — SwiftBridge
+   Navy #1B3252 · Terracotta #E8632A · Source Serif 4 + Source Sans 3
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img,svg{display:block;max-width:100%}
+ul,ol{list-style:none}
+button{cursor:pointer;font-family:inherit}
+a{color:inherit}
+
+:root{
+  --ink:#1B3252;
+  --ink-dark:#142641;
+  --ink-light:#D6E4F0;
+  --ink-subtle:#EEF4FA;
+  --accent:#E8632A;
+  --acc-hover:#C9501E;
+  --acc-light:#FDE8DC;
+  --surface:#FFFFFF;
+  --bg:#F7F9FC;
+  --border:#D0DAE6;
+  --txt-h:#12253A;
+  --txt-b:#2D4560;
+  --txt-m:#5E758F;
+  --success:#1A7F5E;
+  --serif:'Source Serif 4',Georgia,serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
+  --max:1160px;
+  --rad:6px;
+  --trans:0.25s ease;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--sans);background:var(--bg);color:var(--txt-b);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* RTL support for Arabic */
+[dir="rtl"] .nav-links{margin-left:0;margin-right:auto}
+[dir="rtl"] .hero-trust span::before{margin-left:.3rem;margin-right:0}
+[dir="rtl"] .step-num{margin-right:0}
+[dir="rtl"] .trust-item svg{margin-left:.5rem;margin-right:0}
+[dir="rtl"] .footer-grid{direction:rtl}
+[dir="rtl"] .bank-compare tbody td:first-child{border-right:none;border-left:1px solid var(--border)}
+[dir="rtl"] .bank-compare tbody td.sb-col{border-left:none;border-right:3px solid var(--accent)}
+[dir="rtl"] .faq-item summary{flex-direction:row-reverse}
+[dir="rtl"] .app-inner{direction:rtl}
+[dir="rtl"] .calc-disclaimer{text-align:right}
+/* Keep numbers LTR in RTL context */
+[dir="rtl"] .calc-result-amount,[dir="rtl"] .calc-result-meta,[dir="rtl"] .fee-amount{direction:ltr;text-align:right}
+
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--accent);color:#fff;padding:.5rem 1rem;font-weight:600;text-decoration:none;z-index:9999;border-radius:0 0 var(--rad) 0}
+.skip-link:focus{left:0}
+[dir="rtl"] .skip-link:focus{left:auto;right:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.eyebrow{font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--txt-m);display:block;margin-bottom:.5rem}
+.section-h{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.25rem);font-weight:700;color:var(--txt-h);line-height:1.2;margin-bottom:.75rem}
+.section-sub{font-size:1.0625rem;color:var(--txt-b);max-width:56ch;line-height:1.7;margin-bottom:2rem}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.5rem;border-radius:var(--rad);font-family:var(--sans);font-size:1rem;font-weight:600;text-decoration:none;border:2px solid transparent;transition:background var(--trans),border-color var(--trans),color var(--trans);min-height:44px;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover,.btn-primary:focus-visible{background:var(--acc-hover);border-color:var(--acc-hover)}
+.btn-secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-secondary:hover,.btn-secondary:focus-visible{background:var(--ink-subtle);border-color:var(--ink)}
+.btn-white{background:#fff;color:var(--ink);border-color:#fff}
+.btn-white:hover,.btn-white:focus-visible{background:var(--ink-light);border-color:var(--ink-light)}
+.btn-ghost-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-ghost-white:hover,.btn-ghost-white:focus-visible{background:rgba(255,255,255,.10);border-color:#fff}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+hr.rule{border:none;border-top:1px solid var(--border);margin:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:1.25rem}
+.section{padding:4rem 0}
+.section-alt{background:var(--ink-subtle)}
+.section-dark{background:var(--ink);color:#fff}
+
+/* ── TOP BAR ── */
+#topbar{background:var(--ink);color:rgba(255,255,255,.80);font-size:.8125rem;padding:.45rem 1.25rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+#topbar a{color:rgba(255,255,255,.90);text-decoration:underline}
+/* Language switcher in topbar */
+#lang-switcher{position:relative;margin-left:auto;flex-shrink:0}
+[dir="rtl"] #lang-switcher{margin-left:0;margin-right:auto}
+#lang-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:var(--rad);color:#fff;font-size:.8125rem;font-weight:600;padding:.3rem .75rem;display:flex;align-items:center;gap:.4rem;min-height:32px;cursor:pointer;white-space:nowrap;font-family:var(--sans)}
+#lang-btn:hover,#lang-btn:focus-visible{background:rgba(255,255,255,.22)}
+#lang-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#lang-dropdown{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--border);border-radius:var(--rad);box-shadow:0 8px 24px rgba(27,50,82,.18);min-width:160px;z-index:200;overflow:hidden}
+[dir="rtl"] #lang-dropdown{right:auto;left:0}
+#lang-dropdown.open{display:block}
+#lang-dropdown button{display:block;width:100%;text-align:left;padding:.625rem 1rem;font-size:.875rem;font-family:var(--sans);color:var(--txt-b);background:none;border:none;cursor:pointer;transition:background var(--trans)}
+[dir="rtl"] #lang-dropdown button{text-align:right}
+#lang-dropdown button:hover,#lang-dropdown button:focus-visible{background:var(--ink-subtle)}
+#lang-dropdown button[aria-pressed="true"]{font-weight:700;color:var(--ink)}
+#lang-dropdown button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* First-visit hint */
+#lang-hint{background:var(--acc-light);border:1px solid var(--accent);border-radius:var(--rad);padding:.5rem 1rem;font-size:.8125rem;color:var(--ink);display:none;align-items:center;gap:.75rem;position:fixed;bottom:1.25rem;right:1.25rem;z-index:500;max-width:320px;box-shadow:0 4px 16px rgba(27,50,82,.15)}
+[dir="rtl"] #lang-hint{right:auto;left:1.25rem}
+#lang-hint.show{display:flex}
+#lang-hint-close{background:none;border:none;color:var(--ink);font-size:1rem;cursor:pointer;padding:.25rem;margin-left:auto;min-height:32px;min-width:32px;display:flex;align-items:center;justify-content:center}
+[dir="rtl"] #lang-hint-close{margin-left:0;margin-right:auto}
+
+/* aria-live announcer */
+#lang-announce{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+/* ── NAV ── */
+#nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:var(--max);margin-inline:auto;padding:.875rem 1.25rem;display:flex;align-items:center;gap:1.5rem}
+.nav-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink);font-family:var(--serif);font-size:1.25rem;font-weight:700;flex-shrink:0}
+.nav-logo svg{width:28px;height:28px}
+.nav-links{display:flex;gap:1.25rem;margin-left:auto}
+[dir="rtl"] .nav-links{margin-left:0;margin-right:auto}
+.nav-links a{font-size:.9375rem;font-weight:500;color:var(--txt-b);text-decoration:none;padding:.25rem 0;border-bottom:2px solid transparent;transition:color var(--trans),border-color var(--trans);white-space:nowrap}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink);border-bottom-color:var(--accent)}
+.nav-links a.nav-business{color:var(--ink);font-weight:600}
+.nav-actions{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.nav-toggle{display:none;background:none;border:none;padding:.5rem;color:var(--ink)}
+@media(max-width:860px){
+  .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:1rem 1.25rem;gap:.5rem;z-index:99}
+  .nav-links.open{display:flex}
+  .nav-actions .btn{display:none}
+  .nav-toggle{display:block;margin-left:auto}
+}
+
+/* ── HERO ── */
+#hero{background:var(--ink-subtle);padding:4rem 0 3rem}
+.hero-inner{max-width:var(--max);margin-inline:auto;padding-inline:1.25rem;display:grid;grid-template-columns:1fr 420px;gap:3.5rem;align-items:start}
+@media(max-width:960px){.hero-inner{grid-template-columns:1fr;gap:2.5rem}}
+.hero-eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:block}
+.hero-h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--txt-h);line-height:1.15;margin-bottom:1.125rem;white-space:pre-line}
+.hero-sub{font-size:1.0625rem;color:var(--txt-b);line-height:1.7;margin-bottom:1.75rem;max-width:52ch}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem}
+.hero-trust{font-size:.8125rem;color:var(--txt-m);display:flex;flex-wrap:wrap;gap:.5rem .75rem;align-items:center}
+.hero-trust span{display:flex;align-items:center;gap:.3rem}
+.hero-trust span::before{content:'';display:inline-block;width:6px;height:6px;background:var(--success);border-radius:50%;flex-shrink:0}
+
+/* DNB Card */
+.dnb-card{background:#fff;border:2px solid var(--ink-light);border-radius:10px;padding:1.75rem 1.5rem;box-shadow:0 4px 24px rgba(27,50,82,.10);position:relative}
+.dnb-card-badge{position:absolute;top:-16px;right:1.5rem;background:var(--accent);color:#fff;font-size:.6875rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:.3rem .75rem;border-radius:20px}
+[dir="rtl"] .dnb-card-badge{right:auto;left:1.5rem}
+.dnb-card-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.dnb-shield{width:48px;height:48px;flex-shrink:0}
+.dnb-card-logo-text{font-family:var(--serif);font-size:.9375rem;font-weight:600;color:var(--ink);line-height:1.3}
+.dnb-card-logo-text small{display:block;font-family:var(--sans);font-size:.75rem;font-weight:400;color:var(--txt-m);margin-top:.2rem}
+.dnb-card-quote{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--ink);line-height:1.55;margin-bottom:1.25rem}
+.dnb-card-badge-row{display:flex;align-items:center;gap:.625rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.dnb-pill{background:var(--ink-subtle);border:1px solid var(--ink-light);border-radius:20px;font-size:.75rem;font-weight:600;color:var(--ink);padding:.3rem .75rem;display:flex;align-items:center;gap:.3rem}
+
+/* Calculator */
+.calc-heading{font-family:var(--sans);font-size:.9375rem;font-weight:600;color:var(--txt-h);margin-bottom:1rem;padding-top:.25rem;border-top:1px solid var(--border)}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:.625rem;margin-bottom:.625rem}
+.calc-label{font-size:.75rem;font-weight:600;color:var(--txt-m);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.25rem}
+.calc-input,.calc-select{width:100%;padding:.625rem .75rem;border:1.5px solid var(--border);border-radius:var(--rad);font-family:var(--sans);font-size:.9375rem;color:var(--txt-h);background:#fff;min-height:44px;-webkit-appearance:none;appearance:none}
+.calc-input:focus,.calc-select:focus{outline:none;border-color:var(--ink)}
+.calc-select-wrap{position:relative}
+.calc-select-wrap::after{content:'▾';position:absolute;right:.75rem;top:50%;transform:translateY(-50%);color:var(--txt-m);pointer-events:none;font-size:.75rem}
+[dir="rtl"] .calc-select-wrap::after{right:auto;left:.75rem}
+.calc-speed{display:flex;gap:.625rem;margin-bottom:.75rem}
+.calc-speed label{flex:1;display:flex;align-items:center;gap:.5rem;border:1.5px solid var(--border);border-radius:var(--rad);padding:.625rem .75rem;cursor:pointer;font-size:.8125rem;min-height:44px;transition:border-color var(--trans),background var(--trans)}
+.calc-speed input[type=radio]{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0}
+.calc-speed label:has(input:checked){border-color:var(--accent);background:var(--acc-light)}
+.calc-result-box{background:var(--ink-subtle);border:1px solid var(--ink-light);border-radius:var(--rad);padding:.875rem 1rem;margin-bottom:.75rem}
+.calc-result-label{font-size:.75rem;font-weight:600;color:var(--txt-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem}
+.calc-result-amount{font-family:var(--serif);font-size:1.75rem;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1;direction:ltr}
+.calc-result-meta{font-size:.75rem;color:var(--txt-m);margin-top:.3rem;line-height:1.5;direction:ltr}
+.calc-disclaimer{font-size:.6875rem;color:var(--txt-m);line-height:1.5;margin-bottom:.875rem}
+.calc-cta{width:100%;justify-content:center}
+
+/* ── TRUST BAND ── */
+#trust-band{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.25rem 0}
+.trust-inner{max-width:var(--max);margin-inline:auto;padding-inline:1.25rem;display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:center;justify-content:center}
+.trust-item{display:flex;align-items:center;gap:.5rem;font-size:.8125rem;font-weight:600;color:var(--ink);white-space:nowrap}
+.trust-item svg{width:18px;height:18px;flex-shrink:0;color:var(--success)}
+
+/* ── VALUE CARDS ── */
+#value-cards{padding:4rem 0;background:#fff}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:768px){.value-grid{grid-template-columns:1fr}}
+.value-card{border:1px solid var(--border);border-radius:10px;padding:2rem 1.75rem;background:var(--bg);transition:box-shadow var(--trans)}
+.value-card:hover{box-shadow:0 4px 20px rgba(27,50,82,.09)}
+.value-icon{width:48px;height:48px;background:var(--ink-subtle);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+.value-icon svg{width:24px;height:24px;color:var(--ink)}
+.value-card h3{font-family:var(--serif);font-size:1.1875rem;font-weight:700;color:var(--txt-h);margin-bottom:.625rem}
+.value-card p{font-size:.9375rem;color:var(--txt-b);line-height:1.65}
+
+/* ── HOW IT WORKS ── */
+#how-it-works{padding:4rem 0;background:var(--ink-subtle)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:1.75rem 1.5rem;background:#fff;border:1px solid var(--border);border-radius:10px}
+.step-num{width:40px;height:40px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.125rem;font-weight:700;margin-bottom:1rem}
+.step h3{font-family:var(--serif);font-size:1.0625rem;font-weight:700;color:var(--txt-h);margin-bottom:.5rem}
+.step p{font-size:.875rem;color:var(--txt-b);line-height:1.6}
+.step-note{font-size:.75rem;color:var(--txt-m);margin-top:2rem;grid-column:1/-1}
+
+/* ── COMPARISON SECTION (embedded v2) ── */
+#comparison{padding:4rem 0;background:#fff}
+.sb-comparison-inner{max-width:var(--max);margin-inline:auto;padding-inline:1.25rem}
+.sb-comparison__header{text-align:center;margin-bottom:2.5rem}
+.sb-comparison__eyebrow{display:inline-block;font-family:var(--sans);font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}
+.sb-comparison__title{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.25rem);font-weight:700;color:var(--ink);line-height:1.2;margin:0 0 1rem}
+.sb-comparison__subtitle{font-size:1rem;color:var(--txt-m);max-width:580px;margin:0 auto;line-height:1.6}
+.sb-tabs__list{display:flex;gap:0;border-bottom:2px solid var(--border);list-style:none;margin:0 0 1.75rem;padding:0;overflow-x:auto;scrollbar-width:none}
+.sb-tabs__list::-webkit-scrollbar{display:none}
+.sb-tabs__tab{flex-shrink:0;padding:.85rem 1.5rem;font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--txt-m);background:transparent;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;transition:color .18s,border-color .18s;white-space:nowrap}
+.sb-tabs__tab:hover{color:var(--ink)}
+.sb-tabs__tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.sb-tabs__tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.sb-tab-panel{display:none}
+.sb-tab-panel[aria-hidden="false"]{display:block}
+@media(prefers-reduced-motion:no-preference){.sb-tab-panel[aria-hidden="false"]{animation:sbFade .22s ease}}
+@keyframes sbFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sb-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;box-shadow:0 2px 8px rgba(27,50,82,.10);margin-bottom:1.75rem}
+.sb-table{width:100%;border-collapse:collapse;font-size:.875rem;min-width:600px}
+.sb-table thead{background:var(--ink);color:#fff}
+.sb-table thead th{padding:.85rem 1rem;font-weight:700;font-size:.8rem;letter-spacing:.04em;text-align:left;white-space:nowrap}
+[dir="rtl"] .sb-table thead th,[dir="rtl"] .sb-table tbody td{text-align:right}
+.sb-table thead th.sb-col-sb,.sb-table tbody td.sb-col-sb{background:rgba(232,99,42,.08);border-left:3px solid var(--accent);border-right:3px solid var(--accent)}
+.sb-table thead th.sb-col-sb{background:rgba(232,99,42,.18)}
+.sb-table tbody tr:nth-child(even){background:var(--bg)}
+.sb-table tbody tr:nth-child(odd){background:#fff}
+.sb-table tbody td{padding:.75rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.45;color:var(--txt-b)}
+.sb-table tbody td.sb-col-sb{font-weight:600;color:var(--ink)}
+.sb-table tbody tr:last-child td{border-bottom:none}
+.sb-table tbody td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;background:var(--bg)!important;border-right:1px solid var(--border)}
+[dir="rtl"] .sb-table tbody td:first-child{border-right:none;border-left:1px solid var(--border)}
+.sb-badge{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .5rem;border-radius:20px;font-size:.75rem;font-weight:700;white-space:nowrap}
+.sb-badge--yes{background:#d1fae5;color:#065f46}
+.sb-badge--no{background:#fee2e2;color:#991b1b}
+.sb-badge--part{background:#fef3c7;color:#92400e}
+.sb-badge--win{background:#dbeafe;color:#1e40af}
+.sb-example{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.75rem}
+.sb-example__title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin:0 0 .35rem}
+.sb-example__note{font-size:.8rem;color:var(--txt-m);margin:0 0 1.25rem;font-style:italic}
+.sb-example-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.75rem}
+.sb-example-card{background:#fff;border:1px solid var(--border);border-radius:var(--rad);padding:.9rem;text-align:center}
+.sb-example-card--sb{border-color:var(--accent);border-width:2px;background:rgba(232,99,42,.04)}
+.sb-example-card__provider{font-size:.72rem;font-weight:700;color:var(--txt-m);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.35rem}
+.sb-example-card--sb .sb-example-card__provider{color:var(--accent)}
+.sb-example-card__amount{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;direction:ltr}
+.sb-example-card__sub{font-size:.75rem;color:var(--txt-m);line-height:1.4}
+.sb-example-card__tag{display:inline-block;margin-top:.5rem;padding:.15rem .45rem;border-radius:20px;font-size:.7rem;font-weight:700}
+.sb-example-card__tag--speed{background:#d1fae5;color:#065f46}
+.sb-example-card__tag--normal{background:#e0e7ff;color:#3730a3}
+.sb-example-card__tag--slow{background:#fef3c7;color:#92400e}
+.sb-example-card__tag--express{background:#fbbf24;color:#1e3a8a}
+.sb-takeaways{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.75rem}
+@media(max-width:640px){.sb-takeaways{grid-template-columns:1fr}}
+.sb-takeaway{border-radius:var(--rad);padding:1.1rem 1.25rem}
+.sb-takeaway--win{background:#d1fae5;border-left:4px solid #10b981}
+.sb-takeaway--peer{background:#dbeafe;border-left:4px solid #3b82f6}
+[dir="rtl"] .sb-takeaway--win{border-left:none;border-right:4px solid #10b981}
+[dir="rtl"] .sb-takeaway--peer{border-left:none;border-right:4px solid #3b82f6}
+.sb-takeaway__label{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.sb-takeaway--win .sb-takeaway__label{color:#065f46}
+.sb-takeaway--peer .sb-takeaway__label{color:#1e40af}
+.sb-takeaway__text{font-size:.875rem;color:var(--txt-b);line-height:1.5;margin:0}
+.sb-disclaimer{font-size:.775rem;color:var(--txt-m);background:var(--bg);border:1px solid var(--border);border-radius:var(--rad);padding:.85rem 1rem;line-height:1.55}
+
+/* ── CORRIDORS ── */
+#corridors{padding:4rem 0;background:var(--ink-subtle)}
+.corridor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+.corridor-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:1.125rem 1rem;display:flex;align-items:center;gap:.75rem;transition:box-shadow var(--trans),border-color var(--trans);text-decoration:none;color:inherit;min-height:44px}
+.corridor-card:hover,.corridor-card:focus-visible{box-shadow:0 4px 16px rgba(27,50,82,.10);border-color:var(--ink-light)}
+.corridor-flag{font-size:1.5rem;line-height:1;flex-shrink:0}
+.corridor-info strong{display:block;font-size:.9375rem;font-weight:600;color:var(--txt-h)}
+.corridor-info span{font-size:.75rem;color:var(--txt-m)}
+.corridor-note{font-size:.8125rem;color:var(--txt-m);margin-top:.5rem}
+.waitlist-btn{margin-top:1.25rem;display:inline-flex;align-items:center;gap:.4rem;padding:.625rem 1.25rem;background:transparent;border:1.5px solid var(--ink);border-radius:var(--rad);color:var(--ink);font-family:var(--sans);font-size:.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background var(--trans);min-height:44px}
+.waitlist-btn:hover,.waitlist-btn:focus-visible{background:var(--ink-subtle)}
+
+/* ── APP SECTION ── */
+#app-section{padding:4.5rem 0;background:var(--ink);color:#fff}
+.app-inner{max-width:var(--max);margin-inline:auto;padding-inline:1.25rem;display:grid;grid-template-columns:1fr 260px;gap:4rem;align-items:center}
+@media(max-width:860px){.app-inner{grid-template-columns:1fr;gap:2.5rem}}
+.app-heading{font-family:var(--serif);font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:700;line-height:1.15;margin-bottom:.875rem}
+.app-sub{font-size:1.0625rem;color:rgba(255,255,255,.78);line-height:1.65;margin-bottom:1.75rem;max-width:48ch}
+.app-pills{display:flex;flex-wrap:wrap;gap:.625rem;margin-bottom:1.75rem}
+.app-pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:.375rem .875rem;font-size:.875rem;color:rgba(255,255,255,.90);font-weight:500}
+.app-badges{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:440px){.app-badges{grid-template-columns:1fr}}
+.app-badge-block{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:1.125rem 1rem;display:flex;flex-direction:column;gap:.625rem}
+.app-badge-label{font-size:.6875rem;font-weight:600;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.07em}
+.app-badge-link{text-decoration:none;display:inline-block;transition:opacity var(--trans);border-radius:6px}
+.app-badge-link:hover{opacity:.88}
+.app-badge-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.app-trust-note{font-size:.6875rem;color:rgba(255,255,255,.40);border-top:1px solid rgba(255,255,255,.09);padding-top:.5rem;line-height:1.5}
+.app-phone-mock{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:24px;padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1rem}
+.app-phone-mock svg{width:48px;height:48px;color:var(--accent)}
+.app-phone-mock p{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.5}
+@media(max-width:860px){.app-phone-mock{order:-1;max-width:300px;margin:0 auto}}
+
+/* ── TESTIMONIALS ── */
+#testimonials{padding:4rem 0;background:#fff}
+.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:768px){.testimonial-grid{grid-template-columns:1fr}}
+.testimonial-card{border:1px solid var(--border);border-radius:10px;padding:2rem 1.75rem;background:var(--bg);position:relative}
+.testimonial-card::before{content:'\201C';font-family:var(--serif);font-size:4rem;color:var(--ink-light);position:absolute;top:.5rem;left:1.25rem;line-height:1}
+[dir="rtl"] .testimonial-card::before{left:auto;right:1.25rem;content:'\201D'}
+.testimonial-body{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--txt-b);line-height:1.7;margin-bottom:1rem;margin-top:1.5rem}
+.testimonial-stars{color:var(--accent);font-size:.875rem;margin-bottom:.5rem}
+.testimonial-name{font-size:.875rem;font-weight:600;color:var(--txt-h)}
+.testimonial-meta{font-size:.75rem;color:var(--txt-m)}
+.testimonial-illustrative{font-size:.6875rem;color:var(--txt-m);text-align:center;margin-top:1.25rem;grid-column:1/-1}
+
+/* ── FAQ ── */
+#faq{padding:4rem 0;background:var(--ink-subtle)}
+.faq-list{max-width:780px;margin-inline:auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:first-child{border-top:1px solid var(--border)}
+.faq-item summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:1.125rem 0;cursor:pointer;font-size:1rem;font-weight:600;color:var(--txt-h);gap:1rem;min-height:44px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-icon{width:24px;height:24px;flex-shrink:0;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8125rem;color:var(--txt-m);transition:transform var(--trans),background var(--trans),border-color var(--trans)}
+.faq-item[open] summary .faq-icon{transform:rotate(45deg);background:var(--accent);border-color:var(--accent);color:#fff}
+.faq-item[open] summary{color:var(--ink)}
+.faq-body{padding:.25rem 0 1.25rem;font-size:.9375rem;color:var(--txt-b);line-height:1.7;max-width:68ch}
+
+/* ── CTA BAND ── */
+#cta-band{padding:4.5rem 0;background:var(--ink);text-align:center;color:#fff}
+.cta-h{font-family:var(--serif);font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:700;margin-bottom:.875rem;color:#fff}
+.cta-sub{font-size:1.0625rem;color:rgba(255,255,255,.78);margin-bottom:2rem;max-width:52ch;margin-inline:auto;line-height:1.65}
+.cta-btns{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:1rem}
+.cta-microcopy{font-size:.8125rem;color:rgba(255,255,255,.55)}
+
+/* ── FOOTER ── */
+#footer{background:var(--ink-dark);color:rgba(255,255,255,.72);padding:3.5rem 0 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:2.5rem;margin-bottom:3rem}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.footer-grid{grid-template-columns:1fr}}
+.footer-brand-name{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
+.footer-brand-desc{font-size:.875rem;line-height:1.65;color:rgba(255,255,255,.60);max-width:30ch;margin-bottom:1.25rem}
+.footer-social{display:flex;gap:.75rem}
+.footer-social a{color:rgba(255,255,255,.55);font-size:.8125rem;text-decoration:none;transition:color var(--trans)}
+.footer-social a:hover{color:#fff}
+.footer-col-heading{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45);margin-bottom:.875rem}
+.footer-col ul{display:flex;flex-direction:column;gap:.5rem}
+.footer-col a{font-size:.875rem;color:rgba(255,255,255,.65);text-decoration:none;transition:color var(--trans)}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:1.5rem}
+.footer-disclaimer{font-size:.725rem;line-height:1.7;color:rgba(255,255,255,.40);max-width:80ch}
+.footer-copy{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:.75rem}
+
+/* ── Animations ── */
+@media(prefers-reduced-motion:no-preference){
+  .fade-in{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+  .fade-in.visible{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Skip link -->
+<a class="skip-link" href="#main-content" data-i18n="skip_to_main">Ga naar hoofdinhoud</a>
+
+<!-- aria-live announcer for language changes -->
+<div id="lang-announce" aria-live="polite" aria-atomic="true" role="status"></div>
+
+<!-- First-visit language hint -->
+<div id="lang-hint" role="alert" aria-live="assertive">
+  <span id="lang-hint-text">Weergegeven in jouw taal · wijzig hier</span>
+  <button id="lang-hint-close" aria-label="Melding sluiten">&#x2715;</button>
+</div>
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<div id="topbar" role="banner" aria-label="Regulatoire informatie">
+  <span>SwiftBridge &mdash; Nederland &middot; <a href="https://www.dnb.nl/" target="_blank" rel="noopener" data-i18n="hero_eyebrow">Onder toezicht van DNB via onze EMI-partner</a> &middot; Wwft &amp; AVG-conform</span>
+
+  <a href="#app-section" id="topbar-download" style="display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:#fff;background:var(--accent);border-radius:999px;padding:.28rem .8rem;font-weight:600;font-size:.8125rem;white-space:nowrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+    <span data-i18n="topbar_download">Download de app</span>
+  </a>
+
+  <!-- Language Switcher -->
+  <div id="lang-switcher" role="navigation" aria-label="Taal kiezen">
+    <button id="lang-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-dropdown">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span id="lang-current-label">Nederlands</span>
+      <span aria-hidden="true">&#9660;</span>
+    </button>
+    <div id="lang-dropdown" role="listbox" aria-label="Kies taal">
+      <button role="option" data-lang="nl" aria-pressed="true">Nederlands</button>
+      <button role="option" data-lang="en" aria-pressed="false">English</button>
+      <button role="option" data-lang="tr" aria-pressed="false">Türkçe</button>
+      <button role="option" data-lang="ar" aria-pressed="false">العربية</button>
+      <button role="option" data-lang="de" aria-pressed="false">Deutsch</button>
+      <button role="option" data-lang="fr" aria-pressed="false">Français</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav id="nav" aria-label="Hoofdnavigatie">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" aria-label="SwiftBridge — naar homepage">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true" focusable="false">
+        <rect width="28" height="28" rx="6" fill="#1B3252"/>
+        <polygon points="16,4 10,15 14,15 12,24 19,12 15,12" fill="#E8632A"/>
+      </svg>
+      SwiftBridge
+    </a>
+    <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Menu openen">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect y="4" width="22" height="2" rx="1" fill="currentColor"/><rect y="10" width="22" height="2" rx="1" fill="currentColor"/><rect y="16" width="22" height="2" rx="1" fill="currentColor"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="#how-it-works" data-i18n="nav_how_it_works">Hoe werkt het</a>
+      <a href="#comparison" data-i18n="nav_rates">Tarieven</a>
+      <a href="#corridors" data-i18n="nav_currencies">Valuta</a>
+      <a href="#faq">FAQ</a>
+      <a href="#app-section" data-i18n="nav_download_app">App downloaden</a>
+      <a href="/zakelijk" class="nav-business" data-i18n="nav_business">Zakelijk</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-secondary" href="/login" style="padding:.5rem 1rem;font-size:.9rem" data-i18n="nav_login">Inloggen</a>
+      <a class="btn btn-primary" href="#" data-i18n="nav_send_money">Verstuur geld &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main id="main-content">
+
+<!-- ── HERO ── -->
+<section id="hero" aria-labelledby="hero-h1">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <span class="hero-eyebrow" data-i18n="hero_eyebrow">Onder toezicht van DNB via onze EMI-partner</span>
+      <h1 class="hero-h1" id="hero-h1" data-i18n="hero_headline">Zo betrouwbaar als uw bank.
+Gebouwd voor mensen zoals u.</h1>
+      <p class="hero-sub" data-i18n="hero_subhead">SwiftBridge werkt onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde toezichthouder die uw eigen bank bewaakt. Stuur geld naar huis met volledig zichtbare kosten en doorgaans binnen 5 minuten op de rekening van de ontvanger.</p>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#" data-i18n="hero_cta">Gratis account openen</a>
+        <a class="btn btn-secondary" href="#comparison">Vergelijk met uw bank &rarr;</a>
+      </div>
+      <div class="hero-trust" aria-label="Vertrouwenskenmerken">
+        <span data-i18n="trust_dnb">DNB-toezicht via EMI-partner</span>
+        <span data-i18n="trust_ideal">iDEAL betaling</span>
+        <span data-i18n="trust_idin">iDIN verificatie</span>
+        <span data-i18n="trust_encryption">256-bit encryptie</span>
+        <span data-i18n="trust_wwft">Wwft-gecertificeerd</span>
+      </div>
+    </div>
+
+    <!-- DNB Trust Card + Calculator -->
+    <div class="hero-right">
+      <div class="dnb-card" role="region" aria-labelledby="dnb-card-title">
+        <div class="dnb-card-badge">Gereguleerd</div>
+        <div class="dnb-card-logo">
+          <svg class="dnb-shield" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M24 4L6 12v14c0 9.94 7.72 19.24 18 22 10.28-2.76 18-12.06 18-22V12L24 4Z" fill="#1B3252"/>
+            <path d="M24 10L10 17v9c0 7.16 5.56 13.84 14 16 8.44-2.16 14-8.84 14-16v-9L24 10Z" fill="#EEF4FA"/>
+            <path d="M20 24l3 3 6-6" stroke="#1A7F5E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="dnb-card-logo-text" id="dnb-card-title">
+            De Nederlandsche Bank
+            <small>Toezicht via geregistreerde EMI-partner</small>
+          </div>
+        </div>
+        <p class="dnb-card-quote">"Onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde standaard als uw eigen bank."</p>
+        <div class="dnb-card-badge-row" aria-label="Compliance kenmerken">
+          <span class="dnb-pill">&#x2713; Betaaldiensten</span>
+          <span class="dnb-pill">&#x2713; Gereguleerd NL</span>
+          <span class="dnb-pill">&#x2713; Wwft-conform</span>
+          <span class="dnb-pill">&#x2713; AVG/GDPR</span>
+        </div>
+
+        <!-- CALCULATOR -->
+        <div class="calc-heading" id="calc-heading">Bereken uw overboeking</div>
+        <form id="calc-form" aria-labelledby="calc-heading" novalidate>
+          <div class="calc-row">
+            <div>
+              <label class="calc-label" for="calc-amount" data-i18n="calc_label_amount">Stuur ik</label>
+              <input class="calc-input" id="calc-amount" type="number" min="10" max="5000" value="500" step="1"
+                aria-describedby="calc-amount-hint"
+                data-i18n-attr="aria-label:calc_label_amount"/>
+              <span id="calc-amount-hint" style="font-size:.6875rem;color:var(--txt-m)">Min. €10 · Max. €5.000</span>
+            </div>
+            <div>
+              <label class="calc-label" for="calc-currency" data-i18n="calc_label_currency">Valuta</label>
+              <div class="calc-select-wrap">
+                <select class="calc-select" id="calc-currency"
+                  data-i18n-attr="aria-label:calc_label_currency">
+                  <option value="TRY">&#x1F1F9;&#x1F1F7; TRY &mdash; Turkse lira</option>
+                  <option value="AZN">&#x1F1E6;&#x1F1FF; AZN &mdash; Azerbeidzjaanse manat</option>
+                  <option value="KZT">&#x1F1F0;&#x1F1FF; KZT &mdash; Kazachse tenge</option>
+                  <option value="UZS">&#x1F1FA;&#x1F1FF; UZS &mdash; Oezbeekse soem</option>
+                  <option value="TMT">&#x1F1F9;&#x1F1F2; TMT &mdash; Turkmeense manat</option>
+                  <option value="KGS">&#x1F1F0;&#x1F1EC; KGS &mdash; Kirgizische som</option>
+                  <option value="USD">&#x1F1FA;&#x1F1F8; USD &mdash; Amerikaanse dollar</option>
+                  <option value="GBP">&#x1F1EC;&#x1F1E7; GBP &mdash; Brits pond</option>
+                  <option value="MAD">&#x1F1F2;&#x1F1E6; MAD &mdash; Marokkaanse dirham</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <fieldset style="border:none;margin-bottom:.75rem">
+            <legend class="calc-label" style="margin-bottom:.4rem">Snelheid</legend>
+            <div class="calc-speed" role="radiogroup" aria-label="Overboekingssnelheid">
+              <label>
+                <input type="radio" name="speed" value="express" checked/>
+                <span><strong data-i18n="calc_speed_express_short">Express</strong> <span data-i18n="calc_speed_express">&lt;5 min &mdash; €7,50</span></span>
+              </label>
+              <label>
+                <input type="radio" name="speed" value="economy"/>
+                <span><strong data-i18n="calc_speed_economy_short">Economy</strong> <span data-i18n="calc_speed_economy">1–2 dagen &mdash; €4,50</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="calc-result-box" aria-live="polite" aria-atomic="true">
+            <div class="calc-result-label" data-i18n="calc_label_receive">Ontvanger krijgt (indicatief)</div>
+            <div class="calc-result-amount" id="calc-result">&mdash;</div>
+            <div class="calc-result-meta" id="calc-meta">
+              <span id="calc-rate-line"></span><br/>
+              <span id="calc-fee-line"></span>
+            </div>
+          </div>
+
+          <p class="calc-disclaimer" data-i18n="calc_indicatief_note">&#8224; Indicatieve koers. Koersen bevestigd voor elke transactie. Werkelijk tarief kan afwijken.</p>
+          <a class="btn btn-primary calc-cta" href="#" role="button" data-i18n="calc_cta">Begin gratis &rarr;</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAND ── -->
+<div id="trust-band" role="complementary" aria-label="Vertrouwenskenmerken">
+  <div class="trust-inner">
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span data-i18n="trust_dnb">DNB-toezicht via EMI-partner</span>
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      <span data-i18n="trust_ideal">iDEAL betaling</span>
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span data-i18n="trust_idin">iDIN verificatie</span>
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span data-i18n="trust_encryption">256-bit encryptie</span>
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      <span data-i18n="trust_gdpr">AVG/GDPR-conform</span>
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span data-i18n="trust_wwft">Wwft-gecertificeerd</span>
+    </span>
+  </div>
+</div>
+
+<!-- ── VALUE CARDS ── -->
+<section id="value-cards" class="section" aria-labelledby="value-heading">
+  <div class="wrap">
+    <span class="eyebrow">Waarom SwiftBridge</span>
+    <h2 class="section-h" id="value-heading">Bankwaardige beveiliging. Betere kosten. Sneller.</h2>
+    <div class="value-grid">
+      <article class="value-card fade-in">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 data-i18n="card1_title">Veilig gereguleerd — net als uw eigen bank</h3>
+        <p data-i18n="card1_blurb">SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Elke transactie doorloopt Wwft-screening en sanctiecontrole. Uw geld is beschermd conform de hoogste Nederlandse en Europese normen.</p>
+      </article>
+      <article class="value-card fade-in">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3 data-i18n="card2_title">U ziet elke cent vóór u bevestigt</h3>
+        <p data-i18n="card2_blurb">Geen verborgen FX-marges. Geen kleine lettertjes achteraf. U ziet de transactiekosten, de wisselkoers én de FX-marge — allemaal vóór u op verzenden drukt. Tarieven indicatief; definitief bevestigd per transactie.</p>
+      </article>
+      <article class="value-card fade-in">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3 data-i18n="card3_title">Uw familie wacht niet</h3>
+        <p data-i18n="card3_blurb">Kies Express en uw overboeking arriveert doorgaans binnen 5 minuten op de rekening van de ontvanger. Of kies Economy voor het laagste tarief bij 1–2 werkdagen. De koers en kosten ziet u altijd vóór bevestiging.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how-it-works" class="section section-alt" aria-labelledby="hiw-heading">
+  <div class="wrap">
+    <span class="eyebrow">Zo eenvoudig werkt het</span>
+    <h2 class="section-h" id="hiw-heading" data-i18n="hiw_heading">In vier stappen klaar — veilig en eenvoudig</h2>
+    <p class="section-sub">Uw eerste overboeking is in minder dan 10 minuten ingesteld. Eenmalig verificeren, daarna altijd direct klaar.</p>
+    <div class="steps">
+      <article class="step fade-in">
+        <div class="step-num" aria-hidden="true">1</div>
+        <h3 data-i18n="hiw_step1_title">Maak gratis een account aan</h3>
+        <p data-i18n="hiw_step1_body">Vul uw naam, e-mailadres en telefoonnummer in. Geen creditcard nodig. Geen verplichtingen. Gewoon beginnen.</p>
+      </article>
+      <article class="step fade-in">
+        <div class="step-num" aria-hidden="true">2</div>
+        <h3 data-i18n="hiw_step2_title">Eenmalig verificeren via uw eigen bank</h3>
+        <p data-i18n="hiw_step2_body">iDIN gebruikt uw bestaande bankapp om uw identiteit veilig te bevestigen — snel, wettelijk conform de Wwft, en eenmalig ingesteld. Daarna altijd direct klaar om te versturen.</p>
+      </article>
+      <article class="step fade-in">
+        <div class="step-num" aria-hidden="true">3</div>
+        <h3 data-i18n="hiw_step3_title">Betaal zoals u gewend bent — via iDEAL</h3>
+        <p data-i18n="hiw_step3_body">Kies bedrag en bestemming, controleer de wisselkoers en alle kosten, en bevestig via iDEAL vanuit uw eigen Nederlandse bank. Altijd het volledige kostenoverzicht vóór bevestiging. Nooit verrassingen.</p>
+      </article>
+      <article class="step fade-in">
+        <div class="step-num" aria-hidden="true">4</div>
+        <h3 data-i18n="hiw_step4_title">Veilig op de rekening van uw familie</h3>
+        <p data-i18n="hiw_step4_body">Het bedrag wordt bijgeschreven op de lokale bankrekening van de ontvanger — bij Express doorgaans binnen 5 minuten. Zowel u als de ontvanger ontvangt een WhatsApp-bevestiging zodra de overboeking is verwerkt.</p>
+      </article>
+      <p class="step-note">&#8224; Express-overboekingen: doorgaans onder 5 minuten op live corridors. Economy: 1–2 werkdagen. Definitieve koers en kosten bevestigd vóór elke transactie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON (tabbed v2) ── -->
+<section id="comparison" aria-labelledby="comparison-title">
+  <div class="sb-comparison-inner">
+    <header class="sb-comparison__header">
+      <span class="sb-comparison__eyebrow">Eerlijk vergelijken</span>
+      <h2 class="sb-comparison__title" id="comparison-title" data-i18n="comparison_heading">Wat kost een overboeking via uw bank — en wat via SwiftBridge?</h2>
+      <p class="sb-comparison__subtitle">Vergelijk vaste kosten, wisselkoersmarge en snelheid — transparant en zonder verrassingen.</p>
+    </header>
+
+    <!-- Tab list -->
+    <ul class="sb-tabs__list" role="tablist" aria-label="Vergelijkingsweergaven">
+      <li role="presentation">
+        <button class="sb-tabs__tab" role="tab" id="tab-banks" aria-controls="panel-banks" aria-selected="true" tabindex="0" data-i18n="comparison_tab_banks">
+          Vs. banken
+        </button>
+      </li>
+      <li role="presentation">
+        <button class="sb-tabs__tab" role="tab" id="tab-fintechs" aria-controls="panel-fintechs" aria-selected="false" tabindex="-1" data-i18n="comparison_tab_fintech">
+          Vs. fintechs
+        </button>
+      </li>
+    </ul>
+
+    <!-- Panel: Banks -->
+    <div class="sb-tab-panel" role="tabpanel" id="panel-banks" aria-labelledby="tab-banks" aria-hidden="false">
+      <div class="sb-table-wrap">
+        <table class="sb-table" aria-label="SwiftBridge versus Nederlandse banken">
+          <thead><tr>
+            <th scope="col">Kenmerk</th>
+            <th scope="col" class="sb-col-sb">SwiftBridge</th>
+            <th scope="col">ING</th>
+            <th scope="col">ABN AMRO</th>
+            <th scope="col">Rabobank</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>Vaste kosten (niet-SEPA)</td>
+              <td class="sb-col-sb">€4,50 Economy<br>€7,50 Express</td>
+              <td>~€6 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td>€9 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td>€8 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
+            </tr>
+            <tr>
+              <td>FX-marge</td>
+              <td class="sb-col-sb">~1,2% <small style="color:var(--txt-m)">(getoond vóór bevestiging)</small></td>
+              <td>~0,85–1,66% <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td>~1–2% <small style="color:var(--txt-m)">(niet apart gepubliceerd)</small></td>
+              <td>~1–2% <small style="color:var(--txt-m)">(indicatief)</small></td>
+            </tr>
+            <tr>
+              <td>Snelheid non-SEPA</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--win">Express: &lt;5 min</span><br>Economy: 1–2 werkdagen</td>
+              <td>1–2 werkdagen</td>
+              <td>3–5 werkdagen</td>
+              <td>~2 werkdagen</td>
+            </tr>
+            <tr>
+              <td>Kosten volledig vooraf zichtbaar</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Volledig</span></td>
+              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+            </tr>
+            <tr>
+              <td>iDEAL / iDIN (NL-native)</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — centraal</span></td>
+              <td><span class="sb-badge sb-badge--part">Eigen bank</span></td>
+              <td><span class="sb-badge sb-badge--part">Eigen bank</span></td>
+              <td><span class="sb-badge sb-badge--part">Eigen bank</span></td>
+            </tr>
+            <tr>
+              <td>Express &lt;5 min</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €7,50 vast</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+            </tr>
+            <tr>
+              <td>Centrale-Aziatische corridors</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja (UZS, KZT, KGS, TMT, AZN)</span></td>
+              <td><span class="sb-badge sb-badge--part">Beperkt</span></td>
+              <td><span class="sb-badge sb-badge--part">Beperkt</span></td>
+              <td><span class="sb-badge sb-badge--part">Beperkt</span></td>
+            </tr>
+            <tr>
+              <td>WhatsApp-bevestiging</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sb-example">
+        <p class="sb-example__title">Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)</p>
+        <p class="sb-example__note">Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief); Economy-tarief SwiftBridge. Bankmarges indicatief ~1,5%. Controleer actuele tarieven vóór verzending.</p>
+        <div class="sb-example-grid">
+          <div class="sb-example-card sb-example-card--sb">
+            <p class="sb-example-card__provider">SwiftBridge</p>
+            <p class="sb-example-card__amount">~35.395 TRY</p>
+            <p class="sb-example-card__sub">Fee: €4,50 · Marge: ~1,2%<br>Totale kost: ~€16,50</p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal">1–2 werkdagen</span>
+          </div>
+          <div class="sb-example-card">
+            <p class="sb-example-card__provider">ING</p>
+            <p class="sb-example-card__amount">~35.227 TRY</p>
+            <p class="sb-example-card__sub">Fee: ~€6 · Marge: ~1,5%<br>Totale kost: ~€21,60</p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal">1–2 werkdagen</span>
+          </div>
+          <div class="sb-example-card">
+            <p class="sb-example-card__provider">ABN AMRO</p>
+            <p class="sb-example-card__amount">~35.120 TRY</p>
+            <p class="sb-example-card__sub">Fee: €9 · Marge: ~1,5%<br>Totale kost: ~€24,75</p>
+            <span class="sb-example-card__tag sb-example-card__tag--slow">3–5 werkdagen</span>
+          </div>
+          <div class="sb-example-card">
+            <p class="sb-example-card__provider">Rabobank</p>
+            <p class="sb-example-card__amount">~35.156 TRY</p>
+            <p class="sb-example-card__sub">Fee: €8 · Marge: ~1,5%<br>Totale kost: ~€23,70</p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal">~2 werkdagen</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-takeaways">
+        <div class="sb-takeaway sb-takeaway--win">
+          <p class="sb-takeaway__label">SwiftBridge wint op</p>
+          <p class="sb-takeaway__text">Lagere totaalkosten voor diaspora-bedragen, Express &lt;5 min (uniek), volledige kostentransparantie vóór bevestiging, iDEAL + iDIN NL-native, WhatsApp-bevestiging, Centraal-Aziatische corridors.</p>
+        </div>
+        <div class="sb-takeaway sb-takeaway--peer">
+          <p class="sb-takeaway__label">Eerlijk: waar banken scoren</p>
+          <p class="sb-takeaway__text">Klanten die sporadisch overmaken wisselen minder snel. Banken bieden brede dienstverlening zonder nieuwe app. Sommige klanten verkiezen de vertrouwde omgeving.</p>
+        </div>
+      </div>
+
+      <p class="sb-disclaimer"><strong>Indicatief — gecheckt 14 juni 2026.</strong> Bankgegevens gebaseerd op openbaar gepubliceerde tarieven. FX-marges zijn indicatief geschat. <span data-i18n="comparison_disclaimer">Controleer actuele tarieven altijd bij uw bank.</span></p>
+    </div>
+
+    <!-- Panel: Fintechs -->
+    <div class="sb-tab-panel" role="tabpanel" id="panel-fintechs" aria-labelledby="tab-fintechs" aria-hidden="true">
+      <div class="sb-table-wrap">
+        <table class="sb-table" aria-label="SwiftBridge versus fintechs">
+          <thead><tr>
+            <th scope="col">Kenmerk</th>
+            <th scope="col" class="sb-col-sb">SwiftBridge</th>
+            <th scope="col">Wise</th>
+            <th scope="col">Remitly</th>
+            <th scope="col">Revolut</th>
+            <th scope="col">Western Union</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>Vaste kosten</td>
+              <td class="sb-col-sb">€4,50 Economy<br>€7,50 Express</td>
+              <td>~€6,50 totaal per €1.000 <small style="color:var(--txt-m)">(fee + %)</small></td>
+              <td>~€1,49–€1,99 flat <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td>Gratis binnen plan-limiet <small style="color:var(--txt-m)">(daarna 1%)</small></td>
+              <td>Variabel per methode</td>
+            </tr>
+            <tr>
+              <td>FX-marge</td>
+              <td class="sb-col-sb">~1,2% <small style="color:var(--txt-m)">(getoond vóór bevestiging)</small></td>
+              <td><strong>0% FX-opslag</strong> — mid-market rate <small style="color:var(--txt-m)">(alleen expliciete conversion fee)</small></td>
+              <td>~0,5–3,0% boven mid-market <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td>0% binnen limiet; +1% weekend <small style="color:var(--txt-m)">(Standard plan)</small></td>
+              <td>FX-marge verwerkt in koers</td>
+            </tr>
+            <tr>
+              <td>Snelheid non-SEPA</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--win">Express: doorgaans &lt;5 min</span><br>Economy: 1–2 werkdagen</td>
+              <td>40% seconden; meeste binnen uren–1 dag</td>
+              <td>Express: "kan direct"; Economy: 3–5 werkdagen</td>
+              <td>Revolut→Revolut: minuten; bank non-SEPA: 3–5 werkdagen</td>
+              <td>Bank: 1–2 werkdagen; cash pickup: minuten</td>
+            </tr>
+            <tr>
+              <td>Kosten vooraf zichtbaar</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Volledig</span></td>
+              <td><span class="sb-badge sb-badge--yes">Uitstekend</span></td>
+              <td><span class="sb-badge sb-badge--yes">Goed</span></td>
+              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+              <td><span class="sb-badge sb-badge--part">Matig</span></td>
+            </tr>
+            <tr>
+              <td>iDEAL / iDIN NL-native</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — centraal</span></td>
+              <td><span class="sb-badge sb-badge--part">Beschikbaar</span></td>
+              <td><span class="sb-badge sb-badge--no">Niet prominent</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+            </tr>
+            <tr>
+              <td>Express &lt;5 min (vaste prijs)</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €7,50 vast</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--part">Remitly Express (hogere fee)</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee voor non-SEPA bank</span></td>
+              <td><span class="sb-badge sb-badge--part">Cash pickup: minuten</span></td>
+            </tr>
+            <tr>
+              <td>Centrale-Aziatische corridors</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja (UZS, KZT, KGS, TMT, AZN)</span></td>
+              <td><span class="sb-badge sb-badge--part">Beperkt voor NL</span></td>
+              <td><span class="sb-badge sb-badge--part">Beperkt voor NL→CA</span></td>
+              <td><span class="sb-badge sb-badge--no">Niet gefocust</span></td>
+              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+            </tr>
+            <tr>
+              <td>WhatsApp-bevestiging</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+            </tr>
+            <tr>
+              <td>DNB/EMI NL-supervisie</td>
+              <td class="sb-col-sb">Ja — via EMI-partner, DNB</td>
+              <td>DNB-geregistreerd; FCA-primair</td>
+              <td>EU-licenties; niet DNB-primair</td>
+              <td>EU banklicentie (LT); DNB NL</td>
+              <td>FCA/EU; niet DNB-primair</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sb-example">
+        <p class="sb-example__title">Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)</p>
+        <p class="sb-example__note">Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief). Wise gebruikt mid-market rate (0% FX-opslag). Controleer actuele tarieven altijd bij de aanbieder.</p>
+        <div class="sb-example-grid">
+          <div class="sb-example-card sb-example-card--sb">
+            <p class="sb-example-card__provider">SwiftBridge</p>
+            <p class="sb-example-card__amount">~35.395 TRY</p>
+            <p class="sb-example-card__sub">Fee: €4,50 · Marge: ~1,2%<br>Totale kost: ~€16,50</p>
+            <span class="sb-example-card__tag sb-example-card__tag--express">Express ook: &lt;5 min</span>
+          </div>
+          <div class="sb-example-card">
+            <p class="sb-example-card__provider">Wise</p>
+            <p class="sb-example-card__amount">~35.766 TRY</p>
+            <p class="sb-example-card__sub">Fee: ~€6,50 · <strong>0% FX-opslag</strong><br>Totale kost: ~€6,50</p>
+            <span class="sb-example-card__tag sb-example-card__tag--speed">Uren–1 dag</span>
+          </div>
+          <div class="sb-example-card">
+            <p class="sb-example-card__provider">Remitly Economy</p>
+            <p class="sb-example-card__amount">~35.408 TRY</p>
+            <p class="sb-example-card__sub">Fee: ~€1,99 · Marge: ~1,5%<br>Totale kost: ~€17,50</p>
+            <span class="sb-example-card__tag sb-example-card__tag--slow">3–5 werkdagen</span>
+          </div>
+          <div class="sb-example-card">
+            <p class="sb-example-card__provider">Western Union</p>
+            <p class="sb-example-card__amount">~34.800–35.400 TRY</p>
+            <p class="sb-example-card__sub">Kost: ~€6–€30*<br><small>*sterk afhankelijk van methode</small></p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal">Bank: 1–2 werkdagen</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-takeaways">
+        <div class="sb-takeaway sb-takeaway--win">
+          <p class="sb-takeaway__label">SwiftBridge wint op</p>
+          <p class="sb-takeaway__text">iDEAL + iDIN NL-native (uniek); Express &lt;5 min met vaste gebrande prijs; DNB/EMI-toezicht als NL-vertrouwenssignaal; Centraal-Aziatische corridors; WhatsApp-bevestiging aan familie.</p>
+        </div>
+        <div class="sb-takeaway sb-takeaway--peer">
+          <p class="sb-takeaway__label">Eerlijk: waar concurrenten uitblinken</p>
+          <p class="sb-takeaway__text"><strong>Wise:</strong> laagste totaalkosten (~€6,50), 0% FX-opslag, uitstekende transparantie. <strong>Revolut:</strong> breed ecosysteem. <strong>WU:</strong> cash pickup wereldwijd. <strong>Remitly:</strong> sterke diaspora-UX.</p>
+        </div>
+      </div>
+
+      <p class="sb-disclaimer" data-i18n="comparison_disclaimer"><strong>Indicatief — gecheckt 14 juni 2026.</strong> Alle bedragen zijn indicatief op basis van openbaar beschikbare tarieven. Tarieven kunnen variëren — controleer actuele kosten altijd bij uw bank of aanbieder. SwiftBridge-tarieven worden bevestigd vóór elke transactie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CORRIDORS ── -->
+<section id="corridors" class="section section-alt" aria-labelledby="corridors-heading">
+  <div class="wrap">
+    <span class="eyebrow">Beschikbare corridors</span>
+    <h2 class="section-h" id="corridors-heading" data-i18n="corridor_heading">45+ valuta. Eén vertrouwd platform.</h2>
+    <p class="section-sub">Of uw familie nu in Turkije, Marokko, Azerbeidzjan, Kazachstan, Oezbekistan of elders woont — SwiftBridge staat voor u klaar. Veilig gereguleerd, volledig transparant, altijd zichtbare kosten.</p>
+    <div class="corridor-grid" role="list">
+      <a class="corridor-card" href="#" role="listitem" aria-label="Turkije - Turkse lira">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1F9;&#x1F1F7;</span>
+        <div class="corridor-info"><strong>Turkije</strong><span>TRY &mdash; 1 EUR = 36,22 TRY&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Marokko - Marokkaanse dirham">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1F2;&#x1F1E6;</span>
+        <div class="corridor-info"><strong>Marokko</strong><span>MAD &mdash; 1 EUR = 11,02 MAD&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Azerbeidzjan - Azerbeidzjaanse manat">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1E6;&#x1F1FF;</span>
+        <div class="corridor-info"><strong>Azerbeidzjan</strong><span>AZN &mdash; 1 EUR = 1,845 AZN&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Kazachstan - Kazachse tenge">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1F0;&#x1F1FF;</span>
+        <div class="corridor-info"><strong>Kazachstan</strong><span>KZT &mdash; 1 EUR = 512,4 KZT&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Oezbekistan - Oezbeekse soem">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1FA;&#x1F1FF;</span>
+        <div class="corridor-info"><strong>Oezbekistan</strong><span>UZS &mdash; 1 EUR = 13.820 UZS&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Kirgizistan - Kirgizische som">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1F0;&#x1F1EC;</span>
+        <div class="corridor-info"><strong>Kirgizistan</strong><span>KGS &mdash; 1 EUR = 97,6 KGS&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Turkmenistan - Turkmeense manat">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1F9;&#x1F1F2;</span>
+        <div class="corridor-info"><strong>Turkmenistan</strong><span>TMT &mdash; 1 EUR = 3,83 TMT&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Verenigde Staten - Amerikaanse dollar">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1FA;&#x1F1F8;</span>
+        <div class="corridor-info"><strong>USD</strong><span>USD &mdash; 1 EUR = 1,095 USD&#8224;</span></div>
+      </a>
+      <a class="corridor-card" href="#" role="listitem" aria-label="Verenigd Koninkrijk - Brits pond">
+        <span class="corridor-flag" aria-hidden="true">&#x1F1EC;&#x1F1E7;</span>
+        <div class="corridor-info"><strong>GBP</strong><span>GBP &mdash; 1 EUR = 0,861 GBP&#8224;</span></div>
+      </a>
+      <div class="corridor-card" style="background:var(--ink-subtle);border-style:dashed;cursor:default;" role="listitem" aria-label="Meer corridors — wachtlijst">
+        <span class="corridor-flag" aria-hidden="true">&#x1F310;</span>
+        <div class="corridor-info"><strong>+35 valuta</strong><span>Nieuw in aanbouw</span></div>
+      </div>
+    </div>
+    <p class="corridor-note">&#8224; <span data-i18n="corridor_availability_disclaimer">Beschikbaarheid van corridors kan variëren. Controleer de app voor de actuele status van uw bestemming.</span> Koersen zijn indicatief.</p>
+    <a class="waitlist-btn" href="#" data-i18n="corridor_waitlist_cta">Meld me aan voor de wachtlijst</a>
+  </div>
+</section>
+
+<!-- ── APP SECTION ── -->
+<section id="app-section" aria-labelledby="app-heading">
+  <div class="app-inner">
+    <div class="app-content">
+      <h2 class="app-heading" id="app-heading" data-i18n="app_heading">SwiftBridge — altijd bij de hand</h2>
+      <p class="app-sub" data-i18n="app_intro">Uw overboekingen geregeld via uw telefoon: live wisselkoersen, Express-transfers doorgaans in minder dan 5 minuten, en een WhatsApp-bevestiging voor uw familie zodra het geld er is. Gratis te downloaden voor iOS en Android — onder DNB-toezicht via onze EMI-partner.</p>
+      <div class="app-pills">
+        <span class="app-pill">iDEAL betaling</span>
+        <span class="app-pill">Express doorgaans &lt;5 min</span>
+        <span class="app-pill">WhatsApp-bevestiging</span>
+        <span class="app-pill">Live koersalerts</span>
+      </div>
+      <div class="app-badges">
+        <div class="app-badge-block">
+          <span class="app-badge-label" data-i18n="app_download_ios">Download in de App Store</span>
+          <a href="#" class="app-badge-link" aria-label="Download SwiftBridge in de App Store">
+            <svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true">
+              <rect width="120" height="40" rx="6" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.3" stroke-width="1"/>
+              <text x="10" y="25" font-family="system-ui" font-size="10" fill="white" opacity="0.9">&#xf8ff; App Store</text>
+            </svg>
+          </a>
+          <span class="app-trust-note" data-i18n="app_trust_line">Gratis · Geen creditcard · Onder DNB-toezicht</span>
+        </div>
+        <div class="app-badge-block">
+          <span class="app-badge-label" data-i18n="app_download_android">Downloaden via Google Play</span>
+          <a href="#" class="app-badge-link" aria-label="Download SwiftBridge via Google Play">
+            <svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true">
+              <rect width="120" height="40" rx="6" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.3" stroke-width="1"/>
+              <text x="10" y="25" font-family="system-ui" font-size="10" fill="white" opacity="0.9">&#x25B6; Google Play</text>
+            </svg>
+          </a>
+          <span class="app-trust-note">Gratis te downloaden voor Android</span>
+        </div>
+      </div>
+    </div>
+    <div class="app-phone-mock" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="8" y="2" width="32" height="44" rx="6" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+        <circle cx="24" cy="41" r="2" fill="rgba(255,255,255,0.3)"/>
+        <rect x="13" y="8" width="22" height="26" rx="2" fill="rgba(255,255,255,0.08)"/>
+        <polygon points="24,14 20,22 23,22 21,30 28,20 25,20" fill="#E8632A"/>
+        <circle cx="24" cy="8" r="1.5" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+      <p>SwiftBridge app<br><small>iOS &amp; Android</small></p>
+      <p style="font-size:.75rem;opacity:.5;" data-i18n="app_qr_help">Scan de QR-code om de app te downloaden</p>
+      <svg width="80" height="80" viewBox="0 0 80 80" aria-label="QR-code placeholder" role="img">
+        <rect width="80" height="80" rx="4" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <rect x="10" y="10" width="20" height="20" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="50" y="10" width="20" height="20" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="10" y="50" width="20" height="20" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="14" y="14" width="12" height="12" rx="1" fill="rgba(255,255,255,0.1)"/>
+        <rect x="54" y="14" width="12" height="12" rx="1" fill="rgba(255,255,255,0.1)"/>
+        <rect x="14" y="54" width="12" height="12" rx="1" fill="rgba(255,255,255,0.1)"/>
+        <rect x="35" y="35" width="10" height="10" rx="1" fill="rgba(255,255,255,0.2)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials" class="section" aria-labelledby="testimonials-heading">
+  <div class="wrap">
+    <span class="eyebrow">Ervaringen van klanten</span>
+    <h2 class="section-h" id="testimonials-heading">Wat onze klanten zeggen</h2>
+    <div class="testimonial-grid">
+      <article class="testimonial-card fade-in">
+        <div class="testimonial-stars" aria-label="5 sterren">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="testimonial-body">"Ik stuurde altijd via ABN AMRO — dat voelde veilig. Totdat iemand mij SwiftBridge liet zien. Zelfde toezichthouder, lagere kosten, en ik zie de koers vóórdat ik bevestig. Nooit meer terug."</blockquote>
+        <p class="testimonial-name">Mehmet Y.</p>
+        <p class="testimonial-meta">Den Haag</p>
+      </article>
+      <article class="testimonial-card fade-in">
+        <div class="testimonial-stars" aria-label="5 sterren">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="testimonial-body">"Ik was sceptisch — ik had nog nooit van SwiftBridge gehoord. Maar DNB-toezicht, iDEAL betaling, iDIN verificatie via mijn eigen bank... Na de eerste overboeking was ik overtuigd."</blockquote>
+        <p class="testimonial-name">Fatima A.</p>
+        <p class="testimonial-meta">Amsterdam</p>
+      </article>
+      <article class="testimonial-card fade-in">
+        <div class="testimonial-stars" aria-label="5 sterren">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="testimonial-body">"Mijn kinderen in Ankara ontvangen een WhatsApp zodra het geld er is. Dat geeft ons allebei rust. Ik hoef mijn bank niet meer te bellen om te vragen of de overboeking is verwerkt."</blockquote>
+        <p class="testimonial-name">Hasan K.</p>
+        <p class="testimonial-meta">Utrecht</p>
+      </article>
+      <p class="testimonial-illustrative">&#9888; Bovenstaande testimonials zijn uitsluitend illustratief. Vervang door geverifieerde klantquotes vóór publicatie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq" class="section section-alt" aria-labelledby="faq-heading">
+  <div class="wrap">
+    <span class="eyebrow">Veelgestelde vragen</span>
+    <h2 class="section-h" id="faq-heading">Alles wat u wilt weten</h2>
+    <div class="faq-list" role="list">
+
+      <details class="faq-item" role="listitem">
+        <summary>
+          <span data-i18n="faq_q1">Hoe snel komt het geld aan?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-body" data-i18n="faq_a1">Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen. De exacte verwerkingstijd hangt af van het bestemmingsland en de lokale bank van de ontvanger. U ziet altijd de verwachte levertijd vóór u bevestigt.</div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary>
+          <span data-i18n="faq_q2">Wat kost een overboeking?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-body" data-i18n="faq_a2">SwiftBridge rekent een transactiefee (€ 7,50 Express / € 4,50 Economy) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.</div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary>
+          <span data-i18n="faq_q3">Is SwiftBridge veilig en legaal?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-body" data-i18n="faq_a3">Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wij voldoen aan de Wwft en de AVG/GDPR. Elke transactie wordt getoetst aan internationale sanctielijsten. Uw identiteit wordt geverifieerd via iDIN.</div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary>
+          <span>Wat zijn de minimale en maximale bedragen?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-body">U kunt bedragen overmaken vanaf € 10 tot € 5.000 per transactie. Het wekelijkse limiet is € 5.000. Voor hogere zakelijke limieten: zie <a href="/zakelijk" style="color:var(--accent)">SwiftBridge Zakelijk</a>.</div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary>
+          <span>Hoe weet de ontvanger dat het geld onderweg is?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-body">Zodra uw overboeking is verzonden, sturen wij automatisch een WhatsApp-bevestiging naar de ontvanger. U ontvangt ook een bevestiging. Zo weet u beiden precies dat het geld is aangekomen.</div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary>
+          <span>Hoe verhoudt SwiftBridge zich tot Wise of Revolut?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-body">Wise heeft een lager totaalkostenniveau op veel corridors dankzij de 0% FX-opslag — dat erkennen wij eerlijk. SwiftBridge onderscheidt zich met: iDEAL + iDIN NL-native betaalflow, Express &lt;5 min met vaste prijs, DNB/EMI NL-toezicht als vertrouwenssignaal, Centraal-Aziatische corridors, en WhatsApp-bevestiging voor de ontvanger. Beide diensten zijn transparant — vergelijk op uw specifieke corridor.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<section id="cta-band" aria-labelledby="cta-heading">
+  <div class="wrap">
+    <h2 class="cta-h" id="cta-heading" data-i18n="cta_band_heading">Klaar om over te stappen?</h2>
+    <p class="cta-sub" data-i18n="cta_band_sub">Gratis account aanmaken in minder dan 2 minuten. Uw eerste overboeking — veilig, transparant en eerlijk geprijsd. Onder toezicht van De Nederlandsche Bank via onze EMI-partner.</p>
+    <div class="cta-btns">
+      <a class="btn btn-white" href="#" data-i18n="cta_band_button">Gratis account openen</a>
+      <a class="btn btn-ghost-white" href="#comparison">Vergelijk tarieven</a>
+    </div>
+    <p class="cta-microcopy">Geen creditcard nodig &middot; DNB-toezicht via EMI-partner &middot; iDEAL betaling &middot; Wwft-conform</p>
+  </div>
+</section>
+
+</main><!-- /main -->
+
+<!-- ── FOOTER ── -->
+<footer id="footer" role="contentinfo">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#E8632A"/><polygon points="16,4 10,15 14,15 12,24 19,12 15,12" fill="#fff"/></svg>
+          SwiftBridge
+        </div>
+        <p class="footer-brand-desc">Veilig geld overmaken vanuit Nederland naar 45+ landen. Onder DNB-toezicht via onze EMI-partner.</p>
+        <div class="footer-social" aria-label="Social media">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="LinkedIn">LI</a>
+          <a href="#" aria-label="Twitter/X">X</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Product</p>
+        <ul>
+          <li><a href="#how-it-works" data-i18n="nav_how_it_works">Hoe werkt het</a></li>
+          <li><a href="#comparison" data-i18n="nav_rates">Tarieven</a></li>
+          <li><a href="#corridors" data-i18n="nav_currencies">Valuta</a></li>
+          <li><a href="/zakelijk" data-i18n="nav_business">Zakelijk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Bedrijf</p>
+        <ul>
+          <li><a href="#" data-i18n="nav_about">Over ons</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Pers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading">Account</p>
+        <ul>
+          <li><a href="/login" data-i18n="nav_login">Inloggen</a></li>
+          <li><a href="#">Account aanmaken</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Voorwaarden</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer" data-i18n="footer_legal_oneliner">SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. € 10 / max. € 5.000 per transactie, max. € 5.000 per week.</p>
+      <p class="footer-copy">&copy; 2026 SwiftBridge B.V. Alle rechten voorbehouden.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+/* ============================================================
+   I18N ENGINE — SwiftBridge Betrouwbaar Definitief
+   Langs: nl (default), en, tr, ar (RTL), de, fr
+   Voor volledige meertaligheid buiten deze 6 talen: koppel een vertaal-API
+   (bijv. server-side) of laat de browser-vertaling het overnemen.
+   ============================================================ */
+const I18N = {
+  nl: {
+    skip_to_main: "Ga naar hoofdinhoud",
+    nav_how_it_works: "Hoe werkt het",
+    nav_rates: "Tarieven",
+    nav_currencies: "Valuta",
+    nav_about: "Over ons",
+    nav_login: "Inloggen",
+    nav_send_money: "Verstuur geld →",
+    nav_download_app: "App downloaden",
+    topbar_download: "Download de app",
+    nav_business: "Zakelijk",
+    hero_eyebrow: "Onder toezicht van DNB via onze EMI-partner",
+    hero_headline: "Zo betrouwbaar als uw bank.\nGebouwd voor mensen zoals u.",
+    hero_subhead: "SwiftBridge werkt onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde toezichthouder die uw eigen bank bewaakt. Stuur geld naar huis met volledig zichtbare kosten en doorgaans binnen 5 minuten op de rekening van de ontvanger.",
+    hero_cta: "Gratis account openen",
+    hero_microtrust: "DNB-toezicht via EMI-partner · Betaal via iDEAL · Identiteit via iDIN · 256-bit versleuteld · Wwft-conform",
+    calc_label_amount: "Stuur ik",
+    calc_label_currency: "Valuta",
+    calc_label_receive: "Ontvanger krijgt (indicatief)",
+    calc_speed_express: "Express (doorgaans < 5 min)",
+    calc_speed_express_short: "Express",
+    calc_speed_economy: "Economy (1–2 werkdagen)",
+    calc_speed_economy_short: "Economy",
+    calc_rate_label: "Koers",
+    calc_fee_label: "Transactiekosten",
+    calc_indicatief_note: "† Indicatieve koers. Tarieven kunnen fluctueren. De definitieve koers wordt bevestigd op het moment van uw overboeking.",
+    calc_cta: "Begin gratis →",
+    trust_dnb: "DNB-toezicht via EMI-partner",
+    trust_ideal: "iDEAL betaling",
+    trust_idin: "iDIN verificatie",
+    trust_encryption: "256-bit encryptie",
+    trust_gdpr: "AVG/GDPR-conform",
+    trust_wwft: "Wwft-gecertificeerd",
+    card1_title: "Veilig gereguleerd — net als uw eigen bank",
+    card1_blurb: "SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Elke transactie doorloopt Wwft-screening en sanctiecontrole. Uw geld is beschermd conform de hoogste Nederlandse en Europese normen.",
+    card2_title: "U ziet elke cent vóór u bevestigt",
+    card2_blurb: "Geen verborgen FX-marges. Geen kleine lettertjes achteraf. U ziet de transactiekosten, de wisselkoers én de FX-marge — allemaal vóór u op verzenden drukt. Tarieven indicatief; definitief bevestigd per transactie.",
+    card3_title: "Uw familie wacht niet",
+    card3_blurb: "Kies Express en uw overboeking arriveert doorgaans binnen 5 minuten op de rekening van de ontvanger. Of kies Economy voor het laagste tarief bij 1–2 werkdagen. De koers en kosten ziet u altijd vóór bevestiging.",
+    hiw_heading: "In vier stappen klaar — veilig en eenvoudig",
+    hiw_step1_title: "Maak gratis een account aan",
+    hiw_step1_body: "Vul uw naam, e-mailadres en telefoonnummer in. Geen creditcard nodig. Geen verplichtingen. Gewoon beginnen.",
+    hiw_step2_title: "Eenmalig verificeren via uw eigen bank",
+    hiw_step2_body: "iDIN gebruikt uw bestaande bankapp om uw identiteit veilig te bevestigen — snel, wettelijk conform de Wwft, en eenmalig ingesteld. Daarna altijd direct klaar om te versturen.",
+    hiw_step3_title: "Betaal zoals u gewend bent — via iDEAL",
+    hiw_step3_body: "Kies bedrag en bestemming, controleer de wisselkoers en alle kosten, en bevestig via iDEAL vanuit uw eigen Nederlandse bank. Altijd het volledige kostenoverzicht vóór bevestiging. Nooit verrassingen.",
+    hiw_step4_title: "Veilig op de rekening van uw familie",
+    hiw_step4_body: "Het bedrag wordt bijgeschreven op de lokale bankrekening van de ontvanger — bij Express doorgaans binnen 5 minuten. Zowel u als de ontvanger ontvangt een WhatsApp-bevestiging zodra de overboeking is verwerkt.",
+    comparison_heading: "Wat kost een overboeking via uw bank — en wat via SwiftBridge?",
+    comparison_tab_banks: "Vs. banken",
+    comparison_tab_fintech: "Vs. fintechs",
+    comparison_disclaimer: "Alle bedragen zijn indicatief op basis van openbaar beschikbare tarieven. Tarieven kunnen variëren — controleer actuele kosten altijd bij uw bank of aanbieder. SwiftBridge-tarieven worden bevestigd vóór elke transactie.",
+    corridor_heading: "45+ valuta. Eén vertrouwd platform.",
+    corridor_availability_disclaimer: "Beschikbaarheid van corridors kan variëren. Controleer de app voor de actuele status van uw bestemming.",
+    corridor_waitlist_cta: "Meld me aan voor de wachtlijst",
+    app_heading: "SwiftBridge — altijd bij de hand",
+    app_intro: "Uw overboekingen geregeld via uw telefoon: live wisselkoersen, Express-transfers doorgaans in minder dan 5 minuten, en een WhatsApp-bevestiging voor uw familie zodra het geld er is. Gratis te downloaden voor iOS en Android — onder DNB-toezicht via onze EMI-partner.",
+    app_download_ios: "Download in de App Store",
+    app_download_android: "Downloaden via Google Play",
+    app_qr_help: "Scan de QR-code om de app te downloaden",
+    app_trust_line: "Gratis · Geen creditcard · Onder DNB-toezicht via EMI-partner",
+    faq_q1: "Hoe snel komt het geld aan?",
+    faq_a1: "Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen. De exacte verwerkingstijd hangt af van het bestemmingsland en de lokale bank van de ontvanger. U ziet altijd de verwachte levertijd vóór u bevestigt.",
+    faq_q2: "Wat kost een overboeking?",
+    faq_a2: "SwiftBridge rekent een transactiefee (€ 7,50 Express / € 4,50 Economy) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.",
+    faq_q3: "Is SwiftBridge veilig en legaal?",
+    faq_a3: "Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wij voldoen aan de Wwft en de AVG/GDPR. Elke transactie wordt getoetst aan internationale sanctielijsten. Uw identiteit wordt geverifieerd via iDIN.",
+    cta_band_heading: "Klaar om over te stappen?",
+    cta_band_sub: "Gratis account aanmaken in minder dan 2 minuten. Uw eerste overboeking — veilig, transparant en eerlijk geprijsd. Onder toezicht van De Nederlandsche Bank via onze EMI-partner.",
+    cta_band_button: "Gratis account openen",
+    footer_legal_oneliner: "SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. € 10 / max. € 5.000 per transactie, max. € 5.000 per week.",
+    login_tab_login: "Inloggen",
+    login_tab_register: "Registreren",
+    login_label_email: "E-mailadres",
+    login_label_password: "Wachtwoord",
+    login_forgot: "Wachtwoord vergeten?",
+    login_btn_login: "Inloggen",
+    login_btn_register: "Account aanmaken",
+    login_show: "Weergeven",
+    login_hide: "Verbergen",
+    login_err_email: "Voer een geldig e-mailadres in.",
+    login_err_password: "Wachtwoord moet minimaal 8 tekens bevatten.",
+    login_security_note: "256-bit versleuteld · DNB-toezicht via EMI-partner · iDIN-verificatie beschikbaar",
+    login_or_continue: "Of ga verder met",
+    login_remember: "Onthoud mij"
+  },
+  en: {
+    skip_to_main: "Skip to main content",
+    nav_how_it_works: "How it works",
+    nav_rates: "Rates",
+    nav_currencies: "Currencies",
+    nav_about: "About us",
+    nav_login: "Log in",
+    nav_send_money: "Send money →",
+    nav_download_app: "Download app",
+    topbar_download: "Download the app",
+    nav_business: "Business",
+    hero_eyebrow: "Supervised by DNB via our EMI partner",
+    hero_headline: "As trustworthy as your bank.\nBuilt for people like you.",
+    hero_subhead: "SwiftBridge operates under the supervision of De Nederlandsche Bank via our EMI partner — the same regulator that oversees your own bank. Send money home with fully transparent fees and delivery typically within 5 minutes.",
+    hero_cta: "Open a free account",
+    hero_microtrust: "DNB supervision via EMI partner · Pay via iDEAL · Identity via iDIN · 256-bit encrypted · Wwft compliant",
+    calc_label_amount: "I send",
+    calc_label_currency: "Currency",
+    calc_label_receive: "Recipient gets (indicative)",
+    calc_speed_express: "Express (typically < 5 min)",
+    calc_speed_express_short: "Express",
+    calc_speed_economy: "Economy (1–2 business days)",
+    calc_speed_economy_short: "Economy",
+    calc_rate_label: "Exchange rate",
+    calc_fee_label: "Transaction fee",
+    calc_indicatief_note: "† Indicative rate. Rates may fluctuate. The final rate is confirmed at the time of your transfer.",
+    calc_cta: "Start for free →",
+    trust_dnb: "DNB supervision via EMI partner",
+    trust_ideal: "iDEAL payment",
+    trust_idin: "iDIN identity verification",
+    trust_encryption: "256-bit encryption",
+    trust_gdpr: "GDPR compliant",
+    trust_wwft: "Wwft certified",
+    card1_title: "Regulated and secure — just like your bank",
+    card1_blurb: "SwiftBridge operates via a registered EMI partner under De Nederlandsche Bank (DNB) supervision. Every transaction undergoes Wwft screening and sanctions checks. Your money is protected to the highest Dutch and European standards.",
+    card2_title: "See every cost before you confirm",
+    card2_blurb: "No hidden FX margins. No fine print after the fact. You see the transaction fee, the exchange rate and the FX margin — all before you hit send. Rates are indicative; final amounts confirmed per transaction.",
+    card3_title: "Your family doesn’t wait",
+    card3_blurb: "Choose Express and your transfer typically arrives within 5 minutes to the recipient’s account. Or choose Economy for the lowest fee with 1–2 business days. Rate and fees always shown before confirmation.",
+    hiw_heading: "Ready in four steps — safe and simple",
+    hiw_step1_title: "Create a free account",
+    hiw_step1_body: "Enter your name, email address and phone number. No credit card required. No obligations. Just get started.",
+    hiw_step2_title: "Verify your identity once via your own bank",
+    hiw_step2_body: "iDIN uses your existing banking app to securely confirm your identity — fast, legally compliant with Wwft, and a one-time setup. After that you’re always ready to send.",
+    hiw_step3_title: "Pay the way you know — via iDEAL",
+    hiw_step3_body: "Choose amount and destination, review the exchange rate and all costs, then confirm via iDEAL from your own Dutch bank. Full cost breakdown always shown before confirmation. Never any surprises.",
+    hiw_step4_title: "Funds safely in your family’s account",
+    hiw_step4_body: "The amount is credited to the recipient’s local bank account — with Express typically within 5 minutes. Both you and the recipient receive a WhatsApp confirmation once the transfer is processed.",
+    comparison_heading: "What does a transfer cost via your bank — and via SwiftBridge?",
+    comparison_tab_banks: "Vs. banks",
+    comparison_tab_fintech: "Vs. fintechs",
+    comparison_disclaimer: "All figures are indicative based on publicly available rates. Rates may vary — always verify current costs with your bank or provider. SwiftBridge rates are confirmed before each transaction.",
+    corridor_heading: "45+ currencies. One trusted platform.",
+    corridor_availability_disclaimer: "Corridor availability may vary. Check the app for the current status of your destination.",
+    corridor_waitlist_cta: "Join the waitlist",
+    app_heading: "SwiftBridge — always at hand",
+    app_intro: "Manage your transfers via your phone: live exchange rates, Express transfers typically in under 5 minutes, and a WhatsApp confirmation for your family the moment the money arrives. Free to download for iOS and Android — under DNB supervision via our EMI partner.",
+    app_download_ios: "Download on the App Store",
+    app_download_android: "Get it on Google Play",
+    app_qr_help: "Scan the QR code to download the app",
+    app_trust_line: "Free · No credit card · DNB supervision via EMI partner",
+    faq_q1: "How quickly does the money arrive?",
+    faq_a1: "With Express, a transfer typically takes under 5 minutes on our live corridors. Economy transfers take 1–2 business days. Exact processing time depends on the destination country and the recipient’s local bank. You always see the expected delivery time before confirming.",
+    faq_q2: "What does a transfer cost?",
+    faq_a2: "SwiftBridge charges a transaction fee (€7.50 Express / €4.50 Economy) plus an indicative FX margin of approx. 1.2%. You always see the full cost breakdown before confirming. No hidden fees.",
+    faq_q3: "Is SwiftBridge safe and legal?",
+    faq_a3: "Yes. SwiftBridge operates via a registered EMI partner under De Nederlandsche Bank (DNB) supervision. We comply with Wwft (anti-money laundering) and GDPR. Every transaction is screened against international sanctions lists. Identity is verified via iDIN.",
+    cta_band_heading: "Ready to make the switch?",
+    cta_band_sub: "Create a free account in under 2 minutes. Your first transfer — safe, transparent and fairly priced. Under supervision of De Nederlandsche Bank via our EMI partner.",
+    cta_band_button: "Open a free account",
+    footer_legal_oneliner: "SwiftBridge is not a bank and does not hold its own DNB banking licence. Payment services are provided via an authorised EMI partner operating under DNB supervision, in accordance with PSD2 and Wwft. Exchange rates and transaction fees are indicative and confirmed before each transaction. Limits: min. €10 / max. €5,000 per transaction, max. €5,000 per week.",
+    login_tab_login: "Log in", login_tab_register: "Register", login_label_email: "Email address",
+    login_label_password: "Password", login_forgot: "Forgot password?", login_btn_login: "Log in",
+    login_btn_register: "Create account", login_show: "Show", login_hide: "Hide",
+    login_err_email: "Please enter a valid email address.",
+    login_err_password: "Password must be at least 8 characters.",
+    login_security_note: "256-bit encrypted · DNB supervision via EMI partner · iDIN verification available",
+    login_or_continue: "Or continue with", login_remember: "Remember me"
+  },
+  tr: {
+    skip_to_main: "Ana içeriğe geç",
+    nav_how_it_works: "Nasıl çalışır", nav_rates: "Üretler", nav_currencies: "Para birimleri",
+    nav_about: "Hakkımızda", nav_login: "Giriş yap", nav_send_money: "Para gönder →", nav_business: "Kurumsal", nav_download_app: "Uygulamayı indir", topbar_download: "Uygulamayı indir",
+    hero_eyebrow: "EMI ortağımız aracılığıyla DNB denetimi altında",
+    hero_headline: "Bankanız kadar güvenilir.\nSizin gibi insanlar için yapıldı.",
+    hero_subhead: "SwiftBridge, kendi bankanızı denetleyen aynı düzenleyici kurum olan De Nederlandsche Bank’ın EMI ortağımız aracılığıyla denetimi altında faaliyet gösterir. Tüm üretler şeffaf biçimde gösterilir; genellikle 5 dakika içinde alıcının hesabına para ulaşır.",
+    hero_cta: "Ücretsiз hesap aç", hero_microtrust: "EMI ortağı ile DNB denetimi · iDEAL ödeme · iDIN kimlik doğrulama · 256-bit şifreleme · Wwft uyumlu",
+    calc_label_amount: "Gönderilen tutar", calc_label_currency: "Para birimi",
+    calc_label_receive: "Alıcının alacağı (gösterge)", calc_speed_express: "Ekspres (genellikle < 5 dak.)",
+    calc_speed_express_short: "Ekspres", calc_speed_economy: "Ekonomi (1–2 iş günü)", calc_speed_economy_short: "Ekonomi",
+    calc_rate_label: "Döviz kuru", calc_fee_label: "İşlem ücreti",
+    calc_indicatief_note: "† Gösterge nitelikte kur. Kurlar dalgalanabilir. Kesin kur transferiniz anında onaylanır.",
+    calc_cta: "Ücretsiз başla →",
+    trust_dnb: "EMI ortağı ile DNB denetimi", trust_ideal: "iDEAL ödeme", trust_idin: "iDIN kimlik doğrulama",
+    trust_encryption: "256-bit şifreleme", trust_gdpr: "GDPR uyumlu", trust_wwft: "Wwft sertifikalı",
+    card1_title: "Bankanız gibi düzenlemiş ve güvenli",
+    card1_blurb: "SwiftBridge, De Nederlandsche Bank (DNB) denetimindeki kayıtlı bir EMI ortağı aracılığıyla faaliyet gösterir. Her işlem Wwft taraımasından ve yaptırım kontrolunden geçer.",
+    card2_title: "Onaylamadan önce her kuruşu görün",
+    card2_blurb: "Gizli döviz marjı yok. Sonradan ortaya çıkan ince yazı yok. Göndermeden önce tüm maliyetleri görürsünüz.",
+    card3_title: "Aileniz beklemez",
+    card3_blurb: "Ekspres’i seçin; transferiniz genellikle 5 dakika içinde alıcının hesabına ulaşır.",
+    hiw_heading: "Dört adımda hazır — güvenli ve kolay",
+    hiw_step1_title: "Ücretsiз hesap oluşturun", hiw_step1_body: "Adınızı, e-posta adresinizi ve telefon numaranuası girin. Kredi kartı gerekmez.",
+    hiw_step2_title: "Kendi bankanız üzerinden bir kez kimlik doğrayın", hiw_step2_body: "iDIN, kimliğinizi güvenli biçimde doğrulamak için mevcut bankacılık uygulamanızı kullanır.",
+    hiw_step3_title: "Alışk olduğunuz şekilde ödeme yapın — iDEAL ile", hiw_step3_body: "Tutar ve hedef seçin, döviz kurunu inceleyin, ardından kendi Hollanda bankanızdan iDEAL ile onaylayın.",
+    hiw_step4_title: "Paranız ailenizin hesabına güvenle ulaşır", hiw_step4_body: "Ekspres ile genellikle 5 dakika içinde. Hem siz hem de alıcı WhatsApp onayı alır.",
+    comparison_heading: "Bankanız üzerinden transfer ne kadara mal olur — ya SwiftBridge?",
+    comparison_tab_banks: "Bankalar ile karşılaştırma", comparison_tab_fintech: "Fintechlerle karşılaştırma",
+    comparison_disclaimer: "Tüm rakamlar, kamuya açık kaynaklara dayalı gösterge niteliğindedir. Ücretler değişebilir. SwiftBridge ücretleri her işlemden önce onaylanır.",
+    corridor_heading: "45'ten fazla para birimi. Tek güvenilir platform.",
+    corridor_availability_disclaimer: "Koridor erişilebilirliği değişebilir. Hedef ülkenizin güncel durumu için uygulamaı kontrol edin.",
+    corridor_waitlist_cta: "Bekleme listesine kaydol",
+    app_heading: "SwiftBridge — her zaman elinizin altında",
+    app_intro: "Transferlerinizi telefonunuzdan yönetin: canlı döviz kurları, genellikle 5 dakikadan kısa süren Ekspres transferler ve para ulaştığı anda ailenize WhatsApp onayı.",
+    app_download_ios: "App Store'dan indirin", app_download_android: "Google Play'den indirin",
+    app_qr_help: "Uygulamaıyı indirmek için QR kodunu trayın",
+    app_trust_line: "Ücretsiз · Kredi kartı gerekmez · EMI ortağı ile DNB denetimi",
+    faq_q1: "Para ne kadar sürede ulaşır?", faq_a1: "Ekspres seçeneğinde, canlı koridorlarımızda bir transfer genellikle 5 dakikadan kısa sürer.",
+    faq_q2: "Transfer ücreti ne kadar?", faq_a2: "SwiftBridge bir işlem ücreti (Ekspres € 7,50 / Ekonomi € 4,50) ve gösterge nitelikte yaklaşık %1,2 döviz marjı alır.",
+    faq_q3: "SwiftBridge güvenli ve yasal mı?", faq_a3: "Evet. SwiftBridge, De Nederlandsche Bank (DNB) denetimindeki kayıtlı bir EMI ortağı aracılığıyla faaliyet gösterir.",
+    cta_band_heading: "Geçiş yapmaya hazır mısınız?",
+    cta_band_sub: "2 dakikadan kısa sürede üretsiз hesap açın. EMI ortağımız aracılığıyla De Nederlandsche Bank denetimi altında.",
+    cta_band_button: "Ücretsiз hesap aç",
+    footer_legal_oneliner: "SwiftBridge bir banka değildir ve DNB bankacılık lisansına sahip değildir. Ödeme hizmetleri, PSD2 ve Wwft kapsamında DNB denetiminde faaliyet gösteren yetkili bir EMI ortağı aracılığıyla sunulmaktadır.",
+    login_tab_login: "Giriş yap", login_tab_register: "Kayıt ol", login_label_email: "E-posta adresi",
+    login_label_password: "Şifre", login_forgot: "Şifremii unuttum?", login_btn_login: "Giriş yap",
+    login_btn_register: "Hesap oluştur", login_show: "Göster", login_hide: "Gizle",
+    login_err_email: "Lütfen geçerli bir e-posta adresi girin.", login_err_password: "Şifre en az 8 karakter içermelidir.",
+    login_security_note: "256-bit şifreli · EMI ortağı ile DNB denetimi · iDIN doğrulama mevcut",
+    login_or_continue: "Ya da şunula devam et", login_remember: "Beni hatırla"
+  },
+  ar: {
+    skip_to_main: "انتقل إلى المحتوى الرئيسي",
+    nav_how_it_works: "كيف يعمل", nav_rates: "الأسعار", nav_currencies: "العملات",
+    nav_about: "من نحن", nav_login: "تسجيل الدخول", nav_send_money: "أرسل الأموال →", nav_business: "الأعمال", nav_download_app: "تنزيل التطبيق", topbar_download: "نزّل التطبيق",
+    hero_eyebrow: "تحت إشراف DNB عبر شريكنا المُصدِر للنقود الإلكترونية",
+    hero_headline: "موثوق كبنكك.\nمصمَّم لأناس مثلك.",
+    hero_subhead: "تعمل SwiftBridge تحت إشراف De Nederlandsche Bank عبر شريكنا. أرسل الأموال إلى وطنك بتكاليف شفافة تمامًا، وتصل عادةً في أقل من 5 دقائق.",
+    hero_cta: "افتح حسابًا مجانيًا",
+    hero_microtrust: "إشراف DNB عبر شريك EMI · الدفع عبر iDEAL · التحقق عبر iDIN · تشفير 256 بت · متوافق مع Wwft",
+    calc_label_amount: "أُرسل", calc_label_currency: "العملة",
+    calc_label_receive: "المستلِم يحصل على (استرشادي)",
+    calc_speed_express: "إكسبريس (عادةً < 5 دقائق)", calc_speed_express_short: "إكسبريس",
+    calc_speed_economy: "اقتصادي (1–2 أيام عمل)", calc_speed_economy_short: "اقتصادي",
+    calc_rate_label: "سعر الصرف", calc_fee_label: "رسوم المعاملة",
+    calc_indicatief_note: "† سعر استرشادي. قد تتغيّر الأسعار. يُؤكّد السعر النهائي عند إجراء التحويل.",
+    calc_cta: "ابدأ مجانًا →",
+    trust_dnb: "إشراف DNB عبر شريك EMI", trust_ideal: "الدفع عبر iDEAL",
+    trust_idin: "التحقق من الهوية عبر iDIN", trust_encryption: "تشفير 256 بت",
+    trust_gdpr: "متوافق مع اللائحة الأوروبية لحماية البيانات GDPR", trust_wwft: "مُعتمَد وفق Wwft",
+    card1_title: "منظَّم وآمن — تمامًا كبنكك",
+    card1_blurb: "تعمل SwiftBridge عبر شريك EMI مسجَّل تحت إشراف De Nederlandsche Bank (DNB). تخضع كل معاملة لفحص Wwft ومراقبة العقوبات.",
+    card2_title: "اطَّلع على كل مبلغ قبل التأكيد",
+    card2_blurb: "لا هوامش صرف مخفية. ترى رسوم المعاملة وسعر الصرف وهامش الصرف — كلها قبل الإرسال.",
+    card3_title: "عائلتك لن تنتظر",
+    card3_blurb: "اختر إكسبريس وسيصل تحويلك عادةً خلال 5 دقائق إلى حساب المستلِم.",
+    hiw_heading: "جاهز في أربع خطوات — آمن وبسيط",
+    hiw_step1_title: "أنشئ حسابًا مجانيًا", hiw_step1_body: "أدخل اسمك وعنوان بريدك الإلكتروني ورقم هاتفك. لا حاجة لبطاقة ائتمان.",
+    hiw_step2_title: "تحقّق من هويتك مرة واحدة عبر بنكك", hiw_step2_body: "يستخدم iDIN تطبيق مصرفك الحالي للتحقق من هويتك بأمان.",
+    hiw_step3_title: "ادفع بالطريقة المعتادة — عبر iDEAL", hiw_step3_body: "اختر المبلغ والوجهة، راجع سعر الصرف وجميع التكاليف، ثم أكّد عبر iDEAL.",
+    hiw_step4_title: "الأموال بأمان في حساب عائلتك", hiw_step4_body: "يُقيد المبلغ في الحساب المصرفي المحلي للمستلِم — مع إكسبريس عادةً في غضون 5 دقائق.",
+    comparison_heading: "كم يكلف التحويل عبر بنكك — وكم عبر SwiftBridge؟",
+    comparison_tab_banks: "مقارنة مع البنوك", comparison_tab_fintech: "مقارنة مع شركات التقنية المالية",
+    comparison_disclaimer: "جميع الأرقام استرشادية. تُؤكّد أسعار SwiftBridge قبل كل معاملة.",
+    corridor_heading: "أكثر من 45 عملة. منصة موثوقة واحدة.",
+    corridor_availability_disclaimer: "قد يتفاوت توفر الممرات. تحقّق من التطبيق للاطلاع على الحالة الراهنة لوجهتك.",
+    corridor_waitlist_cta: "سجّل في قائمة الانتظار",
+    app_heading: "SwiftBridge — في متناول يدك دائمًا",
+    app_intro: "أدِر تحويلاتك عبر هاتفك: أسعار صرف مباشرة، وتحويلات إكسبريس عادةً في أقل من 5 دقائق.",
+    app_download_ios: "تنزيل من App Store", app_download_android: "تنزيل من Google Play",
+    app_qr_help: "امسح رمز QR لتنزيل التطبيق",
+    app_trust_line: "مجاني · لا حاجة لبطاقة ائتمان · إشراف DNB عبر شريك EMI",
+    faq_q1: "كم يستغرق وصول الأموال؟", faq_a1: "مع إكسبريس، يستغرق التحويل عادةً أقل من 5 دقائق على ممراتنا المباشرة.",
+    faq_q2: "ما تكلفة التحويل؟", faq_a2: "تفرض SwiftBridge رسوم معاملة (€ 7.50 إكسبريس / € 4.50 اقتصادي) بالإضافة إلى هامش صرف استرشادي يبلغ نحو 1.2٪.",
+    faq_q3: "هل SwiftBridge آمنة وقانونية؟", faq_a3: "نعم. تعمل SwiftBridge عبر شريك EMI مسجَّل تحت إشراف De Nederlandsche Bank (DNB).",
+    cta_band_heading: "هل أنت مستعد للتحول؟",
+    cta_band_sub: "أنشئ حسابًا مجانيًا في أقل من دقيقتين. تحت إشراف De Nederlandsche Bank عبر شريكنا EMI.",
+    cta_band_button: "افتح حسابًا مجانيًا",
+    footer_legal_oneliner: "SwiftBridge ليست بنكًا ولا تمتلك ترخيص DNB المصرفي الخاص. تُقدَّم خدمات الدفع عبر شريك EMI مُرخَّص يعمل تحت إشراف DNB. الحدود: الحد الأدنى € 10 / الحد الأقصى € 5,000 لكل معاملة.",
+    login_tab_login: "تسجيل الدخول", login_tab_register: "التسجيل",
+    login_label_email: "عنوان البريد الإلكتروني", login_label_password: "كلمة المرور",
+    login_forgot: "نسيت كلمة المرور؟", login_btn_login: "تسجيل الدخول",
+    login_btn_register: "إنشاء حساب", login_show: "إظهار", login_hide: "إخفاء",
+    login_err_email: "يرجى إدخال عنوان بريد إلكتروني صالح.", login_err_password: "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل.",
+    login_security_note: "تشفير 256 بت · إشراف DNB عبر شريك EMI · التحقق عبر iDIN متاح",
+    login_or_continue: "أو تابع باستخدام", login_remember: "تذكّرني"
+  },
+  de: {
+    skip_to_main: "Zum Hauptinhalt springen",
+    nav_how_it_works: "So funktioniert’s", nav_rates: "Preise", nav_currencies: "Währungen",
+    nav_about: "Über uns", nav_login: "Anmelden", nav_send_money: "Geld senden →", nav_business: "Geschäftlich", nav_download_app: "App laden", topbar_download: "App herunterladen",
+    hero_eyebrow: "Unter DNB-Aufsicht über unseren EMI-Partner",
+    hero_headline: "So vertrauenswürdig wie Ihre Bank.\nGemacht für Menschen wie Sie.",
+    hero_subhead: "SwiftBridge operiert unter der Aufsicht der De Nederlandsche Bank über unseren EMI-Partner — dieselbe Regulierungsbehörde, die Ihre eigene Bank überwacht. Senden Sie Geld nach Hause mit vollständig transparenten Gebühren und einer Gutschrift in der Regel innerhalb von 5 Minuten.",
+    hero_cta: "Kostenloses Konto eröffnen",
+    hero_microtrust: "DNB-Aufsicht via EMI-Partner · Zahlung per iDEAL · Identität per iDIN · 256-Bit-Verschlüsselung · Wwft-konform",
+    calc_label_amount: "Ich sende", calc_label_currency: "Währung",
+    calc_label_receive: "Empfänger erhält (indikativ)", calc_speed_express: "Express (typischerweise < 5 Min.)",
+    calc_speed_express_short: "Express", calc_speed_economy: "Economy (1–2 Werktage)", calc_speed_economy_short: "Economy",
+    calc_rate_label: "Wechselkurs", calc_fee_label: "Transaktionsgebühr",
+    calc_indicatief_note: "† Indikativer Kurs. Kurse können schwanken. Der endgültige Kurs wird zum Zeitpunkt Ihrer Überweisung bestätigt.",
+    calc_cta: "Kostenlos starten →",
+    trust_dnb: "DNB-Aufsicht via EMI-Partner", trust_ideal: "iDEAL-Zahlung", trust_idin: "iDIN-Identitätsverifizierung",
+    trust_encryption: "256-Bit-Verschlüsselung", trust_gdpr: "DSGVO-konform", trust_wwft: "Wwft-zertifiziert",
+    card1_title: "Reguliert und sicher — genau wie Ihre Bank",
+    card1_blurb: "SwiftBridge operiert über einen registrierten EMI-Partner unter DNB-Aufsicht. Jede Transaktion durchläuft eine Wwft-Prüfung und Sanktionskontrolle.",
+    card2_title: "Sehen Sie jeden Cent vor der Bestätigung",
+    card2_blurb: "Keine versteckten Devisenmargen. Kein Kleingedrucktes im Nachhinein. Sie sehen Transaktionsgebühr, Wechselkurs und Devisenmarge — alles, bevor Sie auf Senden drücken.",
+    card3_title: "Ihre Familie wartet nicht",
+    card3_blurb: "Wählen Sie Express und Ihre Überweisung trifft typischerweise innerhalb von 5 Minuten auf dem Konto des Empfängers ein.",
+    hiw_heading: "In vier Schritten fertig — sicher und einfach",
+    hiw_step1_title: "Kostenloses Konto erstellen", hiw_step1_body: "Geben Sie Ihren Namen, Ihre E-Mail-Adresse und Ihre Telefonnummer ein. Keine Kreditkarte erforderlich.",
+    hiw_step2_title: "Einmalig über Ihre eigene Bank verifizieren", hiw_step2_body: "iDIN nutzt Ihre bestehende Banking-App, um Ihre Identität sicher zu bestätigen.",
+    hiw_step3_title: "Bezahlen wie gewohnt — per iDEAL", hiw_step3_body: "Betrag und Ziel wählen, Wechselkurs und alle Kosten prüfen und dann per iDEAL bestätigen.",
+    hiw_step4_title: "Sicher auf dem Konto Ihrer Familie", hiw_step4_body: "Bei Express typischerweise innerhalb von 5 Minuten. Beide erhalten eine WhatsApp-Bestätigung.",
+    comparison_heading: "Was kostet eine Überweisung über Ihre Bank — und was über SwiftBridge?",
+    comparison_tab_banks: "Vs. Banken", comparison_tab_fintech: "Vs. Fintechs",
+    comparison_disclaimer: "Alle Beträge sind auf Basis öffentlich verfügbarer Tarife indikativ. SwiftBridge-Tarife werden vor jeder Transaktion bestätigt.",
+    corridor_heading: "Über 45 Währungen. Eine vertrauenswürdige Plattform.",
+    corridor_availability_disclaimer: "Die Verfügbarkeit von Korridoren kann variieren. Prüfen Sie den aktuellen Status Ihres Ziels in der App.",
+    corridor_waitlist_cta: "Warteliste beitreten",
+    app_heading: "SwiftBridge — immer griffbereit",
+    app_intro: "Verwalten Sie Ihre Überweisungen per Smartphone: Live-Wechselkurse, Express-Transfers typischerweise in unter 5 Minuten.",
+    app_download_ios: "Im App Store laden", app_download_android: "Bei Google Play laden",
+    app_qr_help: "QR-Code scannen, um die App herunterzuladen",
+    app_trust_line: "Kostenlos · Keine Kreditkarte · DNB-Aufsicht via EMI-Partner",
+    faq_q1: "Wie schnell kommt das Geld an?", faq_a1: "Bei Express dauert eine Überweisung typischerweise unter 5 Minuten. Bei Economy rechnen Sie mit 1–2 Werktagen.",
+    faq_q2: "Was kostet eine Überweisung?", faq_a2: "SwiftBridge erhebt eine Transaktionsgebühr (€ 7,50 Express / € 4,50 Economy) zuzüglich einer indikativen Devisenmarge von ca. 1,2 %.",
+    faq_q3: "Ist SwiftBridge sicher und legal?", faq_a3: "Ja. SwiftBridge operiert über einen registrierten EMI-Partner unter der Aufsicht der De Nederlandsche Bank (DNB).",
+    cta_band_heading: "Bereit zum Wechseln?",
+    cta_band_sub: "Kostenloses Konto in unter 2 Minuten erstellen. Unter Aufsicht der De Nederlandsche Bank über unseren EMI-Partner.",
+    cta_band_button: "Kostenloses Konto eröffnen",
+    footer_legal_oneliner: "SwiftBridge ist keine Bank und verfügt über keine eigene DNB-Banklizenz. Zahlungsdienstleistungen werden über einen autorisierten EMI-Partner gemäß PSD2 und Wwft erbracht. Wechselkurse und Transaktionsgebühren sind indikativ. Limits: mind. € 10 / max. € 5.000 pro Transaktion.",
+    login_tab_login: "Anmelden", login_tab_register: "Registrieren", login_label_email: "E-Mail-Adresse",
+    login_label_password: "Passwort", login_forgot: "Passwort vergessen?", login_btn_login: "Anmelden",
+    login_btn_register: "Konto erstellen", login_show: "Anzeigen", login_hide: "Verbergen",
+    login_err_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein.", login_err_password: "Das Passwort muss mindestens 8 Zeichen enthalten.",
+    login_security_note: "256-Bit-verschlüsselt · DNB-Aufsicht via EMI-Partner · iDIN-Verifizierung verfügbar",
+    login_or_continue: "Oder weiter mit", login_remember: "Angemeldet bleiben"
+  },
+  fr: {
+    skip_to_main: "Aller au contenu principal",
+    nav_how_it_works: "Comment ça marche", nav_rates: "Tarifs", nav_currencies: "Devises",
+    nav_about: "À propos", nav_login: "Se connecter", nav_send_money: "Envoyer de l’argent →", nav_business: "Entreprises", nav_download_app: "Télécharger l’app", topbar_download: "Télécharger l’app",
+    hero_eyebrow: "Sous la supervision de la DNB via notre partenaire EMI",
+    hero_headline: "Aussi fiable que votre banque.\nConçu pour des gens comme vous.",
+    hero_subhead: "SwiftBridge opère sous la supervision de De Nederlandsche Bank via notre partenaire EMI — le même régulateur qui surveille votre propre banque. Envoyez de l’argent chez vous avec des frais entièrement transparents et un crédit généralement en moins de 5 minutes.",
+    hero_cta: "Ouvrir un compte gratuit",
+    hero_microtrust: "Supervision DNB via partenaire EMI · Paiement par iDEAL · Identité via iDIN · Chiffrement 256 bits · Conforme Wwft",
+    calc_label_amount: "J’envoie", calc_label_currency: "Devise",
+    calc_label_receive: "Le bénéficiaire reçoit (indicatif)", calc_speed_express: "Express (généralement < 5 min)",
+    calc_speed_express_short: "Express", calc_speed_economy: "Économique (1–2 jours ouvrables)", calc_speed_economy_short: "Économique",
+    calc_rate_label: "Taux de change", calc_fee_label: "Frais de transaction",
+    calc_indicatief_note: "† Taux indicatif. Les taux peuvent fluctuer. Le taux définitif est confirmé au moment de votre virement.",
+    calc_cta: "Commencer gratuitement →",
+    trust_dnb: "Supervision DNB via partenaire EMI", trust_ideal: "Paiement iDEAL", trust_idin: "Vérification d’identité iDIN",
+    trust_encryption: "Chiffrement 256 bits", trust_gdpr: "Conforme au RGPD", trust_wwft: "Certifié Wwft",
+    card1_title: "Réglementé et sécurisé — comme votre banque",
+    card1_blurb: "SwiftBridge opère via un partenaire EMI agréé sous la supervision de DNB. Chaque transaction est soumise à un contrôle Wwft et aux vérifications de sanctions.",
+    card2_title: "Voyez chaque centime avant de confirmer",
+    card2_blurb: "Pas de marges de change cachées. Vous voyez les frais, le taux et la marge — tout avant d’appuyer sur Envoyer.",
+    card3_title: "Votre famille n’attend pas",
+    card3_blurb: "Choisissez Express et votre virement arrive généralement en 5 minutes sur le compte du bénéficiaire.",
+    hiw_heading: "Prêt en quatre étapes — sûr et simple",
+    hiw_step1_title: "Créez un compte gratuit", hiw_step1_body: "Saisissez votre nom, adresse e-mail et numéro de téléphone. Pas de carte bancaire requise.",
+    hiw_step2_title: "Vérifiez votre identité une seule fois via votre banque", hiw_step2_body: "iDIN utilise votre application bancaire existante pour confirmer votre identité en toute sécurité.",
+    hiw_step3_title: "Payez comme d’habitude — par iDEAL", hiw_step3_body: "Choisissez montant et destination, vérifiez le taux et les frais, puis confirmez par iDEAL.",
+    hiw_step4_title: "Les fonds en sécurité sur le compte de votre famille", hiw_step4_body: "Avec Express, généralement en 5 minutes. Vous et le bénéficiaire recevez une confirmation WhatsApp.",
+    comparison_heading: "Combien coûte un virement via votre banque — et via SwiftBridge ?",
+    comparison_tab_banks: "Vs. banques", comparison_tab_fintech: "Vs. fintechs",
+    comparison_disclaimer: "Tous les montants sont indicatifs sur la base des tarifs publiquement disponibles. Les tarifs SwiftBridge sont confirmés avant chaque transaction.",
+    corridor_heading: "Plus de 45 devises. Une seule plateforme de confiance.",
+    corridor_availability_disclaimer: "La disponibilité des corridors peut varier. Consultez l’application pour connaître le statut actuel de votre destination.",
+    corridor_waitlist_cta: "Rejoindre la liste d’attente",
+    app_heading: "SwiftBridge — toujours à portée de main",
+    app_intro: "Gérez vos virements depuis votre téléphone: taux de change en direct, virements Express généralement en moins de 5 minutes.",
+    app_download_ios: "Télécharger sur l’App Store", app_download_android: "Disponible sur Google Play",
+    app_qr_help: "Scannez le code QR pour télécharger l’application",
+    app_trust_line: "Gratuit · Sans carte bancaire · Supervision DNB via partenaire EMI",
+    faq_q1: "Combien de temps faut-il pour que l’argent arrive ?", faq_a1: "Avec Express, un virement prend généralement moins de 5 minutes sur nos corridors actifs.",
+    faq_q2: "Combien coûte un virement ?", faq_a2: "SwiftBridge facture des frais de transaction (€ 7,50 Express / € 4,50 Économique) plus une marge de change indicative d’environ 1,2 %.",
+    faq_q3: "SwiftBridge est-il sûr et légal ?", faq_a3: "Oui. SwiftBridge opère via un partenaire EMI agréé sous la supervision de De Nederlandsche Bank (DNB).",
+    cta_band_heading: "Prêt à passer le cap ?",
+    cta_band_sub: "Créez un compte gratuit en moins de 2 minutes. Sous la supervision de De Nederlandsche Bank via notre partenaire EMI.",
+    cta_band_button: "Ouvrir un compte gratuit",
+    footer_legal_oneliner: "SwiftBridge n’est pas une banque et ne détient pas sa propre licence bancaire DNB. Les services de paiement sont fournis via un partenaire EMI agréé opérant sous supervision DNB, conformément à PSD2 et à la Wwft. Limites : min. € 10 / max. € 5 000 par transaction.",
+    login_tab_login: "Se connecter", login_tab_register: "S’inscrire", login_label_email: "Adresse e-mail",
+    login_label_password: "Mot de passe", login_forgot: "Mot de passe oublié ?", login_btn_login: "Se connecter",
+    login_btn_register: "Créer un compte", login_show: "Afficher", login_hide: "Masquer",
+    login_err_email: "Veuillez saisir une adresse e-mail valide.", login_err_password: "Le mot de passe doit contenir au moins 8 caractères.",
+    login_security_note: "Chiffrement 256 bits · Supervision DNB via partenaire EMI · Vérification iDIN disponible",
+    login_or_continue: "Ou continuer avec", login_remember: "Se souvenir de moi"
+  }
+};
+
+const SUPPORTED_LANGS = ['nl','en','tr','ar','de','fr'];
+const NATIVE_NAMES = {nl:'Nederlands',en:'English',tr:'Türkçe',ar:'العربية',de:'Deutsch',fr:'Français'};
+const RTL_LANGS = ['ar'];
+
+let currentLang = 'nl';
+
+function getSavedLang() {
+  try { return localStorage.getItem('sb_lang'); } catch(e) { return null; }
+}
+function saveLang(lang) {
+  try { localStorage.setItem('sb_lang', lang); } catch(e) {}
+}
+
+function detectLang() {
+  const saved = getSavedLang();
+  if (saved && SUPPORTED_LANGS.includes(saved)) return { lang: saved, fromStorage: true };
+  const navLangs = (navigator.languages || [navigator.language || 'nl']);
+  for (const nl of navLangs) {
+    const prefix = nl.slice(0,2).toLowerCase();
+    if (SUPPORTED_LANGS.includes(prefix)) return { lang: prefix, fromStorage: false };
+  }
+  return { lang: 'nl', fromStorage: false };
+}
+
+function applyLang(lang, announce) {
+  if (!SUPPORTED_LANGS.includes(lang)) lang = 'nl';
+  currentLang = lang;
+  const dict = I18N[lang];
+  const isRTL = RTL_LANGS.includes(lang);
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+  // Apply text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+
+  // Apply attributes
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+    const pairs = el.getAttribute('data-i18n-attr').split(';');
+    pairs.forEach(pair => {
+      const [attr, key] = pair.split(':');
+      if (attr && key && dict[key] !== undefined) el.setAttribute(attr.trim(), dict[key]);
+    });
+  });
+
+  // Update switcher UI
+  const currentLabel = document.getElementById('lang-current-label');
+  if (currentLabel) currentLabel.textContent = NATIVE_NAMES[lang];
+  document.querySelectorAll('#lang-dropdown button[data-lang]').forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+  });
+
+  // Announce
+  if (announce) {
+    const announcer = document.getElementById('lang-announce');
+    if (announcer) {
+      announcer.textContent = '';
+      setTimeout(() => { announcer.textContent = 'Language: ' + NATIVE_NAMES[lang]; }, 50);
+    }
+  }
+
+  // Re-run calculator with new labels
+  runCalc();
+}
+
+// Lang switcher toggle
+const langBtn = document.getElementById('lang-btn');
+const langDropdown = document.getElementById('lang-dropdown');
+if (langBtn && langDropdown) {
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const open = langDropdown.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+  langDropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.querySelectorAll('#lang-dropdown button[data-lang]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const lang = this.dataset.lang;
+      saveLang(lang);
+      applyLang(lang, true);
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+      langBtn.focus();
+      // Hide hint if shown
+      const hint = document.getElementById('lang-hint');
+      if (hint) hint.classList.remove('show');
+    });
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+    });
+  });
+}
+
+// Close hint
+const hintClose = document.getElementById('lang-hint-close');
+if (hintClose) {
+  hintClose.addEventListener('click', function() {
+    document.getElementById('lang-hint').classList.remove('show');
+  });
+}
+
+// ── CALCULATOR ──
+const RATES = { TRY:36.22, AZN:1.845, KZT:512.4, UZS:13820, TMT:3.83, KGS:97.6, USD:1.095, GBP:0.861, MAD:11.02 };
+const FX_MARGIN = 0.012;
+
+function runCalc() {
+  const amountEl = document.getElementById('calc-amount');
+  const currencyEl = document.getElementById('calc-currency');
+  const speedEl = document.querySelector('input[name="speed"]:checked');
+  const resultEl = document.getElementById('calc-result');
+  const rateLine = document.getElementById('calc-rate-line');
+  const feeLine = document.getElementById('calc-fee-line');
+  if (!amountEl || !currencyEl || !speedEl || !resultEl) return;
+
+  const amount = parseFloat(amountEl.value) || 0;
+  const currency = currencyEl.value;
+  const speed = speedEl.value;
+  const fee = speed === 'express' ? 7.50 : 4.50;
+  const rate = RATES[currency] || 1;
+  const effectiveRate = rate * (1 - FX_MARGIN);
+  const net = Math.max(0, amount - fee);
+  const received = net * effectiveRate;
+
+  if (amount < 10 || amount > 5000) {
+    resultEl.textContent = '—';
+    if (rateLine) rateLine.textContent = '';
+    if (feeLine) feeLine.textContent = '';
+    return;
+  }
+
+  const dict = I18N[currentLang] || I18N.nl;
+  const rateLabel = dict.calc_rate_label || 'Koers';
+  const feeLabel = dict.calc_fee_label || 'Transactiekosten';
+
+  resultEl.textContent = received.toLocaleString('nl-NL', { maximumFractionDigits: 0 }) + ' ' + currency;
+  if (rateLine) rateLine.textContent = rateLabel + ': 1 EUR = ' + effectiveRate.toFixed(4) + ' ' + currency + ' (± 1,2% marge)';
+  if (feeLine) feeLine.textContent = feeLabel + ': € ' + fee.toFixed(2) + (speed === 'express' ? ' (Express)' : ' (Economy)');
+}
+
+document.getElementById('calc-amount')?.addEventListener('input', runCalc);
+document.getElementById('calc-currency')?.addEventListener('change', runCalc);
+document.querySelectorAll('input[name="speed"]').forEach(r => r.addEventListener('change', runCalc));
+
+// ── TABS ──
+(function() {
+  var tabList = document.querySelector('[role="tablist"]');
+  if (!tabList) return;
+  var tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
+  var panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+
+  function activateTab(idx) {
+    tabs.forEach((t, i) => {
+      t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      t.setAttribute('tabindex', i === idx ? '0' : '-1');
+    });
+    panels.forEach((p, i) => {
+      if (p) p.setAttribute('aria-hidden', i === idx ? 'false' : 'true');
+    });
+    tabs[idx].focus();
+  }
+
+  tabs.forEach((tab, idx) => {
+    tab.addEventListener('click', () => activateTab(idx));
+    tab.addEventListener('keydown', e => {
+      let ni;
+      if (e.key === 'ArrowRight') ni = (idx + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') ni = (idx - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') ni = 0;
+      else if (e.key === 'End') ni = tabs.length - 1;
+      else return;
+      e.preventDefault();
+      activateTab(ni);
+    });
+  });
+})();
+
+// ── NAV TOGGLE ──
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('nav-links');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', function() {
+    const open = navLinks.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+}
+
+// ── FADE IN ──
+if ('IntersectionObserver' in window) {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+}
+
+// ── INIT ──
+(function() {
+  const { lang, fromStorage } = detectLang();
+  applyLang(lang, false);
+  runCalc();
+
+  // Show first-visit hint if auto-detected non-NL
+  if (!fromStorage && lang !== 'nl') {
+    const hint = document.getElementById('lang-hint');
+    if (hint) {
+      const hintText = document.getElementById('lang-hint-text');
+      if (hintText) {
+        const msgs = { en:'Displayed in your language · change here', tr:'Dilinizde gösteriliyor · buradan değiştirin', ar:'معروض بلغتك · غيّر هنا', de:'In Ihrer Sprache angezeigt · hier ändern', fr:'Affiché dans votre langue · modifier ici' };
+        hintText.textContent = msgs[lang] || 'Weergegeven in jouw taal · wijzig hier';
+      }
+      setTimeout(() => hint.classList.add('show'), 800);
+      setTimeout(() => hint.classList.remove('show'), 7000);
+    }
+  }
+})();
+</script>
+</body>
+</html>

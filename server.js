@@ -27,16 +27,34 @@ const MIME_TYPES = {
   '.txt':         'text/plain',
 };
 
+// ── Premium marketing-landing (Cowork-concept) ─────────────────────────────
+// Statische HTML-pagina's die de React-app NIET via de SPA-router afhandelt.
+// De React-app (inloggen, dashboard, betaalflow) draait op alle overige routes
+// via de SPA-fallback hieronder. CTA's in de landing wijzen naar /login etc.
+const LANDING_ROUTES = {
+  '/':            'landing/particulier.html',
+  '/particulier': 'landing/particulier.html',
+  '/zakelijk':    'landing/zakelijk.html',
+};
+
 const server = http.createServer((req, res) => {
   // Strip query string
   let urlPath = req.url.split('?')[0];
+  // Normaliseer trailing slash (bv. /zakelijk/ → /zakelijk)
+  const routeKey = urlPath !== '/' ? urlPath.replace(/\/+$/, '') : urlPath;
 
   // Security: prevent path traversal
   const safePath = path.normalize(urlPath).replace(/^(\.\.[/\\])+/, '');
   let filePath = path.join(DIST, safePath);
 
-  // SPA fallback: bestanden die niet bestaan → index.html
-  if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+  // Premium landing-routes → serveer de marketing-HTML.
+  if (LANDING_ROUTES[routeKey]) {
+    const landingFile = path.join(DIST, LANDING_ROUTES[routeKey]);
+    if (fs.existsSync(landingFile)) {
+      filePath = landingFile;
+    }
+  } else if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+    // SPA fallback: bestanden die niet bestaan → index.html (React-app)
     filePath = path.join(DIST, 'index.html');
   }
 
