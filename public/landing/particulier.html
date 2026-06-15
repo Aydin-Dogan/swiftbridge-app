@@ -1687,7 +1687,18 @@ if (hintClose) {
 }
 
 // ── CALCULATOR ──
-const RATES = { TRY:36.22, AZN:1.845, KZT:512.4, UZS:13820, TMT:3.83, KGS:97.6, USD:1.095, GBP:0.861, MAD:11.02 };
+let RATES = { TRY:36.22, AZN:1.845, KZT:512.4, UZS:13820, TMT:3.83, KGS:97.6, USD:1.095, GBP:0.861, MAD:11.02 }; // fallback-koersen tot live geladen
+// Live koersen ophalen van de echte SwiftBridge-API (zelfde bron als de ingelogde app).
+// Stil terugvallen op de fallback-koersen bij offline/trage API. Marketing-indicatie.
+const _API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? 'http://localhost:3000' : 'https://api.swiftbridge.tr';
+(async function laadLiveKoersen() {
+  try {
+    const res = await fetch(_API_BASE + '/transactions/koersen', { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && data.koersen) { RATES = Object.assign({}, RATES, data.koersen); if (typeof runCalc === 'function') runCalc(); }
+  } catch (e) { /* fallback-koersen blijven staan */ }
+})();
 const FX_MARGIN = 0.012;
 
 function runCalc() {
