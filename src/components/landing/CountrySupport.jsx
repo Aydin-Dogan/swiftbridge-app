@@ -30,10 +30,10 @@ export default function CountrySupport() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">
+          <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
             {t('landing_landen_eyebrow')}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
             {t('landing_landen_titel')}
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto">
@@ -48,7 +48,7 @@ export default function CountrySupport() {
           {LANDEN.map((l, i) => (
             <div
               key={l.code}
-              className="bg-white rounded-2xl border border-gray-100 hover:border-blue-300 hover:shadow-md transition p-5 text-center animate-fade-up"
+              className="bg-white rounded-md border border-gray-200 hover:border-brand-300 transition p-5 text-center animate-fade-up"
               style={{ animationDelay: `${i * 0.05}s` }}
             >
               <div className="flex justify-center mb-3">

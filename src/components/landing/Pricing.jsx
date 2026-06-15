@@ -137,104 +137,99 @@ export default function Pricing({ embedded = false }) {
   // kiezen of we 'm in een eigen section of in PricingSection renderen.
   const inhoud = (
     <>
-        {/* Desktop tabel */}
-        <div className="hidden md:block bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+        {/* Desktop tabel — bancaire hairline-stijl */}
+        <div className="hidden md:block border border-gray-200 bg-white overflow-x-auto mt-9">
           <table className="w-full text-sm">
-            <thead className="bg-gradient-to-r from-slate-50 to-blue-50/40 text-gray-500 text-xs font-bold uppercase tracking-wider">
+            <thead>
               <tr>
-                <th className="px-6 py-4 text-left">{t('landing_pricing_col_aanbieder')}</th>
-                <th className="px-4 py-4 text-center">{t('landing_pricing_col_fee')}</th>
-                <th className="px-4 py-4 text-center">{t('landing_pricing_col_marge')}</th>
-                <th className="px-4 py-4 text-center">{t('landing_pricing_col_snelheid')}</th>
-                <th className="px-4 py-4 text-center">{t('landing_pricing_col_totaal')}</th>
-                <th className="px-4 py-4 text-center">{t('landing_pricing_col_ontvanger')}</th>
+                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('landing_pricing_col_aanbieder')}</th>
+                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('landing_pricing_col_fee')}</th>
+                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('landing_pricing_col_marge')}</th>
+                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('landing_pricing_col_snelheid')}</th>
+                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('landing_pricing_col_totaal')}</th>
+                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('landing_pricing_col_ontvanger')}</th>
               </tr>
             </thead>
             <tbody>
-              {ROWS.map(r => (
+              {ROWS.map((r, i) => {
+                const rand = i === ROWS.length - 1 ? '' : 'border-b border-gray-200';
+                return (
                 <tr
                   key={r.key}
-                  className={`border-t border-gray-100 transition ${
-                    r.highlight
-                      ? 'bg-gradient-to-r from-emerald-50/60 to-blue-50/40'
-                      : 'hover:bg-slate-50/60'
-                  }`}
+                  className={r.highlight ? 'bg-brand-50' : ''}
                 >
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`font-bold ${
-                          r.highlight ? 'text-blue-700' : 'text-gray-800'
-                        }`}
-                      >
-                        {r.highlight && (
-                          <Zap className="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5" aria-hidden="true" />
-                        )}
-                        {r.naam}
-                      </span>
+                  <td className={`px-[18px] py-3.5 ${rand} ${r.highlight ? 'font-semibold text-brand-800' : 'text-gray-700'}`}>
+                    <span className="inline-flex items-center">
                       {r.highlight && (
-                        <span className="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        <Zap className="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5" aria-hidden="true" />
+                      )}
+                      {r.naam}
+                      {r.highlight && (
+                        <span className="inline-block text-[9px] font-semibold uppercase tracking-[0.16em] bg-accent-400 text-brand-900 rounded-[2px] px-1.5 py-0.5 ml-2 align-middle">
                           {t(r.badge)}
                         </span>
                       )}
-                    </div>
+                    </span>
                   </td>
-                  <td className={`px-4 py-5 text-center font-semibold ${r.highlight ? 'text-emerald-700' : 'text-gray-700'}`}>
+                  <td className={`px-[18px] py-3.5 ${rand} text-gray-700 tabular-nums`}>
                     {r.fee}
                   </td>
-                  <td className={`px-4 py-5 text-center font-semibold ${r.highlight ? 'text-emerald-700' : 'text-gray-700'}`}>
+                  <td className={`px-[18px] py-3.5 ${rand} text-gray-700 tabular-nums`}>
                     {r.marge}
                   </td>
-                  <td className={`px-4 py-5 text-center font-semibold ${r.highlight ? 'text-emerald-700' : 'text-gray-700'}`}>
+                  <td className={`px-[18px] py-3.5 ${rand} text-gray-700`}>
                     {r.snelheid}
                   </td>
-                  <td className={`px-4 py-5 text-center font-extrabold ${r.highlight ? 'text-emerald-700' : 'text-gray-800'}`}>
+                  <td className={`px-[18px] py-3.5 ${rand} text-gray-700 tabular-nums`}>
                     {r.totaal}
                   </td>
-                  <td className={`px-4 py-5 text-center font-bold ${r.highlight ? 'text-emerald-700' : 'text-gray-600'}`}>
+                  <td className={`px-[18px] py-3.5 ${rand} text-gray-700 tabular-nums`}>
                     {r.ontvanger}
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>
 
-        {/* Mobiele kaartweergave */}
-        <div className="md:hidden space-y-4">
+        {/* Mobiele kaartweergave — hairline, plat */}
+        <div className="md:hidden space-y-4 mt-9">
           {ROWS.map(r => (
             <div
               key={r.key}
-              className={`rounded-2xl p-5 ${
+              className={`p-5 border ${
                 r.highlight
-                  ? 'bg-gradient-to-br from-emerald-50 to-blue-50 border-2 border-emerald-300'
-                  : 'bg-white border border-gray-200'
-              } shadow-sm`}
+                  ? 'bg-brand-50 border-gray-200'
+                  : 'bg-white border-gray-200'
+              }`}
             >
               <div className="flex items-center justify-between mb-3">
-                <div className="font-bold text-gray-900">
-                  {r.highlight && ''}
+                <div className={`inline-flex items-center ${r.highlight ? 'font-semibold text-brand-800' : 'font-medium text-gray-900'}`}>
+                  {r.highlight && (
+                    <Zap className="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5" aria-hidden="true" />
+                  )}
                   {r.naam}
                 </div>
                 {r.highlight && (
-                  <span className="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-full uppercase">
+                  <span className="inline-block text-[9px] font-semibold uppercase tracking-[0.16em] bg-accent-400 text-brand-900 rounded-[2px] px-1.5 py-0.5 align-middle">
                     {t(r.badge)}
                   </span>
                 )}
               </div>
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
                 <dt className="text-gray-500">{t('landing_pricing_col_fee')}</dt>
-                <dd className="text-right font-semibold">{r.fee}</dd>
+                <dd className="text-right text-gray-700 tabular-nums">{r.fee}</dd>
                 <dt className="text-gray-500">{t('landing_pricing_col_marge')}</dt>
-                <dd className="text-right font-semibold">{r.marge}</dd>
+                <dd className="text-right text-gray-700 tabular-nums">{r.marge}</dd>
                 <dt className="text-gray-500">{t('landing_pricing_col_snelheid')}</dt>
-                <dd className="text-right font-semibold">{r.snelheid}</dd>
+                <dd className="text-right text-gray-700">{r.snelheid}</dd>
                 <dt className="text-gray-500">{t('landing_pricing_col_totaal')}</dt>
-                <dd className={`text-right font-extrabold ${r.highlight ? 'text-emerald-700' : 'text-gray-800'}`}>
+                <dd className="text-right text-gray-700 tabular-nums">
                   {r.totaal}
                 </dd>
                 <dt className="text-gray-500">{t('landing_pricing_col_ontvanger')}</dt>
-                <dd className={`text-right font-bold ${r.highlight ? 'text-emerald-700' : 'text-gray-700'}`}>
+                <dd className="text-right text-gray-700 tabular-nums">
                   {r.ontvanger}
                 </dd>
               </dl>
@@ -242,7 +237,7 @@ export default function Pricing({ embedded = false }) {
           ))}
         </div>
 
-        <p className="text-xs text-gray-400 text-center mt-6 max-w-2xl mx-auto">
+        <p className="text-[0.72rem] text-gray-500 mt-3 max-w-2xl mx-auto">
           {t('landing_pricing_disclaimer')}
         </p>
     </>
@@ -261,10 +256,10 @@ export default function Pricing({ embedded = false }) {
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-3">
+          <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
             {t('landing_pricing_eyebrow')}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
             {t('landing_pricing_titel')}
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto">

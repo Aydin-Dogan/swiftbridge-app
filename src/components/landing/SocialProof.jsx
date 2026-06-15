@@ -83,10 +83,10 @@ export default function SocialProof() {
         {TESTIMONIALS.length > 0 && (
           <>
             <div className="text-center mb-10">
-              <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">
+              <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
                 {t('landing_reviews_eyebrow')}
               </p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-3">
+              <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
                 {t('landing_reviews_titel')}
               </h2>
             </div>

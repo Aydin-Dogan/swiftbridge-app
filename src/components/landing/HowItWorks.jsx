@@ -19,45 +19,38 @@ export default function HowItWorks() {
     <section id="hoe-werkt-het" className="py-20 sm:py-24 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
-          <p className="text-xs font-semibold text-brand-600 uppercase tracking-widest mb-3">
+          <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
             {t('landing_how_eyebrow')}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
             {t('landing_how_titel')}
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-base">
+          <p className="text-gray-500 max-w-2xl mx-auto">
             {t('landing_how_subtitel')}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6 relative">
-          {/* Verbindingslijn op desktop — subtieler, matte */}
-          <div
-            className="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-px z-0"
-            style={{ background: 'linear-gradient(90deg, transparent 0%, #cbd5e1 20%, #cbd5e1 80%, transparent 100%)' }}
-            aria-hidden="true"
-          />
-
+        <div className="max-w-2xl mx-auto">
           {STAPPEN.map((s, i) => (
             <div
               key={s.nr}
-              className="relative z-10 text-center animate-fade-up"
+              className="flex items-start gap-[18px] mb-[22px] last:mb-0 animate-fade-up"
               style={{ animationDelay: `${i * 0.08}s` }}
             >
-              <div className="w-20 h-20 mx-auto mb-5 relative">
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-brand-50 border border-brand-100">
-                  <s.Icon className="w-9 h-9 text-brand-600" />
-                </div>
-                <div className="absolute -top-1.5 -right-1.5 w-7 h-7 rounded-full bg-brand-600 text-white font-bold text-xs flex items-center justify-center ring-4 ring-white">
-                  {s.nr}
-                </div>
+              <div className="flex-shrink-0 w-[38px] h-[38px] rounded-full border border-brand-500 text-brand-600 font-display text-base grid place-items-center">
+                {s.nr}
               </div>
-              <h3 className="font-semibold text-gray-900 text-base mb-2">
-                {t(`landing_step_${s.key}_titel`)}
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {t(`landing_step_${s.key}_tekst`)}
-              </p>
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-brand-50 border border-brand-100">
+                <s.Icon className="w-6 h-6 text-brand-600" />
+              </div>
+              <div className="pt-1">
+                <b className="block font-semibold text-gray-900">
+                  {t(`landing_step_${s.key}_titel`)}
+                </b>
+                <p className="text-gray-500 text-[0.94rem] leading-relaxed">
+                  {t(`landing_step_${s.key}_tekst`)}
+                </p>
+              </div>
             </div>
           ))}
         </div>

@@ -42,8 +42,8 @@ function AccordionItem({ vraag, antwoord, open, onToggle, index }) {
   const btnId = `faq-button-${index}`;
   return (
     <div
-      className={`bg-white rounded-2xl border transition ${
-        open ? 'border-blue-300 shadow-md' : 'border-gray-200'
+      className={`relative -mt-px bg-white border transition ${
+        open ? 'border-brand-300 z-10' : 'border-gray-200'
       }`}
     >
       <button
@@ -52,10 +52,10 @@ function AccordionItem({ vraag, antwoord, open, onToggle, index }) {
         aria-expanded={open}
         aria-controls={id}
         onClick={onToggle}
-        className="w-full flex items-center justify-between gap-3 text-left px-5 sm:px-6 py-5"
+        className="w-full flex items-center justify-between gap-3 text-left px-5 sm:px-6 py-4"
       >
-        <span className="font-bold text-gray-900 text-base">{vraag}</span>
-        <span className={`flex-shrink-0 ${open ? 'text-blue-600' : 'text-gray-400'}`}>
+        <span className="font-semibold text-gray-900">{vraag}</span>
+        <span className={`flex-shrink-0 ${open ? 'text-brand-600' : 'text-gray-400'}`}>
           <ChevronIcon open={open} />
         </span>
       </button>
@@ -64,7 +64,7 @@ function AccordionItem({ vraag, antwoord, open, onToggle, index }) {
         role="region"
         aria-labelledby={btnId}
         hidden={!open}
-        className="px-5 sm:px-6 pb-5 text-sm text-gray-600 leading-relaxed"
+        className="px-5 sm:px-6 pb-4 text-gray-500 text-[0.93rem] leading-relaxed"
       >
         {antwoord}
       </div>
@@ -80,16 +80,16 @@ export default function FAQ() {
     <section id="faq" className="py-16 sm:py-20 px-4 bg-white">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">
+          <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
             {t('landing_faq_eyebrow')}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
             {t('landing_faq_titel')}
           </h2>
           <p className="text-gray-500">{t('landing_faq_subtitel')}</p>
         </div>
 
-        <div className="space-y-3">
+        <div>
           {VRAGEN.map((v, i) => (
             <AccordionItem
               key={v.key}

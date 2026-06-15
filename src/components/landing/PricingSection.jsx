@@ -23,26 +23,26 @@ export default function PricingSection() {
       <div className="max-w-7xl mx-auto">
         {/* Section heading boven de tabs */}
         <div className="text-center mb-8">
-          <p className="text-xs font-semibold text-brand-600 uppercase tracking-widest mb-3">
+          <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
             {t('pricing_section_eyebrow')}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
             {t('pricing_section_titel')}
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-base">
+          <p className="text-gray-500 max-w-2xl mx-auto">
             {t('pricing_section_subtitel')}
           </p>
         </div>
 
         {/* Segmented control — tab keuze */}
         <div className="flex justify-center mb-8" role="tablist" aria-label="Prijs-weergave">
-          <div className="inline-flex p-1 bg-white border border-gray-200 rounded-xl shadow-soft-sm">
+          <div className="inline-flex p-1 bg-white border border-gray-200 rounded-md">
             <button
               type="button"
               role="tab"
               aria-selected={tab === 'vergelijking'}
               onClick={() => setTab('vergelijking')}
-              className={`px-4 sm:px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+              className={`px-4 sm:px-5 py-2 rounded text-sm font-semibold transition-colors ${
                 tab === 'vergelijking'
                   ? 'bg-brand-600 text-white'
                   : 'text-gray-600 hover:bg-gray-50'
@@ -55,7 +55,7 @@ export default function PricingSection() {
               role="tab"
               aria-selected={tab === 'staffel'}
               onClick={() => setTab('staffel')}
-              className={`px-4 sm:px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+              className={`px-4 sm:px-5 py-2 rounded text-sm font-semibold transition-colors ${
                 tab === 'staffel'
                   ? 'bg-brand-600 text-white'
                   : 'text-gray-600 hover:bg-gray-50'

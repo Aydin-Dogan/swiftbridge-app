@@ -19,7 +19,7 @@ function Badge({ children }) {
 function TrustItem({ Icon, label, sub }) {
   return (
     <div className="flex items-start gap-3 bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3">
-      <Icon className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+      <Icon className="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" />
       <div className="min-w-0">
         <div className="text-white font-bold text-xs">{label}</div>
         <div className="text-gray-400 text-[11px] leading-relaxed">{sub}</div>
@@ -33,7 +33,7 @@ export default function Footer() {
   const jaar = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-950 text-gray-400 pt-14 pb-8 px-4 text-sm">
+    <footer className="bg-brand-900 text-[#93a7cc] pt-14 pb-8 px-4 text-sm">
       <div className="max-w-7xl mx-auto">
         {/* TrustRow — concrete signalen voor de fold (Verbetering T). */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
@@ -62,12 +62,12 @@ export default function Footer() {
           {/* Branding */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-6 h-6 text-blue-400" aria-hidden="true" />
-              <span className="font-extrabold text-white text-lg tracking-tight">
+              <Zap className="w-6 h-6 text-accent-400" aria-hidden="true" />
+              <span className="font-display text-white text-xl">
                 SwiftBridge
               </span>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed mb-4">
+            <p className="text-[0.84rem] leading-[1.9] mb-4">
               {t('landing_footer_slogan')}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -79,10 +79,10 @@ export default function Footer() {
 
           {/* Product */}
           <div>
-            <h4 className="text-white font-bold mb-3 text-sm">
+            <h4 className="text-[0.64rem] tracking-[0.26em] uppercase text-accent-400 mb-3 font-medium">
               {t('landing_footer_product')}
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-[0.84rem] leading-[1.9]">
               <li>
                 <a href="#hoe-werkt-het" className="hover:text-white transition">
                   {t('landing_nav_how')}
@@ -108,10 +108,10 @@ export default function Footer() {
 
           {/* Juridisch */}
           <div>
-            <h4 className="text-white font-bold mb-3 text-sm">
+            <h4 className="text-[0.64rem] tracking-[0.26em] uppercase text-accent-400 mb-3 font-medium">
               {t('landing_footer_juridisch')}
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-[0.84rem] leading-[1.9]">
               <li>
                 <a href="/algemene-voorwaarden" className="hover:text-white transition">
                   {t('landing_footer_voorwaarden')}
@@ -137,10 +137,10 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-bold mb-3 text-sm">
+            <h4 className="text-[0.64rem] tracking-[0.26em] uppercase text-accent-400 mb-3 font-medium">
               {t('landing_footer_contact')}
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-[0.84rem] leading-[1.9]">
               <li>
                 <a href="mailto:support@swiftbridge.tr" className="hover:text-white transition inline-flex items-center gap-2">
                   <Mail className="w-4 h-4" /> support@swiftbridge.tr
@@ -157,12 +157,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-500">
+        <div className="border-t border-white/10 pt-5 mt-10 flex flex-col md:flex-row items-center justify-between gap-3 text-[0.72rem] leading-[1.7] text-[#7388b3]">
+          <p>
             {/* F32 fix: "B.V." weggehaald tot KvK-inschrijving rond is. */}
             © {jaar} SwiftBridge · {t('landing_footer_rechten')}
           </p>
-          <p className="text-[11px] text-gray-600 max-w-xl text-center md:text-right leading-relaxed">
+          <p className="max-w-xl text-center md:text-right">
             {t('landing_footer_dnb_disclaimer')}
           </p>
         </div>
