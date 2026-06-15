@@ -318,7 +318,7 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
         />
         {/* Kader overlay */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-3/4 aspect-[3/4] border-4 border-white/70 rounded-3xl shadow-xl" />
+          <div className="w-3/4 aspect-[3/4] border-4 border-white/70 rounded-md shadow-soft" />
         </div>
         <div className="absolute bottom-3 left-3 right-3 text-center pointer-events-none">
           <span className="inline-block bg-black/60 text-white text-xs font-semibold px-3 py-1 rounded-full">
@@ -721,8 +721,8 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
       {/* Stap 6: review */}
       {huidige === 'review' && (
         <div className="space-y-4">
-          <h3 className="font-bold text-gray-800 text-sm">{t('kyc_upload_review_titel')}</h3>
-          <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+          <h3 className="font-display font-medium text-ink-1 text-sm">{t('kyc_upload_review_titel')}</h3>
+          <div className="bg-surface-2 border border-border-subtle rounded-md p-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">{t('kyc_upload_kies_doctype')}</span>
               <span className="font-semibold">{t(docConfig.tKey)}</span>
@@ -749,7 +749,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             ))}
           </div>
           {serverFout && (
-            <div role="alert" className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-700">
+            <div role="alert" className="bg-red-50 border border-red-200 rounded-md p-3 text-sm text-red-700">
               {serverFout}
             </div>
           )}
@@ -757,7 +757,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             <div className="space-y-2">
               <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-blue-600 h-full transition-all duration-200"
+                  className="bg-brand-600 h-full transition-all duration-200"
                   style={{ width: `${progress}%` }}
                   role="progressbar"
                   aria-valuenow={progress}
@@ -774,14 +774,14 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
             <button
               onClick={vorige}
               disabled={bezig}
-              className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl hover:bg-gray-50 font-semibold text-sm disabled:opacity-50"
+              className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm disabled:opacity-50"
             >
               {t('terug')}
             </button>
             <button
               onClick={indienen}
               disabled={bezig || !voorkant || !selfie}
-              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-sm"
+              className="flex-1 bg-success-600 hover:bg-success-700 disabled:bg-gray-300 text-white font-semibold py-3 rounded-md text-sm"
             >
               {bezig ? t('laden') : (
                 <span className="inline-flex items-center justify-center gap-1.5">

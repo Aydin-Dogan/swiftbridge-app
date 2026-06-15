@@ -115,7 +115,7 @@ function StapPersoonlijk({ form, update, onVolgende }) {
       <div>
         <label className="block text-xs font-semibold text-ink-2 mb-1">Geboortedatum *</label>
         <input type="date" value={form.geboortedatum} onChange={e => update('geboortedatum', e.target.value)}
-          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition" />
+          className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition" />
       </div>
 
       <div>
@@ -133,7 +133,7 @@ function StapPersoonlijk({ form, update, onVolgende }) {
         <label className="block text-xs font-semibold text-ink-2 mb-1">Telefoonnummer</label>
         <input value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
           placeholder="+31 6 12345678"
-          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 transition" />
+          className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition" />
       </div>
 
       <div className="bg-brand-50 border border-brand-100 rounded-md p-3 text-xs text-brand-700">

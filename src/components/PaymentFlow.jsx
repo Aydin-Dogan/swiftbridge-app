@@ -230,10 +230,10 @@ function OntvangerModal({ onKies, onSluit }) {
   const ontvangers = laadOntvangers();
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-sm">
-        <div className="flex items-center justify-between p-4 border-b border-gray-100">
-          <h3 className="font-bold text-gray-800">Kies ontvanger</h3>
-          <button onClick={onSluit} className="text-gray-400 hover:text-gray-600" aria-label="Sluiten"><X className="w-5 h-5" /></button>
+      <div className="bg-surface border border-border rounded-md shadow-soft w-full max-w-sm">
+        <div className="flex items-center justify-between p-4 border-b border-border-subtle">
+          <h3 className="font-display font-medium text-ink-1">Kies ontvanger</h3>
+          <button onClick={onSluit} className="text-gray-400 hover:text-ink-2" aria-label="Sluiten"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-3 space-y-2 max-h-72 overflow-y-auto">
           {ontvangers.length === 0 && (
@@ -245,25 +245,25 @@ function OntvangerModal({ onKies, onSluit }) {
             const labelInfo = getLabelInfo(o.label);
             return (
               <button key={i} onClick={() => onKies(o)}
-                className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition text-left">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-lg font-bold text-blue-700 flex-shrink-0">
+                className="w-full flex items-center gap-3 p-3 rounded-md hover:bg-brand-50 transition text-left">
+                <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center font-display text-lg font-medium text-brand-700 flex-shrink-0">
                   {o.naam[0].toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-semibold text-gray-800 text-sm">{o.naam}</span>
+                    <span className="font-semibold text-ink-1 text-sm">{o.naam}</span>
                     {labelInfo && (
-                      <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-semibold">
+                      <span className="text-xs bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded-full font-semibold">
                         {labelInfo.label}
                       </span>
                     )}
                   </div>
                   <div className="text-xs text-gray-400 font-mono">{o.iban.slice(0, 4)} •••• {o.iban.slice(-4)}</div>
                   {o.laatsteBedrag && (
-                    <div className="text-xs text-blue-600 font-medium">Vorige: €{o.laatsteBedrag}</div>
+                    <div className="text-xs text-brand-700 font-medium">Vorige: €{o.laatsteBedrag}</div>
                   )}
                 </div>
-                <span className="text-blue-500">→</span>
+                <span className="text-brand-500">→</span>
               </button>
             );
           })}
@@ -320,24 +320,24 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 200)}
         placeholder="Mehmet Yilmaz"
-        className="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition"
+        className="w-full border border-border rounded-md px-4 py-3 outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
         autoComplete="off"
       />
       {open && suggesties.length > 0 && (
-        <ul className="absolute z-20 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto">
+        <ul className="absolute z-20 left-0 right-0 mt-1 bg-surface border border-border rounded-md shadow-soft max-h-64 overflow-y-auto">
           {suggesties.map(b => (
             <li key={b.id}>
               <button
                 type="button"
                 onMouseDown={(e) => e.preventDefault()} /* voorkom blur vóór click */
                 onClick={() => kies(b)}
-                className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-blue-50 transition border-b border-gray-50 last:border-b-0"
+                className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brand-50 transition border-b border-border-subtle last:border-b-0"
               >
-                <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center flex-shrink-0">
+                <span className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 text-xs font-semibold flex items-center justify-center flex-shrink-0">
                   {(b.naam || '?').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase()}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-gray-900 truncate">
+                  <div className="text-sm font-semibold text-ink-1 truncate">
                     {b.bijnaam || b.naam}
                   </div>
                   <div className="text-xs text-gray-500 truncate">
@@ -380,13 +380,13 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= 10 && ontvanger && ontvangerInfoOK;
 
   return (
-    <div className="card-glass p-6 space-y-5 animate-fade-up">
-      <h2 className="text-xl font-bold text-gray-800 tracking-tight">Geld overmaken</h2>
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5 animate-fade-up">
+      <h2 className="font-display text-xl font-medium text-ink-1">Geld overmaken</h2>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-2">Bedrag (EUR)</label>
-        <div className="flex items-center border-2 border-blue-500 rounded-xl px-4 py-3 bg-blue-50/50">
-          <span className="text-2xl font-bold text-blue-400 mr-2">€</span>
+        <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">Bedrag (EUR)</label>
+        <div className="flex items-center border border-brand-500 rounded-md px-4 py-3 bg-brand-50/50 focus-within:ring-2 focus-within:ring-brand-100">
+          <span className="font-display text-2xl font-medium text-brand-400 mr-2">€</span>
           <input type="number" min="0" max="5000" step="10" inputMode="decimal"
             value={bedrag}
             onChange={e => {
@@ -395,15 +395,15 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               const n = parseFloat(v);
               if (!isNaN(n)) setBedrag(Math.max(0, n).toString());
             }}
-            className="flex-1 text-2xl font-bold text-gray-800 outline-none bg-transparent" />
+            className="flex-1 font-display text-2xl font-medium tabular-nums text-ink-1 outline-none bg-transparent" />
         </div>
         <div className="flex gap-2 mt-2 flex-wrap">
           {SNELLE_BEDRAGEN.map(b => (
             <button key={b} onClick={() => setBedrag(b.toString())}
-              className={`px-3 py-1 rounded-full text-sm font-semibold transition ${
+              className={`px-3 py-1 rounded-full text-sm font-semibold tabular-nums transition ${
                 bedrag === b.toString()
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-700'}`}>
+                  ? 'bg-brand-600 text-white'
+                  : 'bg-gray-100 text-ink-2 hover:bg-brand-100 hover:text-brand-700'}`}>
               €{b.toLocaleString('nl-NL')}
             </button>
           ))}
@@ -412,39 +412,39 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
       {/* Snelheid keuze: Express vs Economy */}
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-2">Snelheid</label>
+        <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">Snelheid</label>
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => setSnelheid('express')}
-            className={`p-3 rounded-xl text-left transition-all active:scale-95 ${
+            className={`p-3 rounded-md text-left border transition-colors active:scale-[0.99] ${
               snelheid === 'express'
-                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-brand-600 border-brand-600 text-white shadow-soft'
+                : 'bg-surface border-border text-ink-2 hover:bg-surface-3'
             }`}
           >
             <div className="flex items-center gap-2 mb-0.5">
               <Zap className="w-4 h-4" />
-              <span className="font-bold text-sm">Express</span>
+              <span className="font-semibold text-sm">Express</span>
             </div>
-            <div className={`text-[10px] ${snelheid === 'express' ? 'text-blue-100' : 'text-gray-500'}`}>
+            <div className={`text-[10px] tabular-nums ${snelheid === 'express' ? 'text-blue-100' : 'text-gray-500'}`}>
               &lt;5 min · €{previewFee('express').toFixed(2)}
             </div>
           </button>
           <button
             type="button"
             onClick={() => setSnelheid('economy')}
-            className={`p-3 rounded-xl text-left transition-all active:scale-95 ${
+            className={`p-3 rounded-md text-left border transition-colors active:scale-[0.99] ${
               snelheid === 'economy'
-                ? 'bg-gradient-to-br from-emerald-600 to-emerald-700 text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-success-600 border-success-600 text-white shadow-soft'
+                : 'bg-surface border-border text-ink-2 hover:bg-surface-3'
             }`}
           >
             <div className="flex items-center gap-2 mb-0.5">
               <Clock className="w-4 h-4" />
-              <span className="font-bold text-sm">Economy</span>
+              <span className="font-semibold text-sm">Economy</span>
             </div>
-            <div className={`text-[10px] ${snelheid === 'economy' ? 'text-emerald-100' : 'text-gray-500'}`}>
+            <div className={`text-[10px] tabular-nums ${snelheid === 'economy' ? 'text-success-100' : 'text-gray-500'}`}>
               1-2 dagen · €{previewFee('economy').toFixed(2)} · zeer voordelig
             </div>
           </button>
@@ -452,7 +452,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-2">Ontvanger krijgt in</label>
+        <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">Ontvanger krijgt in</label>
         <CurrencySelector
           value={valuta}
           onChange={setValuta}
@@ -460,7 +460,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           onToggleFavoriet={toggleFavoriet}
         />
         {valutaInfo.status === 'binnenkort' && (
-          <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 mt-2 text-[11px] text-amber-800 leading-snug">
+          <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-md px-3 py-2.5 mt-2 text-[11px] text-amber-800 leading-snug">
             <Bell className="w-4 h-4 flex-shrink-0" />
             <span>Uitbetaling naar {valutaInfo.land} komt binnenkort. Bereken alvast — je kunt je op de wachtlijst zetten.</span>
           </div>
@@ -468,50 +468,44 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
       </div>
 
       {ontvangenNetto !== null && (
-        <div
-          className="rounded-xl p-4 space-y-3 animate-fade-up"
-          style={{
-            background: 'linear-gradient(135deg, rgba(219,234,254,0.6), rgba(199,210,254,0.4))',
-            border: '1px solid rgba(59,130,246,0.25)',
-          }}
-        >
+        <div className="rounded-md p-4 space-y-3 animate-fade-up bg-surface-2 border border-border">
           {/* PSD2 transparante kostenweergave — vereist door EU 2019/518 */}
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Servicekosten</span>
-            <span className="font-mono font-semibold text-gray-800">€{kosten.klantBetaaltFee.toFixed(2)}</span>
+            <span className="text-ink-2">Servicekosten</span>
+            <span className="font-mono font-semibold tabular-nums text-ink-1">€{kosten.klantBetaaltFee.toFixed(2)}</span>
           </div>
 
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Wisselkoers marge ({kosten.fxAfwijkingPct}%)</span>
-            <span className="font-mono font-semibold text-gray-800">€{kosten.fxKostenEur.toFixed(2)}</span>
+            <span className="text-ink-2">Wisselkoers marge ({kosten.fxAfwijkingPct}%)</span>
+            <span className="font-mono font-semibold tabular-nums text-ink-1">€{kosten.fxKostenEur.toFixed(2)}</span>
           </div>
 
-          <div className="border-t border-blue-200 pt-2 flex justify-between text-sm font-bold text-rose-700">
+          <div className="border-t border-border-subtle pt-2 flex justify-between text-sm font-semibold text-rose-700">
             <span>Totale kosten</span>
-            <span className="font-mono">€{kosten.totaleKostenEur.toFixed(2)} ({kosten.totaleKostenPct}%)</span>
+            <span className="font-mono tabular-nums">€{kosten.totaleKostenEur.toFixed(2)} ({kosten.totaleKostenPct}%)</span>
           </div>
 
           {/* Mid-market vs gehanteerde koers — PSD2 vereiste */}
-          <div className="bg-white/60 rounded-lg p-2 space-y-1 text-[11px] border border-blue-100">
+          <div className="bg-surface rounded-md p-2 space-y-1 text-[11px] border border-border-subtle">
             <div className="flex justify-between text-gray-500">
               <span>Mid-market koers (ECB referentie)</span>
-              <span className="font-mono">1 EUR = {kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}</span>
+              <span className="font-mono tabular-nums">1 EUR = {kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}</span>
             </div>
-            <div className="flex justify-between text-gray-800 font-semibold">
+            <div className="flex justify-between text-ink-1 font-semibold">
               <span>Onze koers</span>
-              <span className="font-mono">1 EUR = {kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
+              <span className="font-mono tabular-nums">1 EUR = {kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} {valutaInfo.code}</span>
             </div>
             <div className="text-[10px] text-gray-400 mt-1">
               Onze koers wijkt {kosten.fxAfwijkingPct}% af van de ECB referentiekoers
             </div>
           </div>
 
-          <div className="border-t border-blue-200 pt-2 flex justify-between font-bold text-blue-700">
+          <div className="border-t border-border-subtle pt-2 flex justify-between font-semibold text-brand-700">
             <span>Ontvanger krijgt</span>
-            <span className="text-lg font-mono">{formatBedrag(ontvangenNetto, valuta)}</span>
+            <span className="font-display text-lg font-medium tabular-nums">{formatBedrag(ontvangenNetto, valuta)}</span>
           </div>
 
-          <div className="bg-blue-100/60 rounded-lg px-2 py-1.5 text-[11px] text-blue-700 leading-snug">
+          <div className="bg-brand-50 border border-brand-100 rounded-md px-2 py-1.5 text-[11px] text-brand-700 leading-snug">
             <Vlag land={valutaInfo.landCode} size={14} /> <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening.
           </div>
         </div>
@@ -531,10 +525,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-600">Naam ontvanger</label>
+          <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">Naam ontvanger</label>
           {ontvangers.length > 0 && (
             <button onClick={() => setToonOntvangers(true)}
-              className="text-xs text-blue-600 font-medium hover:underline">Kies opgeslagen</button>
+              className="text-sm font-semibold text-brand-700 hover:underline underline-offset-4">Kies opgeslagen</button>
           )}
         </div>
         <BeneficiaryAutocomplete
@@ -548,12 +542,12 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
         {/* Bewaar als favoriete ontvanger checkbox */}
         {ontvanger && iban && (
-          <label className="flex items-center gap-2 mt-2 cursor-pointer text-xs text-gray-600 select-none">
+          <label className="flex items-center gap-2 mt-2 cursor-pointer text-xs text-ink-2 select-none">
             <input
               type="checkbox"
               checked={!!bewaarAlsFavoriet}
               onChange={e => setBewaarAlsFavoriet?.(e.target.checked)}
-              className="h-4 w-4 accent-blue-600"
+              className="h-4 w-4 accent-brand-600"
             />
             <span>Bewaar als favoriete ontvanger</span>
           </label>
@@ -562,15 +556,15 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         {/* Familie label selector */}
         {ontvanger && (
           <div className="mt-3">
-            <p className="text-xs font-medium text-gray-500 mb-2">Wie is dit voor jou?</p>
+            <p className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">Wie is dit voor jou?</p>
             <div className="flex gap-1.5 flex-wrap">
               {FAMILIE_LABELS.map(l => (
                 <button key={l.id} type="button"
                   onClick={() => setOntvangerLabel?.(l.id === ontvangerLabel ? null : l.id)}
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition flex items-center gap-1 ${
                     l.id === ontvangerLabel
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-700'
+                      ? 'bg-brand-600 text-white'
+                      : 'bg-gray-100 text-ink-2 hover:bg-brand-100 hover:text-brand-700'
                   }`}>
                   <span>{l.label}</span>
                 </button>
@@ -582,20 +576,20 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 
       {/* Uitbetaal methode toggle: bank vs Papara */}
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-2">Hoe ontvangt {ontvanger || 'de ontvanger'} het geld?</label>
+        <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">Hoe ontvangt {ontvanger || 'de ontvanger'} het geld?</label>
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => setUitbetaalMethode('bank')}
-            className={`p-3 rounded-xl text-left transition-all active:scale-95 ${
+            className={`p-3 rounded-md text-left border transition-colors active:scale-[0.99] ${
               uitbetaalMethode === 'bank'
-                ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-brand-600 border-brand-600 text-white shadow-soft'
+                : 'bg-surface border-border text-ink-2 hover:bg-surface-3'
             }`}
           >
             <div className="flex items-center gap-2 mb-0.5">
               <Bank className="w-4 h-4" />
-              <span className="font-bold text-sm">Bankrekening</span>
+              <span className="font-semibold text-sm">Bankrekening</span>
             </div>
             <div className={`text-[10px] ${uitbetaalMethode === 'bank' ? 'text-blue-100' : 'text-gray-500'}`}>
               Garanti, İş Bankası, Ziraat...
@@ -604,18 +598,18 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           <button
             type="button"
             onClick={() => setUitbetaalMethode('papara')}
-            className={`p-3 rounded-xl text-left transition-all active:scale-95 relative ${
+            className={`p-3 rounded-md text-left border transition-colors active:scale-[0.99] relative ${
               uitbetaalMethode === 'papara'
-                ? 'bg-gradient-to-br from-purple-600 to-pink-600 text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-accent-500 border-accent-500 text-white shadow-soft'
+                : 'bg-surface border-border text-ink-2 hover:bg-surface-3'
             }`}
           >
             <span className="absolute top-1 right-1 text-[8px] bg-amber-400 text-amber-900 font-bold px-1 rounded">SOON</span>
             <div className="flex items-center gap-2 mb-0.5">
               <Wallet className="w-4 h-4" />
-              <span className="font-bold text-sm">Papara wallet</span>
+              <span className="font-semibold text-sm">Papara wallet</span>
             </div>
-            <div className={`text-[10px] ${uitbetaalMethode === 'papara' ? 'text-pink-100' : 'text-gray-500'}`}>
+            <div className={`text-[10px] ${uitbetaalMethode === 'papara' ? 'text-white/80' : 'text-gray-500'}`}>
               Instant · 18M users in TR
             </div>
           </button>
@@ -625,10 +619,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
       {uitbetaalMethode === 'bank' ? (
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">
               Bank van ontvanger
               {valutaInfo.landCode && LAND_INFO[valutaInfo.landCode] && (
-                <span className="text-gray-400 text-xs ml-1">
+                <span className="text-gray-400 ml-1 normal-case tracking-normal">
                   ({LAND_INFO[valutaInfo.landCode].naam})
                 </span>
               )}
@@ -636,7 +630,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             <select
               value={ontvangerBank}
               onChange={e => setOntvangerBank(e.target.value)}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 font-medium"
+              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 font-medium"
             >
               {(() => {
                 // Bepaal welk land op basis van gekozen valuta
@@ -661,15 +655,15 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             </p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">IBAN ontvanger</label>
+            <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">IBAN ontvanger</label>
             <input value={iban} onChange={e => setIban(e.target.value.toUpperCase().replace(/\s/g, ''))}
               placeholder="TR330006100519786457841326"
-              className={`w-full border-2 rounded-xl px-4 py-3 outline-none font-mono text-sm transition ${
-                !iban ? 'border-gray-200' :
-                ibanCheck?.geldig ? 'border-green-400 bg-green-50' : 'border-red-300 bg-red-50'
+              className={`w-full border rounded-md px-4 py-3 outline-none font-mono text-sm bg-surface transition focus:ring-2 focus:ring-brand-100 ${
+                !iban ? 'border-border focus:border-brand-500' :
+                ibanCheck?.geldig ? 'border-success-500 bg-success-50' : 'border-red-300 bg-red-50'
               }`} />
             {iban && ibanCheck && (
-              <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-green-600' : 'text-red-500'}`}>
+              <p className={`text-xs mt-1 ${ibanCheck.geldig ? 'text-success-700' : 'text-red-500'}`}>
                 {ibanCheck.geldig ? 'Geldig IBAN' : `${ibanCheck.fout}`}
               </p>
             )}
@@ -677,11 +671,11 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         </div>
       ) : (
         <div className="space-y-2">
-          <div className="bg-purple-50 border border-purple-200 rounded-xl p-2.5 text-[11px] text-purple-800 flex items-start gap-1.5">
+          <div className="bg-amber-50 border border-amber-200 rounded-md p-2.5 text-[11px] text-amber-800 flex items-start gap-1.5">
             <AlertTriangle className="w-4 h-4 flex-shrink-0" />
             <span><strong>Coming soon:</strong> Papara wallet uitbetaling is in ontwikkeling (live verwacht Q3 2026). Voor nu kun je het bestellen — wij betalen handmatig uit zodra je transactie gelukt is.</span>
           </div>
-          <label className="block text-sm font-medium text-gray-600">Hoe wil je sturen?</label>
+          <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">Hoe wil je sturen?</label>
           <div className="grid grid-cols-3 gap-1.5">
             {[
               { type: 'papara_nummer', label: 'Papara #', placeholder: 'PL1234567890' },
@@ -692,10 +686,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
                 key={opt.type}
                 type="button"
                 onClick={() => setPaparaIdentifierType(opt.type)}
-                className={`py-2 rounded-lg text-xs font-bold transition ${
+                className={`py-2 rounded-md text-xs font-semibold transition ${
                   paparaIdentifierType === opt.type
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gray-100 text-gray-600'
+                    ? 'bg-accent-500 text-white'
+                    : 'bg-gray-100 text-ink-2'
                 }`}
               >
                 {opt.label}
@@ -710,14 +704,14 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               paparaIdentifierType === 'telefoon' ? '+905XX1234567' :
               'naam@example.com'
             }
-            className="w-full border-2 border-purple-300 rounded-xl px-4 py-3 outline-none font-mono text-sm focus:border-purple-500"
+            className="w-full border border-border rounded-md px-4 py-3 outline-none font-mono text-sm bg-surface focus:border-accent-500 focus:ring-2 focus:ring-brand-100"
           />
         </div>
       )}
 
       <button onClick={onVolgende}
         disabled={!kanVolgende}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition">
+        className="btn-inst w-full py-4 disabled:bg-gray-300 disabled:cursor-not-allowed">
         Betaalmethode kiezen →
       </button>
 
@@ -738,31 +732,31 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 // ── Stap 1: Betaalmethode ─────────────────────────────────────────────────────
 function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
   return (
-    <div className="bg-white rounded-2xl shadow-soft p-6 space-y-5">
-      <h2 className="text-xl font-semibold text-gray-900">Kies betaalmethode</h2>
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5">
+      <h2 className="font-display text-xl font-medium text-ink-1">Kies betaalmethode</h2>
       <div className="space-y-2.5">
         {BETAALMETHODEN.map(m => {
           const selected = methode === m.id;
           const disabled = m.disabled;
           return (
             <label key={m.id}
-              className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-colors ${
-                disabled ? 'border border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
-                : selected ? 'border-2 border-brand-500 bg-brand-50'
-                : 'border border-gray-200 hover:border-gray-300 hover:bg-gray-50 bg-white'
+              className={`flex items-center gap-4 p-4 rounded-md cursor-pointer transition-colors ${
+                disabled ? 'border border-border bg-surface-2 opacity-50 cursor-not-allowed'
+                : selected ? 'border border-brand-500 bg-brand-50'
+                : 'border border-border hover:border-gray-300 hover:bg-surface-3 bg-surface'
               }`}>
               <input type="radio" name="methode" value={m.id}
                 checked={selected} disabled={disabled}
                 onChange={() => !disabled && setMethode(m.id)} className="sr-only" />
-              <div className={`w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                selected ? 'bg-brand-600 text-white' : 'bg-gray-100 text-gray-600'
+              <div className={`w-11 h-11 rounded-md flex items-center justify-center flex-shrink-0 ${
+                selected ? 'bg-brand-600 text-white' : 'bg-gray-100 text-ink-2'
               }`}>
                 {m.iconType === 'vlag'
                   ? <Vlag land={m.land} size={22} decorative />
                   : <m.Icon className="w-5 h-5" />}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-gray-900">{m.label}</div>
+                <div className="font-semibold text-ink-1">{m.label}</div>
                 <div className="text-sm text-gray-500 truncate">{m.desc}</div>
                 <div className="text-xs text-gray-400 mt-0.5">{m.sub}</div>
               </div>
@@ -776,8 +770,8 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
       </div>
 
       {methode === 'sepa' && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-700 space-y-1">
-          <p className="font-bold">Maak over naar SwiftBridge:</p>
+        <div className="bg-amber-50 border border-amber-200 rounded-md p-4 text-sm text-amber-700 space-y-1">
+          <p className="font-semibold">Maak over naar SwiftBridge:</p>
           <p className="font-mono text-xs">IBAN: NL12SWFT0000000001</p>
           <p className="font-mono text-xs">BIC: SWFTNL2A</p>
           <p className="text-xs text-amber-600 mt-1">Vermeld je e-mailadres als omschrijving.</p>
@@ -785,9 +779,9 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
       )}
 
       <div className="flex gap-3">
-        <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition">← Terug</button>
+        <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 font-semibold py-3 hover:bg-surface-3 transition">← Terug</button>
         <button onClick={onVolgende} disabled={!methode}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl transition">Controleren →</button>
+          className="flex-1 btn-inst py-3 disabled:bg-gray-300">Controleren →</button>
       </div>
     </div>
   );
@@ -804,9 +798,9 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
   const kosten = berekenKosten(bedragNum, methode || 'ideal', 'express', effectieveKoers);
 
   return (
-    <div className="card-glass p-6 space-y-5 animate-fade-up">
-      <h2 className="text-xl font-bold text-gray-800 tracking-tight">Bevestig overmaken</h2>
-      <div className="bg-gray-50 rounded-xl p-4 space-y-3">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5 animate-fade-up">
+      <h2 className="font-display text-xl font-medium text-ink-1">Bevestig overmaken</h2>
+      <div className="bg-surface-2 border border-border-subtle rounded-md p-4 space-y-3">
         {[
           ['Van', `€${bedragNum.toFixed(2)}`],
           ['Betaalmethode', methodeObj?.label || methode],
@@ -822,7 +816,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
             <span className="text-gray-500 text-sm">{label}</span>
-            <span className="font-semibold text-gray-800 text-sm text-right">{value}</span>
+            <span className="font-semibold tabular-nums text-ink-1 text-sm text-right">{value}</span>
           </div>
         ))}
       </div>
@@ -831,7 +825,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
         <div
           role="alert"
           aria-live="assertive"
-          className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm space-y-2"
+          className="bg-red-50 border border-red-200 rounded-md p-3 text-red-600 text-sm space-y-2"
         >
           <div>{fout}</div>
           {emailNietGeverifieerd && (
@@ -850,9 +844,9 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
                 <div
                   role="status"
                   aria-live="polite"
-                  className={`text-xs rounded-lg px-2 py-1.5 border ${
+                  className={`text-xs rounded-md px-2 py-1.5 border ${
                     resendOk
-                      ? 'text-green-700 bg-green-50 border-green-200'
+                      ? 'text-success-700 bg-success-50 border-success-100'
                       : 'text-red-700 bg-red-50 border-red-200'
                   }`}
                 >
@@ -867,8 +861,8 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
 
       {/* VVV — optionele notitie voor eigen administratie */}
       {setNotitie && (
-        <div className="rounded-xl bg-gray-50 border border-gray-200 p-3">
-          <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+        <div className="rounded-md bg-surface-2 border border-border p-3">
+          <label className="block text-xs font-semibold text-ink-2 mb-1.5">
             Persoonlijke notitie <span className="text-gray-400 font-normal">(optioneel, alleen voor jou zichtbaar)</span>
           </label>
           <input
@@ -877,7 +871,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
             onChange={(e) => setNotitie(e.target.value.slice(0, 200))}
             placeholder="Bv. 'Verjaardag Moeder' of 'Huur juni'"
             maxLength={200}
-            className="w-full text-sm border border-gray-200 bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full text-sm border border-border bg-surface rounded-md px-3 py-2 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
           />
           <div className="text-[10px] text-gray-400 text-right mt-1">{(notitie || '').length}/200</div>
         </div>
@@ -885,13 +879,13 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
 
       <p className="text-xs text-gray-400 text-center">
         Door te bevestigen ga je akkoord met onze{' '}
-        <a href="/algemene-voorwaarden" target="_blank" className="text-blue-500 hover:underline">Algemene Voorwaarden</a>.
+        <a href="/algemene-voorwaarden" target="_blank" className="text-brand-700 font-semibold hover:underline underline-offset-4">Algemene Voorwaarden</a>.
       </p>
 
       <div className="flex gap-3">
-        <button onClick={onTerug} className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition">← Terug</button>
+        <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 font-semibold py-3 hover:bg-surface-3 transition">← Terug</button>
         <button onClick={onVerstuur} disabled={laden}
-          className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl transition">
+          className="flex-1 bg-success-600 hover:bg-success-700 disabled:bg-gray-300 text-white font-semibold py-3 rounded-md transition">
           {laden ? 'Verwerken...' : 'Bevestigen & betalen'}
         </button>
       </div>
@@ -948,7 +942,7 @@ function PushOptInCard({ token }) {
   if (verborgen) return null;
   if (resultaat === 'ok') {
     return (
-      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-700 flex items-center gap-2">
+      <div className="bg-success-50 border border-success-100 rounded-md p-3 text-sm text-success-700 flex items-center gap-2">
         <Check className="w-4 h-4 flex-shrink-0" />
         Notificaties aangezet — je krijgt bericht bij aankomst.
       </div>
@@ -956,12 +950,12 @@ function PushOptInCard({ token }) {
   }
 
   return (
-    <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-left">
+    <div className="bg-brand-50 border border-brand-200 rounded-md p-4 text-left">
       <div className="flex items-start gap-3">
-        <Bell className="w-6 h-6 text-blue-600 flex-shrink-0" />
+        <Bell className="w-6 h-6 text-brand-600 flex-shrink-0" />
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-blue-900 text-sm">Krijg bericht bij aankomst?</p>
-          <p className="text-xs text-blue-800 mt-0.5">
+          <p className="font-display font-medium text-brand-900 text-sm">Krijg bericht bij aankomst?</p>
+          <p className="text-xs text-brand-800 mt-0.5">
             We sturen één korte notificatie wanneer het geld is aangekomen op de Turkse rekening.
           </p>
         </div>
@@ -970,13 +964,13 @@ function PushOptInCard({ token }) {
         <button
           onClick={jaActiveer}
           disabled={bezig}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold py-2 rounded-lg transition"
+          className="flex-1 bg-brand-600 hover:bg-brand-700 disabled:opacity-50 text-white text-xs font-semibold py-2 rounded-md transition"
         >
           {bezig ? 'Bezig…' : 'Ja, graag'}
         </button>
         <button
           onClick={neeBedankt}
-          className="text-xs font-semibold text-gray-600 hover:text-gray-800 px-3 py-2"
+          className="text-xs font-semibold text-ink-2 hover:text-ink-1 px-3 py-2"
         >
           Nee, dank je
         </button>
@@ -1029,35 +1023,35 @@ function TrackingShareCard({ trackingToken }) {
   }
 
   return (
-    <div className="bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-left space-y-3">
+    <div className="bg-brand-50 border border-brand-200 rounded-md p-4 text-left space-y-3">
       <div className="flex items-start gap-3">
-        <Send className="w-6 h-6 text-indigo-600 flex-shrink-0" />
+        <Send className="w-6 h-6 text-brand-600 flex-shrink-0" />
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-indigo-900 text-sm">Deel tracking-link met ontvanger</p>
-          <p className="text-xs text-indigo-800 mt-0.5">
+          <p className="font-display font-medium text-brand-900 text-sm">Deel tracking-link met ontvanger</p>
+          <p className="text-xs text-brand-800 mt-0.5">
             Ze kunnen status volgen zonder account — geen persoonsgegevens zichtbaar.
           </p>
         </div>
       </div>
-      <div className="bg-white rounded-lg px-3 py-2 text-xs font-mono text-gray-700 truncate">
+      <div className="bg-surface border border-border-subtle rounded-md px-3 py-2 text-xs font-mono text-ink-2 truncate">
         {trackUrl}
       </div>
       <div className="grid grid-cols-3 gap-2">
         <button
           onClick={kopieer}
-          className="text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg py-2.5 transition"
+          className="text-xs font-semibold text-ink-2 bg-gray-100 hover:bg-gray-200 rounded-md py-2.5 transition"
         >
           {gekopieerd ? 'Gekopieerd' : 'Kopieer'}
         </button>
         <button
           onClick={deelWhatsApp}
-          className="text-xs font-bold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-lg py-2.5 transition"
+          className="text-xs font-semibold text-white bg-[#25D366] hover:bg-[#1ebe57] rounded-md py-2.5 transition"
         >
           WhatsApp
         </button>
         <button
           onClick={deelNative}
-          className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg py-2.5 transition"
+          className="text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-md py-2.5 transition"
         >
           Delen
         </button>
@@ -1073,23 +1067,17 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
   const valutaInfo = getValuta(valuta);
   const ontvangenBedrag = transactie?.ontvangenBedrag ?? transactie?.tryBedrag ?? 0;
   return (
-    <div className="card-glass p-6 text-center space-y-5 animate-fade-up">
-      <div className="w-16 h-16 mx-auto bg-emerald-100 rounded-full flex items-center justify-center">
-        <Sparkles className="w-8 h-8 text-emerald-600" />
+    <div className="bg-surface border border-border rounded-md shadow-soft p-6 text-center space-y-5 animate-fade-up">
+      <div className="w-16 h-16 mx-auto bg-success-100 rounded-full flex items-center justify-center">
+        <Sparkles className="w-8 h-8 text-success-600" />
       </div>
-      <h2 className="text-2xl font-bold text-emerald-600 tracking-tight">Geld onderweg!</h2>
-      <p className="text-gray-500 text-sm">
+      <h2 className="font-display text-2xl font-medium text-success-700">Geld onderweg!</h2>
+      <p className="text-ink-2 text-sm">
         {methode === 'ideal'
           ? `Je iDEAL betaling is verwerkt. Het geld is binnen 5 minuten op de rekening in ${valutaInfo.land}.`
           : `Je SEPA overboeking is geregistreerd. Na ontvangst sturen we het geld door naar ${valutaInfo.land}.`}
       </p>
-      <div
-        className="rounded-xl p-4 space-y-2 text-left"
-        style={{
-          background: 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05))',
-          border: '1px solid rgba(16,185,129,0.25)',
-        }}
-      >
+      <div className="rounded-md p-4 space-y-2 text-left bg-success-50 border border-success-100">
         {[
           ['Verstuurd', `€${transactie?.eurBedrag?.toFixed(2)}`],
           ['Ontvanger krijgt', formatBedrag(ontvangenBedrag, valuta)],
@@ -1098,7 +1086,7 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between text-sm">
             <span className="text-gray-500">{label}</span>
-            <span className="font-bold text-gray-800 font-mono">{value}</span>
+            <span className="font-semibold text-ink-1 font-mono tabular-nums">{value}</span>
           </div>
         ))}
       </div>
@@ -1114,7 +1102,7 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
       {/* Push opt-in (Verbetering NN) — alleen tonen als browser ondersteunt en niet al beslist */}
       <PushOptInCard token={token} />
 
-      <button onClick={onNieuw} className="btn-primary w-full py-3">
+      <button onClick={onNieuw} className="btn-inst w-full py-3">
         Nieuwe overschrijving
       </button>
     </div>
@@ -1449,17 +1437,17 @@ export default function PaymentFlow({ token }) {
       <div className="flex items-center justify-center mb-6">
         {STAPPEN.map((s, i) => (
           <div key={i} className="flex items-center">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition ${
-              i < stap ? 'bg-blue-600 text-white' :
-              i === stap ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-500' :
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold tabular-nums transition ${
+              i < stap ? 'bg-brand-600 text-white' :
+              i === stap ? 'bg-brand-100 text-brand-700 ring-2 ring-brand-500' :
                            'bg-gray-100 text-gray-400'}`}>
               {i < stap ? <Check className="w-4 h-4" /> : i + 1}
             </div>
-            <span className={`mx-1 text-xs font-medium hidden sm:block ${i <= stap ? 'text-blue-600' : 'text-gray-400'}`}>
+            <span className={`mx-1 text-[0.7rem] font-medium uppercase tracking-[0.15em] hidden sm:block ${i <= stap ? 'text-brand-700' : 'text-gray-400'}`}>
               {s}
             </span>
             {i < STAPPEN.length - 1 && (
-              <div className={`w-5 h-0.5 mx-1 ${i < stap ? 'bg-blue-600' : 'bg-gray-200'}`} />
+              <div className={`w-5 h-0.5 mx-1 ${i < stap ? 'bg-brand-600' : 'bg-gray-200'}`} />
             )}
           </div>
         ))}

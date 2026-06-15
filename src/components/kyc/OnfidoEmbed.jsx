@@ -144,8 +144,8 @@ export default function OnfidoEmbed({ sdkToken, taal = 'nl', onComplete, onError
 
   if (status === 'fout') {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-2xl p-5 text-sm text-red-700 space-y-3">
-        <p className="font-bold">Verificatie kan nu niet starten</p>
+      <div className="bg-red-50 border border-red-200 rounded-md p-5 text-sm text-red-700 space-y-3">
+        <p className="font-display font-medium">Verificatie kan nu niet starten</p>
         <p>{foutMsg}</p>
         <p className="text-xs text-red-500">
           Je documenten zijn wel bij ons aangekomen. Een medewerker controleert ze handmatig
@@ -155,7 +155,7 @@ export default function OnfidoEmbed({ sdkToken, taal = 'nl', onComplete, onError
           <button
             type="button"
             onClick={onAnnuleer}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-xl text-sm"
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md text-sm"
           >
             ← Terug
           </button>
@@ -165,7 +165,7 @@ export default function OnfidoEmbed({ sdkToken, taal = 'nl', onComplete, onError
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow p-4 space-y-3">
+    <div className="bg-surface border border-border rounded-md shadow-soft p-4 space-y-3">
       {status === 'loading' && (
         <div className="text-center py-8 text-gray-500 text-sm">
           <div className="mb-2"><Refresh className="w-8 h-8 mx-auto text-gray-400 animate-spin" /></div>
