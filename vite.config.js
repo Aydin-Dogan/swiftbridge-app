@@ -73,7 +73,7 @@ export default defineConfig({
             purpose: 'any',
           },
           {
-            src: 'icon-192.png',
+            src: 'maskable-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'maskable',
@@ -85,7 +85,7 @@ export default defineConfig({
             purpose: 'any',
           },
           {
-            src: 'icon-512.png',
+            src: 'maskable-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
