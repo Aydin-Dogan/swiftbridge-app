@@ -10,6 +10,14 @@ import { registerRoute, NavigationRoute } from 'workbox-routing';
 import { NetworkFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 
+// ── Directe overname bij update ─────────────────────────────────────────────
+// Bij injectManifest moet je dit ZELF doen (autoUpdate regelt het alleen voor
+// generateSW). Zonder dit blijft de oude SW de oude pagina serveren tot ALLE
+// tabs dicht zijn — bezoekers zien dan de oude versie. Met skipWaiting +
+// clients.claim neemt de nieuwe SW meteen over bij de volgende load.
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()));
+
 // ── Precaching (door Vite ingevoegd) ────────────────────────────────────────
 precacheAndRoute(self.__WB_MANIFEST || []);
 cleanupOutdatedCaches();
