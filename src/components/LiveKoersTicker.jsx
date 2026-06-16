@@ -84,8 +84,11 @@ export default function LiveKoersTicker() {
 
       <style>{`
         .ticker-scroll {
-          animation: ticker 45s linear infinite;
+          animation: ticker 120s linear infinite;
           width: max-content;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ticker-scroll { animation-duration: 240s; }
         }
         .ticker-scroll:hover {
           animation-play-state: paused;
