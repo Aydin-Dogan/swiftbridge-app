@@ -14,14 +14,17 @@ import { ExpirationPlugin } from 'workbox-expiration';
 precacheAndRoute(self.__WB_MANIFEST || []);
 cleanupOutdatedCaches();
 
-// SPA fallback: alle navigatie → index.html
+// SPA fallback: alle navigatie → index.html (React-app), BEHALVE de premium
+// marketing-landing (/ , /particulier , /zakelijk). Die worden door de server
+// als statische HTML geserveerd — de service-worker mag ze NIET onderscheppen,
+// anders krijgt de bezoeker de gecachte React-app i.p.v. de premium landing.
 const navigationRoute = new NavigationRoute(
   async () => {
     const cache = await caches.open('workbox-precache');
     const response = await cache.match('/index.html');
     return response || fetch('/index.html');
   },
-  { denylist: [/^\/api/, /^\/sw\.js/] }
+  { denylist: [/^\/api/, /^\/sw\.js/, /^\/$/, /^\/particulier\/?$/, /^\/zakelijk\/?$/] }
 );
 registerRoute(navigationRoute);
 
