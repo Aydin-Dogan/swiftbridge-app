@@ -57,7 +57,7 @@ export default defineConfig({
         name: 'SwiftBridge',
         short_name: 'SwiftBridge',
         description: 'Geld overmaken van Nederland naar Turkije in minder dan 5 minuten.',
-        theme_color: '#2563EB',
+        theme_color: '#1B3252',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
