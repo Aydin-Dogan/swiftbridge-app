@@ -430,26 +430,43 @@ function ReferralRedirect() {
 // downstream fetch calls sturen straks gewoon `credentials: 'include'`.
 const TOKEN_SENTINEL = 'cookie';
 
-// PATCH-3 — Gevoelige client-side storage die bij logout/401 gewist moet worden.
-// Voorkomt dat na uitloggen IBAN-keys, tx-drafts en user-cache achterblijven
-// in localStorage (privacy + AVG art. 32 verantwoording).
+// PATCH-3 + SEC-FIX — Gevoelige client-side storage die bij logout/401 gewist
+// moet worden. Voorkomt dat na uitloggen ontvanger-IBANs, tx-data en user-cache
+// achterblijven in localStorage (privacy + AVG art. 32).
+// FIX: hier stonden eerder de JS-variabelenamen 'ONTV_KEY'/'TX_KEY' i.p.v. de
+// ECHTE localStorage-keys ('swiftbridge_ontvangers'/'_transacties'), waardoor
+// localStorage.removeItem niets verwijderde en PII bleef staan op het apparaat.
 const GEVOELIGE_STORAGE_KEYS = [
-  'ONTV_KEY', // F50 — ontvanger-key (e2e crypto)
-  'TX_KEY', // F50 — transactie-key
-  'sb_user', // gecachede gebruikersdata
-  'sb_prefs', // gebruikersvoorkeuren
-  'sb_token', // legacy — voor de zekerheid
-  'sb_refresh', // legacy
-  'sb_gebruiker', // legacy
-  'payment_draft', // F42 — draft tx data
-  'favoriete_valutas_cache', // KKK — kan PII reveal als per-user
+  'swiftbridge_ontvangers',    // begunstigden (naam + IBAN)
+  'swiftbridge_transacties',   // transactie-cache (bedragen)
+  'swiftbridge_repeat_tx',     // "stuur opnieuw" hand-off (naam + IBAN + bedrag)
+  'swiftbridge_payment_draft', // F42 — concept-transactie
+  'sb_chat_history',           // support-chat (vrije tekst, kan PII bevatten)
+  'sb_user',                   // gecachede gebruikersdata
+  'sb_prefs',                  // gebruikersvoorkeuren
+  'sb_token',                  // legacy — voor de zekerheid
+  'sb_refresh',                // legacy
+  'sb_gebruiker',              // legacy
+  'favoriete_valutas_cache',   // KKK — kan PII reveal als per-user
 ];
+
+// Defensieve sweep: elke (ook toekomstige) key met een PII-data-patroon wordt
+// gewist, zodat een nieuwe key nooit meer per ongeluk blijft staan. Neutrale
+// UI-keys (taal/thema/consent/bezoek-teller/install-dismissal) matchen niet.
+const STORAGE_PII_PATROON = /(ontvanger|transactie|repeat_tx|payment_draft|begunstigde|iban|chat_history)/i;
 
 function wisGevoeligeStorage() {
   try {
     GEVOELIGE_STORAGE_KEYS.forEach((key) => {
       try { localStorage.removeItem(key); } catch { /* quota of disabled */ }
     });
+    try {
+      Object.keys(localStorage).forEach((key) => {
+        if (STORAGE_PII_PATROON.test(key)) {
+          try { localStorage.removeItem(key); } catch { /* ignore */ }
+        }
+      });
+    } catch { /* enumeratie kan falen in private mode */ }
     try { sessionStorage.clear(); } catch { /* idem */ }
   } catch { /* alle storage failure best-effort */ }
 }

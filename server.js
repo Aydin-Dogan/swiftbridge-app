@@ -43,19 +43,31 @@ const server = http.createServer((req, res) => {
   // Normaliseer trailing slash (bv. /zakelijk/ → /zakelijk)
   const routeKey = urlPath !== '/' ? urlPath.replace(/\/+$/, '') : urlPath;
 
-  // Security: prevent path traversal
-  const safePath = path.normalize(urlPath).replace(/^(\.\.[/\\])+/, '');
-  let filePath = path.join(DIST, safePath);
+  // Security: prevent path traversal — decode, normaliseer en verifieer dat het
+  // uiteindelijke pad BINNEN DIST blijft (robuuster dan een regex op '../').
+  let decodedPath;
+  try { decodedPath = decodeURIComponent(urlPath); }
+  catch { decodedPath = urlPath; } // malformed %-escape → val terug op raw
+  let filePath = path.join(DIST, path.normalize(decodedPath));
+  let isLandingHtml = false;
 
   // Premium landing-routes → serveer de marketing-HTML.
   if (LANDING_ROUTES[routeKey]) {
-    const landingFile = path.join(DIST, LANDING_ROUTES[routeKey]);
-    if (fs.existsSync(landingFile)) {
-      filePath = landingFile;
+    filePath = path.join(DIST, LANDING_ROUTES[routeKey]);
+    isLandingHtml = fs.existsSync(filePath);
+    if (!isLandingHtml) filePath = path.join(DIST, 'index.html');
+  } else {
+    // Hard containment-check: nooit een bestand buiten DIST serveren.
+    const resolved = path.resolve(filePath);
+    if (resolved !== DIST && !resolved.startsWith(DIST + path.sep)) {
+      res.writeHead(403);
+      res.end('Forbidden');
+      return;
     }
-  } else if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     // SPA fallback: bestanden die niet bestaan → index.html (React-app)
-    filePath = path.join(DIST, 'index.html');
+    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+      filePath = path.join(DIST, 'index.html');
+    }
   }
 
   const ext = path.extname(filePath).toLowerCase();
@@ -80,6 +92,27 @@ const server = http.createServer((req, res) => {
   }
 
   res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  // ── Security headers (alle responses) ──────────────────────────────────────
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains');
+
+  // CSP alleen op de zelf-bevattende premium landing-HTML. De SPA (index.html)
+  // heeft een eigen <meta>-CSP; daar geen header bovenop om conflicten te mijden.
+  if (isLandingHtml) {
+    res.setHeader('Content-Security-Policy', [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data:",
+      "connect-src 'self' https://api.swiftbridge.tr https://*.up.railway.app",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join('; '));
+  }
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
