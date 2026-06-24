@@ -168,6 +168,7 @@ export default function AdminPanel() {
   const [aanvragen, setAanvragen ] = useState([]);
   const [stats, setStats ] = useState(null);
   const [integriteit, setIntegriteit ] = useState(null);
+  const [payouts, setPayouts ] = useState([]); // H-1: vastgehouden uitbetalingen
   const [filter, setFilter ] = useState('in_behandeling');
   const [laden, setLaden ] = useState(true);
   const [fout, setFout ] = useState('');
@@ -176,12 +177,14 @@ export default function AdminPanel() {
     setLaden(true);
     setFout('');
     try {
-      const [kycRes, statsRes, integriteitRes] = await Promise.all([
+      const [kycRes, statsRes, integriteitRes, payoutsRes] = await Promise.all([
         fetch(`${API}/kyc/alle`, {
         credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
         fetch(`${API}/kyc/admin/stats`, {
         credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
         fetch(`${API}/kyc/admin/integriteit`, {
+        credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
+        fetch(`${API}/admin/payouts/pending`, {
         credentials: 'include', headers: { 'X-Admin-Secret': secret } }),
       ]);
 
@@ -196,6 +199,7 @@ export default function AdminPanel() {
       setAanvragen(kycData.aanvragen || []);
       setStats(statsData);
       setIntegriteit(integriteitData);
+      setPayouts(payoutsRes.ok ? ((await payoutsRes.json()).payouts || []) : []);
     } catch (e) {
       setFout(parseError(e, t));
     } finally {
@@ -273,6 +277,49 @@ export default function AdminPanel() {
             <StatKaart icoon={Euro} label={t('admin_stat_totaal_verstuurd') || 'Totaal verstuurd'}
               waarde={`€${((stats.transacties?.voltooid?.totaal || 0)).toLocaleString('nl-NL', { maximumFractionDigits: 0 })}`}
               kleur="text-ink-1" />
+          </div>
+        )}
+
+        {/* Vastgehouden uitbetalingen (externe review H-1) */}
+        {payouts.length > 0 && (
+          <div>
+            <h2 className="font-display text-lg font-medium text-ink-1 mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-accent-600" />
+              {t('admin_payouts_pending_titel') || 'Vastgehouden uitbetalingen'} ({payouts.length})
+            </h2>
+            <div className="bg-accent-400/10 border border-accent-400/30 rounded-md p-3 text-sm text-ink-2 mb-3">
+              {t('admin_payouts_pending_uitleg') || 'Betaald maar (nog) niet uitbetaald — er is geen echte payout-rail actief. Handmatige opvolging vereist.'}
+            </div>
+            <div className="overflow-x-auto bg-surface rounded-md border border-border shadow-soft">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-[0.7rem] uppercase tracking-[0.16em] text-gray-500 border-b border-border">
+                    <th className="px-3 py-2">Ref</th>
+                    <th className="px-3 py-2">{t('admin_payouts_ontvanger') || 'Ontvanger'}</th>
+                    <th className="px-3 py-2">{t('admin_payouts_methode') || 'Methode'}</th>
+                    <th className="px-3 py-2 text-right">{t('admin_payouts_bedrag') || 'Bedrag'}</th>
+                    <th className="px-3 py-2">{t('admin_payouts_aangemaakt') || 'Aangemaakt'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payouts.map(p => (
+                    <tr key={p.id} className="border-b border-border/50 last:border-0">
+                      <td className="px-3 py-2 font-mono text-xs">{p.referentieNr || String(p.id).slice(0, 8)}</td>
+                      <td className="px-3 py-2">
+                        <div className="font-medium text-ink-1">{p.ontvangerNaam || '—'}</div>
+                        <div className="text-xs text-ink-3">{p.uitbetaalReferentie || p.ontvangerBank || ''}</div>
+                      </td>
+                      <td className="px-3 py-2 capitalize">{p.uitbetaalMethode || '—'}</td>
+                      <td className="px-3 py-2 text-right tabular-nums">
+                        €{Number(p.eurBedrag).toLocaleString('nl-NL', { minimumFractionDigits: 2 })}
+                        <div className="text-xs text-ink-3">{p.valuta} {Math.round(p.tryBedrag).toLocaleString('nl-NL')}</div>
+                      </td>
+                      <td className="px-3 py-2 text-ink-2 whitespace-nowrap">{tijdGeleden(p.aangemaaktOp)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
