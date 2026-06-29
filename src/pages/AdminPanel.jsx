@@ -209,6 +209,29 @@ export default function AdminPanel() {
 
   useEffect(() => { laadData(); }, [laadData]);
 
+  // H-1: handmatige afhandeling van vastgehouden uitbetalingen.
+  async function payoutActie(id, actie) {
+    const labels = {
+      'handmatig-uitbetaald': t('admin_payout_actie_markeren') || 'als handmatig uitbetaald markeren',
+      'opnieuw': t('admin_payout_actie_opnieuw') || 'opnieuw inplannen',
+    };
+    if (!confirm(`${t('admin_payout_bevestig') || 'Weet je zeker dat je deze uitbetaling wilt'} ${labels[actie] || actie}?`)) return;
+    try {
+      const res = await fetch(`${API}/admin/payouts/${id}/${actie}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'X-Admin-Secret': secret },
+      });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw Object.assign(new Error(d.error || 'Fout'), { errorCode: d.errorCode, data: d });
+      }
+      laadData();
+    } catch (e) {
+      alert('Fout: ' + parseError(e, t));
+    }
+  }
+
   const gefilterd = aanvragen.filter(a => filter === 'alle' ? true : a.status === filter);
 
   if (!secret) {
@@ -299,6 +322,7 @@ export default function AdminPanel() {
                     <th className="px-3 py-2">{t('admin_payouts_methode') || 'Methode'}</th>
                     <th className="px-3 py-2 text-right">{t('admin_payouts_bedrag') || 'Bedrag'}</th>
                     <th className="px-3 py-2">{t('admin_payouts_aangemaakt') || 'Aangemaakt'}</th>
+                    <th className="px-3 py-2 text-right">{t('admin_payouts_actie') || 'Actie'}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -315,6 +339,18 @@ export default function AdminPanel() {
                         <div className="text-xs text-ink-3">{p.valuta} {Math.round(p.tryBedrag).toLocaleString('nl-NL')}</div>
                       </td>
                       <td className="px-3 py-2 text-ink-2 whitespace-nowrap">{tijdGeleden(p.aangemaaktOp)}</td>
+                      <td className="px-3 py-2 text-right whitespace-nowrap">
+                        <button
+                          onClick={() => payoutActie(p.id, 'handmatig-uitbetaald')}
+                          className="text-[0.7rem] font-medium uppercase tracking-[0.14em] bg-success-600 hover:bg-success-700 text-white px-2.5 py-1.5 rounded-md transition">
+                          {t('admin_payout_btn_uitbetaald') || 'Uitbetaald'}
+                        </button>
+                        <button
+                          onClick={() => payoutActie(p.id, 'opnieuw')}
+                          className="ml-1.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] bg-surface-3 hover:bg-surface-2 text-ink-2 px-2.5 py-1.5 rounded-md transition">
+                          {t('admin_payout_btn_opnieuw') || 'Opnieuw'}
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
