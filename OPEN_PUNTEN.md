@@ -6,6 +6,16 @@
 
 ---
 
+## 🟢 ACTUELE STAND — 1 juli 2026 (dit blok is leidend; de tekst hieronder is historie)
+
+**Sinds 26 mei is er veel afgerond.** De "deferred" lijst hieronder klopt grotendeels niet meer:
+- ✅ **Afgerond:** SS (e-mailwijziging), EE (brand-tokens), UU (dark mode), FFF (admin i18n), MMM (valuta-favorieten), **QQ (Mollie SEPA-mandaat — backend + frontend)**, frontend-tests, **PostgreSQL live**, boot-guards (TWOFA_ENC + webhook-secret), PIN-lock, volledige bancaire restyle, wereldwijde valuta's, resilience/circuit-breakers, en 6 security-fix-batches (KRITIEK/HOOG/MIDDEL/LAAG allemaal dicht) + betaal-/payout-reconciliatie. Backend-suite: **31 suites / 319 tests groen**.
+- 🔧 **Nog open in code (gepland, geen externe afhankelijkheid):** **fx_history** (KoersSparkline draait nog op nep-data — risico #4 hieronder + `KoersSparkline.jsx` TODO), OpenAPI-spec, A11y-pass, CHANGELOG, Playwright-E2E. FF (SSE) blijft bewust uitgesteld (polling volstaat).
+- ⛔ **Geblokkeerd op partners/credentials:** payout-rail (TerraPay/Papara/Wise), KYC-live-provider, iDIN/Buckaroo.
+- ⏳ **Jouw externe/config-acties:** Railway compute-quota verhogen (api ligt nu plat), Mollie **live-key** + webhook-URL, Resend-domein, EMI-partner-contract, BV/KvK (notaris), Wwft-jurist, DNS (Stefan), privacy/AV juridische check, Sentry, launch-prep. **Open besluit:** FX-marge op landing tonen of verbergen (staat op verbergen).
+
+---
+
 ## 🔴 KRITIEK — moet vóór go-live afgerond
 
 ### 1. DNS-overdracht swiftbridge.tr / .nl / .com.tr

@@ -1,61 +1,52 @@
 /**
- * KoersSparkline.jsx — mini chart EUR→TRY laatste 7 dagen.
+ * KoersSparkline.jsx — mini chart EUR→valuta laatste 7 dagen.
  *
- * Verbetering X — bouwt vertrouwen op de Hero: "de koers ging recent omhoog,
- * goed moment om te sturen". Visueel signaal zonder grote chart-library.
+ * Verbetering X — bouwt vertrouwen op de Hero: "de koers ging recent omhoog".
  *
- * Data-bron: TODO — momenteel gegenereerd uit huidige koers via deterministische
- * random-walk (zelfde input → zelfde curve, geen flicker). Wanneer backend
- * /fx/historie endpoint bestaat, vervangen door fetch.
+ * Data-bron: ECHTE historie via GET /transactions/historie (dagelijkse
+ * mid-market snapshots in de backend; zelfde rauwe koers als /koersen, geen
+ * FX-marge). Vervangt de vroegere deterministische nep-walk.
  *
- * Het visuele effect is hetzelfde: bewegende lijn met dot op vandaag,
- * delta-% labeling. De curve is plausibel (±0.5% per dag), niet absurd.
+ * Eerlijkheid: zolang er nog geen (≥2 dagen) echte historie is, tonen we BEWUST
+ * niets (return null) i.p.v. een verzonnen curve. De backend backfilt TRY +
+ * EUR-zone via frankfurter, dus de hoofd-corridor heeft meteen data; nieuwe
+ * corridors vullen zich via de dagelijkse snapshot.
+ *
+ * NB: dit component is momenteel niet in de premium Hero gemount (orphaned na
+ * de FASE 3-restyle). Het is klaar voor (her)gebruik zodra gewenst.
  */
-import { useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTaal } from '../../i18n';
+import { API_URL } from '../../services/api';
 
-// Deterministische pseudo-random op basis van seed — geen Math.random()
-// want dan zou de curve flickeren bij elke render.
-function seededWalk(seed, steps, amplitude = 0.005) {
-  let s = seed;
-  const next = () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280; // 0..1
-  };
-  const punten = [];
-  let waarde = 0;
-  for (let i = 0; i < steps; i++) {
-    waarde += (next() - 0.5) * amplitude * 2;
-    punten.push(waarde);
-  }
-  return punten;
-}
-
-export default function KoersSparkline({ huidigeKoers, valuta = 'TRY', label }) {
+export default function KoersSparkline({ valuta = 'TRY', label }) {
   const { t } = useTaal();
+  const [koersen, setKoersen] = useState(null); // null = laden · [] = geen data
 
-  const { punten, vanaf, naar, delta, deltaPct, omhoog } = useMemo(() => {
-    if (!huidigeKoers) return { punten: [], vanaf: 0, naar: 0, delta: 0, deltaPct: 0, omhoog: false };
-    // Seed = afgeronde koers × 1000 → zelfde curve voor zelfde koers
-    const seed = Math.round(huidigeKoers * 1000);
-    const walk = seededWalk(seed, 7, 0.012);
-    // Schaal walk naar absolute koers-waardes rond huidige koers
-    // Laatste punt MOET huidige koers zijn — dus alignen
-    const laatste = walk[walk.length - 1];
-    const punten = walk.map((w) => huidigeKoers * (1 + w - laatste));
+  useEffect(() => {
+    let actief = true;
+    fetch(`${API_URL}/transactions/historie?valuta=${encodeURIComponent(valuta)}&dagen=7`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('http'))))
+      .then((d) => { if (actief) setKoersen((d.punten || []).map((p) => p.koers)); })
+      .catch(() => { if (actief) setKoersen([]); });
+    return () => { actief = false; };
+  }, [valuta]);
+
+  const stat = useMemo(() => {
+    if (!koersen || koersen.length < 2) return null;
+    const vanaf = koersen[0];
+    const naar = koersen[koersen.length - 1];
     return {
-      punten,
-      vanaf: punten[0],
-      naar: punten[punten.length - 1],
-      delta: punten[punten.length - 1] - punten[0],
-      deltaPct: ((punten[punten.length - 1] - punten[0]) / punten[0]) * 100,
-      omhoog: punten[punten.length - 1] >= punten[0],
+      punten: koersen,
+      deltaPct: vanaf ? ((naar - vanaf) / vanaf) * 100 : 0,
+      omhoog: naar >= vanaf,
     };
-  }, [huidigeKoers]);
+  }, [koersen]);
 
-  if (!punten.length) return null;
+  // Geen echte data (cold-start of API down) → bewust niets tonen, geen nep-curve.
+  if (!stat) return null;
 
-  // Bereken SVG path
+  const { punten, deltaPct, omhoog } = stat;
   const W = 100;
   const H = 28;
   const min = Math.min(...punten);
@@ -68,7 +59,6 @@ export default function KoersSparkline({ huidigeKoers, valuta = 'TRY', label }) 
       return `${i === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`;
     })
     .join(' ');
-  // Vul-pad voor onder de lijn
   const fillPath = `${path} L ${W} ${H} L 0 ${H} Z`;
 
   const kleur = omhoog ? '#10b981' /* emerald-500 */ : '#f97316' /* orange-500 */;
@@ -79,7 +69,6 @@ export default function KoersSparkline({ huidigeKoers, valuta = 'TRY', label }) 
       <svg width="100" height="28" viewBox={`0 0 ${W} ${H}`} aria-hidden="true">
         <path d={fillPath} fill={fillKleur} />
         <path d={path} fill="none" stroke={kleur} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
-        {/* Dot op laatste punt */}
         <circle
           cx={W}
           cy={H - ((punten[punten.length - 1] - min) / range) * H}
