@@ -758,6 +758,7 @@ export const az = {
  dashboard_recurring_subtitel_n:'{n} aktiv',
  recurring_pagina_titel:'Təkrarlanan köçürmələr',
  recurring_pagina_uitleg:'Mütəmadi köçürmələri planlayın — məs."hər ayın 1-də anaya €200". Avtomatik fonda işləyir.',
+ a11y_skip:'Məzmuna keç',
  recurring_knop_nieuw:'Yeni təkrarlanan köçürmə',
  recurring_incasso_titel:'Avtomatik tutulma',
  recurring_incasso_uitleg:'SEPA avtomatik ödəniş tapşırığı qurun ki, təkrarlanan köçürmələriniz avtomatik tutulsun — hər dəfə ödəniş etməyə ehtiyac qalmasın.',

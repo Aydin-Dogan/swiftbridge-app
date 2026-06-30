@@ -280,6 +280,8 @@ function AppShell({ gebruiker, token, onLogout }) {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      {/* A11y: skip-to-content (zichtbaar bij toetsenbord-focus) */}
+      <a href="#inhoud" className="skip-link">{t('a11y_skip')}</a>
       <LiveKoersTicker />
       <InstallBanner />
       {/* Header */}
@@ -360,7 +362,7 @@ function AppShell({ gebruiker, token, onLogout }) {
       </header>
 
       {/* Inhoud */}
-      <main className="max-w-2xl mx-auto px-4 py-5 pb-28">
+      <main id="inhoud" className="max-w-2xl mx-auto px-4 py-5 pb-28">
         <Suspense fallback={<LaadSpinner />}>
           {actief === 'dashboard' && <Dashboard gebruiker={gebruiker} />}
           {actief === 'betaling' && (

@@ -728,6 +728,7 @@ export const nl = {
  dashboard_recurring_subtitel_n:'{n} actief',
  recurring_pagina_titel:'Terugkerende overboekingen',
  recurring_pagina_uitleg:'Plan periodieke overboekingen zoals"elke 1e van de maand €200 naar mama". Loopt automatisch op de achtergrond.',
+ a11y_skip:'Naar de inhoud',
  recurring_knop_nieuw:'Nieuwe terugkerende overboeking',
  recurring_incasso_titel:'Automatische incasso',
  recurring_incasso_uitleg:'Stel een SEPA-incasso in zodat je terugkerende overboekingen vanzelf worden afgeschreven — dan hoef je niet elke keer zelf te betalen.',

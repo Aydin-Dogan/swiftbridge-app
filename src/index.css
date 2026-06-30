@@ -428,3 +428,44 @@ input, select, textarea {
   }
   .btn-inst-ondark:hover { background-color: #f59e0b; } /* accent-500 */
 }
+
+/* ── A11y-pass (E5) ────────────────────────────────────────────────────────
+ * Universele toegankelijkheids-verbeteringen, los van componenten.
+ */
+
+/* WCAG 2.4.7 — zichtbare toetsenbord-focus. :focus-visible toont de ring ALLEEN
+ * bij toetsenbord-navigatie (niet bij muisklik), dus geen visuele ruis voor
+ * muisgebruikers. Brand-blauw met offset zodat hij op elke achtergrond opvalt. */
+:focus-visible {
+  outline: 2px solid #2563eb;   /* brand-500 */
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.dark :focus-visible {
+  outline-color: #60a5fa;       /* lichter blauw op donkere achtergrond */
+}
+
+/* Skip-link: spring direct naar de hoofdinhoud. Visueel verborgen tot focus. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: #1B3252;
+  color: #fff;
+  border-radius: 6px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 0.5rem; }
+
+/* WCAG 2.3.3 — respecteer "verminder beweging". Schakelt de vele transitions/
+ * active:scale-animaties uit voor gebruikers die dat in hun OS hebben gezet. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -847,6 +847,7 @@ export const en = {
  dashboard_recurring_subtitel_n:'{n} active',
  recurring_pagina_titel:'Recurring transfers',
  recurring_pagina_uitleg:'Schedule recurring transfers like"€200 to mom every 1st of the month". Runs automatically in the background.',
+ a11y_skip:'Skip to content',
  recurring_knop_nieuw:'New recurring transfer',
  recurring_incasso_titel:'Automatic collection',
  recurring_incasso_uitleg:'Set up a SEPA direct debit so your recurring transfers are collected automatically — no need to pay each time.',

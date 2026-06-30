@@ -847,6 +847,7 @@ export const tr = {
  dashboard_recurring_subtitel_n:'{n} aktif',
  recurring_pagina_titel:'Tekrarlayan transferler',
  recurring_pagina_uitleg:'Düzenli transferleri planlayın — örneğin"her ayın 1\'inde anneye €200". Arka planda otomatik çalışır.',
+ a11y_skip:'İçeriğe geç',
  recurring_knop_nieuw:'Yeni tekrarlayan transfer',
  recurring_incasso_titel:'Otomatik tahsilat',
  recurring_incasso_uitleg:'SEPA otomatik ödeme talimatı kurun; tekrarlayan transferleriniz otomatik olarak tahsil edilsin — her seferinde ödeme yapmanıza gerek kalmaz.',
