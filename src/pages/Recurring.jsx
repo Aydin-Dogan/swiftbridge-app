@@ -35,6 +35,9 @@ export default function Recurring() {
   // met een nette modal die ESC-toets + click-outside ondersteunt.
   const [bevestig, setBevestig] = useState(null);
   // bevestig = { actie: 'uitvoer'|'verwijder', id, title, message, variant }
+  // Verbetering QQ: SEPA-mandaat-status voor automatische incasso.
+  const [mandaat, setMandaat] = useState(null); // { incassoBeschikbaar, heeftMandaat }
+  const [incassoBezig, setIncassoBezig] = useState(false);
 
   const laad = useCallback(async () => {
     setLaden(true);
@@ -42,12 +45,39 @@ export default function Recurring() {
     try {
       const d = await apiFetch('/recurring');
       setItems(d.recurring || []);
+      // Incasso-status best-effort ophalen — mag de pagina niet blokkeren.
+      try {
+        const m = await apiFetch('/recurring/mandaat/status');
+        setMandaat(m);
+      } catch { /* incasso-status niet kritiek */ }
     } catch (e) {
       setFout(parseError(e, t));
     } finally {
       setLaden(false);
     }
   }, [t]);
+
+  // Start de SEPA-mandaat-flow → Mollie-checkout. Gebruikt de eerste actieve
+  // schedule als basis voor de eerste incasso (de cron incasseert de rest).
+  async function stelIncassoIn() {
+    if (incassoBezig) return;
+    const doel = items.find(i => i.actief) || items[0];
+    if (!doel) return;
+    setIncassoBezig(true);
+    setFout('');
+    try {
+      const r = await apiFetch(`/recurring/${doel.id}/mandaat/start`, { method: 'POST' });
+      if (r?.checkoutUrl) {
+        window.location.href = r.checkoutUrl;   // door naar Mollie-checkout
+      } else {
+        await laad();
+        setIncassoBezig(false);
+      }
+    } catch (e) {
+      setFout(parseError(e, t) || t('recurring_incasso_fout'));
+      setIncassoBezig(false);
+    }
+  }
 
   useEffect(() => { laad(); }, [laad]);
 
@@ -161,6 +191,30 @@ export default function Recurring() {
         <div className="mb-4 bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">
           {fout}
         </div>
+      )}
+
+      {/* Verbetering QQ: automatische SEPA-incasso. Toont alleen wanneer incasso
+          beschikbaar is (live Mollie-modus). */}
+      {mandaat?.incassoBeschikbaar && (
+        mandaat.heeftMandaat ? (
+          <div className="mb-4 flex items-center gap-2 bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 text-sm">
+            <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
+            {t('recurring_incasso_actief')}
+          </div>
+        ) : items.length > 0 ? (
+          <div className="mb-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <h3 className="font-bold text-amber-900 text-sm">{t('recurring_incasso_titel')}</h3>
+            <p className="text-amber-800 text-sm mt-1 mb-3">{t('recurring_incasso_uitleg')}</p>
+            <button
+              type="button"
+              onClick={stelIncassoIn}
+              disabled={incassoBezig}
+              className="bg-amber-600 hover:bg-amber-700 disabled:opacity-60 text-white font-bold px-4 py-2.5 rounded-xl active:scale-95 transition text-sm"
+            >
+              {incassoBezig ? t('recurring_incasso_bezig') : t('recurring_incasso_knop')}
+            </button>
+          </div>
+        ) : null
       )}
 
       <button
