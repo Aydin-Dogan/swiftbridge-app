@@ -4,3 +4,8 @@ dist/
 .env.local
 *.log
 public/gen_*.py
+
+# Playwright (E7)
+/test-results/
+/playwright-report/
+/playwright/.cache/
