@@ -1873,13 +1873,19 @@ if ('IntersectionObserver' in window) {
 <script>
 (function(){
   'use strict';
-  var API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-    ? 'http://localhost:3000' : 'https://api.swiftbridge.tr';
-  try {
-    fetch(API + '/transactions/koersen', {
-      signal: (window.AbortSignal && AbortSignal.timeout) ? AbortSignal.timeout(8000) : undefined
+  var HOSTS = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? ['http://localhost:3000']
+    : ['https://api.swiftbridge.tr', 'https://swiftbridge-api-production.up.railway.app'];
+  function probeer(i) {
+    if (i >= HOSTS.length) return Promise.resolve(null);
+    return fetch(HOSTS[i] + '/transactions/koersen', {
+      signal: (window.AbortSignal && AbortSignal.timeout) ? AbortSignal.timeout(6000) : undefined
     })
-      .then(function(res){ return res.ok ? res.json() : null; })
+      .then(function(res){ return res.ok ? res.json() : probeer(i + 1); })
+      .catch(function(){ return probeer(i + 1); });
+  }
+  try {
+    probeer(0)
       .then(function(data){
         if (!data || !data.koersen) return;
         Object.keys(data.koersen).forEach(function(c){
