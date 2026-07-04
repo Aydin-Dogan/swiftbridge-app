@@ -426,6 +426,48 @@ function ReferralRedirect() {
   return <Navigate to={`/login?tab=register&ref=${encodeURIComponent(safe)}`} replace />;
 }
 
+// ── Statische-landing redirect (productie) ──
+// '/' hoort de DEFINITIEF-landing van server.js te zijn. Komt de SPA hier
+// tóch (logo-klik binnen de app, of een verouderde service-worker die de
+// oude bundle uit cache serveert), dan ruimen we oude SW's + caches op en
+// forceren we een echte server-request. De tijds-guard voorkomt een
+// reload-loop als de server onverhoopt tóch de SPA op '/' serveert.
+function StatischeLandingRedirect() {
+  const [vast, setVast] = useState(false);
+  useEffect(() => {
+    const nu = Date.now();
+    let vorige = 0;
+    try {
+      vorige = Number(sessionStorage.getItem('sb_landing_redirect')) || 0;
+      sessionStorage.setItem('sb_landing_redirect', String(nu));
+    } catch { /* private mode: geen guard, redirect gewoon */ }
+    if (nu - vorige < 3000) { setVast(true); return; }
+    (async () => {
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map((r) => r.unregister()));
+        }
+        if (window.caches) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+      } catch { /* opruimen is best-effort */ }
+      window.location.replace('/');
+    })();
+  }, []);
+  if (vast) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface px-4">
+        <a href="/landing/particulier.html" className="text-brand-500 underline">
+          Ga verder naar SwiftBridge
+        </a>
+      </div>
+    );
+  }
+  return <LaadSpinner />;
+}
+
 // Sentinel: andere componenten ontvangen `token` als prop. Met de httpOnly cookie
 // is er geen leesbare token-string meer, maar we willen die props niet wijzigen
 // (out of scope). Een truthy placeholder houdt `if (token)`-checks elders heel —
@@ -614,18 +656,24 @@ export default function App() {
       <ErrorBoundary>
       <Suspense fallback={<LaadSpinner />}>
         <Routes>
-          <Route path="/" element={<Landing />} />
-          {/* Multi-locale landing routes (Verbetering F) — voor hreflang SEO.
-              /tr/, /nl/, /en/, /ru/, /az/ renderen allemaal Landing met geforceerde
-              taal. Subpages (/calculator, /wise-alternatief, etc.) blijven mono-route. */}
+          {/* '/' en de taal-routes worden in productie door server.js als
+              STATISCHE DEFINITIEF-landing geserveerd. Deze SPA-routes zijn
+              alleen bereikbaar via client-side navigatie (logo-klik) of een
+              verouderde service-worker-cache — beide sturen we hard terug
+              naar de server, met self-healing van oude caches. In dev
+              (vite serveert de SPA op '/') tonen we de oude React-landing
+              zodat er geen redirect-loop ontstaat. */}
+          <Route path="/" element={import.meta.env.DEV ? <Landing /> : <StatischeLandingRedirect />} />
           {['nl', 'tr', 'en', 'ru', 'az'].map(loc => (
             <Route
               key={loc}
               path={`/${loc}`}
               element={
-                <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
-                  <LocaleLanding />
-                </Suspense>
+                import.meta.env.DEV ? (
+                  <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+                    <LocaleLanding />
+                  </Suspense>
+                ) : <StatischeLandingRedirect />
               }
             />
           ))}
