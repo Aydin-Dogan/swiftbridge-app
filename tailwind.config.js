@@ -21,18 +21,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ── Primary brand (vervangt blue-*) ─────────────────────────────────
+        // ── Primary brand — DEFINITIEF-huisstijl navy (#1B3252-familie) ─────
+        // Afgeleid van de DEFINITIEF-landings: --ink/--ink-dark/--ink-light/
+        // --ink-subtle. Zelfde look als de statische marketing-pagina's.
         brand: {
-          50:  '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#2563eb',   // primary actie-kleur
-          600: '#1d4ed8',
-          700: '#1e40af',
-          800: '#1e3a8a',
-          900: '#172554',
+          50:  '#EEF4FA',
+          100: '#D6E4F0',
+          200: '#B7CCE2',
+          300: '#8FACC9',
+          400: '#5578A1',
+          500: '#1B3252',   // primary actie-kleur (navy, bank-look)
+          600: '#162A46',
+          700: '#142641',
+          800: '#10203A',
+          900: '#0B1728',
         },
         // ── Success (vervangt emerald-*) ────────────────────────────────────
         success: {
@@ -42,11 +44,11 @@ export default {
           600: '#059669',
           700: '#047857',
         },
-        // ── Accent (vervangt amber-*) — voor highlights, niet voor CTAs ────
+        // ── Accent — DEFINITIEF-terracotta (#E8632A) voor highlights/CTA's ─
         accent: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
+          400: '#F0854F',
+          500: '#E8632A',
+          600: '#C9501E',
         },
         // ── Neutrals — gebruik gewoon Tailwind's gray-* ────────────────────
 
@@ -109,8 +111,9 @@ export default {
       },
       // Brand-gradient als CSS-variable basis (1 plek aanpassen = overal updaten)
       backgroundImage: {
-        'brand-hero': 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0ea5e9 100%)',
-        'brand-cta':  'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+        // Zelfde navy-verloop als de members-kaart (t-founder) op de landing.
+        'brand-hero': 'linear-gradient(135deg, #142641 0%, #1B3252 45%, #22416B 100%)',
+        'brand-cta':  'linear-gradient(135deg, #1B3252 0%, #142641 100%)',
       },
       animation: {
         'fade-up':   'fadeUp 0.5s ease-out',

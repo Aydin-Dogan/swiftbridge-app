@@ -30,7 +30,7 @@ export default function ChatBubble({ bericht }) {
           <div
             className="rounded-2xl rounded-br-md px-4 py-2.5 text-sm leading-snug text-white shadow-sm break-words whitespace-pre-wrap"
             style={{
-              background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+              background: 'linear-gradient(135deg, #22416B 0%, #1B3252 100%)',
             }}
           >
             {tekst}
@@ -50,7 +50,7 @@ export default function ChatBubble({ bericht }) {
         <div
           className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm"
           style={{
-            background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
+            background: 'linear-gradient(135deg, #1B3252 0%, #1A7F5E 100%)',
           }}
           aria-hidden="true"
         >

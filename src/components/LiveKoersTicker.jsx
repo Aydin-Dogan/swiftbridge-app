@@ -51,7 +51,7 @@ export default function LiveKoersTicker() {
       className="overflow-hidden text-white relative"
       style={{
         height: '46px',
-        background: 'linear-gradient(90deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%)',
+        background: 'linear-gradient(90deg, #10203A 0%, #1B3252 50%, #10203A 100%)',
         borderBottom: '1px solid rgba(59,130,246,0.3)',
       }}
     >

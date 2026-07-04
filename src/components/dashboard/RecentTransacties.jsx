@@ -126,7 +126,7 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
         >
           {/* Bron — EUR circle (Wise-stijl met currency-code ipv vlag) */}
           <circle cx="25" cy="40" r="20" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5" />
-          <text x="25" y="46" textAnchor="middle" fontSize="14" fill="#2563eb" fontWeight="bold">EUR</text>
+          <text x="25" y="46" textAnchor="middle" fontSize="14" fill="#1B3252" fontWeight="bold">EUR</text>
           {/* Pijl met euro */}
           <path d="M 50 40 L 105 40" stroke="#2563EB" strokeWidth="2" strokeDasharray="3 3" />
           <polygon points="105,35 115,40 105,45" fill="#2563EB" />

@@ -49,7 +49,7 @@ export default function SocialProof() {
           className="rounded-3xl p-7 sm:p-10 mb-12 text-white relative overflow-hidden"
           style={{
             background:
-              'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #047857 100%)',
+              'linear-gradient(135deg, #142641 0%, #1B3252 50%, #22416B 100%)',
           }}
         >
           <div

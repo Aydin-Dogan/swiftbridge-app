@@ -92,8 +92,8 @@ function BackupCodesPaneel({ codes }) {
     * { box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
            color: #111; max-width: 600px; margin: 40px auto; padding: 0 24px; }
-    header { border-bottom: 2px solid #2563eb; padding-bottom: 16px; margin-bottom: 24px; }
-    h1 { font-size: 22px; margin: 0 0 4px; color: #2563eb; }
+    header { border-bottom: 2px solid #1B3252; padding-bottom: 16px; margin-bottom: 24px; }
+    h1 { font-size: 22px; margin: 0 0 4px; color: #1B3252; }
     .subtitle { color: #666; font-size: 13px; }
     .warning { background: #fef3c7; border: 2px solid #fcd34d; border-radius: 8px;
                padding: 12px 16px; margin: 24px 0; font-size: 13px; }
