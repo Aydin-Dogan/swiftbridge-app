@@ -1833,5 +1833,39 @@ if ('IntersectionObserver' in window) {
 }());
 </script>
 
+
+<!-- Sessie-herkenning: is de bezoeker nog ingelogd, toon dan "Mijn dashboard"
+     i.p.v. "Inloggen" zodat de knoppen de werkelijke status weerspiegelen. -->
+<script>
+(function(){
+  'use strict';
+  var HOSTS = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? ['http://localhost:3000']
+    : ['https://api.swiftbridge.tr', 'https://swiftbridge-api-production.up.railway.app'];
+  function probeerMe(i) {
+    if (i >= HOSTS.length) return Promise.resolve(null);
+    return fetch(HOSTS[i] + '/auth/me', {
+      credentials: 'include',
+      signal: (window.AbortSignal && AbortSignal.timeout) ? AbortSignal.timeout(6000) : undefined
+    })
+      .then(function(res){ return res.ok ? res.json() : (res.status === 401 ? null : probeerMe(i + 1)); })
+      .catch(function(){ return probeerMe(i + 1); });
+  }
+  try {
+    probeerMe(0).then(function(g){
+      if (!g || !g.id) return;
+      var login = document.querySelector('.nav-login, a[data-i18n="nav_login"]');
+      if (login) {
+        login.textContent = 'Mijn dashboard';
+        login.setAttribute('href', '/app');
+        login.removeAttribute('data-i18n');
+      }
+      var stuur = document.querySelector('.nav-actions a[data-i18n="nav_send_money"]');
+      if (stuur) { stuur.setAttribute('href', '/app'); }
+    });
+  } catch (e) { /* geen sessie-detectie -> knoppen blijven standaard */ }
+}());
+</script>
+
 </body>
 </html>
