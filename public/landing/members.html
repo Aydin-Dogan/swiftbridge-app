@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwiftBridge — Ledenprogramma &amp; Members Card</title>
+<meta name="description" content="Het SwiftBridge-ledenprogramma: twee sporen (privé en zakelijk), vijf niveaus en de Members Card. Groei automatisch mee op basis van uw verzonden volume.">
+<link rel="canonical" href="https://swiftbridge.tr/members">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B3252; --ink-dark:#142641; --accent:#E8632A; --acc-hover:#C9501E;
+    --acc-light:#FDE8DC; --surface:#FFFFFF; --bg:#F7F9FC; --border:#D0DAE6;
+    --txt-h:#12253A; --txt-b:#2D4560; --txt-m:#5E758F;
+    --biz:#993C1D; --biz-light:#FAECE7;
+    --serif:'Source Serif 4',Georgia,serif; --sans:'Source Sans 3',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--txt-b);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+  /* ---- mini-nav ---- */
+  .topnav{background:var(--surface);border-bottom:1px solid var(--border)}
+  .topnav-inner{max-width:1160px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .topnav a.logo{font-family:var(--serif);font-weight:700;font-size:1.15rem;color:var(--txt-h);text-decoration:none}
+  .topnav a.logo span{color:var(--accent)}
+  .topnav .nav-cta{display:flex;gap:10px;align-items:center}
+  .topnav .nav-cta a{text-decoration:none;font-size:.9rem;font-weight:600}
+  .topnav .nav-cta .login{color:var(--txt-b)}
+  .topnav .nav-cta .btn{background:var(--accent);color:#fff;border-radius:8px;padding:9px 16px;transition:background .2s}
+  .topnav .nav-cta .btn:hover{background:var(--acc-hover)}
+
+  main{padding:56px 0 64px}
+  .eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--accent);text-align:center;display:block;margin-bottom:.5rem}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(1.9rem,3.5vw,2.6rem);color:var(--txt-h);text-align:center;line-height:1.2}
+  .sub{text-align:center;color:var(--txt-m);max-width:640px;margin:.75rem auto 48px;font-size:1rem}
+
+  /* ---- kaarten ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px}
+  .item{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .card{
+    width:100%;max-width:380px;aspect-ratio:1.586;border-radius:14px;padding:30px;
+    color:#fff;display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;
+    box-shadow:0 24px 56px -18px rgba(20,38,65,.55);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s;
+  }
+  .card:hover{transform:translateY(-8px) rotate(-1deg);box-shadow:0 40px 80px -20px rgba(20,38,65,.6)}
+  .card::before{content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 50% at 88% 8%,rgba(232,99,42,.22) 0%,transparent 68%);pointer-events:none}
+  .card::after{content:'';position:absolute;inset:0;
+    background:linear-gradient(115deg,transparent 0%,transparent 43%,rgba(255,255,255,.07) 50%,transparent 57%,transparent 100%);pointer-events:none}
+  .t-founder{background:linear-gradient(128deg,#1B3252 0%,#2A4A75 40%,#142641 64%,#22416B 100%)}
+  .t-premium{background:linear-gradient(128deg,#142641 0%,#1B3252 34%,#3A2A1E 78%,#142641 100%)}
+  .t-black{background:linear-gradient(128deg,#10203A 0%,#1A2D45 40%,#080F1B 66%,#16263C 100%)}
+  .c-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .c-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;letter-spacing:.04em}
+  .c-logo span{color:var(--accent)}
+  .chip{width:42px;height:32px;border-radius:5px;opacity:.95;position:relative;
+    background:linear-gradient(135deg,#F0A878 0%,#E8632A 45%,#A8401A 100%)}
+  .chip::before{content:'';position:absolute;inset:5px 6px;border:1px solid rgba(255,255,255,.25);border-radius:2px}
+  .c-mid{display:flex;flex-direction:column;gap:3px}
+  .c-label{font-family:var(--sans);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .c-number{font-family:var(--serif);font-size:1.15rem;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.9)}
+  .c-bottom{display:flex;justify-content:space-between;align-items:flex-end}
+  .c-member{font-family:var(--sans);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;opacity:.9}
+  .tier-name{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--txt-h)}
+  .tier-desc{font-size:.85rem;color:var(--txt-m);text-align:center;max-width:300px}
+  .tier-card-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:380px}
+
+  /* ---- programma (twee sporen) ---- */
+  h2.sec{font-family:var(--serif);font-weight:700;font-size:clamp(1.5rem,2.6vw,2rem);color:var(--txt-h);margin:64px 0 6px;text-align:center;line-height:1.25}
+  .lead{color:var(--txt-m);text-align:center;max-width:640px;margin:0 auto 28px}
+  .split-note{max-width:760px;margin:0 auto 40px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;display:flex;gap:14px;align-items:flex-start}
+  .split-note svg{flex-shrink:0;margin-top:2px}
+  .split-note b{color:var(--txt-h)}
+  .split-note p{font-size:.92rem;color:var(--txt-b)}
+  .tracks{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media(max-width:860px){.tracks{grid-template-columns:1fr}}
+  .track{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)}
+  .track-head{padding:16px 20px;display:flex;align-items:center;gap:10px;color:#fff}
+  .track-head.priv{background:linear-gradient(120deg,#1B3252,#0C447C)}
+  .track-head.biz{background:linear-gradient(120deg,#993C1D,#C9501E)}
+  .track-head h3{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff}
+  .track-head .meta{margin-left:auto;font-size:.78rem;opacity:.85}
+  .track-body{padding:18px;display:flex;flex-direction:column;gap:12px}
+  .lvl{border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .lvl.feat{border:2px solid var(--accent)}
+  .lvl-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
+  .lvl-name{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--txt-h)}
+  .lvl-fee{font-size:.82rem;font-weight:600;color:var(--ink);background:var(--bg);border-radius:6px;padding:3px 8px;white-space:nowrap}
+  .lvl-fee.biz{color:var(--biz)}
+  .lvl-crit{font-size:.82rem;color:var(--txt-m);margin-bottom:5px}
+  .lvl-perk{font-size:.86rem;color:var(--txt-b)}
+  .kyc{font-size:.82rem;color:var(--txt-m);background:var(--bg);border-radius:8px;padding:10px 12px}
+  .kyc b{color:var(--txt-h)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+  .step-n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem;margin-bottom:10px}
+  .step h4{font-family:var(--serif);font-size:1.05rem;color:var(--txt-h);margin-bottom:6px}
+  .step p{font-size:.85rem;color:var(--txt-m)}
+
+  /* ---- CTA + footer ---- */
+  .cta-band{margin-top:64px;background:linear-gradient(120deg,var(--ink),var(--ink-dark));border-radius:16px;padding:40px 32px;text-align:center;color:#fff}
+  .cta-band h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.4rem,2.4vw,1.9rem);color:#fff;margin-bottom:8px}
+  .cta-band p{color:rgba(255,255,255,.75);max-width:520px;margin:0 auto 20px;font-size:.95rem}
+  .cta-band a{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;border-radius:8px;padding:13px 26px;transition:background .2s}
+  .cta-band a:hover{background:var(--acc-hover)}
+  .foot{text-align:center;margin:52px 0 40px;font-size:.78rem;color:var(--txt-m)}
+  .foot a{color:var(--txt-m)}
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Hoofdnavigatie">
+  <div class="topnav-inner">
+    <a class="logo" href="/" aria-label="SwiftBridge — naar homepage">Swift<span>Bridge</span></a>
+    <div class="nav-cta">
+      <a class="login" href="/login">Inloggen</a>
+      <a class="btn" href="/login?tab=register">Gratis account openen</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <span class="eyebrow">SwiftBridge · Lidmaatschap</span>
+  <h1>De Members Card</h1>
+  <p class="sub">Elk lid krijgt een eigen kaart met lidnummer. Uw niveau groeit automatisch mee met
+  het bedrag dat u de laatste 12 maanden heeft verzonden — hoe meer u verstuurt, hoe beter uw voorwaarden.</p>
+
+  <div class="grid">
+    <div class="item">
+      <div class="tier-card-wrap">
+        <div class="card t-founder">
+          <div class="c-top"><div class="c-logo">Swift<span>Bridge</span></div><div class="chip"></div></div>
+          <div class="c-mid"><span class="c-label">Oprichterslid</span><span class="c-number">N° 001 / 500</span></div>
+          <div class="c-bottom"><span class="c-member">Internationaal</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.6" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+        </div>
+        <div class="tier-name">Oprichterslid</div>
+        <p class="tier-desc">De eerste 500 leden. Vaste lage fee voor altijd, voorrang bij nieuwe corridors.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="tier-card-wrap">
+        <div class="card t-premium">
+          <div class="c-top"><div class="c-logo">Swift<span>Bridge</span></div><div class="chip"></div></div>
+          <div class="c-mid"><span class="c-label">Premium</span><span class="c-number">N° 1042</span></div>
+          <div class="c-bottom"><span class="c-member">Internationaal</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.6" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+        </div>
+        <div class="tier-name">Premium</div>
+        <p class="tier-desc">Lagere fee per overboeking, hogere limieten en snellere uitbetaling.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="tier-card-wrap">
+        <div class="card t-black">
+          <div class="c-top"><div class="c-logo">Swift<span>Bridge</span></div><div class="chip"></div></div>
+          <div class="c-mid"><span class="c-label">Black</span><span class="c-number">N° 028</span></div>
+          <div class="c-bottom"><span class="c-member">Private</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.6" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+        </div>
+        <div class="tier-name">Black</div>
+        <p class="tier-desc">Voor grote/zakelijke volumes. Persoonlijk contact, beste koers, geen limieten.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">Twee sporen: privé en zakelijk</h2>
+  <p class="lead">Het onderscheid wordt al bij de aanmelding gemaakt. Daarna groeit elke klant binnen
+  zijn eigen spoor mee op basis van het verzonden bedrag van de laatste 12 maanden.</p>
+
+  <div class="split-note">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5"/></svg>
+    <p><b>De splitsing bij registratie:</b> kiest de klant <b>privé</b>, dan volgt een ID-check (iDIN)
+    en het privé-spoor. Kiest de klant <b>zakelijk</b>, dan volgt KvK + UBO-controle, facturatie met
+    BTW-overzicht, hogere limieten en het zakelijke spoor. De twee profielen blijven gescheiden in de KYC/AML.</p>
+  </div>
+
+  <div class="tracks">
+
+    <div class="track">
+      <div class="track-head priv">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <h3>Privé</h3><span class="meta">op verzonden volume / 12 mnd</span>
+      </div>
+      <div class="track-body">
+        <div class="lvl feat">
+          <div class="lvl-top"><span class="lvl-name">1 · Oprichterslid</span><span class="lvl-fee">Premium — levenslang</span></div>
+          <div class="lvl-crit">Eerste 500 privé-accounts bij lancering. Daarna gesloten.</div>
+          <div class="lvl-perk">Vaste laagste fee voor altijd, kaart N°/500, voorrang nieuwe corridors.</div>
+        </div>
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">2 · Black</span><span class="lvl-fee">€4,95 + 0,8%</span></div>
+          <div class="lvl-crit">€25.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk">Beste koers, geen limiet, persoonlijke accountmanager.</div>
+        </div>
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">3 · Premium</span><span class="lvl-fee">€4,95 + 1,0%</span></div>
+          <div class="lvl-crit">€10.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk">Betere koers, snellere uitbetaling, prioriteit-support.</div>
+        </div>
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">4 · Plus</span><span class="lvl-fee">€4,95 + 1,2%</span></div>
+          <div class="lvl-crit">€2.500+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk">Hogere limiet en referral-bonus.</div>
+        </div>
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">5 · Basis</span><span class="lvl-fee">€4,95 + 1,5%</span></div>
+          <div class="lvl-crit">Iedereen start hier · min €50 · limiet €5.000.</div>
+          <div class="lvl-perk">Standaard voorwaarden, direct na ID-check.</div>
+        </div>
+        <div class="kyc"><b>KYC privé:</b> ID-bewijs + adrescontrole via iDIN.</div>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-head biz">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="1"/><path d="M9 7V4h6v3M9 12h6M9 16h6"/></svg>
+        <h3>Zakelijk</h3><span class="meta">KvK · op offerte / contract</span>
+      </div>
+      <div class="track-body">
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">Corporate</span><span class="lvl-fee biz">beste koers · contract</span></div>
+          <div class="lvl-crit">€500.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk">Dedicated contactpersoon, maatwerklimieten, scherpste tarief.</div>
+        </div>
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">Pro</span><span class="lvl-fee biz">lagere marge</span></div>
+          <div class="lvl-crit">€100.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk">API-koppeling en bulk-betalingen (salaris, leveranciers).</div>
+        </div>
+        <div class="lvl">
+          <div class="lvl-top"><span class="lvl-name">Start</span><span class="lvl-fee biz">op offerte</span></div>
+          <div class="lvl-crit">Bij KvK-registratie.</div>
+          <div class="lvl-perk">Facturatie + BTW-overzicht, zakelijke onboarding.</div>
+        </div>
+        <div class="kyc"><b>KYC zakelijk:</b> KvK-uittreksel, UBO('s) en een zakelijke rekening. Hogere limieten dan privé.</div>
+        <div class="kyc">Wisselen tussen privé en zakelijk kan alleen via een aparte/aangepaste KYC — het zijn losse klantprofielen.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="sec">Hoe een klant zichzelf laat opschalen</h2>
+  <p class="lead">Binnen het eigen spoor — automatisch op verzonden volume.</p>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><h4>Meten</h4><p>Het systeem telt continu het verzonden bedrag van de laatste 12 maanden.</p></div>
+    <div class="step"><div class="step-n">2</div><h4>Upgraden</h4><p>Drempel bereikt? Automatische upgrade met nieuwe kaart en lidnummer in de app.</p></div>
+    <div class="step"><div class="step-n">3</div><h4>Behouden</h4><p>Een niveau blijft 12 maanden geldig; bij terugval volgt 3 maanden respijt.</p></div>
+    <div class="step"><div class="step-n">4</div><h4>Uitzondering</h4><p>Oprichterslid = eerste 500 privé (permanent). Zakelijk wordt bepaald bij KvK-registratie.</p></div>
+  </div>
+
+  <div class="cta-band">
+    <h2>Word een van de eerste 500 oprichtersleden</h2>
+    <p>Open gratis een account en ontvang uw lidnummer. De eerste 500 privé-accounts krijgen de Oprichterskaart — met de laagste fee, voor altijd.</p>
+    <a href="/login?tab=register">Gratis account openen</a>
+  </div>
+
+  <p class="foot">Tarieven en drempels zijn indicatief en worden bevestigd vóór elke transactie · de Members Card is een merk-/loyaliteitselement, geen betaalpas ·
+  <a href="/">terug naar swiftbridge.tr</a> · <a href="/privacybeleid">privacy</a> · <a href="/algemene-voorwaarden">voorwaarden</a></p>
+</div>
+</main>
+
+</body>
+</html>

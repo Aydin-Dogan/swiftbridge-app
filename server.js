@@ -35,6 +35,7 @@ const LANDING_ROUTES = {
   '/':            'landing/particulier.html',
   '/particulier': 'landing/particulier.html',
   '/zakelijk':    'landing/zakelijk.html',
+  '/members':     'landing/members.html',
 };
 
 const server = http.createServer((req, res) => {
