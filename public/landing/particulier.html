@@ -323,6 +323,10 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
 .testimonial-name{font-size:.875rem;font-weight:600;color:var(--txt-h)}
 .testimonial-meta{font-size:.75rem;color:var(--txt-m)}
 .testimonial-illustrative{font-size:.6875rem;color:var(--txt-m);text-align:center;margin-top:1.25rem;grid-column:1/-1}
+.trust-fact-card{border:1px solid var(--border);border-radius:10px;padding:1.75rem;background:var(--bg);display:flex;flex-direction:column;gap:.75rem}
+.trust-fact-title{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--txt-h);line-height:1.3}
+.trust-fact-body{font-size:.9375rem;color:var(--txt-b);line-height:1.65}
+.trust-fact-note{font-size:.75rem;color:var(--txt-m);text-align:center;margin-top:1.5rem;grid-column:1/-1;max-width:640px;margin-left:auto;margin-right:auto}
 
 /* ── FAQ ── */
 #faq{padding:4rem 0;background:var(--ink-subtle)}
@@ -1036,29 +1040,26 @@ Gebouwd voor mensen zoals u.</h1>
 <!-- ── TESTIMONIALS ── -->
 <section id="testimonials" class="section" aria-labelledby="testimonials-heading">
   <div class="wrap">
-    <span class="eyebrow">Ervaringen van klanten</span>
-    <h2 class="section-h" id="testimonials-heading">Wat onze klanten zeggen</h2>
+    <span class="eyebrow">Waarom SwiftBridge</span>
+    <h2 class="section-h" id="testimonials-heading">Gebouwd op transparantie, niet op beloftes</h2>
     <div class="testimonial-grid">
-      <article class="testimonial-card fade-in">
-        <div class="testimonial-stars" aria-label="5 sterren">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote class="testimonial-body">"Ik stuurde altijd via ABN AMRO — dat voelde veilig. Totdat iemand mij SwiftBridge liet zien. Zelfde toezichthouder, lagere kosten, en ik zie de koers vóórdat ik bevestig. Nooit meer terug."</blockquote>
-        <p class="testimonial-name">Mehmet Y.</p>
-        <p class="testimonial-meta">Den Haag</p>
+      <article class="trust-fact-card fade-in">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <h3 class="trust-fact-title">Onder toezicht van DNB</h3>
+        <p class="trust-fact-body">Betaaldiensten worden aangeboden via een vergunde EMI-partner die onder toezicht staat van De Nederlandsche Bank — dezelfde toezichthouder die uw eigen bank bewaakt. SwiftBridge is zelf geen bank.</p>
       </article>
-      <article class="testimonial-card fade-in">
-        <div class="testimonial-stars" aria-label="5 sterren">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote class="testimonial-body">"Ik was sceptisch — ik had nog nooit van SwiftBridge gehoord. Maar DNB-toezicht, iDEAL betaling, iDIN verificatie via mijn eigen bank... Na de eerste overboeking was ik overtuigd."</blockquote>
-        <p class="testimonial-name">Fatima A.</p>
-        <p class="testimonial-meta">Amsterdam</p>
+      <article class="trust-fact-card fade-in">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <h3 class="trust-fact-title">De koers ziet u vóór u bevestigt</h3>
+        <p class="trust-fact-body">Geen verstopte marge. U ziet de wisselkoers, de FX-marge (ca. 1,2%) en de kosten volledig uitgesplitst — vóór u op verzenden klikt. Wat u ziet, is wat u betaalt.</p>
       </article>
-      <article class="testimonial-card fade-in">
-        <div class="testimonial-stars" aria-label="5 sterren">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote class="testimonial-body">"Mijn kinderen in Ankara ontvangen een WhatsApp zodra het geld er is. Dat geeft ons allebei rust. Ik hoef mijn bank niet meer te bellen om te vragen of de overboeking is verwerkt."</blockquote>
-        <p class="testimonial-name">Hasan K.</p>
-        <p class="testimonial-meta">Utrecht</p>
+      <article class="trust-fact-card fade-in">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <h3 class="trust-fact-title">Beveiligd op bankniveau</h3>
+        <p class="trust-fact-body">Verificatie in twee stappen bij elke aanmelding, sessies die na korte inactiviteit sluiten, en versleutelde opslag van uw gegevens. Identiteitscontrole via iDIN met uw eigen bank.</p>
       </article>
-      <p class="testimonial-illustrative">&#9888; Bovenstaande testimonials zijn uitsluitend illustratief. Vervang door geverifieerde klantquotes vóór publicatie.</p>
     </div>
+    <p class="trust-fact-note">Wij plaatsen geen verzonnen klantenreviews. Zodra echte, geverifieerde klantervaringen beschikbaar zijn, tonen we die hier — met bronvermelding.</p>
   </div>
 </section>
 
@@ -1770,6 +1771,14 @@ if (navToggle && navLinks) {
   navToggle.addEventListener('click', function() {
     const open = navLinks.classList.toggle('open');
     this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  // Sluit het mobiele menu zodra er op een link geklikt wordt (anders blijft
+  // het open over de pagina heen bij anchor-navigatie).
+  navLinks.addEventListener('click', function(e) {
+    if (e.target.closest('a')) {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
   });
 }
 

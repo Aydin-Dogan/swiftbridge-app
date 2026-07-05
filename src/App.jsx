@@ -743,7 +743,9 @@ export default function App() {
               <Status />
             </Suspense>
           } />
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin" element={
+            token ? <AdminPanel /> : <Navigate to="/login" replace />
+          } />
           <Route path="/admin/compliance" element={
             token ? <AdminCompliance /> : <Navigate to="/login" replace />
           } />

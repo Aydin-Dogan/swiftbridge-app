@@ -47,13 +47,34 @@ export async function apiFetch(path, opties = {}) {
     if (csrf) finaleHeaders['X-CSRF-Token'] = csrf;
   }
 
-  const res = await fetch(`${API_URL}${path}`, {
-    method,
-    credentials: 'include',
-    headers: finaleHeaders,
-    body: finaleBody,
-    ...rest,
-  });
+  // Stabiliteit: elke request krijgt een 30s-timeout zodat een hangende
+  // verbinding (trage/kapotte API, dood netwerk) de UI nooit eeuwig laat
+  // spinnen. Caller mag een eigen signal meegeven — die wint dan.
+  if (rest.signal == null && typeof AbortSignal !== 'undefined' && AbortSignal.timeout) {
+    rest.signal = AbortSignal.timeout(30000);
+  }
+
+  let res;
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      method,
+      credentials: 'include',
+      headers: finaleHeaders,
+      body: finaleBody,
+      ...rest,
+    });
+  } catch (netwerkFout) {
+    const isTimeout = netwerkFout?.name === 'TimeoutError' || netwerkFout?.name === 'AbortError';
+    const fout = new Error(
+      isTimeout
+        ? 'Verzoek verlopen — controleer je internetverbinding en probeer het opnieuw.'
+        : 'Kan de server niet bereiken — controleer je internetverbinding.'
+    );
+    fout.status = 0;
+    fout.netwerk = true;
+    fout.errorCode = isTimeout ? 'TIMEOUT' : 'NETWERK';
+    throw fout;
+  }
 
   const tekst = await res.text();
   let data = null;
