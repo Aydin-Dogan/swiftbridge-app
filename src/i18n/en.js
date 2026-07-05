@@ -722,7 +722,9 @@ export const en = {
 
  // Support chat widget
  support_titel:'SwiftBridge Support',
- support_online_status:'Online — avg. response time 2 hours',
+ support_online_status:'Digital assistant Â· instant answers 24/7',
+ support_medewerker_knop:'Talk to a human',
+ support_escalatie_ok:'Your conversation has been forwarded to our team. You will receive a reply by e-mail as soon as possible.',
  support_open_chat:'Open support chat',
  support_sluit:'Close chat',
  support_dialog_label:'SwiftBridge support chat',

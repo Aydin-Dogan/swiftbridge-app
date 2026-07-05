@@ -1133,7 +1133,9 @@ export const nl = {
 
  // Support chat widget
  support_titel:'SwiftBridge Support',
- support_online_status:'Online — gem. reactietijd 2 uur',
+ support_online_status:'Digitale assistent Â· 24/7 direct antwoord',
+ support_medewerker_knop:'Medewerker spreken',
+ support_escalatie_ok:'Je gesprek is doorgestuurd naar een medewerker. Je ontvangt zo snel mogelijk antwoord per e-mail.',
  support_open_chat:'Open support chat',
  support_sluit:'Chat sluiten',
  support_dialog_label:'SwiftBridge support chat',

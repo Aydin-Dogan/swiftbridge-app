@@ -153,7 +153,16 @@ export default function SupportChat({ gebruiker, actief = true }) {
     }, 500);
   }
 
-  // ── Vrij bericht verzenden ────────────────────────────────────────────────
+  // ── Gespreksgeschiedenis voor de AI (alleen user/support, recentste 12) ───
+  function bouwGeschiedenis(extraUserTekst) {
+    const relevant = berichten
+      .filter((b) => b.rol === 'user' || b.rol === 'support')
+      .map((b) => ({ rol: b.rol === 'user' ? 'user' : 'assistent', tekst: b.tekst }));
+    if (extraUserTekst) relevant.push({ rol: 'user', tekst: extraUserTekst });
+    return relevant.slice(-12);
+  }
+
+  // ── Vrij bericht verzenden → AI-assistent (second brain) ─────────────────
   async function verzendBericht(e) {
     e?.preventDefault();
     const tekst = invoer.trim();
@@ -170,23 +179,17 @@ export default function SupportChat({ gebruiker, actief = true }) {
     setVerzendt(true);
 
     try {
-      await apiFetch('/support/bericht', {
+      const data = await apiFetch('/support/chat', {
         method: 'POST',
-        body: {
-          tekst,
-          gebruikerNaam: gebruiker?.naam || null,
-          gebruikerEmail: gebruiker?.email || null,
-          tijdstip: nu,
-        },
+        body: { berichten: bouwGeschiedenis(tekst) },
       });
       voegToe({
         id: nieuwId(),
-        rol: 'system',
-        tekst: t('support_bericht_ontvangen'),
+        rol: 'support',
+        tekst: data?.antwoord || t('support_offline_fallback'),
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
-      // Endpoint kan nog niet bestaan — toon nette fallback
       voegToe({
         id: nieuwId(),
         rol: 'support',
@@ -196,6 +199,37 @@ export default function SupportChat({ gebruiker, actief = true }) {
     } finally {
       setVerzendt(false);
       textareaRef.current?.focus();
+    }
+  }
+
+  // ── Escalatie: gesprek doorsturen naar een menselijke medewerker ─────────
+  async function escaleerNaarMedewerker() {
+    if (verzendt) return;
+    setVerzendt(true);
+    try {
+      await apiFetch('/support/escalatie', {
+        method: 'POST',
+        body: {
+          berichten: bouwGeschiedenis(),
+          gebruikerNaam: gebruiker?.naam || null,
+          gebruikerEmail: gebruiker?.email || null,
+        },
+      });
+      voegToe({
+        id: nieuwId(),
+        rol: 'system',
+        tekst: t('support_escalatie_ok'),
+        timestamp: new Date().toISOString(),
+      });
+    } catch (err) {
+      voegToe({
+        id: nieuwId(),
+        rol: 'support',
+        tekst: t('support_offline_fallback'),
+        timestamp: new Date().toISOString(),
+      });
+    } finally {
+      setVerzendt(false);
     }
   }
 
@@ -363,10 +397,19 @@ export default function SupportChat({ gebruiker, actief = true }) {
               </button>
             </div>
             <p className="text-[10px] text-gray-400 text-center mt-1.5">
+              <button
+                type="button"
+                onClick={escaleerNaarMedewerker}
+                disabled={verzendt}
+                className="text-brand-500 hover:underline font-medium disabled:opacity-50"
+              >
+                {t('support_medewerker_knop')}
+              </button>
+              {' · '}
               {t('support_footer_mail')}{' '}
               <a
                 href="mailto:support@swiftbridge.tr"
-                className="text-blue-600 hover:underline"
+                className="text-brand-500 hover:underline"
               >
                 support@swiftbridge.tr
               </a>

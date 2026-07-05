@@ -1219,7 +1219,9 @@ export const az = {
 
  // ── Dəstək çatı ───────────────────────────────────────────────────────────
  support_titel:'SwiftBridge Dəstəyi',
- support_online_status:'Onlayn — orta cavab vaxtı 2 saat',
+ support_online_status:'RÉqÉmsal assistent Â· 24/7 dÉrhal cavab',
+ support_medewerker_knop:'ÆmÉkdaÅla danÄ±Å',
+ support_escalatie_ok:'SÃ¶hbÉtiniz ÉmÉkdaÅÄ±mÄ±za gÃ¶ndÉrildi. Æn qÄ±sa zamanda e-poÃ§t ilÉ cavab alacaqsÄ±nÄ±z.',
  support_open_chat:'Dəstək çatını aç',
  support_sluit:'Çatı bağla',
  support_dialog_label:'SwiftBridge dəstək çatı',

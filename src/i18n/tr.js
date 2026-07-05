@@ -722,7 +722,9 @@ export const tr = {
 
  // Destek sohbet widget
  support_titel:'SwiftBridge Destek',
- support_online_status:'Çevrimiçi — ort. yanıt süresi 2 saat',
+ support_online_status:'Dijital asistan Â· 7/24 anÄ±nda yanÄ±t',
+ support_medewerker_knop:'Bir Ã§alÄ±Åanla gÃ¶rÃ¼Å',
+ support_escalatie_ok:'GÃ¶rÃ¼Åmeniz bir Ã§alÄ±ÅanÄ±mÄ±za iletildi. En kÄ±sa sÃ¼rede e-posta ile yanÄ±t alacaksÄ±nÄ±z.',
  support_open_chat:'Destek sohbetini aç',
  support_sluit:'Sohbeti kapat',
  support_dialog_label:'SwiftBridge destek sohbeti',
