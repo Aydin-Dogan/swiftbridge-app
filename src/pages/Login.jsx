@@ -31,6 +31,9 @@ export default function Login({ onLogin }) {
   const [twofaCode, setTwofaCode ] = useState('');
   const [twofaLaden, setTwofaLaden ] = useState(false);
   const [twofaFout, setTwofaFout ] = useState('');
+  const [herverzendBericht, setHerverzendBericht] = useState('');
+  const [herverzendBezig, setHerverzendBezig] = useState(false);
+  const [herverzendCooldown, setHerverzendCooldown] = useState(0);
 
   // Wachtwoord reset via link (?reset=TOKEN)
   const resetToken = params.get('reset');
@@ -170,6 +173,42 @@ export default function Login({ onLogin }) {
     }
   }
 
+  // ── 2FA code opnieuw laten sturen (dead-end-fix: code kwam niet aan / verliep) ──
+  async function herverzendCode() {
+    if (herverzendBezig || herverzendCooldown > 0) return;
+    setHerverzendBezig(true);
+    setHerverzendBericht('');
+    setTwofaFout('');
+    try {
+      const data = await apiFetch('/auth/2fa-herverzend', {
+        method: 'POST',
+        body: { pendingToken: twofaPendingToken },
+      });
+      if (data?.pendingToken) setTwofaPendingToken(data.pendingToken);
+      setHerverzendBericht('Nieuwe code verstuurd. Check ook je spam-map.');
+      // 30s cooldown tegen spam
+      setHerverzendCooldown(30);
+      const timer = setInterval(() => {
+        setHerverzendCooldown((s) => {
+          if (s <= 1) { clearInterval(timer); return 0; }
+          return s - 1;
+        });
+      }, 1000);
+    } catch (e) {
+      // Verlopen sessie → terug naar login i.p.v. dead-end
+      if (e.errorCode === 'PENDING_TOKEN_INVALID') {
+        setTwofaUserId(null);
+        setTwofaPendingToken(null);
+        setTwofaCode('');
+        setFout('Je sessie is verlopen. Log opnieuw in.');
+      } else {
+        setTwofaFout(e.message);
+      }
+    } finally {
+      setHerverzendBezig(false);
+    }
+  }
+
   // ── 2FA code invoeren ──
   if (twofaUserId) {
     // Plak code uit klembord (Clipboard API)
@@ -242,11 +281,20 @@ export default function Login({ onLogin }) {
             {twofaFout && (
               <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3">{twofaFout}</p>
             )}
+            {herverzendBericht && (
+              <p className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-md p-3">{herverzendBericht}</p>
+            )}
             <button type="submit" disabled={twofaLaden || twofaCode.length !== 6}
               className="btn-inst w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
               {twofaLaden ? 'Bezig...' : 'Verifieer & inloggen'}
             </button>
-            <button type="button" onClick={() => { setTwofaUserId(null); setTwofaPendingToken(null); setTwofaCode(''); setTwofaFout(''); }}
+            <button type="button" onClick={herverzendCode} disabled={herverzendBezig || herverzendCooldown > 0}
+              className="w-full text-sm font-semibold text-brand-700 hover:underline underline-offset-4 disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed">
+              {herverzendBezig ? 'Bezig met versturen…'
+                : herverzendCooldown > 0 ? `Opnieuw sturen kan over ${herverzendCooldown}s`
+                : 'Geen code ontvangen? Stuur opnieuw'}
+            </button>
+            <button type="button" onClick={() => { setTwofaUserId(null); setTwofaPendingToken(null); setTwofaCode(''); setTwofaFout(''); setHerverzendBericht(''); }}
               className="w-full text-sm font-semibold text-brand-700 hover:underline underline-offset-4">
               ← Terug naar inloggen
             </button>
