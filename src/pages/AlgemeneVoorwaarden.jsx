@@ -6,8 +6,8 @@ export default function AlgemeneVoorwaarden() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="bg-white rounded-2xl shadow-sm p-8 md:p-12">
           <div className="flex items-center gap-3 mb-2">
-            <Zap className="w-8 h-8 text-blue-600" />
-            <span className="font-bold text-xl text-blue-600">SwiftBridge</span>
+            <Zap className="w-8 h-8 text-brand-600" />
+            <span className="font-bold text-xl text-brand-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Algemene Voorwaarden</h1>
           <p className="text-sm text-gray-500 mb-8">Versie 1.0 — Datum: mei 2026</p>

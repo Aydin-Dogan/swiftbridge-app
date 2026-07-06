@@ -6,8 +6,8 @@ export default function AMLBeleid() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="bg-white rounded-2xl shadow-sm p-8 md:p-12">
           <div className="flex items-center gap-3 mb-2">
-            <Zap className="w-8 h-8 text-blue-600" />
-            <span className="font-bold text-xl text-blue-600">SwiftBridge</span>
+            <Zap className="w-8 h-8 text-brand-600" />
+            <span className="font-bold text-xl text-brand-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">AML-beleid</h1>
           <p className="text-gray-600 mb-1">Anti-Money Laundering & Counter-Terrorist Financing Policy</p>
@@ -15,7 +15,7 @@ export default function AMLBeleid() {
 
           {/* F31 fix (Cursor review): "Intern beleidsdocument" tekst verwijderd —
               dit document is publiek toegankelijk voor transparantie. */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 text-sm text-blue-900">
+          <div className="bg-brand-50 border border-brand-200 rounded-xl p-4 mb-8 text-sm text-brand-900">
             <strong>Publiek beleidsdocument:</strong> Dit document beschrijft hoe SwiftBridge witwassen van geld en financiering van terrorisme voorkomt, conform de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft) en EU Anti-witwasrichtlijnen (AMLD).
           </div>
 

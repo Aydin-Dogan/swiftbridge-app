@@ -27,6 +27,9 @@ const Profiel = lazy(() => import('./components/Profiel'));
 const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
 const Privacybeleid = lazy(() => import('./pages/Privacybeleid'));
 const AMLBeleid = lazy(() => import('./pages/AMLBeleid'));
+const Klachten = lazy(() => import('./pages/Klachten'));
+const Veiligheid = lazy(() => import('./pages/Veiligheid'));
+const OverOns = lazy(() => import('./pages/OverOns'));
 const AdminPanel = lazy(() => import('./pages/AdminPanel'));
 const AdminCompliance = lazy(() => import('./pages/AdminCompliance'));
 const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
@@ -737,6 +740,9 @@ export default function App() {
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacybeleid" element={<Privacybeleid />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />
+          <Route path="/klachten" element={<Klachten />} />
+          <Route path="/veiligheid" element={<Veiligheid />} />
+          <Route path="/over-ons" element={<OverOns />} />
           {/* Publieke status page (Verbetering L) — bouwt vertrouwen, live healthchecks */}
           <Route path="/status" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
