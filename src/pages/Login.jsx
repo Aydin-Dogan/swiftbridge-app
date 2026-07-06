@@ -15,7 +15,7 @@ export default function Login({ onLogin }) {
 
   // Auto-vul referralCode uit URL ?ref=ABCD1234 (gedeeld via WhatsApp/email)
   const initialRef = params.get('ref') || params.get('r') || '';
-  const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '', referralCode: initialRef.toUpperCase() });
+  const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '', referralCode: initialRef.toUpperCase(), accountType: 'particulier', bedrijfsnaam: '', kvkNummer: '' });
   // Referral validatie state
   const [refValidatie, setRefValidatie] = useState({ status: 'idle', uitnodigerNaam: '' }); // idle | bezig | geldig | ongeldig
   const [laden, setLaden] = useState(false);
@@ -112,6 +112,20 @@ export default function Login({ onLogin }) {
 
   function update(k, v) { setForm(f => ({ ...f, [k]: v })); }
 
+  // Wachtwoord-sterktemeter (P1-prototype): indicatie vooraf; de echte controle
+  // (zxcvbn, ≥10 tekens, geen naam/e-mail erin) doet de server bij registratie.
+  function wachtwoordSterkte(pw) {
+    let score = 0;
+    if (pw.length >= 10) score += 2; else if (pw.length >= 8) score += 1;
+    if (pw.length >= 14) score += 1;
+    if (/[A-Z]/.test(pw)) score += 1;
+    if (/\d/.test(pw)) score += 1;
+    if (/[^A-Za-z0-9]/.test(pw)) score += 1;
+    if (score >= 5) return { label: 'Sterk wachtwoord', kleur: 'bg-success-500', tekst: 'text-success-700', pct: 100 };
+    if (score >= 3) return { label: 'Redelijk — maak hem langer of voeg een teken toe', kleur: 'bg-amber-500', tekst: 'text-amber-700', pct: 60 };
+    return { label: 'Zwak — gebruik hoofdletter, cijfer en 10+ tekens', kleur: 'bg-red-500', tekst: 'text-red-600', pct: 25 };
+  }
+
   async function submit(e) {
     e.preventDefault();
     setLaden(true);
@@ -125,6 +139,8 @@ export default function Login({ onLogin }) {
             password: form.password,
             naam: form.naam,
             telefoon: form.telefoon,
+            accountType: form.accountType,
+            ...(form.accountType === 'zakelijk' ? { bedrijfsnaam: form.bedrijfsnaam, kvkNummer: form.kvkNummer } : {}),
             ...(form.referralCode ? { referralCode: form.referralCode.trim().toUpperCase() } : {}),
           };
 
@@ -490,8 +506,41 @@ export default function Login({ onLogin }) {
           <form onSubmit={submit} className="p-6 space-y-4">
             {tab === 'register' && (
               <>
+                {/* P1 (plan Aydin): Particulier/Zakelijk-keuze vanaf registratie */}
                 <div>
-                  <label htmlFor="reg-naam" className="block text-xs font-semibold text-ink-2 mb-1">Volledige naam</label>
+                  <div className="flex rounded-md border border-border overflow-hidden" role="group" aria-label="Type account">
+                    {[['particulier', 'Particulier'], ['zakelijk', 'Zakelijk']].map(([waarde, label]) => (
+                      <button key={waarde} type="button" onClick={() => update('accountType', waarde)}
+                        aria-pressed={form.accountType === waarde}
+                        className={`flex-1 py-3 text-sm font-semibold transition-colors
+                          ${form.accountType === waarde ? 'bg-brand-500 text-white' : 'bg-surface text-ink-2 hover:bg-brand-50'}`}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                {form.accountType === 'zakelijk' && (
+                  <>
+                    <div>
+                      <label htmlFor="reg-bedrijf" className="block text-xs font-semibold text-ink-2 mb-1">Bedrijfsnaam</label>
+                      <input id="reg-bedrijf" name="bedrijfsnaam" autoComplete="organization" value={form.bedrijfsnaam}
+                        onChange={e => update('bedrijfsnaam', e.target.value)} placeholder="Voorbeeld B.V." required
+                        className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
+                    </div>
+                    <div>
+                      <label htmlFor="reg-kvk" className="block text-xs font-semibold text-ink-2 mb-1">KvK-nummer</label>
+                      <input id="reg-kvk" name="kvkNummer" inputMode="numeric" value={form.kvkNummer}
+                        onChange={e => update('kvkNummer', e.target.value.replace(/\D/g, '').slice(0, 8))}
+                        placeholder="12345678" required minLength={8} maxLength={8}
+                        className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface font-mono tracking-widest" />
+                      <p className="text-[11px] text-gray-500 mt-1">8 cijfers — we controleren dit later bij de bedrijfsverificatie (KvK-uittreksel + ID van de tekenbevoegde).</p>
+                    </div>
+                  </>
+                )}
+                <div>
+                  <label htmlFor="reg-naam" className="block text-xs font-semibold text-ink-2 mb-1">
+                    {form.accountType === 'zakelijk' ? 'Naam contactpersoon' : 'Volledige naam'}
+                  </label>
                   <input id="reg-naam" name="naam" autoComplete="name" value={form.naam} onChange={e => update('naam', e.target.value)}
                     placeholder="Naam" required
                     className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
@@ -552,8 +601,19 @@ export default function Login({ onLogin }) {
                 placeholder="••••••••" type="password" required minLength={8}
                 aria-describedby={tab === 'register' ? 'pw-hint' : undefined}
                 className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
-              {tab === 'register' && (
-                <p id="pw-hint" className="text-xs text-gray-500 mt-1">Minimaal 8 tekens</p>
+              {tab === 'register' && form.password && (() => {
+                const s = wachtwoordSterkte(form.password);
+                return (
+                  <div id="pw-hint" className="mt-2">
+                    <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                      <div className={`h-full rounded-full transition-all duration-300 ${s.kleur}`} style={{ width: `${s.pct}%` }} />
+                    </div>
+                    <p className={`text-[11px] mt-1 font-medium ${s.tekst}`}>{s.label}</p>
+                  </div>
+                );
+              })()}
+              {tab === 'register' && !form.password && (
+                <p id="pw-hint" className="text-xs text-gray-500 mt-1">Hoofdletter, cijfer en 10+ tekens</p>
               )}
             </div>
 
