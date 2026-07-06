@@ -990,27 +990,26 @@ Gebouwd voor mensen zoals u.</h1>
         <span class="app-pill">WhatsApp-bevestiging</span>
         <span class="app-pill">Live koersalerts</span>
       </div>
-      <div class="app-badges">
-        <div class="app-badge-block">
-          <span class="app-badge-label" data-i18n="app_download_ios">Download in de App Store</span>
-          <a href="/app" class="app-badge-link" aria-label="Download SwiftBridge in de App Store">
-            <svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true">
-              <rect width="120" height="40" rx="6" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.3" stroke-width="1"/>
-              <text x="10" y="25" font-family="system-ui" font-size="10" fill="white" opacity="0.9">&#xf8ff; App Store</text>
-            </svg>
-          </a>
-          <span class="app-trust-note" data-i18n="app_trust_line">Gratis · Geen creditcard · Onder DNB-toezicht</span>
-        </div>
-        <div class="app-badge-block">
-          <span class="app-badge-label" data-i18n="app_download_android">Downloaden via Google Play</span>
-          <a href="/app" class="app-badge-link" aria-label="Download SwiftBridge via Google Play">
-            <svg width="120" height="40" viewBox="0 0 120 40" fill="none" aria-hidden="true">
-              <rect width="120" height="40" rx="6" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.3" stroke-width="1"/>
-              <text x="10" y="25" font-family="system-ui" font-size="10" fill="white" opacity="0.9">&#x25B6; Google Play</text>
-            </svg>
-          </a>
-          <span class="app-trust-note">Gratis te downloaden voor Android</span>
-        </div>
+      <!-- Installeer rechtstreeks vanaf de website als app (PWA) — geen App
+           Store of Google Play nodig. De knop triggert de browser-installatie
+           (Android/Chrome/Edge); iOS krijgt korte instructies. -->
+      <div class="app-install">
+        <button id="pwa-install-btn" type="button" class="btn btn-primary" style="display:none">
+          &#x2B07; Installeer de app op je telefoon
+        </button>
+        <a id="pwa-install-fallback" class="btn btn-primary" href="/login?tab=register">
+          Gratis account &amp; app openen
+        </a>
+        <p id="pwa-ios-hint" class="app-trust-note" style="display:none;margin-top:.75rem">
+          Op iPhone/iPad: tik op <strong>Deel</strong> &#x2191; onderin Safari &rarr;
+          <strong>Zet op beginscherm</strong>. Dan staat SwiftBridge als app op je toestel.
+        </p>
+        <p class="app-trust-note" style="margin-top:.5rem" data-i18n="app_trust_line">
+          Gratis &middot; Geen creditcard &middot; Onder DNB-toezicht via EMI-partner
+        </p>
+        <p class="app-trust-note" style="opacity:.7;margin-top:.25rem">
+          Binnenkort ook in de App Store en Google Play.
+        </p>
       </div>
     </div>
     <div class="app-phone-mock" aria-hidden="true">
@@ -1811,6 +1810,42 @@ if ('IntersectionObserver' in window) {
     }
   }
 })();
+</script>
+
+<!-- App installeren vanaf de website (PWA) — geen app store nodig. -->
+<script>
+(function(){
+  'use strict';
+  var btn = document.getElementById('pwa-install-btn');
+  var fallback = document.getElementById('pwa-install-fallback');
+  var iosHint = document.getElementById('pwa-ios-hint');
+  if (!btn) return;
+
+  // Al geïnstalleerd? (draait als standalone app)
+  var staatAlsApp = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+  if (staatAlsApp) return;
+
+  var uitgesteld = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    uitgesteld = e;
+    btn.style.display = 'inline-flex';
+    if (fallback) fallback.style.display = 'none';
+  });
+
+  btn.addEventListener('click', function(){
+    if (!uitgesteld) return;
+    uitgesteld.prompt();
+    uitgesteld.userChoice.finally(function(){ uitgesteld = null; btn.style.display = 'none'; });
+  });
+
+  window.addEventListener('appinstalled', function(){ btn.style.display = 'none'; });
+
+  // iOS/iPadOS ondersteunt beforeinstallprompt niet → toon 'zet op beginscherm'.
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS && iosHint) { iosHint.style.display = 'block'; if (fallback) fallback.style.display = 'none'; }
+}());
 </script>
 
 <!-- Warme overdracht: de calculator-CTA neemt het berekende bedrag + valuta mee
