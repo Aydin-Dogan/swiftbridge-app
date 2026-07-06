@@ -549,7 +549,7 @@ Gebouwd voor mensen zoals u.</h1>
           </div>
 
           <p class="calc-disclaimer" data-i18n="calc_indicatief_note">&#8224; Indicatieve koers. Koersen bevestigd voor elke transactie. Werkelijk tarief kan afwijken.</p>
-          <a class="btn btn-primary calc-cta" href="/login?tab=register" role="button" data-i18n="calc_cta">Begin gratis &rarr;</a>
+          <a class="btn btn-primary calc-cta" id="calc-cta" href="/calculator" role="button" data-i18n="calc_cta">Begin gratis &rarr;</a>
         </form>
       </div>
     </div>
@@ -1811,6 +1811,29 @@ if ('IntersectionObserver' in window) {
     }
   }
 })();
+</script>
+
+<!-- Warme overdracht: de calculator-CTA neemt het berekende bedrag + valuta mee
+     naar /calculator in de app, die deze params vooringevuld overneemt. Zo gaat
+     de intentie van de bezoeker niet verloren op het duurste moment. -->
+<script>
+(function(){
+  'use strict';
+  var cta = document.getElementById('calc-cta');
+  var amt = document.getElementById('calc-amount');
+  var cur = document.getElementById('calc-currency');
+  if (!cta || !amt || !cur) return;
+  function sync(){
+    var b = parseInt(amt.value, 10);
+    var v = cur.value || 'TRY';
+    var q = '/calculator?valuta=' + encodeURIComponent(v);
+    if (b && b >= 10 && b <= 5000) q += '&bedrag=' + b;
+    cta.setAttribute('href', q);
+  }
+  amt.addEventListener('input', sync);
+  cur.addEventListener('change', sync);
+  sync();
+}());
 </script>
 
 <!-- Live koersen: overschrijft de fallback-RATES met de echte SwiftBridge-koersen (indicatief). -->
