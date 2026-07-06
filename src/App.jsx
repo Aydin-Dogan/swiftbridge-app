@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate, useParams } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import LiveKoersTicker from './components/LiveKoersTicker';
@@ -582,6 +582,40 @@ export default function App() {
       window.removeEventListener('blur', lockApp);
     };
   }, [pinIngeschakeld, pinOntgrendeld]);
+
+  // Sessie-keepalive: de backend-sessie verloopt na 15 min inactiviteit
+  // (rollend). Zonder dit zou een ACTIEVE gebruiker die 15 min in een
+  // betaalformulier bezig is er hard uitvliegen (401 → dataverlies). Daarom
+  // verversen we de sessie proactief zolang de gebruiker aantoonbaar actief
+  // is — precies zoals ING/bunq. Inactieve gebruikers verlopen gewoon.
+  const laatsteActiviteit = useRef(Date.now());
+  useEffect(() => {
+    if (!gebruiker?.id) return;
+    const markeer = () => { laatsteActiviteit.current = Date.now(); };
+    const events = ['mousedown', 'keydown', 'touchstart', 'scroll', 'input'];
+    events.forEach((e) => window.addEventListener(e, markeer, { passive: true }));
+
+    // Elke 4 min: was de gebruiker in de laatste 13 min actief? Rol dan de
+    // 15-min-sessie door. Faalt de refresh met 401, dan is de sessie echt weg.
+    const interval = setInterval(async () => {
+      const actiefRecent = Date.now() - laatsteActiviteit.current < 13 * 60 * 1000;
+      if (!actiefRecent) return;
+      try {
+        await apiFetch('/auth/refresh', { method: 'POST' });
+      } catch (err) {
+        if (err?.status === 401) {
+          wisGevoeligeStorage();
+          setGebruiker(null);
+        }
+        // andere fouten (netwerk): laten liggen, volgende tick probeert opnieuw
+      }
+    }, 4 * 60 * 1000);
+
+    return () => {
+      clearInterval(interval);
+      events.forEach((e) => window.removeEventListener(e, markeer));
+    };
+  }, [gebruiker?.id]);
 
   // Bij opstarten: vraag /auth/me — als 401, dan niet ingelogd
   useEffect(() => {
