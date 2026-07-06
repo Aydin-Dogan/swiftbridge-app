@@ -45,6 +45,7 @@ const SeoPaparaYukleme = lazy(() => import('./pages/seo/PaparaYukleme'));
 const SeoBayramRemittance = lazy(() => import('./pages/seo/BayramRemittance'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const LocaleLanding = lazy(() => import('./pages/LocaleLanding'));
+const BevestigInlog = lazy(() => import('./pages/BevestigInlog'));
 const Status = lazy(() => import('./pages/Status'));
 const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
@@ -749,6 +750,12 @@ export default function App() {
           <Route path="/login" element={
             token ? <Navigate to="/app" replace /> :
             <Login onLogin={handleLogin} />
+          } />
+          {/* Inlog bevestigen via de app (ING-model) — push-notificatie wijst hierheen */}
+          <Route path="/bevestig-inlog" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <BevestigInlog onLogin={handleLogin} />
+            </Suspense>
           } />
           <Route path="/app" element={
             <ProtectedRoute token={token} gebruiker={gebruiker} onLogout={handleLogout}>

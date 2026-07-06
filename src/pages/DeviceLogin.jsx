@@ -4,46 +4,50 @@ import { Zap } from '../components/icons/Icons';
 
 /**
  * ING-stijl device-login. Twee modi:
- *  - modus="inloggen": snelle login op een gekoppeld toestel met de 5-cijferige
+ *  - modus="inloggen": snelle login op een gekoppeld toestel met de 6-cijferige
  *    toegangscode (POST /auth/apparaat/inloggen).
  *  - modus="koppelen": ná een volledige login dit toestel onthouden door een
- *    5-cijferige code te kiezen (POST /auth/apparaat/koppelen).
+ *    6-cijferige code te kiezen (POST /auth/apparaat/koppelen).
  *
  * Bezit van het gekoppelde toestel (httpOnly cookie) + kennis van de code =
  * twee factoren, zonder e-mailcode bij elke login.
+ * (5→6 cijfers op verzoek Aydin 6-7-2026; bestaande 5-cijferige codes blijven
+ * inloggen via de knop — auto-submit gebeurt pas bij 6 cijfers.)
  */
+export const CODE_LENGTE = 6;
 
-// 5 losse cijfervelden met auto-advance, backspace en plak-ondersteuning.
-function CodeInvoer({ waarde, setWaarde, onCompleet, disabled }) {
+// Losse cijfervelden met auto-advance, backspace en plak-ondersteuning.
+// Ook gebruikt door het "Bevestig inlog"-scherm (BevestigInlog.jsx).
+export function CodeInvoer({ waarde, setWaarde, onCompleet, disabled, lengte = CODE_LENGTE }) {
   const refs = useRef([]);
-  const cijfers = waarde.padEnd(5, ' ').slice(0, 5).split('');
+  const cijfers = waarde.padEnd(lengte, ' ').slice(0, lengte).split('');
 
   function zet(i, v) {
     const only = v.replace(/\D/g, '');
     if (!only) return;
     const arr = waarde.split('');
     arr[i] = only[only.length - 1];
-    const nieuw = arr.join('').slice(0, 5);
+    const nieuw = arr.join('').slice(0, lengte);
     setWaarde(nieuw);
-    if (i < 4) refs.current[i + 1]?.focus();
-    if (nieuw.replace(/\s/g, '').length === 5) onCompleet?.(nieuw);
+    if (i < lengte - 1) refs.current[i + 1]?.focus();
+    if (nieuw.replace(/\s/g, '').length === lengte) onCompleet?.(nieuw);
   }
   function toets(i, e) {
     if (e.key === 'Backspace') {
       e.preventDefault();
-      const arr = waarde.padEnd(5, ' ').split('');
+      const arr = waarde.padEnd(lengte, ' ').split('');
       if (arr[i] && arr[i] !== ' ') { arr[i] = ' '; setWaarde(arr.join('').trimEnd()); }
       else if (i > 0) { arr[i - 1] = ' '; setWaarde(arr.join('').trimEnd()); refs.current[i - 1]?.focus(); }
     }
   }
   function plak(e) {
-    const t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 5);
-    if (t) { e.preventDefault(); setWaarde(t); if (t.length === 5) onCompleet?.(t); else refs.current[t.length]?.focus(); }
+    const t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, lengte);
+    if (t) { e.preventDefault(); setWaarde(t); if (t.length === lengte) onCompleet?.(t); else refs.current[t.length]?.focus(); }
   }
   useEffect(() => { refs.current[0]?.focus(); }, []);
 
   return (
-    <div className="flex justify-center gap-2.5" onPaste={plak}>
+    <div className="flex justify-center gap-2" onPaste={plak}>
       {cijfers.map((c, i) => (
         <input
           key={i}
@@ -57,7 +61,7 @@ function CodeInvoer({ waarde, setWaarde, onCompleet, disabled }) {
           value={c.trim()}
           onChange={(e) => zet(i, e.target.value)}
           onKeyDown={(e) => toets(i, e)}
-          className="w-12 h-14 text-center text-2xl font-semibold rounded-xl border-2 border-gray-300 bg-white text-brand-700 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:opacity-50"
+          className="w-11 h-14 text-center text-2xl font-semibold rounded-xl border-2 border-gray-300 bg-white text-brand-700 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 disabled:opacity-50"
         />
       ))}
     </div>
@@ -73,7 +77,8 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
 
   async function snelleLogin(volledig) {
     const c = volledig || code;
-    if (c.length !== 5 || laden) return;
+    // Minimaal 5: koppelingen van vóór de 6-cijfer-omschakeling blijven werken.
+    if (c.length < 5 || laden) return;
     setLaden(true); setFout('');
     try {
       await apiFetch('/auth/apparaat/inloggen', { method: 'POST', body: { toegangscode: c } });
@@ -91,7 +96,7 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
 
   async function koppel() {
     if (stap === 'code') {
-      if (code.length !== 5) return setFout('Kies een 5-cijferige code.');
+      if (code.length !== CODE_LENGTE) return setFout(`Kies een ${CODE_LENGTE}-cijferige code.`);
       setFout(''); setStap('herhaal'); return;
     }
     if (code2 !== code) { setFout('De codes komen niet overeen.'); setCode2(''); setStap('code'); setCode(''); return; }
@@ -111,9 +116,9 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
     : 'Welkom terug';
   const uitleg = isKoppel
     ? (stap === 'code'
-        ? 'Kies een 5-cijferige toegangscode. Daarmee log je op dit toestel voortaan snel en veilig in — zonder e-mailcode.'
-        : 'Voer dezelfde 5 cijfers nog een keer in ter bevestiging.')
-    : `Voer je 5-cijferige toegangscode in${apparaatNaam ? '' : ''}.`;
+        ? `Kies een ${CODE_LENGTE}-cijferige toegangscode. Daarmee log je op dit toestel voortaan snel en veilig in — zonder e-mailcode.`
+        : `Voer dezelfde ${CODE_LENGTE} cijfers nog een keer in ter bevestiging.`)
+    : `Voer je ${CODE_LENGTE}-cijferige toegangscode in${apparaatNaam ? '' : ''}.`;
 
   const huidig = isKoppel && stap === 'herhaal' ? code2 : code;
   const setHuidig = isKoppel && stap === 'herhaal' ? setCode2 : setCode;
@@ -135,7 +140,7 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
         <div className="mt-6 space-y-3">
           {isKoppel ? (
             <>
-              <button onClick={koppel} disabled={laden || huidig.length !== 5}
+              <button onClick={koppel} disabled={laden || huidig.length !== CODE_LENGTE}
                 className="btn-inst w-full py-3.5 disabled:opacity-50">
                 {laden ? 'Bezig…' : (stap === 'code' ? 'Volgende' : 'Apparaat koppelen')}
               </button>
@@ -145,7 +150,7 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
             </>
           ) : (
             <>
-              <button onClick={() => snelleLogin()} disabled={laden || code.length !== 5}
+              <button onClick={() => snelleLogin()} disabled={laden || code.length < 5}
                 className="btn-inst w-full py-3.5 disabled:opacity-50">
                 {laden ? 'Inloggen…' : 'Inloggen'}
               </button>

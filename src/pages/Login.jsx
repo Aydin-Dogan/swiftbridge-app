@@ -5,6 +5,7 @@ import { useTaal } from '../i18n';
 import { apiFetch, haalProfiel } from '../services/api';
 import { Mail, Lock, Zap, AlertTriangle } from '../components/icons/Icons';
 import DeviceLogin from './DeviceLogin';
+import InlogWachtOpApp from './InlogWachtOpApp';
 
 export default function Login({ onLogin }) {
   const [params] = useSearchParams();
@@ -44,6 +45,9 @@ export default function Login({ onLogin }) {
   const [resetOk, setResetOk] = useState(false);
   const [resetLaden, setResetLaden] = useState(false);
 
+  // ING-model: website-login wacht op bevestiging in de app (push → app → code)
+  const [bevestigingToken, setBevestigingToken] = useState(null);
+
   // ING-stijl device-login: is dit toestel gekoppeld?
   const [apparaatStatus, setApparaatStatus] = useState('onbekend'); // onbekend | gekoppeld | nee
   const [apparaatNaam, setApparaatNaam] = useState(null);
@@ -54,17 +58,28 @@ export default function Login({ onLogin }) {
   useEffect(() => { setFout(''); }, [tab]);
 
   // Bij binnenkomst: is dit toestel al gekoppeld? (bepaalt snel-inlog-scherm)
+  // Gekoppeld toestel + openstaande inlogpoging elders → direct naar het
+  // bevestig-scherm (voor wie de app zelf opent i.p.v. op de melding te tikken).
   useEffect(() => {
     if (resetToken) return;
     let weg = false;
     apiFetch('/auth/apparaat/status')
-      .then((d) => { if (!weg) { setApparaatStatus(d?.gekoppeld ? 'gekoppeld' : 'nee'); setApparaatNaam(d?.apparaatNaam || null); } })
+      .then((d) => {
+        if (weg) return;
+        setApparaatStatus(d?.gekoppeld ? 'gekoppeld' : 'nee');
+        setApparaatNaam(d?.apparaatNaam || null);
+        if (d?.gekoppeld) {
+          apiFetch('/auth/inlog-bevestiging/openstaand')
+            .then((o) => { if (!weg && o?.openstaand) navigate('/bevestig-inlog'); })
+            .catch(() => {});
+        }
+      })
       .catch(() => { if (!weg) setApparaatStatus('nee'); });
     return () => { weg = true; };
-  }, [resetToken]);
+  }, [resetToken, navigate]);
 
   // Na een geslaagde volledige login: als dit toestel nog niet gekoppeld is,
-  // bied aan het te onthouden (5-cijferige code) — anders meteen door.
+  // bied aan het te onthouden (6-cijferige code) — anders meteen door.
   function naSuccesLogin(profiel) {
     if (apparaatStatus !== 'gekoppeld') { setNaProfiel(profiel); setToonKoppel(true); return; }
     onLogin(null, profiel);
@@ -115,6 +130,12 @@ export default function Login({ onLogin }) {
 
       // apiFetch zet `credentials: 'include'` — backend zet sb_token cookie.
       const data = await apiFetch(endpoint, { method: 'POST', body });
+
+      // App-bevestiging (ING-model): wachten tot de gebruiker in de app bevestigt
+      if (data.appBevestiging) {
+        setBevestigingToken(data.bevestigingToken);
+        return;
+      }
 
       // 2FA tussenstap
       if (data.tweeFactor) {
@@ -231,6 +252,22 @@ export default function Login({ onLogin }) {
     } finally {
       setHerverzendBezig(false);
     }
+  }
+
+  // Wachten op bevestiging in de app (ING-model) ná de wachtwoordstap.
+  if (bevestigingToken) {
+    return (
+      <InlogWachtOpApp
+        bevestigingToken={bevestigingToken}
+        onIngelogd={(profiel) => { setBevestigingToken(null); naSuccesLogin(profiel); }}
+        onFallback={(d) => {
+          setBevestigingToken(null);
+          setTwofaUserId(d.userId);
+          setTwofaPendingToken(d.pendingToken || null);
+        }}
+        onTerug={() => setBevestigingToken(null)}
+      />
+    );
   }
 
   // ── 2FA code invoeren ──
