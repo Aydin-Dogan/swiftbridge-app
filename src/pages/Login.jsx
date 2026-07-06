@@ -434,7 +434,7 @@ export default function Login({ onLogin }) {
             <Zap className="w-10 h-10 text-accent-400" />
             <div className="text-left">
               <div className="font-display text-2xl font-medium">SwiftBridge</div>
-              <div className="text-blue-200 text-xs">NL → TR in &lt;5 minuten</div>
+              <div className="text-blue-200 text-xs">{t('slogan')}</div>
             </div>
           </button>
         </div>
@@ -481,7 +481,7 @@ export default function Login({ onLogin }) {
                       refValidatie.status === 'geldig'
                         ? 'border-success-500 bg-success-50'
                         : refValidatie.status === 'ongeldig'
-                        ? 'border-rose-300 bg-rose-50'
+                        ? 'border-red-300 bg-red-50'
                         : 'border-border focus:border-brand-500'
                     }`}
                   />
@@ -494,7 +494,7 @@ export default function Login({ onLogin }) {
                     </p>
                   )}
                   {refValidatie.status === 'ongeldig' && form.referralCode && (
-                    <p className="text-[11px] text-rose-600 mt-1">
+                    <p className="text-[11px] text-red-600 mt-1">
                       {t('registreer_referral_ongeldig')}
                     </p>
                   )}
@@ -543,7 +543,7 @@ export default function Login({ onLogin }) {
         </div>
 
         <p className="text-center text-blue-200 text-xs mt-6">
-          Beveiligd via JWT · Rate limited · End-to-end versleuteld
+          {t('beveiligd_via_jwt')}
         </p>
       </div>
     </div>

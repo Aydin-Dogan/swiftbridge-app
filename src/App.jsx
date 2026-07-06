@@ -302,7 +302,7 @@ function AppShell({ gebruiker, token, onLogout }) {
             />
             <div>
               <h1 className="text-base font-extrabold text-gray-900 leading-none">SwiftBridge</h1>
-              <p className="text-xs text-blue-600 font-medium">NL → TR in &lt;5 min</p>
+              <p className="text-xs text-blue-600 font-medium">{t('slogan')}</p>
             </div>
           </button>
           <div className="flex items-center gap-2">

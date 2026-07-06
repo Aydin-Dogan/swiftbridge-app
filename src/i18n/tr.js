@@ -1,7 +1,7 @@
 export const tr = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'NL → TR <5 dakikada',
+ slogan:'Bankanız kadar güvenilir',
  laden:'İşleniyor...',
  opslaan:'Kaydet',
  annuleren:'İptal',
@@ -176,7 +176,7 @@ export const tr = {
  uitloggen:'Çıkış yap',
 
  // Voettekst
- beveiligd_via_jwt:'JWT ile güvenli · Hız sınırlı · Uçtan uca şifreli',
+ beveiligd_via_jwt:'EMI ortağımız aracılığıyla DNB denetimi · 256-bit şifreleme · Wwft uyumlu',
 
  // ── Profil: WhatsApp opt-in ──────────────────────────────────────────────
  profiel_whatsapp_titel:'Aile için WhatsApp onayı',
@@ -224,7 +224,7 @@ export const tr = {
  gdpr_wwft_disclaimer:'Önemli — Wwft Madde 38, anonimleştirme sonrasında bile işlem geçmişini 5 yıl saklamamızı zorunlu kılar. Yalnızca kişisel kimlik bilgileri (PII) silinir.',
  gdpr_download_titel:'Verilerimi indir',
  gdpr_download_uitleg:'Tüm profil bilgileriniz, işlemler, KYC kayıtları, denetim günlüğü ve bildirim ayarlarınızı içeren tek bir JSON dosyası. Doğrudan cihazınıza kaydedin.',
- gdpr_download_knop:'⬇️ JSON olarak indir',
+ gdpr_download_knop:'JSON olarak indir',
  gdpr_download_bezig:'Hazırlanıyor...',
  gdpr_download_subtekst:'Bu dosyayı güvenli bir yerde saklayın — tüm kişisel verilerinizi içerir.',
  gdpr_download_succes:'İndirme başladı. Dosyanızı güvenli bir yerde saklayın.',

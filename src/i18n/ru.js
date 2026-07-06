@@ -1,7 +1,7 @@
 export const ru = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'NL → TR менее чем за 5 минут',
+ slogan:'Надёжен, как ваш банк',
  laden:'Загрузка...',
  opslaan:'Сохранить',
  annuleren:'Отмена',
@@ -161,7 +161,7 @@ export const ru = {
  uitloggen:'Выйти',
 
  // Voettekst
- beveiligd_via_jwt:'Защищено JWT · Ограничение запросов · Сквозное шифрование',
+ beveiligd_via_jwt:'Под надзором DNB через EMI-партнёра · 256-битное шифрование · Соответствие Wwft',
 
  // ── Profiel: WhatsApp opt-in ─────────────────────────────────────────────
  profiel_whatsapp_titel:'Подтверждение в WhatsApp для семьи',
@@ -209,7 +209,7 @@ export const ru = {
  gdpr_wwft_disclaimer:'Внимание — Wwft ст. 38 обязывает нас хранить вашу историю транзакций 5 лет, даже после анонимизации. Удаляются только персональные идентификационные данные (PII).',
  gdpr_download_titel:'Скачать мои данные',
  gdpr_download_uitleg:'Один JSON-файл со всеми данными профиля, транзакциями, KYC-записями, журналом аудита и настройками уведомлений. Сохраняется прямо на ваше устройство.',
- gdpr_download_knop:'⬇️ Скачать как JSON',
+ gdpr_download_knop:'Скачать как JSON',
  gdpr_download_bezig:'Подготовка...',
  gdpr_download_subtekst:'Храните этот файл в безопасном месте — он содержит все ваши персональные данные.',
  gdpr_download_succes:'Загрузка начата. Сохраните файл в безопасном месте.',

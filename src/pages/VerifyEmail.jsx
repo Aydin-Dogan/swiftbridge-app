@@ -95,7 +95,7 @@ export default function VerifyEmail() {
             <Zap className="w-9 h-9" aria-hidden="true" />
             <div className="text-left">
               <div className="text-2xl font-extrabold">SwiftBridge</div>
-              <div className="text-blue-200 text-xs">NL → TR in &lt;5 minuten</div>
+              <div className="text-blue-200 text-xs">{t('slogan')}</div>
             </div>
           </button>
         </div>

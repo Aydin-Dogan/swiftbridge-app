@@ -1,7 +1,7 @@
 export const nl = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'NL → TR in <5 minuten',
+ slogan:'Zo betrouwbaar als uw bank',
  laden:'Bezig...',
  opslaan:'Opslaan',
  annuleren:'Annuleren',
@@ -176,7 +176,7 @@ export const nl = {
  uitloggen:'Uitloggen',
 
  // Voettekst
- beveiligd_via_jwt:'Beveiligd via JWT · Rate limited · End-to-end versleuteld',
+ beveiligd_via_jwt:'Onder DNB-toezicht via EMI-partner · 256-bit versleuteling · Wwft-conform',
 
  // ── Profiel: WhatsApp opt-in ─────────────────────────────────────────────
  profiel_whatsapp_titel:'WhatsApp bevestiging voor familie',
@@ -225,7 +225,7 @@ export const nl = {
  gdpr_wwft_disclaimer:'Let op — Wwft Art. 38 verplicht ons om je transactie-historie 5 jaar te bewaren, ook na anonimisering. Alleen persoonlijke identificatiegegevens (PII) worden gewist.',
  gdpr_download_titel:'Download mijn data',
  gdpr_download_uitleg:'Eén JSON-bestand met al je profielgegevens, transacties, KYC-records, audit-log en notificatie-instellingen. Direct opslaan op je apparaat.',
- gdpr_download_knop:'⬇️ Download als JSON',
+ gdpr_download_knop:'Download als JSON',
  gdpr_download_bezig:'Bezig met ophalen...',
  gdpr_download_subtekst:'Bewaar dit bestand op een veilige plek — het bevat al je persoonsgegevens.',
  gdpr_download_succes:'Download gestart. Bewaar je gegevensbestand op een veilige plek.',
