@@ -77,13 +77,13 @@ export default function Stap2KYC({ onStartKYC, onLater, onTerug }) {
       <div className="space-y-2">
         <button
           onClick={onStartKYC}
-          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg shadow-blue-600/30 active:scale-[0.98] transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="btn-inst w-full py-3.5"
         >
           {t('onb_kyc_start_idin')} →
         </button>
         <button
           onClick={onLater}
-          className="w-full bg-white hover:bg-slate-50 text-slate-700 font-semibold py-3 rounded-2xl text-sm border border-slate-200 active:scale-[0.98] transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+          className="w-full bg-surface hover:bg-brand-50 text-brand-700 font-semibold py-3 rounded-[3px] text-sm border border-border active:scale-[0.98] transition focus:outline-none focus:ring-2 focus:ring-brand-100"
         >
           {t('onb_kyc_later')}
         </button>

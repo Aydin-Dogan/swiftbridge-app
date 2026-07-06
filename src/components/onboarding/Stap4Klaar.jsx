@@ -92,7 +92,7 @@ export default function Stap4Klaar({ onNaarOverboeking }) {
       {/* CTA */}
       <button
         onClick={onNaarOverboeking}
-        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg shadow-blue-600/30 active:scale-[0.98] transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="btn-inst w-full py-3.5"
       >
         {t('onb_klaar_cta')} →
       </button>

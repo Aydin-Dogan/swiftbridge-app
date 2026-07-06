@@ -19,12 +19,12 @@ export default function Stap3Bevestig({ onVolgende }) {
       {/* Header */}
       <div className="text-center space-y-2">
         <div className="mb-2 flex justify-center" aria-hidden="true">
-          <Sparkles className="w-12 h-12 text-blue-600" />
+          <Sparkles className="w-12 h-12 text-accent-500" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
-          {t('onb_bevestig_titel')} <Check className="w-6 h-6 inline text-emerald-600" />
+        <h2 className="font-display text-2xl md:text-3xl font-bold text-ink-1 leading-tight">
+          {t('onb_bevestig_titel')} <Check className="w-6 h-6 inline text-success-600" />
         </h2>
-        <p className="text-sm text-slate-600 max-w-md mx-auto">
+        <p className="text-sm text-ink-2 max-w-md mx-auto">
           {t('onb_bevestig_subtitel')}
         </p>
       </div>
@@ -78,7 +78,7 @@ export default function Stap3Bevestig({ onVolgende }) {
       {/* CTA */}
       <button
         onClick={onVolgende}
-        className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg shadow-emerald-600/30 active:scale-[0.98] transition focus:outline-none focus:ring-2 focus:ring-emerald-300"
+        className="btn-inst w-full py-3.5"
       >
         {t('onb_bevestig_cta')} →
       </button>

@@ -13,9 +13,9 @@ export default function Stap1Welkom({ gebruiker, onVolgende }) {
   const voornaam = gebruiker?.naam?.split(' ')[0] || '';
 
   const punten = [
-    { Icoon: Check, kleur: 'bg-emerald-100 text-emerald-700 border-emerald-200', tekst: t('onb_welkom_punt_1') },
-    { Icoon: Lightbulb, kleur: 'bg-blue-100 text-blue-700 border-blue-200', tekst: t('onb_welkom_punt_2') },
-    { Icoon: Rocket, kleur: 'bg-amber-100 text-amber-700 border-amber-200', tekst: t('onb_welkom_punt_3') },
+    { Icoon: Check, kleur: 'bg-success-50 text-success-700 border-success-100', tekst: t('onb_welkom_punt_1') },
+    { Icoon: Lightbulb, kleur: 'bg-brand-50 text-brand-700 border-brand-100', tekst: t('onb_welkom_punt_2') },
+    { Icoon: Rocket, kleur: 'bg-accent-400/15 text-accent-600 border-accent-400/30', tekst: t('onb_welkom_punt_3') },
   ];
 
   return (
@@ -23,12 +23,12 @@ export default function Stap1Welkom({ gebruiker, onVolgende }) {
       {/* Header */}
       <div className="text-center space-y-2">
         <div className="mb-2 flex justify-center" aria-hidden="true">
-          <Sparkles className="w-12 h-12 text-blue-600" />
+          <Sparkles className="w-12 h-12 text-accent-500" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
+        <h2 className="font-display text-2xl md:text-3xl font-bold text-ink-1 leading-tight">
           {t('onb_welkom_titel', { naam: voornaam })}
         </h2>
-        <p className="text-sm text-slate-600 max-w-md mx-auto">
+        <p className="text-sm text-ink-2 max-w-md mx-auto">
           {t('onb_welkom_subtitel')}
         </p>
       </div>
@@ -49,7 +49,7 @@ export default function Stap1Welkom({ gebruiker, onVolgende }) {
       {/* CTA */}
       <button
         onClick={onVolgende}
-        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg shadow-blue-600/30 active:scale-[0.98] transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="btn-inst w-full py-3.5"
       >
         {t('onb_welkom_cta')} →
       </button>
