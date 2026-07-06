@@ -4,6 +4,7 @@ import TaalKiezer from '../components/TaalKiezer';
 import { useTaal } from '../i18n';
 import { apiFetch, haalProfiel } from '../services/api';
 import { Mail, Lock, Zap, AlertTriangle } from '../components/icons/Icons';
+import DeviceLogin from './DeviceLogin';
 
 export default function Login({ onLogin }) {
   const [params] = useSearchParams();
@@ -43,7 +44,32 @@ export default function Login({ onLogin }) {
   const [resetOk, setResetOk] = useState(false);
   const [resetLaden, setResetLaden] = useState(false);
 
+  // ING-stijl device-login: is dit toestel gekoppeld?
+  const [apparaatStatus, setApparaatStatus] = useState('onbekend'); // onbekend | gekoppeld | nee
+  const [apparaatNaam, setApparaatNaam] = useState(null);
+  const [metWachtwoord, setMetWachtwoord] = useState(false); // forceer volledig e-mail/wachtwoord-scherm
+  const [toonKoppel, setToonKoppel] = useState(false);       // koppel-aanbod ná volledige login
+  const [naProfiel, setNaProfiel] = useState(null);          // profiel om mee door te gaan na koppel
+
   useEffect(() => { setFout(''); }, [tab]);
+
+  // Bij binnenkomst: is dit toestel al gekoppeld? (bepaalt snel-inlog-scherm)
+  useEffect(() => {
+    if (resetToken) return;
+    let weg = false;
+    apiFetch('/auth/apparaat/status')
+      .then((d) => { if (!weg) { setApparaatStatus(d?.gekoppeld ? 'gekoppeld' : 'nee'); setApparaatNaam(d?.apparaatNaam || null); } })
+      .catch(() => { if (!weg) setApparaatStatus('nee'); });
+    return () => { weg = true; };
+  }, [resetToken]);
+
+  // Na een geslaagde volledige login: als dit toestel nog niet gekoppeld is,
+  // bied aan het te onthouden (5-cijferige code) — anders meteen door.
+  function naSuccesLogin(profiel) {
+    if (apparaatStatus !== 'gekoppeld') { setNaProfiel(profiel); setToonKoppel(true); return; }
+    onLogin(null, profiel);
+    navigate('/app');
+  }
 
   // Live validatie van referral code — debounced 400ms
   useEffect(() => {
@@ -99,8 +125,7 @@ export default function Login({ onLogin }) {
 
       // Cookie is gezet door server. Haal profiel op via /auth/me i.p.v. body te vertrouwen.
       const profiel = await haalProfiel();
-      onLogin(null, profiel || data.gebruiker);
-      navigate('/app');
+      naSuccesLogin(profiel || data.gebruiker);
     } catch (e) {
       setFout(e.message);
     } finally {
@@ -164,8 +189,7 @@ export default function Login({ onLogin }) {
       });
       // Cookie is gezet — haal profiel op via /auth/me
       const profiel = await haalProfiel();
-      onLogin(null, profiel);
-      navigate('/app');
+      naSuccesLogin(profiel);
     } catch (e) {
       setTwofaFout(e.message);
     } finally {
@@ -210,6 +234,30 @@ export default function Login({ onLogin }) {
   }
 
   // ── 2FA code invoeren ──
+  // Koppel-aanbod ná een geslaagde volledige login (dit toestel onthouden).
+  if (toonKoppel) {
+    return (
+      <DeviceLogin
+        modus="koppelen"
+        onGelukt={() => { onLogin(null, naProfiel); navigate('/app'); }}
+        onAnnuleer={() => { onLogin(null, naProfiel); navigate('/app'); }}
+      />
+    );
+  }
+
+  // Snelle login op een gekoppeld toestel: 5-cijferige toegangscode (ING-stijl).
+  if (apparaatStatus === 'gekoppeld' && !metWachtwoord && tab === 'login'
+      && !twofaUserId && !toonReset && !toonVergeten) {
+    return (
+      <DeviceLogin
+        modus="inloggen"
+        apparaatNaam={apparaatNaam}
+        onGelukt={(p) => { onLogin(null, p); navigate('/app'); }}
+        onAnderAccount={() => setMetWachtwoord(true)}
+      />
+    );
+  }
+
   if (twofaUserId) {
     // Plak code uit klembord (Clipboard API)
     async function plakUitKlembord() {
