@@ -42,8 +42,9 @@ registerRoute(navigationRoute);
 // uur-oude koers serveren zonder hint aan de UI — UI doet er berekeningen
 // op die afwijken van werkelijke markt. Plus maxEntries om unbounded growth
 // te voorkomen.
+// Matcht zowel het oude directe API-domein als de same-origin /api-proxy.
 registerRoute(
-  /^https:\/\/.*\.up\.railway\.app\/transactions\/koersen/,
+  /(\.up\.railway\.app\/|\/api\/)transactions\/koersen/,
   new NetworkFirst({
     cacheName: 'fx-koersen',
     networkTimeoutSeconds: 5,

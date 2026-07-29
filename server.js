@@ -4,6 +4,7 @@
  * MIME types and cache headers for PWA.
  */
 import http from 'http';
+import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -11,6 +12,70 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 8080;
 const DIST = path.join(__dirname, 'dist');
+
+// ── Same-origin API-proxy (fix "Geen token opgegeven", diagnose 28-7) ────────
+// De app en de API draaien op verschillende *.up.railway.app-subdomeinen; dat
+// zijn voor de browser twee losse "sites" (Public Suffix List), waardoor de
+// sb_token-cookie in browsers met third-party-cookie-blokkering (Safari/iOS,
+// Firefox, Chrome incognito/tracking-bescherming) wordt geweigerd. Door de API
+// via de EIGEN origin te serveren (/api/* → API) is de cookie first-party en
+// werkt inloggen in elke browser — zonder te wachten op het domein.
+// Frontend praat via VITE_API_URL=/api; blijft ook werken na de latere
+// migratie naar www.swiftbridge.nl.
+const API_PROXY_DOEL = process.env.API_PROXY_DOEL
+  || 'https://swiftbridge-api-production.up.railway.app';
+
+function proxyNaarApi(req, res) {
+  let doel;
+  try { doel = new URL(API_PROXY_DOEL); }
+  catch {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end('{"error":"API_PROXY_DOEL ongeldig"}');
+    return;
+  }
+  // /api/auth/login → /auth/login (API-routes zijn op root gemount)
+  const pad = req.url.replace(/^\/api(?=\/|\?|$)/, '') || '/';
+
+  const headers = { ...req.headers, host: doel.host };
+  // Klant-IP doorgeven zodat rate-limiting per klant blijft werken (de API
+  // leest dit via trust proxy; zie TRUST_PROXY_HOPS in de api).
+  const bestaandeXff = req.headers['x-forwarded-for'];
+  const peer = req.socket.remoteAddress || '';
+  headers['x-forwarded-for'] = bestaandeXff ? `${bestaandeXff}, ${peer}` : peer;
+  headers['x-forwarded-proto'] = 'https';
+
+  const mod = doel.protocol === 'https:' ? https : http;
+  const uit = mod.request({
+    protocol: doel.protocol,
+    hostname: doel.hostname,
+    port: doel.port || (doel.protocol === 'https:' ? 443 : 80),
+    path: pad,
+    method: req.method,
+    headers,
+  }, (apiRes) => {
+    // Cookie-paden herschrijven naar de proxy-prefix. Alleen smalle paden
+    // (zoals sb_refresh Path=/auth/refresh) — Path=/ blijft staan, anders zou
+    // sb_csrf onleesbaar worden voor de pagina (document.cookie).
+    const uitHeaders = { ...apiRes.headers };
+    if (uitHeaders['set-cookie']) {
+      uitHeaders['set-cookie'] = uitHeaders['set-cookie'].map((c) =>
+        c.replace(/;(\s*)Path=\/(?!;|\s|$)(?!api\/)/i, ';$1Path=/api/')
+      );
+    }
+    res.writeHead(apiRes.statusCode || 502, uitHeaders);
+    apiRes.pipe(res); // streamt ook SSE (/status live-updates) gewoon door
+  });
+  uit.on('error', (err) => {
+    console.error('API-proxy fout:', err.message);
+    if (!res.headersSent) {
+      res.writeHead(502, { 'Content-Type': 'application/json' });
+      res.end('{"error":"API tijdelijk niet bereikbaar. Probeer het opnieuw."}');
+    } else {
+      res.end();
+    }
+  });
+  req.pipe(uit);
+}
 
 const MIME_TYPES = {
   '.html':        'text/html; charset=utf-8',
@@ -41,6 +106,11 @@ const LANDING_ROUTES = {
 const server = http.createServer((req, res) => {
   // Strip query string
   let urlPath = req.url.split('?')[0];
+
+  // API-verkeer eerst: same-origin proxy naar de backend (zie boven).
+  if (urlPath === '/api' || urlPath.startsWith('/api/')) {
+    return proxyNaarApi(req, res);
+  }
   // Normaliseer trailing slash (bv. /zakelijk/ → /zakelijk)
   const routeKey = urlPath !== '/' ? urlPath.replace(/\/+$/, '') : urlPath;
 
