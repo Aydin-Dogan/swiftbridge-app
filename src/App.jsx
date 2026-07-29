@@ -46,6 +46,7 @@ const SeoBayramRemittance = lazy(() => import('./pages/seo/BayramRemittance'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const LocaleLanding = lazy(() => import('./pages/LocaleLanding'));
 const BevestigInlog = lazy(() => import('./pages/BevestigInlog'));
+const InfoAanleveren = lazy(() => import('./pages/InfoAanleveren'));
 const Status = lazy(() => import('./pages/Status'));
 const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
@@ -764,6 +765,14 @@ export default function App() {
           } />
           <Route path="/app/recurring" element={
             token ? <Recurring /> : <Navigate to="/login" replace />
+          } />
+          {/* "Info nodig"-flow (Wwft): klant levert categorie + foto + omschrijving aan */}
+          <Route path="/app/transactie-info/:transactieId" element={
+            token ? (
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+                <InfoAanleveren />
+              </Suspense>
+            ) : <Navigate to="/login" replace />
           } />
           <Route path="/r/:code" element={<ReferralRedirect />} />
           <Route path="/verifieer-email" element={<VerifyEmail />} />

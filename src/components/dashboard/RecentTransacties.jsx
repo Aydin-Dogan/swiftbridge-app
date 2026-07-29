@@ -10,10 +10,11 @@
  * - Skeleton loaders tijdens laden
  */
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TransactieReceipt from '../TransactieReceipt';
 import { formatBedrag } from '../../services/currencies';
 import { useTaal } from '../../i18n';
-import { CheckCircle, Clock, XCircle, X as XIcon, Zap } from '../icons/Icons';
+import { CheckCircle, Clock, XCircle, X as XIcon, Zap, Info } from '../icons/Icons';
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
@@ -50,6 +51,9 @@ function StatusBadge({ status, t }) {
     wacht_op_betaling: { pill: 'pill-warning', Icoon: Clock, label: t('status_in_behandeling') },
     mislukt: { pill: 'pill-error', Icoon: XCircle, label: t('status_mislukt') },
     geannuleerd: { pill: 'pill-neutral', Icoon: XIcon, label: t('status_geannuleerd') },
+    // "Info nodig"-flow (Wwft): compliance vraagt aanvullende informatie
+    info_nodig: { pill: 'pill-warning', Icoon: Info, label: t('status_info_nodig') },
+    info_in_behandeling: { pill: 'pill-warning', Icoon: Clock, label: t('status_info_in_behandeling') },
   };
   const s = map[status] || map.in_behandeling;
   return (
@@ -83,6 +87,7 @@ function RijSkeleton({ delay }) {
 
 export default function RecentTransacties({ transacties = [], laden = false }) {
   const { t } = useTaal();
+  const navigate = useNavigate();
   const [detailTx, setDetailTx] = useState(null);
 
   // Zoek + filter state (Verbetering NNN)
@@ -275,6 +280,17 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
                   </div>
                 </div>
               </button>
+              {/* "Info nodig" (Wwft): duidelijke actieknop direct onder de rij */}
+              {tx.status === 'info_nodig' && (
+                <div className="px-4 pb-3">
+                  <button
+                    onClick={() => navigate(`/app/transactie-info/${tx.id}`)}
+                    className="w-full py-2.5 rounded-md bg-accent-500 hover:bg-accent-600 text-white text-[0.7rem] font-semibold uppercase tracking-[0.16em] transition-colors"
+                  >
+                    {t('info_aanleveren_cta')}
+                  </button>
+                </div>
+              )}
             </li>
           ))}
         </ul>

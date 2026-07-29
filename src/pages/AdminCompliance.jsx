@@ -19,8 +19,9 @@ import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import {
   Users, Clock, CheckCircle, Euro, Calendar, Shield, Clipboard, Lock,
-  AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh,
+  AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh, Info, XCircle,
 } from '../components/icons/Icons';
+import { API_URL } from '../services/api';
 
 // Lazy load heavy admin sub-components — alleen ophalen wanneer tab geopend wordt.
 // Houdt de initial AdminCompliance bundle ~1MB+ kleiner (UserManagement 664 LOC + BannerBeheer 412 LOC).
@@ -259,6 +260,155 @@ function AuditTab() {
           </table>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ── Tab: "Info nodig"-verzoeken (Wwft, gapanalyse §9) ────────────────────────
+function InfoVerzoekenTab() {
+  const [filter, setFilter] = useState('ingediend');
+  const [verzoeken, setVerzoeken] = useState([]);
+  const [laden, setLaden] = useState(true);
+  const [fout, setFout] = useState('');
+  const [bezigId, setBezigId] = useState(null);
+  const [bewijsOpen, setBewijsOpen] = useState(null); // verzoek-id waarvan de foto open staat
+  // Markeer-formulier: transactie-id + reden
+  const [markeerTxId, setMarkeerTxId] = useState('');
+  const [markeerReden, setMarkeerReden] = useState('');
+  const [markeerBericht, setMarkeerBericht] = useState('');
+
+  const laad = useCallback(async () => {
+    setLaden(true); setFout('');
+    try {
+      const qs = filter === 'alle' ? '' : `?status=${filter}`;
+      const data = await apiFetch(`/admin/info-verzoeken${qs}`);
+      setVerzoeken(data.verzoeken || []);
+    } catch (e) { setFout(e.message); }
+    finally { setLaden(false); }
+  }, [filter]);
+
+  useEffect(() => { laad(); }, [laad]);
+
+  async function markeer() {
+    setMarkeerBericht('');
+    if (!markeerTxId.trim()) { setMarkeerBericht('Vul een transactie-ID in.'); return; }
+    try {
+      await apiFetch(`/admin/transacties/${markeerTxId.trim()}/info-nodig`, {
+        method: 'POST', body: { reden: markeerReden.trim() || undefined },
+      });
+      setMarkeerBericht('Gemarkeerd — de klant heeft e-mail en pushmelding ontvangen.');
+      setMarkeerTxId(''); setMarkeerReden('');
+      laad();
+    } catch (e) { setMarkeerBericht(e.message); }
+  }
+
+  async function beoordeel(id, besluit) {
+    const notitie = besluit === 'afgewezen'
+      ? (window.prompt('Toelichting voor de klant (optioneel):') || undefined)
+      : undefined;
+    setBezigId(id);
+    try {
+      await apiFetch(`/admin/info-verzoeken/${id}/beoordeel`, { method: 'POST', body: { besluit, notitie } });
+      laad();
+    } catch (e) { setFout(e.message); }
+    finally { setBezigId(null); }
+  }
+
+  const STATUS_STIJL = {
+    wachtend: 'bg-amber-50 text-amber-700 border-amber-200',
+    ingediend: 'bg-brand-50 text-brand-700 border-brand-100',
+    vrijgegeven: 'bg-success-50 text-success-700 border-success-100',
+    afgewezen: 'bg-red-50 text-red-600 border-red-200',
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* Transactie markeren als "Info nodig" */}
+      <div className="bg-surface border border-border rounded-md p-4 shadow-soft">
+        <h3 className="font-display font-medium text-ink-1 mb-1">Transactie markeren: informatie nodig</h3>
+        <p className="text-xs text-ink-3 mb-3">
+          De transactie wordt gepauzeerd; de klant krijgt e-mail + pushmelding en levert categorie,
+          omschrijving en een bewijsfoto aan. (Transactie-ID: kopieer uit het Transacties-tabblad.)
+        </p>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <input value={markeerTxId} onChange={(e) => setMarkeerTxId(e.target.value)}
+            placeholder="Transactie-ID" className="flex-1 border border-border rounded-md px-3 py-2 text-sm font-mono bg-surface outline-none focus:border-brand-500" />
+          <input value={markeerReden} onChange={(e) => setMarkeerReden(e.target.value)}
+            placeholder="Reden (optioneel, ziet de klant)" className="flex-1 border border-border rounded-md px-3 py-2 text-sm bg-surface outline-none focus:border-brand-500" />
+          <button onClick={markeer} className="btn-inst px-5 py-2.5">Markeer</button>
+        </div>
+        {markeerBericht && <p className="text-xs mt-2 text-ink-2">{markeerBericht}</p>}
+      </div>
+
+      {/* Filter */}
+      <div className="flex gap-1.5 flex-wrap">
+        {['ingediend', 'wachtend', 'vrijgegeven', 'afgewezen', 'alle'].map((f) => (
+          <button key={f} onClick={() => setFilter(f)}
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition
+              ${filter === f ? 'bg-brand-500 text-white border-brand-500' : 'bg-surface text-ink-2 border-border hover:border-brand-300'}`}>
+            {f === 'alle' ? 'Alle' : f.charAt(0).toUpperCase() + f.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {fout && <p className="text-sm text-red-600">{fout}</p>}
+      {laden && <p className="text-sm text-ink-3">Laden…</p>}
+      {!laden && verzoeken.length === 0 && (
+        <p className="text-sm text-ink-3 py-6 text-center">Geen verzoeken met deze status.</p>
+      )}
+
+      {verzoeken.map((v) => (
+        <div key={v.id} className="bg-surface border border-border rounded-md p-4 shadow-soft">
+          <div className="flex items-start justify-between gap-3 flex-wrap">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${STATUS_STIJL[v.status] || ''}`}>{v.status}</span>
+                <span className="font-semibold text-ink-1 text-sm">{v.gebruikerNaam}</span>
+                <span className="text-xs text-ink-3">{v.gebruikerEmail}</span>
+              </div>
+              <div className="text-sm text-ink-2 mt-1.5">
+                {fmtEur(v.eurBedrag)} naar <strong className="text-ink-1">{v.ontvangerNaam}</strong>
+                {v.referentie ? <span className="text-ink-3"> · {v.referentie}</span> : null}
+              </div>
+              {v.reden && <div className="text-xs text-ink-3 mt-1">Reden markering: {v.reden}</div>}
+              {v.status !== 'wachtend' && (
+                <div className="mt-2 text-sm">
+                  <span className="text-ink-3">Categorie:</span> <strong className="text-ink-1">{v.categorie || '—'}</strong>
+                  {v.omschrijving && <p className="text-ink-2 mt-1 border-l-2 border-brand-100 pl-2">{v.omschrijving}</p>}
+                </div>
+              )}
+              {v.beoordelingNotitie && <div className="text-xs text-ink-3 mt-1">Notitie beoordeling: {v.beoordelingNotitie}</div>}
+            </div>
+            <div className="flex flex-col gap-2 items-end shrink-0">
+              {v.heeftBewijs && (
+                <button onClick={() => setBewijsOpen(bewijsOpen === v.id ? null : v.id)}
+                  className="text-xs font-semibold text-brand-700 hover:underline underline-offset-4">
+                  {bewijsOpen === v.id ? 'Verberg bewijs' : 'Bekijk bewijs'}
+                </button>
+              )}
+              {(v.status === 'ingediend' || v.status === 'wachtend') && (
+                <div className="flex gap-2">
+                  <button onClick={() => beoordeel(v.id, 'vrijgegeven')} disabled={bezigId === v.id}
+                    className="px-3 py-1.5 rounded-md bg-success-600 hover:bg-success-700 text-white text-xs font-semibold disabled:opacity-50 inline-flex items-center gap-1">
+                    <CheckCircle className="w-3.5 h-3.5" /> Vrijgeven
+                  </button>
+                  <button onClick={() => beoordeel(v.id, 'afgewezen')} disabled={bezigId === v.id}
+                    className="px-3 py-1.5 rounded-md bg-red-600 hover:bg-red-700 text-white text-xs font-semibold disabled:opacity-50 inline-flex items-center gap-1">
+                    <XCircle className="w-3.5 h-3.5" /> Afwijzen
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          {bewijsOpen === v.id && (
+            <div className="mt-3 border-t border-border pt-3">
+              {/* Cookie-sessie authenticeert het beeld; via de /api-proxy is dit same-origin */}
+              <img src={`${API_URL}/admin/info-verzoeken/${v.id}/bewijs`} alt="Bewijsstuk van de klant"
+                className="max-h-96 rounded-md border border-border" />
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
@@ -531,6 +681,7 @@ export default function AdminCompliance() {
     { id: 'stats', label: 'Overzicht', icoon: null },
     { id: 'users', label: 'Gebruikers', icoon: Users },
     { id: 'kycreview', label: 'KYC Review', icoon: IdCard },
+    { id: 'infoverzoeken', label: 'Info-verzoeken', icoon: Info },
     { id: 'audit', label: 'Audit logs', icoon: Clipboard },
     { id: 'sanctie', label: 'Sanctie matches', icoon: Shield },
     { id: 'gdpr', label: 'GDPR acties', icoon: Lock },
@@ -602,6 +753,7 @@ export default function AdminCompliance() {
           {tab === 'stats' && <StatsTab stats={stats} chain={chain} />}
           {tab === 'users' && <UserManagement />}
           {tab === 'kycreview' && <KYCReviewQueue />}
+          {tab === 'infoverzoeken' && <InfoVerzoekenTab />}
           {tab === 'audit' && <AuditTab />}
           {tab === 'sanctie' && <SanctieTab />}
           {tab === 'gdpr' && <GdprTab />}

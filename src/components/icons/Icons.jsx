@@ -407,3 +407,19 @@ export const Home = (p) => (
     <polyline points="9 22 9 12 15 12 15 22" />
   </Icon>
 );
+
+// "Info nodig"-flow (gapanalyse §9): camera + fotobibliotheek
+export const Camera = (p) => (
+  <Icon {...p}>
+    <path d="M14.5 4h-5L7.5 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3.5L14.5 4z" />
+    <circle cx="12" cy="13" r="3" />
+  </Icon>
+);
+
+export const Photo = (p) => (
+  <Icon {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <circle cx="8.5" cy="9.5" r="1.5" />
+    <path d="M21 15l-5-5L5 21" />
+  </Icon>
+);
