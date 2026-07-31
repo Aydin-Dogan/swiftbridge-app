@@ -9,12 +9,30 @@
  * - Klik op rij → opent de bestaande TransactieReceipt modal
  * - Skeleton loaders tijdens laden
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TransactieReceipt from '../TransactieReceipt';
 import { formatBedrag } from '../../services/currencies';
 import { useTaal } from '../../i18n';
-import { CheckCircle, Clock, XCircle, X as XIcon, Zap, Info } from '../icons/Icons';
+import { apiFetch } from '../../services/api';
+import { CheckCircle, Clock, XCircle, X as XIcon, Zap, Info, Calendar, Refresh } from '../icons/Icons';
+
+// Gapanalyse §3 — statustabs zoals zakelijk bankieren:
+// Geweigerd = mislukt/geannuleerd; In behandeling omvat ook de "Info nodig"-
+// statussen; Gepland = de herhaalopdrachten (aparte weergave).
+const STATUS_GROEPEN = {
+  in_behandeling: ['in_behandeling', 'wacht_op_betaling', 'info_nodig', 'info_in_behandeling'],
+  voltooid: ['voltooid'],
+  geweigerd: ['mislukt', 'geannuleerd'],
+};
+
+// Reden-weergave bij een geweigerde overboeking (eerlijk, klantvriendelijk)
+function geweigerdReden(tx, t) {
+  const bs = String(tx.betalingStatus || '').toLowerCase();
+  if (['failed', 'expired', 'canceled', 'mislukt'].includes(bs)) return t('reden_betaling_niet_afgerond');
+  if (tx.status === 'geannuleerd') return t('reden_geannuleerd');
+  return t('reden_mislukt');
+}
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
@@ -90,13 +108,40 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
   const navigate = useNavigate();
   const [detailTx, setDetailTx] = useState(null);
 
-  // Zoek + filter state (Verbetering NNN)
+  // Zoek + statustabs (Verbetering NNN → gapanalyse §3)
   // Toon zoekbalk pas vanaf 5 transacties (anders overbodig).
   const [zoekTerm, setZoekTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('alle');
+  const [statusFilter, setStatusFilter] = useState('alle'); // alle | in_behandeling | voltooid | geweigerd | gepland
+
+  // Gepland-tab = herhaalopdrachten; pas ophalen wanneer de tab geopend wordt.
+  const [gepland, setGepland] = useState(null); // null = nog niet geladen
+  const [geplandLaden, setGeplandLaden] = useState(false);
+  useEffect(() => {
+    if (statusFilter !== 'gepland' || gepland !== null || geplandLaden) return;
+    let weg = false;
+    setGeplandLaden(true);
+    apiFetch('/recurring')
+      .then((d) => { if (!weg) setGepland(d?.recurring || []); })
+      .catch(() => { if (!weg) setGepland([]); })
+      .finally(() => { if (!weg) setGeplandLaden(false); });
+    return () => { weg = true; };
+  }, [statusFilter, gepland, geplandLaden]);
+
+  function opnieuwVersturen(tx) {
+    localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
+      ontvanger: tx.ontvangerNaam || tx.ontvanger_naam,
+      iban: tx.ontvangerIBAN || tx.ontvanger_iban,
+      bedrag: tx.eurBedrag || tx.eur_bedrag,
+      valuta: tx.valuta || 'TRY',
+    }));
+    window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+  }
 
   const gefilterd = transacties.filter(tx => {
-    if (statusFilter !== 'alle' && tx.status !== statusFilter) return false;
+    if (statusFilter !== 'alle' && statusFilter !== 'gepland') {
+      const groep = STATUS_GROEPEN[statusFilter] || [statusFilter];
+      if (!groep.includes(tx.status)) return false;
+    }
     if (zoekTerm) {
       const term = zoekTerm.toLowerCase().trim();
       const naam = (tx.ontvangerNaam || tx.ontvanger_naam || '').toLowerCase();
@@ -197,32 +242,79 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
         </span>
       </div>
 
-      {/* Zoek + filter (Verbetering NNN) — alleen vanaf 5 transacties */}
-      {toonFilter && !laden && (
-        <div className="px-4 py-2.5 bg-surface-2 border-b border-border-subtle flex gap-2 items-center">
-          <input
-            type="search"
-            value={zoekTerm}
-            onChange={(e) => setZoekTerm(e.target.value)}
-            placeholder={t('dashboard_recent_zoek_placeholder')}
-            className="flex-1 text-xs border border-border bg-surface rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-100"
-            aria-label={t('dashboard_recent_zoek_aria')}
-          />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs border border-border bg-surface rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-100"
-            aria-label={t('dashboard_recent_status_aria')}
-          >
-            <option value="alle">{t('dashboard_recent_status_alle')}</option>
-            <option value="voltooid">{t('status_voltooid')}</option>
-            <option value="in_behandeling">{t('status_in_behandeling')}</option>
-            <option value="mislukt">{t('status_mislukt')}</option>
-          </select>
+      {/* Statustabs (gapanalyse §3) + zoekbalk vanaf 5 transacties */}
+      {!laden && (
+        <div className="px-4 py-2.5 bg-surface-2 border-b border-border-subtle space-y-2">
+          <div className="flex gap-1.5 overflow-x-auto" role="tablist" aria-label={t('dashboard_recent_status_aria')}>
+            {[
+              ['alle', t('dashboard_recent_status_alle')],
+              ['in_behandeling', t('status_in_behandeling')],
+              ['voltooid', t('status_voltooid')],
+              ['geweigerd', t('tab_geweigerd')],
+              ['gepland', t('tab_gepland')],
+            ].map(([waarde, label]) => (
+              <button key={waarde} role="tab" aria-selected={statusFilter === waarde}
+                onClick={() => setStatusFilter(waarde)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition
+                  ${statusFilter === waarde
+                    ? 'bg-brand-500 text-white border-brand-500'
+                    : 'bg-surface text-ink-2 border-border hover:border-brand-300'}`}>
+                {label}
+              </button>
+            ))}
+          </div>
+          {toonFilter && statusFilter !== 'gepland' && (
+            <input
+              type="search"
+              value={zoekTerm}
+              onChange={(e) => setZoekTerm(e.target.value)}
+              placeholder={t('dashboard_recent_zoek_placeholder')}
+              className="w-full text-xs border border-border bg-surface rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-100"
+              aria-label={t('dashboard_recent_zoek_aria')}
+            />
+          )}
         </div>
       )}
 
-      {laden ? (
+      {/* Gepland-tab: herhaalopdrachten met volgende datum + beheer-link */}
+      {!laden && statusFilter === 'gepland' ? (
+        <div>
+          {geplandLaden && <p className="text-xs text-ink-3 px-4 py-5 text-center">{t('laden')}</p>}
+          {!geplandLaden && gepland && gepland.length === 0 && (
+            <p className="text-sm text-ink-3 px-4 py-6 text-center">{t('gepland_leeg')}</p>
+          )}
+          {!geplandLaden && gepland && gepland.length > 0 && (
+            <ul className="divide-y divide-border-subtle">
+              {gepland.map((g) => (
+                <li key={g.id} className="px-4 py-3 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
+                      <Calendar className="w-5 h-5 text-brand-600" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-semibold text-ink-1 text-sm truncate">{g.ontvangerNaam || g.naam}</div>
+                      <div className="text-[11px] text-ink-3 mt-0.5">
+                        {g.actief
+                          ? `${t('gepland_volgende')}: ${(g.volgendeUitvoering || '').slice(0, 10)}`
+                          : t('gepland_gepauzeerd')}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <div className="font-display font-medium text-sm tabular-nums text-ink-1">{fmtEur(g.bedragEur)}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="border-t border-border-subtle px-4 py-3">
+            <button onClick={() => navigate('/app/recurring')}
+              className="w-full text-center text-sm text-brand-700 font-semibold hover:underline underline-offset-4">
+              {t('gepland_beheer')}
+            </button>
+          </div>
+        </div>
+      ) : laden ? (
         <div className="divide-y divide-border-subtle">
           {[0, 1, 2].map(i => <RijSkeleton key={i} delay={i * 80} />)}
         </div>
@@ -280,6 +372,18 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
                   </div>
                 </div>
               </button>
+              {/* Geweigerd (gapanalyse §3): reden + "Opnieuw versturen" */}
+              {(tx.status === 'mislukt' || tx.status === 'geannuleerd') && (
+                <div className="px-4 pb-3 -mt-1">
+                  <p className="text-[11px] text-ink-3 mb-2">{geweigerdReden(tx, t)}</p>
+                  <button
+                    onClick={() => opnieuwVersturen(tx)}
+                    className="w-full py-2.5 rounded-md border border-brand-300 text-brand-700 hover:bg-brand-50 text-[0.7rem] font-semibold uppercase tracking-[0.16em] transition-colors inline-flex items-center justify-center gap-1.5"
+                  >
+                    <Refresh className="w-3.5 h-3.5" /> {t('opnieuw_versturen')}
+                  </button>
+                </div>
+              )}
               {/* "Info nodig" (Wwft): duidelijke actieknop direct onder de rij */}
               {tx.status === 'info_nodig' && (
                 <div className="px-4 pb-3">
