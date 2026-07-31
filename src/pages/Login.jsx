@@ -25,6 +25,7 @@ export default function Login({ onLogin }) {
   const [vergetenBericht, setVergetenBericht] = useState('');
   const [vergetenOk, setVergetenOk] = useState(false); // succes-state ipv emoji-prefix check
   const [vergetenLaden, setVergetenLaden] = useState(false);
+  const [vergetenOefenLink, setVergetenOefenLink] = useState(''); // alleen gevuld in lokale oefenversie
 
   // 2FA state
   const [twofaUserId, setTwofaUserId] = useState(null);
@@ -181,9 +182,11 @@ export default function Login({ onLogin }) {
       });
       setVergetenBericht(data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.');
       setVergetenOk(true);
+      setVergetenOefenLink(data.resetLinkOefen || '');
     } catch (e) {
       setVergetenBericht(e.message || 'Geen verbinding met server. Probeer opnieuw.');
       setVergetenOk(false);
+      setVergetenOefenLink('');
     } finally {
       setVergetenLaden(false);
     }
@@ -467,6 +470,16 @@ export default function Login({ onLogin }) {
                   ? 'text-success-700 bg-success-50 border-success-100'
                   : 'text-red-600 bg-red-50 border-red-200'
               }`}>{vergetenBericht}</p>
+            )}
+            {vergetenOefenLink && (
+              <div className="text-sm rounded-md p-3 border text-ink-1 bg-surface-2 border-border">
+                <p className="font-semibold mb-1">Oefenversie</p>
+                <p className="mb-2">Er wordt hier geen echte e-mail verstuurd. Stel je wachtwoord direct opnieuw in:</p>
+                <a href={vergetenOefenLink}
+                  className="inline-block font-semibold text-brand-700 underline underline-offset-4">
+                  Wachtwoord opnieuw instellen
+                </a>
+              </div>
             )}
             <button type="submit" disabled={vergetenLaden}
               className="btn-inst w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed">
