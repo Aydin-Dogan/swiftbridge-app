@@ -49,6 +49,7 @@ const BevestigInlog = lazy(() => import('./pages/BevestigInlog'));
 const InfoAanleveren = lazy(() => import('./pages/InfoAanleveren'));
 // Bank-Overzicht (OVZ-ronde): rekening-detail, inzicht, opdrachten, meer
 const RekeningDetail = lazy(() => import('./pages/RekeningDetail'));
+const KycTelefoon = lazy(() => import('./pages/KycTelefoon'));
 const Inzicht = lazy(() => import('./pages/Inzicht'));
 const Documenten = lazy(() => import('./pages/Documenten'));
 const ServicePagina = lazy(() => import('./pages/Service'));
@@ -862,6 +863,12 @@ export default function App() {
           } />
           <Route path="/app/recurring" element={
             token ? <Recurring /> : <Navigate to="/login" replace />
+          } />
+          {/* KYC telefoon-handoff: fotoflow op de telefoon via kortlevend token */}
+          <Route path="/kyc-telefoon" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <KycTelefoon />
+            </Suspense>
           } />
           {/* Bank-Overzicht: rekening-detail met af- en bijschrijvingen */}
           <Route path="/app/rekening" element={

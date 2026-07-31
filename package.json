@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "flag-icons": "^7.5.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.15.0",

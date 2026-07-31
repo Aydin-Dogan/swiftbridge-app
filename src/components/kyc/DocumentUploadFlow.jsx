@@ -354,14 +354,15 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
 }
 
 // ── DocumentUploadFlow (main) ─────────────────────────────────────────────────
-export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
+export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken = null, beginWaarden = null }) {
   const { t } = useTaal();
   const [stap, setStap] = useState(0);
   const [form, setForm] = useState({
     documentType: 'paspoort',
     documentNummer: '',
-    geboortedatum: '',
-    nationaliteit: 'TR',
+    // Telefoon-handoff: geboortedatum/nationaliteit komen van de computer-stap
+    geboortedatum: beginWaarden?.geboortedatum || '',
+    nationaliteit: beginWaarden?.nationaliteit || 'TR',
   });
   const [voorkant, setVoorkant] = useState(null);
   const [achterkant, setAchterkant] = useState(null);
@@ -417,7 +418,12 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer }) {
       await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', `${API_URL}/kyc/upload-document`);
-        xhr.withCredentials = true; // stuur sb_token cookie mee
+        if (bearerToken) {
+          // Telefoon-handoff: auth via het kortlevende handoff-token, geen cookie
+          xhr.setRequestHeader('Authorization', `Bearer ${bearerToken}`);
+        } else {
+          xhr.withCredentials = true; // stuur sb_token cookie mee
+        }
         xhr.upload.onprogress = (ev) => {
           if (ev.lengthComputable) {
             setProgress(Math.round((ev.loaded / ev.total) * 100));

@@ -5,7 +5,7 @@
  * - Preview van geüploade foto's
  * - Voortgangsbalk + stap validatie
  */
-import { useState, useRef, useCallback, lazy, Suspense } from 'react';
+import { useState, useRef, useCallback, useEffect, lazy, Suspense } from 'react';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import {
@@ -83,8 +83,10 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
 }
 
 // ── Stap 0: Persoonlijk ───────────────────────────────────────────────────────
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function StapPersoonlijk({ form, update, onVolgende }) {
-  const geldig = form.voornaam && form.achternaam && form.geboortedatum;
+  const geldig = form.voornaam && form.achternaam && form.geboortedatum && EMAIL_RE.test(form.email || '');
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-4">
       <div>
@@ -110,6 +112,16 @@ function StapPersoonlijk({ form, update, onVolgende }) {
             placeholder="Dogan"
             className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition" />
         </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-ink-2 mb-1">E-mailadres *</label>
+        <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
+          placeholder="naam@email.nl"
+          className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition" />
+        {form.email && !EMAIL_RE.test(form.email) && (
+          <p className="text-amber-600 text-xs mt-1">Vul een geldig e-mailadres in</p>
+        )}
       </div>
 
       <div>
@@ -148,8 +160,115 @@ function StapPersoonlijk({ form, update, onVolgende }) {
   );
 }
 
+// ── Telefoon-handoff: foto's maken met de telefoon (bank-patroon) ────────────
+// Na de persoonlijke gegevens krijgt de klant een QR-code + link. Op de
+// telefoon opent die de foto-flow (betere camera); de computer pollt en gaat
+// automatisch verder zodra de foto's binnen zijn.
+function TelefoonHandoff({ form, token, onFotosKlaar }) {
+  const [url, setUrl] = useState('');
+  const [qr, setQr] = useState('');
+  const [laden, setLaden] = useState(false);
+  const [fout, setFout] = useState('');
+  const [gekopieerd, setGekopieerd] = useState(false);
+  const [verlopen, setVerlopen] = useState(false);
+
+  async function maakLink() {
+    setLaden(true);
+    setFout('');
+    setVerlopen(false);
+    try {
+      const res = await fetch(`${API}/kyc/handoff`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          voornaam: form.voornaam, achternaam: form.achternaam, email: form.email,
+          geboortedatum: form.geboortedatum, nationaliteit: form.nationaliteit, telefoon: form.telefoon,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      setUrl(data.url);
+      // QR client-side genereren — lazy chunk, de link zelf blijft altijd bruikbaar
+      try {
+        const QR = await import('qrcode');
+        setQr(await QR.toDataURL(data.url, { width: 220, margin: 1, color: { dark: '#1B3252' } }));
+      } catch { /* geen QR — link + kopieerknop volstaan */ }
+    } catch (e) {
+      setFout(e.message || 'Kon geen telefoonlink maken');
+    } finally {
+      setLaden(false);
+    }
+  }
+
+  // Poll de handoff-status: 'voltooid' = foto's binnen → computer gaat verder
+  useEffect(() => {
+    if (!url) return undefined;
+    let weg = false;
+    const id = setInterval(async () => {
+      try {
+        const res = await fetch(`${API}/kyc/handoff/mijn-status`, {
+          credentials: 'include',
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) return;
+        const d = await res.json();
+        if (weg) return;
+        if (d.status === 'voltooid') onFotosKlaar();
+        else if (d.status === 'verlopen') { setVerlopen(true); setUrl(''); setQr(''); }
+      } catch { /* volgende poll */ }
+    }, 4000);
+    return () => { weg = true; clearInterval(id); };
+  }, [url, token, onFotosKlaar]);
+
+  async function kopieer() {
+    try {
+      await navigator.clipboard.writeText(url);
+      setGekopieerd(true);
+      setTimeout(() => setGekopieerd(false), 2500);
+    } catch { /* selectie blijft mogelijk */ }
+  }
+
+  return (
+    <div className="border border-brand-100 bg-brand-50 rounded-md p-4 space-y-3">
+      <div className="font-semibold text-ink-1 text-sm">Maak de foto's met je telefoon (aanbevolen)</div>
+      <p className="text-xs text-ink-2">
+        De camera van je telefoon maakt scherpere foto's van je document. Scan de QR-code of open de link op je
+        telefoon — deze computer gaat automatisch verder zodra de foto's binnen zijn.
+      </p>
+      {!url && (
+        <button onClick={maakLink} disabled={laden}
+          className="btn-inst w-full py-2.5 text-sm disabled:opacity-50">
+          {laden ? 'Bezig...' : 'Maak telefoonlink'}
+        </button>
+      )}
+      {verlopen && (
+        <p className="text-xs text-amber-700">De vorige link is verlopen (15 minuten). Maak een nieuwe link.</p>
+      )}
+      {fout && <p className="text-xs text-fg-error">{fout}</p>}
+      {url && (
+        <div className="space-y-3">
+          {qr && (
+            <img src={qr} alt="QR-code voor je telefoon" width="176" height="176"
+              className="mx-auto rounded-md border border-border bg-white p-2" />
+          )}
+          <div className="text-xs text-ink-2 break-all bg-surface border border-border rounded-md p-2 select-all">{url}</div>
+          <button onClick={kopieer}
+            className="w-full py-2 rounded-md border border-brand-300 text-brand-700 hover:bg-surface text-xs font-semibold uppercase tracking-[0.16em] transition">
+            {gekopieerd ? 'Gekopieerd' : 'Kopieer link'}
+          </button>
+          <p className="flex items-center justify-center gap-2 text-xs text-ink-2">
+            <span className="w-2 h-2 rounded-full bg-accent-500 animate-pulse" aria-hidden="true" />
+            Wachten op je telefoon... de link is 15 minuten geldig.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Stap 1: Document ──────────────────────────────────────────────────────────
-function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }) {
+function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug, telefoonPaneel }) {
   const geldig = form.documentType && form.documentNummer && docFoto;
 
   return (
@@ -158,6 +277,15 @@ function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug }
         <h2 className="font-display text-xl font-medium text-ink-1">Identiteitsbewijs</h2>
         <p className="text-ink-2 text-sm mt-1">SwiftBridge accepteert het Turkse kimlik!</p>
       </div>
+
+      {telefoonPaneel}
+      {telefoonPaneel && (
+        <div className="flex items-center gap-3 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-ink-3">
+          <span className="flex-1 h-px bg-border" aria-hidden="true" />
+          of ga verder op deze computer
+          <span className="flex-1 h-px bg-border" aria-hidden="true" />
+        </div>
+      )}
 
       <div className="space-y-2">
         {DOC_TYPES.map(d => (
@@ -445,7 +573,15 @@ export default function KYCFlow({ token, gebruiker }) {
     voornaam: '', achternaam: '', geboortedatum: '',
     nationaliteit: 'TR', documentType: 'kimlik',
     documentNummer: '', telefoon: '',
+    email: gebruiker?.email || '',
   });
+
+  // E-mail voorinvullen zodra het profiel binnenkomt (login-flow race)
+  useEffect(() => {
+    if (gebruiker?.email) {
+      setForm(f => (f.email ? f : { ...f, email: gebruiker.email }));
+    }
+  }, [gebruiker?.email]);
   const [docFoto, setDocFoto ] = useState(null);
   const [selfieFoto,setSelfieFoto] = useState(null);
   const [laden, setLaden ] = useState(false);
@@ -473,6 +609,7 @@ export default function KYCFlow({ token, gebruiker }) {
           documentNummer: form.documentNummer,
           geboortedatum: form.geboortedatum,
           nationaliteit: form.nationaliteit,
+          email: form.email,
           heeftDocFoto: !!docFoto,
           heeftSelfie: !!selfieFoto,
         }),
@@ -554,7 +691,11 @@ export default function KYCFlow({ token, gebruiker }) {
       </div>
 
       {stap === 0 && <StapPersoonlijk form={form} update={update} onVolgende={() => setStap(1)} />}
-      {stap === 1 && <StapDocument form={form} update={update} docFoto={docFoto} setDocFoto={setDocFoto} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
+      {stap === 1 && (
+        <StapDocument form={form} update={update} docFoto={docFoto} setDocFoto={setDocFoto}
+          onVolgende={() => setStap(2)} onTerug={() => setStap(0)}
+          telefoonPaneel={<TelefoonHandoff form={form} token={token} onFotosKlaar={() => setStap(3)} />} />
+      )}
       {stap === 2 && !onfidoToken && <StapSelfie selfieFoto={selfieFoto} setSelfieFoto={setSelfieFoto} laden={laden} fout={fout} onIndienen={dien_in} onTerug={() => setStap(1)} />}
       {stap === 2 && onfidoToken && (
         <Suspense fallback={<div className="text-center py-6 text-gray-500 text-sm">{t('laden')}</div>}>
