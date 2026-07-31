@@ -26,6 +26,7 @@ export default function Login({ onLogin }) {
   const [vergetenOk, setVergetenOk] = useState(false); // succes-state ipv emoji-prefix check
   const [vergetenLaden, setVergetenLaden] = useState(false);
   const [vergetenOefenLink, setVergetenOefenLink] = useState(''); // alleen gevuld in lokale oefenversie
+  const [vergetenOefenOnbekend, setVergetenOefenOnbekend] = useState(false); // oefenversie: adres heeft hier geen account
 
   // 2FA state
   const [twofaUserId, setTwofaUserId] = useState(null);
@@ -183,10 +184,12 @@ export default function Login({ onLogin }) {
       setVergetenBericht(data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.');
       setVergetenOk(true);
       setVergetenOefenLink(data.resetLinkOefen || '');
+      setVergetenOefenOnbekend(!!data.oefenOnbekend);
     } catch (e) {
       setVergetenBericht(e.message || 'Geen verbinding met server. Probeer opnieuw.');
       setVergetenOk(false);
       setVergetenOefenLink('');
+      setVergetenOefenOnbekend(false);
     } finally {
       setVergetenLaden(false);
     }
@@ -479,6 +482,12 @@ export default function Login({ onLogin }) {
                   className="inline-block font-semibold text-brand-700 underline underline-offset-4">
                   Wachtwoord opnieuw instellen
                 </a>
+              </div>
+            )}
+            {vergetenOefenOnbekend && (
+              <div className="text-sm rounded-md p-3 border text-ink-1 bg-surface-2 border-border">
+                <p className="font-semibold mb-1">Oefenversie</p>
+                <p>Dit e-mailadres heeft in deze oefenomgeving nog geen account, dus er komt geen mail. Maak eerst een account aan via Registreren — dat werkt hier direct, zonder e-mailcode.</p>
               </div>
             )}
             <button type="submit" disabled={vergetenLaden}
