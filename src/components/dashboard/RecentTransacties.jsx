@@ -113,19 +113,21 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
   const [zoekTerm, setZoekTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('alle'); // alle | in_behandeling | voltooid | geweigerd | gepland
 
-  // Gepland-tab = herhaalopdrachten; pas ophalen wanneer de tab geopend wordt.
+  // Gepland-tab = herhaalopdrachten; vers ophalen bij elke tab-opening.
+  // LET OP: deps alleen [statusFilter] — met laden-state in de deps zou het
+  // zetten van "laden" de eigen fetch via de cleanup annuleren (bug 31-7).
   const [gepland, setGepland] = useState(null); // null = nog niet geladen
   const [geplandLaden, setGeplandLaden] = useState(false);
   useEffect(() => {
-    if (statusFilter !== 'gepland' || gepland !== null || geplandLaden) return;
+    if (statusFilter !== 'gepland') return;
     let weg = false;
     setGeplandLaden(true);
     apiFetch('/recurring')
       .then((d) => { if (!weg) setGepland(d?.recurring || []); })
-      .catch(() => { if (!weg) setGepland([]); })
+      .catch(() => { if (!weg) setGepland((oud) => oud || []); })
       .finally(() => { if (!weg) setGeplandLaden(false); });
     return () => { weg = true; };
-  }, [statusFilter, gepland, geplandLaden]);
+  }, [statusFilter]);
 
   function opnieuwVersturen(tx) {
     localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
@@ -279,7 +281,7 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
       {/* Gepland-tab: herhaalopdrachten met volgende datum + beheer-link */}
       {!laden && statusFilter === 'gepland' ? (
         <div>
-          {geplandLaden && <p className="text-xs text-ink-3 px-4 py-5 text-center">{t('laden')}</p>}
+          {geplandLaden && !gepland && <p className="text-xs text-ink-3 px-4 py-5 text-center">{t('laden')}</p>}
           {!geplandLaden && gepland && gepland.length === 0 && (
             <p className="text-sm text-ink-3 px-4 py-6 text-center">{t('gepland_leeg')}</p>
           )}
