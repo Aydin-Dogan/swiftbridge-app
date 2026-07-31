@@ -9,7 +9,7 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
-import { berekenKosten, zichtbarePercentage } from '../services/kosten';
+import { berekenKosten } from '../services/kosten';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';

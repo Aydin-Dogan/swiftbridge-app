@@ -35,21 +35,23 @@ describe('i18n key consistency', () => {
     }
   });
 
-  test('Geen verouderde flat-fee strings in pricing-keys', () => {
+  test('Geen verouderde staffel-strings in pricing-keys (model = vaste fee €4,95, bouwbrief §8)', () => {
     const slechte_patronen = [
-      /vaste\s+fee/i,
-      /flat\s+fee/i,
-      /sabit\s+(işlem\s+)?üc?ret/i,
+      /staffel/i,
+      /€s?7[.,]50/,
+      /€s?4[.,]50/,
+      /€s?1[.,]99/,
+      /€s?0[.,]99/,
+      /2,0%[^)]*0,8%/, // oude staffel-range
     ];
     for (const [code, dict] of Object.entries(TALEN)) {
       for (const [key, value] of Object.entries(dict)) {
         if (typeof value !== 'string') continue;
-        if (/minimum/i.test(value)) continue; // 'Minimum fee €1,99' is OK
+        if (!/pric|tarief|kosten|fee|goedkoop/i.test(key)) continue;
         for (const pat of slechte_patronen) {
           expect(
             pat.test(value),
-            `Verouderde pricing-string in ${code}.${key}: "${value.slice(0, 80)}"`
-          ).toBe(false);
+                      ).toBe(false);
         }
       }
     }

@@ -283,7 +283,7 @@ export const az = {
  landing_feature_snel_titel:'Şimşək sürətində',
  landing_feature_snel_tekst:'Sevdiklərinizin hesabına 5 dəqiqə ərzində pul — həftə sonları və iş saatlarından kənar da, canlı koridorlarımızda.',
  landing_feature_goedkoop_titel:'Ədalətli qiymət',
- landing_feature_goedkoop_tekst:'Ədalətli pilləli tarif, köçürmə başına 0,8%-dən başlayan. Nə qədər çox göndərsən, bir o qədər aşağı tarif. Tam tarif cədvəli əvvəlcədən görünür.',
+ landing_feature_goedkoop_tekst:'Sabit €4,95 komissiya və 1,2%-dən başlayan şəffaf kurs marjası — üzvlük səviyyəsinə görə 0,6%-ə düşür. Hər şey əvvəlcədən görünür.',
  landing_feature_veilig_titel:'Təhlükəsiz və tənzimlənən',
  landing_feature_veilig_tekst:'EMI tərəfdaşımız vasitəsilə DNB nəzarəti altında, hər qəbul edən üçün sanksiya siyahısı yoxlaması, iDIN identifikasiyası.',
 
@@ -303,13 +303,13 @@ export const az = {
  // Tarif cədvəli bölməsi
  tariefkaart_eyebrow:'Tariflərimiz',
  tariefkaart_titel:'Tam tarif cədvəli',
- tariefkaart_subtitel:'Ədalətli pilləli tarif — nə qədər çox göndərsən, bir o qədər aşağı tarif. Gizli xərclər yoxdur.',
+ tariefkaart_subtitel:'Tək sabit komissiya, üzvlük səviyyəsinə görə şəffaf kurs marjası. Gizli xərc yoxdur.',
  tariefkaart_col_bedrag:'Məbləğ',
  tariefkaart_methode_ideal:'iDEAL / Wero',
  tariefkaart_methode_card:'Kredit kartı',
  tariefkaart_methode_klarna:'Klarna',
  tariefkaart_methode_sepa:'SEPA',
- tariefkaart_disclaimer:'Mübadilə kursu canlı mid-market kursa əsaslanır. Nümunə: €500 iDEAL ilə 1,5% = €7,50 komissiya.',
+ tariefkaart_disclaimer:'Mübadilə kursu canlı orta bazar kursuna əsaslanır. Hər köçürmə üçün sabit €4,95 komissiya; kurs marjası (1,2%-dən, üzvlük səviyyəsinə görə azalır) şəffaf göstərilir. Minimum €50.',
 
  // Social proof / stats
  landing_stat_overboekingen:'İşlənmiş köçürmələr',
@@ -353,7 +353,7 @@ export const az = {
  landing_faq_snelheid_vraag:'Pul Türkiyəyə nə qədər tez çatır?',
  landing_faq_snelheid_antwoord:'Əksər hallarda iDEAL ödənişinizin təsdiqindən sonra 5 dəqiqə ərzində. Böyük məbləğlər və ya iş saatlarından kənar zamanlarda bu, ən çox 1 saata qədər uzana bilər. Çox ilk köçürmədə KYC-ni bir dəfəlik yoxladığımız üçün biraz daha çox vaxt apara bilər.',
  landing_faq_kosten_vraag:'Real xərclər nədir?',
- landing_faq_kosten_antwoord:'Tariflərimiz pilləli sistemdən istifadə edir: kiçik məbləğlər üçün (€10-200) 2,0%-dən başlayıb €2.500+ üçün 0,8%-ə düşür. €500-da 1,5% (€7,50), €1.000-da 1,2% (€12) ödəyirsən. Tam tarif cədvəli landing səhifəsindədir. Abunəlik yoxdur, gizli xərclər yoxdur.',
+ landing_faq_kosten_antwoord:'Hər köçürmə üçün sabit €4,95 əməliyyat haqqı, üstəgəl şəffaf 1,2% kurs marjası (Basis) — üzvlük səviyyəsinə görə 0,6%-ə (Black) düşür. Minimum köçürmə €50. Abunə yoxdur, gizli xərc yoxdur.',
  landing_faq_veiligheid_vraag:'Pulum SwiftBridge-də təhlükəsizdirmi?',
  landing_faq_veiligheid_antwoord:'Bəli. Ödənişlər DNB lisenziyalı EMI tərəfdaşı vasitəsilə həyata keçirilir (DNB nəzarəti altında agent modeli). Hər qəbul edəni beynəlxalq sanksiya siyahısı ilə yoxlayırıq, 256-bit şifrələmə istifadə edirik və məlumatlarınızı GDPR və Wwft-yə uyğun saxlayırıq.',
  landing_faq_banken_vraag:'Hansı türk bankları dəstəklənir?',
@@ -375,7 +375,7 @@ export const az = {
  landing_faq_feestdagen_vraag:'SwiftBridge Ramazan, Bayram və Türk bayramlarında işləyirmi?',
  landing_faq_feestdagen_antwoord:'Bəli — texniki infrastrukturumuz 7/24 işləyir. Lakin Türk bankları bayramlarda gələn köçürmələri işləməkdə gecikmələrə yol verirlər. Ramazan Bayramı və Qurban Bayramı zamanı çatdırılma bir az daha uzun çəkə bilər (<5 dəqiqə yerinə 1 iş gününə qədər). Bayramda əməliyyat planlasanız əvvəlcədən push bildirişləri göndəririk.',
  landing_faq_belgie_duitsland_vraag:'SwiftBridge Belçika və ya Almaniyadan da işləyirmi?',
- landing_faq_belgie_duitsland_antwoord:'Bəli. Belçikadan iDEAL-ın ekvivalenti olaraq Bancontact dəstəkləyirik. Almaniyadan Sofort və SEPA işləyir. Alıcının Türkiyə, Azərbaycan, Qazaxıstan, Özbəkistan, Türkmənistan, Qırğızıstan və ya Tacikistanda hesabı olmalıdır. Tariflər EUR pilləli tariflərimizlə eynidir.',
+ landing_faq_belgie_duitsland_antwoord:'Bəli. Belçikadan Bancontact, Almaniyadan Sofort və SEPA işləyir. Alıcının Türkiyə, Azərbaycan, Qazaxıstan, Özbəkistan, Türkmənistan, Qırğızıstan və ya Tacikistanda hesabı olmalıdır. Qiymətlər eynidir: sabit €4,95 üstəgəl şəffaf kurs marjası.',
  landing_faq_nog_vragen:'Hələ də suallarınız var?',
 
  // ── Kalkulyator (hesabsız) — Sprint 4 ─────────────────────────────────────
@@ -417,7 +417,7 @@ export const az = {
  // ── Pricing-section wrapper ───────────────────────────────────────────────
  pricing_section_eyebrow:'Şəffaf qiymətlər',
  pricing_section_titel:'Bir köçürmə nə qədərdir?',
- pricing_section_subtitel:'SwiftBridge-i €500-də rəqiblərlə müqayisə edin və ya tam məbləğ×üsul pilləli tarif cədvəlimizə baxın.',
+ pricing_section_subtitel:'€500 üzərində rəqiblərlə müqayisə edin və ya üzvlük səviyyəsinə görə tam tarifi görün.',
  pricing_section_tab_vergelijking:'Rəqiblərə qarşı',
  pricing_section_tab_staffel:'Tam tarif cədvəli',
 
@@ -1252,7 +1252,7 @@ export const az = {
  support_qa_kyc_vraag:'KYC sənədlərimi necə yükləyə bilərəm?',
  support_qa_kyc_antwoord:'Doğrulama sekmesinə keçin və"Sənədi taradı"düyməsini basın. Sizə lazımdır:\n• Pasport və ya ID kart (etibarlı)\n• Ünvan təsdiqi (3 aydan köhnə olmayan)\n• Selfie təsdiq üçün\n\nTarama 5 dəqiqədən az çəkir və dərhal cavab alacaqsınız.',
  support_qa_kosten_vraag:'Köçürmənin qiyməti nə qədərdir?',
- support_qa_kosten_antwoord:'SwiftBridge şəffaf qiymət təklif edir:\n• Pilləli komissiya %0,8-dən %2,0-yə qədər (məbləğ və metoddan asılı olaraq)\n• Mübadilə kursu marjı daxildir\n\nGizli xərclər yoxdur — təsdiqdən əvvəl dəqiq məbləği görürsünüz.',
+ support_qa_kosten_antwoord:'SwiftBridge hər köçürmə üçün sabit €4,95 komissiya üstəgəl şəffaf kurs marjası alır:\n• Basis: 1,2%\n• Plus: 1,0%\n• Premium: 0,8%\n• Black: 0,6%\n\nMinimum köçürmə €50. Gizli xərc yoxdur.',
  support_qa_status_vraag:'Pulum hələ çatmayıb — nə edim?',
  support_qa_status_antwoord:'Panika etməyin — əvvəlcə əsas səhifədə statusu yoxlayın. Növbəti mesajda mənə əməliyyat nömrəsini (TX-XXXXXX) göndərin və dərhal sizin üçün axtarım.\n\n• Express: < 5 dəq\n• Economy: 2 iş gününə qədər',
 };

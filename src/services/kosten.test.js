@@ -1,141 +1,61 @@
 /**
- * Tests voor src/services/kosten.js — frontend pricing engine.
- *
- * Hier dezelfde tests als backend (swiftbridge-api/tests/kosten.test.js)
- * vertaald naar de frontend-API. Bewaakt dat front en back exact dezelfde
- * resultaten geven voor dezelfde input.
+ * Tests voor src/services/kosten.js — frontend pricing (transparant model).
+ * Spiegelt de backend-tests (swiftbridge-api/tests/kosten.test.js) zodat
+ * front en back exact dezelfde prijzen rekenen (bewaakt door matrixSync.test.js).
  */
-
 import { describe, test, expect } from 'vitest';
 import {
   berekenKosten,
-  mollieKosten,
-  transferKosten,
-  zichtbarePercentage,
-  tariefTier,
-  methodeNaarTariefKolom,
-  TARIEF_MATRIX,
-  TARIEF_TIER_GRENZEN,
+  fxMarge,
+  FEE_VAST,
+  MIN_BEDRAG,
+  MAX_BEDRAG,
+  FX_MARGE_NIVEAUS,
 } from './kosten';
 
-describe('berekenKosten()', () => {
-  test('Express tier 0 (€100 iDEAL) — 2,0% van bedrag, boven minimum', () => {
-    const r = berekenKosten(100, 'ideal', 'express', 36.20);
-    expect(r.klantBetaaltFee).toBe(2.00);
-    expect(r.zichtbarePct).toBe(2.0);
+describe('kosten.js — transparant prijsmodel (bouwbrief §8)', () => {
+  test('bindende parameters', () => {
+    expect(FEE_VAST).toBe(4.95);
+    expect(MIN_BEDRAG).toBe(50);
+    expect(MAX_BEDRAG).toBe(5000);
+    expect(FX_MARGE_NIVEAUS.basis).toBe(0.012);
+    expect(FX_MARGE_NIVEAUS.black).toBe(0.006);
   });
 
-  test('Express minimum fee kickt in bij micro-bedrag (€50 iDEAL)', () => {
-    const r = berekenKosten(50, 'ideal', 'express', 36.20);
-    expect(r.klantBetaaltFee).toBe(1.99);
+  test('vaste fee €4,95 ongeacht bedrag/methode/snelheid', () => {
+    for (const [bedrag, methode, snelheid] of [[50, 'ideal', 'express'], [500, 'card', 'economy'], [5000, 'sepa', 'express']]) {
+      const r = berekenKosten(bedrag, methode, snelheid, 36.20);
+      expect(r.klantBetaaltFee).toBe(4.95);
+    }
   });
 
-  test('Economy minimum fee (€50 SEPA) = €0,99', () => {
-    const r = berekenKosten(50, 'sepa', 'economy', 36.20);
-    expect(r.klantBetaaltFee).toBe(0.99);
+  test('marge per niveau + fallback naar basis', () => {
+    expect(fxMarge('basis')).toBe(0.012);
+    expect(fxMarge('black')).toBe(0.006);
+    expect(fxMarge('bestaat-niet')).toBe(0.012);
+    expect(berekenKosten(500, 'ideal', 'express', 36.20, 'premium').fxMargePct).toBe(0.8);
   });
 
-  test('Tier 1 (€500 iDEAL) = 1,5%', () => {
+  test('applied rate transparant: mid-market minus getoonde marge', () => {
     const r = berekenKosten(500, 'ideal', 'express', 36.20);
-    expect(r.klantBetaaltFee).toBe(7.50);
-    expect(r.zichtbarePct).toBe(1.5);
+    expect(r.appliedRate).toBeCloseTo(36.20 * (1 - 0.012), 3);
+    expect(r.fxAfwijkingPct).toBe(1.2);
   });
 
-  test('Tier 4 (€5.000 iDEAL) = 0,8% (boven €2.500)', () => {
-    const r = berekenKosten(5000, 'ideal', 'express', 36.20);
-    expect(r.klantBetaaltFee).toBe(40.00);
-    expect(r.zichtbarePct).toBe(0.8);
+  test('totale kosten = fee + marge over netto (PSD2-veld)', () => {
+    const r = berekenKosten(500, 'ideal', 'express', 36.20);
+    expect(r.totaleKostenEur).toBeCloseTo(4.95 + (500 - 4.95) * 0.012, 2);
+    expect(r.fxKostenEur).toBeCloseTo((500 - 4.95) * 0.012, 2);
   });
 
-  test('Card-kolom heeft hogere percentages dan iDEAL', () => {
-    const ideal = berekenKosten(500, 'ideal', 'express', 36.20).klantBetaaltFee;
-    const card = berekenKosten(500, 'card', 'express', 36.20).klantBetaaltFee;
-    expect(card).toBeGreaterThan(ideal);
-    expect(card).toBe(17.50); // 500 * 3.5%
+  test('ontvangen bedrag = (bedrag - fee) × applied rate', () => {
+    const r = berekenKosten(1000, 'ideal', 'express', 36.20);
+    expect(r.ontvangenBedrag).toBeCloseTo((1000 - 4.95) * 36.20 * (1 - 0.012), 1);
   });
 
-  test('Wero en Bancontact tellen als iDEAL-kolom', () => {
-    expect(methodeNaarTariefKolom('wero')).toBe('ideal');
-    expect(methodeNaarTariefKolom('bancontact')).toBe('ideal');
-    const wero = berekenKosten(500, 'wero', 'express', 36.20);
-    const ideal = berekenKosten(500, 'ideal', 'express', 36.20);
-    expect(wero.klantBetaaltFee).toBe(ideal.klantBetaaltFee);
-  });
-
-  test('Express applied rate < mid-market (marge verborgen in koers)', () => {
-    const r = berekenKosten(100, 'ideal', 'express', 36.20);
-    expect(r.appliedRate).toBeLessThan(36.20);
-    expect(r.appliedRate).toBeCloseTo(35.7656, 3);
-  });
-
-  test('ontvangenBedrag = (eurBedrag - fee) * appliedRate', () => {
-    const r = berekenKosten(100, 'ideal', 'express', 36.20);
-    const verwacht = (100 - r.klantBetaaltFee) * r.appliedRate;
-    expect(r.ontvangenBedrag).toBeCloseTo(verwacht, 1);
-  });
-
-  test('Edge: bedrag 0 → totaleKostenPct = 0 (geen division-by-zero)', () => {
-    const r = berekenKosten(0, 'ideal', 'express', 36.20);
-    expect(r.totaleKostenPct).toBe(0);
-    expect(Number.isFinite(r.totaleKostenPct)).toBe(true);
-  });
-
-  test('Default methode/snelheid/koers werken', () => {
-    const r = berekenKosten(100);
-    expect(r.klantBetaaltFee).toBe(2.00);
-    expect(r.midMarketRate).toBe(36.20);
-  });
-});
-
-describe('Tariefkaart helpers', () => {
-  test('tariefTier: grenzen €200/€500/€1000/€2500', () => {
-    expect(tariefTier(0)).toBe(0);
-    expect(tariefTier(200)).toBe(0);
-    expect(tariefTier(200.01)).toBe(1);
-    expect(tariefTier(500)).toBe(1);
-    expect(tariefTier(500.01)).toBe(2);
-    expect(tariefTier(2500)).toBe(3);
-    expect(tariefTier(10000)).toBe(4);
-  });
-
-  test('TARIEF_MATRIX matcht §4.4 (sync met backend)', () => {
-    expect(TARIEF_MATRIX.ideal).toEqual([0.020, 0.015, 0.012, 0.010, 0.008]);
-    expect(TARIEF_MATRIX.card).toEqual([0.035, 0.035, 0.032, 0.030, 0.028]);
-    expect(TARIEF_MATRIX.klarna).toEqual([0.050, 0.050, 0.045, 0.040, 0.035]);
-    expect(TARIEF_MATRIX.sepa).toEqual([0.012, 0.009, 0.007, 0.005, 0.004]);
-  });
-
-  test('TARIEF_TIER_GRENZEN', () => {
-    expect(TARIEF_TIER_GRENZEN).toEqual([200, 500, 1000, 2500]);
-  });
-
-  test('zichtbarePercentage geeft nummer terug (geen Decimal in frontend)', () => {
-    expect(zichtbarePercentage(500, 'ideal')).toBe(0.015);
-    expect(zichtbarePercentage(1000, 'card')).toBe(0.032);
-  });
-});
-
-describe('mollieKosten()', () => {
-  test('iDEAL: vaste €0.29 ongeacht bedrag', () => {
-    expect(mollieKosten(10, 'ideal')).toBe(0.29);
-    expect(mollieKosten(1000, 'ideal')).toBe(0.29);
-  });
-
-  test('Creditcard: 1.8% + €0.25', () => {
-    expect(mollieKosten(100, 'creditcard')).toBeCloseTo(2.05, 4);
-  });
-
-  test('SEPA: max(€0.29, 0.25% van bedrag)', () => {
-    expect(mollieKosten(50, 'sepa')).toBe(0.29);
-    expect(mollieKosten(500, 'sepa')).toBeCloseTo(1.25, 4);
-  });
-});
-
-describe('transferKosten()', () => {
-  test('Express = €2.50', () => {
-    expect(transferKosten('express')).toBe(2.50);
-  });
-  test('Economy = €0.50', () => {
-    expect(transferKosten('economy')).toBe(0.50);
+  test('edge cases: 0 en negatief geven geen negatieve uitkomsten', () => {
+    expect(berekenKosten(0).ontvangenBedrag).toBe(0);
+    expect(berekenKosten(-50).ontvangenBedrag).toBe(0);
+    expect(berekenKosten('abc').bedrag).toBe(0);
   });
 });

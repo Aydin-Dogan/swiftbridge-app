@@ -299,7 +299,7 @@ export const nl = {
  landing_feature_snel_titel:'Razendsnel',
  landing_feature_snel_tekst:'Geld op de rekening van je dierbaren binnen 5 minuten — ook in het weekend en buiten kantooruren, op onze live corridors.',
  landing_feature_goedkoop_titel:'Eerlijk geprijsd',
- landing_feature_goedkoop_tekst:'Eerlijke staffel-tarieven vanaf 0,8% per overboeking. Hoe meer je stuurt, hoe lager je tarief. Volledige tariefkaart vooraf zichtbaar.',
+ landing_feature_goedkoop_tekst:'Eén vaste fee van €4,95 en een transparante koersmarge vanaf 1,2% die per ledenniveau daalt tot 0,6%. Alles vooraf zichtbaar.',
  landing_feature_veilig_titel:'Veilig & gereguleerd',
  landing_feature_veilig_tekst:'Onder DNB-toezicht via onze EMI-partner, sanctielijst-check op iedere ontvanger, iDIN-identificatie.',
 
@@ -319,13 +319,13 @@ export const nl = {
  // Tariefkaart sectie
  tariefkaart_eyebrow:'Onze tarieven',
  tariefkaart_titel:'Volledige tariefkaart',
- tariefkaart_subtitel:'Eerlijke staffel: hoe meer je stuurt, hoe lager je tarief. Geen verborgen kosten — wat je ziet is wat je betaalt.',
+ tariefkaart_subtitel:'Eén vaste fee, transparante koersmarge per ledenniveau. Geen verborgen kosten — wat je ziet is wat je betaalt.',
  tariefkaart_col_bedrag:'Bedrag',
  tariefkaart_methode_ideal:'iDEAL / Wero',
  tariefkaart_methode_card:'Creditcard',
  tariefkaart_methode_klarna:'Klarna',
  tariefkaart_methode_sepa:'SEPA',
- tariefkaart_disclaimer:'Wisselkoers op basis van live mid-market koers. Voorbeeld: op €500 via iDEAL betaal je 1,5% = €7,50 fee.',
+ tariefkaart_disclaimer:'Wisselkoers op basis van live mid-market koers. Eén vaste fee van €4,95 per overboeking; de koersmarge (vanaf 1,2%, lager per ledenniveau) wordt transparant getoond. Minimum €50.',
 
  // Social proof / stats
  landing_stat_overboekingen:'Overboekingen verwerkt',
@@ -369,7 +369,7 @@ export const nl = {
  landing_faq_snelheid_vraag:'Hoe snel komt het geld aan in Türkiye?',
  landing_faq_snelheid_antwoord:'In de meeste gevallen binnen 5 minuten na bevestiging van je iDEAL-betaling. Bij grote bedragen of buiten kantooruren kan dit oplopen tot maximaal 1 uur. Voor de allereerste transactie kan het iets langer duren omdat we je KYC eenmalig verifiëren.',
  landing_faq_kosten_vraag:'Wat zijn de werkelijke kosten?',
- landing_faq_kosten_antwoord:'Onze tarieven werken op een staffel: 2,0% voor kleine bedragen (€10-200), aflopend tot 0,8% voor €2.500+. Op €500 betaal je 1,5% (€7,50), op €1.000 betaal je 1,2% (€12). De volledige tariefkaart staat op de landing-pagina. Geen abonnement, geen verborgen kosten.',
+ landing_faq_kosten_antwoord:'Eén vaste transactiefee van €4,95 per overboeking, plus een transparante koersmarge van 1,2% (Basis) die per ledenniveau daalt tot 0,6% (Black). Minimum overboekbedrag €50. Geen abonnement, geen verborgen kosten — je ziet alles vóór bevestiging.',
  landing_faq_veiligheid_vraag:'Is mijn geld veilig bij SwiftBridge?',
  landing_faq_veiligheid_antwoord:'Ja. Betalingen lopen via een DNB-gelicentieerde EMI-partner (agent-model onder DNB-toezicht). We checken iedere ontvanger op de internationale sanctielijst, gebruiken 256-bit versleuteling en bewaren je gegevens conform AVG en Wwft.',
  landing_faq_banken_vraag:'Welke Turkse banken worden ondersteund?',
@@ -391,7 +391,7 @@ export const nl = {
  landing_faq_feestdagen_vraag:'Werkt SwiftBridge ook tijdens Ramazan, Bayram en Turkse feestdagen?',
  landing_faq_feestdagen_antwoord:'Ja — onze technische infrastructuur draait 24/7. Wel hebben Turkse banken op feestdagen vaak vertraging in het verwerken van inkomende transfers. Tijdens Ramazan Bayramı en Kurban Bayramı kan de levering iets langer duren (tot 1 werkdag i.p.v. <5 minuten). We sturen vooraf push-notificaties als je een transactie op een feestdag plant.',
  landing_faq_belgie_duitsland_vraag:'Werkt SwiftBridge ook vanuit België of Duitsland?',
- landing_faq_belgie_duitsland_antwoord:'Ja. Vanuit België ondersteunen we Bancontact als equivalent van iDEAL. Vanuit Duitsland werkt Sofort en SEPA. De ontvanger moet wel een rekening hebben in Türkiye, Azerbeidzjan, Kazachstan, Oezbekistan, Turkmenistan, Kirgizië of Tadzjikistan. Tarieven zijn identiek aan onze EUR-staffel.',
+ landing_faq_belgie_duitsland_antwoord:'Ja. Vanuit België ondersteunen we Bancontact als equivalent van iDEAL. Vanuit Duitsland werkt Sofort en SEPA. De ontvanger moet wel een rekening hebben in Türkiye, Azerbeidzjan, Kazachstan, Oezbekistan, Turkmenistan, Kirgizië of Tadzjikistan. Tarieven zijn identiek: €4,95 vast plus de transparante koersmarge.',
 
  // ── Calculator-pagina (zonder account) — Sprint 4 ──────────────────────
  calc_titel:'Bereken je overboeking',
@@ -432,7 +432,7 @@ export const nl = {
  // ── Pricing-section wrapper (audit P1: consolidatie) ────────────────────
  pricing_section_eyebrow:'Transparante prijzen',
  pricing_section_titel:'Wat kost een overboeking?',
- pricing_section_subtitel:'Vergelijk SwiftBridge met concurrenten op €500, of bekijk onze volledige bedrag×methode-staffel.',
+ pricing_section_subtitel:'Vergelijk SwiftBridge met concurrenten op €500, of bekijk het volledige tarief per ledenniveau.',
  pricing_section_tab_vergelijking:'Vs concurrenten',
  pricing_section_tab_staffel:'Volledige tariefkaart',
 
@@ -1166,7 +1166,7 @@ export const nl = {
  support_qa_kyc_vraag:'Hoe upload ik mijn KYC documenten?',
  support_qa_kyc_antwoord:'Ga naar het tabblad Verificatie en klik op"Document scannen". Je hebt nodig:\n• Paspoort of ID-kaart (geldig)\n• Bewijs van woonadres (max 3 maanden oud)\n• Selfie ter bevestiging\n\nDe scan duurt minder dan 5 minuten en je krijgt direct feedback.',
  support_qa_kosten_vraag:'Wat zijn de kosten van een overboeking?',
- support_qa_kosten_antwoord:'SwiftBridge gebruikt een eerlijke staffel:\n• iDEAL Express: 2,0% (klein) tot 0,8% (€2.500+)\n• SEPA Economy: 1,2% tot 0,4%\n• Minimum fee: €1,99 (express) / €0,99 (economy)\n\nVolledige tariefkaart zichtbaar op de landing-pagina. Geen verborgen kosten — je ziet de exacte uitkomst voor je bevestigt.',
+ support_qa_kosten_antwoord:'SwiftBridge rekent één vaste fee van €4,95 per overboeking plus een transparante koersmarge:\n• Basis: 1,2%\n• Plus: 1,0%\n• Premium: 0,8%\n• Black: 0,6%\n\nMinimum overboekbedrag €50. Geen verborgen kosten — je ziet de exacte uitkomst voor je bevestigt.',
  support_qa_status_vraag:'Mijn geld is nog niet aangekomen — wat nu?',
  support_qa_status_antwoord:'Geen paniek — check eerst de status op je Dashboard. Stuur me het referentienummer (TX-XXXXXX) in een volgend bericht, dan zoek ik het direct voor je op.\n\n• Express: < 5 min\n• Economy: tot 2 werkdagen',
 

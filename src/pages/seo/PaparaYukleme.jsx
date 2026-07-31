@@ -44,7 +44,7 @@ export default function PaparaYukleme() {
               Open SwiftBridge, kies "Papara wallet" als uitbetaal-methode.
             </li>
             <li>
-              Vul bedrag in (vanaf €10, tot €5.000 per week in eerste 90 dagen).
+              Vul bedrag in (vanaf €50, tot €5.000 per week in eerste 90 dagen).
             </li>
             <li>
               Betaal met iDEAL — geld staat doorgaans binnen <strong>5 minuten</strong>

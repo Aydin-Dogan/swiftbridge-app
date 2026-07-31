@@ -1,126 +1,94 @@
 /**
- * Tariefkaart.jsx — Volledige bedrag × methode-staffel.
+ * Tariefkaart.jsx — Transparant prijsmodel per ledenniveau.
  *
- * Bron: KOSTEN_TARIEF_OVERZICHT.md §4.4 — gespiegeld in TARIEF_MATRIX
- * (zie src/services/kosten.js). Hier puur presentatie; de waardes komen
- * uit dezelfde source-of-truth zodat staffel en checkout altijd matchen.
+ * Bron: bouwbrief §8 + SwiftBridge-prijsstrategie-transparant (BINDEND) —
+ * gespiegeld in src/services/kosten.js (FEE_VAST + FX_MARGE_NIVEAUS), zodat
+ * tariefkaart en checkout altijd dezelfde source-of-truth gebruiken.
  */
 import { useTaal } from '../../i18n';
-import { TARIEF_MATRIX } from '../../services/kosten';
-import { Bank, Card } from '../icons/Icons';
+import { FEE_VAST, MIN_BEDRAG, FX_MARGE_NIVEAUS, NIVEAU_LABELS, berekenKosten } from '../../services/kosten';
+import { Bank } from '../icons/Icons';
 
-const TIERS = [
-  { label: '€10 – €200' },
-  { label: '€200 – €500' },
-  { label: '€500 – €1.000' },
-  { label: '€1.000 – €2.500' },
-  { label: '€2.500+' },
-];
+const NIVEAUS = ['basis', 'plus', 'premium', 'black'];
+const VOORBEELD_BEDRAGEN = [100, 500, 1000, 2500];
 
-// Klarna staat in PaymentFlow.jsx als 'Activeer eerst in Mollie' — totdat
-// Klarna écht beschikbaar is, niet in publieke tariefkaart tonen (anders
-// misleidende reclame). Voeg Klarna weer toe zodra Mollie het activeert.
-const METHODEN = [
-  { key: 'ideal', Icon: Bank, i18n: 'tariefkaart_methode_ideal' },
-  { key: 'card', Icon: Card, i18n: 'tariefkaart_methode_card' },
-  { key: 'sepa', Icon: Bank, i18n: 'tariefkaart_methode_sepa' },
-];
-
+function eur(n) {
+  return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n);
+}
 function pct(v) {
-  // 0.020 → '2,0%'
   return `${(v * 100).toFixed(1).replace('.', ',')}%`;
+}
+// Totale kosten (fee + marge over netto) voor de voorbeeldtabel
+function totaleKosten(bedrag, niveau) {
+  return berekenKosten(bedrag, 'ideal', 'express', 36.20, niveau).totaleKostenEur;
 }
 
 /**
  * @param {object} props
  * @param {boolean} [props.embedded=false] - render zonder outer section/header
- * (voor gebruik binnen PricingSection wrapper).
  */
 export default function Tariefkaart({ embedded = false }) {
   const { t } = useTaal();
 
   const inhoud = (
     <>
-        {/* Desktop tabel — bancaire hairline-stijl */}
-        <div className="hidden md:block border border-gray-200 bg-white overflow-x-auto mt-9">
-          <table className="w-full text-sm">
-            <thead>
-              <tr>
-                <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">{t('tariefkaart_col_bedrag')}</th>
-                {METHODEN.map((m) => (
-                  <th key={m.key} className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">
-                    <span className="inline-flex items-center gap-1.5">
-                      <m.Icon className="w-4 h-4" aria-hidden="true" />
-                      {t(m.i18n)}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {TIERS.map((tier, idx) => {
-                const rand = idx === TIERS.length - 1 ? '' : 'border-b border-gray-200';
-                return (
-                <tr key={idx}>
-                  <td className={`px-[18px] py-3.5 ${rand} font-semibold text-gray-700`}>{tier.label}</td>
-                  {METHODEN.map((m) => (
-                    <td
-                      key={m.key}
-                      className={`px-[18px] py-3.5 ${rand} tabular-nums font-semibold ${
-                        m.key === 'ideal'
-                          ? 'text-green-700'
-                          : m.key === 'sepa'
-                          ? 'text-brand-700'
-                          : 'text-gray-700'
-                      }`}
-                    >
-                      {pct(TARIEF_MATRIX[m.key][idx])}
+      {/* Kern: één vaste fee + transparante marge per niveau */}
+      <div className="grid sm:grid-cols-3 gap-4 mt-9 text-center">
+        <div className="p-5 bg-white border border-gray-200">
+          <div className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1.5">Vaste fee</div>
+          <div className="font-display text-2xl font-medium text-gray-900 tabular-nums">{eur(FEE_VAST)}</div>
+          <div className="text-xs text-gray-500 mt-1">per overboeking, elk niveau</div>
+        </div>
+        <div className="p-5 bg-white border border-gray-200">
+          <div className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1.5">Koersmarge</div>
+          <div className="font-display text-2xl font-medium text-gray-900 tabular-nums">{pct(FX_MARGE_NIVEAUS.basis)} &rarr; {pct(FX_MARGE_NIVEAUS.black)}</div>
+          <div className="text-xs text-gray-500 mt-1">transparant getoond, daalt per ledenniveau</div>
+        </div>
+        <div className="p-5 bg-white border border-gray-200">
+          <div className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-1.5">Minimum</div>
+          <div className="font-display text-2xl font-medium text-gray-900 tabular-nums">{eur(MIN_BEDRAG)}</div>
+          <div className="text-xs text-gray-500 mt-1">per overboeking · max. &euro;5.000 p/w</div>
+        </div>
+      </div>
+
+      {/* Totale kosten per niveau × voorbeeldbedrag */}
+      <div className="border border-gray-200 bg-white overflow-x-auto mt-4">
+        <table className="w-full text-sm">
+          <thead>
+            <tr>
+              <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">
+                <span className="inline-flex items-center gap-1.5"><Bank className="w-4 h-4" aria-hidden="true" /> Niveau</span>
+              </th>
+              <th className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-left px-[18px] py-3.5 border-b border-gray-200">Marge</th>
+              {VOORBEELD_BEDRAGEN.map((b) => (
+                <th key={b} className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-gray-500 text-right px-[18px] py-3.5 border-b border-gray-200">
+                  op {eur(b)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {NIVEAUS.map((niveau, idx) => {
+              const rand = idx === NIVEAUS.length - 1 ? '' : 'border-b border-gray-200';
+              return (
+                <tr key={niveau}>
+                  <td className={`px-[18px] py-3.5 ${rand} font-semibold text-gray-700`}>{NIVEAU_LABELS[niveau]}</td>
+                  <td className={`px-[18px] py-3.5 ${rand} tabular-nums font-semibold text-brand-700`}>{pct(FX_MARGE_NIVEAUS[niveau])}</td>
+                  {VOORBEELD_BEDRAGEN.map((b) => (
+                    <td key={b} className={`px-[18px] py-3.5 ${rand} tabular-nums font-semibold text-right ${niveau === 'basis' ? 'text-gray-900' : 'text-gray-700'}`}>
+                      {eur(totaleKosten(b, niveau))}
                     </td>
                   ))}
                 </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
-        {/* Mobiele kaartweergave — een kaart per methode, hairline plat */}
-        <div className="md:hidden space-y-4 mt-9">
-          {METHODEN.map((m) => (
-            <div
-              key={m.key}
-              className="p-5 bg-white border border-gray-200"
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <m.Icon className="w-5 h-5 text-gray-700" aria-hidden="true" />
-                <div className="font-medium text-gray-900">{t(m.i18n)}</div>
-              </div>
-              <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-                {TIERS.flatMap((tier, idx) => [
-                  <dt key={`${m.key}-${idx}-l`} className="text-gray-500">
-                    {tier.label}
-                  </dt>,
-                  <dd
-                    key={`${m.key}-${idx}-v`}
-                    className={`text-right tabular-nums font-semibold ${
-                      m.key === 'ideal'
-                        ? 'text-green-700'
-                        : m.key === 'sepa'
-                        ? 'text-brand-700'
-                        : 'text-gray-700'
-                    }`}
-                  >
-                    {pct(TARIEF_MATRIX[m.key][idx])}
-                  </dd>,
-                ])}
-              </dl>
-            </div>
-          ))}
-        </div>
-
-        <p className="text-[0.72rem] text-gray-500 mt-3 max-w-2xl mx-auto">
-          {t('tariefkaart_disclaimer')}
-        </p>
+      <p className="text-[0.72rem] text-gray-500 mt-3 max-w-2xl mx-auto">
+        {t('tariefkaart_disclaimer')}
+      </p>
     </>
   );
 

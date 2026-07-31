@@ -298,7 +298,7 @@ export const tr = {
  landing_feature_snel_titel:'Şimşek hızında',
  landing_feature_snel_tekst:'Sevdiklerinizin hesabına 5 dakika içinde para — hafta sonları ve mesai dışı dahil, canlı koridorlarımızda.',
  landing_feature_goedkoop_titel:'Adil fiyatlı',
- landing_feature_goedkoop_tekst:'Adil kademeli tarife, işlem başına %0,8\'den başlayan. Ne kadar çok gönderirsen, o kadar düşük tarife. Tam tarife kartı önceden görünür.',
+ landing_feature_goedkoop_tekst:'Sabit €4,95 ücret ve %1,2\'den başlayan şeffaf kur marjı — üyelik seviyesine göre %0,6\'ya düşer. Her şey önceden görünür.',
  landing_feature_veilig_titel:'Güvenli ve denetimli',
  landing_feature_veilig_tekst:'EMI ortağımız aracılığıyla DNB denetiminde, her alıcı için yaptırım listesi kontrolü, iDIN kimlik doğrulama.',
 
@@ -318,13 +318,13 @@ export const tr = {
  // Tarife kartı bölümü
  tariefkaart_eyebrow:'Tarifelerimiz',
  tariefkaart_titel:'Tam tarife kartı',
- tariefkaart_subtitel:'Adil kademeli tarife — ne kadar çok gönderirsen, o kadar düşük tarife. Gizli masraf yok.',
+ tariefkaart_subtitel:'Tek sabit ücret, üyelik seviyesine göre şeffaf kur marjı. Gizli maliyet yok.',
  tariefkaart_col_bedrag:'Tutar',
  tariefkaart_methode_ideal:'iDEAL / Wero',
  tariefkaart_methode_card:'Kredi kartı',
  tariefkaart_methode_klarna:'Klarna',
  tariefkaart_methode_sepa:'SEPA',
- tariefkaart_disclaimer:'Döviz kuru canlı mid-market kura dayalı. Örnek: €500 iDEAL ile %1,5 = €7,50 ücret.',
+ tariefkaart_disclaimer:'Döviz kuru canlı orta piyasa kuruna dayanır. Transfer başına sabit €4,95 ücret; kur marjı (%1,2\'den, üyelik seviyesine göre düşer) şeffaf gösterilir. Minimum €50.',
 
  // Social proof / stats
  landing_stat_overboekingen:'Tamamlanan transfer',
@@ -368,7 +368,7 @@ export const tr = {
  landing_faq_snelheid_vraag:'Para Türkiye\'ye ne kadar sürede ulaşır?',
  landing_faq_snelheid_antwoord:'Çoğu durumda iDEAL ödemenin onayından sonra 5 dakika içinde. Büyük tutarlar veya mesai dışı saatlerde en fazla 1 saate kadar uzayabilir. İlk transferde KYC doğrulamasından dolayı biraz daha sürebilir.',
  landing_faq_kosten_vraag:'Gerçek maliyet nedir?',
- landing_faq_kosten_antwoord:'Tarifelerimiz kademeli sistem kullanır: küçük tutarlar için (€10-200) %2,0\'den başlayıp, €2.500+ için %0,8\'e iner. €500\'da %1,5 (€7,50) ödersin, €1.000\'de %1,2 (€12). Tam tarife kartı landing sayfasında. Abonelik yok, gizli masraf yok.',
+ landing_faq_kosten_antwoord:'Transfer başına sabit €4,95 işlem ücreti, artı şeffaf %1,2 kur marjı (Basis) — üyelik seviyesine göre %0,6\'ya (Black) düşer. Minimum transfer €50. Abonelik yok, gizli maliyet yok.',
  landing_faq_veiligheid_vraag:'Param SwiftBridge\'de güvende mi?',
  landing_faq_veiligheid_antwoord:'Evet. Ödemeler DNB lisanslı bir EMI ortağı aracılığıyla yürütülür (DNB denetimi altında acente modeli). Her alıcıyı uluslararası yaptırım listesinde kontrol ederiz, 256-bit şifreleme kullanırız ve verilerinizi GDPR ve Wwft uyarınca saklarız.',
  landing_faq_banken_vraag:'Hangi Türk bankaları destekleniyor?',
@@ -390,7 +390,7 @@ export const tr = {
  landing_faq_feestdagen_vraag:'SwiftBridge Ramazan, Bayram ve Türk bayramlarında çalışır mı?',
  landing_faq_feestdagen_antwoord:'Evet — teknik altyapımız 7/24 çalışır. Ancak Türk bankalarının bayramlarda gelen transferleri işlemekte gecikmesi sıktır. Ramazan Bayramı ve Kurban Bayramı sırasında teslim biraz daha uzun sürebilir (<5 dakika yerine 1 iş gününe kadar). Bayramda bir işlem planlarsan önceden push bildirimi gönderiyoruz.',
  landing_faq_belgie_duitsland_vraag:'SwiftBridge Belçika veya Almanya\'dan da çalışır mı?',
- landing_faq_belgie_duitsland_antwoord:'Evet. Belçika\'dan iDEAL\'in eşdeğeri olarak Bancontact destekliyoruz. Almanya\'dan Sofort ve SEPA çalışıyor. Alıcının Türkiye, Azerbaycan, Kazakistan, Özbekistan, Türkmenistan, Kırgızistan veya Tacikistan\'da hesabı olması gerekir. Tarifeler EUR kademeli tarifemizle aynıdır.',
+ landing_faq_belgie_duitsland_antwoord:'Evet. Belçika\'dan Bancontact, Almanya\'dan Sofort ve SEPA çalışır. Alıcının Türkiye, Azerbaycan, Kazakistan, Özbekistan, Türkmenistan, Kırgızistan veya Tacikistan\'da hesabı olmalı. Fiyatlar aynı: sabit €4,95 artı şeffaf kur marjı.',
 
  // ── Hesap makinesi sayfası (hesap gerekmeden) — Sprint 4 ─────────────────
  calc_titel:'Transferini hesapla',
@@ -431,7 +431,7 @@ export const tr = {
  // ── Pricing-section wrapper ───────────────────────────────────────────────
  pricing_section_eyebrow:'Şeffaf fiyatlar',
  pricing_section_titel:'Bir transfer ne kadar?',
- pricing_section_subtitel:'SwiftBridge\'i €500\'de rakiplerle karşılaştır veya tam tutar×yöntem kademeli tarifemizi gör.',
+ pricing_section_subtitel:'€500 üzerinden rakiplerle karşılaştırın veya üyelik seviyesine göre tam tarifeyi görün.',
  pricing_section_tab_vergelijking:'Rakiplere karşı',
  pricing_section_tab_staffel:'Tam tarife kartı',
 
@@ -755,7 +755,7 @@ export const tr = {
  support_qa_kyc_vraag:'KYC belgelerimi nasıl yüklerim?',
  support_qa_kyc_antwoord:'Doğrulama sekmesine gidin ve"Belge tara"düğmesine tıklayın. Gerekenler:\n• Pasaport veya kimlik kartı (geçerli)\n• İkamet kanıtı (en fazla 3 ay eski)\n• Onay için selfie\n\nTarama 5 dakikadan az sürer ve anında geri bildirim alırsınız.',
  support_qa_kosten_vraag:'Para transferinin maliyeti nedir?',
- support_qa_kosten_antwoord:'SwiftBridge adil kademeli tarife kullanır:\n• iDEAL Express: %2,0 (küçük) - %0,8 (€2.500+)\n• SEPA Economy: %1,2 - %0,4\n• Minimum ücret: €1,99 (express) / €0,99 (economy)\n\nTam tarife kartı landing sayfasında görünür. Gizli maliyet yok — onaylamadan önce tam tutarı görürsünüz.',
+ support_qa_kosten_antwoord:'SwiftBridge transfer başına sabit €4,95 ücret artı şeffaf kur marjı alır:\n• Basis: %1,2\n• Plus: %1,0\n• Premium: %0,8\n• Black: %0,6\n\nMinimum transfer €50. Gizli maliyet yok.',
  support_qa_status_vraag:'Param henüz gelmedi — şimdi ne yapmalıyım?',
  support_qa_status_antwoord:'Endişelenmeyin — önce Panel\'den durumu kontrol edin. Referans numarasını (TX-XXXXXX) bir sonraki mesajda gönderin, sizin için hemen kontrol edeyim.\n\n• Express: < 5 dk\n• Economy: 2 iş gününe kadar',
 

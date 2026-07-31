@@ -53,15 +53,14 @@ export default function GarantiOverboeking() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Wat kost het?</h2>
           <p>
-            SwiftBridge gebruikt een staffel-tarief: hoe meer je stuurt, hoe lager het
-            tarief. Voor Garanti-overboekingen via iDEAL:
+            SwiftBridge rekent één vaste fee plus een transparante koersmarge — geen
+            verborgen kosten. Voor Garanti-overboekingen via iDEAL:
           </p>
           <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            <li>€10-200: 2,0% (€2-4 fee)</li>
-            <li>€200-500: 1,5% (€7,50 op €500)</li>
-            <li>€500-1.000: 1,2% (€12 op €1.000)</li>
-            <li>€1.000-2.500: 1,0%</li>
-            <li>€2.500+: 0,8%</li>
+            <li>Vaste transactiefee: €4,95 per overboeking</li>
+            <li>Koersmarge: 1,2% (Basis), per ledenniveau dalend tot 0,6% (Black)</li>
+            <li>Minimum overboekbedrag: €50 · maximum €5.000 per week</li>
+            <li>Voorbeeld: op €500 betaal je in totaal ongeveer €10,89</li>
           </ul>
           <p>
             Garanti zelf rekent geen extra kosten voor inkomende EUR→TRY transfers vanuit

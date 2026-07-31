@@ -17,10 +17,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FinancialService","name":"SwiftBridge","url":"https://swiftbridge.tr/","description":"Internationaal geld overmaken vanuit Nederland. Express doorgaans binnen 5 minuten, Economy 1–2 werkdagen. Onder DNB-toezicht via EMI-partner.","areaServed":{"@type":"Country","name":"Netherlands"},"offers":[{"@type":"Offer","name":"Express","priceCurrency":"EUR","price":"7.50"},{"@type":"Offer","name":"Economy","priceCurrency":"EUR","price":"4.50"}],"regulatoryOrganization":{"@type":"GovernmentOrganization","name":"De Nederlandsche Bank","url":"https://www.dnb.nl/"}}
+{"@context":"https://schema.org","@type":"FinancialService","name":"SwiftBridge","url":"https://swiftbridge.tr/","description":"Internationaal geld overmaken vanuit Nederland. Express doorgaans binnen 5 minuten, Economy 1–2 werkdagen. Onder DNB-toezicht via EMI-partner.","areaServed":{"@type":"Country","name":"Netherlands"},"offers":[{"@type":"Offer","name":"Overboeking (vaste fee)","priceCurrency":"EUR","price":"4.95"}],"regulatoryOrganization":{"@type":"GovernmentOrganization","name":"De Nederlandsche Bank","url":"https://www.dnb.nl/"}}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hoe snel komt het geld aan?","acceptedAnswer":{"@type":"Answer","text":"Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen."}},{"@type":"Question","name":"Wat kost een overboeking?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge rekent een transactiefee (€7,50 Express / €4,50 Economy) plus een FX-marge van ca. 1,2% (indicatief). Volledig kostenoverzicht altijd vóór bevestiging."}},{"@type":"Question","name":"Is SwiftBridge veilig en legaal?","acceptedAnswer":{"@type":"Answer","text":"Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wwft en AVG/GDPR-conform. Sanctiescreening bij elke transactie."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hoe snel komt het geld aan?","acceptedAnswer":{"@type":"Answer","text":"Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen."}},{"@type":"Question","name":"Wat kost een overboeking?","acceptedAnswer":{"@type":"Answer","text":"SwiftBridge rekent een transactiefee (€4,95 vast per overboeking) plus een FX-marge van ca. 1,2% (indicatief). Volledig kostenoverzicht altijd vóór bevestiging."}},{"@type":"Question","name":"Is SwiftBridge veilig en legaal?","acceptedAnswer":{"@type":"Answer","text":"Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wwft en AVG/GDPR-conform. Sanctiescreening bij elke transactie."}}]}
 </script>
 <style>
 /* ============================================================
@@ -501,10 +501,10 @@ Gebouwd voor mensen zoals u.</h1>
           <div class="calc-row">
             <div>
               <label class="calc-label" for="calc-amount" data-i18n="calc_label_amount">Stuur ik</label>
-              <input class="calc-input" id="calc-amount" type="number" min="10" max="5000" value="500" step="1"
+              <input class="calc-input" id="calc-amount" type="number" min="50" max="5000" value="500" step="1"
                 aria-describedby="calc-amount-hint"
                 data-i18n-attr="aria-label:calc_label_amount"/>
-              <span id="calc-amount-hint" style="font-size:.6875rem;color:var(--txt-m)">Min. €10 · Max. €5.000</span>
+              <span id="calc-amount-hint" style="font-size:.6875rem;color:var(--txt-m)">Min. €50 · Max. €5.000</span>
             </div>
             <div>
               <label class="calc-label" for="calc-currency" data-i18n="calc_label_currency">Valuta</label>
@@ -530,11 +530,11 @@ Gebouwd voor mensen zoals u.</h1>
             <div class="calc-speed" role="radiogroup" aria-label="Overboekingssnelheid">
               <label>
                 <input type="radio" name="speed" value="express" checked/>
-                <span><strong data-i18n="calc_speed_express_short">Express</strong> <span data-i18n="calc_speed_express">&lt;5 min &mdash; €7,50</span></span>
+                <span><strong data-i18n="calc_speed_express_short">Express</strong> <span data-i18n="calc_speed_express">&lt;5 min</span></span>
               </label>
               <label>
                 <input type="radio" name="speed" value="economy"/>
-                <span><strong data-i18n="calc_speed_economy_short">Economy</strong> <span data-i18n="calc_speed_economy">1–2 dagen &mdash; €4,50</span></span>
+                <span><strong data-i18n="calc_speed_economy_short">Economy</strong> <span data-i18n="calc_speed_economy">1–2 dagen</span></span>
               </label>
             </div>
           </fieldset>
@@ -686,7 +686,7 @@ Gebouwd voor mensen zoals u.</h1>
           <tbody>
             <tr>
               <td>Vaste kosten (niet-SEPA)</td>
-              <td class="sb-col-sb">€4,50 Economy<br>€7,50 Express</td>
+              <td class="sb-col-sb">€4,95 vast</td>
               <td>~€6 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
               <td>€9 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
               <td>€8 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
@@ -721,7 +721,7 @@ Gebouwd voor mensen zoals u.</h1>
             </tr>
             <tr>
               <td>Express &lt;5 min</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €7,50 vast</span></td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €4,95 vast</span></td>
               <td><span class="sb-badge sb-badge--no">Nee</span></td>
               <td><span class="sb-badge sb-badge--no">Nee</span></td>
               <td><span class="sb-badge sb-badge--no">Nee</span></td>
@@ -751,7 +751,7 @@ Gebouwd voor mensen zoals u.</h1>
           <div class="sb-example-card sb-example-card--sb">
             <p class="sb-example-card__provider">SwiftBridge</p>
             <p class="sb-example-card__amount">~35.395 TRY</p>
-            <p class="sb-example-card__sub">Fee: €4,50 · Marge: ~1,2%<br>Totale kost: ~€16,50</p>
+            <p class="sb-example-card__sub">Fee: €4,95 · Marge: 1,2%<br>Totale kost: ~€16,95</p>
             <span class="sb-example-card__tag sb-example-card__tag--normal">1–2 werkdagen</span>
           </div>
           <div class="sb-example-card">
@@ -804,7 +804,7 @@ Gebouwd voor mensen zoals u.</h1>
           <tbody>
             <tr>
               <td>Vaste kosten</td>
-              <td class="sb-col-sb">€4,50 Economy<br>€7,50 Express</td>
+              <td class="sb-col-sb">€4,95 vast</td>
               <td>~€6,50 totaal per €1.000 <small style="color:var(--txt-m)">(fee + %)</small></td>
               <td>~€1,49–€1,99 flat <small style="color:var(--txt-m)">(indicatief)</small></td>
               <td>Gratis binnen plan-limiet <small style="color:var(--txt-m)">(daarna 1%)</small></td>
@@ -844,7 +844,7 @@ Gebouwd voor mensen zoals u.</h1>
             </tr>
             <tr>
               <td>Express &lt;5 min (vaste prijs)</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €7,50 vast</span></td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €4,95 vast</span></td>
               <td><span class="sb-badge sb-badge--no">Nee</span></td>
               <td><span class="sb-badge sb-badge--part">Remitly Express (hogere fee)</span></td>
               <td><span class="sb-badge sb-badge--no">Nee voor non-SEPA bank</span></td>
@@ -885,7 +885,7 @@ Gebouwd voor mensen zoals u.</h1>
           <div class="sb-example-card sb-example-card--sb">
             <p class="sb-example-card__provider">SwiftBridge</p>
             <p class="sb-example-card__amount">~35.395 TRY</p>
-            <p class="sb-example-card__sub">Fee: €4,50 · Marge: ~1,2%<br>Totale kost: ~€16,50</p>
+            <p class="sb-example-card__sub">Fee: €4,95 · Marge: 1,2%<br>Totale kost: ~€16,95</p>
             <span class="sb-example-card__tag sb-example-card__tag--express">Express ook: &lt;5 min</span>
           </div>
           <div class="sb-example-card">
@@ -1082,7 +1082,7 @@ Gebouwd voor mensen zoals u.</h1>
           <span data-i18n="faq_q2">Wat kost een overboeking?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body" data-i18n="faq_a2">SwiftBridge rekent een transactiefee (€ 7,50 Express / € 4,50 Economy) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.</div>
+        <div class="faq-body" data-i18n="faq_a2">SwiftBridge rekent een transactiefee (€4,95 vast per overboeking) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.</div>
       </details>
 
       <details class="faq-item" role="listitem">
@@ -1098,7 +1098,7 @@ Gebouwd voor mensen zoals u.</h1>
           <span>Wat zijn de minimale en maximale bedragen?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body">U kunt bedragen overmaken vanaf € 10 tot € 5.000 per transactie. Het wekelijkse limiet is € 5.000. Voor hogere zakelijke limieten: zie <a href="/zakelijk" style="color:var(--accent)">SwiftBridge Zakelijk</a>.</div>
+        <div class="faq-body">U kunt bedragen overmaken vanaf € 50 tot € 5.000 per transactie. Het wekelijkse limiet is € 5.000. Voor hogere zakelijke limieten: zie <a href="/zakelijk" style="color:var(--accent)">SwiftBridge Zakelijk</a>.</div>
       </details>
 
       <details class="faq-item" role="listitem">
@@ -1183,7 +1183,7 @@ Gebouwd voor mensen zoals u.</h1>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-disclaimer" data-i18n="footer_legal_oneliner">SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. € 10 / max. € 5.000 per transactie, max. € 5.000 per week.</p>
+      <p class="footer-disclaimer" data-i18n="footer_legal_oneliner">SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. €50 / max. € 5.000 per transactie, max. € 5.000 per week.</p>
       <p class="footer-copy">&copy; 2026 SwiftBridge B.V. Alle rechten voorbehouden.</p>
     </div>
   </div>
@@ -1264,13 +1264,13 @@ const I18N = {
     faq_q1: "Hoe snel komt het geld aan?",
     faq_a1: "Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen. De exacte verwerkingstijd hangt af van het bestemmingsland en de lokale bank van de ontvanger. U ziet altijd de verwachte levertijd vóór u bevestigt.",
     faq_q2: "Wat kost een overboeking?",
-    faq_a2: "SwiftBridge rekent een transactiefee (€ 7,50 Express / € 4,50 Economy) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.",
+    faq_a2: "SwiftBridge rekent een transactiefee (€4,95 vast per overboeking) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.",
     faq_q3: "Is SwiftBridge veilig en legaal?",
     faq_a3: "Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wij voldoen aan de Wwft en de AVG/GDPR. Elke transactie wordt getoetst aan internationale sanctielijsten. Uw identiteit wordt geverifieerd via iDIN.",
     cta_band_heading: "Klaar om over te stappen?",
     cta_band_sub: "Gratis account aanmaken in minder dan 2 minuten. Uw eerste overboeking — veilig, transparant en eerlijk geprijsd. Onder toezicht van De Nederlandsche Bank via onze EMI-partner.",
     cta_band_button: "Gratis account openen",
-    footer_legal_oneliner: "SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. € 10 / max. € 5.000 per transactie, max. € 5.000 per week.",
+    footer_legal_oneliner: "SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. €50 / max. € 5.000 per transactie, max. € 5.000 per week.",
     login_tab_login: "Inloggen",
     login_tab_register: "Registreren",
     login_label_email: "E-mailadres",
@@ -1350,13 +1350,13 @@ const I18N = {
     faq_q1: "How quickly does the money arrive?",
     faq_a1: "With Express, a transfer typically takes under 5 minutes on our live corridors. Economy transfers take 1–2 business days. Exact processing time depends on the destination country and the recipient’s local bank. You always see the expected delivery time before confirming.",
     faq_q2: "What does a transfer cost?",
-    faq_a2: "SwiftBridge charges a transaction fee (€7.50 Express / €4.50 Economy) plus an indicative FX margin of approx. 1.2%. You always see the full cost breakdown before confirming. No hidden fees.",
+    faq_a2: "SwiftBridge charges a transaction fee (€4,95 vast per overboeking) plus an indicative FX margin of approx. 1.2%. You always see the full cost breakdown before confirming. No hidden fees.",
     faq_q3: "Is SwiftBridge safe and legal?",
     faq_a3: "Yes. SwiftBridge operates via a registered EMI partner under De Nederlandsche Bank (DNB) supervision. We comply with Wwft (anti-money laundering) and GDPR. Every transaction is screened against international sanctions lists. Identity is verified via iDIN.",
     cta_band_heading: "Ready to make the switch?",
     cta_band_sub: "Create a free account in under 2 minutes. Your first transfer — safe, transparent and fairly priced. Under supervision of De Nederlandsche Bank via our EMI partner.",
     cta_band_button: "Open a free account",
-    footer_legal_oneliner: "SwiftBridge is not a bank and does not hold its own DNB banking licence. Payment services are provided via an authorised EMI partner operating under DNB supervision, in accordance with PSD2 and Wwft. Exchange rates and transaction fees are indicative and confirmed before each transaction. Limits: min. €10 / max. €5,000 per transaction, max. €5,000 per week.",
+    footer_legal_oneliner: "SwiftBridge is not a bank and does not hold its own DNB banking licence. Payment services are provided via an authorised EMI partner operating under DNB supervision, in accordance with PSD2 and Wwft. Exchange rates and transaction fees are indicative and confirmed before each transaction. Limits: min. €50 / max. €5,000 per transaction, max. €5,000 per week.",
     login_tab_login: "Log in", login_tab_register: "Register", login_label_email: "Email address",
     login_label_password: "Password", login_forgot: "Forgot password?", login_btn_login: "Log in",
     login_btn_register: "Create account", login_show: "Show", login_hide: "Hide",
@@ -1404,7 +1404,7 @@ const I18N = {
     app_qr_help: "Uygulamaıyı indirmek için QR kodunu trayın",
     app_trust_line: "Ücretsiз · Kredi kartı gerekmez · EMI ortağı ile DNB denetimi",
     faq_q1: "Para ne kadar sürede ulaşır?", faq_a1: "Ekspres seçeneğinde, canlı koridorlarımızda bir transfer genellikle 5 dakikadan kısa sürer.",
-    faq_q2: "Transfer ücreti ne kadar?", faq_a2: "SwiftBridge bir işlem ücreti (Ekspres € 7,50 / Ekonomi € 4,50) ve gösterge nitelikte yaklaşık %1,2 döviz marjı alır.",
+    faq_q2: "Transfer ücreti ne kadar?", faq_a2: "SwiftBridge sabit €4,95 işlem ücreti ve şeffaf, yaklaşık %1,2 döviz marjı alır (üyelik seviyesine göre %0,6'ya kadar düşer). Minimum transfer €50.",
     faq_q3: "SwiftBridge güvenli ve yasal mı?", faq_a3: "Evet. SwiftBridge, De Nederlandsche Bank (DNB) denetimindeki kayıtlı bir EMI ortağı aracılığıyla faaliyet gösterir.",
     cta_band_heading: "Geçiş yapmaya hazır mısınız?",
     cta_band_sub: "2 dakikadan kısa sürede üretsiз hesap açın. EMI ortağımız aracılığıyla De Nederlandsche Bank denetimi altında.",
@@ -1459,12 +1459,12 @@ const I18N = {
     app_qr_help: "امسح رمز QR لتنزيل التطبيق",
     app_trust_line: "مجاني · لا حاجة لبطاقة ائتمان · إشراف DNB عبر شريك EMI",
     faq_q1: "كم يستغرق وصول الأموال؟", faq_a1: "مع إكسبريس، يستغرق التحويل عادةً أقل من 5 دقائق على ممراتنا المباشرة.",
-    faq_q2: "ما تكلفة التحويل؟", faq_a2: "تفرض SwiftBridge رسوم معاملة (€ 7.50 إكسبريس / € 4.50 اقتصادي) بالإضافة إلى هامش صرف استرشادي يبلغ نحو 1.2٪.",
+    faq_q2: "ما تكلفة التحويل؟", faq_a2: "تفرض SwiftBridge رسوم معاملة (€4,95 vast per overboeking) بالإضافة إلى هامش صرف استرشادي يبلغ نحو 1.2٪.",
     faq_q3: "هل SwiftBridge آمنة وقانونية؟", faq_a3: "نعم. تعمل SwiftBridge عبر شريك EMI مسجَّل تحت إشراف De Nederlandsche Bank (DNB).",
     cta_band_heading: "هل أنت مستعد للتحول؟",
     cta_band_sub: "أنشئ حسابًا مجانيًا في أقل من دقيقتين. تحت إشراف De Nederlandsche Bank عبر شريكنا EMI.",
     cta_band_button: "افتح حسابًا مجانيًا",
-    footer_legal_oneliner: "SwiftBridge ليست بنكًا ولا تمتلك ترخيص DNB المصرفي الخاص. تُقدَّم خدمات الدفع عبر شريك EMI مُرخَّص يعمل تحت إشراف DNB. الحدود: الحد الأدنى € 10 / الحد الأقصى € 5,000 لكل معاملة.",
+    footer_legal_oneliner: "SwiftBridge ليست بنكًا ولا تمتلك ترخيص DNB المصرفي الخاص. تُقدَّم خدمات الدفع عبر شريك EMI مُرخَّص يعمل تحت إشراف DNB. الحدود: الحد الأدنى € 50 / الحد الأقصى € 5,000 لكل معاملة.",
     login_tab_login: "تسجيل الدخول", login_tab_register: "التسجيل",
     login_label_email: "عنوان البريد الإلكتروني", login_label_password: "كلمة المرور",
     login_forgot: "نسيت كلمة المرور؟", login_btn_login: "تسجيل الدخول",
@@ -1513,12 +1513,12 @@ const I18N = {
     app_qr_help: "QR-Code scannen, um die App herunterzuladen",
     app_trust_line: "Kostenlos · Keine Kreditkarte · DNB-Aufsicht via EMI-Partner",
     faq_q1: "Wie schnell kommt das Geld an?", faq_a1: "Bei Express dauert eine Überweisung typischerweise unter 5 Minuten. Bei Economy rechnen Sie mit 1–2 Werktagen.",
-    faq_q2: "Was kostet eine Überweisung?", faq_a2: "SwiftBridge erhebt eine Transaktionsgebühr (€ 7,50 Express / € 4,50 Economy) zuzüglich einer indikativen Devisenmarge von ca. 1,2 %.",
+    faq_q2: "Was kostet eine Überweisung?", faq_a2: "SwiftBridge erhebt eine Transaktionsgebühr (€4,95 vast per overboeking) zuzüglich einer indikativen Devisenmarge von ca. 1,2 %.",
     faq_q3: "Ist SwiftBridge sicher und legal?", faq_a3: "Ja. SwiftBridge operiert über einen registrierten EMI-Partner unter der Aufsicht der De Nederlandsche Bank (DNB).",
     cta_band_heading: "Bereit zum Wechseln?",
     cta_band_sub: "Kostenloses Konto in unter 2 Minuten erstellen. Unter Aufsicht der De Nederlandsche Bank über unseren EMI-Partner.",
     cta_band_button: "Kostenloses Konto eröffnen",
-    footer_legal_oneliner: "SwiftBridge ist keine Bank und verfügt über keine eigene DNB-Banklizenz. Zahlungsdienstleistungen werden über einen autorisierten EMI-Partner gemäß PSD2 und Wwft erbracht. Wechselkurse und Transaktionsgebühren sind indikativ. Limits: mind. € 10 / max. € 5.000 pro Transaktion.",
+    footer_legal_oneliner: "SwiftBridge ist keine Bank und verfügt über keine eigene DNB-Banklizenz. Zahlungsdienstleistungen werden über einen autorisierten EMI-Partner gemäß PSD2 und Wwft erbracht. Wechselkurse und Transaktionsgebühren sind indikativ. Limits: mind. € 50 / max. € 5.000 pro Transaktion.",
     login_tab_login: "Anmelden", login_tab_register: "Registrieren", login_label_email: "E-Mail-Adresse",
     login_label_password: "Passwort", login_forgot: "Passwort vergessen?", login_btn_login: "Anmelden",
     login_btn_register: "Konto erstellen", login_show: "Anzeigen", login_hide: "Verbergen",
@@ -1566,12 +1566,12 @@ const I18N = {
     app_qr_help: "Scannez le code QR pour télécharger l’application",
     app_trust_line: "Gratuit · Sans carte bancaire · Supervision DNB via partenaire EMI",
     faq_q1: "Combien de temps faut-il pour que l’argent arrive ?", faq_a1: "Avec Express, un virement prend généralement moins de 5 minutes sur nos corridors actifs.",
-    faq_q2: "Combien coûte un virement ?", faq_a2: "SwiftBridge facture des frais de transaction (€ 7,50 Express / € 4,50 Économique) plus une marge de change indicative d’environ 1,2 %.",
+    faq_q2: "Combien coûte un virement ?", faq_a2: "SwiftBridge facture des frais de transaction (€4,95 vast per overboeking) plus une marge de change indicative d’environ 1,2 %.",
     faq_q3: "SwiftBridge est-il sûr et légal ?", faq_a3: "Oui. SwiftBridge opère via un partenaire EMI agréé sous la supervision de De Nederlandsche Bank (DNB).",
     cta_band_heading: "Prêt à passer le cap ?",
     cta_band_sub: "Créez un compte gratuit en moins de 2 minutes. Sous la supervision de De Nederlandsche Bank via notre partenaire EMI.",
     cta_band_button: "Ouvrir un compte gratuit",
-    footer_legal_oneliner: "SwiftBridge n’est pas une banque et ne détient pas sa propre licence bancaire DNB. Les services de paiement sont fournis via un partenaire EMI agréé opérant sous supervision DNB, conformément à PSD2 et à la Wwft. Limites : min. € 10 / max. € 5 000 par transaction.",
+    footer_legal_oneliner: "SwiftBridge n’est pas une banque et ne détient pas sa propre licence bancaire DNB. Les services de paiement sont fournis via un partenaire EMI agréé opérant sous supervision DNB, conformément à PSD2 et à la Wwft. Limites : min. €50 / max. € 5 000 par transaction.",
     login_tab_login: "Se connecter", login_tab_register: "S’inscrire", login_label_email: "Adresse e-mail",
     login_label_password: "Mot de passe", login_forgot: "Mot de passe oublié ?", login_btn_login: "Se connecter",
     login_btn_register: "Créer un compte", login_show: "Afficher", login_hide: "Masquer",
@@ -1705,13 +1705,13 @@ function runCalc() {
   const amount = parseFloat(amountEl.value) || 0;
   const currency = currencyEl.value;
   const speed = speedEl.value;
-  const fee = speed === 'express' ? 7.50 : 4.50;
+  const fee = 4.95;
   const rate = RATES[currency] || 1;
   const effectiveRate = rate * (1 - FX_MARGIN);
   const net = Math.max(0, amount - fee);
   const received = net * effectiveRate;
 
-  if (amount < 10 || amount > 5000) {
+  if (amount < 50 || amount > 5000) {
     resultEl.textContent = '—';
     if (rateLine) rateLine.textContent = '';
     if (feeLine) feeLine.textContent = '';
@@ -1724,7 +1724,7 @@ function runCalc() {
 
   resultEl.textContent = received.toLocaleString('nl-NL', { maximumFractionDigits: 0 }) + ' ' + currency;
   if (rateLine) rateLine.textContent = rateLabel + ': 1 EUR = ' + effectiveRate.toFixed(4) + ' ' + currency + ' (± 1,2% marge)';
-  if (feeLine) feeLine.textContent = feeLabel + ': € ' + fee.toFixed(2) + (speed === 'express' ? ' (Express)' : ' (Economy)');
+  if (feeLine) feeLine.textContent = feeLabel + ': € ' + fee.toFixed(2) + ' (vast)';
 }
 
 document.getElementById('calc-amount')?.addEventListener('input', runCalc);

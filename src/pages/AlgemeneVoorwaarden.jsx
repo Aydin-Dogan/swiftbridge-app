@@ -78,7 +78,7 @@ export default function AlgemeneVoorwaarden() {
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Artikel 6 — Transacties en Limieten</h2>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Transacties zijn mogelijk vanaf €10 tot maximaal €10.000 per transactie.</li>
+                <li>Transacties zijn mogelijk vanaf €50 tot maximaal €5.000 per transactie (en €5.000 per week).</li>
                 <li>Het dagelijkse limiet bedraagt €5.000, het maandelijkse limiet €25.000 (voor standaard geverifieerde accounts).</li>
                 <li>SwiftBridge kan hogere limieten toepassen na uitgebreid klantonderzoek (Enhanced Due Diligence).</li>
                 <li>Eenmaal ingediende transacties zijn niet annuleerbaar tenzij de verwerking nog niet is gestart.</li>

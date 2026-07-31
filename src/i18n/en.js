@@ -298,7 +298,7 @@ export const en = {
  landing_feature_snel_titel:'Lightning fast',
  landing_feature_snel_tekst:'Money on your loved one\'s account within 5 minutes — including weekends and outside business hours, on our live corridors.',
  landing_feature_goedkoop_titel:'Fairly priced',
- landing_feature_goedkoop_tekst:'Fair tiered pricing from 0.8% per transfer. The more you send, the lower your rate. Full pricing table upfront.',
+ landing_feature_goedkoop_tekst:'One fixed €4.95 fee and a transparent FX margin from 1.2%, decreasing to 0.6% per membership level. Everything visible upfront.',
  landing_feature_veilig_titel:'Secure & regulated',
  landing_feature_veilig_tekst:'Under DNB supervision via our EMI partner, sanctions list check on every recipient, iDIN identification.',
 
@@ -318,13 +318,13 @@ export const en = {
  // Pricing table section
  tariefkaart_eyebrow:'Our pricing',
  tariefkaart_titel:'Full pricing table',
- tariefkaart_subtitel:'Fair tiered pricing — the more you send, the lower your rate. No hidden costs — what you see is what you pay.',
+ tariefkaart_subtitel:'One fixed fee, transparent FX margin per membership level. No hidden costs — what you see is what you pay.',
  tariefkaart_col_bedrag:'Amount',
  tariefkaart_methode_ideal:'iDEAL / Wero',
  tariefkaart_methode_card:'Credit card',
  tariefkaart_methode_klarna:'Klarna',
  tariefkaart_methode_sepa:'SEPA',
- tariefkaart_disclaimer:'Exchange rate based on live mid-market rate. Example: €500 via iDEAL costs 1.5% = €7.50 fee.',
+ tariefkaart_disclaimer:'Exchange rate based on the live mid-market rate. One fixed fee of €4.95 per transfer; the FX margin (from 1.2%, lower per membership level) is shown transparently. Minimum €50.',
 
  // Social proof / stats
  landing_stat_overboekingen:'Transfers processed',
@@ -368,7 +368,7 @@ export const en = {
  landing_faq_snelheid_vraag:'How fast does the money arrive in Türkiye?',
  landing_faq_snelheid_antwoord:'In most cases within 5 minutes after your iDEAL payment is confirmed. For large amounts or outside business hours it can take up to 1 hour. The very first transfer can be slightly slower because we verify your KYC once.',
  landing_faq_kosten_vraag:'What does it really cost?',
- landing_faq_kosten_antwoord:'Our pricing uses a tiered model: 2.0% for small amounts (€10-200), down to 0.8% for €2,500+. On €500 you pay 1.5% (€7.50), on €1,000 you pay 1.2% (€12). Full pricing table on the landing page. No subscription, no hidden costs.',
+ landing_faq_kosten_antwoord:'One fixed transaction fee of €4.95 per transfer, plus a transparent FX margin of 1.2% (Basic) decreasing per membership level to 0.6% (Black). Minimum transfer €50. No subscription, no hidden costs — you see everything before confirming.',
  landing_faq_veiligheid_vraag:'Is my money safe with SwiftBridge?',
  landing_faq_veiligheid_antwoord:'Yes. Payments are handled by a DNB-licensed EMI partner (agent model under DNB supervision). We check every recipient against the international sanctions list, use 256-bit encryption and store your data in line with GDPR and Wwft.',
  landing_faq_banken_vraag:'Which Turkish banks are supported?',
@@ -390,7 +390,7 @@ export const en = {
  landing_faq_feestdagen_vraag:'Does SwiftBridge work during Ramazan, Bayram and Turkish holidays?',
  landing_faq_feestdagen_antwoord:'Yes — our technical infrastructure runs 24/7. However, Turkish banks often have delays processing incoming transfers on holidays. During Ramazan Bayramı and Kurban Bayramı, delivery can take slightly longer (up to 1 business day instead of <5 minutes). We send push notifications in advance if you schedule a transaction on a holiday.',
  landing_faq_belgie_duitsland_vraag:'Does SwiftBridge also work from Belgium or Germany?',
- landing_faq_belgie_duitsland_antwoord:'Yes. From Belgium we support Bancontact as equivalent to iDEAL. From Germany Sofort and SEPA work. The recipient must have an account in Türkiye, Azerbaijan, Kazakhstan, Uzbekistan, Turkmenistan, Kyrgyzstan or Tajikistan. Rates are identical to our EUR tiered pricing.',
+ landing_faq_belgie_duitsland_antwoord:'Yes. From Belgium we support Bancontact as the iDEAL equivalent. From Germany, Sofort and SEPA work. The recipient needs an account in Türkiye, Azerbaijan, Kazakhstan, Uzbekistan, Turkmenistan, Kyrgyzstan or Tajikistan. Pricing is identical: €4.95 fixed plus the transparent FX margin.',
 
  // ── Calculator page (no account required) — Sprint 4 ─────────────────────
  calc_titel:'Calculate your transfer',
@@ -431,7 +431,7 @@ export const en = {
  // ── Pricing-section wrapper ───────────────────────────────────────────────
  pricing_section_eyebrow:'Transparent pricing',
  pricing_section_titel:'What does a transfer cost?',
- pricing_section_subtitel:'Compare SwiftBridge to competitors on €500, or view our full amount×method tiered pricing.',
+ pricing_section_subtitel:'Compare SwiftBridge with competitors at €500, or view the full rate per membership level.',
  pricing_section_tab_vergelijking:'Vs competitors',
  pricing_section_tab_staffel:'Full pricing table',
 
@@ -755,7 +755,7 @@ export const en = {
  support_qa_kyc_vraag:'How do I upload my KYC documents?',
  support_qa_kyc_antwoord:'Go to the Verification tab and click"Scan document". You\'ll need:\n• Passport or ID card (valid)\n• Proof of residence (max 3 months old)\n• Selfie for confirmation\n\nThe scan takes less than 5 minutes and you get instant feedback.',
  support_qa_kosten_vraag:'What does a transfer cost?',
- support_qa_kosten_antwoord:'SwiftBridge uses fair tiered pricing:\n• iDEAL Express: 2.0% (small) to 0.8% (€2,500+)\n• SEPA Economy: 1.2% to 0.4%\n• Minimum fee: €1.99 (express) / €0.99 (economy)\n\nFull pricing table visible on the landing page. No hidden costs — you see the exact outcome before you confirm.',
+ support_qa_kosten_antwoord:'SwiftBridge charges one fixed fee of €4.95 per transfer plus a transparent FX margin:\n• Basic: 1.2%\n• Plus: 1.0%\n• Premium: 0.8%\n• Black: 0.6%\n\nMinimum transfer €50. No hidden costs — you see the exact outcome before you confirm.',
  support_qa_status_vraag:'My money hasn\'t arrived yet — what now?',
  support_qa_status_antwoord:'No worries — first check the status on your Dashboard. Send me the reference number (TX-XXXXXX) in the next message and I\'ll look it up right away.\n\n• Express: < 5 min\n• Economy: up to 2 business days',
 
