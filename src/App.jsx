@@ -15,7 +15,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi, apiFetch } from './services/api';
-import { Home, Send, Bell, User, IdCard, X as XIcon, AlertTriangle, Lock } from './components/icons/Icons';
+import { Home, Send, Bell, User, IdCard, X as XIcon, AlertTriangle, Lock, Lightbulb, Clipboard, MessageCircle, Menu as MenuIcon, ChevronDown, ChevronUp } from './components/icons/Icons';
 import AppLockScherm from './components/pin/AppLockScherm';
 
 // Lazy load zware paginas (code splitting)
@@ -47,6 +47,13 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const LocaleLanding = lazy(() => import('./pages/LocaleLanding'));
 const BevestigInlog = lazy(() => import('./pages/BevestigInlog'));
 const InfoAanleveren = lazy(() => import('./pages/InfoAanleveren'));
+// Bank-Overzicht (OVZ-ronde): rekening-detail, inzicht, opdrachten, meer
+const RekeningDetail = lazy(() => import('./pages/RekeningDetail'));
+const Inzicht = lazy(() => import('./pages/Inzicht'));
+const Documenten = lazy(() => import('./pages/Documenten'));
+const ServicePagina = lazy(() => import('./pages/Service'));
+const Betalingen = lazy(() => import('./components/opdrachten/Betalingen'));
+const Verzendlijst = lazy(() => import('./components/opdrachten/Verzendlijst'));
 const Status = lazy(() => import('./pages/Status'));
 const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
@@ -261,13 +268,28 @@ function AppShell({ gebruiker, token, onLogout }) {
     };
   }, [accountMenuOpen]);
   const [actief, setActief] = useState('dashboard');
+  // Betalingen-pagina kan direct op het Gepland-tabblad openen
+  // ("Ingeplande opdrachten" in Direct naar / Beheer zelf)
+  const [betalingenTab, setBetalingenTab] = useState('alles');
+  // Uitklapstatus van de zijbalk-groepen (desktop)
+  const [zijOpen, setZijOpen] = useState({ opdrachten: true, meer: false });
   const navigate = useNavigate();
   const { t } = useTaal();
 
-  // Luister naar interne navigatie events (bijv. van FeestKalender)
+  // Luister naar interne navigatie events (bijv. van FeestKalender, Direct naar)
   useEffect(() => {
     const handler = (e) => {
-      if (['dashboard', 'betaling', 'kyc'].includes(e.detail)) setActief(e.detail);
+      const doel = e.detail;
+      if (doel === 'betalingen_gepland') {
+        setBetalingenTab('gepland');
+        setActief('betalingen');
+        return;
+      }
+      if (doel === 'betalingen') setBetalingenTab('alles');
+      if (['dashboard', 'betaling', 'kyc', 'alerts', 'profiel', 'inzicht', 'betalingen', 'verzendlijst', 'service', 'documenten'].includes(doel)) {
+        setActief(doel);
+        window.scrollTo({ top: 0 });
+      }
     };
     window.addEventListener('swiftbridge_navigate', handler);
     return () => window.removeEventListener('swiftbridge_navigate', handler);
@@ -291,7 +313,7 @@ function AppShell({ gebruiker, token, onLogout }) {
       <InstallBanner />
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-2xl lg:max-w-6xl mx-auto px-4 lg:px-6 py-3 flex items-center justify-between">
           <button onClick={() => navigate('/')} className="flex items-center gap-2">
             <img
               src="/icon-192.png"
@@ -366,10 +388,84 @@ function AppShell({ gebruiker, token, onLogout }) {
         </div>
       </header>
 
-      {/* Inhoud */}
-      <main id="inhoud" className="max-w-2xl mx-auto px-4 py-5 pb-28">
+      {/* Inhoud — desktop (lg+): zijbalk links zoals zakelijk bankieren */}
+      <div className="lg:max-w-6xl lg:mx-auto lg:px-6 lg:flex lg:gap-6 lg:items-start">
+        <aside className="hidden lg:block w-52 flex-shrink-0 pt-6 sticky top-20" aria-label={t('zijbalk_aria')}>
+          <nav className="bg-surface border border-border rounded-md shadow-soft py-2">
+            {/* Overzicht */}
+            <button onClick={() => { setActief('dashboard'); window.scrollTo({ top: 0 }); }}
+              aria-current={actief === 'dashboard' ? 'page' : undefined}
+              className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition
+                ${actief === 'dashboard' ? 'text-brand-700 bg-brand-50 border-l-2 border-accent-500' : 'text-ink-2 hover:bg-surface-2'}`}>
+              <Home className="w-4 h-4" aria-hidden="true" /> {t('zijbalk_overzicht')}
+            </button>
+            {/* Inzicht */}
+            <button onClick={() => { setActief('inzicht'); window.scrollTo({ top: 0 }); }}
+              aria-current={actief === 'inzicht' ? 'page' : undefined}
+              className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition
+                ${actief === 'inzicht' ? 'text-brand-700 bg-brand-50 border-l-2 border-accent-500' : 'text-ink-2 hover:bg-surface-2'}`}>
+              <Lightbulb className="w-4 h-4" aria-hidden="true" /> {t('zijbalk_inzicht')}
+            </button>
+            {/* Opdrachten (uitklapbaar) */}
+            <button onClick={() => setZijOpen(o => ({ ...o, opdrachten: !o.opdrachten }))}
+              aria-expanded={zijOpen.opdrachten}
+              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-ink-2 hover:bg-surface-2 transition">
+              <Clipboard className="w-4 h-4" aria-hidden="true" /> {t('zijbalk_opdrachten')}
+              <span className="ml-auto">{zijOpen.opdrachten ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}</span>
+            </button>
+            {zijOpen.opdrachten && (
+              <div className="pb-1">
+                {[
+                  ['verzendlijst', t('zijbalk_verzendlijst'), () => { setActief('verzendlijst'); window.scrollTo({ top: 0 }); }],
+                  ['betalingen', t('zijbalk_betalingen'), () => { setBetalingenTab('alles'); setActief('betalingen'); window.scrollTo({ top: 0 }); }],
+                  ['ingepland', t('direct_ingeplande'), () => { setBetalingenTab('gepland'); setActief('betalingen'); window.scrollTo({ top: 0 }); }],
+                ].map(([id, label, actie]) => (
+                  <button key={id} onClick={actie}
+                    className={`w-full text-left pl-11 pr-4 py-2 text-[13px] transition
+                      ${actief === id ? 'text-brand-700 font-semibold' : 'text-ink-2 hover:text-ink-1 hover:bg-surface-2'}`}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+            {/* Service */}
+            <button onClick={() => { setActief('service'); window.scrollTo({ top: 0 }); }}
+              aria-current={actief === 'service' ? 'page' : undefined}
+              className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition
+                ${actief === 'service' ? 'text-brand-700 bg-brand-50 border-l-2 border-accent-500' : 'text-ink-2 hover:bg-surface-2'}`}>
+              <MessageCircle className="w-4 h-4" aria-hidden="true" /> {t('zijbalk_service')}
+            </button>
+            {/* Meer (uitklapbaar) */}
+            <button onClick={() => setZijOpen(o => ({ ...o, meer: !o.meer }))}
+              aria-expanded={zijOpen.meer}
+              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-ink-2 hover:bg-surface-2 transition">
+              <MenuIcon className="w-4 h-4" aria-hidden="true" /> {t('zijbalk_meer')}
+              <span className="ml-auto">{zijOpen.meer ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}</span>
+            </button>
+            {zijOpen.meer && (
+              <div className="pb-1">
+                <button onClick={() => { setActief('documenten'); window.scrollTo({ top: 0 }); }}
+                  className={`w-full text-left pl-11 pr-4 py-2 text-[13px] transition
+                    ${actief === 'documenten' ? 'text-brand-700 font-semibold' : 'text-ink-2 hover:text-ink-1 hover:bg-surface-2'}`}>
+                  {t('zijbalk_documenten')}
+                </button>
+                <button onClick={() => { setActief('alerts'); window.scrollTo({ top: 0 }); }}
+                  className="w-full text-left pl-11 pr-4 py-2 text-[13px] text-ink-2 hover:text-ink-1 hover:bg-surface-2 transition">
+                  {t('zijbalk_hulpmiddelen')}
+                </button>
+              </div>
+            )}
+          </nav>
+        </aside>
+
+        <main id="inhoud" className="max-w-2xl mx-auto px-4 py-5 pb-28 lg:mx-0 lg:flex-1 lg:pb-10 lg:px-0 lg:max-w-none">
         <Suspense fallback={<LaadSpinner />}>
           {actief === 'dashboard' && <Dashboard gebruiker={gebruiker} />}
+          {actief === 'inzicht' && <Inzicht />}
+          {actief === 'betalingen' && <Betalingen beginTab={betalingenTab} />}
+          {actief === 'verzendlijst' && <Verzendlijst />}
+          {actief === 'service' && <ServicePagina />}
+          {actief === 'documenten' && <Documenten />}
           {actief === 'betaling' && (
             kycGoedgekeurd
               ? <PaymentFlow token={token} />
@@ -391,12 +487,13 @@ function AppShell({ gebruiker, token, onLogout }) {
           {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} />}
           {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
         </Suspense>
-      </main>
+        </main>
+      </div>
 
-      {/* Bottom navigatie — mobiel geoptimaliseerd, monochroom Wise-stijl.
+      {/* Bottom navigatie — alleen mobiel/tablet; desktop heeft de zijbalk.
           Iconen erven currentColor: inactive = ink-3, active = fg-primary.
           Dark mode automatisch correct via semantic tokens. */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-50 safe-area-inset-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-50 safe-area-inset-bottom lg:hidden">
         <div className="max-w-2xl mx-auto flex">
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActief(tab.id)}
@@ -765,6 +862,14 @@ export default function App() {
           } />
           <Route path="/app/recurring" element={
             token ? <Recurring /> : <Navigate to="/login" replace />
+          } />
+          {/* Bank-Overzicht: rekening-detail met af- en bijschrijvingen */}
+          <Route path="/app/rekening" element={
+            token ? (
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+                <RekeningDetail gebruiker={gebruiker} />
+              </Suspense>
+            ) : <Navigate to="/login" replace />
           } />
           {/* "Info nodig"-flow (Wwft): klant levert categorie + foto + omschrijving aan */}
           <Route path="/app/transactie-info/:transactieId" element={
