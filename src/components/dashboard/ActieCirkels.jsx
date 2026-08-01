@@ -40,7 +40,7 @@ export default function ActieCirkels() {
       <Cirkel
         Icoon={Send}
         label={t('actie_overschrijven')}
-        onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
+        onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'overschrijven' }))}
       />
       <Cirkel
         Icoon={Bell}

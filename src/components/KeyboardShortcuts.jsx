@@ -39,7 +39,7 @@ export default function KeyboardShortcuts() {
       if ((e.metaKey || e.ctrlKey) && e.key === 'n') {
         if (window.location.pathname.startsWith('/app')) {
           e.preventDefault();
-          window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+          window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'overschrijven' }));
         }
         return;
       }

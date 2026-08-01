@@ -33,9 +33,24 @@ export default function Verzendlijst() {
 
   useEffect(() => {
     let weg = false;
-    apiFetch('/recurring')
-      .then(d => { if (!weg) setGepland((d?.recurring || []).filter(g => g.actief)); })
-      .catch(() => { if (!weg) setGepland([]); });
+    // Gepland = actieve herhaalopdrachten + eenmalig geplande opdrachten (OVZ-4)
+    Promise.allSettled([
+      apiFetch('/recurring').catch(() => ({ recurring: [] })),
+      apiFetch('/opdrachten').catch(() => ({ opdrachten: [] })),
+    ]).then(([recRes, opdRes]) => {
+      if (weg) return;
+      const rec = (recRes.value?.recurring || []).filter(g => g.actief).map(g => ({
+        key: `rec-${g.id}`, soort: 'recurring',
+        naam: g.ontvangerNaam || g.naam, datum: (g.volgendeUitvoering || '').slice(0, 10),
+        bedragEur: g.bedragEur,
+      }));
+      const opd = (opdRes.value?.opdrachten || []).filter(o => o.status === 'gepland').map(o => ({
+        key: `opd-${o.id}`, soort: 'eenmalig',
+        naam: o.ontvangerNaam, datum: (o.uitvoerenOp || '').slice(0, 10),
+        bedragEur: o.bedragEur,
+      }));
+      setGepland([...rec, ...opd].sort((a, b) => a.datum.localeCompare(b.datum)));
+    });
     return () => { weg = true; };
   }, []);
 
@@ -52,7 +67,7 @@ export default function Verzendlijst() {
       <h1 className="font-display text-2xl text-ink-1">{t('verzendlijst_titel')}</h1>
 
       <button
-        onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
+        onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'overschrijven' }))}
         className="group flex flex-col items-center gap-1.5 w-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 rounded-md py-1">
         <span className="w-11 h-11 rounded-full bg-brand-500 hover:bg-brand-600 text-white flex items-center justify-center shadow-soft transition group-active:scale-95">
           <Send className="w-5 h-5" aria-hidden="true" />
@@ -113,15 +128,17 @@ export default function Verzendlijst() {
           {gepland && gepland.length > 0 && (
             <ul className="divide-y divide-border-subtle">
               {gepland.map(g => (
-                <li key={g.id} className="px-4 py-3 flex items-center justify-between gap-3">
+                <li key={g.key} className="px-4 py-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     <span className="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                       <Calendar className="w-4 h-4 text-brand-600" />
                     </span>
                     <div className="min-w-0">
-                      <div className="font-semibold text-ink-1 text-sm truncate">{g.ontvangerNaam || g.naam}</div>
+                      <div className="font-semibold text-ink-1 text-sm truncate">{g.naam}</div>
                       <div className="text-[11px] text-ink-3 mt-0.5">
-                        {t('gepland_volgende')}: {(g.volgendeUitvoering || '').slice(0, 10)}
+                        {g.soort === 'eenmalig'
+                          ? `${t('gepland_uitvoerdatum')}: ${g.datum} · ${t('gepland_eenmalig')}`
+                          : `${t('gepland_volgende')}: ${g.datum}`}
                       </div>
                     </div>
                   </div>

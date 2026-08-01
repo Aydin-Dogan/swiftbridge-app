@@ -96,6 +96,7 @@ export default function Betalingen({ beginTab = 'alles' }) {
   const navigate = useNavigate();
   const [transacties, setTransacties] = useState([]);
   const [recurring, setRecurring] = useState([]);
+  const [opdrachten, setOpdrachten] = useState([]);
   const [laden, setLaden] = useState(true);
   const [tab, setTab] = useState(beginTab);
   const [openId, setOpenId] = useState(null);
@@ -107,10 +108,12 @@ export default function Betalingen({ beginTab = 'alles' }) {
     Promise.allSettled([
       fetch(`${API}/transactions`, { credentials: 'include' }).then(r => r.ok ? r.json() : { transacties: [] }),
       apiFetch('/recurring').catch(() => ({ recurring: [] })),
-    ]).then(([txRes, recRes]) => {
+      apiFetch('/opdrachten').catch(() => ({ opdrachten: [] })),
+    ]).then(([txRes, recRes, opdRes]) => {
       if (weg) return;
       if (txRes.status === 'fulfilled') setTransacties(txRes.value?.transacties || []);
       if (recRes.status === 'fulfilled') setRecurring(recRes.value?.recurring || []);
+      if (opdRes.status === 'fulfilled') setOpdrachten(opdRes.value?.opdrachten || []);
       setLaden(false);
     });
     return () => { weg = true; };
@@ -122,7 +125,26 @@ export default function Betalingen({ beginTab = 'alles' }) {
     in_behandeling: transacties.filter(tx => IN_BEHANDELING.includes(tx.status)),
   }), [transacties]);
 
-  const geplandActief = recurring.filter(g => g.actief);
+  // Gepland = actieve herhaalopdrachten + eenmalig geplande opdrachten (OVZ-4)
+  const geplandActief = useMemo(() => [
+    ...recurring.filter(g => g.actief).map(g => ({
+      key: `rec-${g.id}`, soort: 'recurring', id: g.id,
+      naam: g.ontvangerNaam || g.naam, datum: (g.volgendeUitvoering || '').slice(0, 10),
+      frequentie: g.frequentie, bedragEur: g.bedragEur,
+    })),
+    ...opdrachten.filter(o => o.status === 'gepland').map(o => ({
+      key: `opd-${o.id}`, soort: 'eenmalig', id: o.id,
+      naam: o.ontvangerNaam, datum: (o.uitvoerenOp || '').slice(0, 10),
+      bedragEur: o.bedragEur,
+    })),
+  ].sort((a, b) => a.datum.localeCompare(b.datum)), [recurring, opdrachten]);
+
+  async function annuleerOpdracht(id) {
+    try {
+      await apiFetch(`/opdrachten/${id}`, { method: 'DELETE' });
+      setOpdrachten(prev => prev.map(o => (o.id === id ? { ...o, status: 'geannuleerd' } : o)));
+    } catch { /* stil — rij blijft staan */ }
+  }
 
   function opnieuwVersturen(tx) {
     localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
@@ -146,7 +168,7 @@ export default function Betalingen({ beginTab = 'alles' }) {
       <h1 className="font-display text-2xl text-ink-1">{t('betalingen_titel')}</h1>
 
       <button
-        onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
+        onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'overschrijven' }))}
         className="group flex flex-col items-center gap-1.5 w-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 rounded-md py-1">
         <span className="w-11 h-11 rounded-full bg-brand-500 hover:bg-brand-600 text-white flex items-center justify-center shadow-soft transition group-active:scale-95">
           <Send className="w-5 h-5" aria-hidden="true" />
@@ -172,25 +194,32 @@ export default function Betalingen({ beginTab = 'alles' }) {
             <p className="text-sm text-ink-3 px-4 py-8 text-center">{t('gepland_leeg')}</p>
           ) : (
             <ul className="divide-y divide-border-subtle">
-              {geplandActief
-                .sort((a, b) => String(a.volgendeUitvoering || '').localeCompare(String(b.volgendeUitvoering || '')))
-                .map(g => (
-                  <li key={g.id} className="px-4 py-3 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                        <Calendar className="w-4 h-4 text-brand-600" />
-                      </span>
-                      <div className="min-w-0">
-                        <div className="font-semibold text-ink-1 text-sm truncate">{g.ontvangerNaam || g.naam}</div>
-                        <div className="text-[11px] text-ink-3 mt-0.5">
-                          {t('gepland_volgende')}: {(g.volgendeUitvoering || '').slice(0, 10)}
-                          {['dagelijks', 'wekelijks', 'maandelijks'].includes(g.frequentie) && ` · ${t(`gepland_freq_${g.frequentie}`)}`}
-                        </div>
+              {geplandActief.map(g => (
+                <li key={g.key} className="px-4 py-3 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                      <Calendar className="w-4 h-4 text-brand-600" />
+                    </span>
+                    <div className="min-w-0">
+                      <div className="font-semibold text-ink-1 text-sm truncate">{g.naam}</div>
+                      <div className="text-[11px] text-ink-3 mt-0.5">
+                        {g.soort === 'eenmalig'
+                          ? `${t('gepland_uitvoerdatum')}: ${g.datum} · ${t('gepland_eenmalig')}`
+                          : <>{t('gepland_volgende')}: {g.datum}{['dagelijks', 'wekelijks', 'maandelijks'].includes(g.frequentie) && ` · ${t(`gepland_freq_${g.frequentie}`)}`}</>}
                       </div>
                     </div>
-                    <div className="font-display font-medium text-sm tabular-nums text-ink-1 flex-shrink-0">{fmtEur(g.bedragEur)}</div>
-                  </li>
-                ))}
+                  </div>
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <div className="font-display font-medium text-sm tabular-nums text-ink-1">{fmtEur(g.bedragEur)}</div>
+                    {g.soort === 'eenmalig' && (
+                      <button onClick={() => annuleerOpdracht(g.id)}
+                        className="text-[11px] font-semibold text-fg-error hover:underline underline-offset-4">
+                        {t('gepland_annuleer')}
+                      </button>
+                    )}
+                  </div>
+                </li>
+              ))}
             </ul>
           )
         )}

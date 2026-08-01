@@ -55,6 +55,7 @@ const Documenten = lazy(() => import('./pages/Documenten'));
 const ServicePagina = lazy(() => import('./pages/Service'));
 const Betalingen = lazy(() => import('./components/opdrachten/Betalingen'));
 const Verzendlijst = lazy(() => import('./components/opdrachten/Verzendlijst'));
+const Overschrijven = lazy(() => import('./components/opdrachten/Overschrijven'));
 const Status = lazy(() => import('./pages/Status'));
 const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
@@ -287,7 +288,7 @@ function AppShell({ gebruiker, token, onLogout }) {
         return;
       }
       if (doel === 'betalingen') setBetalingenTab('alles');
-      if (['dashboard', 'betaling', 'kyc', 'alerts', 'profiel', 'inzicht', 'betalingen', 'verzendlijst', 'service', 'documenten'].includes(doel)) {
+      if (['dashboard', 'betaling', 'overschrijven', 'kyc', 'alerts', 'profiel', 'inzicht', 'betalingen', 'verzendlijst', 'service', 'documenten'].includes(doel)) {
         setActief(doel);
         window.scrollTo({ top: 0 });
       }
@@ -417,6 +418,7 @@ function AppShell({ gebruiker, token, onLogout }) {
             {zijOpen.opdrachten && (
               <div className="pb-1">
                 {[
+                  ['overschrijven', t('actie_overschrijven'), () => { setActief('overschrijven'); window.scrollTo({ top: 0 }); }],
                   ['verzendlijst', t('zijbalk_verzendlijst'), () => { setActief('verzendlijst'); window.scrollTo({ top: 0 }); }],
                   ['betalingen', t('zijbalk_betalingen'), () => { setBetalingenTab('alles'); setActief('betalingen'); window.scrollTo({ top: 0 }); }],
                   ['ingepland', t('direct_ingeplande'), () => { setBetalingenTab('gepland'); setActief('betalingen'); window.scrollTo({ top: 0 }); }],
@@ -467,9 +469,9 @@ function AppShell({ gebruiker, token, onLogout }) {
           {actief === 'verzendlijst' && <Verzendlijst />}
           {actief === 'service' && <ServicePagina />}
           {actief === 'documenten' && <Documenten />}
-          {actief === 'betaling' && (
+          {(actief === 'betaling' || actief === 'overschrijven') && (
             kycGoedgekeurd
-              ? <PaymentFlow token={token} />
+              ? (actief === 'betaling' ? <PaymentFlow token={token} /> : <Overschrijven />)
               : (
                 <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
                   <div className="mx-auto w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-3">
