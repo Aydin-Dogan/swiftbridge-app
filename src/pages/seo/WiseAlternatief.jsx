@@ -8,13 +8,13 @@ export default function WiseAlternatief() {
   return (
     <SeoLanding
       title="Wise alternatief voor geld naar Türkiye"
-      description="Op zoek naar een Wise-alternatief voor EUR→TRY transfers? SwiftBridge: vanaf 0,8% per overboeking, binnen 5 minuten op de Turkse rekening. Vergelijking + tarieven."
+      description="Op zoek naar een Wise-alternatief voor EUR→TRY transfers? SwiftBridge: €4,95 vast + transparante koersmarge, binnen 5 minuten op de Turkse rekening. Vergelijking + tarieven."
       canonicalPath="/wise-alternatief"
       heroEyebrow="Alternatief"
-      heroSubtitel="Voor de NL→TR corridor specifiek gebouwd: sneller op Turkse banken, eigen Nederlandstalige support, transparant staffel-tarief."
+      heroSubtitel="Voor de NL→TR corridor specifiek gebouwd: sneller op Turkse banken, eigen Nederlandstalige support, transparante tariefkaart."
       voorbeeldBedrag={500}
       cta="Vergelijk tarieven nu"
-      bullets={['<5 minuten via iDEAL', 'Vanaf 0,8% staffel', '100+ Turkse banken']}
+      bullets={['<5 minuten via iDEAL', '€4,95 vast + transparante marge', '100+ Turkse banken']}
       content={
         <>
           <p>
@@ -54,7 +54,8 @@ export default function WiseAlternatief() {
               handig bij IBAN-vragen of vertraging-troubleshooting.
             </li>
             <li>
-              <strong>Transparant staffel-tarief</strong> dat vooraf zichtbaar is — geen
+              <strong>Transparante tariefkaart</strong> (€4,95 vaste fee + koersmarge per
+              ledenniveau) die vooraf zichtbaar is — geen
               "live rate" die op laatste moment verandert.
             </li>
           </ul>
@@ -63,15 +64,15 @@ export default function WiseAlternatief() {
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 my-4">
             <p className="font-semibold text-gray-900 mb-2">€500 EUR → TRY:</p>
             <ul className="text-sm space-y-1 text-gray-700">
-              <li><strong>SwiftBridge iDEAL Express:</strong> 1,5% = €7,50 fee · &lt;5 min</li>
+              <li><strong>SwiftBridge iDEAL Express:</strong> €4,95 vast + 1,2% marge (Basis) = €10,95 · &lt;5 min</li>
               <li><strong>Wise:</strong> €4,38 fee + 0% FX-marge · 1-2 dagen</li>
-              <li><strong>Verschil:</strong> SwiftBridge €3,12 duurder, ~24-48 uur sneller</li>
+              <li><strong>Verschil:</strong> SwiftBridge ~€6,57 duurder, ~24-48 uur sneller</li>
             </ul>
           </div>
 
           <p>
             Voor de meeste klanten in de Turks-Nederlandse diaspora wegen die 24-48 uur
-            extra snelheid + Nederlandstalige support ruim op tegen de €3 prijsverschil.
+            extra snelheid + Nederlandstalige support ruim op tegen de ~€7 prijsverschil.
             Zeker voor noodgevallen (ziekenhuiskosten, ondernemerskosten, familie-bijdrage
             voor Bayram).
           </p>
@@ -99,7 +100,7 @@ export default function WiseAlternatief() {
         },
         {
           vraag: 'Krijg ik dezelfde wisselkoers als bij Wise?',
-          antwoord: 'Bijna. Wise gebruikt mid-market rate (0% marge). SwiftBridge gebruikt live ECB-koers met ~1,2% verborgen marge (express) of 0,5% (economy). Op €500 = €6-3 verschil in koers, plus onze 1,5% service fee.',
+          antwoord: 'Bijna. Wise gebruikt de mid-market rate (0% marge). SwiftBridge gebruikt de live ECB-koers met een transparant getoonde koersmarge: 1,2% op Basis, aflopend tot 0,6% op Black. Je ziet de marge, de vaste fee van €4,95 en de exacte uitkomst vóór je bevestigt.',
         },
       ]}
     />

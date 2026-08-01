@@ -178,7 +178,7 @@ const server = http.createServer((req, res) => {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data:",
-      "connect-src 'self' https://api.swiftbridge.tr https://*.up.railway.app",
+      "connect-src 'self' https://api.swiftbridge.nl https://*.up.railway.app",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",

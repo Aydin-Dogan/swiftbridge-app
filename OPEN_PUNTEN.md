@@ -18,7 +18,7 @@
 
 ## 🔴 KRITIEK — moet vóór go-live afgerond
 
-### 1. DNS-overdracht swiftbridge.tr / .nl / .com.tr
+### 1. DNS-overdracht www.swiftbridge.nl / .nl / .com.tr
 - **Wat:** Stefan (Vormgvr) moet DNS A-records + CNAME records plaatsen naar Railway
 - **Status:** ⏳ wachten op Stefan
 - **Werk Claude:** alles voorbereid, geen code-actie nodig

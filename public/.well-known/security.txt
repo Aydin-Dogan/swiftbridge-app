@@ -1,8 +1,8 @@
 # SwiftBridge — responsible disclosure
-# https://swiftbridge.tr/veiligheid
+# https://www.swiftbridge.nl/veiligheid
 
-Contact: mailto:security@swiftbridge.tr
+Contact: mailto:security@swiftbridge.nl
 Preferred-Languages: nl, en, tr
-Canonical: https://swiftbridge.tr/.well-known/security.txt
+Canonical: https://www.swiftbridge.nl/.well-known/security.txt
 Expires: 2027-01-01T00:00:00.000Z
-Policy: https://swiftbridge.tr/veiligheid
+Policy: https://www.swiftbridge.nl/veiligheid

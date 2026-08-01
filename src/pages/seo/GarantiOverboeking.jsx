@@ -9,7 +9,7 @@ export default function GarantiOverboeking() {
   return (
     <SeoLanding
       title="Geld overmaken naar Garanti BBVA in Türkiye"
-      description="Stuur geld vanuit Nederland naar een Garanti BBVA rekening. Binnen 5 minuten op de Turkse rekening via iDEAL. Tarieven vanaf 0,8%. IBAN-validatie + Wwft compliance."
+      description="Stuur geld vanuit Nederland naar een Garanti BBVA rekening. Binnen 5 minuten op de Turkse rekening via iDEAL. €4,95 vast + transparante koersmarge. IBAN-validatie + Wwft compliance."
       canonicalPath="/garanti-overboeking"
       heroEyebrow="Garanti BBVA"
       heroSubtitel="Garanti is een van de grootste banken van Türkiye. Wij ondersteunen alle Garanti-rekeningen, zowel particulier als zakelijk."

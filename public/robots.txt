@@ -1,5 +1,5 @@
 # SwiftBridge — robots.txt
-# Productie-domein wordt swiftbridge.tr (voorstel, beslissing nog bij Stefan).
+# Productie-domein wordt www.swiftbridge.nl (voorstel, beslissing nog bij Stefan).
 # Update dit bestand zodra canonical-domein is bevestigd.
 
 User-agent: *
@@ -37,4 +37,4 @@ User-agent: Google-Extended
 Allow: /
 
 # Sitemap
-Sitemap: https://swiftbridge.tr/sitemap.xml
+Sitemap: https://www.swiftbridge.nl/sitemap.xml

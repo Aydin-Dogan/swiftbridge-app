@@ -63,8 +63,9 @@ export default function PaparaYukleme() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Maliyetler ve sınırlamalar</h2>
           <p>
-            Papara cüzdanına gönderim aynı tarife yapısı: 2,0%-0,8% kademeli, bedrağ
-            arttıkça düşüyor. Papara tarafında ekstra ücret yok — gönderdiğin TRY tutarı
+            Papara cüzdanına gönderimde aynı tarife yapısı geçerli: işlem başına €4,95
+            sabit ücret + üyelik seviyesine göre %1,2&apos;den %0,6&apos;ya düşen şeffaf kur
+            marjı. Papara tarafında ekstra ücret yok — gönderdiğin TRY tutarı
             doğrudan cüzdana eklenir.
           </p>
           <p>

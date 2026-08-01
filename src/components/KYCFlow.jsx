@@ -468,7 +468,7 @@ function KYCAfgewezen({ naam, onOpnieuw }) {
         ))}
       </div>
       <div className="bg-amber-50 border border-amber-200 rounded-md p-3 text-sm text-amber-700">
-        {t('kyc_afgewezen_support')} <a href="mailto:support@swiftbridge.tr" className="font-semibold underline underline-offset-4">support@swiftbridge.tr</a>
+        {t('kyc_afgewezen_support')} <a href="mailto:support@swiftbridge.nl" className="font-semibold underline underline-offset-4">support@swiftbridge.nl</a>
       </div>
       <button onClick={onOpnieuw}
         className="btn-inst w-full py-3 inline-flex items-center justify-center gap-2">
@@ -503,7 +503,7 @@ function KYCGeblokkeerd() {
       </div>
       <div className="bg-red-50 border border-red-200 rounded-md p-4 text-sm text-red-700 space-y-2">
         <p className="font-bold flex items-center gap-1.5"><Mail className="w-4 h-4" /> Contact klantenservice</p>
-        <p>E-mail: <strong>support@swiftbridge.tr</strong></p>
+        <p>E-mail: <strong>support@swiftbridge.nl</strong></p>
         <p className="text-xs text-red-500">Vermeld je e-mailadres en de reden van je verzoek.</p>
       </div>
     </div>

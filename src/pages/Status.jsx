@@ -472,8 +472,8 @@ export default function Status() {
           <div className="space-y-1 text-sm">
             <div>
               <span className="font-semibold text-gray-700">E-mail: </span>
-              <a href="mailto:support@swiftbridge.tr" className="text-blue-600 hover:underline">
-                support@swiftbridge.tr
+              <a href="mailto:support@swiftbridge.nl" className="text-blue-600 hover:underline">
+                support@swiftbridge.nl
               </a>
             </div>
           </div>

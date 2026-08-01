@@ -24,7 +24,7 @@ export default function Privacybeleid() {
               <div className="bg-gray-50 rounded-lg p-4 mt-3 text-sm">
                 <p><strong>SwiftBridge B.V.</strong></p>
                 <p>Nederland</p>
-                <p>E-mail: privacy@swiftbridge.tr</p>
+                <p>E-mail: privacy@swiftbridge.nl</p>
                 <p>Website: swiftbridge.nl</p>
               </div>
             </section>
@@ -141,7 +141,7 @@ export default function Privacybeleid() {
 
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-3">6. Uw rechten (AVG)</h2>
-              <p className="mb-3">U heeft de volgende rechten, die u kunt uitoefenen via privacy@swiftbridge.tr:</p>
+              <p className="mb-3">U heeft de volgende rechten, die u kunt uitoefenen via privacy@swiftbridge.nl:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
                   { Icoon: Eye, title: 'Inzagerecht', desc: 'U kunt opvragen welke gegevens wij van u verwerken.' },
@@ -192,8 +192,8 @@ export default function Privacybeleid() {
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-3">10. Contact</h2>
               <div className="bg-gray-50 rounded-lg p-4 text-sm">
-                <p><strong>Privacyvragen of verzoeken:</strong> privacy@swiftbridge.tr</p>
-                <p><strong>Algemene ondersteuning:</strong> support@swiftbridge.tr</p>
+                <p><strong>Privacyvragen of verzoeken:</strong> privacy@swiftbridge.nl</p>
+                <p><strong>Algemene ondersteuning:</strong> support@swiftbridge.nl</p>
                 <p><strong>Functionaris Gegevensbescherming (FG):</strong> fg@swiftbridge.nl</p>
               </div>
             </section>

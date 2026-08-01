@@ -408,10 +408,10 @@ export default function SupportChat({ gebruiker, actief = true }) {
               {' · '}
               {t('support_footer_mail')}{' '}
               <a
-                href="mailto:support@swiftbridge.tr"
+                href="mailto:support@swiftbridge.nl"
                 className="text-brand-500 hover:underline"
               >
-                support@swiftbridge.tr
+                support@swiftbridge.nl
               </a>
             </p>
           </form>

@@ -50,13 +50,13 @@ export default function OverOns() {
               <p className="text-sm text-brand-900">
                 SwiftBridge B.V. is in oprichting. Zodra de inschrijving bij de Kamer van Koophandel
                 is afgerond, vindt u hier onze KvK- en vestigingsgegevens. Tot die tijd bereikt u ons
-                gewoon via <a href="mailto:info@swiftbridge.tr" className="underline">info@swiftbridge.tr</a>.
+                gewoon via <a href="mailto:info@swiftbridge.nl" className="underline">info@swiftbridge.nl</a>.
               </p>
             </div>
 
             <h2 className="text-xl font-semibold text-gray-900 pt-2">Vragen?</h2>
             <p>
-              We horen graag van u. Mail <a href="mailto:info@swiftbridge.tr" className="text-brand-600 underline">info@swiftbridge.tr</a>,
+              We horen graag van u. Mail <a href="mailto:info@swiftbridge.nl" className="text-brand-600 underline">info@swiftbridge.nl</a>,
               of gebruik de chat rechtsonder — onze digitale assistent helpt u 24/7 in uw eigen taal,
               en schakelt u door naar een mens wanneer dat nodig is.
             </p>

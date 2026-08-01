@@ -33,9 +33,10 @@ const STATS = [
   { key: 'banken', getal: '100+' }, // echt — turkstaligeBanken.js
   { key: 'talen', getal: '5' }, // echt — i18n/{nl,en,tr,ru,az}
   { key: 'snelheid', getal: '<5 min' }, // echt — gemiddeld via iDEAL
-  // F24 fix (Cursor review): "vanaf 0,8%" AFM-richtlijn problematisch.
-  // Concretere framing: staffel vermeld zodat verwachting reëel is.
-  { key: 'fee', getal: '0,8% - 2,0%' }, // staffel — tariefkaart §4.4
+  // F24 fix (Cursor review): los "vanaf"-percentage AFM-richtlijn
+  // problematisch. Vaste fee is het enige harde getal; de koersmarge
+  // (1,2% → 0,6% per ledenniveau) staat in de tariefkaart-sectie ernaast.
+  { key: 'fee', getal: '€4,95' }, // vaste fee — tariefkaart §4.4
 ];
 
 export default function SocialProof() {

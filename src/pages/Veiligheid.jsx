@@ -111,7 +111,7 @@ export default function Veiligheid() {
               <h2 className="text-lg font-semibold text-gray-900 mb-2">Een kwetsbaarheid gevonden?</h2>
               <p className="text-sm text-gray-600">
                 Beveiligingsonderzoekers zijn welkom. Meld verantwoord via{' '}
-                <a href="mailto:security@swiftbridge.tr" className="text-brand-600 underline">security@swiftbridge.tr</a>{' '}
+                <a href="mailto:security@swiftbridge.nl" className="text-brand-600 underline">security@swiftbridge.nl</a>{' '}
                 (zie ook onze <a href="/.well-known/security.txt" className="text-brand-600 underline">security.txt</a>).
                 Wij reageren snel en werken graag met u samen.
               </p>

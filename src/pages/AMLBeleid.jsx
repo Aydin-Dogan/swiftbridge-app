@@ -214,7 +214,7 @@ export default function AMLBeleid() {
                 <li>De Compliance Officer rapporteert direct aan de directie.</li>
                 <li>Alle medewerkers met klantcontact volgen verplicht AML-training bij indiensttreding en jaarlijks daarna.</li>
                 <li>Dit beleid wordt minimaal jaarlijks herzien en aangepast aan nieuwe wet- en regelgeving.</li>
-                <li>Interne meldingen van vermoedens kunnen anoniem via compliance@swiftbridge.tr.</li>
+                <li>Interne meldingen van vermoedens kunnen anoniem via compliance@swiftbridge.nl.</li>
               </ul>
             </section>
 
@@ -229,7 +229,7 @@ export default function AMLBeleid() {
             </section>
 
             <section className="border-t pt-6">
-              <p className="text-sm text-gray-500">SwiftBridge B.V. — compliance@swiftbridge.tr</p>
+              <p className="text-sm text-gray-500">SwiftBridge B.V. — compliance@swiftbridge.nl</p>
               <p className="text-sm text-gray-500 mt-1">Versie 1.0, mei 2026. Goedgekeurd door directie. Jaarlijkse herziening vereist.</p>
               <p className="text-sm text-gray-500 mt-1">Wettelijke basis: Wwft, 6e AMLD, FATF-aanbevelingen, Sanctiewet 1977.</p>
             </section>

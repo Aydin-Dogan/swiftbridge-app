@@ -59,7 +59,7 @@ export default function SeoLanding({
     let canonical = document.querySelector('link[rel="canonical"]');
     const prevCanonical = canonical?.getAttribute('href');
     if (canonical) {
-      canonical.setAttribute('href', `https://swiftbridge.tr${canonicalPath}`);
+      canonical.setAttribute('href', `https://www.swiftbridge.nl${canonicalPath}`);
     }
 
     // Inject Article JSON-LD
@@ -74,19 +74,19 @@ export default function SeoLanding({
       author: {
         '@type': 'Organization',
         name: 'SwiftBridge',
-        url: 'https://swiftbridge.tr',
+        url: 'https://www.swiftbridge.nl',
       },
       publisher: {
         '@type': 'Organization',
         name: 'SwiftBridge',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://swiftbridge.tr/icon-512.png',
+          url: 'https://www.swiftbridge.nl/icon-512.png',
         },
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `https://swiftbridge.tr${canonicalPath}`,
+        '@id': `https://www.swiftbridge.nl${canonicalPath}`,
       },
     });
     document.head.appendChild(ld);

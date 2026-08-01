@@ -42,7 +42,7 @@ const BETAALMETHODEN = [
     label: 'iDEAL',
     iconType: 'icon', Icon: Bank,
     desc: 'Direct via je Nederlandse bank',
-    sub: 'Meest gekozen · vanaf 0,8%',
+    sub: 'Meest gekozen',
   },
   {
     id: 'creditcard',

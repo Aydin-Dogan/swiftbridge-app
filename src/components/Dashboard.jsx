@@ -439,7 +439,7 @@ export default function Dashboard({ gebruiker }) {
             {[
               { Icoon: Zap,      tekst: '< 5 min aankomst',           kleur: 'text-brand-600' },
               { Icoon: Lock,     tekst: 'Veilig via licentiepartner', kleur: 'text-success-600' },
-              { Icoon: Banknote, tekst: '2,0–2,5% alles-in',          kleur: 'text-accent-600' },
+              { Icoon: Banknote, tekst: 'Tarief vooraf zichtbaar',    kleur: 'text-accent-600' },
             ].map(({ Icoon, tekst, kleur }) => (
               <div key={tekst} className="bg-surface rounded-md border border-border shadow-soft p-3">
                 <div className={`flex justify-center mb-1 ${kleur}`} aria-hidden="true">

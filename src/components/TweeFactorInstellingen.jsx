@@ -114,7 +114,7 @@ function BackupCodesPaneel({ codes }) {
 <body>
   <header>
     <h1>SwiftBridge — 2FA backup codes</h1>
-    <p class="subtitle">Gegenereerd op ${datum} · swiftbridge.tr</p>
+    <p class="subtitle">Gegenereerd op ${datum} · www.swiftbridge.nl</p>
   </header>
   <div class="warning">
     <strong>Bewaar deze codes veilig.</strong> Gebruik ze alleen als je geen toegang
@@ -125,7 +125,7 @@ function BackupCodesPaneel({ codes }) {
     ${codes.map((c, i) => `<div class="code"><span class="num">${String(i + 1).padStart(2, '0')}.</span>${c}</div>`).join('')}
   </div>
   <footer>
-    SwiftBridge B.V. · support@swiftbridge.tr · Deel deze codes nooit met anderen.
+    SwiftBridge B.V. · support@swiftbridge.nl · Deel deze codes nooit met anderen.
   </footer>
   <script>
     // Direct printdialoog openen — gebruiker kan "Save as PDF" kiezen

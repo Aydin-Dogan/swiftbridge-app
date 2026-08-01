@@ -106,10 +106,10 @@ export default function FAQ() {
           <p className="text-sm text-gray-500">
             {t('landing_faq_nog_vragen')}{' '}
             <a
-              href="mailto:support@swiftbridge.tr"
+              href="mailto:support@swiftbridge.nl"
               className="text-brand-600 hover:text-brand-700 font-semibold"
             >
-              support@swiftbridge.tr
+              support@swiftbridge.nl
             </a>
           </p>
         </div>

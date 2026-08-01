@@ -121,8 +121,8 @@ export default function NotFound() {
 
           <p className="text-xs text-gray-500 mt-8">
             {t('notfound_contact_prefix')}{' '}
-            <a href="mailto:support@swiftbridge.tr" className="text-brand-600 hover:underline font-semibold">
-              support@swiftbridge.tr
+            <a href="mailto:support@swiftbridge.nl" className="text-brand-600 hover:underline font-semibold">
+              support@swiftbridge.nl
             </a>
           </p>
         </div>

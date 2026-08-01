@@ -39,7 +39,7 @@ export default function LocaleLanding() {
       const link = document.createElement('link');
       link.rel = 'alternate';
       link.hreflang = code;
-      link.href = `https://swiftbridge.tr/${code}/`;
+      link.href = `https://www.swiftbridge.nl/${code}/`;
       link.id = `dynamic-hreflang-${code}`;
       document.head.appendChild(link);
       links.push(link);
@@ -48,7 +48,7 @@ export default function LocaleLanding() {
     const def = document.createElement('link');
     def.rel = 'alternate';
     def.hreflang = 'x-default';
-    def.href = 'https://swiftbridge.tr/';
+    def.href = 'https://www.swiftbridge.nl/';
     def.id = 'dynamic-hreflang-default';
     document.head.appendChild(def);
     links.push(def);
@@ -57,7 +57,7 @@ export default function LocaleLanding() {
     const canonical = document.querySelector('link[rel="canonical"]');
     const prevCanonical = canonical?.getAttribute('href');
     if (canonical) {
-      canonical.setAttribute('href', `https://swiftbridge.tr/${locale}/`);
+      canonical.setAttribute('href', `https://www.swiftbridge.nl/${locale}/`);
     }
 
     return () => {

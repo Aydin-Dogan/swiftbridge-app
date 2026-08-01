@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   SwiftBridge sitemap.
-  Canonical: swiftbridge.tr (Stefan plaatst DNS dinsdag).
+  Canonical: www.swiftbridge.nl (Stefan plaatst DNS dinsdag).
   Update <lastmod> bij elke deploy via build-script (TODO Sprint 3.2).
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -12,7 +12,7 @@
        per-locale routes (/nl, /en, ...) verwijzen door naar / en staan
        daarom niet meer in de sitemap. -->
   <url>
-    <loc>https://swiftbridge.tr/</loc>
+    <loc>https://www.swiftbridge.nl/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -20,7 +20,7 @@
 
   <!-- Registratie / inschrijving -->
   <url>
-    <loc>https://swiftbridge.tr/login</loc>
+    <loc>https://www.swiftbridge.nl/login</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -28,21 +28,21 @@
 
   <!-- Juridisch — verplicht zichtbaar voor compliance + waardevol voor SEO trust -->
   <url>
-    <loc>https://swiftbridge.tr/algemene-voorwaarden</loc>
+    <loc>https://www.swiftbridge.nl/algemene-voorwaarden</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>quarterly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/privacybeleid</loc>
+    <loc>https://www.swiftbridge.nl/privacybeleid</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>quarterly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/aml-beleid</loc>
+    <loc>https://www.swiftbridge.nl/aml-beleid</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>quarterly</changefreq>
     <priority>0.4</priority>
@@ -51,49 +51,49 @@
   <!-- ═══ SEO landings — long-tail traffic (Sprint 3 deel 2) ═══ -->
 
   <url>
-    <loc>https://swiftbridge.tr/calculator</loc>
+    <loc>https://www.swiftbridge.nl/calculator</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/wise-alternatief</loc>
+    <loc>https://www.swiftbridge.nl/wise-alternatief</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/wise-vs-swiftbridge</loc>
+    <loc>https://www.swiftbridge.nl/wise-vs-swiftbridge</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/garanti-overboeking</loc>
+    <loc>https://www.swiftbridge.nl/garanti-overboeking</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/papara-yukleme</loc>
+    <loc>https://www.swiftbridge.nl/papara-yukleme</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/bayram-remittance</loc>
+    <loc>https://www.swiftbridge.nl/bayram-remittance</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://swiftbridge.tr/status</loc>
+    <loc>https://www.swiftbridge.nl/status</loc>
     <lastmod>2026-05-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.4</priority>
@@ -101,13 +101,13 @@
 
   <!-- Zakelijke landing + ledenprogramma (statisch, DEFINITIEF-ontwerp 4-7-2026) -->
   <url>
-    <loc>https://swiftbridge.tr/zakelijk</loc>
+    <loc>https://www.swiftbridge.nl/zakelijk</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://swiftbridge.tr/members</loc>
+    <loc>https://www.swiftbridge.nl/members</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

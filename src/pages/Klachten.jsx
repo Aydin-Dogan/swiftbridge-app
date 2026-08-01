@@ -53,7 +53,7 @@ export default function Klachten() {
               <h2 className="text-xl font-semibold text-gray-900 mb-3">1. Stap 1 — Meld uw klacht bij ons</h2>
               <p className="mb-3">
                 De snelste weg is via het formulier onderaan deze pagina, of per e-mail naar{' '}
-                <a href="mailto:klachten@swiftbridge.tr" className="text-brand-600 underline">klachten@swiftbridge.tr</a>.
+                <a href="mailto:klachten@swiftbridge.nl" className="text-brand-600 underline">klachten@swiftbridge.nl</a>.
                 Vermeld zoveel mogelijk: uw naam, uw e-mailadres, waar de klacht over gaat en (indien van
                 toepassing) het transactienummer. Zo kunnen wij u het snelst helpen.
               </p>
@@ -148,7 +148,7 @@ export default function Klachten() {
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 outline-none" />
                   </div>
                   {status === 'fout' && (
-                    <p className="text-sm text-red-600">Er ging iets mis bij het versturen. Mail ons rechtstreeks via klachten@swiftbridge.tr.</p>
+                    <p className="text-sm text-red-600">Er ging iets mis bij het versturen. Mail ons rechtstreeks via klachten@swiftbridge.nl.</p>
                   )}
                   <button type="submit" disabled={status === 'bezig'}
                     className="bg-brand-500 hover:bg-brand-600 text-white font-medium rounded-lg px-6 py-3 disabled:opacity-50">
@@ -159,7 +159,7 @@ export default function Klachten() {
             </section>
 
             <section className="border-t pt-6">
-              <p className="text-sm text-gray-500">SwiftBridge — klachten@swiftbridge.tr</p>
+              <p className="text-sm text-gray-500">SwiftBridge — klachten@swiftbridge.nl</p>
               <p className="text-sm text-gray-500 mt-1">
                 SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB.
                 Betaaldiensten worden aangeboden via een door DNB gelicentieerde EMI-partner (agent-model),

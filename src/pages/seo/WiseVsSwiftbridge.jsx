@@ -39,41 +39,43 @@ export default function WiseVsSwiftbridge() {
               <tbody>
                 <tr>
                   <td className="p-3 border border-gray-200 font-semibold">€100</td>
-                  <td className="p-3 border border-gray-200 text-right">€2,00 (2,0%)</td>
+                  <td className="p-3 border border-gray-200 text-right">€6,15 (€4,95 + 1,2%)</td>
                   <td className="p-3 border border-gray-200 text-right">~€1,30</td>
-                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€0,70</td>
+                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€4,85</td>
                 </tr>
                 <tr>
                   <td className="p-3 border border-gray-200 font-semibold">€500</td>
-                  <td className="p-3 border border-gray-200 text-right">€7,50 (1,5%)</td>
+                  <td className="p-3 border border-gray-200 text-right">€10,95 (€4,95 + 1,2%)</td>
                   <td className="p-3 border border-gray-200 text-right">~€4,38</td>
-                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€3,12</td>
+                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€6,57</td>
                 </tr>
                 <tr>
                   <td className="p-3 border border-gray-200 font-semibold">€1.000</td>
-                  <td className="p-3 border border-gray-200 text-right">€12,00 (1,2%)</td>
+                  <td className="p-3 border border-gray-200 text-right">€16,95 (€4,95 + 1,2%)</td>
                   <td className="p-3 border border-gray-200 text-right">~€7,80</td>
-                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€4,20</td>
+                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€9,15</td>
                 </tr>
                 <tr>
                   <td className="p-3 border border-gray-200 font-semibold">€2.500</td>
-                  <td className="p-3 border border-gray-200 text-right">€25 (1,0%)</td>
+                  <td className="p-3 border border-gray-200 text-right">€34,95 (€4,95 + 1,2%)</td>
                   <td className="p-3 border border-gray-200 text-right">~€18,50</td>
-                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€6,50</td>
+                  <td className="p-3 border border-gray-200 text-right text-gray-600">+€16,45</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <p className="text-xs text-gray-500 mt-2">
-            Wise-tarieven schatting op basis van openbare pricing en mid-market kurs. Exacte
-            cijfers wisselen — check actuele tarieven op wise.com vóór beslissing.
+            SwiftBridge = €4,95 vaste fee + koersmarge op Basis-niveau (1,2%); bij hogere
+            ledenniveaus daalt de marge tot 0,6%. Wise-tarieven zijn een schatting op basis
+            van openbare pricing en mid-market koers. Exacte cijfers wisselen — check
+            actuele tarieven op wise.com vóór beslissing.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Snelheid vergeleken</h2>
           <ul className="list-disc pl-5 space-y-1.5 text-gray-700">
             <li><strong>SwiftBridge iDEAL Express:</strong> doorgaans &lt;5 minuten op TR-rekening</li>
-            <li><strong>SwiftBridge SEPA Economy:</strong> 1-2 werkdagen, goedkoper tarief</li>
+            <li><strong>SwiftBridge SEPA Economy:</strong> 1-2 werkdagen</li>
             <li><strong>Wise:</strong> 1-2 dagen voor TRY in de meeste gevallen (afhankelijk van betaalmethode)</li>
             <li><strong>Wise instant via debitcard:</strong> minuten, hoger tarief (~2,5% extra)</li>
           </ul>
@@ -97,23 +99,24 @@ export default function WiseVsSwiftbridge() {
                 <li>Mid-market rate zonder marge (transparant 100%)</li>
                 <li>Multi-currency wallet — handig voor reizen</li>
                 <li>1.000+ valuta&apos;s ondersteund</li>
-                <li>Lagere prijs op grote bedragen (€1.000+) als snelheid niet kritiek is</li>
+                <li>Lagere totaalkosten als snelheid niet kritiek is</li>
               </ul>
             </div>
           </div>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Onze eerlijke aanbeveling</h2>
           <p>
-            <strong>Kies Wise als:</strong> je &lt;€100 of &gt;€2.500 stuurt EN snelheid
-            niet kritiek is, of je multi-currency wallet nodig hebt.
+            <strong>Kies Wise als:</strong> de laagste totaalprijs doorslaggevend is en
+            1-2 dagen wachten geen probleem is, of je een multi-currency wallet nodig hebt.
           </p>
           <p>
-            <strong>Kies SwiftBridge als:</strong> je tussen €100-€2.500 stuurt naar
-            Türkiye, snelheid belangrijk is, of je Nederlandse klantenservice wilt.
+            <strong>Kies SwiftBridge als:</strong> snelheid belangrijk is (minuten in
+            plaats van dagen), je Nederlandse klantenservice wilt, of je vaak stuurt en
+            via de ledenniveaus een lagere marge opbouwt.
           </p>
           <p>
-            <strong>Pro tip:</strong> probeer beide één keer. De €2-€4 prijsverschil bij
-            één test-transactie is verwaarloosbaar — de praktische ervaring zal de
+            <strong>Pro tip:</strong> probeer beide één keer. Het prijsverschil bij
+            één test-transactie is beperkt — de praktische ervaring zal de
             volgende keuze maken.
           </p>
         </>
