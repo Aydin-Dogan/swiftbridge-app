@@ -20,8 +20,8 @@ export default function OverOns() {
 
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <p>
-              Miljoenen mensen in Nederland sturen geld naar familie in het buitenland — naar Turkije,
-              Centraal-Azië en daarbuiten. Vaak via wegen die duur, traag of onduidelijk zijn: hoge
+              Miljoenen mensen in Nederland sturen geld naar familie in het buitenland — over de
+              hele wereld. Vaak via wegen die duur, traag of onduidelijk zijn: hoge
               kosten, ongunstige koersen, en verborgen marges die je pas achteraf merkt.
             </p>
             <p>
@@ -34,7 +34,7 @@ export default function OverOns() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Eerlijke prijs.</strong> Vaste, zichtbare kosten en een transparante wisselkoers — u ziet altijd precies wat de ontvanger krijgt.</li>
               <li><strong>Snelheid.</strong> Express-overboekingen doorgaans binnen 5 minuten, ook in het weekend.</li>
-              <li><strong>Uw taal.</strong> De app en onze hulp werken in het Nederlands, Turks, Engels en meer.</li>
+              <li><strong>Uw taal.</strong> De app en onze hulp werken in vijf talen — en er komen er meer bij.</li>
               <li><strong>Veiligheid op bankniveau.</strong> Sterke verificatie en versleuteling — lees hoe op onze <a href="/veiligheid" className="text-brand-600 underline">veiligheidspagina</a>.</li>
             </ul>
 

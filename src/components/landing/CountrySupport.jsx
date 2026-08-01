@@ -1,18 +1,20 @@
 /**
- * CountrySupport.jsx — Carousel/grid of supported Turkic countries with bank counts.
+ * CountrySupport.jsx — grid van uitbetaallanden met bank-aantallen.
+ * Merkregel wereldwijd: neutrale spelling, alfabetisch, huisstijlkleur —
+ * geen land uitgelicht.
  */
 import { useTaal } from '../../i18n';
 import Vlag from '../Vlag';
 
-// Bank-aantallen per land — indicatief, sluit aan op turkstaligeBanken.js data
+// Bank-aantallen per land — indicatief; alfabetisch, allemaal in huisstijl-navy
 const LANDEN = [
-  { code: 'TR', naam: 'Türkiye',       banken: 14, kleur: '#E30A17' },
-  { code: 'AZ', naam: 'Azerbaycan',    banken: 8,  kleur: '#00B5E2' },
-  { code: 'KZ', naam: 'Kazakistan',    banken: 6,  kleur: '#00AFCA' },
-  { code: 'UZ', naam: 'Özbekistan',    banken: 5,  kleur: '#1EB53A' },
-  { code: 'TM', naam: 'Türkmenistan',  banken: 3,  kleur: '#00853E' },
-  { code: 'KG', naam: 'Kırgızistan',   banken: 4,  kleur: '#E8112D' },
-  { code: 'TJ', naam: 'Tacikistan',    banken: 3,  kleur: '#cc0000' },
+  { code: 'AZ', naam: 'Azerbeidzjan',  banken: 8,  kleur: '#1B3252' },
+  { code: 'KZ', naam: 'Kazachstan',    banken: 6,  kleur: '#1B3252' },
+  { code: 'KG', naam: 'Kirgizië',      banken: 4,  kleur: '#1B3252' },
+  { code: 'UZ', naam: 'Oezbekistan',   banken: 5,  kleur: '#1B3252' },
+  { code: 'TJ', naam: 'Tadzjikistan',  banken: 3,  kleur: '#1B3252' },
+  { code: 'TM', naam: 'Turkmenistan',  banken: 3,  kleur: '#1B3252' },
+  { code: 'TR', naam: 'Türkiye',       banken: 14, kleur: '#1B3252' },
 ];
 
 export default function CountrySupport() {

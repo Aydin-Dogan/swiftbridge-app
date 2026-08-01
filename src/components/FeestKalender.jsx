@@ -98,7 +98,7 @@ export default function FeestKalender({ onOvermaken }) {
     ? `${feest.naam} begint morgen`
     : `Nog ${feest.dagenTotStart} dagen tot ${feest.naam}`;
 
-  const cta = feest.isNu ? 'Stuur Bayram-geld' : 'Plan een overboeking';
+  const cta = feest.isNu ? 'Stuur een feestbijdrage' : 'Plan een overboeking';
 
   return (
     <div className={`bg-gradient-to-r ${feest.kleur} rounded-2xl p-4 text-white shadow-lg`}>
@@ -110,7 +110,7 @@ export default function FeestKalender({ onOvermaken }) {
           <div className="min-w-0">
             <div className="font-bold text-sm">{tekst}</div>
             <div className="text-xs opacity-90 mt-0.5">
-              Geld over naar familie in Turkije voor deze speciale periode
+              Maak geld over aan familie voor deze speciale periode
             </div>
           </div>
         </div>

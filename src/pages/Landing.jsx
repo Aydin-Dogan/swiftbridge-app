@@ -60,28 +60,27 @@ export default function Landing() {
       <div className="sr-only">
         <h2>SwiftBridge — Goedkoop alternatief voor Wise, Remitly en Western Union</h2>
         <p>
-          SwiftBridge is een snelle en transparante manier om geld over te maken
-          vanuit Nederland naar Turkije, Azerbeidzjan, Kazachstan, Oezbekistan,
-          Turkmenistan, Kirgizië en Tadzjikistan. Tarieven vanaf 0,8% per
-          overboeking met iDEAL, en betaling via iDEAL, creditcard, PayPal of
-          SEPA. Het bedrag staat doorgaans binnen 5 minuten op de Turkse
-          bankrekening (Garanti, Akbank, İş Bankası, Ziraat, Yapı Kredi en
-          100+ andere banken).
+          SwiftBridge is een snelle en transparante manier om internationaal geld
+          over te maken vanuit Nederland. Eén vaste fee van €4,95 per overboeking
+          plus een transparante koersmarge vanaf 1,2% (lager per ledenniveau, tot
+          0,6%), en betaling via iDEAL, creditcard, PayPal of SEPA. Het bedrag
+          staat doorgaans binnen 5 minuten op de bankrekening van de ontvanger,
+          bij alle grote banken in onze uitbetaallanden.
         </p>
         <h2>Waarom SwiftBridge een goed Wise- en Remitly-alternatief is</h2>
         <ul>
-          <li>Staffel-tarief vanaf 0,8% per overboeking (hoe meer je stuurt, hoe lager het tarief)</li>
+          <li>Eén vaste fee van €4,95 plus transparante koersmarge (lager per ledenniveau)</li>
           <li>Onder DNB-toezicht via EMI-partner (Wwft-compliant)</li>
           <li>Wwft- en AVG-compliant, EU-sanctielijst screening op iedere ontvanger</li>
           <li>256-bit encryptie en multi-factor authenticatie</li>
-          <li>Volledige tariefkaart vooraf zichtbaar — geen verborgen vaste fees</li>
+          <li>Volledige tariefkaart vooraf zichtbaar — geen verborgen kosten</li>
         </ul>
-        <h2>Veelgestelde vragen — geld sturen naar Turkije</h2>
+        <h2>Veelgestelde vragen — internationaal geld sturen</h2>
         <p>
-          Hoe snel komt geld aan in Türkiye? Doorgaans binnen 5 minuten via iDEAL.
-          Wat zijn de kosten? Vanaf 0,8% per overboeking via iDEAL (€2.500+);
-          €500 kost 1,5% (€7,50), €1.000 kost 1,2% (€12). Volledige tariefkaart
-          op landing-pagina. Is SwiftBridge veilig? Ja — onder DNB-toezicht via
+          Hoe snel komt het geld aan bij de ontvanger? Doorgaans binnen 5 minuten
+          via iDEAL. Wat zijn de kosten? Eén vaste fee van €4,95 plus een
+          transparante koersmarge vanaf 1,2%; de volledige tariefkaart staat op
+          de landing-pagina. Is SwiftBridge veilig? Ja — onder DNB-toezicht via
           EMI-partner, volledig Wwft- en AVG-compliant.
         </p>
       </div>

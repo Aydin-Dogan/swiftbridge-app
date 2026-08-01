@@ -592,7 +592,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-semibold text-sm">Bankrekening</span>
             </div>
             <div className={`text-[10px] ${uitbetaalMethode === 'bank' ? 'text-blue-100' : 'text-gray-500'}`}>
-              Garanti, İş Bankası, Ziraat...
+              Rechtstreeks op de rekening
             </div>
           </button>
           <button
@@ -607,10 +607,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             <span className="absolute top-1 right-1 text-[8px] bg-amber-400 text-amber-900 font-bold px-1 rounded">SOON</span>
             <div className="flex items-center gap-2 mb-0.5">
               <Wallet className="w-4 h-4" />
-              <span className="font-semibold text-sm">Papara wallet</span>
+              <span className="font-semibold text-sm">Digitale wallet</span>
             </div>
             <div className={`text-[10px] ${uitbetaalMethode === 'papara' ? 'text-white/80' : 'text-gray-500'}`}>
-              Instant · 18M users in TR
+              Direct op de wallet-rekening
             </div>
           </button>
         </div>
@@ -673,13 +673,13 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         <div className="space-y-2">
           <div className="bg-amber-50 border border-amber-200 rounded-md p-2.5 text-[11px] text-amber-800 flex items-start gap-1.5">
             <AlertTriangle className="w-4 h-4 flex-shrink-0" />
-            <span><strong>Coming soon:</strong> Papara wallet uitbetaling is in ontwikkeling (live verwacht Q3 2026). Voor nu kun je het bestellen — wij betalen handmatig uit zodra je transactie gelukt is.</span>
+            <span><strong>Binnenkort:</strong> wallet-uitbetaling is in ontwikkeling (live verwacht Q3 2026). Voor nu kun je het bestellen — wij betalen handmatig uit zodra je transactie gelukt is.</span>
           </div>
           <label className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">Hoe wil je sturen?</label>
           <div className="grid grid-cols-3 gap-1.5">
             {[
-              { type: 'papara_nummer', label: 'Papara #', placeholder: 'PL1234567890' },
-              { type: 'telefoon', label: 'Telefoon', placeholder: '+90...' },
+              { type: 'papara_nummer', label: 'Wallet-ID', placeholder: 'Wallet-nummer' },
+              { type: 'telefoon', label: 'Telefoon', placeholder: '+...' },
               { type: 'email', label: 'Email', placeholder: 'naam@x.com' },
             ].map(opt => (
               <button
@@ -700,8 +700,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
             value={paparaIdentifier}
             onChange={e => setPaparaIdentifier(e.target.value)}
             placeholder={
-              paparaIdentifierType === 'papara_nummer' ? 'PL1234567890' :
-              paparaIdentifierType === 'telefoon' ? '+905XX1234567' :
+              paparaIdentifierType === 'papara_nummer' ? 'Wallet-nummer van de ontvanger' :
+              paparaIdentifierType === 'telefoon' ? '+31 6 12345678' :
               'naam@example.com'
             }
             className="w-full border border-border rounded-md px-4 py-3 outline-none font-mono text-sm bg-surface focus:border-accent-500 focus:ring-2 focus:ring-brand-100"
@@ -956,7 +956,7 @@ function PushOptInCard({ token }) {
         <div className="flex-1 min-w-0">
           <p className="font-display font-medium text-brand-900 text-sm">Krijg bericht bij aankomst?</p>
           <p className="text-xs text-brand-800 mt-0.5">
-            We sturen één korte notificatie wanneer het geld is aangekomen op de Turkse rekening.
+            We sturen één korte notificatie wanneer het geld is aangekomen op de rekening van de ontvanger.
           </p>
         </div>
       </div>

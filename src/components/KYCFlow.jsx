@@ -373,7 +373,7 @@ function KYCGoedgekeurd({ naam }) {
     <div className="bg-surface border border-border rounded-md shadow-soft p-8 text-center space-y-5">
       <div className="w-20 h-20 bg-success-100 rounded-full flex items-center justify-center mx-auto"><CheckCircle className="w-10 h-10 text-success-600" /></div>
       <h2 className="font-display text-2xl font-medium text-ink-1">Verificatie voltooid!</h2>
-      <p className="text-ink-2 text-sm">Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken naar Turkije.</p>
+      <p className="text-ink-2 text-sm">Hoi {naam}, je identiteit is bevestigd. Je kunt nu wereldwijd geld overmaken.</p>
       <div className="bg-success-50 border border-success-100 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>

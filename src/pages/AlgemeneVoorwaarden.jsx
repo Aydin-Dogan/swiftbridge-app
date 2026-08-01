@@ -24,8 +24,8 @@ export default function AlgemeneVoorwaarden() {
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>SwiftBridge:</strong> SwiftBridge B.V., gevestigd in Nederland, ingeschreven bij de Kamer van Koophandel.</li>
                 <li><strong>Gebruiker:</strong> elke natuurlijke persoon van 18 jaar of ouder die een account aanmaakt en gebruikmaakt van de diensten van SwiftBridge.</li>
-                <li><strong>Dienst:</strong> het online platform van SwiftBridge voor het overmaken van geld van Nederland naar Turkije.</li>
-                <li><strong>Transactie:</strong> elke door de Gebruiker geïnitieerde overboeking van euro's (EUR) naar Turkse lira (TRY).</li>
+                <li><strong>Dienst:</strong> het online platform van SwiftBridge voor het internationaal overmaken van geld vanuit Nederland.</li>
+                <li><strong>Transactie:</strong> elke door de Gebruiker geïnitieerde overboeking van euro's (EUR) naar de valuta van het land van de ontvanger.</li>
                 <li><strong>KYC:</strong> Know Your Customer — identiteitsverificatieprocedure verplicht op grond van de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft).</li>
                 <li><strong>Platform:</strong> de website en mobiele applicatie van SwiftBridge.</li>
               </ul>

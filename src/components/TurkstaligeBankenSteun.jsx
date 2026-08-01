@@ -53,7 +53,7 @@ export default function TurkstaligeBankenSteun({ titel, ondertitel, size = 'sm' 
       </div>
 
       <p className="text-[10px] text-gray-400 mt-4">
-        {TOTAAL_BANKEN} banken & wallets ondersteund in 7 Turkstalige landen. Merknamen zijn eigendom van betreffende organisaties.
+        {TOTAAL_BANKEN} banken & wallets ondersteund in onze uitbetaallanden. Merknamen zijn eigendom van betreffende organisaties.
       </p>
     </div>
   );

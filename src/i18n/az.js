@@ -23,9 +23,9 @@ export const az = {
  tab_profiel:'Profil',
 
  // Landing page
- landing_titel:'Türkiyəyə pul',
+ landing_titel:'Dünyaya pul göndər',
  landing_ondertitel:'5 dəqiqədən az müddətdə',
- landing_uitleg:'Bankınızdan ucuz. Şimşək sürəti ilə. 24/7 əlçatan. Türk kimliyi ilə.',
+ landing_uitleg:'Bankınızdan ucuz. Şimşək sürəti ilə. 24/7 əlçatan.',
  gratis_starten:'Pulsuz başla →',
  download_app:'Tətbiqi yüklə',
  inloggen:'Daxil ol',
@@ -44,7 +44,7 @@ export const az = {
 
  // Dashboard
  dashboard_hallo:'Salam {naam}',
- dashboard_subtitel:'Türkiyəyə pul köçür',
+ dashboard_subtitel:'Dünyanın hər yerinə pul köçür',
  dashboard_kyc_vereist:'KYC doğrulama tələb olunur',
  dashboard_kyc_uitleg:'Pul köçürmək üçün şəxsiyyətinizi təsdiqləyin. 5 dəqiqədən az vaxt aparır.',
  dashboard_live_koers:'Canlı məzənnə',
@@ -73,7 +73,7 @@ export const az = {
  dashboard_quick_koersen_sub:'Canlı mübadilə kursları',
  dashboard_quick_alert:'Bildiriş yarat',
  dashboard_quick_alert_sub:'Sərfəli məzənnəni qaçırma',
- dashboard_koers_titel:'EUR → TRY son 7 gün',
+ dashboard_koers_titel:'Məzənnə — son 7 gün',
  dashboard_koers_huidige:'Cari məzənnə',
  dashboard_koers_vs_gisteren:'dünənkinə görə',
  dashboard_koers_meer_valuta:'Daha çox valyuta →',
@@ -112,7 +112,7 @@ export const az = {
  // Transacties
  transacties:'Əməliyyatlar',
  transacties_geen:'Hələ əməliyyat yoxdur',
- transacties_eerste:'Türkiyəyə ilk köçürmənizi edin',
+ transacties_eerste:'İlk köçürmənizi edin',
  transactiedetails:'Əməliyyat detalları',
  status_voltooid:'Tamamlanıb',
  status_in_behandeling:'Davam edir',
@@ -144,7 +144,7 @@ export const az = {
  kyc_selfie:'Selfi',
  kyc_klaar:'Hazırdır',
  kyc_goedgekeurd_titel:'Doğrulama tamamlandı!',
- kyc_goedgekeurd_uitleg:'Salam {naam}, şəxsiyyətiniz təsdiqləndi. İndi Türkiyəyə pul köçürə bilərsiniz.',
+ kyc_goedgekeurd_uitleg:'Salam {naam}, şəxsiyyətiniz təsdiqləndi. İndi dünyanın hər yerinə pul köçürə bilərsiniz.',
  kyc_in_behandeling_titel:'Müraciət işlənir',
  kyc_in_behandeling_uitleg:'Salam {naam}, sənədlərinizi yoxlayırıq. Adətən 5 dəqiqədən az vaxt aparır.',
  kyc_afgewezen_titel:'Doğrulama rədd edildi',
@@ -178,7 +178,7 @@ export const az = {
 
  // ── Profiel: WhatsApp opt-in ─────────────────────────────────────────────
  profiel_whatsapp_titel:'Ailə üçün WhatsApp təsdiqi',
- profiel_whatsapp_uitleg:'Aileniz gözləyir? Pul Türkiyəyə çatan kimi birbaşa WhatsApp təsdiqi alın. E-poçta ehtiyac yoxdur.',
+ profiel_whatsapp_uitleg:'Aileniz gözləyir? Pul çatan kimi birbaşa WhatsApp təsdiqi alın. E-poçta ehtiyac yoxdur.',
  profiel_whatsapp_geen_telefoon:'Əvvəlcə telefon nömrənizi əlavə edin.',
 
  // ── Profiel: GDPR / AVG sectie kop ───────────────────────────────────────
@@ -207,9 +207,9 @@ export const az = {
  referral_hoe_stap1:'Kodunuzu və ya linki dostlarınızla WhatsApp və ya e-poçtla paylaşın.',
  referral_hoe_stap2:'Dostunuz kodunuzla qeydiyyatdan keçir və ilk köçürməsini edir.',
  referral_hoe_stap3:'Hər ikiniz növbəti köçürmədə €{bedrag} endirim qazanırsınız.',
- referral_share_whatsapp:'Salam! SwiftBridge ilə Türkiyəyə pul göndərirəm — bankdan sürətli və ucuz. Mənim kodumla qeydiyyatdan keçsən €{bedrag} bonus qazanarsan: {url}',
+ referral_share_whatsapp:'Salam! Xaricə pul göndərmək üçün SwiftBridge istifadə edirəm — bankdan sürətli və ucuz. Mənim kodumla qeydiyyatdan keçsən €{bedrag} bonus qazanarsan: {url}',
  referral_share_email_onderwerp:'SwiftBridge-i sınayın — €5 bonus qazanın',
- referral_share_email_tekst:'Salam!\n\nSwiftBridge ilə Türkiyəyə tez və ucuz pul göndərirəm. Linkimlə qeydiyyatdan keçsən ilk köçürmədə €{bedrag} bonus qazanarsan, mən də!\n\n{url}\n\nSalamlar,',
+ referral_share_email_tekst:'Salam!\n\nXaricə tez və ucuz pul göndərmək üçün SwiftBridge istifadə edirəm. Linkimlə qeydiyyatdan keçsən ilk köçürmədə €{bedrag} bonus qazanarsan, mən də!\n\n{url}\n\nSalamlar,',
  registreer_referral_label:'Sizi dəvət edən var? (məcburi deyil)',
  registreer_referral_placeholder:'ABCD1234',
  registreer_referral_check:'Kod yoxlanılır...',
@@ -252,11 +252,11 @@ export const az = {
  landing_nav_faq:'FAQ',
 
  // Hero
- landing_pill_route:'Hollandiya → Türkiyə',
+ landing_pill_route:'Hollandiya → bütün dünya',
  landing_pill_wereldwijd:'Canlı məzənnələr · dünya üzrə {landen}+ valyuta',
  landing_hero_titel_1:'Sevdiklərinizə pul göndərin,',
  landing_hero_titel_2:'dünyanın istənilən yerinə',
- landing_hero_subline:'{landen}+ valyuta üçün canlı məzənnələr. Böyüyən ölkə şəbəkəsinə göndərin — bu gün Türkiyə və Mərkəzi Asiya, daim yeni koridorlar əlavə olunur. Ədalətli tariflər, gizli xərclər yoxdur.',
+ landing_hero_subline:'{landen}+ valyuta üçün canlı məzənnələr. Dünya üzrə böyüyən ölkə şəbəkəsinə göndərin — daim yeniləri əlavə olunur. Ədalətli tariflər, gizli xərclər yoxdur.',
  landing_hero_cta_primary:'Pulsuz başla',
  landing_hero_cta_secondary:'Necə işlədiyinə bax',
  // F23 fix (Cursor review): EMI tərəfdaşı qualifier əlavə edildi
@@ -298,7 +298,7 @@ export const az = {
  landing_step_ideal_titel:'iDEAL ilə ödə',
  landing_step_ideal_tekst:'Məbləği daxil edin və bank tətbiqinizdə bir toxunuşla təsdiqləyin.',
  landing_step_ontvangen_titel:'Ailə pulu alır',
- landing_step_ontvangen_tekst:'Pul 5 dəqiqə ərzində türk bank hesabına çatır. WhatsApp bildirişi daxildir.',
+ landing_step_ontvangen_tekst:'Pul 5 dəqiqə ərzində alıcının bank hesabına çatır. WhatsApp bildirişi daxildir.',
 
  // Tarif cədvəli bölməsi
  tariefkaart_eyebrow:'Tariflərimiz',
@@ -316,12 +316,12 @@ export const az = {
  landing_stat_omzet:'Cəmi göndərilib',
  landing_stat_reviews:'Orta Trustpilot reytinqi',
  landing_stat_gebruikers:'Aktiv istifadəçilər',
- landing_stat_banken:'Dəstəklənən Türk bankları',
+ landing_stat_banken:'Dəstəklənən bank və pul kisələri',
  landing_stat_talen:'Mövcud dil',
  landing_stat_snelheid:'Orta çatdırılma vaxtı (iDEAL)',
  landing_stat_fee:'Köçürmə tarifi',
  landing_reviews_eyebrow:'Müştərilərimiz nə deyir',
- landing_reviews_titel:'Türk icmasının etibar etdiyi tətbiq',
+ landing_reviews_titel:'Müştərilərimizin etibar etdiyi tətbiq',
  landing_reviews_aantal:'1 240 rəy',
  landing_testimonial_aydin:'Nəhayət düzgün işləyən bir tətbiq. Bankıma nisbətən €15 qənaət etdim və anam pulu 4 dəqiqədə aldı.',
  landing_testimonial_elif:'Çox şəffafdır — qəbul edənin nə alacağını dərhal görürsən. Western Union kimi gizli komissiya yoxdur.',
@@ -343,39 +343,39 @@ export const az = {
  // Country support
  landing_landen_eyebrow:'Təyinatlar',
  landing_landen_titel:'Bu gün 7 ölkədə canlı',
- landing_landen_subtitel:'Dünya üzrə {landen}+ valyuta üçün canlı məzənnələr — Avropa və Asiyadan Afrika və Amerikalara qədər. Ödənişlər Türkiyə və Mərkəzi Asiyada başlayır, yeni koridorlar mütəmadi əlavə olunur.',
+ landing_landen_subtitel:'Dünya üzrə {landen}+ valyuta üçün canlı məzənnələr — Avropa və Asiyadan Afrika və Amerikalara qədər. Yeni ödəniş ölkələri mütəmadi əlavə olunur.',
  landing_landen_banken:'bank',
 
  // FAQ
  landing_faq_eyebrow:'Tez-tez verilən suallar',
  landing_faq_titel:'Suallarınıza cavablar',
  landing_faq_subtitel:'Axtardığınızı tapmadınız? Bizə e-poçt yazın — 24 saat ərzində cavab veririk.',
- landing_faq_snelheid_vraag:'Pul Türkiyəyə nə qədər tez çatır?',
+ landing_faq_snelheid_vraag:'Pul alıcıya nə qədər tez çatır?',
  landing_faq_snelheid_antwoord:'Əksər hallarda iDEAL ödənişinizin təsdiqindən sonra 5 dəqiqə ərzində. Böyük məbləğlər və ya iş saatlarından kənar zamanlarda bu, ən çox 1 saata qədər uzana bilər. Çox ilk köçürmədə KYC-ni bir dəfəlik yoxladığımız üçün biraz daha çox vaxt apara bilər.',
  landing_faq_kosten_vraag:'Real xərclər nədir?',
  landing_faq_kosten_antwoord:'Hər köçürmə üçün sabit €4,95 əməliyyat haqqı, üstəgəl şəffaf 1,2% kurs marjası (Basis) — üzvlük səviyyəsinə görə 0,6%-ə (Black) düşür. Minimum köçürmə €50. Abunə yoxdur, gizli xərc yoxdur.',
  landing_faq_veiligheid_vraag:'Pulum SwiftBridge-də təhlükəsizdirmi?',
  landing_faq_veiligheid_antwoord:'Bəli. Ödənişlər DNB lisenziyalı EMI tərəfdaşı vasitəsilə həyata keçirilir (DNB nəzarəti altında agent modeli). Hər qəbul edəni beynəlxalq sanksiya siyahısı ilə yoxlayırıq, 256-bit şifrələmə istifadə edirik və məlumatlarınızı GDPR və Wwft-yə uyğun saxlayırıq.',
- landing_faq_banken_vraag:'Hansı türk bankları dəstəklənir?',
- landing_faq_banken_antwoord:'Garanti BBVA, İş Bankası, Ziraat, Yapı Kredi, Akbank, Halkbank, VakıfBank, DenizBank, Finansbank daxil olmaqla bütün böyük türk bankları. Papara və digər elektron pul kisələri də dəstəklənir. Bundan əlavə, Azərbaycan, Qazaxıstan, Özbəkistan, Türkmənistan, Qırğızıstan və Tacikistan bankları.',
+ landing_faq_banken_vraag:'Hansı banklar dəstəklənir?',
+ landing_faq_banken_antwoord:'Ödəniş etdiyimiz ölkələrdəki bütün böyük banklar və populyar rəqəmsal pul kisələri. Göndərərkən alıcının ölkəsini seçin və mövcud bank və pul kisələrini dərhal görün.',
  landing_faq_idin_vraag:'iDIN identifikasiyası nədir?',
  landing_faq_idin_antwoord:'iDIN — Hollandiya banklarının rəsmi identifikasiya sistemidir. Öz Hollandiya bank tətbiqinizdə şəxsiyyətinizi təsdiqləyirsiniz — pasport skan etmək yox, selfi yox, gözləmə yoxdur. Bir dəfə təsdiqlədikdən sonra bir daha lazım deyil.',
  landing_faq_contact_vraag:'Sizinlə necə əlaqə saxlaya bilərəm?',
- landing_faq_contact_antwoord:'support@swiftbridge.tr ünvanına e-poçt göndərin. Holland, türk və ingilis dillərində danışırıq və iş saatlarında adətən 4 saat ərzində cavab veririk.',
+ landing_faq_contact_antwoord:'support@swiftbridge.nl ünvanına e-poçt göndərin. Bir neçə dildə kömək edirik və iş saatlarında adətən 4 saat ərzində cavab veririk.',
 
  // FAQ — Sprint 3: 6 yeni long-tail SEO sualı
  landing_faq_limieten_vraag:'Aylıq və ya günlük limitlər nədir?',
  landing_faq_limieten_antwoord:'KYC təsdiqindən sonrakı ilk 90 gündə həftəlik €5.000 limit qüvvədədir. Sonrasında əməliyyat tarixçəsi və Wwft risk profilinə əsasən avtomatik artırılır. Birdəfəlik daha böyük məbləğ göndərmək istəyirsiniz? Dəstək ilə əlaqə saxlayın — sorğu ilə əməliyyat başına maksimum €25.000-ə qədər daha yüksək limit aktivləşdirə bilərik.',
  landing_faq_wise_vergelijk_vraag:'SwiftBridge Wise ilə necə müqayisə olunur?',
- landing_faq_wise_vergelijk_antwoord:'Wise dünya çapındadır və 1.000+ valyuta ilə işləyir. SwiftBridge EUR→TRY dəhlizində və əlaqədar Türk ölkələrində ixtisaslaşıb — bu sayədə daha sürətli (tez-tez iDEAL ilə <5 dəq) və Garanti, Akbank, İş Bankası, Yapı Kredi kimi Türk bankları üçün daha yaxşı dəstək. €500 əməliyyatda tarifimiz Wise-dən €1-2 yüksəkdir — bu əlavə xərc müqabilində daha çox sürət və Hollandca müştəri xidməti alırsınız.',
+ landing_faq_wise_vergelijk_antwoord:'Wise dünya çapındadır və 1.000+ valyuta ilə işləyir. SwiftBridge birbaşa bank əlaqələri olan seçilmiş ödəniş ölkələrinə fokuslanır — buna görə tez-tez daha sürətli (iDEAL ilə <5 dəq) və fərdi müştəri xidməti ilə. €500 əməliyyatda tarifimiz Wise-dən €1-2 yüksəkdir — bu əlavə xərc müqabilində daha çox sürət və daha yaxşı dəstək alırsınız.',
  landing_faq_annuleren_vraag:'Bir əməliyyatı ləğv edə və ya geri qaytara bilərəmmi?',
- landing_faq_annuleren_antwoord:'iDEAL ödənişi tamamlanmadan əvvəl: bəli, ödəniş etməsəniz əməliyyat 1 saat ərzində avtomatik bitir. Ödəniş sonrası ancaq çıxışdan əvvəl (\'işlənir\'statusu): məbləğ artıq Türk bankına doğru getdiyi üçün adətən artıq olmur. Tamamlandıqdan sonra: yalnız alıcıya geri qaytarma sorğusu ilə. Ləğv şansını maksimuma çatdırmaq üçün ödəniş sonrası 30 dəqiqə ərzində dəstəklə əlaqə saxlayın.',
+ landing_faq_annuleren_antwoord:'iDEAL ödənişi tamamlanmadan əvvəl: bəli, ödəniş etməsəniz əməliyyat 1 saat ərzində avtomatik bitir. Ödəniş sonrası ancaq çıxışdan əvvəl (\'işlənir\' statusu): məbləğ artıq alıcının bankına doğru getdiyi üçün adətən artıq olmur. Tamamlandıqdan sonra: yalnız alıcıya geri qaytarma sorğusu ilə. Ləğv şansını maksimuma çatdırmaq üçün ödəniş sonrası 30 dəqiqə ərzində dəstəklə əlaqə saxlayın.',
  landing_faq_koers_wijzigt_vraag:'Ödənişim zamanı mübadilə kursu dəyişərsə nə olar?',
  landing_faq_koers_wijzigt_antwoord:'Kurs ödəniş anında deyil, əməliyyatı təsdiqlədikdə bağlanır. Təsdiqdən sonra iDEAL ödənişini göstərilən kursla tamamlamaq üçün 15 dəqiqəniz var. Daha uzun çəkir? Cari kursla yenidən hesablayır və işlənmədən əvvəl sizi məlumatlandırırıq.',
- landing_faq_feestdagen_vraag:'SwiftBridge Ramazan, Bayram və Türk bayramlarında işləyirmi?',
- landing_faq_feestdagen_antwoord:'Bəli — texniki infrastrukturumuz 7/24 işləyir. Lakin Türk bankları bayramlarda gələn köçürmələri işləməkdə gecikmələrə yol verirlər. Ramazan Bayramı və Qurban Bayramı zamanı çatdırılma bir az daha uzun çəkə bilər (<5 dəqiqə yerinə 1 iş gününə qədər). Bayramda əməliyyat planlasanız əvvəlcədən push bildirişləri göndəririk.',
+ landing_faq_feestdagen_vraag:'SwiftBridge həftə sonları və bayramlarda işləyirmi?',
+ landing_faq_feestdagen_antwoord:'Bəli — infrastrukturumuz həftə sonları daxil 7/24 işləyir. Yerli banklar rəsmi bayramlarda əməliyyatları bir az gec işləyə bilər (<5 dəqiqə yerinə 1 iş gününə qədər). Bayram ətrafında köçürmə planlasanız əvvəlcədən bildiriş göndəririk.',
  landing_faq_belgie_duitsland_vraag:'SwiftBridge Belçika və ya Almaniyadan da işləyirmi?',
- landing_faq_belgie_duitsland_antwoord:'Bəli. Belçikadan Bancontact, Almaniyadan Sofort və SEPA işləyir. Alıcının Türkiyə, Azərbaycan, Qazaxıstan, Özbəkistan, Türkmənistan, Qırğızıstan və ya Tacikistanda hesabı olmalıdır. Qiymətlər eynidir: sabit €4,95 üstəgəl şəffaf kurs marjası.',
+ landing_faq_belgie_duitsland_antwoord:'Bəli. Belçikadan Bancontact, Almaniyadan Sofort və SEPA işləyir. Alıcının ödəniş etdiyimiz ölkələrdən birində hesabı olmalıdır. Qiymətlər eynidir: sabit €4,95 üstəgəl şəffaf kurs marjası.',
  landing_faq_nog_vragen:'Hələ də suallarınız var?',
 
  // ── Kalkulyator (hesabsız) — Sprint 4 ─────────────────────────────────────
@@ -409,9 +409,9 @@ export const az = {
  notfound_populair_titel:'Məşhur səhifələr',
  notfound_link_calculator:'Köçürmənizi hesablayın (hesab tələb olunmur)',
  notfound_link_wise:'SwiftBridge vs Wise — dürüst müqayisə',
- notfound_link_garanti:'Türkiyədəki Garanti BBVA-ya pul göndər',
- notfound_link_papara:'Hollandiyadan Papara cüzdanına yükləmə',
- notfound_link_bayram:'Bayram köçürmələri: məsləhətlər + təqvim',
+ notfound_link_garanti:'Köçürməni hesabla',
+ notfound_link_papara:'Tariflərimiz',
+ notfound_link_bayram:'Təhlükəsiz pul köçürmələri',
  notfound_contact_prefix:'Köməyə ehtiyacınız var? Yazın',
 
  // ── Pricing-section wrapper ───────────────────────────────────────────────
@@ -457,7 +457,7 @@ export const az = {
  status_svc_db_name:'Verilənlər bazası',
  status_svc_db_desc:'İstifadəçilər və əməliyyatlar üçün daimi yaddaş.',
  status_svc_rates_name:'Məzənnə axını',
- status_svc_rates_desc:'Kalkulyator və vidcet üçün canlı EUR→TRY məzənnəsi.',
+ status_svc_rates_desc:'Kalkulyator və vidcet üçün canlı məzənnələr.',
  status_last_checked:'Son yoxlama:',
  status_auto_refresh:'hər 30 san avtomatik yenilənmə',
  status_refresh:'Yenilə',
@@ -629,7 +629,7 @@ export const az = {
  TX_BANK_NIET_BESCHIKBAAR:'Bu bank hazırda əlçatan deyil.',
  TX_WEEKLIMIET_BEREIKT:'Həftəlik limitinizə çatdınız. Gələn həftə yenidən cəhd edin.',
  TX_NOT_FOUND:'Əməliyyat tapılmadı.',
- TX_PAPARA_INVALID:'Papara məlumatları yanlışdır.',
+ TX_PAPARA_INVALID:'Pul kisəsi məlumatları yanlışdır.',
  TX_SANCTIONED_RECIPIENT:'Bu qəbul edənə ödəniş edilə bilməz. Müştəri xidmətimizlə əlaqə saxlayın.',
  TX_MISSING_FIELDS:'Bütün sahələr doldurulmayıb.',
 
@@ -843,7 +843,7 @@ export const az = {
  track_gestart_op:'Başlanğıc',
  track_voltooid_op:'Tamamlanma',
  track_auto_refresh:'Status hər 30 san avtomatik yenilənir',
- track_cta_uitleg:'Türkiyəyə özünüz pul göndərmək istərdiniz?',
+ track_cta_uitleg:'Siz də xaricə tez pul göndərmək istəyirsiniz?',
  track_cta_button:'SwiftBridge sınayın',
  track_disclaimer:'Bu link şəxsi məlumat ehtiva etmir. Təhlükəsiz paylaşılır.',
 
@@ -914,7 +914,7 @@ export const az = {
 
  // ── Yığım hədəfləri (Təkmilləşdirmə AAA) ─────────────────────────────────
  spaardoel_titel:'Yığım hədəflərim',
- spaardoel_intro:'Konkret bir şey üçün yığım: Bayram hədiyyəsi, məzuniyyət və ya ailə hədiyyəsi. Həftədə nə qədər göndərmək lazım olduğunu hesablayırıq.',
+ spaardoel_intro:'Konkret bir şey üçün yığım: hədiyyə, məzuniyyət və ya ailə üçün sürpriz. Həftədə nə qədər göndərmək lazım olduğunu hesablayırıq.',
  spaardoel_nieuw:'+ Yeni hədəf',
  spaardoel_nieuw_kort:'Yeni',
  spaardoel_bereikt:'Çatdı!',
@@ -929,7 +929,7 @@ export const az = {
  spaardoel_form_titel:'Yeni yığım hədəfi',
  spaardoel_form_emoji:'İkon seç',
  spaardoel_form_naam:'Ad',
- spaardoel_form_naam_placeholder:'Məs. Bayram ailə hədiyyəsi',
+ spaardoel_form_naam_placeholder:'Məs. Ailə hədiyyəsi',
  spaardoel_form_bedrag:'Hədəf məbləğ (€)',
  spaardoel_form_deadline:'Son tarix',
  spaardoel_form_ontvanger:'Kimin üçün? (istəyə bağlı)',
@@ -1196,7 +1196,7 @@ export const az = {
  onb_label_deal:'Xoş gəlmə bonusu',
  onb_label_klaar:'Hazır',
  onb_welkom_titel:'SwiftBridge-ə xoş gəlmisiniz, {naam}!',
- onb_welkom_subtitel:'Hesabınızı 2 dəqiqədə Türkiyəyə pul göndərmək üçün hazırlayaq.',
+ onb_welkom_subtitel:'Hesabınızı 2 dəqiqədə dünyanın hər yerinə pul göndərmək üçün hazırlayaq.',
  onb_welkom_punt_1:'Hesab yaradıldı',
  onb_welkom_punt_2:'Kimliyinizi təsdiqləyin (1 dəqiqə, Hollandiya bankınız vasitəsilə)',
  onb_welkom_punt_3:'İlk köçürmə pulsuz (€800-a qədər)',
@@ -1217,7 +1217,7 @@ export const az = {
  onb_bevestig_promo_code_label:'Promo kod',
  onb_bevestig_promo_uitleg:'İlk köçürmənizə avtomatik tətbiq olunur. 30 gün etibarlıdır.',
  onb_bevestig_volgende_label:'Növbəti addım',
- onb_bevestig_volgende_tekst:'Türkiyəyə ilk köçürməni edin',
+ onb_bevestig_volgende_tekst:'İlk köçürməni et',
  onb_bevestig_cta:'Davam et',
  onb_klaar_titel:'Başlamağa hazır!',
  onb_klaar_subtitel:'SwiftBridge-dən maksimum yararlanmaq üçün bir neçə məsləhət.',

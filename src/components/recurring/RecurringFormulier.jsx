@@ -35,8 +35,9 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
   const [ontvangerNaam, setOntvangerNaam] = useState('');
   const [iban, setIban] = useState('');
   const [bank, setBank] = useState('');
-  const [valuta, setValuta] = useState('TRY');
-  const [land, setLand] = useState('TR');
+  // Geen voorkeursland (merkregel wereldwijd): start neutraal vanuit NL/EUR
+  const [valuta, setValuta] = useState('EUR');
+  const [land, setLand] = useState('NL');
   const [frequentie, setFrequentie] = useState('maandelijks');
   const [dagVanMaand, setDagVanMaand] = useState(1);
   const [dagVanWeek, setDagVanWeek] = useState(1);
@@ -202,7 +203,7 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
                 type="text"
                 value={bank}
                 onChange={(e) => setBank(e.target.value)}
-                placeholder="Garanti BBVA"
+                placeholder="Naam van de bank"
                 className="w-full p-3 border border-border rounded-md bg-surface focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             </div>

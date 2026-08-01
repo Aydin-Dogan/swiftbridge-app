@@ -279,7 +279,7 @@ function ReferralCtaInReceipt() {
   }
 
   function whatsapp() {
-    const bericht = `Ik gebruik SwiftBridge voor geld sturen naar Türkiye — snel én goedkoop. Doe je mee? ${data.deelUrl}`;
+    const bericht = `Ik gebruik SwiftBridge om geld naar het buitenland te sturen — snel én goedkoop. Doe je mee? ${data.deelUrl}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(bericht)}`, '_blank', 'noopener,noreferrer');
   }
 

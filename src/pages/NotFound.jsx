@@ -13,12 +13,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTaal } from '../i18n';
 import { Zap, ArrowRight, Globe } from '../components/icons/Icons';
 
+// Neutrale bestemmingen (merkregel wereldwijd) — de corridor-SEO-pagina's
+// blijven bestaan voor zoekverkeer, maar worden hier niet meer uitgelicht.
 const POPULAIRE_LINKS = [
-  { path: '/calculator',           label_key: 'notfound_link_calculator' },
-  { path: '/wise-alternatief',     label_key: 'notfound_link_wise' },
-  { path: '/garanti-overboeking',  label_key: 'notfound_link_garanti' },
-  { path: '/papara-yukleme',       label_key: 'notfound_link_papara' },
-  { path: '/bayram-remittance',    label_key: 'notfound_link_bayram' },
+  { path: '/calculator',  label_key: 'notfound_link_calculator' },
+  { path: '/wise-alternatief', label_key: 'notfound_link_wise' },
+  { path: '/#pricing',    label_key: 'notfound_link_papara' },
+  { path: '/veiligheid',  label_key: 'notfound_link_bayram' },
 ];
 
 export default function NotFound() {

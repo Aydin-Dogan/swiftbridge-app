@@ -23,9 +23,9 @@ export const nl = {
  tab_profiel:'Profiel',
 
  // Landing page
- landing_titel:'Geld naar Turkije',
+ landing_titel:'Geld wereldwijd versturen',
  landing_ondertitel:'in minder dan 5 minuten',
- landing_uitleg:'Goedkoper dan je bank. Razendsnel. 24/7 beschikbaar. Met Turks kimlik.',
+ landing_uitleg:'Goedkoper dan je bank. Razendsnel. 24/7 beschikbaar.',
  gratis_starten:'Gratis starten →',
  download_app:'Download de app',
  inloggen:'Inloggen',
@@ -44,7 +44,7 @@ export const nl = {
 
  // Dashboard
  dashboard_hallo:'Hallo {naam}',
- dashboard_subtitel:'Geld overmaken naar Turkije',
+ dashboard_subtitel:'Wereldwijd geld overmaken',
  dashboard_kyc_vereist:'KYC verificatie vereist',
  dashboard_kyc_uitleg:'Verifieer je identiteit om geld over te kunnen maken. Duurt minder dan 5 minuten.',
  dashboard_live_koers:'Live wisselkoers',
@@ -73,7 +73,7 @@ export const nl = {
  dashboard_quick_koersen_sub:'Live wisselkoersen',
  dashboard_quick_alert:'Maak alert',
  dashboard_quick_alert_sub:'Mis nooit een gunstige koers',
- dashboard_koers_titel:'EUR → TRY laatste 7 dagen',
+ dashboard_koers_titel:'Wisselkoers — laatste 7 dagen',
  dashboard_koers_huidige:'Huidige koers',
  dashboard_koers_vs_gisteren:'vs gisteren',
  dashboard_koers_meer_valuta:'Bekijk meer valuta →',
@@ -127,7 +127,7 @@ export const nl = {
  // Transacties
  transacties:'Transacties',
  transacties_geen:'Nog geen transacties',
- transacties_eerste:'Maak je eerste overschrijving naar Turkije',
+ transacties_eerste:'Maak je eerste overboeking',
  transactiedetails:'Transactiedetails',
  status_voltooid:'Voltooid',
  status_in_behandeling:'In behandeling',
@@ -159,7 +159,7 @@ export const nl = {
  kyc_selfie:'Selfie',
  kyc_klaar:'Klaar',
  kyc_goedgekeurd_titel:'Verificatie voltooid!',
- kyc_goedgekeurd_uitleg:'Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken naar Turkije.',
+ kyc_goedgekeurd_uitleg:'Hoi {naam}, je identiteit is bevestigd. Je kunt nu wereldwijd geld overmaken.',
  kyc_in_behandeling_titel:'Aanvraag in behandeling',
  kyc_in_behandeling_uitleg:'Hoi {naam}, we controleren je documenten. Dit duurt normaal minder dan 5 minuten.',
  kyc_afgewezen_titel:'Verificatie afgewezen',
@@ -193,7 +193,7 @@ export const nl = {
 
  // ── Profiel: WhatsApp opt-in ─────────────────────────────────────────────
  profiel_whatsapp_titel:'WhatsApp bevestiging voor familie',
- profiel_whatsapp_uitleg:'Familie wachten? Krijg direct een WhatsApp bevestiging zodra het geld in Türkiye is. Geen e-mail nodig.',
+ profiel_whatsapp_uitleg:'Familie wachten? Krijg direct een WhatsApp-bevestiging zodra het geld is aangekomen. Geen e-mail nodig.',
  profiel_whatsapp_geen_telefoon:'Voeg eerst je telefoonnummer toe.',
 
  // ── Profiel: GDPR / AVG sectie kop ───────────────────────────────────────
@@ -222,9 +222,9 @@ export const nl = {
  referral_hoe_stap1:'Deel je code of link met vrienden via WhatsApp of e-mail.',
  referral_hoe_stap2:'Je vriend registreert met jouw code en doet een eerste overboeking.',
  referral_hoe_stap3:'Jullie krijgen allebei €{bedrag} korting op een volgende overboeking.',
- referral_share_whatsapp:'Hey! Ik gebruik SwiftBridge voor geld sturen naar Türkiye — sneller en goedkoper dan de bank. Krijg €{bedrag} bonus als je via mijn code registreert: {url}',
+ referral_share_whatsapp:'Hey! Ik gebruik SwiftBridge om geld naar het buitenland te sturen — sneller en goedkoper dan de bank. Krijg €{bedrag} bonus als je via mijn code registreert: {url}',
  referral_share_email_onderwerp:'Probeer SwiftBridge — krijg €5 bonus',
- referral_share_email_tekst:'Hoi!\n\nIk gebruik SwiftBridge om snel en goedkoop geld te sturen naar Türkiye. Als je je registreert via mijn link krijg je €{bedrag} bonus op je eerste overboeking, en ik ook!\n\n{url}\n\nGroet,',
+ referral_share_email_tekst:'Hoi!\n\nIk gebruik SwiftBridge om snel en goedkoop geld naar het buitenland te sturen. Als je je registreert via mijn link krijg je €{bedrag} bonus op je eerste overboeking, en ik ook!\n\n{url}\n\nGroet,',
  // Registratie veld
  registreer_referral_label:'Heeft iemand je uitgenodigd? (optioneel)',
  registreer_referral_placeholder:'ABCD1234',
@@ -268,11 +268,11 @@ export const nl = {
  landing_nav_faq:'FAQ',
 
  // Hero
- landing_pill_route:'Nederland → Türkiye',
+ landing_pill_route:'Nederland → wereldwijd',
  landing_pill_wereldwijd:'Live koersen · {landen}+ valuta wereldwijd',
  landing_hero_titel_1:'Stuur geld naar je dierbaren,',
  landing_hero_titel_2:'overal ter wereld',
- landing_hero_subline:'Live wisselkoersen voor {landen}+ valuta. Versturen naar een groeiend netwerk van landen — vandaag al naar Türkiye en Centraal-Azië, en steeds meer corridors erbij. Eerlijke tarieven, geen verborgen kosten.',
+ landing_hero_subline:'Live wisselkoersen voor {landen}+ valuta. Versturen naar een groeiend netwerk van landen wereldwijd — en er komen er steeds meer bij. Eerlijke tarieven, geen verborgen kosten.',
  landing_hero_cta_primary:'Gratis starten',
  landing_hero_cta_secondary:'Bekijk hoe het werkt',
  // F23 fix (Cursor review): qualifier"via EMI-partner"ingebed in label zelf
@@ -314,7 +314,7 @@ export const nl = {
  landing_step_ideal_titel:'Betaal met iDEAL',
  landing_step_ideal_tekst:'Voer het bedrag in en bevestig met één tik in je bank-app.',
  landing_step_ontvangen_titel:'Familie ontvangt geld',
- landing_step_ontvangen_tekst:'Geld staat binnen 5 minuten op de Turkse bankrekening. WhatsApp-melding incl.',
+ landing_step_ontvangen_tekst:'Geld staat binnen 5 minuten op de rekening van de ontvanger. WhatsApp-melding incl.',
 
  // Tariefkaart sectie
  tariefkaart_eyebrow:'Onze tarieven',
@@ -332,12 +332,12 @@ export const nl = {
  landing_stat_omzet:'Totaal overgemaakt',
  landing_stat_reviews:'Gemiddelde Trustpilot-score',
  landing_stat_gebruikers:'Actieve gebruikers',
- landing_stat_banken:'Turkse banken ondersteund',
+ landing_stat_banken:'Banken en wallets ondersteund',
  landing_stat_talen:'Talen beschikbaar',
  landing_stat_snelheid:'Gemiddelde levertijd (iDEAL)',
  landing_stat_fee:'Tarief per overboeking',
  landing_reviews_eyebrow:'Wat onze klanten zeggen',
- landing_reviews_titel:'Vertrouwd door de Turkse gemeenschap',
+ landing_reviews_titel:'Vertrouwd door onze klanten',
  landing_reviews_aantal:'1.240 reviews',
  landing_testimonial_aydin:'Eindelijk een app die werkt zoals het hoort. €15 bespaard ten opzichte van mijn bank en mijn moeder had het geld in 4 minuten.',
  landing_testimonial_elif:'Heel transparant — je ziet meteen wat de ontvanger krijgt. Geen verborgen kosten zoals bij Western Union.',
@@ -359,39 +359,39 @@ export const nl = {
  // Country support
  landing_landen_eyebrow:'Bestemmingen',
  landing_landen_titel:'Vandaag al live in 7 landen',
- landing_landen_subtitel:'Live koersen voor {landen}+ valuta wereldwijd — van Europa en Azië tot Afrika en de Amerika\'s. Uitbetaling begint bij Türkiye en Centraal-Azië, nieuwe corridors komen er steeds bij.',
+ landing_landen_subtitel:'Live koersen voor {landen}+ valuta wereldwijd — van Europa en Azië tot Afrika en de Amerika\'s. Nieuwe uitbetaallanden komen er steeds bij.',
  landing_landen_banken:'banken',
 
  // FAQ
  landing_faq_eyebrow:'Veelgestelde vragen',
  landing_faq_titel:'Antwoord op je vragen',
  landing_faq_subtitel:'Niet gevonden wat je zocht? Stuur ons een mailtje — we reageren binnen 24 uur.',
- landing_faq_snelheid_vraag:'Hoe snel komt het geld aan in Türkiye?',
+ landing_faq_snelheid_vraag:'Hoe snel komt het geld aan bij de ontvanger?',
  landing_faq_snelheid_antwoord:'In de meeste gevallen binnen 5 minuten na bevestiging van je iDEAL-betaling. Bij grote bedragen of buiten kantooruren kan dit oplopen tot maximaal 1 uur. Voor de allereerste transactie kan het iets langer duren omdat we je KYC eenmalig verifiëren.',
  landing_faq_kosten_vraag:'Wat zijn de werkelijke kosten?',
  landing_faq_kosten_antwoord:'Eén vaste transactiefee van €4,95 per overboeking, plus een transparante koersmarge van 1,2% (Basis) die per ledenniveau daalt tot 0,6% (Black). Minimum overboekbedrag €50. Geen abonnement, geen verborgen kosten — je ziet alles vóór bevestiging.',
  landing_faq_veiligheid_vraag:'Is mijn geld veilig bij SwiftBridge?',
  landing_faq_veiligheid_antwoord:'Ja. Betalingen lopen via een DNB-gelicentieerde EMI-partner (agent-model onder DNB-toezicht). We checken iedere ontvanger op de internationale sanctielijst, gebruiken 256-bit versleuteling en bewaren je gegevens conform AVG en Wwft.',
- landing_faq_banken_vraag:'Welke Turkse banken worden ondersteund?',
- landing_faq_banken_antwoord:'Alle grote Turkse banken inclusief Garanti BBVA, İş Bankası, Ziraat, Yapı Kredi, Akbank, Halkbank, VakıfBank, DenizBank, Finansbank en meer. Ook Papara en andere e-wallets worden ondersteund. Daarnaast banken in Azerbaijan, Kazachstan, Oezbekistan, Turkmenistan, Kirgizië en Tadzjikistan.',
+ landing_faq_banken_vraag:'Welke banken worden ondersteund?',
+ landing_faq_banken_antwoord:'Alle grote banken in onze uitbetaallanden, plus populaire digitale wallets. Kies bij het overmaken het land van de ontvanger en je ziet direct welke banken en wallets beschikbaar zijn.',
  landing_faq_idin_vraag:'Wat is iDIN-identificatie?',
  landing_faq_idin_antwoord:'iDIN is het officiële Nederlandse identificatiesysteem van de banken. Je identificeert je via je eigen Nederlandse bank-app — geen paspoort scannen, geen selfie, geen wachten. Eenmaal geverifieerd hoef je dit nooit meer te doen.',
  landing_faq_contact_vraag:'Hoe kan ik contact opnemen?',
- landing_faq_contact_antwoord:'Stuur een mail naar support@swiftbridge.tr. We spreken Nederlands, Turks en Engels en reageren doorgaans binnen 4 uur tijdens kantooruren.',
+ landing_faq_contact_antwoord:'Stuur een mail naar support@swiftbridge.nl. We helpen je in meerdere talen en reageren doorgaans binnen 4 uur tijdens kantooruren.',
 
  // FAQ — Sprint 3: 6 nieuwe long-tail SEO vragen
  landing_faq_limieten_vraag:'Wat zijn de limieten per maand of dag?',
  landing_faq_limieten_antwoord:'In de eerste 90 dagen na KYC-goedkeuring geldt een weeklimiet van €5.000. Daarna wordt dit automatisch verhoogd op basis van je transactie-historie en Wwft-risicoprofiel. Wil je éénmalig een groter bedrag versturen? Neem contact op met support — we kunnen op aanvraag een hogere limiet activeren tot maximaal €25.000 per transactie.',
  landing_faq_wise_vergelijk_vraag:'Hoe verhoudt SwiftBridge zich tot Wise?',
- landing_faq_wise_vergelijk_antwoord:'Wise is wereldwijd en handelt 1.000+ valuta\'s. SwiftBridge is gespecialiseerd in de EUR→TRY corridor en aanverwante Turkic-landen — daardoor sneller (vaak <5 min via iDEAL) en met betere ondersteuning voor Turkse banken zoals Garanti, Akbank, İş Bankası en Yapı Kredi. Op een €500 transactie zit ons tarief €1-2 boven Wise — voor die meerprijs krijg je meer snelheid en Nederlandstalige klantenservice.',
+ landing_faq_wise_vergelijk_antwoord:'Wise is wereldwijd en handelt 1.000+ valuta\'s. SwiftBridge focust op een gerichte set uitbetaallanden met directe bankkoppelingen — daardoor vaak sneller (<5 min via iDEAL) en met persoonlijke, Nederlandstalige klantenservice. Op een €500 transactie zit ons tarief €1-2 boven Wise — voor die meerprijs krijg je meer snelheid en betere begeleiding.',
  landing_faq_annuleren_vraag:'Kan ik een transactie annuleren of terugdraaien?',
- landing_faq_annuleren_antwoord:'Vóór de iDEAL-betaling is afgerond: ja, transactie vervalt automatisch binnen 1 uur als je niet betaalt. Na betaling maar vóór uitbetaling (status \'in_behandeling\'): meestal niet meer, omdat het bedrag al in de pijplijn zit naar de Turkse bank. Na voltooiing: alleen via een terugvraag aan de ontvanger. Bel of mail support binnen 30 minuten na betaling voor de hoogste kans op annulering.',
+ landing_faq_annuleren_antwoord:'Vóór de iDEAL-betaling is afgerond: ja, transactie vervalt automatisch binnen 1 uur als je niet betaalt. Na betaling maar vóór uitbetaling (status \'in_behandeling\'): meestal niet meer, omdat het bedrag al onderweg is naar de bank van de ontvanger. Na voltooiing: alleen via een terugvraag aan de ontvanger. Bel of mail support binnen 30 minuten na betaling voor de hoogste kans op annulering.',
  landing_faq_koers_wijzigt_vraag:'Wat als de wisselkoers wijzigt tijdens mijn betaling?',
  landing_faq_koers_wijzigt_antwoord:'De koers wordt vastgezet op het moment dat je de transactie bevestigt, niet bij betaling. Vanaf bevestiging heb je 15 minuten om de iDEAL-betaling af te ronden tegen de getoonde koers. Duurt het langer? Dan herberekenen we tegen de actuele koers en informeren we je vóór de betaling wordt verwerkt.',
- landing_faq_feestdagen_vraag:'Werkt SwiftBridge ook tijdens Ramazan, Bayram en Turkse feestdagen?',
- landing_faq_feestdagen_antwoord:'Ja — onze technische infrastructuur draait 24/7. Wel hebben Turkse banken op feestdagen vaak vertraging in het verwerken van inkomende transfers. Tijdens Ramazan Bayramı en Kurban Bayramı kan de levering iets langer duren (tot 1 werkdag i.p.v. <5 minuten). We sturen vooraf push-notificaties als je een transactie op een feestdag plant.',
+ landing_faq_feestdagen_vraag:'Werkt SwiftBridge ook in het weekend en op feestdagen?',
+ landing_faq_feestdagen_antwoord:'Ja — onze infrastructuur draait 24/7, ook in het weekend. Lokale banken kunnen op feestdagen wel iets trager zijn met verwerken (tot 1 werkdag i.p.v. <5 minuten). Plan je een overboeking rond een feestdag, dan sturen we vooraf een melding.',
  landing_faq_belgie_duitsland_vraag:'Werkt SwiftBridge ook vanuit België of Duitsland?',
- landing_faq_belgie_duitsland_antwoord:'Ja. Vanuit België ondersteunen we Bancontact als equivalent van iDEAL. Vanuit Duitsland werkt Sofort en SEPA. De ontvanger moet wel een rekening hebben in Türkiye, Azerbeidzjan, Kazachstan, Oezbekistan, Turkmenistan, Kirgizië of Tadzjikistan. Tarieven zijn identiek: €4,95 vast plus de transparante koersmarge.',
+ landing_faq_belgie_duitsland_antwoord:'Ja. Vanuit België ondersteunen we Bancontact als equivalent van iDEAL. Vanuit Duitsland werkt Sofort en SEPA. De ontvanger heeft een rekening nodig in een van onze uitbetaallanden. Tarieven zijn identiek: €4,95 vast plus de transparante koersmarge.',
 
  // ── Calculator-pagina (zonder account) — Sprint 4 ──────────────────────
  calc_titel:'Bereken je overboeking',
@@ -424,9 +424,9 @@ export const nl = {
  notfound_populair_titel:'Populaire pagina\'s',
  notfound_link_calculator:'Bereken je transfer (geen account nodig)',
  notfound_link_wise:'SwiftBridge vs Wise — eerlijke vergelijking',
- notfound_link_garanti:'Geld naar Garanti BBVA in Türkiye',
- notfound_link_papara:'Papara hesabına para yükleme',
- notfound_link_bayram:'Bayram-overboeking: tips + kalender',
+ notfound_link_garanti:'Bereken je overboeking',
+ notfound_link_papara:'Onze tarieven',
+ notfound_link_bayram:'Veilig geld overmaken',
  notfound_contact_prefix:'Hulp nodig? Mail',
 
  // ── Pricing-section wrapper (audit P1: consolidatie) ────────────────────
@@ -472,7 +472,7 @@ export const nl = {
  status_svc_db_name:'Database',
  status_svc_db_desc:'Persistente opslag voor gebruikers en transacties.',
  status_svc_rates_name:'Wisselkoers feed',
- status_svc_rates_desc:'Live EUR→TRY koers voor calculator en widget.',
+ status_svc_rates_desc:'Live wisselkoersen voor calculator en widget.',
  status_last_checked:'Laatste controle:',
  status_auto_refresh:'auto-refresh elke 30s',
  status_refresh:'Vernieuwen',
@@ -604,7 +604,7 @@ export const nl = {
 
  // Stap 1 — Welkom
  onb_welkom_titel:'Welkom bij SwiftBridge, {naam}!',
- onb_welkom_subtitel:'Laten we je account in 2 minuten klaarmaken om geld naar Türkiye te sturen.',
+ onb_welkom_subtitel:'Laten we je account in 2 minuten klaarmaken om wereldwijd geld te sturen.',
  onb_welkom_punt_1:'Account aangemaakt',
  onb_welkom_punt_2:'Identificeer jezelf (1 minuut, via je Nederlandse bank)',
  onb_welkom_punt_3:'Verstuur je eerste overboeking gratis (tot €800)',
@@ -629,7 +629,7 @@ export const nl = {
  onb_bevestig_promo_code_label:'Promo code',
  onb_bevestig_promo_uitleg:'Wordt automatisch toegepast op je eerste overboeking. Geldig 30 dagen.',
  onb_bevestig_volgende_label:'Volgende stap',
- onb_bevestig_volgende_tekst:'Maak je eerste overboeking naar Türkiye',
+ onb_bevestig_volgende_tekst:'Maak je eerste overboeking',
  onb_bevestig_cta:'Verder',
 
  // Stap 4 — Klaar
@@ -695,7 +695,7 @@ export const nl = {
  TX_BANK_NIET_BESCHIKBAAR:'Deze bank is op dit moment niet beschikbaar.',
  TX_WEEKLIMIET_BEREIKT:'Je weeklimiet is bereikt. Probeer het volgende week opnieuw.',
  TX_NOT_FOUND:'Transactie niet gevonden.',
- TX_PAPARA_INVALID:'Papara gegevens zijn ongeldig.',
+ TX_PAPARA_INVALID:'Wallet-gegevens zijn ongeldig.',
  TX_SANCTIONED_RECIPIENT:'Deze ontvanger kan niet betaald worden. Neem contact op met onze klantenservice.',
  TX_MISSING_FIELDS:'Niet alle velden zijn ingevuld.',
 
@@ -814,7 +814,7 @@ export const nl = {
  track_gestart_op:'Gestart op',
  track_voltooid_op:'Voltooid op',
  track_auto_refresh:'Status wordt elke 30 sec automatisch ververst',
- track_cta_uitleg:'Wil je zelf snel geld sturen naar Türkiye?',
+ track_cta_uitleg:'Wil je zelf snel geld naar het buitenland sturen?',
  track_cta_button:'Probeer SwiftBridge',
  track_disclaimer:'Deze link bevat geen persoonsgegevens. Veilig deelbaar.',
 
@@ -885,7 +885,7 @@ export const nl = {
 
  // ── Spaardoelen (Verbetering AAA) ────────────────────────────────────────
  spaardoel_titel:'Mijn spaardoelen',
- spaardoel_intro:'Spaar voor iets concreets: Bayram-cadeau, vakantie, of een gift voor familie. We rekenen voor je uit hoeveel je per week moet sturen.',
+ spaardoel_intro:'Spaar voor iets concreets: een cadeau, vakantie of gift voor familie. We rekenen voor je uit hoeveel je per week moet sturen.',
  spaardoel_nieuw:'+ Nieuw spaardoel',
  spaardoel_nieuw_kort:'Nieuw',
  spaardoel_bereikt:'Bereikt!',
@@ -900,7 +900,7 @@ export const nl = {
  spaardoel_form_titel:'Nieuw spaardoel',
  spaardoel_form_emoji:'Kies een icoon',
  spaardoel_form_naam:'Naam',
- spaardoel_form_naam_placeholder:'Bv. Bayram cadeau familie',
+ spaardoel_form_naam_placeholder:'Bv. Cadeau voor familie',
  spaardoel_form_bedrag:'Doelbedrag (€)',
  spaardoel_form_deadline:'Deadline',
  spaardoel_form_ontvanger:'Voor wie? (optioneel)',

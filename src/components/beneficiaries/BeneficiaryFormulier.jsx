@@ -42,18 +42,19 @@ function valideerIban(iban) {
   return { geldig: true, fout: null };
 }
 
+// Alfabetisch — geen land uitgelicht (merkregel wereldwijd)
 const LANDEN = [
-  { code: 'TR', naam: 'Türkiye', valuta: 'TRY' },
   { code: 'AZ', naam: 'Azerbeidzjan', valuta: 'AZN' },
-  { code: 'KZ', naam: 'Kazachstan', valuta: 'KZT' },
-  { code: 'UZ', naam: 'Oezbekistan', valuta: 'UZS' },
-  { code: 'TM', naam: 'Turkmenistan', valuta: 'TMT' },
-  { code: 'KG', naam: 'Kirgizië', valuta: 'KGS' },
-  { code: 'NL', naam: 'Nederland', valuta: 'EUR' },
   { code: 'BE', naam: 'België', valuta: 'EUR' },
   { code: 'DE', naam: 'Duitsland', valuta: 'EUR' },
   { code: 'FR', naam: 'Frankrijk', valuta: 'EUR' },
-  { code: 'GB', naam: 'VK', valuta: 'GBP' },
+  { code: 'KZ', naam: 'Kazachstan', valuta: 'KZT' },
+  { code: 'KG', naam: 'Kirgizië', valuta: 'KGS' },
+  { code: 'NL', naam: 'Nederland', valuta: 'EUR' },
+  { code: 'UZ', naam: 'Oezbekistan', valuta: 'UZS' },
+  { code: 'TM', naam: 'Turkmenistan', valuta: 'TMT' },
+  { code: 'TR', naam: 'Türkiye', valuta: 'TRY' },
+  { code: 'GB', naam: 'Verenigd Koninkrijk', valuta: 'GBP' },
 ];
 
 export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnnuleer, onOpslaan }) {
@@ -63,8 +64,9 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
     bijnaam: '',
     iban: '',
     bank: '',
-    valuta: 'TRY',
-    land: 'TR',
+    // Geen voorkeursland (merkregel wereldwijd): start neutraal vanuit NL/EUR
+    valuta: 'EUR',
+    land: 'NL',
   });
   const [ibanCheck, setIbanCheck] = useState(null);
   const [lokaleFout, setLokaleFout] = useState('');
@@ -76,11 +78,11 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
         bijnaam: initial.bijnaam || initial.label || '',
         iban: initial.iban || '',
         bank: initial.bank || '',
-        valuta: initial.valuta || 'TRY',
-        land: initial.land || 'TR',
+        valuta: initial.valuta || 'EUR',
+        land: initial.land || 'NL',
       });
     } else {
-      setForm({ naam: '', bijnaam: '', iban: '', bank: '', valuta: 'TRY', land: 'TR' });
+      setForm({ naam: '', bijnaam: '', iban: '', bank: '', valuta: 'EUR', land: 'NL' });
     }
     setLokaleFout('');
   }, [initial, open]);

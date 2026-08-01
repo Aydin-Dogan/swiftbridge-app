@@ -109,7 +109,7 @@ export default function Klachten() {
               <h2 className="text-xl font-semibold text-gray-900 mb-3">4. Wat u van ons mag verwachten</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Een persoonlijke, begrijpelijke reactie — geen standaardbrief.</li>
-                <li>Behandeling in uw eigen taal waar mogelijk (o.a. Nederlands, Turks, Engels).</li>
+                <li>Behandeling in uw eigen taal waar mogelijk — de app ondersteunt vijf talen.</li>
                 <li>Vertrouwelijke behandeling; uw klacht heeft geen negatief effect op onze dienstverlening aan u.</li>
                 <li>Als wij een fout hebben gemaakt, herstellen we die en leggen we uit hoe we herhaling voorkomen.</li>
               </ul>

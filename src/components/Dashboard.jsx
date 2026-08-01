@@ -75,8 +75,13 @@ function laadLokaleTransacties() {
 }
 
 function laadVoorkeuren() {
-  try { return new Set(JSON.parse(localStorage.getItem(VOORKEUR_KEY) || '[]')); }
-  catch { return new Set(); }
+  // Feestkalender staat standaard UIT (merkregel wereldwijd — cultuurspecifieke
+  // widget alleen voor wie hem bewust aanzet via Personaliseer overzicht).
+  try {
+    const opgeslagen = localStorage.getItem(VOORKEUR_KEY);
+    if (opgeslagen == null) return new Set(['feest']);
+    return new Set(JSON.parse(opgeslagen));
+  } catch { return new Set(['feest']); }
 }
 
 function fmtEur(n) {
