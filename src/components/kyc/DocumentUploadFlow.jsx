@@ -27,66 +27,17 @@ const MAX_FILE_MB = 5;
 const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 const TOEGESTANE_TYPES = ['image/jpeg', 'image/png'];
 
-// ── Document types ────────────────────────────────────────────────────────────
+// ── Document types — bank-indeling, wereldwijd (merkregel: geen landspecifieke
+// labels; SwiftBridge accepteert paspoorten uit elk land) ────────────────────
 const DOC_TYPES = [
-  { value: 'paspoort', icoon: IdCard, tKey: 'kyc_doc_paspoort', heeftAchterkant: false },
+  { value: 'paspoort_eu', icoon: IdCard, tKey: 'kyc_doc_paspoort_eu', heeftAchterkant: false },
+  { value: 'paspoort_niet_eu', icoon: IdCard, tKey: 'kyc_doc_paspoort_niet_eu', heeftAchterkant: false },
   { value: 'id_kaart', icoon: IdCard, tKey: 'kyc_doc_id_kaart', heeftAchterkant: true },
   { value: 'rijbewijs', icoon: Card, tKey: 'kyc_doc_rijbewijs', heeftAchterkant: true },
 ];
 
-// Top 50 landen (focus op diaspora-relevante landen)
-const LANDEN = [
-  { code: 'TR', naam: 'Türkiye' },
-  { code: 'NL', naam: 'Nederland' },
-  { code: 'MA', naam: 'Marokko' },
-  { code: 'SY', naam: 'Syrië' },
-  { code: 'AF', naam: 'Afghanistan' },
-  { code: 'IR', naam: 'Iran' },
-  { code: 'IQ', naam: 'Irak' },
-  { code: 'PK', naam: 'Pakistan' },
-  { code: 'AZ', naam: 'Azerbeidzjan' },
-  { code: 'UZ', naam: 'Oezbekistan' },
-  { code: 'KZ', naam: 'Kazachstan' },
-  { code: 'TM', naam: 'Turkmenistan' },
-  { code: 'KG', naam: 'Kirgizië' },
-  { code: 'TJ', naam: 'Tadzjikistan' },
-  { code: 'DE', naam: 'Duitsland' },
-  { code: 'BE', naam: 'België' },
-  { code: 'FR', naam: 'Frankrijk' },
-  { code: 'IT', naam: 'Italië' },
-  { code: 'ES', naam: 'Spanje' },
-  { code: 'PT', naam: 'Portugal' },
-  { code: 'PL', naam: 'Polen' },
-  { code: 'RO', naam: 'Roemenië' },
-  { code: 'BG', naam: 'Bulgarije' },
-  { code: 'GR', naam: 'Griekenland' },
-  { code: 'AL', naam: 'Albanië' },
-  { code: 'MK', naam: 'Noord-Macedonië' },
-  { code: 'RS', naam: 'Servië' },
-  { code: 'BA', naam: 'Bosnië en Herzegovina' },
-  { code: 'XK', naam: 'Kosovo' },
-  { code: 'GE', naam: 'Georgië' },
-  { code: 'AM', naam: 'Armenië' },
-  { code: 'RU', naam: 'Rusland' },
-  { code: 'UA', naam: 'Oekraïne' },
-  { code: 'BY', naam: 'Wit-Rusland' },
-  { code: 'MD', naam: 'Moldavië' },
-  { code: 'EG', naam: 'Egypte' },
-  { code: 'DZ', naam: 'Algerije' },
-  { code: 'TN', naam: 'Tunesië' },
-  { code: 'LB', naam: 'Libanon' },
-  { code: 'JO', naam: 'Jordanië' },
-  { code: 'PS', naam: 'Palestina' },
-  { code: 'SO', naam: 'Somalië' },
-  { code: 'SD', naam: 'Soedan' },
-  { code: 'ER', naam: 'Eritrea' },
-  { code: 'ET', naam: 'Ethiopië' },
-  { code: 'IN', naam: 'India' },
-  { code: 'BD', naam: 'Bangladesh' },
-  { code: 'GB', naam: 'Verenigd Koninkrijk' },
-  { code: 'US', naam: 'Verenigde Staten' },
-  { code: 'OTHER', naam: 'Anders' },
-];
+// Neutrale, alfabetische landenlijst (gedeeld met de rest van de KYC-flow)
+import { LANDEN } from './landen';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function valideerBestand(file, t) {
@@ -358,11 +309,12 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
   const { t } = useTaal();
   const [stap, setStap] = useState(0);
   const [form, setForm] = useState({
-    documentType: 'paspoort',
+    documentType: 'paspoort_eu',
     documentNummer: '',
-    // Telefoon-handoff: geboortedatum/nationaliteit komen van de computer-stap
+    // Telefoon-handoff: geboortedatum/nationaliteit komen van de computer-stap.
+    // Geen land-default (merkregel: geen voorkeursland).
     geboortedatum: beginWaarden?.geboortedatum || '',
-    nationaliteit: beginWaarden?.nationaliteit || 'TR',
+    nationaliteit: beginWaarden?.nationaliteit || '',
   });
   const [voorkant, setVoorkant] = useState(null);
   const [achterkant, setAchterkant] = useState(null);

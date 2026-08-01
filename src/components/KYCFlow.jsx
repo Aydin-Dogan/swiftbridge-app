@@ -6,6 +6,7 @@
  * - Voortgangsbalk + stap validatie
  */
 import { useState, useRef, useCallback, useEffect, lazy, Suspense } from 'react';
+import { LANDEN } from './kyc/landen';
 import { parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import {
@@ -20,17 +21,13 @@ const OnfidoEmbed = lazy(() => import('./kyc/OnfidoEmbed'));
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+// Foto's gaan uitsluitend via de telefoon (QR/link) — besluit 1-8-2026.
+// De computer toont: gegevens → QR → klaar. Documentkeuze zit op de telefoon,
+// in bank-indeling en wereldwijd (SwiftBridge accepteert alle paspoorten).
 const STAPPEN = [
   { titel: 'Persoonlijk', icoon: User },
-  { titel: 'Document', icoon: IdCard },
-  { titel: 'Selfie', icoon: Eye },
+  { titel: "Foto's", icoon: IdCard },
   { titel: 'Klaar', icoon: CheckCircle },
-];
-
-const DOC_TYPES = [
-  { value: 'kimlik', label: 'Turks Kimlik (TC)', sub: 'Turkse identiteitskaart' },
-  { value: 'paspoort', label: 'Paspoort', sub: 'Nederlands of Turks paspoort'},
-  { value: 'rijbewijs', label: 'Rijbewijs', sub: 'EU rijbewijs' },
 ];
 
 // ── Upload veld component ──────────────────────────────────────────────────────
@@ -86,7 +83,7 @@ function FotoUpload({ label, sublabel, preview, onBestand, accept = 'image/*', c
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function StapPersoonlijk({ form, update, onVolgende }) {
-  const geldig = form.voornaam && form.achternaam && form.geboortedatum && EMAIL_RE.test(form.email || '');
+  const geldig = form.voornaam && form.achternaam && form.geboortedatum && form.nationaliteit && EMAIL_RE.test(form.email || '');
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-4">
       <div>
@@ -95,7 +92,7 @@ function StapPersoonlijk({ form, update, onVolgende }) {
       </div>
 
       <div className="bg-amber-50 border border-amber-200 rounded-md p-3 text-xs text-amber-800">
-        <strong>Bèta:</strong> Tijdens de testfase worden je documentfoto's lokaal verwerkt en niet permanent opgeslagen.
+        <strong>Bèta:</strong> Tijdens de testfase wordt je aanvraag handmatig door ons team beoordeeld.
         Bij commerciële livegang verloopt KYC via onze licentiepartner met versleutelde opslag.
       </div>
 
@@ -131,13 +128,13 @@ function StapPersoonlijk({ form, update, onVolgende }) {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-ink-2 mb-1">Nationaliteit</label>
+        <label className="block text-xs font-semibold text-ink-2 mb-1">Nationaliteit *</label>
         <select value={form.nationaliteit} onChange={e => update('nationaliteit', e.target.value)}
           className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition">
-          <option value="TR">Turks</option>
-          <option value="NL">Nederlands</option>
-          <option value="DUAL">Dubbele nationaliteit</option>
-          <option value="OTHER">Anders</option>
+          <option value="">Maak een keuze</option>
+          {LANDEN.map(l => (
+            <option key={l.code} value={l.code}>{l.naam}</option>
+          ))}
         </select>
       </div>
 
@@ -231,7 +228,7 @@ function TelefoonHandoff({ form, token, onFotosKlaar }) {
 
   return (
     <div className="border border-brand-100 bg-brand-50 rounded-md p-4 space-y-3">
-      <div className="font-semibold text-ink-1 text-sm">Maak de foto's met je telefoon (aanbevolen)</div>
+      <div className="font-semibold text-ink-1 text-sm">Maak de foto's met je telefoon</div>
       <p className="text-xs text-ink-2">
         De camera van je telefoon maakt scherpere foto's van je document. Scan de QR-code of open de link op je
         telefoon — deze computer gaat automatisch verder zodra de foto's binnen zijn.
@@ -268,69 +265,23 @@ function TelefoonHandoff({ form, token, onFotosKlaar }) {
 }
 
 // ── Stap 1: Document ──────────────────────────────────────────────────────────
-function StapDocument({ form, update, docFoto, setDocFoto, onVolgende, onTerug, telefoonPaneel }) {
-  const geldig = form.documentType && form.documentNummer && docFoto;
-
+// Foto's uitsluitend via de telefoon: dit scherm toont alleen de QR/link.
+// SwiftBridge accepteert identiteitsdocumenten uit elk land (bank-indeling
+// Europees/niet-Europees paspoort zit op de telefoonpagina).
+function StapFotos({ form, token, onFotosKlaar, onTerug }) {
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-4">
       <div>
         <h2 className="font-display text-xl font-medium text-ink-1">Identiteitsbewijs</h2>
-        <p className="text-ink-2 text-sm mt-1">SwiftBridge accepteert het Turkse kimlik!</p>
+        <p className="text-ink-2 text-sm mt-1">SwiftBridge accepteert alle paspoorten en identiteitskaarten, uit elk land.</p>
       </div>
 
-      {telefoonPaneel}
-      {telefoonPaneel && (
-        <div className="flex items-center gap-3 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-ink-3">
-          <span className="flex-1 h-px bg-border" aria-hidden="true" />
-          of ga verder op deze computer
-          <span className="flex-1 h-px bg-border" aria-hidden="true" />
-        </div>
-      )}
+      <TelefoonHandoff form={form} token={token} onFotosKlaar={onFotosKlaar} />
 
-      <div className="space-y-2">
-        {DOC_TYPES.map(d => (
-          <label key={d.value}
-            className={`flex items-center p-3 border rounded-md cursor-pointer transition ${
-              form.documentType === d.value
-                ? 'border-brand-500 bg-brand-50'
-                : 'border-border hover:border-gray-300'}`}>
-            <input type="radio" name="docType" value={d.value}
-              checked={form.documentType === d.value}
-              onChange={e => update('documentType', e.target.value)}
-              className="mr-3 accent-brand-600" />
-            <div>
-              <div className="font-semibold text-ink-1 text-sm">{d.label}</div>
-              <div className="text-xs text-gray-500">{d.sub}</div>
-            </div>
-          </label>
-        ))}
-      </div>
-
-      <div>
-        <label className="block text-xs font-semibold text-ink-2 mb-1">Documentnummer *</label>
-        <input value={form.documentNummer} onChange={e => update('documentNummer', e.target.value)}
-          placeholder={form.documentType === 'kimlik' ? '12345678901 (11 cijfers)' : 'NL1234567'}
-          className="w-full border border-border rounded-md px-3 py-2.5 text-sm outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 font-mono transition" />
-      </div>
-
-      <FotoUpload
-        label="Foto van je document *"
-        sublabel="Maak een foto of upload een scan van je document"
-        preview={docFoto}
-        onBestand={(data) => setDocFoto(data)}
-      />
-
-      {!geldig && form.documentNummer && !docFoto && (
-        <p className="text-amber-600 text-xs">Upload nog een foto van je document</p>
-      )}
-
-      <div className="flex gap-3">
-        <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm transition">← Terug</button>
-        <button onClick={onVolgende} disabled={!geldig}
-          className="flex-1 btn-inst py-3 disabled:bg-gray-300 disabled:cursor-not-allowed">
-          Volgende →
-        </button>
-      </div>
+      <button onClick={onTerug}
+        className="w-full border border-border rounded-md text-ink-2 py-3 hover:bg-surface-3 font-semibold text-sm transition">
+        ← Terug
+      </button>
     </div>
   );
 }
@@ -397,10 +348,6 @@ function StapKlaar({ form }) {
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Naam</span>
           <span className="font-semibold">{form.voornaam} {form.achternaam}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Document</span>
-          <span className="font-semibold capitalize">{DOC_TYPES.find(d => d.value === form.documentType)?.label}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Status</span>
@@ -692,27 +639,9 @@ export default function KYCFlow({ token, gebruiker }) {
 
       {stap === 0 && <StapPersoonlijk form={form} update={update} onVolgende={() => setStap(1)} />}
       {stap === 1 && (
-        <StapDocument form={form} update={update} docFoto={docFoto} setDocFoto={setDocFoto}
-          onVolgende={() => setStap(2)} onTerug={() => setStap(0)}
-          telefoonPaneel={<TelefoonHandoff form={form} token={token} onFotosKlaar={() => setStap(3)} />} />
+        <StapFotos form={form} token={token} onFotosKlaar={() => setStap(2)} onTerug={() => setStap(0)} />
       )}
-      {stap === 2 && !onfidoToken && <StapSelfie selfieFoto={selfieFoto} setSelfieFoto={setSelfieFoto} laden={laden} fout={fout} onIndienen={dien_in} onTerug={() => setStap(1)} />}
-      {stap === 2 && onfidoToken && (
-        <Suspense fallback={<div className="text-center py-6 text-gray-500 text-sm">{t('laden')}</div>}>
-          <OnfidoEmbed
-            sdkToken={onfidoToken}
-            taal={taal}
-            onComplete={onOnfidoVoltooid}
-            onError={(msg) => { setFout(msg || 'SDK fout'); setOnfidoToken(null); }}
-            onAnnuleer={() => { setOnfidoToken(null); }}
-          />
-        </Suspense>
-      )}
-      {stap === 3 && <StapKlaar form={form} />}
-
-      {/* Document upload fallback (voor users zonder NL bank) — alleen tonen
-          tijdens de actieve flow, niet op het Klaar-scherm */}
-      {stap < 3 && <DocumentUploadFallback />}
+      {stap === 2 && <StapKlaar form={form} />}
     </div>
   );
 }

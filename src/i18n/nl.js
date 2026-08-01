@@ -1370,4 +1370,10 @@ export const nl = {
  service_email:'E-mail',
  service_klacht:'Klacht indienen',
  service_klacht_sub:'Lees hoe we met klachten omgaan.',
+
+ // ── KYC documenttypes bank-indeling (wereldwijd, 1-8-2026) ───────────────
+ kyc_doc_paspoort_eu:'Europees paspoort',
+ kyc_doc_paspoort_eu_sub:'Paspoort uit een EU- of EER-land (alleen voorkant)',
+ kyc_doc_paspoort_niet_eu:'Niet-Europees paspoort',
+ kyc_doc_paspoort_niet_eu_sub:'Paspoort uit elk ander land ter wereld (alleen voorkant)',
 };

@@ -1360,4 +1360,10 @@ export const az = {
  service_email:'E-poçt',
  service_klacht:'Şikayət bildir',
  service_klacht_sub:'Şikayətlərə necə baxdığımızı oxuyun.',
+
+ // ── KYC sənəd növləri, bank düzümü (bütün dünya, 1-8-2026) ───────────────
+ kyc_doc_paspoort_eu:'Avropa pasportu',
+ kyc_doc_paspoort_eu_sub:'Aİ/AİZ ölkəsindən pasport (yalnız ön tərəf)',
+ kyc_doc_paspoort_niet_eu:'Avropadan kənar pasport',
+ kyc_doc_paspoort_niet_eu_sub:'Dünyanın istənilən digər ölkəsindən pasport (yalnız ön tərəf)',
 };

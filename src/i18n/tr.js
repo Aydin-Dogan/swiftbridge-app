@@ -1368,4 +1368,10 @@ export const tr = {
  service_email:'E-posta',
  service_klacht:'Şikayet bildir',
  service_klacht_sub:'Şikayetleri nasıl ele aldığımızı okuyun.',
+
+ // ── KYC belge türleri, banka düzeni (dünya çapında, 1-8-2026) ────────────
+ kyc_doc_paspoort_eu:'Avrupa pasaportu',
+ kyc_doc_paspoort_eu_sub:'AB/AEA ülkesinden pasaport (sadece ön yüz)',
+ kyc_doc_paspoort_niet_eu:'Avrupa dışı pasaport',
+ kyc_doc_paspoort_niet_eu_sub:'Dünyanın diğer tüm ülkelerinden pasaport (sadece ön yüz)',
 };

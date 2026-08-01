@@ -1,0 +1,63 @@
+/**
+ * landen.js — neutrale landenlijst voor KYC (nationaliteit).
+ * Alfabetisch, geen enkel land uitgelicht (merkregel: wereldwijde uitstraling),
+ * "Anders" als vangnet onderaan.
+ */
+const BASIS = [
+  { code: 'AF', naam: 'Afghanistan' },
+  { code: 'AL', naam: 'Albanië' },
+  { code: 'DZ', naam: 'Algerije' },
+  { code: 'AM', naam: 'Armenië' },
+  { code: 'AZ', naam: 'Azerbeidzjan' },
+  { code: 'BD', naam: 'Bangladesh' },
+  { code: 'BE', naam: 'België' },
+  { code: 'BA', naam: 'Bosnië en Herzegovina' },
+  { code: 'BG', naam: 'Bulgarije' },
+  { code: 'DE', naam: 'Duitsland' },
+  { code: 'EG', naam: 'Egypte' },
+  { code: 'ER', naam: 'Eritrea' },
+  { code: 'ET', naam: 'Ethiopië' },
+  { code: 'FR', naam: 'Frankrijk' },
+  { code: 'GE', naam: 'Georgië' },
+  { code: 'GR', naam: 'Griekenland' },
+  { code: 'IN', naam: 'India' },
+  { code: 'IQ', naam: 'Irak' },
+  { code: 'IR', naam: 'Iran' },
+  { code: 'IT', naam: 'Italië' },
+  { code: 'JO', naam: 'Jordanië' },
+  { code: 'KZ', naam: 'Kazachstan' },
+  { code: 'KG', naam: 'Kirgizië' },
+  { code: 'XK', naam: 'Kosovo' },
+  { code: 'LB', naam: 'Libanon' },
+  { code: 'MA', naam: 'Marokko' },
+  { code: 'MD', naam: 'Moldavië' },
+  { code: 'NL', naam: 'Nederland' },
+  { code: 'MK', naam: 'Noord-Macedonië' },
+  { code: 'UA', naam: 'Oekraïne' },
+  { code: 'UZ', naam: 'Oezbekistan' },
+  { code: 'PK', naam: 'Pakistan' },
+  { code: 'PS', naam: 'Palestina' },
+  { code: 'PL', naam: 'Polen' },
+  { code: 'PT', naam: 'Portugal' },
+  { code: 'RO', naam: 'Roemenië' },
+  { code: 'RU', naam: 'Rusland' },
+  { code: 'RS', naam: 'Servië' },
+  { code: 'SO', naam: 'Somalië' },
+  { code: 'SD', naam: 'Soedan' },
+  { code: 'ES', naam: 'Spanje' },
+  { code: 'SY', naam: 'Syrië' },
+  { code: 'TJ', naam: 'Tadzjikistan' },
+  { code: 'TN', naam: 'Tunesië' },
+  { code: 'TM', naam: 'Turkmenistan' },
+  { code: 'TR', naam: 'Türkiye' },
+  { code: 'GB', naam: 'Verenigd Koninkrijk' },
+  { code: 'US', naam: 'Verenigde Staten' },
+  { code: 'BY', naam: 'Wit-Rusland' },
+];
+
+export const LANDEN = [
+  ...BASIS.sort((a, b) => a.naam.localeCompare(b.naam, 'nl')),
+  { code: 'OTHER', naam: 'Anders' },
+];
+
+export default LANDEN;

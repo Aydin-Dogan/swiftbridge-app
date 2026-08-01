@@ -1368,4 +1368,10 @@ export const en = {
  service_email:'Email',
  service_klacht:'File a complaint',
  service_klacht_sub:'Read how we handle complaints.',
+
+ // ── KYC document types, bank layout (worldwide, 1-8-2026) ────────────────
+ kyc_doc_paspoort_eu:'European passport',
+ kyc_doc_paspoort_eu_sub:'Passport from an EU/EEA country (front only)',
+ kyc_doc_paspoort_niet_eu:'Non-European passport',
+ kyc_doc_paspoort_niet_eu_sub:'Passport from any other country in the world (front only)',
 };
