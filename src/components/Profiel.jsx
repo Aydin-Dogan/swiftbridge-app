@@ -9,6 +9,7 @@ import { parseError } from '../services/api';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
+import PasskeyInstellingen from './PasskeyInstellingen';
 import PinInstellingen from './pin/PinInstellingen'; // PIN-1
 import LoginHistory from './LoginHistory';
 import TourOverlay, { resetTour } from './onboarding/TourOverlay';
@@ -501,6 +502,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         twofaIngeschakeld={!!profiel?.twofaIngeschakeld}
         onChange={(nieuweStatus) => setProfiel(p => ({ ...p, twofaIngeschakeld: nieuweStatus }))}
       />
+
+      {/* BIO-1: passkeys — biometrisch inloggen */}
+      <PasskeyInstellingen />
 
       {/* Notificatie voorkeuren (Verbetering GGG) — email/push/whatsapp toggles */}
       <NotificatieVoorkeuren

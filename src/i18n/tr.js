@@ -1423,4 +1423,18 @@ export const tr = {
  gepland_eenmalig:'Tek seferlik',
  gepland_annuleer:'İptal et',
  gepland_uitvoerdatum:'İşlem tarihi',
+ // BIO-1: passkeys (biometrisch inloggen)
+ passkey_titel:'Parmak izi veya yüz tanıma',
+ passkey_uitleg:'Parmak iziniz, yüzünüz veya cihaz PIN kodunuzla giriş yapın — şifre veya kod gerekmez',
+ passkey_badge_aan:'{aantal} aktif',
+ passkey_badge_uit:'Ayarlanmadı',
+ passkey_niet_ondersteund:'Bu cihaz veya bağlantı geçiş anahtarlarını desteklemiyor. Uygulamayı https üzerinden veya telefonunuzda kullanın.',
+ passkey_naam_onbekend:'Bilinmeyen cihaz',
+ passkey_sinds:'Eklenme tarihi',
+ passkey_laatst:'Son kullanım',
+ passkey_verwijder:'Geçiş anahtarını kaldır',
+ passkey_verwijder_ja:'Kaldır',
+ passkey_toegevoegd:'Geçiş anahtarı eklendi — artık parmak izi veya yüz tanıma ile giriş yapabilirsiniz',
+ passkey_toevoegen:'Geçiş anahtarı ekle',
+ passkey_fout:'Bu işlem başarısız oldu. Lütfen tekrar deneyin.',
 };

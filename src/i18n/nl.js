@@ -1425,4 +1425,18 @@ export const nl = {
  gepland_eenmalig:'Eenmalig',
  gepland_annuleer:'Annuleren',
  gepland_uitvoerdatum:'Uitvoerdatum',
+ // BIO-1: passkeys (biometrisch inloggen)
+ passkey_titel:'Vingerafdruk of gezichtsherkenning',
+ passkey_uitleg:'Log in met je vingerafdruk, gezicht of toestel-PIN — zonder wachtwoord of code',
+ passkey_badge_aan:'{aantal} actief',
+ passkey_badge_uit:'Niet ingesteld',
+ passkey_niet_ondersteund:'Dit toestel of deze verbinding ondersteunt geen passkeys. Gebruik de app via https of op je telefoon.',
+ passkey_naam_onbekend:'Onbekend apparaat',
+ passkey_sinds:'Toegevoegd op',
+ passkey_laatst:'Laatst gebruikt',
+ passkey_verwijder:'Passkey verwijderen',
+ passkey_verwijder_ja:'Verwijderen',
+ passkey_toegevoegd:'Passkey toegevoegd — je kunt nu inloggen met vingerafdruk of gezichtsherkenning',
+ passkey_toevoegen:'Passkey toevoegen',
+ passkey_fout:'Dat is niet gelukt. Probeer het opnieuw.',
 };

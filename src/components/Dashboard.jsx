@@ -17,6 +17,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import NotificatieInstellingen from './NotificatieInstellingen';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
+import PasskeyInstellingen from './PasskeyInstellingen';
 import FeestKalender from './FeestKalender';
 import { useTaal } from '../i18n';
 
@@ -431,6 +432,7 @@ export default function Dashboard({ gebruiker }) {
               <Lock className="w-4 h-4" aria-hidden="true" /> Beveiliging
             </h3>
             <TweeFactorInstellingen token="cookie" twofaIngeschakeld={!!gebruiker?.twofaIngeschakeld} />
+            <PasskeyInstellingen />
           </div>
           {kycGoedgekeurd && <NotificatieInstellingen token="cookie" />}
 

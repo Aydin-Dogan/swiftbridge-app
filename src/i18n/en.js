@@ -1423,4 +1423,18 @@ export const en = {
  gepland_eenmalig:'One-off',
  gepland_annuleer:'Cancel',
  gepland_uitvoerdatum:'Execution date',
+ // BIO-1: passkeys (biometrisch inloggen)
+ passkey_titel:'Fingerprint or face recognition',
+ passkey_uitleg:'Sign in with your fingerprint, face or device PIN — no password or code needed',
+ passkey_badge_aan:'{aantal} active',
+ passkey_badge_uit:'Not set up',
+ passkey_niet_ondersteund:'This device or connection does not support passkeys. Use the app via https or on your phone.',
+ passkey_naam_onbekend:'Unknown device',
+ passkey_sinds:'Added on',
+ passkey_laatst:'Last used',
+ passkey_verwijder:'Remove passkey',
+ passkey_verwijder_ja:'Remove',
+ passkey_toegevoegd:'Passkey added — you can now sign in with fingerprint or face recognition',
+ passkey_toevoegen:'Add passkey',
+ passkey_fout:'That did not work. Please try again.',
 };

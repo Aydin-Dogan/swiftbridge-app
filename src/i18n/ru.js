@@ -1415,4 +1415,18 @@ export const ru = {
  gepland_eenmalig:'Однократно',
  gepland_annuleer:'Отменить',
  gepland_uitvoerdatum:'Дата исполнения',
+ // BIO-1: passkeys (biometrisch inloggen)
+ passkey_titel:'Отпечаток пальца или распознавание лица',
+ passkey_uitleg:'Входите по отпечатку пальца, лицу или PIN-коду устройства — без пароля и кода',
+ passkey_badge_aan:'{aantal} активно',
+ passkey_badge_uit:'Не настроено',
+ passkey_niet_ondersteund:'Это устройство или соединение не поддерживает ключи доступа. Используйте приложение через https или на телефоне.',
+ passkey_naam_onbekend:'Неизвестное устройство',
+ passkey_sinds:'Добавлен',
+ passkey_laatst:'Последнее использование',
+ passkey_verwijder:'Удалить ключ доступа',
+ passkey_verwijder_ja:'Удалить',
+ passkey_toegevoegd:'Ключ доступа добавлен — теперь можно входить по отпечатку пальца или лицу',
+ passkey_toevoegen:'Добавить ключ доступа',
+ passkey_fout:'Не получилось. Попробуйте ещё раз.',
 };

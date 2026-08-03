@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { apiFetch, haalProfiel } from '../services/api';
-import { Zap } from '../components/icons/Icons';
+import { Zap, Fingerprint } from '../components/icons/Icons';
+// BIO-1: biometrisch inloggen met een passkey (Windows Hello/Face ID/vingerafdruk)
+import { passkeySupport, passkeyLogin, isGeannuleerd } from '../services/passkey';
 
 /**
  * ING-stijl device-login. Twee modi:
@@ -94,6 +96,23 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
     } finally { setLaden(false); }
   }
 
+  // BIO-1: inloggen met passkey (biometrie) i.p.v. de toegangscode.
+  async function biometrischInloggen() {
+    if (laden) return;
+    setLaden(true); setFout('');
+    try {
+      await passkeyLogin();
+      const profiel = await haalProfiel();
+      onGelukt?.(profiel);
+    } catch (e) {
+      if (e.errorCode === 'PASSKEY_ONBEKEND') {
+        setFout('Geen passkey gevonden voor dit account — log in met je toegangscode en voeg er een toe via Beveiliging.');
+      } else if (!isGeannuleerd(e)) {
+        setFout(e.message || 'Inloggen met vingerafdruk of gezichtsherkenning is niet gelukt.');
+      }
+    } finally { setLaden(false); }
+  }
+
   async function koppel() {
     if (stap === 'code') {
       if (code.length !== CODE_LENGTE) return setFout(`Kies een ${CODE_LENGTE}-cijferige code.`);
@@ -154,6 +173,13 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
                 className="btn-inst w-full py-3.5 disabled:opacity-50">
                 {laden ? 'Inloggen…' : 'Inloggen'}
               </button>
+              {passkeySupport() && (
+                <button onClick={biometrischInloggen} disabled={laden}
+                  className="w-full py-3 rounded-[3px] border border-brand-300 text-brand-700 text-sm font-medium hover:bg-brand-50 transition inline-flex items-center justify-center gap-2 disabled:opacity-50">
+                  <Fingerprint className="w-4 h-4" aria-hidden="true" />
+                  Inloggen met vingerafdruk of gezichtsherkenning
+                </button>
+              )}
               <button onClick={onAnderAccount} className="text-sm text-brand-600 hover:underline">
                 Met e-mail en wachtwoord inloggen
               </button>

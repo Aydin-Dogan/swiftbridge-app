@@ -87,6 +87,16 @@ export const Lock = (p) => (
   </Icon>
 );
 
+export const Fingerprint = (p) => (
+  <Icon {...p}>
+    <path d="M12 11a2 2 0 0 1 2 2c0 2.5-.5 5-1.5 7.5" />
+    <path d="M8.65 20.2A18 18 0 0 0 10 13a2 2 0 0 1 .59-1.42" />
+    <path d="M6 13a6 6 0 0 1 12 0c0 1.5-.14 3-.4 4.4" />
+    <path d="M4.6 9A8 8 0 0 1 20 13" />
+    <path d="M7.1 5.6A8 8 0 0 1 12 4a8 8 0 0 1 4.9 1.6" />
+  </Icon>
+);
+
 export const Zap = (p) => (
   <Icon {...p}>
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />

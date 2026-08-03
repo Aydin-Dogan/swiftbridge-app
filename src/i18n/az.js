@@ -1415,4 +1415,18 @@ export const az = {
  gepland_eenmalig:'Birdəfəlik',
  gepland_annuleer:'Ləğv et',
  gepland_uitvoerdatum:'İcra tarixi',
+ // BIO-1: passkeys (biometrisch inloggen)
+ passkey_titel:'Barmaq izi və ya üz tanıma',
+ passkey_uitleg:'Barmaq iziniz, üzünüz və ya cihaz PIN kodu ilə daxil olun — şifrə və ya kod lazım deyil',
+ passkey_badge_aan:'{aantal} aktiv',
+ passkey_badge_uit:'Qurulmayıb',
+ passkey_niet_ondersteund:'Bu cihaz və ya bağlantı keçid açarlarını dəstəkləmir. Tətbiqi https ilə və ya telefonunuzda istifadə edin.',
+ passkey_naam_onbekend:'Naməlum cihaz',
+ passkey_sinds:'Əlavə edilib',
+ passkey_laatst:'Son istifadə',
+ passkey_verwijder:'Keçid açarını sil',
+ passkey_verwijder_ja:'Sil',
+ passkey_toegevoegd:'Keçid açarı əlavə edildi — artıq barmaq izi və ya üz tanıma ilə daxil ola bilərsiniz',
+ passkey_toevoegen:'Keçid açarı əlavə et',
+ passkey_fout:'Alınmadı. Yenidən cəhd edin.',
 };
