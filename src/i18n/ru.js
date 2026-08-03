@@ -1429,4 +1429,14 @@ export const ru = {
  passkey_toegevoegd:'Ключ доступа добавлен — теперь можно входить по отпечатку пальца или лицу',
  passkey_toevoegen:'Добавить ключ доступа',
  passkey_fout:'Не получилось. Попробуйте ещё раз.',
+ // BULK-1: bulkbetalingen in de verzendlijst
+ bulk_selecteer_alles:'Выбрать все',
+ bulk_selecteer:'Выбрать',
+ bulk_geselecteerd:'Выбрано: {n}',
+ bulk_verstuur:'Отправить ({n})',
+ bulk_bevestig_titel:'Вы уверены?',
+ bulk_bevestig_tekst:'Вы отправляете {n} поручений на общую сумму {bedrag}. Каждый получатель сначала проверяется.',
+ bulk_ok:'Отправлено {gelukt} из {totaal} поручений.',
+ bulk_deels:'{mislukt} поручений не удалось отправить — они остались в списке.',
+ bulk_fout:'Отправка не удалась. Попробуйте ещё раз.',
 };

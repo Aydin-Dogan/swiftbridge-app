@@ -1429,4 +1429,14 @@ export const az = {
  passkey_toegevoegd:'Keçid açarı əlavə edildi — artıq barmaq izi və ya üz tanıma ilə daxil ola bilərsiniz',
  passkey_toevoegen:'Keçid açarı əlavə et',
  passkey_fout:'Alınmadı. Yenidən cəhd edin.',
+ // BULK-1: bulkbetalingen in de verzendlijst
+ bulk_selecteer_alles:'Hamısını seç',
+ bulk_selecteer:'Seç',
+ bulk_geselecteerd:'{n} seçildi',
+ bulk_verstuur:'Göndər ({n})',
+ bulk_bevestig_titel:'Əminsiniz?',
+ bulk_bevestig_tekst:'Ümumi {bedrag} məbləğində {n} tapşırıq göndərirsiniz. Hər alıcı əvvəlcə yoxlanılır.',
+ bulk_ok:'{totaal} tapşırıqdan {gelukt} göndərildi.',
+ bulk_deels:'{mislukt} tapşırıq göndərilə bilmədi və siyahıda qaldı.',
+ bulk_fout:'Göndərmək alınmadı. Yenidən cəhd edin.',
 };

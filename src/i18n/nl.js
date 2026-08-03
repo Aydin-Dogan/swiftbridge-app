@@ -1439,4 +1439,14 @@ export const nl = {
  passkey_toegevoegd:'Passkey toegevoegd — je kunt nu inloggen met vingerafdruk of gezichtsherkenning',
  passkey_toevoegen:'Passkey toevoegen',
  passkey_fout:'Dat is niet gelukt. Probeer het opnieuw.',
+ // BULK-1: bulkbetalingen in de verzendlijst
+ bulk_selecteer_alles:'Alles selecteren',
+ bulk_selecteer:'Selecteer',
+ bulk_geselecteerd:'{n} geselecteerd',
+ bulk_verstuur:'Verstuur ({n})',
+ bulk_bevestig_titel:'Weet je het zeker?',
+ bulk_bevestig_tekst:'Je verstuurt {n} opdracht(en) met een totaal van {bedrag}. Elke ontvanger wordt eerst gescreend.',
+ bulk_ok:'{gelukt} van {totaal} opdrachten verstuurd.',
+ bulk_deels:'{mislukt} opdracht(en) konden niet worden verstuurd en blijven in de lijst staan.',
+ bulk_fout:'Versturen is niet gelukt. Probeer het opnieuw.',
 };

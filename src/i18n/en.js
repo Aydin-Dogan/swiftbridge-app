@@ -1437,4 +1437,14 @@ export const en = {
  passkey_toegevoegd:'Passkey added — you can now sign in with fingerprint or face recognition',
  passkey_toevoegen:'Add passkey',
  passkey_fout:'That did not work. Please try again.',
+ // BULK-1: bulkbetalingen in de verzendlijst
+ bulk_selecteer_alles:'Select all',
+ bulk_selecteer:'Select',
+ bulk_geselecteerd:'{n} selected',
+ bulk_verstuur:'Send ({n})',
+ bulk_bevestig_titel:'Are you sure?',
+ bulk_bevestig_tekst:'You are sending {n} order(s) with a total of {bedrag}. Every recipient is screened first.',
+ bulk_ok:'{gelukt} of {totaal} orders sent.',
+ bulk_deels:'{mislukt} order(s) could not be sent and remain in the list.',
+ bulk_fout:'Sending failed. Please try again.',
 };

@@ -1437,4 +1437,14 @@ export const tr = {
  passkey_toegevoegd:'Geçiş anahtarı eklendi — artık parmak izi veya yüz tanıma ile giriş yapabilirsiniz',
  passkey_toevoegen:'Geçiş anahtarı ekle',
  passkey_fout:'Bu işlem başarısız oldu. Lütfen tekrar deneyin.',
+ // BULK-1: bulkbetalingen in de verzendlijst
+ bulk_selecteer_alles:'Tümünü seç',
+ bulk_selecteer:'Seç',
+ bulk_geselecteerd:'{n} seçildi',
+ bulk_verstuur:'Gönder ({n})',
+ bulk_bevestig_titel:'Emin misiniz?',
+ bulk_bevestig_tekst:'Toplam {bedrag} tutarında {n} talimat gönderiyorsunuz. Her alıcı önce taranır.',
+ bulk_ok:'{totaal} talimattan {gelukt} tanesi gönderildi.',
+ bulk_deels:'{mislukt} talimat gönderilemedi ve listede kaldı.',
+ bulk_fout:'Gönderilemedi. Lütfen tekrar deneyin.',
 };

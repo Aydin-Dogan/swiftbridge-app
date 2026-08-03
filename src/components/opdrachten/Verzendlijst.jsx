@@ -5,11 +5,13 @@
  * opdrachten. Verzamelbetalingen/incassobatches volgen in een latere
  * ronde samen met de backend (bouwbrief §2) — geen nep-knoppen.
  */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../../i18n';
 import { apiFetch } from '../../services/api';
 import { Send, Calendar, Info } from '../icons/Icons';
+// BULK-1: één PIN-bevestiging (SCA) voor de hele batch, zelfde scherm als PaymentFlow
+import AppLockScherm from '../pin/AppLockScherm';
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
@@ -30,29 +32,94 @@ export default function Verzendlijst() {
   const [concept] = useState(laadConcept);
   const [gepland, setGepland] = useState(null);
   const [filter, setFilter] = useState('alles');
+  // BULK-1: selectie van eenmalige opdrachten voor "Verstuur (N)"
+  const [selectie, setSelectie] = useState(() => new Set());
+  const [bulkStap, setBulkStap] = useState(null); // null | 'bevestig' | 'pin' | 'bezig'
+  const [bulkToken, setBulkToken] = useState(null);
+  const [bulkMelding, setBulkMelding] = useState(null); // { soort: 'ok'|'deels'|'fout', tekst }
 
-  useEffect(() => {
-    let weg = false;
+  const laadGepland = useCallback(() => {
     // Gepland = actieve herhaalopdrachten + eenmalig geplande opdrachten (OVZ-4)
-    Promise.allSettled([
+    return Promise.allSettled([
       apiFetch('/recurring').catch(() => ({ recurring: [] })),
       apiFetch('/opdrachten').catch(() => ({ opdrachten: [] })),
     ]).then(([recRes, opdRes]) => {
-      if (weg) return;
       const rec = (recRes.value?.recurring || []).filter(g => g.actief).map(g => ({
-        key: `rec-${g.id}`, soort: 'recurring',
+        key: `rec-${g.id}`, soort: 'recurring', id: g.id,
         naam: g.ontvangerNaam || g.naam, datum: (g.volgendeUitvoering || '').slice(0, 10),
         bedragEur: g.bedragEur,
       }));
       const opd = (opdRes.value?.opdrachten || []).filter(o => o.status === 'gepland').map(o => ({
-        key: `opd-${o.id}`, soort: 'eenmalig',
+        key: `opd-${o.id}`, soort: 'eenmalig', id: o.id,
         naam: o.ontvangerNaam, datum: (o.uitvoerenOp || '').slice(0, 10),
         bedragEur: o.bedragEur,
       }));
       setGepland([...rec, ...opd].sort((a, b) => a.datum.localeCompare(b.datum)));
     });
-    return () => { weg = true; };
   }, []);
+
+  useEffect(() => {
+    let weg = false;
+    laadGepland().then(() => { if (weg) return; });
+    return () => { weg = true; };
+  }, [laadGepland]);
+
+  const eenmalig = (gepland || []).filter(g => g.soort === 'eenmalig');
+  const geselecteerd = eenmalig.filter(g => selectie.has(g.id));
+  const selectieTotaal = geselecteerd.reduce((som, g) => som + (Number(g.bedragEur) || 0), 0);
+
+  function wisselSelectie(id) {
+    setSelectie(prev => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id); else n.add(id);
+      return n;
+    });
+  }
+
+  function selecteerAlles() {
+    setSelectie(prev => (prev.size === eenmalig.length
+      ? new Set()
+      : new Set(eenmalig.map(g => g.id))));
+  }
+
+  async function verstuurBulk(token) {
+    setBulkStap('bezig');
+    setBulkMelding(null);
+    try {
+      const res = await apiFetch('/opdrachten/verstuur-bulk', {
+        method: 'POST',
+        body: { ids: [...selectie], ...(token ? { txConfirmToken: token } : {}) },
+      });
+      if (res.mislukt === 0) {
+        setBulkMelding({ soort: 'ok', tekst: t('bulk_ok', { gelukt: res.gelukt, totaal: res.totaal }) });
+      } else {
+        setBulkMelding({ soort: 'deels', tekst: `${t('bulk_ok', { gelukt: res.gelukt, totaal: res.totaal })} ${t('bulk_deels', { mislukt: res.mislukt })}` });
+      }
+      setSelectie(new Set());
+      await laadGepland();
+    } catch (err) {
+      if (err.errorCode === 'PIN_CONFIRMATION_REQUIRED') {
+        setBulkStap('pin');
+        return;
+      }
+      setBulkMelding({ soort: 'fout', tekst: t('bulk_fout') });
+    } finally {
+      setBulkToken(null);
+      setBulkStap(prev => (prev === 'pin' ? 'pin' : null));
+    }
+  }
+
+  async function startBulk() {
+    // PIN aan? Dan eerst de tx-confirm-ceremony, anders direct versturen.
+    setBulkStap('bezig');
+    let pinAan = false;
+    try {
+      const s = await apiFetch('/auth/pin/status');
+      pinAan = !!s?.ingeschakeld;
+    } catch { /* status onbekend — backend dwingt zonodig alsnog af */ }
+    if (pinAan) setBulkStap('pin');
+    else await verstuurBulk(null);
+  }
 
   const aantalConcept = concept ? 1 : 0;
   const aantalGepland = gepland?.length || 0;
@@ -126,26 +193,66 @@ export default function Verzendlijst() {
             </p>
           )}
           {gepland && gepland.length > 0 && (
-            <ul className="divide-y divide-border-subtle">
-              {gepland.map(g => (
-                <li key={g.key} className="px-4 py-3 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                      <Calendar className="w-4 h-4 text-brand-600" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className="font-semibold text-ink-1 text-sm truncate">{g.naam}</div>
-                      <div className="text-[11px] text-ink-3 mt-0.5">
-                        {g.soort === 'eenmalig'
-                          ? `${t('gepland_uitvoerdatum')}: ${g.datum} · ${t('gepland_eenmalig')}`
-                          : `${t('gepland_volgende')}: ${g.datum}`}
+            <>
+              {eenmalig.length > 0 && (
+                <div className="px-4 py-2 border-b border-border-subtle flex items-center gap-2">
+                  <input id="bulk-alles" type="checkbox"
+                    checked={selectie.size > 0 && selectie.size === eenmalig.length}
+                    onChange={selecteerAlles}
+                    className="w-4 h-4 rounded border-border text-brand-600 focus:ring-brand-300" />
+                  <label htmlFor="bulk-alles" className="text-xs font-medium text-ink-2 cursor-pointer select-none">
+                    {t('bulk_selecteer_alles')}
+                  </label>
+                </div>
+              )}
+              <ul className="divide-y divide-border-subtle">
+                {gepland.map(g => (
+                  <li key={g.key} className="px-4 py-3 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      {g.soort === 'eenmalig' ? (
+                        <input type="checkbox" checked={selectie.has(g.id)} onChange={() => wisselSelectie(g.id)}
+                          aria-label={`${t('bulk_selecteer')} ${g.naam}`}
+                          className="w-4 h-4 rounded border-border text-brand-600 focus:ring-brand-300 flex-shrink-0" />
+                      ) : (
+                        <span className="w-4 flex-shrink-0" aria-hidden="true" />
+                      )}
+                      <span className="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                        <Calendar className="w-4 h-4 text-brand-600" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-ink-1 text-sm truncate">{g.naam}</div>
+                        <div className="text-[11px] text-ink-3 mt-0.5">
+                          {g.soort === 'eenmalig'
+                            ? `${t('gepland_uitvoerdatum')}: ${g.datum} · ${t('gepland_eenmalig')}`
+                            : `${t('gepland_volgende')}: ${g.datum}`}
+                        </div>
                       </div>
                     </div>
+                    <div className="font-display font-medium text-sm tabular-nums text-ink-1 flex-shrink-0">{fmtEur(g.bedragEur)}</div>
+                  </li>
+                ))}
+              </ul>
+              {selectie.size > 0 && (
+                <div className="border-t border-border px-4 py-3 flex items-center justify-between gap-3 bg-brand-50">
+                  <div className="text-sm text-ink-1">
+                    <span className="font-semibold">{t('bulk_geselecteerd', { n: selectie.size })}</span>
+                    <span className="text-ink-2"> · {fmtEur(selectieTotaal)}</span>
                   </div>
-                  <div className="font-display font-medium text-sm tabular-nums text-ink-1 flex-shrink-0">{fmtEur(g.bedragEur)}</div>
-                </li>
-              ))}
-            </ul>
+                  <button onClick={() => setBulkStap('bevestig')} disabled={bulkStap === 'bezig'}
+                    className="btn-inst px-5 py-2.5 disabled:opacity-50">
+                    {t('bulk_verstuur', { n: selectie.size })}
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+          {bulkMelding && (
+            <p role={bulkMelding.soort === 'fout' ? 'alert' : 'status'}
+              className={`px-4 py-3 text-sm border-t border-border-subtle
+                ${bulkMelding.soort === 'ok' ? 'text-success-700 bg-success-50'
+                  : bulkMelding.soort === 'deels' ? 'text-amber-700 bg-amber-50' : 'text-fg-error bg-red-50'}`}>
+              {bulkMelding.tekst}
+            </p>
           )}
           {gepland && gepland.length > 0 && (
             <div className="border-t border-border-subtle px-4 py-3">
@@ -156,6 +263,37 @@ export default function Verzendlijst() {
             </div>
           )}
         </section>
+      )}
+
+      {/* BULK-1: "Weet je het zeker?"-bevestiging vóór het versturen */}
+      {bulkStap === 'bevestig' && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-4"
+          role="dialog" aria-modal="true" aria-label={t('bulk_bevestig_titel')}
+          onClick={() => setBulkStap(null)}>
+          <div className="bg-surface rounded-md shadow-soft-xl border border-border w-full max-w-sm p-6 space-y-4 animate-fade-up"
+            onClick={e => e.stopPropagation()}>
+            <h2 className="font-display font-medium text-lg text-brand-700">{t('bulk_bevestig_titel')}</h2>
+            <p className="text-sm text-ink-2">{t('bulk_bevestig_tekst', { n: selectie.size, bedrag: fmtEur(selectieTotaal) })}</p>
+            <div className="flex gap-2">
+              <button onClick={startBulk} className="btn-inst px-5 py-2.5">
+                {t('bulk_verstuur', { n: selectie.size })}
+              </button>
+              <button onClick={() => setBulkStap(null)}
+                className="px-5 py-2.5 rounded-[3px] border border-border text-ink-2 text-sm font-medium hover:bg-surface-2 transition">
+                {t('annuleren')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BULK-1: één PIN-bevestiging (SCA) voor de hele batch */}
+      {bulkStap === 'pin' && (
+        <AppLockScherm
+          doel="tx_confirm"
+          onSucces={(token) => { setBulkToken(token); verstuurBulk(token); }}
+          onAnnuleer={() => setBulkStap(null)}
+        />
       )}
     </div>
   );
