@@ -1439,4 +1439,9 @@ export const az = {
  bulk_ok:'{totaal} tapşırıqdan {gelukt} göndərildi.',
  bulk_deels:'{mislukt} tapşırıq göndərilə bilmədi və siyahıda qaldı.',
  bulk_fout:'Göndərmək alınmadı. Yenidən cəhd edin.',
+ // OVZ-4b: geplande opdracht bewerken
+ opdracht_bewerken:'Dəyişdir',
+ opdracht_bewerk_titel:'Planlaşdırılmış tapşırığı dəyişdir',
+ opdracht_bewerk_opgeslagen:'Dəyişikliklər yadda saxlanıldı.',
+ opdracht_bewerk_fout:'Yadda saxlamaq alınmadı. Sahələri yoxlayıb yenidən cəhd edin.',
 };

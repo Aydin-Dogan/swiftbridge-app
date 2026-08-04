@@ -1449,4 +1449,9 @@ export const nl = {
  bulk_ok:'{gelukt} van {totaal} opdrachten verstuurd.',
  bulk_deels:'{mislukt} opdracht(en) konden niet worden verstuurd en blijven in de lijst staan.',
  bulk_fout:'Versturen is niet gelukt. Probeer het opnieuw.',
+ // OVZ-4b: geplande opdracht bewerken
+ opdracht_bewerken:'Bewerken',
+ opdracht_bewerk_titel:'Geplande opdracht bewerken',
+ opdracht_bewerk_opgeslagen:'Wijzigingen opgeslagen.',
+ opdracht_bewerk_fout:'Opslaan is niet gelukt. Controleer de velden en probeer het opnieuw.',
 };

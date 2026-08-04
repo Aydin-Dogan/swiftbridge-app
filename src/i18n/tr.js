@@ -1447,4 +1447,9 @@ export const tr = {
  bulk_ok:'{totaal} talimattan {gelukt} tanesi gönderildi.',
  bulk_deels:'{mislukt} talimat gönderilemedi ve listede kaldı.',
  bulk_fout:'Gönderilemedi. Lütfen tekrar deneyin.',
+ // OVZ-4b: geplande opdracht bewerken
+ opdracht_bewerken:'Düzenle',
+ opdracht_bewerk_titel:'Planlanan talimatı düzenle',
+ opdracht_bewerk_opgeslagen:'Değişiklikler kaydedildi.',
+ opdracht_bewerk_fout:'Kaydedilemedi. Alanları kontrol edip tekrar deneyin.',
 };

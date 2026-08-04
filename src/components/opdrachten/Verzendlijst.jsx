@@ -37,6 +37,10 @@ export default function Verzendlijst() {
   const [bulkStap, setBulkStap] = useState(null); // null | 'bevestig' | 'pin' | 'bezig'
   const [bulkToken, setBulkToken] = useState(null);
   const [bulkMelding, setBulkMelding] = useState(null); // { soort: 'ok'|'deels'|'fout', tekst }
+  // OVZ-4b: bewerken van een geplande opdracht (bedrag/datum/kenmerk/omschrijving)
+  const [bewerk, setBewerk] = useState(null); // null | { id, naam, bedrag, datum, kenmerk, omschrijving }
+  const [bewerkBezig, setBewerkBezig] = useState(false);
+  const [bewerkFout, setBewerkFout] = useState(null);
 
   const laadGepland = useCallback(() => {
     // Gepland = actieve herhaalopdrachten + eenmalig geplande opdrachten (OVZ-4)
@@ -53,6 +57,8 @@ export default function Verzendlijst() {
         key: `opd-${o.id}`, soort: 'eenmalig', id: o.id,
         naam: o.ontvangerNaam, datum: (o.uitvoerenOp || '').slice(0, 10),
         bedragEur: o.bedragEur,
+        // OVZ-4b: nodig om de bewerk-modal voor te vullen
+        omschrijving: o.omschrijving || '', betalingskenmerk: o.betalingskenmerk || '',
       }));
       setGepland([...rec, ...opd].sort((a, b) => a.datum.localeCompare(b.datum)));
     });
@@ -106,6 +112,42 @@ export default function Verzendlijst() {
     } finally {
       setBulkToken(null);
       setBulkStap(prev => (prev === 'pin' ? 'pin' : null));
+    }
+  }
+
+  function openBewerk(g) {
+    setBewerkFout(null);
+    setBewerk({
+      id: g.id, naam: g.naam,
+      bedrag: String(g.bedragEur ?? ''),
+      datum: g.datum, origDatum: g.datum,
+      kenmerk: g.betalingskenmerk || '',
+      omschrijving: g.omschrijving || '',
+    });
+  }
+
+  async function slaBewerkOp() {
+    if (!bewerk) return;
+    setBewerkBezig(true);
+    setBewerkFout(null);
+    try {
+      // uitvoerenOp alleen meesturen als de datum echt gewijzigd is: de backend
+      // weigert elke niet-toekomstige datum, en een rij met een verstreken
+      // uitvoerdatum (transiënte fout) zou anders nooit meer bewerkbaar zijn.
+      const body = {
+        bedragEur: Number(bewerk.bedrag),
+        betalingskenmerk: bewerk.kenmerk.trim() || null,
+        omschrijving: bewerk.omschrijving.trim() || null,
+      };
+      if (bewerk.datum !== bewerk.origDatum) body.uitvoerenOp = bewerk.datum;
+      await apiFetch(`/opdrachten/${bewerk.id}`, { method: 'PATCH', body });
+      setBewerk(null);
+      setBulkMelding({ soort: 'ok', tekst: t('opdracht_bewerk_opgeslagen') });
+      await laadGepland();
+    } catch (err) {
+      setBewerkFout(typeof err?.error === 'string' ? err.error : t('opdracht_bewerk_fout'));
+    } finally {
+      setBewerkBezig(false);
     }
   }
 
@@ -228,7 +270,16 @@ export default function Verzendlijst() {
                         </div>
                       </div>
                     </div>
-                    <div className="font-display font-medium text-sm tabular-nums text-ink-1 flex-shrink-0">{fmtEur(g.bedragEur)}</div>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="font-display font-medium text-sm tabular-nums text-ink-1">{fmtEur(g.bedragEur)}</div>
+                      {g.soort === 'eenmalig' && (
+                        <button onClick={() => openBewerk(g)}
+                          className="text-xs text-brand-700 font-semibold hover:underline underline-offset-4"
+                          aria-label={`${t('opdracht_bewerken')} ${g.naam}`}>
+                          {t('opdracht_bewerken')}
+                        </button>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -279,6 +330,57 @@ export default function Verzendlijst() {
                 {t('bulk_verstuur', { n: selectie.size })}
               </button>
               <button onClick={() => setBulkStap(null)}
+                className="px-5 py-2.5 rounded-[3px] border border-border text-ink-2 text-sm font-medium hover:bg-surface-2 transition">
+                {t('annuleren')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* OVZ-4b: geplande opdracht bewerken */}
+      {bewerk && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-4"
+          role="dialog" aria-modal="true" aria-label={t('opdracht_bewerk_titel')}
+          onClick={() => { if (!bewerkBezig) setBewerk(null); }}>
+          <div className="bg-surface rounded-md shadow-soft-xl border border-border w-full max-w-sm p-6 space-y-4 animate-fade-up"
+            onClick={e => e.stopPropagation()}>
+            <div>
+              <h2 className="font-display font-medium text-lg text-brand-700">{t('opdracht_bewerk_titel')}</h2>
+              <p className="text-sm text-ink-2 mt-0.5 truncate">{bewerk.naam}</p>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <label htmlFor="bewerk-bedrag" className="block text-xs font-medium text-ink-2 mb-1">{t('ovs_bedrag')}</label>
+                <input id="bewerk-bedrag" type="number" min="50" max="5000" step="0.01" value={bewerk.bedrag}
+                  onChange={e => setBewerk(b => ({ ...b, bedrag: e.target.value }))}
+                  className="w-full rounded-[3px] border border-border bg-surface px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-300" />
+              </div>
+              <div>
+                <label htmlFor="bewerk-datum" className="block text-xs font-medium text-ink-2 mb-1">{t('ovs_uitvoerdatum')}</label>
+                <input id="bewerk-datum" type="date" value={bewerk.datum}
+                  onChange={e => setBewerk(b => ({ ...b, datum: e.target.value }))}
+                  className="w-full rounded-[3px] border border-border bg-surface px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-300" />
+              </div>
+              <div>
+                <label htmlFor="bewerk-kenmerk" className="block text-xs font-medium text-ink-2 mb-1">{t('ovs_kenmerk')}</label>
+                <input id="bewerk-kenmerk" type="text" maxLength={35} value={bewerk.kenmerk}
+                  onChange={e => setBewerk(b => ({ ...b, kenmerk: e.target.value }))}
+                  className="w-full rounded-[3px] border border-border bg-surface px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-300" />
+              </div>
+              <div>
+                <label htmlFor="bewerk-omschrijving" className="block text-xs font-medium text-ink-2 mb-1">{t('ovs_omschrijving')}</label>
+                <input id="bewerk-omschrijving" type="text" maxLength={140} value={bewerk.omschrijving}
+                  onChange={e => setBewerk(b => ({ ...b, omschrijving: e.target.value }))}
+                  className="w-full rounded-[3px] border border-border bg-surface px-3 py-2 text-sm text-ink-1 focus:outline-none focus:ring-2 focus:ring-brand-300" />
+              </div>
+            </div>
+            {bewerkFout && <p role="alert" className="text-sm text-fg-error">{bewerkFout}</p>}
+            <div className="flex gap-2">
+              <button onClick={slaBewerkOp} disabled={bewerkBezig} className="btn-inst px-5 py-2.5 disabled:opacity-50">
+                {t('opslaan')}
+              </button>
+              <button onClick={() => setBewerk(null)} disabled={bewerkBezig}
                 className="px-5 py-2.5 rounded-[3px] border border-border text-ink-2 text-sm font-medium hover:bg-surface-2 transition">
                 {t('annuleren')}
               </button>

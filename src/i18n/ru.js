@@ -1439,4 +1439,9 @@ export const ru = {
  bulk_ok:'Отправлено {gelukt} из {totaal} поручений.',
  bulk_deels:'{mislukt} поручений не удалось отправить — они остались в списке.',
  bulk_fout:'Отправка не удалась. Попробуйте ещё раз.',
+ // OVZ-4b: geplande opdracht bewerken
+ opdracht_bewerken:'Изменить',
+ opdracht_bewerk_titel:'Изменить запланированное поручение',
+ opdracht_bewerk_opgeslagen:'Изменения сохранены.',
+ opdracht_bewerk_fout:'Не удалось сохранить. Проверьте поля и попробуйте ещё раз.',
 };

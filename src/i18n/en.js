@@ -1447,4 +1447,9 @@ export const en = {
  bulk_ok:'{gelukt} of {totaal} orders sent.',
  bulk_deels:'{mislukt} order(s) could not be sent and remain in the list.',
  bulk_fout:'Sending failed. Please try again.',
+ // OVZ-4b: geplande opdracht bewerken
+ opdracht_bewerken:'Edit',
+ opdracht_bewerk_titel:'Edit scheduled order',
+ opdracht_bewerk_opgeslagen:'Changes saved.',
+ opdracht_bewerk_fout:'Saving failed. Check the fields and try again.',
 };
