@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,25 +111,57 @@
   .cta-band a:hover{background:var(--acc-hover)}
   .foot{text-align:center;margin:52px 0 40px;font-size:.78rem;color:var(--txt-m)}
   .foot a{color:var(--txt-m)}
+
+  /* ---- i18n: taalkiezer + RTL (additief, verandert bestaande regels niet) ---- */
+  #lang-switcher{position:relative;flex-shrink:0}
+  #lang-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--txt-b);font-size:.85rem;font-weight:600;font-family:var(--sans);padding:7px 10px;display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap}
+  #lang-btn:hover,#lang-btn:focus-visible{background:var(--bg)}
+  #lang-dropdown{display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(27,50,82,.18);min-width:150px;z-index:200;overflow:hidden}
+  #lang-dropdown.open{display:block}
+  #lang-dropdown button{display:block;width:100%;text-align:left;padding:9px 14px;font-size:.875rem;font-family:var(--sans);color:var(--txt-b);background:none;border:none;cursor:pointer}
+  #lang-dropdown button:hover,#lang-dropdown button:focus-visible{background:var(--bg)}
+  #lang-dropdown button[aria-pressed="true"]{font-weight:700;color:var(--ink)}
+  #lang-announce{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  [dir="rtl"] #lang-dropdown{right:auto;left:0}
+  [dir="rtl"] #lang-dropdown button{text-align:right}
+  [dir="rtl"] .track-head .meta{margin-left:0;margin-right:auto}
+  [dir="rtl"] .lvl-fee,[dir="rtl"] .c-number{direction:ltr}
 </style>
 </head>
 <body>
 
-<nav class="topnav" aria-label="Hoofdnavigatie">
+<div id="lang-announce" aria-live="polite" aria-atomic="true" role="status"></div>
+
+<nav class="topnav" aria-label="Hoofdnavigatie" data-i18n-attr="aria-label:nav_aria">
   <div class="topnav-inner">
-    <a class="logo" href="/" aria-label="SwiftBridge — naar homepage">Swift<span>Bridge</span></a>
+    <a class="logo" href="/" aria-label="SwiftBridge — naar homepage" data-i18n-attr="aria-label:logo_aria">Swift<span>Bridge</span></a>
     <div class="nav-cta">
-      <a class="login" href="/login">Inloggen</a>
-      <a class="btn" href="/login?tab=register">Gratis account openen</a>
+      <div id="lang-switcher" role="navigation" aria-label="Taal kiezen" data-i18n-attr="aria-label:lang_choose">
+        <button id="lang-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-dropdown">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="lang-current-label">Nederlands</span>
+          <span aria-hidden="true">&#9660;</span>
+        </button>
+        <div id="lang-dropdown" role="listbox" aria-label="Taal kiezen" data-i18n-attr="aria-label:lang_choose">
+          <button role="option" data-lang="nl" aria-pressed="true">Nederlands</button>
+          <button role="option" data-lang="en" aria-pressed="false">English</button>
+          <button role="option" data-lang="tr" aria-pressed="false">T&uuml;rk&ccedil;e</button>
+          <button role="option" data-lang="ar" aria-pressed="false">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</button>
+          <button role="option" data-lang="de" aria-pressed="false">Deutsch</button>
+          <button role="option" data-lang="fr" aria-pressed="false">Fran&ccedil;ais</button>
+        </div>
+      </div>
+      <a class="login" href="/login" data-i18n="nav_login">Inloggen</a>
+      <a class="btn" href="/login?tab=register" data-i18n="nav_register">Gratis account openen</a>
     </div>
   </div>
 </nav>
 
 <main>
 <div class="wrap">
-  <span class="eyebrow">SwiftBridge · Lidmaatschap</span>
-  <h1>De Members Card</h1>
-  <p class="sub">Elk lid krijgt een eigen kaart met lidnummer. Uw niveau groeit automatisch mee met
+  <span class="eyebrow" data-i18n="eyebrow">SwiftBridge · Lidmaatschap</span>
+  <h1 data-i18n="page_h1">De Members Card</h1>
+  <p class="sub" data-i18n="page_sub">Elk lid krijgt een eigen kaart met lidnummer. Uw niveau groeit automatisch mee met
   het bedrag dat u de laatste 12 maanden heeft verzonden — hoe meer u verstuurt, hoe beter uw voorwaarden.</p>
 
   <div class="grid">
@@ -137,13 +169,13 @@
       <div class="tier-card-wrap">
         <div class="card t-founder">
           <div class="c-top"><div class="c-logo">Swift<span>Bridge</span></div><div class="chip"></div></div>
-          <div class="c-mid"><span class="c-label">Oprichterslid</span><span class="c-number">N° 001 / 500</span></div>
-          <div class="c-bottom"><span class="c-member">Internationaal</span>
+          <div class="c-mid"><span class="c-label" data-i18n="card_founder_label">Oprichterslid</span><span class="c-number">N° 001 / 500</span></div>
+          <div class="c-bottom"><span class="c-member" data-i18n="card_member_intl">Internationaal</span>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.6" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
         </div>
-        <div class="tier-name">Oprichterslid</div>
-        <p class="tier-desc">De eerste 500 leden. Vaste lage fee voor altijd, voorrang bij nieuwe corridors.</p>
+        <div class="tier-name" data-i18n="tier_founder_name">Oprichterslid</div>
+        <p class="tier-desc" data-i18n="tier_founder_desc">De eerste 500 leden. Vaste lage fee voor altijd, voorrang bij nieuwe corridors.</p>
       </div>
     </div>
 
@@ -151,13 +183,13 @@
       <div class="tier-card-wrap">
         <div class="card t-premium">
           <div class="c-top"><div class="c-logo">Swift<span>Bridge</span></div><div class="chip"></div></div>
-          <div class="c-mid"><span class="c-label">Premium</span><span class="c-number">N° 1042</span></div>
-          <div class="c-bottom"><span class="c-member">Internationaal</span>
+          <div class="c-mid"><span class="c-label" data-i18n="card_premium_label">Premium</span><span class="c-number">N° 1042</span></div>
+          <div class="c-bottom"><span class="c-member" data-i18n="card_member_intl">Internationaal</span>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.6" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
         </div>
-        <div class="tier-name">Premium</div>
-        <p class="tier-desc">Lagere fee per overboeking, hogere limieten en snellere uitbetaling.</p>
+        <div class="tier-name" data-i18n="tier_premium_name">Premium</div>
+        <p class="tier-desc" data-i18n="tier_premium_desc">Lagere fee per overboeking, hogere limieten en snellere uitbetaling.</p>
       </div>
     </div>
 
@@ -165,26 +197,26 @@
       <div class="tier-card-wrap">
         <div class="card t-black">
           <div class="c-top"><div class="c-logo">Swift<span>Bridge</span></div><div class="chip"></div></div>
-          <div class="c-mid"><span class="c-label">Black</span><span class="c-number">N° 028</span></div>
-          <div class="c-bottom"><span class="c-member">Private</span>
+          <div class="c-mid"><span class="c-label" data-i18n="card_black_label">Black</span><span class="c-number">N° 028</span></div>
+          <div class="c-bottom"><span class="c-member" data-i18n="card_member_private">Private</span>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.6" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
         </div>
-        <div class="tier-name">Black</div>
-        <p class="tier-desc">Voor grote/zakelijke volumes. Persoonlijk contact, beste koers, geen limieten.</p>
+        <div class="tier-name" data-i18n="tier_black_name">Black</div>
+        <p class="tier-desc" data-i18n="tier_black_desc">Voor grote/zakelijke volumes. Persoonlijk contact, beste koers, geen limieten.</p>
       </div>
     </div>
   </div>
 
-  <h2 class="sec">Twee sporen: privé en zakelijk</h2>
-  <p class="lead">Het onderscheid wordt al bij de aanmelding gemaakt. Daarna groeit elke klant binnen
+  <h2 class="sec" data-i18n="tracks_heading">Twee sporen: privé en zakelijk</h2>
+  <p class="lead" data-i18n="tracks_lead">Het onderscheid wordt al bij de aanmelding gemaakt. Daarna groeit elke klant binnen
   zijn eigen spoor mee op basis van het verzonden bedrag van de laatste 12 maanden.</p>
 
   <div class="split-note">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8632A" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5"/></svg>
-    <p><b>De splitsing bij registratie:</b> kiest de klant <b>privé</b>, dan volgt een ID-check (iDIN)
-    en het privé-spoor. Kiest de klant <b>zakelijk</b>, dan volgt KvK + UBO-controle, facturatie met
-    BTW-overzicht, hogere limieten en het zakelijke spoor. De twee profielen blijven gescheiden in de KYC/AML.</p>
+    <p><b data-i18n="split_note_title">De splitsing bij registratie:</b> <span data-i18n="split_note_body">kiest de klant privé, dan volgt een ID-check (iDIN)
+    en het privé-spoor. Kiest de klant zakelijk, dan volgt KvK + UBO-controle, facturatie met
+    BTW-overzicht, hogere limieten en het zakelijke spoor. De twee profielen blijven gescheiden in de KYC/AML.</span></p>
   </div>
 
   <div class="tracks">
@@ -192,85 +224,694 @@
     <div class="track">
       <div class="track-head priv">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-        <h3>Privé</h3><span class="meta">op verzonden volume / 12 mnd</span>
+        <h3 data-i18n="track_priv_title">Privé</h3><span class="meta" data-i18n="track_priv_meta">op verzonden volume / 12 mnd</span>
       </div>
       <div class="track-body">
         <div class="lvl feat">
-          <div class="lvl-top"><span class="lvl-name">1 · Oprichterslid</span><span class="lvl-fee">Premium — levenslang</span></div>
-          <div class="lvl-crit">Eerste 500 privé-accounts bij lancering. Daarna gesloten.</div>
-          <div class="lvl-perk">Vaste laagste fee voor altijd, kaart N°/500, voorrang nieuwe corridors.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="lvl1_name">1 · Oprichterslid</span><span class="lvl-fee" data-i18n="lvl1_fee">Premium — levenslang</span></div>
+          <div class="lvl-crit" data-i18n="lvl1_crit">Eerste 500 privé-accounts bij lancering. Daarna gesloten.</div>
+          <div class="lvl-perk" data-i18n="lvl1_perk">Vaste laagste fee voor altijd, kaart N°/500, voorrang nieuwe corridors.</div>
         </div>
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">2 · Black</span><span class="lvl-fee">€4,95 + 0,8%</span></div>
-          <div class="lvl-crit">€25.000+ verzonden in 12 mnd.</div>
-          <div class="lvl-perk">Beste koers, geen limiet, persoonlijke accountmanager.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="lvl2_name">2 · Black</span><span class="lvl-fee" data-i18n="lvl2_fee">€4,95 + 0,6%</span></div>
+          <div class="lvl-crit" data-i18n="lvl2_crit">€25.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk" data-i18n="lvl2_perk">Beste koers, geen limiet, persoonlijke accountmanager.</div>
         </div>
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">3 · Premium</span><span class="lvl-fee">€4,95 + 1,0%</span></div>
-          <div class="lvl-crit">€10.000+ verzonden in 12 mnd.</div>
-          <div class="lvl-perk">Betere koers, snellere uitbetaling, prioriteit-support.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="lvl3_name">3 · Premium</span><span class="lvl-fee" data-i18n="lvl3_fee">€4,95 + 0,8%</span></div>
+          <div class="lvl-crit" data-i18n="lvl3_crit">€10.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk" data-i18n="lvl3_perk">Betere koers, snellere uitbetaling, prioriteit-support.</div>
         </div>
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">4 · Plus</span><span class="lvl-fee">€4,95 + 1,2%</span></div>
-          <div class="lvl-crit">€2.500+ verzonden in 12 mnd.</div>
-          <div class="lvl-perk">Hogere limiet en referral-bonus.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="lvl4_name">4 · Plus</span><span class="lvl-fee" data-i18n="lvl4_fee">€4,95 + 1,0%</span></div>
+          <div class="lvl-crit" data-i18n="lvl4_crit">€2.500+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk" data-i18n="lvl4_perk">Hogere limiet en referral-bonus.</div>
         </div>
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">5 · Basis</span><span class="lvl-fee">€4,95 + 1,5%</span></div>
-          <div class="lvl-crit">Iedereen start hier · min €50 · limiet €5.000.</div>
-          <div class="lvl-perk">Standaard voorwaarden, direct na ID-check.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="lvl5_name">5 · Basis</span><span class="lvl-fee" data-i18n="lvl5_fee">€4,95 + 1,2%</span></div>
+          <div class="lvl-crit" data-i18n="lvl5_crit">Iedereen start hier · min €50 · limiet €5.000.</div>
+          <div class="lvl-perk" data-i18n="lvl5_perk">Standaard voorwaarden, direct na ID-check.</div>
         </div>
-        <div class="kyc"><b>KYC privé:</b> ID-bewijs + adrescontrole via iDIN.</div>
+        <div class="kyc"><b data-i18n="kyc_priv_label">KYC privé:</b> <span data-i18n="kyc_priv_body">ID-bewijs + adrescontrole via iDIN.</span></div>
       </div>
     </div>
 
     <div class="track">
       <div class="track-head biz">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="1"/><path d="M9 7V4h6v3M9 12h6M9 16h6"/></svg>
-        <h3>Zakelijk</h3><span class="meta">KvK · op offerte / contract</span>
+        <h3 data-i18n="track_biz_title">Zakelijk</h3><span class="meta" data-i18n="track_biz_meta">KvK · op offerte / contract</span>
       </div>
       <div class="track-body">
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">Corporate</span><span class="lvl-fee biz">beste koers · contract</span></div>
-          <div class="lvl-crit">€500.000+ verzonden in 12 mnd.</div>
-          <div class="lvl-perk">Dedicated contactpersoon, maatwerklimieten, scherpste tarief.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="biz1_name">Corporate</span><span class="lvl-fee biz" data-i18n="biz1_fee">beste koers · contract</span></div>
+          <div class="lvl-crit" data-i18n="biz1_crit">€500.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk" data-i18n="biz1_perk">Dedicated contactpersoon, maatwerklimieten, scherpste tarief.</div>
         </div>
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">Pro</span><span class="lvl-fee biz">lagere marge</span></div>
-          <div class="lvl-crit">€100.000+ verzonden in 12 mnd.</div>
-          <div class="lvl-perk">API-koppeling en bulk-betalingen (salaris, leveranciers).</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="biz2_name">Pro</span><span class="lvl-fee biz" data-i18n="biz2_fee">lagere marge</span></div>
+          <div class="lvl-crit" data-i18n="biz2_crit">€100.000+ verzonden in 12 mnd.</div>
+          <div class="lvl-perk" data-i18n="biz2_perk">API-koppeling en bulk-betalingen (salaris, leveranciers).</div>
         </div>
         <div class="lvl">
-          <div class="lvl-top"><span class="lvl-name">Start</span><span class="lvl-fee biz">op offerte</span></div>
-          <div class="lvl-crit">Bij KvK-registratie.</div>
-          <div class="lvl-perk">Facturatie + BTW-overzicht, zakelijke onboarding.</div>
+          <div class="lvl-top"><span class="lvl-name" data-i18n="biz3_name">Start</span><span class="lvl-fee biz" data-i18n="biz3_fee">op offerte</span></div>
+          <div class="lvl-crit" data-i18n="biz3_crit">Bij KvK-registratie.</div>
+          <div class="lvl-perk" data-i18n="biz3_perk">Facturatie + BTW-overzicht, zakelijke onboarding.</div>
         </div>
-        <div class="kyc"><b>KYC zakelijk:</b> KvK-uittreksel, UBO('s) en een zakelijke rekening. Hogere limieten dan privé.</div>
-        <div class="kyc">Wisselen tussen privé en zakelijk kan alleen via een aparte/aangepaste KYC — het zijn losse klantprofielen.</div>
+        <div class="kyc"><b data-i18n="kyc_biz_label">KYC zakelijk:</b> <span data-i18n="kyc_biz_body">KvK-uittreksel, UBO('s) en een zakelijke rekening. Hogere limieten dan privé.</span></div>
+        <div class="kyc" data-i18n="kyc_switch_note">Wisselen tussen privé en zakelijk kan alleen via een aparte/aangepaste KYC — het zijn losse klantprofielen.</div>
       </div>
     </div>
 
   </div>
 
-  <h2 class="sec">Hoe een klant zichzelf laat opschalen</h2>
-  <p class="lead">Binnen het eigen spoor — automatisch op verzonden volume.</p>
+  <h2 class="sec" data-i18n="upgrade_heading">Hoe een klant zichzelf laat opschalen</h2>
+  <p class="lead" data-i18n="upgrade_lead">Binnen het eigen spoor — automatisch op verzonden volume.</p>
   <div class="steps">
-    <div class="step"><div class="step-n">1</div><h4>Meten</h4><p>Het systeem telt continu het verzonden bedrag van de laatste 12 maanden.</p></div>
-    <div class="step"><div class="step-n">2</div><h4>Upgraden</h4><p>Drempel bereikt? Automatische upgrade met nieuwe kaart en lidnummer in de app.</p></div>
-    <div class="step"><div class="step-n">3</div><h4>Behouden</h4><p>Een niveau blijft 12 maanden geldig; bij terugval volgt 3 maanden respijt.</p></div>
-    <div class="step"><div class="step-n">4</div><h4>Uitzondering</h4><p>Oprichterslid = eerste 500 privé (permanent). Zakelijk wordt bepaald bij KvK-registratie.</p></div>
+    <div class="step"><div class="step-n">1</div><h4 data-i18n="step1_title">Meten</h4><p data-i18n="step1_body">Het systeem telt continu het verzonden bedrag van de laatste 12 maanden.</p></div>
+    <div class="step"><div class="step-n">2</div><h4 data-i18n="step2_title">Upgraden</h4><p data-i18n="step2_body">Drempel bereikt? Automatische upgrade met nieuwe kaart en lidnummer in de app.</p></div>
+    <div class="step"><div class="step-n">3</div><h4 data-i18n="step3_title">Behouden</h4><p data-i18n="step3_body">Een niveau blijft 12 maanden geldig; bij terugval volgt 3 maanden respijt.</p></div>
+    <div class="step"><div class="step-n">4</div><h4 data-i18n="step4_title">Uitzondering</h4><p data-i18n="step4_body">Oprichterslid = eerste 500 privé (permanent). Zakelijk wordt bepaald bij KvK-registratie.</p></div>
   </div>
 
   <div class="cta-band">
-    <h2>Word een van de eerste 500 oprichtersleden</h2>
-    <p>Open gratis een account en ontvang uw lidnummer. De eerste 500 privé-accounts krijgen de Oprichterskaart — met de laagste fee, voor altijd.</p>
-    <a href="/login?tab=register">Gratis account openen</a>
+    <h2 data-i18n="cta_heading">Word een van de eerste 500 oprichtersleden</h2>
+    <p data-i18n="cta_sub">Open gratis een account en ontvang uw lidnummer. De eerste 500 privé-accounts krijgen de Oprichterskaart — met de laagste fee, voor altijd.</p>
+    <a href="/login?tab=register" data-i18n="cta_button">Gratis account openen</a>
   </div>
 
-  <p class="foot">Tarieven en drempels zijn indicatief en worden bevestigd vóór elke transactie · de Members Card is een merk-/loyaliteitselement, geen betaalpas ·
-  <a href="/">terug naar www.swiftbridge.nl</a> · <a href="/privacybeleid">privacy</a> · <a href="/algemene-voorwaarden">voorwaarden</a></p>
+  <p class="foot"><span data-i18n="foot_disclaimer">Tarieven en drempels zijn indicatief en worden bevestigd vóór elke transactie · de Members Card is een merk-/loyaliteitselement, geen betaalpas</span> ·
+  <a href="/" data-i18n="foot_back">terug naar www.swiftbridge.nl</a> · <a href="/privacybeleid" data-i18n="foot_privacy">privacy</a> · <a href="/algemene-voorwaarden" data-i18n="foot_terms">voorwaarden</a></p>
 </div>
 </main>
+
+<script>
+/* ============================================================
+   I18N ENGINE — SwiftBridge Members
+   Zelfde mechanisme als particulier.html:
+   Langs: nl (default), en, tr, ar (RTL), de, fr
+   localStorage 'sb_lang' + navigator.languages detectie
+   ============================================================ */
+const I18N = {
+  nl: {
+    nav_aria: "Hoofdnavigatie",
+    logo_aria: "SwiftBridge — naar homepage",
+    lang_choose: "Taal kiezen",
+    nav_login: "Inloggen",
+    nav_register: "Gratis account openen",
+    eyebrow: "SwiftBridge · Lidmaatschap",
+    page_h1: "De Members Card",
+    page_sub: "Elk lid krijgt een eigen kaart met lidnummer. Uw niveau groeit automatisch mee met het bedrag dat u de laatste 12 maanden heeft verzonden — hoe meer u verstuurt, hoe beter uw voorwaarden.",
+    card_founder_label: "Oprichterslid",
+    card_premium_label: "Premium",
+    card_black_label: "Black",
+    card_member_intl: "Internationaal",
+    card_member_private: "Private",
+    tier_founder_name: "Oprichterslid",
+    tier_founder_desc: "De eerste 500 leden. Vaste lage fee voor altijd, voorrang bij nieuwe corridors.",
+    tier_premium_name: "Premium",
+    tier_premium_desc: "Lagere fee per overboeking, hogere limieten en snellere uitbetaling.",
+    tier_black_name: "Black",
+    tier_black_desc: "Voor grote/zakelijke volumes. Persoonlijk contact, beste koers, geen limieten.",
+    tracks_heading: "Twee sporen: privé en zakelijk",
+    tracks_lead: "Het onderscheid wordt al bij de aanmelding gemaakt. Daarna groeit elke klant binnen zijn eigen spoor mee op basis van het verzonden bedrag van de laatste 12 maanden.",
+    split_note_title: "De splitsing bij registratie:",
+    split_note_body: "kiest de klant privé, dan volgt een ID-check (iDIN) en het privé-spoor. Kiest de klant zakelijk, dan volgt KvK + UBO-controle, facturatie met BTW-overzicht, hogere limieten en het zakelijke spoor. De twee profielen blijven gescheiden in de KYC/AML.",
+    track_priv_title: "Privé",
+    track_priv_meta: "op verzonden volume / 12 mnd",
+    track_biz_title: "Zakelijk",
+    track_biz_meta: "KvK · op offerte / contract",
+    lvl1_name: "1 · Oprichterslid",
+    lvl1_fee: "Premium — levenslang",
+    lvl1_crit: "Eerste 500 privé-accounts bij lancering. Daarna gesloten.",
+    lvl1_perk: "Vaste laagste fee voor altijd, kaart N°/500, voorrang nieuwe corridors.",
+    lvl2_name: "2 · Black",
+    lvl2_fee: "€4,95 + 0,6%",
+    lvl2_crit: "€25.000+ verzonden in 12 mnd.",
+    lvl2_perk: "Beste koers, geen limiet, persoonlijke accountmanager.",
+    lvl3_name: "3 · Premium",
+    lvl3_fee: "€4,95 + 0,8%",
+    lvl3_crit: "€10.000+ verzonden in 12 mnd.",
+    lvl3_perk: "Betere koers, snellere uitbetaling, prioriteit-support.",
+    lvl4_name: "4 · Plus",
+    lvl4_fee: "€4,95 + 1,0%",
+    lvl4_crit: "€2.500+ verzonden in 12 mnd.",
+    lvl4_perk: "Hogere limiet en referral-bonus.",
+    lvl5_name: "5 · Basis",
+    lvl5_fee: "€4,95 + 1,2%",
+    lvl5_crit: "Iedereen start hier · min €50 · limiet €5.000.",
+    lvl5_perk: "Standaard voorwaarden, direct na ID-check.",
+    kyc_priv_label: "KYC privé:",
+    kyc_priv_body: "ID-bewijs + adrescontrole via iDIN.",
+    biz1_name: "Corporate",
+    biz1_fee: "beste koers · contract",
+    biz1_crit: "€500.000+ verzonden in 12 mnd.",
+    biz1_perk: "Dedicated contactpersoon, maatwerklimieten, scherpste tarief.",
+    biz2_name: "Pro",
+    biz2_fee: "lagere marge",
+    biz2_crit: "€100.000+ verzonden in 12 mnd.",
+    biz2_perk: "API-koppeling en bulk-betalingen (salaris, leveranciers).",
+    biz3_name: "Start",
+    biz3_fee: "op offerte",
+    biz3_crit: "Bij KvK-registratie.",
+    biz3_perk: "Facturatie + BTW-overzicht, zakelijke onboarding.",
+    kyc_biz_label: "KYC zakelijk:",
+    kyc_biz_body: "KvK-uittreksel, UBO('s) en een zakelijke rekening. Hogere limieten dan privé.",
+    kyc_switch_note: "Wisselen tussen privé en zakelijk kan alleen via een aparte/aangepaste KYC — het zijn losse klantprofielen.",
+    upgrade_heading: "Hoe een klant zichzelf laat opschalen",
+    upgrade_lead: "Binnen het eigen spoor — automatisch op verzonden volume.",
+    step1_title: "Meten",
+    step1_body: "Het systeem telt continu het verzonden bedrag van de laatste 12 maanden.",
+    step2_title: "Upgraden",
+    step2_body: "Drempel bereikt? Automatische upgrade met nieuwe kaart en lidnummer in de app.",
+    step3_title: "Behouden",
+    step3_body: "Een niveau blijft 12 maanden geldig; bij terugval volgt 3 maanden respijt.",
+    step4_title: "Uitzondering",
+    step4_body: "Oprichterslid = eerste 500 privé (permanent). Zakelijk wordt bepaald bij KvK-registratie.",
+    cta_heading: "Word een van de eerste 500 oprichtersleden",
+    cta_sub: "Open gratis een account en ontvang uw lidnummer. De eerste 500 privé-accounts krijgen de Oprichterskaart — met de laagste fee, voor altijd.",
+    cta_button: "Gratis account openen",
+    foot_disclaimer: "Tarieven en drempels zijn indicatief en worden bevestigd vóór elke transactie · de Members Card is een merk-/loyaliteitselement, geen betaalpas",
+    foot_back: "terug naar www.swiftbridge.nl",
+    foot_privacy: "privacy",
+    foot_terms: "voorwaarden"
+  },
+  en: {
+    nav_aria: "Main navigation",
+    logo_aria: "SwiftBridge — to homepage",
+    lang_choose: "Choose language",
+    nav_login: "Log in",
+    nav_register: "Open a free account",
+    eyebrow: "SwiftBridge · Membership",
+    page_h1: "The Members Card",
+    page_sub: "Every member receives a personal card with a member number. Your level grows automatically with the amount you have sent over the past 12 months — the more you send, the better your conditions.",
+    card_founder_label: "Founding Member",
+    card_premium_label: "Premium",
+    card_black_label: "Black",
+    card_member_intl: "International",
+    card_member_private: "Private",
+    tier_founder_name: "Founding Member",
+    tier_founder_desc: "The first 500 members. A fixed low fee for life and priority access to new corridors.",
+    tier_premium_name: "Premium",
+    tier_premium_desc: "A lower fee per transfer, higher limits and faster payout.",
+    tier_black_name: "Black",
+    tier_black_desc: "For large or business volumes. Personal contact, the best rate, no limits.",
+    tracks_heading: "Two tracks: personal and business",
+    tracks_lead: "The distinction is made at registration. From then on, every customer grows within their own track based on the amount sent over the past 12 months.",
+    split_note_title: "The split at registration:",
+    split_note_body: "if the customer chooses personal, an ID check (iDIN) follows, along with the personal track. If the customer chooses business, a Chamber of Commerce (KvK) + UBO check follows, with invoicing including a VAT overview, higher limits and the business track. The two profiles remain separated in KYC/AML.",
+    track_priv_title: "Personal",
+    track_priv_meta: "based on volume sent / 12 months",
+    track_biz_title: "Business",
+    track_biz_meta: "KvK · by quotation / contract",
+    lvl1_name: "1 · Founding Member",
+    lvl1_fee: "Premium — for life",
+    lvl1_crit: "The first 500 personal accounts at launch. Closed thereafter.",
+    lvl1_perk: "Fixed lowest fee for life, card N°/500, priority on new corridors.",
+    lvl2_name: "2 · Black",
+    lvl2_fee: "€4.95 + 0.6%",
+    lvl2_crit: "€25,000+ sent in 12 months.",
+    lvl2_perk: "Best rate, no limit, personal account manager.",
+    lvl3_name: "3 · Premium",
+    lvl3_fee: "€4.95 + 0.8%",
+    lvl3_crit: "€10,000+ sent in 12 months.",
+    lvl3_perk: "Better rate, faster payout, priority support.",
+    lvl4_name: "4 · Plus",
+    lvl4_fee: "€4.95 + 1.0%",
+    lvl4_crit: "€2,500+ sent in 12 months.",
+    lvl4_perk: "Higher limit and referral bonus.",
+    lvl5_name: "5 · Basic",
+    lvl5_fee: "€4.95 + 1.2%",
+    lvl5_crit: "Everyone starts here · min €50 · limit €5,000.",
+    lvl5_perk: "Standard conditions, immediately after the ID check.",
+    kyc_priv_label: "KYC personal:",
+    kyc_priv_body: "Proof of identity + address verification via iDIN.",
+    biz1_name: "Corporate",
+    biz1_fee: "best rate · contract",
+    biz1_crit: "€500,000+ sent in 12 months.",
+    biz1_perk: "Dedicated contact person, tailored limits, sharpest rate.",
+    biz2_name: "Pro",
+    biz2_fee: "lower margin",
+    biz2_crit: "€100,000+ sent in 12 months.",
+    biz2_perk: "API integration and bulk payments (salaries, suppliers).",
+    biz3_name: "Start",
+    biz3_fee: "by quotation",
+    biz3_crit: "Upon KvK registration.",
+    biz3_perk: "Invoicing + VAT overview, business onboarding.",
+    kyc_biz_label: "KYC business:",
+    kyc_biz_body: "KvK extract, UBO(s) and a business bank account. Higher limits than personal.",
+    kyc_switch_note: "Switching between personal and business is only possible via a separate/adjusted KYC — they are separate customer profiles.",
+    upgrade_heading: "How a customer moves up automatically",
+    upgrade_lead: "Within their own track — automatically, based on volume sent.",
+    step1_title: "Measure",
+    step1_body: "The system continuously counts the amount sent over the past 12 months.",
+    step2_title: "Upgrade",
+    step2_body: "Threshold reached? Automatic upgrade with a new card and member number in the app.",
+    step3_title: "Retain",
+    step3_body: "A level remains valid for 12 months; if volume drops, a 3-month grace period applies.",
+    step4_title: "Exception",
+    step4_body: "Founding Member = the first 500 personal accounts (permanent). Business is determined upon KvK registration.",
+    cta_heading: "Become one of the first 500 founding members",
+    cta_sub: "Open a free account and receive your member number. The first 500 personal accounts receive the Founder Card — with the lowest fee, for life.",
+    cta_button: "Open a free account",
+    foot_disclaimer: "Rates and thresholds are indicative and are confirmed before every transaction · the Members Card is a brand/loyalty element, not a payment card",
+    foot_back: "back to www.swiftbridge.nl",
+    foot_privacy: "privacy",
+    foot_terms: "terms"
+  },
+  tr: {
+    nav_aria: "Ana gezinme",
+    logo_aria: "SwiftBridge — ana sayfaya",
+    lang_choose: "Dil seçin",
+    nav_login: "Giriş yap",
+    nav_register: "Ücretsiz hesap açın",
+    eyebrow: "SwiftBridge · Üyelik",
+    page_h1: "Members Card",
+    page_sub: "Her üye, üyelik numarası bulunan kişisel bir kart alır. Seviyeniz, son 12 ayda gönderdiğiniz tutara göre otomatik olarak yükselir — ne kadar çok gönderirseniz koşullarınız o kadar iyi olur.",
+    card_founder_label: "Kurucu Üye",
+    card_premium_label: "Premium",
+    card_black_label: "Black",
+    card_member_intl: "Uluslararası",
+    card_member_private: "Private",
+    tier_founder_name: "Kurucu Üye",
+    tier_founder_desc: "İlk 500 üye. Ömür boyu sabit düşük ücret, yeni koridorlarda öncelik.",
+    tier_premium_name: "Premium",
+    tier_premium_desc: "Havale başına daha düşük ücret, daha yüksek limitler ve daha hızlı ödeme.",
+    tier_black_name: "Black",
+    tier_black_desc: "Büyük/kurumsal hacimler için. Kişisel iletişim, en iyi kur, limitsiz.",
+    tracks_heading: "İki kanal: bireysel ve kurumsal",
+    tracks_lead: "Ayrım kayıt sırasında yapılır. Ardından her müşteri, son 12 ayda gönderilen tutara göre kendi kanalında yükselir.",
+    split_note_title: "Kayıt sırasındaki ayrım:",
+    split_note_body: "müşteri bireyseli seçerse kimlik doğrulaması (iDIN) ve bireysel kanal uygulanır. Müşteri kurumsalı seçerse Ticaret Odası (KvK) + UBO kontrolü, KDV özetli faturalandırma, daha yüksek limitler ve kurumsal kanal uygulanır. İki profil KYC/AML kapsamında ayrı tutulur.",
+    track_priv_title: "Bireysel",
+    track_priv_meta: "gönderilen hacme göre / 12 ay",
+    track_biz_title: "Kurumsal",
+    track_biz_meta: "KvK · teklif / sözleşme ile",
+    lvl1_name: "1 · Kurucu Üye",
+    lvl1_fee: "Premium — ömür boyu",
+    lvl1_crit: "Lansmandaki ilk 500 bireysel hesap. Sonrasında kapalı.",
+    lvl1_perk: "Ömür boyu sabit en düşük ücret, N°/500 kart, yeni koridorlarda öncelik.",
+    lvl2_name: "2 · Black",
+    lvl2_fee: "€4,95 + %0,6",
+    lvl2_crit: "12 ayda €25.000 ve üzeri gönderim.",
+    lvl2_perk: "En iyi kur, limitsiz, kişisel müşteri temsilcisi.",
+    lvl3_name: "3 · Premium",
+    lvl3_fee: "€4,95 + %0,8",
+    lvl3_crit: "12 ayda €10.000 ve üzeri gönderim.",
+    lvl3_perk: "Daha iyi kur, daha hızlı ödeme, öncelikli destek.",
+    lvl4_name: "4 · Plus",
+    lvl4_fee: "€4,95 + %1,0",
+    lvl4_crit: "12 ayda €2.500 ve üzeri gönderim.",
+    lvl4_perk: "Daha yüksek limit ve tavsiye bonusu.",
+    lvl5_name: "5 · Temel",
+    lvl5_fee: "€4,95 + %1,2",
+    lvl5_crit: "Herkes burada başlar · min. €50 · limit €5.000.",
+    lvl5_perk: "Standart koşullar, kimlik doğrulamasının hemen ardından.",
+    kyc_priv_label: "Bireysel KYC:",
+    kyc_priv_body: "Kimlik belgesi + iDIN ile adres doğrulaması.",
+    biz1_name: "Corporate",
+    biz1_fee: "en iyi kur · sözleşme",
+    biz1_crit: "12 ayda €500.000 ve üzeri gönderim.",
+    biz1_perk: "Özel iletişim kişisi, size özel limitler, en avantajlı tarife.",
+    biz2_name: "Pro",
+    biz2_fee: "daha düşük marj",
+    biz2_crit: "12 ayda €100.000 ve üzeri gönderim.",
+    biz2_perk: "API bağlantısı ve toplu ödemeler (maaş, tedarikçiler).",
+    biz3_name: "Start",
+    biz3_fee: "teklife göre",
+    biz3_crit: "KvK kaydı ile.",
+    biz3_perk: "Faturalandırma + KDV özeti, kurumsal müşteri kabulü.",
+    kyc_biz_label: "Kurumsal KYC:",
+    kyc_biz_body: "KvK kayıt sureti, UBO('lar) ve kurumsal banka hesabı. Bireyselden daha yüksek limitler.",
+    kyc_switch_note: "Bireysel ile kurumsal arasında geçiş yalnızca ayrı/uyarlanmış bir KYC ile mümkündür — bunlar ayrı müşteri profilleridir.",
+    upgrade_heading: "Müşteri seviyesini nasıl otomatik yükseltir",
+    upgrade_lead: "Kendi kanalı içinde — gönderilen hacme göre otomatik.",
+    step1_title: "Ölçüm",
+    step1_body: "Sistem, son 12 ayda gönderilen tutarı sürekli olarak hesaplar.",
+    step2_title: "Yükseltme",
+    step2_body: "Eşiğe ulaşıldı mı? Uygulamada yeni kart ve üyelik numarasıyla otomatik yükseltme.",
+    step3_title: "Koruma",
+    step3_body: "Bir seviye 12 ay geçerli kalır; düşüş halinde 3 aylık hoşgörü süresi uygulanır.",
+    step4_title: "İstisna",
+    step4_body: "Kurucu Üye = ilk 500 bireysel hesap (kalıcı). Kurumsal seviye KvK kaydı sırasında belirlenir.",
+    cta_heading: "İlk 500 kurucu üyeden biri olun",
+    cta_sub: "Ücretsiz bir hesap açın ve üyelik numaranızı alın. İlk 500 bireysel hesap, Kurucu Kart'ı alır — ömür boyu en düşük ücretle.",
+    cta_button: "Ücretsiz hesap açın",
+    foot_disclaimer: "Tarifeler ve eşikler gösterge niteliğindedir ve her işlemden önce teyit edilir · Members Card bir marka/sadakat unsurudur, ödeme kartı değildir",
+    foot_back: "www.swiftbridge.nl adresine dön",
+    foot_privacy: "gizlilik",
+    foot_terms: "koşullar"
+  },
+  ar: {
+    nav_aria: "التنقل الرئيسي",
+    logo_aria: "SwiftBridge — إلى الصفحة الرئيسية",
+    lang_choose: "اختر اللغة",
+    nav_login: "تسجيل الدخول",
+    nav_register: "افتح حسابًا مجانيًا",
+    eyebrow: "SwiftBridge · العضوية",
+    page_h1: "بطاقة الأعضاء",
+    page_sub: "يحصل كل عضو على بطاقة شخصية برقم عضوية. يرتفع مستواك تلقائيًا مع المبلغ الذي أرسلته خلال الاثني عشر شهرًا الماضية — كلما أرسلت أكثر، أصبحت شروطك أفضل.",
+    card_founder_label: "عضو مؤسس",
+    card_premium_label: "Premium",
+    card_black_label: "Black",
+    card_member_intl: "دولي",
+    card_member_private: "Private",
+    tier_founder_name: "عضو مؤسس",
+    tier_founder_desc: "أول 500 عضو. رسوم منخفضة ثابتة مدى الحياة، وأولوية في الممرات الجديدة.",
+    tier_premium_name: "Premium",
+    tier_premium_desc: "رسوم أقل لكل تحويل، وحدود أعلى، ودفع أسرع.",
+    tier_black_name: "Black",
+    tier_black_desc: "للأحجام الكبيرة أو التجارية. تواصل شخصي، أفضل سعر صرف، بلا حدود.",
+    tracks_heading: "مساران: شخصي وتجاري",
+    tracks_lead: "يتم التمييز عند التسجيل. بعد ذلك يرتقي كل عميل ضمن مساره الخاص بناءً على المبلغ المرسل خلال الاثني عشر شهرًا الماضية.",
+    split_note_title: "الفصل عند التسجيل:",
+    split_note_body: "إذا اختار العميل الحساب الشخصي، يتبع ذلك التحقق من الهوية (iDIN) والمسار الشخصي. وإذا اختار العميل الحساب التجاري، يتبع ذلك التحقق من السجل التجاري (KvK) والمستفيد الفعلي (UBO)، مع فوترة تتضمن ملخص ضريبة القيمة المضافة، وحدود أعلى، والمسار التجاري. يبقى الملفان منفصلين ضمن إجراءات KYC/AML.",
+    track_priv_title: "شخصي",
+    track_priv_meta: "حسب الحجم المرسل / 12 شهرًا",
+    track_biz_title: "تجاري",
+    track_biz_meta: "KvK · بعرض سعر / عقد",
+    lvl1_name: "1 · عضو مؤسس",
+    lvl1_fee: "Premium — مدى الحياة",
+    lvl1_crit: "أول 500 حساب شخصي عند الإطلاق. مغلق بعد ذلك.",
+    lvl1_perk: "أدنى رسوم ثابتة مدى الحياة، بطاقة N°/500، أولوية في الممرات الجديدة.",
+    lvl2_name: "2 · Black",
+    lvl2_fee: "€4,95 + 0,6%",
+    lvl2_crit: "إرسال €25.000 أو أكثر خلال 12 شهرًا.",
+    lvl2_perk: "أفضل سعر صرف، بلا حد، مدير حساب شخصي.",
+    lvl3_name: "3 · Premium",
+    lvl3_fee: "€4,95 + 0,8%",
+    lvl3_crit: "إرسال €10.000 أو أكثر خلال 12 شهرًا.",
+    lvl3_perk: "سعر صرف أفضل، دفع أسرع، دعم ذو أولوية.",
+    lvl4_name: "4 · Plus",
+    lvl4_fee: "€4,95 + 1,0%",
+    lvl4_crit: "إرسال €2.500 أو أكثر خلال 12 شهرًا.",
+    lvl4_perk: "حد أعلى ومكافأة إحالة.",
+    lvl5_name: "5 · أساسي",
+    lvl5_fee: "€4,95 + 1,2%",
+    lvl5_crit: "يبدأ الجميع هنا · الحد الأدنى €50 · الحد الأقصى €5.000.",
+    lvl5_perk: "شروط قياسية، مباشرة بعد التحقق من الهوية.",
+    kyc_priv_label: "KYC شخصي:",
+    kyc_priv_body: "إثبات الهوية + التحقق من العنوان عبر iDIN.",
+    biz1_name: "Corporate",
+    biz1_fee: "أفضل سعر · عقد",
+    biz1_crit: "إرسال €500.000 أو أكثر خلال 12 شهرًا.",
+    biz1_perk: "جهة اتصال مخصصة، حدود مخصصة، أفضل تعرفة.",
+    biz2_name: "Pro",
+    biz2_fee: "هامش أقل",
+    biz2_crit: "إرسال €100.000 أو أكثر خلال 12 شهرًا.",
+    biz2_perk: "ربط عبر API ودفعات مجمعة (رواتب، موردون).",
+    biz3_name: "Start",
+    biz3_fee: "بعرض سعر",
+    biz3_crit: "عند التسجيل في السجل التجاري (KvK).",
+    biz3_perk: "فوترة + ملخص ضريبة القيمة المضافة، تهيئة تجارية.",
+    kyc_biz_label: "KYC تجاري:",
+    kyc_biz_body: "مستخرج من السجل التجاري (KvK)، المستفيد الفعلي (UBO)، وحساب مصرفي تجاري. حدود أعلى من الحساب الشخصي.",
+    kyc_switch_note: "التبديل بين الشخصي والتجاري ممكن فقط عبر إجراء KYC منفصل/معدل — فهما ملفان منفصلان للعميل.",
+    upgrade_heading: "كيف يرتقي العميل تلقائيًا",
+    upgrade_lead: "ضمن مساره الخاص — تلقائيًا حسب الحجم المرسل.",
+    step1_title: "القياس",
+    step1_body: "يحتسب النظام باستمرار المبلغ المرسل خلال الاثني عشر شهرًا الماضية.",
+    step2_title: "الترقية",
+    step2_body: "تم بلوغ الحد؟ ترقية تلقائية مع بطاقة ورقم عضوية جديدين في التطبيق.",
+    step3_title: "الاحتفاظ",
+    step3_body: "يبقى المستوى صالحًا لمدة 12 شهرًا؛ وعند التراجع تُمنح مهلة 3 أشهر.",
+    step4_title: "استثناء",
+    step4_body: "العضو المؤسس = أول 500 حساب شخصي (دائم). يُحدد المستوى التجاري عند التسجيل في السجل التجاري (KvK).",
+    cta_heading: "كن واحدًا من أول 500 عضو مؤسس",
+    cta_sub: "افتح حسابًا مجانيًا واحصل على رقم عضويتك. تحصل أول 500 حساب شخصي على بطاقة المؤسس — بأدنى رسوم، مدى الحياة.",
+    cta_button: "افتح حسابًا مجانيًا",
+    foot_disclaimer: "التعرفة والحدود إرشادية ويتم تأكيدها قبل كل معاملة · بطاقة الأعضاء عنصر علامة تجارية/ولاء، وليست بطاقة دفع",
+    foot_back: "العودة إلى www.swiftbridge.nl",
+    foot_privacy: "الخصوصية",
+    foot_terms: "الشروط"
+  },
+  de: {
+    nav_aria: "Hauptnavigation",
+    logo_aria: "SwiftBridge — zur Startseite",
+    lang_choose: "Sprache wählen",
+    nav_login: "Anmelden",
+    nav_register: "Kostenloses Konto eröffnen",
+    eyebrow: "SwiftBridge · Mitgliedschaft",
+    page_h1: "Die Members Card",
+    page_sub: "Jedes Mitglied erhält eine eigene Karte mit Mitgliedsnummer. Ihre Stufe wächst automatisch mit dem Betrag, den Sie in den letzten 12 Monaten gesendet haben — je mehr Sie senden, desto besser Ihre Konditionen.",
+    card_founder_label: "Gründungsmitglied",
+    card_premium_label: "Premium",
+    card_black_label: "Black",
+    card_member_intl: "International",
+    card_member_private: "Private",
+    tier_founder_name: "Gründungsmitglied",
+    tier_founder_desc: "Die ersten 500 Mitglieder. Dauerhaft niedrige Festgebühr, Vorrang bei neuen Korridoren.",
+    tier_premium_name: "Premium",
+    tier_premium_desc: "Niedrigere Gebühr pro Überweisung, höhere Limits und schnellere Auszahlung.",
+    tier_black_name: "Black",
+    tier_black_desc: "Für große/geschäftliche Volumina. Persönlicher Kontakt, bester Kurs, keine Limits.",
+    tracks_heading: "Zwei Wege: privat und geschäftlich",
+    tracks_lead: "Die Unterscheidung erfolgt bereits bei der Anmeldung. Danach wächst jeder Kunde innerhalb seines eigenen Wegs auf Basis des in den letzten 12 Monaten gesendeten Betrags.",
+    split_note_title: "Die Aufteilung bei der Registrierung:",
+    split_note_body: "wählt der Kunde privat, folgen eine Identitätsprüfung (iDIN) und der private Weg. Wählt der Kunde geschäftlich, folgen Handelsregister- (KvK) und UBO-Prüfung, Rechnungsstellung mit USt.-Übersicht, höhere Limits und der geschäftliche Weg. Die beiden Profile bleiben im KYC/AML getrennt.",
+    track_priv_title: "Privat",
+    track_priv_meta: "nach Sendevolumen / 12 Monate",
+    track_biz_title: "Geschäftlich",
+    track_biz_meta: "KvK · auf Angebot / Vertrag",
+    lvl1_name: "1 · Gründungsmitglied",
+    lvl1_fee: "Premium — lebenslang",
+    lvl1_crit: "Die ersten 500 Privatkonten beim Start. Danach geschlossen.",
+    lvl1_perk: "Dauerhaft niedrigste Festgebühr, Karte N°/500, Vorrang bei neuen Korridoren.",
+    lvl2_name: "2 · Black",
+    lvl2_fee: "€4,95 + 0,6%",
+    lvl2_crit: "€25.000+ gesendet in 12 Monaten.",
+    lvl2_perk: "Bester Kurs, kein Limit, persönlicher Account-Manager.",
+    lvl3_name: "3 · Premium",
+    lvl3_fee: "€4,95 + 0,8%",
+    lvl3_crit: "€10.000+ gesendet in 12 Monaten.",
+    lvl3_perk: "Besserer Kurs, schnellere Auszahlung, Priority-Support.",
+    lvl4_name: "4 · Plus",
+    lvl4_fee: "€4,95 + 1,0%",
+    lvl4_crit: "€2.500+ gesendet in 12 Monaten.",
+    lvl4_perk: "Höheres Limit und Empfehlungsbonus.",
+    lvl5_name: "5 · Basis",
+    lvl5_fee: "€4,95 + 1,2%",
+    lvl5_crit: "Jeder startet hier · min. €50 · Limit €5.000.",
+    lvl5_perk: "Standardkonditionen, direkt nach der Identitätsprüfung.",
+    kyc_priv_label: "KYC privat:",
+    kyc_priv_body: "Ausweisdokument + Adressprüfung über iDIN.",
+    biz1_name: "Corporate",
+    biz1_fee: "bester Kurs · Vertrag",
+    biz1_crit: "€500.000+ gesendet in 12 Monaten.",
+    biz1_perk: "Fester Ansprechpartner, maßgeschneiderte Limits, günstigster Tarif.",
+    biz2_name: "Pro",
+    biz2_fee: "niedrigere Marge",
+    biz2_crit: "€100.000+ gesendet in 12 Monaten.",
+    biz2_perk: "API-Anbindung und Sammelzahlungen (Gehälter, Lieferanten).",
+    biz3_name: "Start",
+    biz3_fee: "auf Angebot",
+    biz3_crit: "Bei KvK-Registrierung.",
+    biz3_perk: "Rechnungsstellung + USt.-Übersicht, geschäftliches Onboarding.",
+    kyc_biz_label: "KYC geschäftlich:",
+    kyc_biz_body: "KvK-Auszug, UBO(s) und ein Geschäftskonto. Höhere Limits als privat.",
+    kyc_switch_note: "Ein Wechsel zwischen privat und geschäftlich ist nur über ein separates/angepasstes KYC möglich — es sind getrennte Kundenprofile.",
+    upgrade_heading: "Wie ein Kunde automatisch aufsteigt",
+    upgrade_lead: "Innerhalb des eigenen Wegs — automatisch nach Sendevolumen.",
+    step1_title: "Messen",
+    step1_body: "Das System zählt fortlaufend den in den letzten 12 Monaten gesendeten Betrag.",
+    step2_title: "Upgraden",
+    step2_body: "Schwelle erreicht? Automatisches Upgrade mit neuer Karte und Mitgliedsnummer in der App.",
+    step3_title: "Behalten",
+    step3_body: "Eine Stufe bleibt 12 Monate gültig; bei Rückgang gilt eine Schonfrist von 3 Monaten.",
+    step4_title: "Ausnahme",
+    step4_body: "Gründungsmitglied = die ersten 500 Privatkonten (dauerhaft). Geschäftlich wird bei der KvK-Registrierung festgelegt.",
+    cta_heading: "Werden Sie eines der ersten 500 Gründungsmitglieder",
+    cta_sub: "Eröffnen Sie kostenlos ein Konto und erhalten Sie Ihre Mitgliedsnummer. Die ersten 500 Privatkonten erhalten die Gründerkarte — mit der niedrigsten Gebühr, für immer.",
+    cta_button: "Kostenloses Konto eröffnen",
+    foot_disclaimer: "Tarife und Schwellen sind indikativ und werden vor jeder Transaktion bestätigt · die Members Card ist ein Marken-/Treueelement, keine Zahlungskarte",
+    foot_back: "zurück zu www.swiftbridge.nl",
+    foot_privacy: "Datenschutz",
+    foot_terms: "AGB"
+  },
+  fr: {
+    nav_aria: "Navigation principale",
+    logo_aria: "SwiftBridge — vers la page d'accueil",
+    lang_choose: "Choisir la langue",
+    nav_login: "Se connecter",
+    nav_register: "Ouvrir un compte gratuit",
+    eyebrow: "SwiftBridge · Adhésion",
+    page_h1: "La Members Card",
+    page_sub: "Chaque membre reçoit une carte personnelle avec un numéro de membre. Votre niveau évolue automatiquement avec le montant envoyé au cours des 12 derniers mois — plus vous envoyez, meilleures sont vos conditions.",
+    card_founder_label: "Membre fondateur",
+    card_premium_label: "Premium",
+    card_black_label: "Black",
+    card_member_intl: "International",
+    card_member_private: "Private",
+    tier_founder_name: "Membre fondateur",
+    tier_founder_desc: "Les 500 premiers membres. Frais fixes réduits à vie, priorité sur les nouveaux corridors.",
+    tier_premium_name: "Premium",
+    tier_premium_desc: "Frais réduits par transfert, plafonds plus élevés et versement plus rapide.",
+    tier_black_name: "Black",
+    tier_black_desc: "Pour les volumes importants ou professionnels. Contact personnel, meilleur taux, sans plafond.",
+    tracks_heading: "Deux parcours : particulier et professionnel",
+    tracks_lead: "La distinction est faite dès l'inscription. Ensuite, chaque client évolue dans son propre parcours selon le montant envoyé au cours des 12 derniers mois.",
+    split_note_title: "La séparation à l'inscription :",
+    split_note_body: "si le client choisit particulier, une vérification d'identité (iDIN) et le parcours particulier s'appliquent. S'il choisit professionnel, un contrôle registre du commerce (KvK) + UBO s'applique, avec facturation et récapitulatif TVA, plafonds plus élevés et parcours professionnel. Les deux profils restent séparés dans le cadre KYC/AML.",
+    track_priv_title: "Particulier",
+    track_priv_meta: "selon le volume envoyé / 12 mois",
+    track_biz_title: "Professionnel",
+    track_biz_meta: "KvK · sur devis / contrat",
+    lvl1_name: "1 · Membre fondateur",
+    lvl1_fee: "Premium — à vie",
+    lvl1_crit: "Les 500 premiers comptes particuliers au lancement. Fermé ensuite.",
+    lvl1_perk: "Frais fixes les plus bas à vie, carte N°/500, priorité sur les nouveaux corridors.",
+    lvl2_name: "2 · Black",
+    lvl2_fee: "4,95 € + 0,6 %",
+    lvl2_crit: "25 000 € ou plus envoyés en 12 mois.",
+    lvl2_perk: "Meilleur taux, sans plafond, gestionnaire de compte personnel.",
+    lvl3_name: "3 · Premium",
+    lvl3_fee: "4,95 € + 0,8 %",
+    lvl3_crit: "10 000 € ou plus envoyés en 12 mois.",
+    lvl3_perk: "Meilleur taux, versement plus rapide, assistance prioritaire.",
+    lvl4_name: "4 · Plus",
+    lvl4_fee: "4,95 € + 1,0 %",
+    lvl4_crit: "2 500 € ou plus envoyés en 12 mois.",
+    lvl4_perk: "Plafond plus élevé et prime de parrainage.",
+    lvl5_name: "5 · Base",
+    lvl5_fee: "4,95 € + 1,2 %",
+    lvl5_crit: "Tout le monde commence ici · min. 50 € · plafond 5 000 €.",
+    lvl5_perk: "Conditions standard, immédiatement après la vérification d'identité.",
+    kyc_priv_label: "KYC particulier :",
+    kyc_priv_body: "Pièce d'identité + vérification d'adresse via iDIN.",
+    biz1_name: "Corporate",
+    biz1_fee: "meilleur taux · contrat",
+    biz1_crit: "500 000 € ou plus envoyés en 12 mois.",
+    biz1_perk: "Interlocuteur dédié, plafonds sur mesure, tarif le plus avantageux.",
+    biz2_name: "Pro",
+    biz2_fee: "marge réduite",
+    biz2_crit: "100 000 € ou plus envoyés en 12 mois.",
+    biz2_perk: "Connexion API et paiements groupés (salaires, fournisseurs).",
+    biz3_name: "Start",
+    biz3_fee: "sur devis",
+    biz3_crit: "Lors de l'inscription au registre du commerce (KvK).",
+    biz3_perk: "Facturation + récapitulatif TVA, intégration professionnelle.",
+    kyc_biz_label: "KYC professionnel :",
+    kyc_biz_body: "Extrait KvK, UBO et un compte bancaire professionnel. Plafonds plus élevés que pour les particuliers.",
+    kyc_switch_note: "Le passage entre particulier et professionnel n'est possible que via un KYC distinct/adapté — ce sont des profils clients séparés.",
+    upgrade_heading: "Comment un client monte de niveau automatiquement",
+    upgrade_lead: "Dans son propre parcours — automatiquement, selon le volume envoyé.",
+    step1_title: "Mesurer",
+    step1_body: "Le système comptabilise en continu le montant envoyé au cours des 12 derniers mois.",
+    step2_title: "Évoluer",
+    step2_body: "Seuil atteint ? Passage automatique au niveau supérieur avec nouvelle carte et nouveau numéro de membre dans l'application.",
+    step3_title: "Conserver",
+    step3_body: "Un niveau reste valable 12 mois ; en cas de baisse, un délai de grâce de 3 mois s'applique.",
+    step4_title: "Exception",
+    step4_body: "Membre fondateur = les 500 premiers comptes particuliers (permanent). Le niveau professionnel est déterminé lors de l'inscription KvK.",
+    cta_heading: "Devenez l'un des 500 premiers membres fondateurs",
+    cta_sub: "Ouvrez un compte gratuit et recevez votre numéro de membre. Les 500 premiers comptes particuliers reçoivent la carte Fondateur — avec les frais les plus bas, à vie.",
+    cta_button: "Ouvrir un compte gratuit",
+    foot_disclaimer: "Les tarifs et les seuils sont indicatifs et confirmés avant chaque transaction · la Members Card est un élément de marque/fidélité, pas une carte de paiement",
+    foot_back: "retour à www.swiftbridge.nl",
+    foot_privacy: "confidentialité",
+    foot_terms: "conditions"
+  }
+};
+
+const SUPPORTED_LANGS = ['nl','en','tr','ar','de','fr'];
+const NATIVE_NAMES = {nl:'Nederlands',en:'English',tr:'Türkçe',ar:'العربية',de:'Deutsch',fr:'Français'};
+const RTL_LANGS = ['ar'];
+
+let currentLang = 'nl';
+
+function getSavedLang() {
+  try { return localStorage.getItem('sb_lang'); } catch(e) { return null; }
+}
+function saveLang(lang) {
+  try { localStorage.setItem('sb_lang', lang); } catch(e) {}
+}
+
+function detectLang() {
+  const saved = getSavedLang();
+  if (saved && SUPPORTED_LANGS.includes(saved)) return { lang: saved, fromStorage: true };
+  const navLangs = (navigator.languages || [navigator.language || 'nl']);
+  for (const nl of navLangs) {
+    const prefix = nl.slice(0,2).toLowerCase();
+    if (SUPPORTED_LANGS.includes(prefix)) return { lang: prefix, fromStorage: false };
+  }
+  return { lang: 'nl', fromStorage: false };
+}
+
+function applyLang(lang, announce) {
+  if (!SUPPORTED_LANGS.includes(lang)) lang = 'nl';
+  currentLang = lang;
+  const dict = I18N[lang];
+  const isRTL = RTL_LANGS.includes(lang);
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+  // Apply text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+
+  // Apply attributes
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+    const pairs = el.getAttribute('data-i18n-attr').split(';');
+    pairs.forEach(pair => {
+      const [attr, key] = pair.split(':');
+      if (attr && key && dict[key] !== undefined) el.setAttribute(attr.trim(), dict[key]);
+    });
+  });
+
+  // Update switcher UI
+  const currentLabel = document.getElementById('lang-current-label');
+  if (currentLabel) currentLabel.textContent = NATIVE_NAMES[lang];
+  document.querySelectorAll('#lang-dropdown button[data-lang]').forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+  });
+
+  // Announce
+  if (announce) {
+    const announcer = document.getElementById('lang-announce');
+    if (announcer) {
+      announcer.textContent = '';
+      setTimeout(() => { announcer.textContent = 'Language: ' + NATIVE_NAMES[lang]; }, 50);
+    }
+  }
+}
+
+// Lang switcher toggle
+const langBtn = document.getElementById('lang-btn');
+const langDropdown = document.getElementById('lang-dropdown');
+if (langBtn && langDropdown) {
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const open = langDropdown.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+  langDropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+  document.querySelectorAll('#lang-dropdown button[data-lang]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const lang = this.dataset.lang;
+      saveLang(lang);
+      applyLang(lang, true);
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+      langBtn.focus();
+    });
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+    });
+  });
+}
+
+// ── INIT ──
+(function() {
+  const { lang } = detectLang();
+  applyLang(lang, false);
+})();
+</script>
 
 <script src="/landing/landing-chat.js" defer></script>
 </body>
