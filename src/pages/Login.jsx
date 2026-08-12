@@ -181,7 +181,10 @@ export default function Login({ onLogin }) {
         method: 'POST',
         body: { email: vergetenEmail },
       });
-      setVergetenBericht(data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.');
+      // Oefenversie: toon dan alleen de oefen-kaart (directe link of uitleg) —
+      // de "je ontvangt een mail"-belofte ernaast is daar tegenstrijdig.
+      const oefen = !!(data.resetLinkOefen || data.oefenOnbekend);
+      setVergetenBericht(oefen ? '' : (data.bericht || 'Reset link verstuurd! Check je inbox én spam folder.'));
       setVergetenOk(true);
       setVergetenOefenLink(data.resetLinkOefen || '');
       setVergetenOefenOnbekend(!!data.oefenOnbekend);
