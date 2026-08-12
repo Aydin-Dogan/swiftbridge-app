@@ -1452,4 +1452,8 @@ export const tr = {
  opdracht_bewerk_titel:'Planlanan talimatı düzenle',
  opdracht_bewerk_opgeslagen:'Değişiklikler kaydedildi.',
  opdracht_bewerk_fout:'Kaydedilemedi. Alanları kontrol edip tekrar deneyin.',
+ // AI-LEER-1: feedback op AI-antwoorden
+ chat_feedback_nuttig:'Faydalı',
+ chat_feedback_niet_nuttig:'Faydalı değil',
+ chat_feedback_dank:'Geri bildiriminiz için teşekkürler.',
 };

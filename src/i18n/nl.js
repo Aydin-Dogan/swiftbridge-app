@@ -1454,4 +1454,8 @@ export const nl = {
  opdracht_bewerk_titel:'Geplande opdracht bewerken',
  opdracht_bewerk_opgeslagen:'Wijzigingen opgeslagen.',
  opdracht_bewerk_fout:'Opslaan is niet gelukt. Controleer de velden en probeer het opnieuw.',
+ // AI-LEER-1: feedback op AI-antwoorden
+ chat_feedback_nuttig:'Nuttig',
+ chat_feedback_niet_nuttig:'Niet nuttig',
+ chat_feedback_dank:'Bedankt voor je feedback.',
 };

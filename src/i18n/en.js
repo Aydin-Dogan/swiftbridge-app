@@ -1452,4 +1452,8 @@ export const en = {
  opdracht_bewerk_titel:'Edit scheduled order',
  opdracht_bewerk_opgeslagen:'Changes saved.',
  opdracht_bewerk_fout:'Saving failed. Check the fields and try again.',
+ // AI-LEER-1: feedback op AI-antwoorden
+ chat_feedback_nuttig:'Helpful',
+ chat_feedback_niet_nuttig:'Not helpful',
+ chat_feedback_dank:'Thanks for your feedback.',
 };

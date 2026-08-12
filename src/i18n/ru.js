@@ -1444,4 +1444,8 @@ export const ru = {
  opdracht_bewerk_titel:'Изменить запланированное поручение',
  opdracht_bewerk_opgeslagen:'Изменения сохранены.',
  opdracht_bewerk_fout:'Не удалось сохранить. Проверьте поля и попробуйте ещё раз.',
+ // AI-LEER-1: feedback op AI-antwoorden
+ chat_feedback_nuttig:'Полезно',
+ chat_feedback_niet_nuttig:'Не полезно',
+ chat_feedback_dank:'Спасибо за отзыв.',
 };

@@ -21,7 +21,23 @@ import ChatBubble from './ChatBubble';
 import QuickActions from './QuickActions';
 
 const STORAGE_KEY = 'sb_chat_history';
+const GESPREK_KEY = 'sb_chat_gesprek_id';
 const MAX_HISTORY = 100;
+
+// AI-LEER-1: stabiel gesprek-id zodat de backend berichten van een gesprek
+// kan groeperen in de leer-lus.
+function gesprekId() {
+  try {
+    let id = localStorage.getItem(GESPREK_KEY);
+    if (!id) {
+      id = `g_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+      localStorage.setItem(GESPREK_KEY, id);
+    }
+    return id;
+  } catch {
+    return null;
+  }
+}
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 function laadGeschiedenis() {
@@ -181,12 +197,13 @@ export default function SupportChat({ gebruiker, actief = true }) {
     try {
       const data = await apiFetch('/support/chat', {
         method: 'POST',
-        body: { berichten: bouwGeschiedenis(tekst) },
+        body: { berichten: bouwGeschiedenis(tekst), gesprekId: gesprekId() },
       });
       voegToe({
         id: nieuwId(),
         rol: 'support',
         tekst: data?.antwoord || t('support_offline_fallback'),
+        logId: data?.logId || null,
         timestamp: new Date().toISOString(),
       });
     } catch (err) {
@@ -231,6 +248,18 @@ export default function SupportChat({ gebruiker, actief = true }) {
     } finally {
       setVerzendt(false);
     }
+  }
+
+  // ── AI-LEER-1: feedback op een AI-antwoord (duim omhoog/omlaag) ──────────
+  async function stuurFeedback(bericht, keuze) {
+    // Optimistisch markeren — feedback is best-effort en mag nooit storen.
+    setBerichten((b) => b.map((m) => (m.id === bericht.id ? { ...m, feedback: keuze } : m)));
+    try {
+      await apiFetch('/support/feedback', {
+        method: 'POST',
+        body: { logId: bericht.logId, feedback: keuze },
+      });
+    } catch { /* stil — geen foutmelding voor een feedbackklikje */ }
   }
 
   // ── Toetsenbord in textarea: Enter verzendt, Shift+Enter newline ──────────
@@ -351,7 +380,25 @@ export default function SupportChat({ gebruiker, actief = true }) {
             )}
 
             {berichten.map((b) => (
-              <ChatBubble key={b.id} bericht={b} />
+              <div key={b.id}>
+                <ChatBubble bericht={b} />
+                {b.rol === 'support' && b.logId && (
+                  b.feedback ? (
+                    <p className="text-[10px] text-gray-400 ml-10 -mt-1 mb-2">{t('chat_feedback_dank')}</p>
+                  ) : (
+                    <div className="flex gap-2 ml-10 -mt-1 mb-2">
+                      <button type="button" onClick={() => stuurFeedback(b, 'goed')}
+                        className="text-[10px] text-gray-400 hover:text-brand-600 border border-gray-200 hover:border-brand-300 rounded-full px-2 py-0.5 transition">
+                        {t('chat_feedback_nuttig')}
+                      </button>
+                      <button type="button" onClick={() => stuurFeedback(b, 'slecht')}
+                        className="text-[10px] text-gray-400 hover:text-brand-600 border border-gray-200 hover:border-brand-300 rounded-full px-2 py-0.5 transition">
+                        {t('chat_feedback_niet_nuttig')}
+                      </button>
+                    </div>
+                  )
+                )}
+              </div>
             ))}
 
             {verzendt && (

@@ -1444,4 +1444,8 @@ export const az = {
  opdracht_bewerk_titel:'Planlaşdırılmış tapşırığı dəyişdir',
  opdracht_bewerk_opgeslagen:'Dəyişikliklər yadda saxlanıldı.',
  opdracht_bewerk_fout:'Yadda saxlamaq alınmadı. Sahələri yoxlayıb yenidən cəhd edin.',
+ // AI-LEER-1: feedback op AI-antwoorden
+ chat_feedback_nuttig:'Faydalı',
+ chat_feedback_niet_nuttig:'Faydalı deyil',
+ chat_feedback_dank:'Rəyiniz üçün təşəkkürlər.',
 };
