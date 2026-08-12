@@ -91,6 +91,30 @@ export default function SupportChat({ gebruiker, actief = true }) {
     }
   }, [berichten, open]);
 
+  // ── Mobiel: paneel volgt het zichtbare scherm bij open toetsenbord ────────
+  // (iOS/Android schoven de kop met sluitknop en de verstuurknop buiten beeld
+  //  zodra het toetsenbord opende — bevinding Aydin.)
+  useEffect(() => {
+    if (!open) return;
+    const mobiel = window.matchMedia('(max-width: 640px)').matches;
+    if (!mobiel) return;
+    document.documentElement.style.overflow = 'hidden';
+    const pasAan = () => {
+      if (panelRef.current && window.visualViewport) {
+        panelRef.current.style.height = `${window.visualViewport.height}px`;
+      }
+      if (messageListRef.current) {
+        messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+      }
+    };
+    pasAan();
+    window.visualViewport?.addEventListener('resize', pasAan);
+    return () => {
+      document.documentElement.style.overflow = '';
+      window.visualViewport?.removeEventListener('resize', pasAan);
+    };
+  }, [open]);
+
   // ── Esc sluit modal + focus trap ──────────────────────────────────────────
   useEffect(() => {
     if (!open) return;
@@ -428,7 +452,7 @@ export default function SupportChat({ gebruiker, actief = true }) {
                 rows={1}
                 aria-label={t('support_invoer_label')}
                 disabled={verzendt}
-                className="flex-1 resize-none bg-slate-100 focus:bg-white focus:ring-2 focus:ring-blue-300 border border-transparent focus:border-blue-300 rounded-xl px-3 py-2 text-sm text-gray-800 placeholder-gray-400 outline-none transition max-h-[120px] disabled:opacity-50"
+                className="flex-1 resize-none bg-slate-100 focus:bg-white focus:ring-2 focus:ring-blue-300 border border-transparent focus:border-blue-300 rounded-xl px-3 py-2 text-base sm:text-sm text-gray-800 placeholder-gray-400 outline-none transition max-h-[120px] disabled:opacity-50"
                 style={{ minHeight: '40px' }}
               />
               <button

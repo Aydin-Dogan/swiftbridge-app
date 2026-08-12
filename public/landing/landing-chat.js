@@ -146,7 +146,10 @@
     '#sb-lchat-escalatie{display:none;gap:6px;margin-top:8px}',
     '#sb-lchat-email{flex:1;border:1px solid #e2e8f0;border-radius:10px;padding:8px 10px;font-size:12.5px;font-family:inherit;outline:none}',
     '#sb-lchat-doorsturen{border:none;border-radius:10px;background:#1B3252;color:#fff;font-size:12px;font-weight:600;padding:8px 12px;cursor:pointer}',
-    '@media (max-width:640px){#sb-lchat-paneel{bottom:0;right:0;left:0;width:100%;height:100%;max-height:none;border-radius:0}[dir="rtl"] #sb-lchat-paneel{left:0}}',
+    // Mobiel: dvh volgt het toetsenbord (kop + invoer blijven zichtbaar) en
+    // 16px op invoervelden voorkomt de automatische inzoom van iOS Safari
+    // (die duwde de verstuur- en sluitknop buiten beeld — bevinding Aydin).
+    '@media (max-width:640px){#sb-lchat-paneel{top:0;bottom:0;right:0;left:0;width:100%;height:100dvh;max-height:100dvh;border-radius:0}[dir="rtl"] #sb-lchat-paneel{left:0}#sb-lchat-invoer{font-size:16px}#sb-lchat-email{font-size:16px}}',
   ].join('\n');
 
   var stijl = document.createElement('style');
@@ -198,9 +201,24 @@
     invoer.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); verstuur(e); }
     });
+    // Mobiel toetsenbord: na focus het gesprek weer in beeld scrollen.
+    invoer.addEventListener('focus', function () { setTimeout(scrollOnder, 350); });
     document.addEventListener('keydown', escSluit);
 
     voegBericht('assistent', t('welkom'), null);
+  }
+
+  // Mobiel: het paneel meebewegen met het zichtbare deel van het scherm
+  // wanneer het toetsenbord open is (iOS/Android visual viewport).
+  function isMobiel() { return window.matchMedia('(max-width: 640px)').matches; }
+  function pasHoogteAan() {
+    if (!paneel) return;
+    if (isMobiel() && window.visualViewport) {
+      paneel.style.height = window.visualViewport.height + 'px';
+      scrollOnder();
+    } else {
+      paneel.style.height = '';
+    }
   }
 
   function vertaalPaneel() {
@@ -220,11 +238,16 @@
   function open() {
     if (!paneel) maakPaneel(); else { paneel.style.display = 'flex'; vertaalPaneel(); }
     knop.style.display = 'none';
+    if (isMobiel()) document.documentElement.style.overflow = 'hidden';
+    pasHoogteAan();
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', pasHoogteAan);
     setTimeout(function () { paneel.querySelector('#sb-lchat-invoer').focus(); }, 60);
   }
   function sluit() {
     if (paneel) paneel.style.display = 'none';
     knop.style.display = 'flex';
+    document.documentElement.style.overflow = '';
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', pasHoogteAan);
     knop.focus();
   }
   knop.setAttribute('aria-label', TEKSTEN.nl.open);
