@@ -202,7 +202,10 @@ export default function SupportChat({ gebruiker, actief = true }) {
       voegToe({
         id: nieuwId(),
         rol: 'support',
-        tekst: data?.antwoord || t('support_offline_fallback'),
+        // mock=true: AI niet beschikbaar — toon de melding in de taal van de
+        // gebruiker (de server-fallback is Nederlands).
+        tekst: data?.mock ? t('support_offline_fallback')
+          : (data?.antwoord || t('support_offline_fallback')),
         logId: data?.logId || null,
         timestamp: new Date().toISOString(),
       });

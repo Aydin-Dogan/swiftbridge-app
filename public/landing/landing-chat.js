@@ -23,6 +23,7 @@
       email_placeholder: 'jouw@email.nl', doorsturen: 'Doorsturen',
       escalatie_ok: 'Je gesprek is doorgestuurd. Een medewerker mailt je zo snel mogelijk.',
       fout: 'Er ging iets mis. Probeer het opnieuw of mail support@swiftbridge.nl.',
+      niet_beschikbaar: 'Onze digitale assistent is op dit moment niet beschikbaar. Klik op "Medewerker spreken" of mail support@swiftbridge.nl — we reageren zo snel mogelijk.',
       nuttig: 'Nuttig', niet_nuttig: 'Niet nuttig', dank: 'Bedankt voor je feedback.',
     },
     en: {
@@ -34,6 +35,7 @@
       email_placeholder: 'you@email.com', doorsturen: 'Forward',
       escalatie_ok: 'Your conversation has been forwarded. An agent will email you shortly.',
       fout: 'Something went wrong. Please try again or email support@swiftbridge.nl.',
+      niet_beschikbaar: 'Our digital assistant is currently unavailable. Click "Talk to an agent" or email support@swiftbridge.nl — we will get back to you as soon as possible.',
       nuttig: 'Helpful', niet_nuttig: 'Not helpful', dank: 'Thanks for your feedback.',
     },
     tr: {
@@ -45,6 +47,7 @@
       email_placeholder: 'siz@eposta.com', doorsturen: 'İlet',
       escalatie_ok: 'Görüşmeniz iletildi. Temsilcimiz en kısa sürede e-posta gönderecek.',
       fout: 'Bir şeyler ters gitti. Tekrar deneyin veya support@swiftbridge.nl adresine yazın.',
+      niet_beschikbaar: 'Dijital asistanımız şu anda kullanılamıyor. "Temsilciyle görüş" düğmesine tıklayın veya support@swiftbridge.nl adresine yazın — en kısa sürede dönüş yaparız.',
       nuttig: 'Faydalı', niet_nuttig: 'Faydalı değil', dank: 'Geri bildiriminiz için teşekkürler.',
     },
     ar: {
@@ -56,6 +59,7 @@
       email_placeholder: 'you@email.com', doorsturen: 'إرسال',
       escalatie_ok: 'تم تحويل محادثتك. سيراسلك موظف قريباً.',
       fout: 'حدث خطأ ما. حاول مجدداً أو راسل support@swiftbridge.nl.',
+      niet_beschikbaar: 'المساعد الرقمي غير متاح حالياً. اضغط على «التحدث مع موظف» أو راسل support@swiftbridge.nl — سنرد عليك في أقرب وقت.',
       nuttig: 'مفيد', niet_nuttig: 'غير مفيد', dank: 'شكراً على ملاحظتك.',
     },
     de: {
@@ -67,6 +71,7 @@
       email_placeholder: 'sie@email.de', doorsturen: 'Weiterleiten',
       escalatie_ok: 'Ihr Gespräch wurde weitergeleitet. Ein Mitarbeiter meldet sich per E-Mail.',
       fout: 'Etwas ist schiefgelaufen. Versuchen Sie es erneut oder mailen Sie an support@swiftbridge.nl.',
+      niet_beschikbaar: 'Unser digitaler Assistent ist derzeit nicht verfügbar. Klicken Sie auf "Mit Mitarbeiter sprechen" oder mailen Sie an support@swiftbridge.nl — wir melden uns schnellstmöglich.',
       nuttig: 'Hilfreich', niet_nuttig: 'Nicht hilfreich', dank: 'Danke für Ihr Feedback.',
     },
     fr: {
@@ -78,6 +83,7 @@
       email_placeholder: 'vous@email.fr', doorsturen: 'Transférer',
       escalatie_ok: 'Votre conversation a été transmise. Un agent vous écrira rapidement.',
       fout: 'Une erreur est survenue. Réessayez ou écrivez à support@swiftbridge.nl.',
+      niet_beschikbaar: 'Notre assistant numérique est momentanément indisponible. Cliquez sur « Parler à un agent » ou écrivez à support@swiftbridge.nl — nous vous répondrons au plus vite.',
       nuttig: 'Utile', niet_nuttig: 'Pas utile', dank: 'Merci pour votre retour.',
     },
   };
@@ -290,7 +296,11 @@
     })
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        voegBericht('assistent', (data && data.antwoord) || t('fout'), (data && data.logId) || null);
+        // mock=true: AI niet beschikbaar — toon de melding in de taal van de
+        // bezoeker (de server-fallback is Nederlands).
+        var tekst = data && data.mock ? t('niet_beschikbaar')
+          : (data && data.antwoord) || t('fout');
+        voegBericht('assistent', tekst, (data && data.logId) || null);
       })
       .catch(function () { voegBericht('assistent', t('fout'), null); })
       .then(function () { zetBezig(false); invoer.focus(); });
