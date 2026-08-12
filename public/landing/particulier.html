@@ -390,7 +390,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
      TOP BAR
      ============================================================ -->
 <div id="topbar" role="banner" aria-label="Regulatoire informatie">
-  <span>SwiftBridge &mdash; Nederland &middot; <a href="https://www.dnb.nl/" target="_blank" rel="noopener" data-i18n="hero_eyebrow">Onder toezicht van DNB via onze EMI-partner</a> &middot; Wwft &amp; AVG-conform</span>
+  <span><span data-i18n="topbar_brand">SwiftBridge &mdash; Nederland</span> &middot; <a href="https://www.dnb.nl/" target="_blank" rel="noopener" data-i18n="hero_eyebrow">Onder toezicht van DNB via onze EMI-partner</a> &middot; <span data-i18n="topbar_compliance">Wwft &amp; AVG-conform</span></span>
 
   <a href="#app-section" id="topbar-download" style="display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:#fff;background:var(--accent);border-radius:999px;padding:.28rem .8rem;font-weight:600;font-size:.8125rem;white-space:nowrap">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
@@ -461,7 +461,7 @@ Gebouwd voor mensen zoals u.</h1>
       <p class="hero-sub" data-i18n="hero_subhead">SwiftBridge werkt onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde toezichthouder die uw eigen bank bewaakt. Stuur geld naar huis met volledig zichtbare kosten en doorgaans binnen 5 minuten op de rekening van de ontvanger.</p>
       <div class="hero-btns">
         <a class="btn btn-primary" href="/login?tab=register" data-i18n="hero_cta">Gratis account openen</a>
-        <a class="btn btn-secondary" href="#comparison">Vergelijk met uw bank &rarr;</a>
+        <a class="btn btn-secondary" href="#comparison" data-i18n="hero_compare_cta">Vergelijk met uw bank &rarr;</a>
       </div>
       <div class="hero-trust" aria-label="Vertrouwenskenmerken">
         <span data-i18n="trust_dnb">DNB-toezicht via EMI-partner</span>
@@ -475,7 +475,7 @@ Gebouwd voor mensen zoals u.</h1>
     <!-- DNB Trust Card + Calculator -->
     <div class="hero-right">
       <div class="dnb-card" role="region" aria-labelledby="dnb-card-title">
-        <div class="dnb-card-badge">Gereguleerd</div>
+        <div class="dnb-card-badge" data-i18n="dnb_badge">Gereguleerd</div>
         <div class="dnb-card-logo">
           <svg class="dnb-shield" viewBox="0 0 48 48" fill="none" aria-hidden="true">
             <path d="M24 4L6 12v14c0 9.94 7.72 19.24 18 22 10.28-2.76 18-12.06 18-22V12L24 4Z" fill="#1B3252"/>
@@ -484,19 +484,19 @@ Gebouwd voor mensen zoals u.</h1>
           </svg>
           <div class="dnb-card-logo-text" id="dnb-card-title">
             De Nederlandsche Bank
-            <small>Toezicht via geregistreerde EMI-partner</small>
+            <small data-i18n="dnb_card_sub">Toezicht via geregistreerde EMI-partner</small>
           </div>
         </div>
-        <p class="dnb-card-quote">"Onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde standaard als uw eigen bank."</p>
+        <p class="dnb-card-quote" data-i18n="dnb_card_quote">"Onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde standaard als uw eigen bank."</p>
         <div class="dnb-card-badge-row" aria-label="Compliance kenmerken">
-          <span class="dnb-pill">&#x2713; Betaaldiensten</span>
-          <span class="dnb-pill">&#x2713; Gereguleerd NL</span>
-          <span class="dnb-pill">&#x2713; Wwft-conform</span>
-          <span class="dnb-pill">&#x2713; AVG/GDPR</span>
+          <span class="dnb-pill" data-i18n="dnb_pill_payments">&#x2713; Betaaldiensten</span>
+          <span class="dnb-pill" data-i18n="dnb_pill_regulated">&#x2713; Gereguleerd NL</span>
+          <span class="dnb-pill" data-i18n="dnb_pill_wwft">&#x2713; Wwft-conform</span>
+          <span class="dnb-pill" data-i18n="dnb_pill_avg">&#x2713; AVG/GDPR</span>
         </div>
 
         <!-- CALCULATOR -->
-        <div class="calc-heading" id="calc-heading">Bereken uw overboeking</div>
+        <div class="calc-heading" id="calc-heading" data-i18n="calc_heading">Bereken uw overboeking</div>
         <form id="calc-form" aria-labelledby="calc-heading" novalidate>
           <div class="calc-row">
             <div>
@@ -504,29 +504,29 @@ Gebouwd voor mensen zoals u.</h1>
               <input class="calc-input" id="calc-amount" type="number" min="50" max="5000" value="500" step="1"
                 aria-describedby="calc-amount-hint"
                 data-i18n-attr="aria-label:calc_label_amount"/>
-              <span id="calc-amount-hint" style="font-size:.6875rem;color:var(--txt-m)">Min. €50 · Max. €5.000</span>
+              <span id="calc-amount-hint" style="font-size:.6875rem;color:var(--txt-m)" data-i18n="calc_minmax">Min. €50 · Max. €5.000</span>
             </div>
             <div>
               <label class="calc-label" for="calc-currency" data-i18n="calc_label_currency">Valuta</label>
               <div class="calc-select-wrap">
                 <select class="calc-select" id="calc-currency"
                   data-i18n-attr="aria-label:calc_label_currency">
-                  <option value="TRY">&#x1F1F9;&#x1F1F7; TRY &mdash; Turkse lira</option>
-                  <option value="AZN">&#x1F1E6;&#x1F1FF; AZN &mdash; Azerbeidzjaanse manat</option>
-                  <option value="KZT">&#x1F1F0;&#x1F1FF; KZT &mdash; Kazachse tenge</option>
-                  <option value="UZS">&#x1F1FA;&#x1F1FF; UZS &mdash; Oezbeekse soem</option>
-                  <option value="TMT">&#x1F1F9;&#x1F1F2; TMT &mdash; Turkmeense manat</option>
-                  <option value="KGS">&#x1F1F0;&#x1F1EC; KGS &mdash; Kirgizische som</option>
-                  <option value="USD">&#x1F1FA;&#x1F1F8; USD &mdash; Amerikaanse dollar</option>
-                  <option value="GBP">&#x1F1EC;&#x1F1E7; GBP &mdash; Brits pond</option>
-                  <option value="MAD">&#x1F1F2;&#x1F1E6; MAD &mdash; Marokkaanse dirham</option>
+                  <option value="TRY" data-i18n="calc_cur_try">&#x1F1F9;&#x1F1F7; TRY &mdash; Turkse lira</option>
+                  <option value="AZN" data-i18n="calc_cur_azn">&#x1F1E6;&#x1F1FF; AZN &mdash; Azerbeidzjaanse manat</option>
+                  <option value="KZT" data-i18n="calc_cur_kzt">&#x1F1F0;&#x1F1FF; KZT &mdash; Kazachse tenge</option>
+                  <option value="UZS" data-i18n="calc_cur_uzs">&#x1F1FA;&#x1F1FF; UZS &mdash; Oezbeekse soem</option>
+                  <option value="TMT" data-i18n="calc_cur_tmt">&#x1F1F9;&#x1F1F2; TMT &mdash; Turkmeense manat</option>
+                  <option value="KGS" data-i18n="calc_cur_kgs">&#x1F1F0;&#x1F1EC; KGS &mdash; Kirgizische som</option>
+                  <option value="USD" data-i18n="calc_cur_usd">&#x1F1FA;&#x1F1F8; USD &mdash; Amerikaanse dollar</option>
+                  <option value="GBP" data-i18n="calc_cur_gbp">&#x1F1EC;&#x1F1E7; GBP &mdash; Brits pond</option>
+                  <option value="MAD" data-i18n="calc_cur_mad">&#x1F1F2;&#x1F1E6; MAD &mdash; Marokkaanse dirham</option>
                 </select>
               </div>
             </div>
           </div>
 
           <fieldset style="border:none;margin-bottom:.75rem">
-            <legend class="calc-label" style="margin-bottom:.4rem">Snelheid</legend>
+            <legend class="calc-label" style="margin-bottom:.4rem" data-i18n="calc_speed_legend">Snelheid</legend>
             <div class="calc-speed" role="radiogroup" aria-label="Overboekingssnelheid">
               <label>
                 <input type="radio" name="speed" value="express" checked/>
@@ -589,8 +589,8 @@ Gebouwd voor mensen zoals u.</h1>
 <!-- ── VALUE CARDS ── -->
 <section id="value-cards" class="section" aria-labelledby="value-heading">
   <div class="wrap">
-    <span class="eyebrow">Waarom SwiftBridge</span>
-    <h2 class="section-h" id="value-heading">Bankwaardige beveiliging. Betere kosten. Sneller.</h2>
+    <span class="eyebrow" data-i18n="why_swiftbridge">Waarom SwiftBridge</span>
+    <h2 class="section-h" id="value-heading" data-i18n="value_heading">Bankwaardige beveiliging. Betere kosten. Sneller.</h2>
     <div class="value-grid">
       <article class="value-card fade-in">
         <div class="value-icon">
@@ -620,9 +620,9 @@ Gebouwd voor mensen zoals u.</h1>
 <!-- ── HOW IT WORKS ── -->
 <section id="how-it-works" class="section section-alt" aria-labelledby="hiw-heading">
   <div class="wrap">
-    <span class="eyebrow">Zo eenvoudig werkt het</span>
+    <span class="eyebrow" data-i18n="hiw_eyebrow">Zo eenvoudig werkt het</span>
     <h2 class="section-h" id="hiw-heading" data-i18n="hiw_heading">In vier stappen klaar — veilig en eenvoudig</h2>
-    <p class="section-sub">Uw eerste overboeking is in minder dan 10 minuten ingesteld. Eenmalig verificeren, daarna altijd direct klaar.</p>
+    <p class="section-sub" data-i18n="hiw_sub">Uw eerste overboeking is in minder dan 10 minuten ingesteld. Eenmalig verificeren, daarna altijd direct klaar.</p>
     <div class="steps">
       <article class="step fade-in">
         <div class="step-num" aria-hidden="true">1</div>
@@ -644,7 +644,7 @@ Gebouwd voor mensen zoals u.</h1>
         <h3 data-i18n="hiw_step4_title">Veilig op de rekening van uw familie</h3>
         <p data-i18n="hiw_step4_body">Het bedrag wordt bijgeschreven op de lokale bankrekening van de ontvanger — bij Express doorgaans binnen 5 minuten. Zowel u als de ontvanger ontvangt een WhatsApp-bevestiging zodra de overboeking is verwerkt.</p>
       </article>
-      <p class="step-note">&#8224; Express-overboekingen: doorgaans onder 5 minuten op live corridors. Economy: 1–2 werkdagen. Definitieve koers en kosten bevestigd vóór elke transactie.</p>
+      <p class="step-note" data-i18n="hiw_note">&#8224; Express-overboekingen: doorgaans onder 5 minuten op live corridors. Economy: 1–2 werkdagen. Definitieve koers en kosten bevestigd vóór elke transactie.</p>
     </div>
   </div>
 </section>
@@ -653,9 +653,9 @@ Gebouwd voor mensen zoals u.</h1>
 <section id="comparison" aria-labelledby="comparison-title">
   <div class="sb-comparison-inner">
     <header class="sb-comparison__header">
-      <span class="sb-comparison__eyebrow">Eerlijk vergelijken</span>
+      <span class="sb-comparison__eyebrow" data-i18n="comparison_eyebrow">Eerlijk vergelijken</span>
       <h2 class="sb-comparison__title" id="comparison-title" data-i18n="comparison_heading">Wat kost een overboeking via uw bank — en wat via SwiftBridge?</h2>
-      <p class="sb-comparison__subtitle">Vergelijk vaste kosten, wisselkoersmarge en snelheid — transparant en zonder verrassingen.</p>
+      <p class="sb-comparison__subtitle" data-i18n="comparison_sub">Vergelijk vaste kosten, wisselkoersmarge en snelheid — transparant en zonder verrassingen.</p>
     </header>
 
     <!-- Tab list -->
@@ -677,7 +677,7 @@ Gebouwd voor mensen zoals u.</h1>
       <div class="sb-table-wrap">
         <table class="sb-table" aria-label="SwiftBridge versus Nederlandse banken">
           <thead><tr>
-            <th scope="col">Kenmerk</th>
+            <th scope="col" data-i18n="comp_col_feature">Kenmerk</th>
             <th scope="col" class="sb-col-sb">SwiftBridge</th>
             <th scope="col">ING</th>
             <th scope="col">ABN AMRO</th>
@@ -685,108 +685,108 @@ Gebouwd voor mensen zoals u.</h1>
           </tr></thead>
           <tbody>
             <tr>
-              <td>Vaste kosten (niet-SEPA)</td>
-              <td class="sb-col-sb">€4,95 vast</td>
-              <td>~€6 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
-              <td>€9 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
-              <td>€8 p/overboeking <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td data-i18n="comp_row_fixed">Vaste kosten (niet-SEPA)</td>
+              <td class="sb-col-sb" data-i18n="comp_sb_fixed">€4,95 vast</td>
+              <td><span data-i18n="comp_ing_fee">~€6 p/overboeking</span> <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
+              <td><span data-i18n="comp_abn_fee">€9 p/overboeking</span> <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
+              <td><span data-i18n="comp_rabo_fee">€8 p/overboeking</span> <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
             </tr>
             <tr>
-              <td>FX-marge</td>
-              <td class="sb-col-sb">~1,2% <small style="color:var(--txt-m)">(getoond vóór bevestiging)</small></td>
-              <td>~0,85–1,66% <small style="color:var(--txt-m)">(indicatief)</small></td>
-              <td>~1–2% <small style="color:var(--txt-m)">(niet apart gepubliceerd)</small></td>
-              <td>~1–2% <small style="color:var(--txt-m)">(indicatief)</small></td>
+              <td data-i18n="comp_row_fx">FX-marge</td>
+              <td class="sb-col-sb">~1,2% <small style="color:var(--txt-m)" data-i18n="comp_shown_before">(getoond vóór bevestiging)</small></td>
+              <td>~0,85–1,66% <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
+              <td>~1–2% <small style="color:var(--txt-m)" data-i18n="comp_not_published">(niet apart gepubliceerd)</small></td>
+              <td>~1–2% <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
             </tr>
             <tr>
-              <td>Snelheid non-SEPA</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--win">Express: &lt;5 min</span><br>Economy: 1–2 werkdagen</td>
-              <td>1–2 werkdagen</td>
-              <td>3–5 werkdagen</td>
-              <td>~2 werkdagen</td>
+              <td data-i18n="comp_row_speed">Snelheid non-SEPA</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--win" data-i18n="comp_sb_speed_badge">Express: &lt;5 min</span><br><span data-i18n="comp_sb_speed_econ">Economy: 1–2 werkdagen</span></td>
+              <td data-i18n="comp_days_1_2">1–2 werkdagen</td>
+              <td data-i18n="comp_days_3_5">3–5 werkdagen</td>
+              <td data-i18n="comp_days_2">~2 werkdagen</td>
             </tr>
             <tr>
-              <td>Kosten volledig vooraf zichtbaar</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Volledig</span></td>
-              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
-              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
-              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+              <td data-i18n="comp_row_transparency">Kosten volledig vooraf zichtbaar</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_full">Volledig</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_partial">Gedeeltelijk</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_partial">Gedeeltelijk</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_partial">Gedeeltelijk</span></td>
             </tr>
             <tr>
               <td>iDEAL / iDIN (NL-native)</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — centraal</span></td>
-              <td><span class="sb-badge sb-badge--part">Eigen bank</span></td>
-              <td><span class="sb-badge sb-badge--part">Eigen bank</span></td>
-              <td><span class="sb-badge sb-badge--part">Eigen bank</span></td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes_central">Ja — centraal</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_own_bank">Eigen bank</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_own_bank">Eigen bank</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_own_bank">Eigen bank</span></td>
             </tr>
             <tr>
               <td>Express &lt;5 min</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €4,95 vast</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes_fixed">Ja — €4,95 vast</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
             </tr>
             <tr>
-              <td>Centrale-Aziatische corridors</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja (UZS, KZT, KGS, TMT, AZN)</span></td>
-              <td><span class="sb-badge sb-badge--part">Beperkt</span></td>
-              <td><span class="sb-badge sb-badge--part">Beperkt</span></td>
-              <td><span class="sb-badge sb-badge--part">Beperkt</span></td>
+              <td data-i18n="comp_row_corridors">Centrale-Aziatische corridors</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes_corridors">Ja (UZS, KZT, KGS, TMT, AZN)</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_limited">Beperkt</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_limited">Beperkt</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_limited">Beperkt</span></td>
             </tr>
             <tr>
-              <td>WhatsApp-bevestiging</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td data-i18n="comp_row_whatsapp">WhatsApp-bevestiging</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes">Ja</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="sb-example">
-        <p class="sb-example__title">Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)</p>
-        <p class="sb-example__note">Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief); Economy-tarief SwiftBridge. Bankmarges indicatief ~1,5%. Controleer actuele tarieven vóór verzending.</p>
+        <p class="sb-example__title" data-i18n="comp_example_title">Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)</p>
+        <p class="sb-example__note" data-i18n="comp_example_note1">Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief); Economy-tarief SwiftBridge. Bankmarges indicatief ~1,5%. Controleer actuele tarieven vóór verzending.</p>
         <div class="sb-example-grid">
           <div class="sb-example-card sb-example-card--sb">
             <p class="sb-example-card__provider">SwiftBridge</p>
             <p class="sb-example-card__amount">~35.395 TRY</p>
-            <p class="sb-example-card__sub">Fee: €4,95 · Marge: 1,2%<br>Totale kost: ~€16,95</p>
-            <span class="sb-example-card__tag sb-example-card__tag--normal">1–2 werkdagen</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_sb_fees">Fee: €4,95 · Marge: 1,2%</span><br><span data-i18n="comp_ex_sb_total">Totale kost: ~€16,95</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal" data-i18n="comp_days_1_2">1–2 werkdagen</span>
           </div>
           <div class="sb-example-card">
             <p class="sb-example-card__provider">ING</p>
             <p class="sb-example-card__amount">~35.227 TRY</p>
-            <p class="sb-example-card__sub">Fee: ~€6 · Marge: ~1,5%<br>Totale kost: ~€21,60</p>
-            <span class="sb-example-card__tag sb-example-card__tag--normal">1–2 werkdagen</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_ing_fees">Fee: ~€6 · Marge: ~1,5%</span><br><span data-i18n="comp_ex_ing_total">Totale kost: ~€21,60</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal" data-i18n="comp_days_1_2">1–2 werkdagen</span>
           </div>
           <div class="sb-example-card">
             <p class="sb-example-card__provider">ABN AMRO</p>
             <p class="sb-example-card__amount">~35.120 TRY</p>
-            <p class="sb-example-card__sub">Fee: €9 · Marge: ~1,5%<br>Totale kost: ~€24,75</p>
-            <span class="sb-example-card__tag sb-example-card__tag--slow">3–5 werkdagen</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_abn_fees">Fee: €9 · Marge: ~1,5%</span><br><span data-i18n="comp_ex_abn_total">Totale kost: ~€24,75</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--slow" data-i18n="comp_days_3_5">3–5 werkdagen</span>
           </div>
           <div class="sb-example-card">
             <p class="sb-example-card__provider">Rabobank</p>
             <p class="sb-example-card__amount">~35.156 TRY</p>
-            <p class="sb-example-card__sub">Fee: €8 · Marge: ~1,5%<br>Totale kost: ~€23,70</p>
-            <span class="sb-example-card__tag sb-example-card__tag--normal">~2 werkdagen</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_rabo_fees">Fee: €8 · Marge: ~1,5%</span><br><span data-i18n="comp_ex_rabo_total">Totale kost: ~€23,70</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal" data-i18n="comp_days_2">~2 werkdagen</span>
           </div>
         </div>
       </div>
 
       <div class="sb-takeaways">
         <div class="sb-takeaway sb-takeaway--win">
-          <p class="sb-takeaway__label">SwiftBridge wint op</p>
-          <p class="sb-takeaway__text">Lagere totaalkosten voor diaspora-bedragen, Express &lt;5 min (uniek), volledige kostentransparantie vóór bevestiging, iDEAL + iDIN NL-native, WhatsApp-bevestiging, Centraal-Aziatische corridors.</p>
+          <p class="sb-takeaway__label" data-i18n="comp_takeaway_win_label">SwiftBridge wint op</p>
+          <p class="sb-takeaway__text" data-i18n="comp_takeaway_win_text1">Lagere totaalkosten voor diaspora-bedragen, Express &lt;5 min (uniek), volledige kostentransparantie vóór bevestiging, iDEAL + iDIN NL-native, WhatsApp-bevestiging, Centraal-Aziatische corridors.</p>
         </div>
         <div class="sb-takeaway sb-takeaway--peer">
-          <p class="sb-takeaway__label">Eerlijk: waar banken scoren</p>
-          <p class="sb-takeaway__text">Klanten die sporadisch overmaken wisselen minder snel. Banken bieden brede dienstverlening zonder nieuwe app. Sommige klanten verkiezen de vertrouwde omgeving.</p>
+          <p class="sb-takeaway__label" data-i18n="comp_takeaway_peer_label1">Eerlijk: waar banken scoren</p>
+          <p class="sb-takeaway__text" data-i18n="comp_takeaway_peer_text1">Klanten die sporadisch overmaken wisselen minder snel. Banken bieden brede dienstverlening zonder nieuwe app. Sommige klanten verkiezen de vertrouwde omgeving.</p>
         </div>
       </div>
 
-      <p class="sb-disclaimer"><strong>Indicatief — gecheckt 14 juni 2026.</strong> Bankgegevens gebaseerd op openbaar gepubliceerde tarieven. FX-marges zijn indicatief geschat. <span data-i18n="comparison_disclaimer">Controleer actuele tarieven altijd bij uw bank.</span></p>
+      <p class="sb-disclaimer"><strong data-i18n="comp_disclaimer_checked">Indicatief — gecheckt 14 juni 2026.</strong> <span data-i18n="comp_disclaimer_banks">Bankgegevens gebaseerd op openbaar gepubliceerde tarieven. FX-marges zijn indicatief geschat.</span> <span data-i18n="comparison_disclaimer">Controleer actuele tarieven altijd bij uw bank.</span></p>
     </div>
 
     <!-- Panel: Fintechs -->
@@ -794,7 +794,7 @@ Gebouwd voor mensen zoals u.</h1>
       <div class="sb-table-wrap">
         <table class="sb-table" aria-label="SwiftBridge versus fintechs">
           <thead><tr>
-            <th scope="col">Kenmerk</th>
+            <th scope="col" data-i18n="comp_col_feature">Kenmerk</th>
             <th scope="col" class="sb-col-sb">SwiftBridge</th>
             <th scope="col">Wise</th>
             <th scope="col">Remitly</th>
@@ -803,124 +803,124 @@ Gebouwd voor mensen zoals u.</h1>
           </tr></thead>
           <tbody>
             <tr>
-              <td>Vaste kosten</td>
-              <td class="sb-col-sb">€4,95 vast</td>
-              <td>~€6,50 totaal per €1.000 <small style="color:var(--txt-m)">(fee + %)</small></td>
-              <td>~€1,49–€1,99 flat <small style="color:var(--txt-m)">(indicatief)</small></td>
-              <td>Gratis binnen plan-limiet <small style="color:var(--txt-m)">(daarna 1%)</small></td>
-              <td>Variabel per methode</td>
+              <td data-i18n="comp_row_fixed2">Vaste kosten</td>
+              <td class="sb-col-sb" data-i18n="comp_sb_fixed">€4,95 vast</td>
+              <td><span data-i18n="comp_wise_fee">~€6,50 totaal per €1.000</span> <small style="color:var(--txt-m)">(fee + %)</small></td>
+              <td><span data-i18n="comp_remitly_fee">~€1,49–€1,99 flat</span> <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
+              <td><span data-i18n="comp_revolut_fee">Gratis binnen plan-limiet</span> <small style="color:var(--txt-m)" data-i18n="comp_revolut_fee_note">(daarna 1%)</small></td>
+              <td data-i18n="comp_wu_fee">Variabel per methode</td>
             </tr>
             <tr>
-              <td>FX-marge</td>
-              <td class="sb-col-sb">~1,2% <small style="color:var(--txt-m)">(getoond vóór bevestiging)</small></td>
-              <td><strong>0% FX-opslag</strong> — mid-market rate <small style="color:var(--txt-m)">(alleen expliciete conversion fee)</small></td>
-              <td>~0,5–3,0% boven mid-market <small style="color:var(--txt-m)">(indicatief)</small></td>
-              <td>0% binnen limiet; +1% weekend <small style="color:var(--txt-m)">(Standard plan)</small></td>
-              <td>FX-marge verwerkt in koers</td>
+              <td data-i18n="comp_row_fx">FX-marge</td>
+              <td class="sb-col-sb">~1,2% <small style="color:var(--txt-m)" data-i18n="comp_shown_before">(getoond vóór bevestiging)</small></td>
+              <td><strong data-i18n="comp_wise_fx_strong">0% FX-opslag</strong> <span data-i18n="comp_wise_fx_rest">— mid-market rate</span> <small style="color:var(--txt-m)" data-i18n="comp_wise_fx_note">(alleen expliciete conversion fee)</small></td>
+              <td><span data-i18n="comp_remitly_fx">~0,5–3,0% boven mid-market</span> <small style="color:var(--txt-m)" data-i18n="comp_indicative">(indicatief)</small></td>
+              <td><span data-i18n="comp_revolut_fx">0% binnen limiet; +1% weekend</span> <small style="color:var(--txt-m)">(Standard plan)</small></td>
+              <td data-i18n="comp_wu_fx">FX-marge verwerkt in koers</td>
             </tr>
             <tr>
-              <td>Snelheid non-SEPA</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--win">Express: doorgaans &lt;5 min</span><br>Economy: 1–2 werkdagen</td>
-              <td>40% seconden; meeste binnen uren–1 dag</td>
-              <td>Express: "kan direct"; Economy: 3–5 werkdagen</td>
-              <td>Revolut→Revolut: minuten; bank non-SEPA: 3–5 werkdagen</td>
-              <td>Bank: 1–2 werkdagen; cash pickup: minuten</td>
+              <td data-i18n="comp_row_speed">Snelheid non-SEPA</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--win" data-i18n="comp_sb_speed_badge2">Express: doorgaans &lt;5 min</span><br><span data-i18n="comp_sb_speed_econ">Economy: 1–2 werkdagen</span></td>
+              <td data-i18n="comp_wise_speed">40% seconden; meeste binnen uren–1 dag</td>
+              <td data-i18n="comp_remitly_speed">Express: "kan direct"; Economy: 3–5 werkdagen</td>
+              <td data-i18n="comp_revolut_speed">Revolut→Revolut: minuten; bank non-SEPA: 3–5 werkdagen</td>
+              <td data-i18n="comp_wu_speed">Bank: 1–2 werkdagen; cash pickup: minuten</td>
             </tr>
             <tr>
-              <td>Kosten vooraf zichtbaar</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Volledig</span></td>
-              <td><span class="sb-badge sb-badge--yes">Uitstekend</span></td>
-              <td><span class="sb-badge sb-badge--yes">Goed</span></td>
-              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
-              <td><span class="sb-badge sb-badge--part">Matig</span></td>
+              <td data-i18n="comp_row_transparency2">Kosten vooraf zichtbaar</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_full">Volledig</span></td>
+              <td><span class="sb-badge sb-badge--yes" data-i18n="comp_excellent">Uitstekend</span></td>
+              <td><span class="sb-badge sb-badge--yes" data-i18n="comp_good">Goed</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_partial">Gedeeltelijk</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_fair">Matig</span></td>
             </tr>
             <tr>
               <td>iDEAL / iDIN NL-native</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — centraal</span></td>
-              <td><span class="sb-badge sb-badge--part">Beschikbaar</span></td>
-              <td><span class="sb-badge sb-badge--no">Niet prominent</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes_central">Ja — centraal</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_available">Beschikbaar</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_not_prominent">Niet prominent</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
             </tr>
             <tr>
-              <td>Express &lt;5 min (vaste prijs)</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja — €4,95 vast</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--part">Remitly Express (hogere fee)</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee voor non-SEPA bank</span></td>
-              <td><span class="sb-badge sb-badge--part">Cash pickup: minuten</span></td>
+              <td data-i18n="comp_row_express2">Express &lt;5 min (vaste prijs)</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes_fixed">Ja — €4,95 vast</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_remitly_express">Remitly Express (hogere fee)</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no_nonsepa">Nee voor non-SEPA bank</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_cash_pickup">Cash pickup: minuten</span></td>
             </tr>
             <tr>
-              <td>Centrale-Aziatische corridors</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja (UZS, KZT, KGS, TMT, AZN)</span></td>
-              <td><span class="sb-badge sb-badge--part">Beperkt voor NL</span></td>
-              <td><span class="sb-badge sb-badge--part">Beperkt voor NL→CA</span></td>
-              <td><span class="sb-badge sb-badge--no">Niet gefocust</span></td>
-              <td><span class="sb-badge sb-badge--part">Gedeeltelijk</span></td>
+              <td data-i18n="comp_row_corridors">Centrale-Aziatische corridors</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes_corridors">Ja (UZS, KZT, KGS, TMT, AZN)</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_limited_nl">Beperkt voor NL</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_limited_nl_ca">Beperkt voor NL→CA</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_not_focused">Niet gefocust</span></td>
+              <td><span class="sb-badge sb-badge--part" data-i18n="comp_partial">Gedeeltelijk</span></td>
             </tr>
             <tr>
-              <td>WhatsApp-bevestiging</td>
-              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes">Ja</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
-              <td><span class="sb-badge sb-badge--no">Nee</span></td>
+              <td data-i18n="comp_row_whatsapp">WhatsApp-bevestiging</td>
+              <td class="sb-col-sb"><span class="sb-badge sb-badge--yes" data-i18n="comp_yes">Ja</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
+              <td><span class="sb-badge sb-badge--no" data-i18n="comp_no">Nee</span></td>
             </tr>
             <tr>
-              <td>DNB/EMI NL-supervisie</td>
-              <td class="sb-col-sb">Ja — via EMI-partner, DNB</td>
-              <td>DNB-geregistreerd; FCA-primair</td>
-              <td>EU-licenties; niet DNB-primair</td>
-              <td>EU banklicentie (LT); DNB NL</td>
-              <td>FCA/EU; niet DNB-primair</td>
+              <td data-i18n="comp_row_dnb">DNB/EMI NL-supervisie</td>
+              <td class="sb-col-sb" data-i18n="comp_dnb_sb">Ja — via EMI-partner, DNB</td>
+              <td data-i18n="comp_dnb_wise">DNB-geregistreerd; FCA-primair</td>
+              <td data-i18n="comp_dnb_remitly">EU-licenties; niet DNB-primair</td>
+              <td data-i18n="comp_dnb_revolut">EU banklicentie (LT); DNB NL</td>
+              <td data-i18n="comp_dnb_wu">FCA/EU; niet DNB-primair</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="sb-example">
-        <p class="sb-example__title">Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)</p>
-        <p class="sb-example__note">Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief). Wise gebruikt mid-market rate (0% FX-opslag). Controleer actuele tarieven altijd bij de aanbieder.</p>
+        <p class="sb-example__title" data-i18n="comp_example_title">Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)</p>
+        <p class="sb-example__note" data-i18n="comp_example_note2">Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief). Wise gebruikt mid-market rate (0% FX-opslag). Controleer actuele tarieven altijd bij de aanbieder.</p>
         <div class="sb-example-grid">
           <div class="sb-example-card sb-example-card--sb">
             <p class="sb-example-card__provider">SwiftBridge</p>
             <p class="sb-example-card__amount">~35.395 TRY</p>
-            <p class="sb-example-card__sub">Fee: €4,95 · Marge: 1,2%<br>Totale kost: ~€16,95</p>
-            <span class="sb-example-card__tag sb-example-card__tag--express">Express ook: &lt;5 min</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_sb_fees">Fee: €4,95 · Marge: 1,2%</span><br><span data-i18n="comp_ex_sb_total">Totale kost: ~€16,95</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--express" data-i18n="comp_tag_express_also">Express ook: &lt;5 min</span>
           </div>
           <div class="sb-example-card">
             <p class="sb-example-card__provider">Wise</p>
             <p class="sb-example-card__amount">~35.766 TRY</p>
-            <p class="sb-example-card__sub">Fee: ~€6,50 · <strong>0% FX-opslag</strong><br>Totale kost: ~€6,50</p>
-            <span class="sb-example-card__tag sb-example-card__tag--speed">Uren–1 dag</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_wise_fees">Fee: ~€6,50 ·</span> <strong data-i18n="comp_wise_fx_strong">0% FX-opslag</strong><br><span data-i18n="comp_ex_wise_total">Totale kost: ~€6,50</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--speed" data-i18n="comp_tag_hours_day">Uren–1 dag</span>
           </div>
           <div class="sb-example-card">
             <p class="sb-example-card__provider">Remitly Economy</p>
             <p class="sb-example-card__amount">~35.408 TRY</p>
-            <p class="sb-example-card__sub">Fee: ~€1,99 · Marge: ~1,5%<br>Totale kost: ~€17,50</p>
-            <span class="sb-example-card__tag sb-example-card__tag--slow">3–5 werkdagen</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_remitly_fees">Fee: ~€1,99 · Marge: ~1,5%</span><br><span data-i18n="comp_ex_remitly_total">Totale kost: ~€17,50</span></p>
+            <span class="sb-example-card__tag sb-example-card__tag--slow" data-i18n="comp_days_3_5">3–5 werkdagen</span>
           </div>
           <div class="sb-example-card">
             <p class="sb-example-card__provider">Western Union</p>
             <p class="sb-example-card__amount">~34.800–35.400 TRY</p>
-            <p class="sb-example-card__sub">Kost: ~€6–€30*<br><small>*sterk afhankelijk van methode</small></p>
-            <span class="sb-example-card__tag sb-example-card__tag--normal">Bank: 1–2 werkdagen</span>
+            <p class="sb-example-card__sub"><span data-i18n="comp_ex_wu_cost">Kost: ~€6–€30*</span><br><small data-i18n="comp_ex_wu_note">*sterk afhankelijk van methode</small></p>
+            <span class="sb-example-card__tag sb-example-card__tag--normal" data-i18n="comp_tag_bank_days">Bank: 1–2 werkdagen</span>
           </div>
         </div>
       </div>
 
       <div class="sb-takeaways">
         <div class="sb-takeaway sb-takeaway--win">
-          <p class="sb-takeaway__label">SwiftBridge wint op</p>
-          <p class="sb-takeaway__text">iDEAL + iDIN NL-native (uniek); Express &lt;5 min met vaste gebrande prijs; DNB/EMI-toezicht als NL-vertrouwenssignaal; Centraal-Aziatische corridors; WhatsApp-bevestiging aan familie.</p>
+          <p class="sb-takeaway__label" data-i18n="comp_takeaway_win_label">SwiftBridge wint op</p>
+          <p class="sb-takeaway__text" data-i18n="comp_takeaway_win_text2">iDEAL + iDIN NL-native (uniek); Express &lt;5 min met vaste gebrande prijs; DNB/EMI-toezicht als NL-vertrouwenssignaal; Centraal-Aziatische corridors; WhatsApp-bevestiging aan familie.</p>
         </div>
         <div class="sb-takeaway sb-takeaway--peer">
-          <p class="sb-takeaway__label">Eerlijk: waar concurrenten uitblinken</p>
-          <p class="sb-takeaway__text"><strong>Wise:</strong> laagste totaalkosten (~€6,50), 0% FX-opslag, uitstekende transparantie. <strong>Revolut:</strong> breed ecosysteem. <strong>WU:</strong> cash pickup wereldwijd. <strong>Remitly:</strong> sterke diaspora-UX.</p>
+          <p class="sb-takeaway__label" data-i18n="comp_takeaway_peer_label2">Eerlijk: waar concurrenten uitblinken</p>
+          <p class="sb-takeaway__text"><strong>Wise:</strong> <span data-i18n="comp_peer_wise">laagste totaalkosten (~€6,50), 0% FX-opslag, uitstekende transparantie.</span> <strong>Revolut:</strong> <span data-i18n="comp_peer_revolut">breed ecosysteem.</span> <strong>WU:</strong> <span data-i18n="comp_peer_wu">cash pickup wereldwijd.</span> <strong>Remitly:</strong> <span data-i18n="comp_peer_remitly">sterke diaspora-UX.</span></p>
         </div>
       </div>
 
-      <p class="sb-disclaimer" data-i18n="comparison_disclaimer"><strong>Indicatief — gecheckt 14 juni 2026.</strong> Alle bedragen zijn indicatief op basis van openbaar beschikbare tarieven. Tarieven kunnen variëren — controleer actuele kosten altijd bij uw bank of aanbieder. SwiftBridge-tarieven worden bevestigd vóór elke transactie.</p>
+      <p class="sb-disclaimer"><strong data-i18n="comp_disclaimer_checked">Indicatief — gecheckt 14 juni 2026.</strong> <span data-i18n="comparison_disclaimer">Alle bedragen zijn indicatief op basis van openbaar beschikbare tarieven. Tarieven kunnen variëren — controleer actuele kosten altijd bij uw bank of aanbieder. SwiftBridge-tarieven worden bevestigd vóór elke transactie.</span></p>
     </div>
   </div>
 </section>
@@ -928,37 +928,37 @@ Gebouwd voor mensen zoals u.</h1>
 <!-- ── CORRIDORS ── -->
 <section id="corridors" class="section section-alt" aria-labelledby="corridors-heading">
   <div class="wrap">
-    <span class="eyebrow">Beschikbare corridors</span>
+    <span class="eyebrow" data-i18n="corridor_eyebrow">Beschikbare corridors</span>
     <h2 class="section-h" id="corridors-heading" data-i18n="corridor_heading">45+ valuta. Eén vertrouwd platform.</h2>
-    <p class="section-sub">Of uw familie nu in Turkije, Marokko, Azerbeidzjan, Kazachstan, Oezbekistan of elders woont — SwiftBridge staat voor u klaar. Veilig gereguleerd, volledig transparant, altijd zichtbare kosten.</p>
+    <p class="section-sub" data-i18n="corridor_sub">Of uw familie nu in Turkije, Marokko, Azerbeidzjan, Kazachstan, Oezbekistan of elders woont — SwiftBridge staat voor u klaar. Veilig gereguleerd, volledig transparant, altijd zichtbare kosten.</p>
     <div class="corridor-grid" role="list">
       <a class="corridor-card" href="/calculator?valuta=TRY" role="listitem" aria-label="Turkije - Turkse lira">
         <span class="corridor-flag" aria-hidden="true">&#x1F1F9;&#x1F1F7;</span>
-        <div class="corridor-info"><strong>Turkije</strong><span>TRY &mdash; 1 EUR = 36,22 TRY&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_turkey">Turkije</strong><span>TRY &mdash; 1 EUR = 36,22 TRY&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=MAD" role="listitem" aria-label="Marokko - Marokkaanse dirham">
         <span class="corridor-flag" aria-hidden="true">&#x1F1F2;&#x1F1E6;</span>
-        <div class="corridor-info"><strong>Marokko</strong><span>MAD &mdash; 1 EUR = 11,02 MAD&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_morocco">Marokko</strong><span>MAD &mdash; 1 EUR = 11,02 MAD&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=AZN" role="listitem" aria-label="Azerbeidzjan - Azerbeidzjaanse manat">
         <span class="corridor-flag" aria-hidden="true">&#x1F1E6;&#x1F1FF;</span>
-        <div class="corridor-info"><strong>Azerbeidzjan</strong><span>AZN &mdash; 1 EUR = 1,845 AZN&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_azerbaijan">Azerbeidzjan</strong><span>AZN &mdash; 1 EUR = 1,845 AZN&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=KZT" role="listitem" aria-label="Kazachstan - Kazachse tenge">
         <span class="corridor-flag" aria-hidden="true">&#x1F1F0;&#x1F1FF;</span>
-        <div class="corridor-info"><strong>Kazachstan</strong><span>KZT &mdash; 1 EUR = 512,4 KZT&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_kazakhstan">Kazachstan</strong><span>KZT &mdash; 1 EUR = 512,4 KZT&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=UZS" role="listitem" aria-label="Oezbekistan - Oezbeekse soem">
         <span class="corridor-flag" aria-hidden="true">&#x1F1FA;&#x1F1FF;</span>
-        <div class="corridor-info"><strong>Oezbekistan</strong><span>UZS &mdash; 1 EUR = 13.820 UZS&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_uzbekistan">Oezbekistan</strong><span>UZS &mdash; 1 EUR = 13.820 UZS&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=KGS" role="listitem" aria-label="Kirgizistan - Kirgizische som">
         <span class="corridor-flag" aria-hidden="true">&#x1F1F0;&#x1F1EC;</span>
-        <div class="corridor-info"><strong>Kirgizistan</strong><span>KGS &mdash; 1 EUR = 97,6 KGS&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_kyrgyzstan">Kirgizistan</strong><span>KGS &mdash; 1 EUR = 97,6 KGS&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=TMT" role="listitem" aria-label="Turkmenistan - Turkmeense manat">
         <span class="corridor-flag" aria-hidden="true">&#x1F1F9;&#x1F1F2;</span>
-        <div class="corridor-info"><strong>Turkmenistan</strong><span>TMT &mdash; 1 EUR = 3,83 TMT&#8224;</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_turkmenistan">Turkmenistan</strong><span>TMT &mdash; 1 EUR = 3,83 TMT&#8224;</span></div>
       </a>
       <a class="corridor-card" href="/calculator?valuta=USD" role="listitem" aria-label="Verenigde Staten - Amerikaanse dollar">
         <span class="corridor-flag" aria-hidden="true">&#x1F1FA;&#x1F1F8;</span>
@@ -970,10 +970,10 @@ Gebouwd voor mensen zoals u.</h1>
       </a>
       <div class="corridor-card" style="background:var(--ink-subtle);border-style:dashed;cursor:default;" role="listitem" aria-label="Meer corridors — wachtlijst">
         <span class="corridor-flag" aria-hidden="true">&#x1F310;</span>
-        <div class="corridor-info"><strong>+35 valuta</strong><span>Nieuw in aanbouw</span></div>
+        <div class="corridor-info"><strong data-i18n="corridor_more">+35 valuta</strong><span data-i18n="corridor_more_sub">Nieuw in aanbouw</span></div>
       </div>
     </div>
-    <p class="corridor-note">&#8224; <span data-i18n="corridor_availability_disclaimer">Beschikbaarheid van corridors kan variëren. Controleer de app voor de actuele status van uw bestemming.</span> Koersen zijn indicatief.</p>
+    <p class="corridor-note">&#8224; <span data-i18n="corridor_availability_disclaimer">Beschikbaarheid van corridors kan variëren. Controleer de app voor de actuele status van uw bestemming.</span> <span data-i18n="corridor_rates_indicative">Koersen zijn indicatief.</span></p>
     <a class="waitlist-btn" href="/login?tab=register" data-i18n="corridor_waitlist_cta">Meld me aan voor de wachtlijst</a>
   </div>
 </section>
@@ -985,29 +985,29 @@ Gebouwd voor mensen zoals u.</h1>
       <h2 class="app-heading" id="app-heading" data-i18n="app_heading">SwiftBridge — altijd bij de hand</h2>
       <p class="app-sub" data-i18n="app_intro">Uw overboekingen geregeld via uw telefoon: live wisselkoersen, Express-transfers doorgaans in minder dan 5 minuten, en een WhatsApp-bevestiging voor uw familie zodra het geld er is. Gratis te downloaden voor iOS en Android — onder DNB-toezicht via onze EMI-partner.</p>
       <div class="app-pills">
-        <span class="app-pill">iDEAL betaling</span>
-        <span class="app-pill">Express doorgaans &lt;5 min</span>
-        <span class="app-pill">WhatsApp-bevestiging</span>
-        <span class="app-pill">Live koersalerts</span>
+        <span class="app-pill" data-i18n="trust_ideal">iDEAL betaling</span>
+        <span class="app-pill" data-i18n="app_pill_express">Express doorgaans &lt;5 min</span>
+        <span class="app-pill" data-i18n="comp_row_whatsapp">WhatsApp-bevestiging</span>
+        <span class="app-pill" data-i18n="app_pill_alerts">Live koersalerts</span>
       </div>
       <!-- Installeer rechtstreeks vanaf de website als app (PWA) — geen App
            Store of Google Play nodig. De knop triggert de browser-installatie
            (Android/Chrome/Edge); iOS krijgt korte instructies. -->
       <div class="app-install">
-        <button id="pwa-install-btn" type="button" class="btn btn-primary" style="display:none">
+        <button id="pwa-install-btn" type="button" class="btn btn-primary" style="display:none" data-i18n="pwa_install_btn">
           &#x2B07; Installeer de app op je telefoon
         </button>
-        <a id="pwa-install-fallback" class="btn btn-primary" href="/login?tab=register">
+        <a id="pwa-install-fallback" class="btn btn-primary" href="/login?tab=register" data-i18n="pwa_install_fallback">
           Gratis account &amp; app openen
         </a>
         <p id="pwa-ios-hint" class="app-trust-note" style="display:none;margin-top:.75rem">
-          Op iPhone/iPad: tik op <strong>Deel</strong> &#x2191; onderin Safari &rarr;
-          <strong>Zet op beginscherm</strong>. Dan staat SwiftBridge als app op je toestel.
+          <span data-i18n="pwa_ios_1">Op iPhone/iPad: tik op</span> <strong data-i18n="pwa_ios_share">Deel</strong> &#x2191; <span data-i18n="pwa_ios_2">onderin Safari</span> &rarr;
+          <strong data-i18n="pwa_ios_home">Zet op beginscherm</strong>. <span data-i18n="pwa_ios_3">Dan staat SwiftBridge als app op je toestel.</span>
         </p>
         <p class="app-trust-note" style="margin-top:.5rem" data-i18n="app_trust_line">
           Gratis &middot; Geen creditcard &middot; Onder DNB-toezicht via EMI-partner
         </p>
-        <p class="app-trust-note" style="opacity:.7;margin-top:.25rem">
+        <p class="app-trust-note" style="opacity:.7;margin-top:.25rem" data-i18n="app_stores_soon">
           Binnenkort ook in de App Store en Google Play.
         </p>
       </div>
@@ -1039,34 +1039,34 @@ Gebouwd voor mensen zoals u.</h1>
 <!-- ── TESTIMONIALS ── -->
 <section id="testimonials" class="section" aria-labelledby="testimonials-heading">
   <div class="wrap">
-    <span class="eyebrow">Waarom SwiftBridge</span>
-    <h2 class="section-h" id="testimonials-heading">Gebouwd op transparantie, niet op beloftes</h2>
+    <span class="eyebrow" data-i18n="why_swiftbridge">Waarom SwiftBridge</span>
+    <h2 class="section-h" id="testimonials-heading" data-i18n="trust_facts_heading">Gebouwd op transparantie, niet op beloftes</h2>
     <div class="testimonial-grid">
       <article class="trust-fact-card fade-in">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <h3 class="trust-fact-title">Onder toezicht van DNB</h3>
-        <p class="trust-fact-body">Betaaldiensten worden aangeboden via een vergunde EMI-partner die onder toezicht staat van De Nederlandsche Bank — dezelfde toezichthouder die uw eigen bank bewaakt. SwiftBridge is zelf geen bank.</p>
+        <h3 class="trust-fact-title" data-i18n="trust_fact1_title">Onder toezicht van DNB</h3>
+        <p class="trust-fact-body" data-i18n="trust_fact1_body">Betaaldiensten worden aangeboden via een vergunde EMI-partner die onder toezicht staat van De Nederlandsche Bank — dezelfde toezichthouder die uw eigen bank bewaakt. SwiftBridge is zelf geen bank.</p>
       </article>
       <article class="trust-fact-card fade-in">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        <h3 class="trust-fact-title">De koers ziet u vóór u bevestigt</h3>
-        <p class="trust-fact-body">Geen verstopte marge. U ziet de wisselkoers, de FX-marge (ca. 1,2%) en de kosten volledig uitgesplitst — vóór u op verzenden klikt. Wat u ziet, is wat u betaalt.</p>
+        <h3 class="trust-fact-title" data-i18n="trust_fact2_title">De koers ziet u vóór u bevestigt</h3>
+        <p class="trust-fact-body" data-i18n="trust_fact2_body">Geen verstopte marge. U ziet de wisselkoers, de FX-marge (ca. 1,2%) en de kosten volledig uitgesplitst — vóór u op verzenden klikt. Wat u ziet, is wat u betaalt.</p>
       </article>
       <article class="trust-fact-card fade-in">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <h3 class="trust-fact-title">Beveiligd op bankniveau</h3>
-        <p class="trust-fact-body">Verificatie in twee stappen bij elke aanmelding, sessies die na korte inactiviteit sluiten, en versleutelde opslag van uw gegevens. Identiteitscontrole via iDIN met uw eigen bank.</p>
+        <h3 class="trust-fact-title" data-i18n="trust_fact3_title">Beveiligd op bankniveau</h3>
+        <p class="trust-fact-body" data-i18n="trust_fact3_body">Verificatie in twee stappen bij elke aanmelding, sessies die na korte inactiviteit sluiten, en versleutelde opslag van uw gegevens. Identiteitscontrole via iDIN met uw eigen bank.</p>
       </article>
     </div>
-    <p class="trust-fact-note">Wij plaatsen geen verzonnen klantenreviews. Zodra echte, geverifieerde klantervaringen beschikbaar zijn, tonen we die hier — met bronvermelding.</p>
+    <p class="trust-fact-note" data-i18n="trust_facts_note">Wij plaatsen geen verzonnen klantenreviews. Zodra echte, geverifieerde klantervaringen beschikbaar zijn, tonen we die hier — met bronvermelding.</p>
   </div>
 </section>
 
 <!-- ── FAQ ── -->
 <section id="faq" class="section section-alt" aria-labelledby="faq-heading">
   <div class="wrap">
-    <span class="eyebrow">Veelgestelde vragen</span>
-    <h2 class="section-h" id="faq-heading">Alles wat u wilt weten</h2>
+    <span class="eyebrow" data-i18n="faq_eyebrow">Veelgestelde vragen</span>
+    <h2 class="section-h" id="faq-heading" data-i18n="faq_heading">Alles wat u wilt weten</h2>
     <div class="faq-list" role="list">
 
       <details class="faq-item" role="listitem">
@@ -1095,26 +1095,26 @@ Gebouwd voor mensen zoals u.</h1>
 
       <details class="faq-item" role="listitem">
         <summary>
-          <span>Wat zijn de minimale en maximale bedragen?</span>
+          <span data-i18n="faq_q4">Wat zijn de minimale en maximale bedragen?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body">U kunt bedragen overmaken vanaf € 50 tot € 5.000 per transactie. Het wekelijkse limiet is € 5.000. Voor hogere zakelijke limieten: zie <a href="/zakelijk" style="color:var(--accent)">SwiftBridge Zakelijk</a>.</div>
+        <div class="faq-body"><span data-i18n="faq_a4">U kunt bedragen overmaken vanaf € 50 tot € 5.000 per transactie. Het wekelijkse limiet is € 5.000. Voor hogere zakelijke limieten: zie</span> <a href="/zakelijk" style="color:var(--accent)" data-i18n="faq_a4_link">SwiftBridge Zakelijk</a>.</div>
       </details>
 
       <details class="faq-item" role="listitem">
         <summary>
-          <span>Hoe weet de ontvanger dat het geld onderweg is?</span>
+          <span data-i18n="faq_q5">Hoe weet de ontvanger dat het geld onderweg is?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body">Zodra uw overboeking is verzonden, sturen wij automatisch een WhatsApp-bevestiging naar de ontvanger. U ontvangt ook een bevestiging. Zo weet u beiden precies dat het geld is aangekomen.</div>
+        <div class="faq-body" data-i18n="faq_a5">Zodra uw overboeking is verzonden, sturen wij automatisch een WhatsApp-bevestiging naar de ontvanger. U ontvangt ook een bevestiging. Zo weet u beiden precies dat het geld is aangekomen.</div>
       </details>
 
       <details class="faq-item" role="listitem">
         <summary>
-          <span>Hoe verhoudt SwiftBridge zich tot Wise of Revolut?</span>
+          <span data-i18n="faq_q6">Hoe verhoudt SwiftBridge zich tot Wise of Revolut?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body">Wise heeft een lager totaalkostenniveau op veel corridors dankzij de 0% FX-opslag — dat erkennen wij eerlijk. SwiftBridge onderscheidt zich met: iDEAL + iDIN NL-native betaalflow, Express &lt;5 min met vaste prijs, DNB/EMI NL-toezicht als vertrouwenssignaal, Centraal-Aziatische corridors, en WhatsApp-bevestiging voor de ontvanger. Beide diensten zijn transparant — vergelijk op uw specifieke corridor.</div>
+        <div class="faq-body" data-i18n="faq_a6">Wise heeft een lager totaalkostenniveau op veel corridors dankzij de 0% FX-opslag — dat erkennen wij eerlijk. SwiftBridge onderscheidt zich met: iDEAL + iDIN NL-native betaalflow, Express &lt;5 min met vaste prijs, DNB/EMI NL-toezicht als vertrouwenssignaal, Centraal-Aziatische corridors, en WhatsApp-bevestiging voor de ontvanger. Beide diensten zijn transparant — vergelijk op uw specifieke corridor.</div>
       </details>
 
     </div>
@@ -1128,9 +1128,9 @@ Gebouwd voor mensen zoals u.</h1>
     <p class="cta-sub" data-i18n="cta_band_sub">Gratis account aanmaken in minder dan 2 minuten. Uw eerste overboeking — veilig, transparant en eerlijk geprijsd. Onder toezicht van De Nederlandsche Bank via onze EMI-partner.</p>
     <div class="cta-btns">
       <a class="btn btn-white" href="/login?tab=register" data-i18n="cta_band_button">Gratis account openen</a>
-      <a class="btn btn-ghost-white" href="#comparison">Vergelijk tarieven</a>
+      <a class="btn btn-ghost-white" href="#comparison" data-i18n="cta_band_secondary">Vergelijk tarieven</a>
     </div>
-    <p class="cta-microcopy">Geen creditcard nodig &middot; DNB-toezicht via EMI-partner &middot; iDEAL betaling &middot; Wwft-conform</p>
+    <p class="cta-microcopy" data-i18n="cta_microcopy">Geen creditcard nodig &middot; DNB-toezicht via EMI-partner &middot; iDEAL betaling &middot; Wwft-conform</p>
   </div>
 </section>
 
@@ -1145,7 +1145,7 @@ Gebouwd voor mensen zoals u.</h1>
           <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#E8632A"/><polygon points="16,4 10,15 14,15 12,24 19,12 15,12" fill="#fff"/></svg>
           SwiftBridge
         </div>
-        <p class="footer-brand-desc">Veilig geld overmaken vanuit Nederland naar 45+ landen. Onder DNB-toezicht via onze EMI-partner.</p>
+        <p class="footer-brand-desc" data-i18n="footer_desc">Veilig geld overmaken vanuit Nederland naar 45+ landen. Onder DNB-toezicht via onze EMI-partner.</p>
         <div class="footer-social" aria-label="Social media">
           <a href="/login?tab=register" aria-label="Instagram">IG</a>
           <a href="/login?tab=register" aria-label="LinkedIn">LI</a>
@@ -1153,7 +1153,7 @@ Gebouwd voor mensen zoals u.</h1>
         </div>
       </div>
       <div class="footer-col">
-        <p class="footer-col-heading">Product</p>
+        <p class="footer-col-heading" data-i18n="footer_product">Product</p>
         <ul>
           <li><a href="#how-it-works" data-i18n="nav_how_it_works">Hoe werkt het</a></li>
           <li><a href="#comparison" data-i18n="nav_rates">Tarieven</a></li>
@@ -1162,29 +1162,29 @@ Gebouwd voor mensen zoals u.</h1>
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-col-heading">Bedrijf</p>
+        <p class="footer-col-heading" data-i18n="footer_company">Bedrijf</p>
         <ul>
           <li><a href="/over-ons" data-i18n="nav_about">Over ons</a></li>
-          <li><a href="/veiligheid">Veiligheid</a></li>
-          <li><a href="/status">Status &amp; updates</a></li>
-          <li><a href="mailto:info@swiftbridge.nl">Contact</a></li>
+          <li><a href="/veiligheid" data-i18n="footer_safety">Veiligheid</a></li>
+          <li><a href="/status" data-i18n="footer_status">Status &amp; updates</a></li>
+          <li><a href="mailto:info@swiftbridge.nl" data-i18n="footer_contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-col-heading">Juridisch &amp; account</p>
+        <p class="footer-col-heading" data-i18n="footer_legal_heading">Juridisch &amp; account</p>
         <ul>
-          <li><a href="/login?tab=register">Account aanmaken</a></li>
-          <li><a href="/members">Ledenprogramma</a></li>
-          <li><a href="/privacybeleid">Privacy</a></li>
-          <li><a href="/algemene-voorwaarden">Voorwaarden</a></li>
-          <li><a href="/aml-beleid">AML-beleid</a></li>
-          <li><a href="/klachten">Klachten</a></li>
+          <li><a href="/login?tab=register" data-i18n="footer_create_account">Account aanmaken</a></li>
+          <li><a href="/members" data-i18n="footer_members">Ledenprogramma</a></li>
+          <li><a href="/privacybeleid" data-i18n="footer_privacy">Privacy</a></li>
+          <li><a href="/algemene-voorwaarden" data-i18n="footer_terms">Voorwaarden</a></li>
+          <li><a href="/aml-beleid" data-i18n="footer_aml">AML-beleid</a></li>
+          <li><a href="/klachten" data-i18n="footer_complaints">Klachten</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-disclaimer" data-i18n="footer_legal_oneliner">SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. €50 / max. € 5.000 per transactie, max. € 5.000 per week.</p>
-      <p class="footer-copy">&copy; 2026 SwiftBridge B.V. Alle rechten voorbehouden.</p>
+      <p class="footer-copy" data-i18n="footer_copyright">&copy; 2026 SwiftBridge B.V. Alle rechten voorbehouden.</p>
     </div>
   </div>
 </footer>
@@ -1201,6 +1201,186 @@ Gebouwd voor mensen zoals u.</h1>
    ============================================================ */
 const I18N = {
   nl: {
+    corridor_eyebrow: "Beschikbare corridors",
+    corridor_sub: "Of uw familie nu in Turkije, Marokko, Azerbeidzjan, Kazachstan, Oezbekistan of elders woont — SwiftBridge staat voor u klaar. Veilig gereguleerd, volledig transparant, altijd zichtbare kosten.",
+    corridor_turkey: "Turkije",
+    corridor_morocco: "Marokko",
+    corridor_azerbaijan: "Azerbeidzjan",
+    corridor_kazakhstan: "Kazachstan",
+    corridor_uzbekistan: "Oezbekistan",
+    corridor_kyrgyzstan: "Kirgizistan",
+    corridor_turkmenistan: "Turkmenistan",
+    corridor_more: "+35 valuta",
+    corridor_more_sub: "Nieuw in aanbouw",
+    corridor_rates_indicative: "Koersen zijn indicatief.",
+    app_pill_express: "Express doorgaans <5 min",
+    app_pill_alerts: "Live koersalerts",
+    pwa_install_btn: "⬇ Installeer de app op je telefoon",
+    pwa_install_fallback: "Gratis account & app openen",
+    pwa_ios_1: "Op iPhone/iPad: tik op",
+    pwa_ios_share: "Deel",
+    pwa_ios_2: "onderin Safari",
+    pwa_ios_home: "Zet op beginscherm",
+    pwa_ios_3: "Dan staat SwiftBridge als app op je toestel.",
+    app_stores_soon: "Binnenkort ook in de App Store en Google Play.",
+    trust_facts_heading: "Gebouwd op transparantie, niet op beloftes",
+    trust_fact1_title: "Onder toezicht van DNB",
+    trust_fact1_body: "Betaaldiensten worden aangeboden via een vergunde EMI-partner die onder toezicht staat van De Nederlandsche Bank — dezelfde toezichthouder die uw eigen bank bewaakt. SwiftBridge is zelf geen bank.",
+    trust_fact2_title: "De koers ziet u vóór u bevestigt",
+    trust_fact2_body: "Geen verstopte marge. U ziet de wisselkoers, de FX-marge (ca. 1,2%) en de kosten volledig uitgesplitst — vóór u op verzenden klikt. Wat u ziet, is wat u betaalt.",
+    trust_fact3_title: "Beveiligd op bankniveau",
+    trust_fact3_body: "Verificatie in twee stappen bij elke aanmelding, sessies die na korte inactiviteit sluiten, en versleutelde opslag van uw gegevens. Identiteitscontrole via iDIN met uw eigen bank.",
+    trust_facts_note: "Wij plaatsen geen verzonnen klantenreviews. Zodra echte, geverifieerde klantervaringen beschikbaar zijn, tonen we die hier — met bronvermelding.",
+    faq_eyebrow: "Veelgestelde vragen",
+    faq_heading: "Alles wat u wilt weten",
+    faq_q4: "Wat zijn de minimale en maximale bedragen?",
+    faq_a4: "U kunt bedragen overmaken vanaf € 50 tot € 5.000 per transactie. Het wekelijkse limiet is € 5.000. Voor hogere zakelijke limieten: zie",
+    faq_a4_link: "SwiftBridge Zakelijk",
+    faq_q5: "Hoe weet de ontvanger dat het geld onderweg is?",
+    faq_a5: "Zodra uw overboeking is verzonden, sturen wij automatisch een WhatsApp-bevestiging naar de ontvanger. U ontvangt ook een bevestiging. Zo weet u beiden precies dat het geld is aangekomen.",
+    faq_q6: "Hoe verhoudt SwiftBridge zich tot Wise of Revolut?",
+    faq_a6: "Wise heeft een lager totaalkostenniveau op veel corridors dankzij de 0% FX-opslag — dat erkennen wij eerlijk. SwiftBridge onderscheidt zich met: iDEAL + iDIN NL-native betaalflow, Express <5 min met vaste prijs, DNB/EMI NL-toezicht als vertrouwenssignaal, Centraal-Aziatische corridors, en WhatsApp-bevestiging voor de ontvanger. Beide diensten zijn transparant — vergelijk op uw specifieke corridor.",
+    cta_band_secondary: "Vergelijk tarieven",
+    cta_microcopy: "Geen creditcard nodig · DNB-toezicht via EMI-partner · iDEAL betaling · Wwft-conform",
+    footer_desc: "Veilig geld overmaken vanuit Nederland naar 45+ landen. Onder DNB-toezicht via onze EMI-partner.",
+    footer_product: "Product",
+    footer_company: "Bedrijf",
+    footer_safety: "Veiligheid",
+    footer_status: "Status & updates",
+    footer_contact: "Contact",
+    footer_legal_heading: "Juridisch & account",
+    footer_create_account: "Account aanmaken",
+    footer_members: "Ledenprogramma",
+    footer_privacy: "Privacy",
+    footer_terms: "Voorwaarden",
+    footer_aml: "AML-beleid",
+    footer_complaints: "Klachten",
+    footer_copyright: "© 2026 SwiftBridge B.V. Alle rechten voorbehouden.",
+    comp_example_title: "Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)",
+    comp_example_note1: "Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief); Economy-tarief SwiftBridge. Bankmarges indicatief ~1,5%. Controleer actuele tarieven vóór verzending.",
+    comp_example_note2: "Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief). Wise gebruikt mid-market rate (0% FX-opslag). Controleer actuele tarieven altijd bij de aanbieder.",
+    comp_ex_sb_fees: "Fee: €4,95 · Marge: 1,2%",
+    comp_ex_sb_total: "Totale kost: ~€16,95",
+    comp_ex_ing_fees: "Fee: ~€6 · Marge: ~1,5%",
+    comp_ex_ing_total: "Totale kost: ~€21,60",
+    comp_ex_abn_fees: "Fee: €9 · Marge: ~1,5%",
+    comp_ex_abn_total: "Totale kost: ~€24,75",
+    comp_ex_rabo_fees: "Fee: €8 · Marge: ~1,5%",
+    comp_ex_rabo_total: "Totale kost: ~€23,70",
+    comp_ex_wise_fees: "Fee: ~€6,50 ·",
+    comp_ex_wise_total: "Totale kost: ~€6,50",
+    comp_ex_remitly_fees: "Fee: ~€1,99 · Marge: ~1,5%",
+    comp_ex_remitly_total: "Totale kost: ~€17,50",
+    comp_ex_wu_cost: "Kost: ~€6–€30*",
+    comp_ex_wu_note: "*sterk afhankelijk van methode",
+    comp_tag_express_also: "Express ook: <5 min",
+    comp_tag_hours_day: "Uren–1 dag",
+    comp_tag_bank_days: "Bank: 1–2 werkdagen",
+    comp_takeaway_win_label: "SwiftBridge wint op",
+    comp_takeaway_win_text1: "Lagere totaalkosten voor diaspora-bedragen, Express <5 min (uniek), volledige kostentransparantie vóór bevestiging, iDEAL + iDIN NL-native, WhatsApp-bevestiging, Centraal-Aziatische corridors.",
+    comp_takeaway_peer_label1: "Eerlijk: waar banken scoren",
+    comp_takeaway_peer_text1: "Klanten die sporadisch overmaken wisselen minder snel. Banken bieden brede dienstverlening zonder nieuwe app. Sommige klanten verkiezen de vertrouwde omgeving.",
+    comp_takeaway_win_text2: "iDEAL + iDIN NL-native (uniek); Express <5 min met vaste gebrande prijs; DNB/EMI-toezicht als NL-vertrouwenssignaal; Centraal-Aziatische corridors; WhatsApp-bevestiging aan familie.",
+    comp_takeaway_peer_label2: "Eerlijk: waar concurrenten uitblinken",
+    comp_peer_wise: "laagste totaalkosten (~€6,50), 0% FX-opslag, uitstekende transparantie.",
+    comp_peer_revolut: "breed ecosysteem.",
+    comp_peer_wu: "cash pickup wereldwijd.",
+    comp_peer_remitly: "sterke diaspora-UX.",
+    comp_disclaimer_checked: "Indicatief — gecheckt 14 juni 2026.",
+    comp_disclaimer_banks: "Bankgegevens gebaseerd op openbaar gepubliceerde tarieven. FX-marges zijn indicatief geschat.",
+    comp_col_feature: "Kenmerk",
+    comp_row_fixed: "Vaste kosten (niet-SEPA)",
+    comp_row_fixed2: "Vaste kosten",
+    comp_row_fx: "FX-marge",
+    comp_row_speed: "Snelheid non-SEPA",
+    comp_row_transparency: "Kosten volledig vooraf zichtbaar",
+    comp_row_transparency2: "Kosten vooraf zichtbaar",
+    comp_row_express2: "Express <5 min (vaste prijs)",
+    comp_row_corridors: "Centrale-Aziatische corridors",
+    comp_row_whatsapp: "WhatsApp-bevestiging",
+    comp_row_dnb: "DNB/EMI NL-supervisie",
+    comp_sb_fixed: "€4,95 vast",
+    comp_indicative: "(indicatief)",
+    comp_shown_before: "(getoond vóór bevestiging)",
+    comp_not_published: "(niet apart gepubliceerd)",
+    comp_days_1_2: "1–2 werkdagen",
+    comp_days_3_5: "3–5 werkdagen",
+    comp_days_2: "~2 werkdagen",
+    comp_full: "Volledig",
+    comp_partial: "Gedeeltelijk",
+    comp_limited: "Beperkt",
+    comp_yes: "Ja",
+    comp_no: "Nee",
+    comp_yes_central: "Ja — centraal",
+    comp_own_bank: "Eigen bank",
+    comp_yes_fixed: "Ja — €4,95 vast",
+    comp_yes_corridors: "Ja (UZS, KZT, KGS, TMT, AZN)",
+    comp_sb_speed_badge: "Express: <5 min",
+    comp_sb_speed_badge2: "Express: doorgaans <5 min",
+    comp_sb_speed_econ: "Economy: 1–2 werkdagen",
+    comp_ing_fee: "~€6 p/overboeking",
+    comp_abn_fee: "€9 p/overboeking",
+    comp_rabo_fee: "€8 p/overboeking",
+    comp_wise_fee: "~€6,50 totaal per €1.000",
+    comp_remitly_fee: "~€1,49–€1,99 flat",
+    comp_revolut_fee: "Gratis binnen plan-limiet",
+    comp_revolut_fee_note: "(daarna 1%)",
+    comp_wu_fee: "Variabel per methode",
+    comp_wise_fx_strong: "0% FX-opslag",
+    comp_wise_fx_rest: "— mid-market rate",
+    comp_wise_fx_note: "(alleen expliciete conversion fee)",
+    comp_remitly_fx: "~0,5–3,0% boven mid-market",
+    comp_revolut_fx: "0% binnen limiet; +1% weekend",
+    comp_wu_fx: "FX-marge verwerkt in koers",
+    comp_wise_speed: "40% seconden; meeste binnen uren–1 dag",
+    comp_remitly_speed: "Express: \"kan direct\"; Economy: 3–5 werkdagen",
+    comp_revolut_speed: "Revolut→Revolut: minuten; bank non-SEPA: 3–5 werkdagen",
+    comp_wu_speed: "Bank: 1–2 werkdagen; cash pickup: minuten",
+    comp_excellent: "Uitstekend",
+    comp_good: "Goed",
+    comp_fair: "Matig",
+    comp_available: "Beschikbaar",
+    comp_not_prominent: "Niet prominent",
+    comp_remitly_express: "Remitly Express (hogere fee)",
+    comp_no_nonsepa: "Nee voor non-SEPA bank",
+    comp_cash_pickup: "Cash pickup: minuten",
+    comp_limited_nl: "Beperkt voor NL",
+    comp_limited_nl_ca: "Beperkt voor NL→CA",
+    comp_not_focused: "Niet gefocust",
+    comp_dnb_sb: "Ja — via EMI-partner, DNB",
+    comp_dnb_wise: "DNB-geregistreerd; FCA-primair",
+    comp_dnb_remitly: "EU-licenties; niet DNB-primair",
+    comp_dnb_revolut: "EU banklicentie (LT); DNB NL",
+    comp_dnb_wu: "FCA/EU; niet DNB-primair",
+    topbar_brand: "SwiftBridge — Nederland",
+    topbar_compliance: "Wwft & AVG-conform",
+    hero_compare_cta: "Vergelijk met uw bank →",
+    dnb_badge: "Gereguleerd",
+    dnb_card_sub: "Toezicht via geregistreerde EMI-partner",
+    dnb_card_quote: "\"Onder toezicht van De Nederlandsche Bank via onze EMI-partner — dezelfde standaard als uw eigen bank.\"",
+    dnb_pill_payments: "✓ Betaaldiensten",
+    dnb_pill_regulated: "✓ Gereguleerd NL",
+    dnb_pill_wwft: "✓ Wwft-conform",
+    dnb_pill_avg: "✓ AVG/GDPR",
+    calc_heading: "Bereken uw overboeking",
+    calc_minmax: "Min. €50 · Max. €5.000",
+    calc_speed_legend: "Snelheid",
+    calc_cur_try: "🇹🇷 TRY — Turkse lira",
+    calc_cur_azn: "🇦🇿 AZN — Azerbeidzjaanse manat",
+    calc_cur_kzt: "🇰🇿 KZT — Kazachse tenge",
+    calc_cur_uzs: "🇺🇿 UZS — Oezbeekse soem",
+    calc_cur_tmt: "🇹🇲 TMT — Turkmeense manat",
+    calc_cur_kgs: "🇰🇬 KGS — Kirgizische som",
+    calc_cur_usd: "🇺🇸 USD — Amerikaanse dollar",
+    calc_cur_gbp: "🇬🇧 GBP — Brits pond",
+    calc_cur_mad: "🇲🇦 MAD — Marokkaanse dirham",
+    why_swiftbridge: "Waarom SwiftBridge",
+    value_heading: "Bankwaardige beveiliging. Betere kosten. Sneller.",
+    hiw_eyebrow: "Zo eenvoudig werkt het",
+    hiw_sub: "Uw eerste overboeking is in minder dan 10 minuten ingesteld. Eenmalig verificeren, daarna altijd direct klaar.",
+    hiw_note: "† Express-overboekingen: doorgaans onder 5 minuten op live corridors. Economy: 1–2 werkdagen. Definitieve koers en kosten bevestigd vóór elke transactie.",
+    comparison_eyebrow: "Eerlijk vergelijken",
+    comparison_sub: "Vergelijk vaste kosten, wisselkoersmarge en snelheid — transparant en zonder verrassingen.",
     skip_to_main: "Ga naar hoofdinhoud",
     nav_how_it_works: "Hoe werkt het",
     nav_rates: "Tarieven",
@@ -1219,9 +1399,9 @@ const I18N = {
     calc_label_amount: "Stuur ik",
     calc_label_currency: "Valuta",
     calc_label_receive: "Ontvanger krijgt (indicatief)",
-    calc_speed_express: "Express (doorgaans < 5 min)",
+    calc_speed_express: "(doorgaans < 5 min)",
     calc_speed_express_short: "Express",
-    calc_speed_economy: "Economy (1–2 werkdagen)",
+    calc_speed_economy: "(1–2 werkdagen)",
     calc_speed_economy_short: "Economy",
     calc_rate_label: "Koers",
     calc_fee_label: "Transactiekosten",
@@ -1264,7 +1444,8 @@ const I18N = {
     faq_q1: "Hoe snel komt het geld aan?",
     faq_a1: "Bij de Express-optie duurt een overboeking doorgaans minder dan 5 minuten op onze live corridors. Met Economy rekent u op 1–2 werkdagen. De exacte verwerkingstijd hangt af van het bestemmingsland en de lokale bank van de ontvanger. U ziet altijd de verwachte levertijd vóór u bevestigt.",
     faq_q2: "Wat kost een overboeking?",
-    faq_a2: "SwiftBridge rekent een transactiefee (€4,95 vast per overboeking) plus een FX-marge van ca. 1,2% op de wisselkoers (indicatief). Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.",
+    nav_dashboard: "Mijn dashboard",
+    faq_a2: "SwiftBridge rekent een transactiefee (€4,95 vast per overboeking) plus een transparante FX-marge vanaf 1,2% — lager per ledenniveau, tot 0,6%. Het volledige kostenoverzicht ziet u altijd vóór bevestiging. Nooit verborgen kosten.",
     faq_q3: "Is SwiftBridge veilig en legaal?",
     faq_a3: "Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wij voldoen aan de Wwft en de AVG/GDPR. Elke transactie wordt getoetst aan internationale sanctielijsten. Uw identiteit wordt geverifieerd via iDIN.",
     cta_band_heading: "Klaar om over te stappen?",
@@ -1287,6 +1468,186 @@ const I18N = {
     login_remember: "Onthoud mij"
   },
   en: {
+    corridor_eyebrow: "Available corridors",
+    corridor_sub: "Whether your family lives in Turkey, Morocco, Azerbaijan, Kazakhstan, Uzbekistan or elsewhere — SwiftBridge is ready for you. Safely regulated, fully transparent, costs always visible.",
+    corridor_turkey: "Turkey",
+    corridor_morocco: "Morocco",
+    corridor_azerbaijan: "Azerbaijan",
+    corridor_kazakhstan: "Kazakhstan",
+    corridor_uzbekistan: "Uzbekistan",
+    corridor_kyrgyzstan: "Kyrgyzstan",
+    corridor_turkmenistan: "Turkmenistan",
+    corridor_more: "+35 currencies",
+    corridor_more_sub: "New — in development",
+    corridor_rates_indicative: "Rates are indicative.",
+    app_pill_express: "Express typically <5 min",
+    app_pill_alerts: "Live rate alerts",
+    pwa_install_btn: "⬇ Install the app on your phone",
+    pwa_install_fallback: "Open free account & app",
+    pwa_ios_1: "On iPhone/iPad: tap",
+    pwa_ios_share: "Share",
+    pwa_ios_2: "at the bottom of Safari",
+    pwa_ios_home: "Add to Home Screen",
+    pwa_ios_3: "SwiftBridge will then appear as an app on your device.",
+    app_stores_soon: "Coming soon to the App Store and Google Play.",
+    trust_facts_heading: "Built on transparency, not promises",
+    trust_fact1_title: "Under DNB supervision",
+    trust_fact1_body: "Payment services are provided via a licensed EMI partner supervised by De Nederlandsche Bank — the same regulator that oversees your own bank. SwiftBridge itself is not a bank.",
+    trust_fact2_title: "You see the rate before you confirm",
+    trust_fact2_body: "No hidden margin. You see the exchange rate, the FX margin (approx. 1.2%) and the fees fully itemised — before you click send. What you see is what you pay.",
+    trust_fact3_title: "Secured at bank level",
+    trust_fact3_body: "Two-step verification at every login, sessions that close after brief inactivity, and encrypted storage of your data. Identity verification via iDIN with your own bank.",
+    trust_facts_note: "We do not post fabricated customer reviews. As soon as real, verified customer experiences are available, we will show them here — with sources.",
+    faq_eyebrow: "Frequently asked questions",
+    faq_heading: "Everything you want to know",
+    faq_q4: "What are the minimum and maximum amounts?",
+    faq_a4: "You can transfer amounts from €50 up to €5,000 per transaction. The weekly limit is €5,000. For higher business limits, see",
+    faq_a4_link: "SwiftBridge Business",
+    faq_q5: "How does the recipient know the money is on its way?",
+    faq_a5: "As soon as your transfer is sent, we automatically send a WhatsApp confirmation to the recipient. You receive a confirmation too. That way you both know exactly when the money has arrived.",
+    faq_q6: "How does SwiftBridge compare to Wise or Revolut?",
+    faq_a6: "Wise has lower total costs on many corridors thanks to its 0% FX markup — we acknowledge that honestly. SwiftBridge stands out with: an iDEAL + iDIN NL-native payment flow, Express <5 min at a fixed price, DNB/EMI NL supervision as a trust signal, Central Asian corridors, and WhatsApp confirmation for the recipient. Both services are transparent — compare on your specific corridor.",
+    cta_band_secondary: "Compare rates",
+    cta_microcopy: "No credit card required · DNB supervision via EMI partner · iDEAL payment · Wwft compliant",
+    footer_desc: "Send money safely from the Netherlands to 45+ countries. Under DNB supervision via our EMI partner.",
+    footer_product: "Product",
+    footer_company: "Company",
+    footer_safety: "Security",
+    footer_status: "Status & updates",
+    footer_contact: "Contact",
+    footer_legal_heading: "Legal & account",
+    footer_create_account: "Create account",
+    footer_members: "Membership programme",
+    footer_privacy: "Privacy",
+    footer_terms: "Terms & conditions",
+    footer_aml: "AML policy",
+    footer_complaints: "Complaints",
+    footer_copyright: "© 2026 SwiftBridge B.V. All rights reserved.",
+    comp_example_title: "Worked example: €1,000 to Turkey (EUR → TRY)",
+    comp_example_note1: "Illustrative: ECB mid-rate 1 EUR = 36.00 TRY (fictional); SwiftBridge Economy rate. Bank margins indicative ~1.5%. Check current rates before sending.",
+    comp_example_note2: "Illustrative: ECB mid-rate 1 EUR = 36.00 TRY (fictional). Wise uses the mid-market rate (0% FX markup). Always check current rates with the provider.",
+    comp_ex_sb_fees: "Fee: €4.95 · Margin: 1.2%",
+    comp_ex_sb_total: "Total cost: ~€16.95",
+    comp_ex_ing_fees: "Fee: ~€6 · Margin: ~1.5%",
+    comp_ex_ing_total: "Total cost: ~€21.60",
+    comp_ex_abn_fees: "Fee: €9 · Margin: ~1.5%",
+    comp_ex_abn_total: "Total cost: ~€24.75",
+    comp_ex_rabo_fees: "Fee: €8 · Margin: ~1.5%",
+    comp_ex_rabo_total: "Total cost: ~€23.70",
+    comp_ex_wise_fees: "Fee: ~€6.50 ·",
+    comp_ex_wise_total: "Total cost: ~€6.50",
+    comp_ex_remitly_fees: "Fee: ~€1.99 · Margin: ~1.5%",
+    comp_ex_remitly_total: "Total cost: ~€17.50",
+    comp_ex_wu_cost: "Cost: ~€6–€30*",
+    comp_ex_wu_note: "*strongly depends on method",
+    comp_tag_express_also: "Express also: <5 min",
+    comp_tag_hours_day: "Hours–1 day",
+    comp_tag_bank_days: "Bank: 1–2 business days",
+    comp_takeaway_win_label: "Where SwiftBridge wins",
+    comp_takeaway_win_text1: "Lower total costs for diaspora amounts, Express <5 min (unique), full cost transparency before confirmation, iDEAL + iDIN NL-native, WhatsApp confirmation, Central Asian corridors.",
+    comp_takeaway_peer_label1: "Honestly: where banks score",
+    comp_takeaway_peer_text1: "Customers who transfer only occasionally are slower to switch. Banks offer broad services without a new app. Some customers prefer the familiar environment.",
+    comp_takeaway_win_text2: "iDEAL + iDIN NL-native (unique); Express <5 min at a fixed price; DNB/EMI supervision as a Dutch trust signal; Central Asian corridors; WhatsApp confirmation to family.",
+    comp_takeaway_peer_label2: "Honestly: where competitors excel",
+    comp_peer_wise: "lowest total cost (~€6.50), 0% FX markup, excellent transparency.",
+    comp_peer_revolut: "broad ecosystem.",
+    comp_peer_wu: "cash pickup worldwide.",
+    comp_peer_remitly: "strong diaspora UX.",
+    comp_disclaimer_checked: "Indicative — checked 14 June 2026.",
+    comp_disclaimer_banks: "Bank data based on publicly published rates. FX margins are indicative estimates.",
+    comp_col_feature: "Feature",
+    comp_row_fixed: "Fixed fee (non-SEPA)",
+    comp_row_fixed2: "Fixed fee",
+    comp_row_fx: "FX margin",
+    comp_row_speed: "Speed non-SEPA",
+    comp_row_transparency: "Costs fully visible upfront",
+    comp_row_transparency2: "Costs visible upfront",
+    comp_row_express2: "Express <5 min (fixed price)",
+    comp_row_corridors: "Central Asian corridors",
+    comp_row_whatsapp: "WhatsApp confirmation",
+    comp_row_dnb: "DNB/EMI NL supervision",
+    comp_sb_fixed: "€4.95 fixed",
+    comp_indicative: "(indicative)",
+    comp_shown_before: "(shown before confirmation)",
+    comp_not_published: "(not published separately)",
+    comp_days_1_2: "1–2 business days",
+    comp_days_3_5: "3–5 business days",
+    comp_days_2: "~2 business days",
+    comp_full: "Full",
+    comp_partial: "Partial",
+    comp_limited: "Limited",
+    comp_yes: "Yes",
+    comp_no: "No",
+    comp_yes_central: "Yes — built in",
+    comp_own_bank: "Own bank",
+    comp_yes_fixed: "Yes — €4.95 fixed",
+    comp_yes_corridors: "Yes (UZS, KZT, KGS, TMT, AZN)",
+    comp_sb_speed_badge: "Express: <5 min",
+    comp_sb_speed_badge2: "Express: typically <5 min",
+    comp_sb_speed_econ: "Economy: 1–2 business days",
+    comp_ing_fee: "~€6 per transfer",
+    comp_abn_fee: "€9 per transfer",
+    comp_rabo_fee: "€8 per transfer",
+    comp_wise_fee: "~€6.50 total per €1,000",
+    comp_remitly_fee: "~€1.49–€1.99 flat",
+    comp_revolut_fee: "Free within plan limit",
+    comp_revolut_fee_note: "(then 1%)",
+    comp_wu_fee: "Varies by method",
+    comp_wise_fx_strong: "0% FX markup",
+    comp_wise_fx_rest: "— mid-market rate",
+    comp_wise_fx_note: "(explicit conversion fee only)",
+    comp_remitly_fx: "~0.5–3.0% above mid-market",
+    comp_revolut_fx: "0% within limit; +1% weekends",
+    comp_wu_fx: "FX margin built into the rate",
+    comp_wise_speed: "40% in seconds; most within hours–1 day",
+    comp_remitly_speed: "Express: \"can be instant\"; Economy: 3–5 business days",
+    comp_revolut_speed: "Revolut→Revolut: minutes; non-SEPA bank: 3–5 business days",
+    comp_wu_speed: "Bank: 1–2 business days; cash pickup: minutes",
+    comp_excellent: "Excellent",
+    comp_good: "Good",
+    comp_fair: "Moderate",
+    comp_available: "Available",
+    comp_not_prominent: "Not prominent",
+    comp_remitly_express: "Remitly Express (higher fee)",
+    comp_no_nonsepa: "No for non-SEPA bank",
+    comp_cash_pickup: "Cash pickup: minutes",
+    comp_limited_nl: "Limited for NL",
+    comp_limited_nl_ca: "Limited for NL→Central Asia",
+    comp_not_focused: "Not a focus",
+    comp_dnb_sb: "Yes — via EMI partner, DNB",
+    comp_dnb_wise: "DNB-registered; FCA primary",
+    comp_dnb_remitly: "EU licences; not DNB-primary",
+    comp_dnb_revolut: "EU banking licence (LT); DNB NL",
+    comp_dnb_wu: "FCA/EU; not DNB-primary",
+    topbar_brand: "SwiftBridge — Netherlands",
+    topbar_compliance: "Wwft & GDPR compliant",
+    hero_compare_cta: "Compare with your bank →",
+    dnb_badge: "Regulated",
+    dnb_card_sub: "Supervision via registered EMI partner",
+    dnb_card_quote: "\"Supervised by De Nederlandsche Bank via our EMI partner — the same standard as your own bank.\"",
+    dnb_pill_payments: "✓ Payment services",
+    dnb_pill_regulated: "✓ Regulated NL",
+    dnb_pill_wwft: "✓ Wwft compliant",
+    dnb_pill_avg: "✓ GDPR",
+    calc_heading: "Calculate your transfer",
+    calc_minmax: "Min. €50 · Max. €5,000",
+    calc_speed_legend: "Speed",
+    calc_cur_try: "🇹🇷 TRY — Turkish lira",
+    calc_cur_azn: "🇦🇿 AZN — Azerbaijani manat",
+    calc_cur_kzt: "🇰🇿 KZT — Kazakhstani tenge",
+    calc_cur_uzs: "🇺🇿 UZS — Uzbekistani som",
+    calc_cur_tmt: "🇹🇲 TMT — Turkmenistani manat",
+    calc_cur_kgs: "🇰🇬 KGS — Kyrgyzstani som",
+    calc_cur_usd: "🇺🇸 USD — US dollar",
+    calc_cur_gbp: "🇬🇧 GBP — British pound",
+    calc_cur_mad: "🇲🇦 MAD — Moroccan dirham",
+    why_swiftbridge: "Why SwiftBridge",
+    value_heading: "Bank-grade security. Better costs. Faster.",
+    hiw_eyebrow: "It's this simple",
+    hiw_sub: "Your first transfer is set up in under 10 minutes. Verify once, then you're always ready to send.",
+    hiw_note: "† Express transfers: typically under 5 minutes on live corridors. Economy: 1–2 business days. Final rate and costs confirmed before every transaction.",
+    comparison_eyebrow: "An honest comparison",
+    comparison_sub: "Compare fixed fees, exchange-rate margin and speed — transparent and without surprises.",
     skip_to_main: "Skip to main content",
     nav_how_it_works: "How it works",
     nav_rates: "Rates",
@@ -1305,9 +1666,9 @@ const I18N = {
     calc_label_amount: "I send",
     calc_label_currency: "Currency",
     calc_label_receive: "Recipient gets (indicative)",
-    calc_speed_express: "Express (typically < 5 min)",
+    calc_speed_express: "(typically < 5 min)",
     calc_speed_express_short: "Express",
-    calc_speed_economy: "Economy (1–2 business days)",
+    calc_speed_economy: "(1–2 business days)",
     calc_speed_economy_short: "Economy",
     calc_rate_label: "Exchange rate",
     calc_fee_label: "Transaction fee",
@@ -1350,7 +1711,8 @@ const I18N = {
     faq_q1: "How quickly does the money arrive?",
     faq_a1: "With Express, a transfer typically takes under 5 minutes on our live corridors. Economy transfers take 1–2 business days. Exact processing time depends on the destination country and the recipient’s local bank. You always see the expected delivery time before confirming.",
     faq_q2: "What does a transfer cost?",
-    faq_a2: "SwiftBridge charges a transaction fee (€4,95 vast per overboeking) plus an indicative FX margin of approx. 1.2%. You always see the full cost breakdown before confirming. No hidden fees.",
+    nav_dashboard: "My dashboard",
+    faq_a2: "SwiftBridge charges a transaction fee (a fixed €4.95 per transfer) plus a transparent FX margin starting at 1.2% — lower per membership tier, down to 0.6%. You always see the full cost breakdown before confirming. No hidden fees.",
     faq_q3: "Is SwiftBridge safe and legal?",
     faq_a3: "Yes. SwiftBridge operates via a registered EMI partner under De Nederlandsche Bank (DNB) supervision. We comply with Wwft (anti-money laundering) and GDPR. Every transaction is screened against international sanctions lists. Identity is verified via iDIN.",
     cta_band_heading: "Ready to make the switch?",
@@ -1366,58 +1728,419 @@ const I18N = {
     login_or_continue: "Or continue with", login_remember: "Remember me"
   },
   tr: {
+    corridor_eyebrow: "Mevcut koridorlar",
+    corridor_sub: "Aileniz ister Türkiye'de, ister Fas, Azerbaycan, Kazakistan, Özbekistan veya başka bir yerde yaşasın — SwiftBridge hizmetinizde. Güvenle düzenlenmiş, tamamen şeffaf, maliyetler her zaman görünür.",
+    corridor_turkey: "Türkiye",
+    corridor_morocco: "Fas",
+    corridor_azerbaijan: "Azerbaycan",
+    corridor_kazakhstan: "Kazakistan",
+    corridor_uzbekistan: "Özbekistan",
+    corridor_kyrgyzstan: "Kırgızistan",
+    corridor_turkmenistan: "Türkmenistan",
+    corridor_more: "+35 para birimi",
+    corridor_more_sub: "Yeni — yapım aşamasında",
+    corridor_rates_indicative: "Kurlar gösterge niteliğindedir.",
+    app_pill_express: "Ekspres genellikle <5 dk",
+    app_pill_alerts: "Canlı kur uyarıları",
+    pwa_install_btn: "⬇ Uygulamayı telefonunuza kurun",
+    pwa_install_fallback: "Ücretsiz hesap ve uygulama aç",
+    pwa_ios_1: "iPhone/iPad'de:",
+    pwa_ios_share: "Paylaş",
+    pwa_ios_2: "Safari'nin altında",
+    pwa_ios_home: "Ana Ekrana Ekle",
+    pwa_ios_3: "Böylece SwiftBridge cihazınızda uygulama olarak yer alır.",
+    app_stores_soon: "Yakında App Store ve Google Play'de.",
+    trust_facts_heading: "Vaatlere değil, şeffaflığa dayanır",
+    trust_fact1_title: "DNB denetimi altında",
+    trust_fact1_body: "Ödeme hizmetleri, De Nederlandsche Bank denetimindeki lisanslı bir EMI ortağı aracılığıyla sunulur — kendi bankanızı denetleyen aynı kurum. SwiftBridge'in kendisi bir banka değildir.",
+    trust_fact2_title: "Kuru onaylamadan önce görürsünüz",
+    trust_fact2_body: "Gizli marj yok. Döviz kurunu, kur marjını (yakl. %1,2) ve ücretleri tam dökümüyle görürsünüz — göndermeden önce. Gördüğünüz, ödediğinizdir.",
+    trust_fact3_title: "Banka düzeyinde güvenlik",
+    trust_fact3_body: "Her girişte iki adımlı doğrulama, kısa hareketsizlik sonrası kapanan oturumlar ve verilerinizin şifreli saklanması. Kendi bankanızla iDIN üzerinden kimlik kontrolü.",
+    trust_facts_note: "Uydurma müşteri yorumları yayımlamayız. Gerçek, doğrulanmış müşteri deneyimleri hazır olur olmaz burada — kaynağıyla birlikte — göstereceğiz.",
+    faq_eyebrow: "Sık sorulan sorular",
+    faq_heading: "Bilmek istediğiniz her şey",
+    faq_q4: "Minimum ve maksimum tutarlar nedir?",
+    faq_a4: "İşlem başına €50 ile €5.000 arasında tutar gönderebilirsiniz. Haftalık limit €5.000'dir. Daha yüksek kurumsal limitler için bkz.",
+    faq_a4_link: "SwiftBridge Kurumsal",
+    faq_q5: "Alıcı paranın yolda olduğunu nasıl bilir?",
+    faq_a5: "Transferiniz gönderilir gönderilmez alıcıya otomatik bir WhatsApp onayı göndeririz. Siz de bir onay alırsınız. Böylece ikiniz de paranın ulaştığını tam olarak bilirsiniz.",
+    faq_q6: "SwiftBridge, Wise veya Revolut ile nasıl karşılaştırılır?",
+    faq_a6: "Wise, %0 kur farkı sayesinde birçok koridorda daha düşük toplam maliyete sahiptir — bunu dürüstçe kabul ediyoruz. SwiftBridge şunlarla öne çıkar: iDEAL + iDIN ödeme akışı, sabit fiyatla Ekspres <5 dk, güven işareti olarak DNB/EMI denetimi, Orta Asya koridorları ve alıcıya WhatsApp onayı. Her iki hizmet de şeffaftır — kendi koridorunuzda karşılaştırın.",
+    cta_band_secondary: "Ücretleri karşılaştırın",
+    cta_microcopy: "Kredi kartı gerekmez · EMI ortağı ile DNB denetimi · iDEAL ödeme · Wwft uyumlu",
+    footer_desc: "Hollanda'dan 45'ten fazla ülkeye güvenle para gönderin. EMI ortağımız aracılığıyla DNB denetimi altında.",
+    footer_product: "Ürün",
+    footer_company: "Şirket",
+    footer_safety: "Güvenlik",
+    footer_status: "Durum ve güncellemeler",
+    footer_contact: "İletişim",
+    footer_legal_heading: "Hukuki ve hesap",
+    footer_create_account: "Hesap oluştur",
+    footer_members: "Üyelik programı",
+    footer_privacy: "Gizlilik",
+    footer_terms: "Koşullar",
+    footer_aml: "AML politikası",
+    footer_complaints: "Şikayetler",
+    footer_copyright: "© 2026 SwiftBridge B.V. Tüm hakları saklıdır.",
+    comp_example_title: "Örnek hesap: Türkiye'ye €1.000 (EUR → TRY)",
+    comp_example_note1: "Örnek: ECB orta kuru 1 EUR = 36,00 TRY (varsayımsal); SwiftBridge Ekonomi tarifesi. Banka marjları gösterge ~%1,5. Göndermeden önce güncel kurları kontrol edin.",
+    comp_example_note2: "Örnek: ECB orta kuru 1 EUR = 36,00 TRY (varsayımsal). Wise orta piyasa kurunu kullanır (%0 kur farkı). Güncel kurları her zaman sağlayıcıdan kontrol edin.",
+    comp_ex_sb_fees: "Ücret: €4,95 · Marj: %1,2",
+    comp_ex_sb_total: "Toplam maliyet: ~€16,95",
+    comp_ex_ing_fees: "Ücret: ~€6 · Marj: ~%1,5",
+    comp_ex_ing_total: "Toplam maliyet: ~€21,60",
+    comp_ex_abn_fees: "Ücret: €9 · Marj: ~%1,5",
+    comp_ex_abn_total: "Toplam maliyet: ~€24,75",
+    comp_ex_rabo_fees: "Ücret: €8 · Marj: ~%1,5",
+    comp_ex_rabo_total: "Toplam maliyet: ~€23,70",
+    comp_ex_wise_fees: "Ücret: ~€6,50 ·",
+    comp_ex_wise_total: "Toplam maliyet: ~€6,50",
+    comp_ex_remitly_fees: "Ücret: ~€1,99 · Marj: ~%1,5",
+    comp_ex_remitly_total: "Toplam maliyet: ~€17,50",
+    comp_ex_wu_cost: "Maliyet: ~€6–€30*",
+    comp_ex_wu_note: "*yönteme göre büyük ölçüde değişir",
+    comp_tag_express_also: "Ekspres de: <5 dk",
+    comp_tag_hours_day: "Saatler–1 gün",
+    comp_tag_bank_days: "Banka: 1–2 iş günü",
+    comp_takeaway_win_label: "SwiftBridge'in kazandığı noktalar",
+    comp_takeaway_win_text1: "Diaspora tutarları için daha düşük toplam maliyet, Ekspres <5 dk (benzersiz), onaydan önce tam maliyet şeffaflığı, iDEAL + iDIN, WhatsApp onayı, Orta Asya koridorları.",
+    comp_takeaway_peer_label1: "Dürüstçe: bankaların güçlü olduğu yerler",
+    comp_takeaway_peer_text1: "Nadiren transfer yapan müşteriler daha geç geçiş yapar. Bankalar yeni bir uygulama gerektirmeden geniş hizmet sunar. Bazı müşteriler alışık oldukları ortamı tercih eder.",
+    comp_takeaway_win_text2: "iDEAL + iDIN (benzersiz); sabit fiyatla Ekspres <5 dk; Hollanda güven işareti olarak DNB/EMI denetimi; Orta Asya koridorları; aileye WhatsApp onayı.",
+    comp_takeaway_peer_label2: "Dürüstçe: rakiplerin öne çıktığı yerler",
+    comp_peer_wise: "en düşük toplam maliyet (~€6,50), %0 kur farkı, mükemmel şeffaflık.",
+    comp_peer_revolut: "geniş ekosistem.",
+    comp_peer_wu: "dünya çapında nakit teslim.",
+    comp_peer_remitly: "güçlü diaspora deneyimi.",
+    comp_disclaimer_checked: "Gösterge — 14 Haziran 2026'da kontrol edildi.",
+    comp_disclaimer_banks: "Banka verileri kamuya açık tarifelere dayanır. Kur marjları gösterge niteliğinde tahminlerdir.",
+    comp_col_feature: "Özellik",
+    comp_row_fixed: "Sabit ücret (SEPA dışı)",
+    comp_row_fixed2: "Sabit ücret",
+    comp_row_fx: "Kur marjı",
+    comp_row_speed: "Hız (SEPA dışı)",
+    comp_row_transparency: "Maliyetler önceden tamamen görünür",
+    comp_row_transparency2: "Maliyetler önceden görünür",
+    comp_row_express2: "Ekspres <5 dk (sabit fiyat)",
+    comp_row_corridors: "Orta Asya koridorları",
+    comp_row_whatsapp: "WhatsApp onayı",
+    comp_row_dnb: "DNB/EMI Hollanda denetimi",
+    comp_sb_fixed: "€4,95 sabit",
+    comp_indicative: "(gösterge)",
+    comp_shown_before: "(onaydan önce gösterilir)",
+    comp_not_published: "(ayrıca yayımlanmıyor)",
+    comp_days_1_2: "1–2 iş günü",
+    comp_days_3_5: "3–5 iş günü",
+    comp_days_2: "~2 iş günü",
+    comp_full: "Tam",
+    comp_partial: "Kısmen",
+    comp_limited: "Sınırlı",
+    comp_yes: "Evet",
+    comp_no: "Hayır",
+    comp_yes_central: "Evet — merkezi",
+    comp_own_bank: "Kendi bankanız",
+    comp_yes_fixed: "Evet — €4,95 sabit",
+    comp_yes_corridors: "Evet (UZS, KZT, KGS, TMT, AZN)",
+    comp_sb_speed_badge: "Ekspres: <5 dk",
+    comp_sb_speed_badge2: "Ekspres: genellikle <5 dk",
+    comp_sb_speed_econ: "Ekonomi: 1–2 iş günü",
+    comp_ing_fee: "transfer başına ~€6",
+    comp_abn_fee: "transfer başına €9",
+    comp_rabo_fee: "transfer başına €8",
+    comp_wise_fee: "€1.000 başına toplam ~€6,50",
+    comp_remitly_fee: "~€1,49–€1,99 sabit",
+    comp_revolut_fee: "Plan limiti dahilinde ücretsiz",
+    comp_revolut_fee_note: "(sonrası %1)",
+    comp_wu_fee: "Yönteme göre değişir",
+    comp_wise_fx_strong: "%0 kur farkı",
+    comp_wise_fx_rest: "— orta piyasa kuru",
+    comp_wise_fx_note: "(yalnızca açık dönüşüm ücreti)",
+    comp_remitly_fx: "orta piyasanın ~%0,5–3,0 üzeri",
+    comp_revolut_fx: "limit dahilinde %0; hafta sonu +%1",
+    comp_wu_fx: "Kur marjı kura dahildir",
+    comp_wise_speed: "%40'ı saniyeler içinde; çoğu saatler–1 gün içinde",
+    comp_remitly_speed: "Ekspres: \"anında olabilir\"; Ekonomi: 3–5 iş günü",
+    comp_revolut_speed: "Revolut→Revolut: dakikalar; SEPA dışı banka: 3–5 iş günü",
+    comp_wu_speed: "Banka: 1–2 iş günü; nakit teslim: dakikalar",
+    comp_excellent: "Mükemmel",
+    comp_good: "İyi",
+    comp_fair: "Orta",
+    comp_available: "Mevcut",
+    comp_not_prominent: "Öne çıkmıyor",
+    comp_remitly_express: "Remitly Express (daha yüksek ücret)",
+    comp_no_nonsepa: "SEPA dışı banka için hayır",
+    comp_cash_pickup: "Nakit teslim: dakikalar",
+    comp_limited_nl: "Hollanda için sınırlı",
+    comp_limited_nl_ca: "Hollanda→Orta Asya için sınırlı",
+    comp_not_focused: "Odak değil",
+    comp_dnb_sb: "Evet — EMI ortağı aracılığıyla, DNB",
+    comp_dnb_wise: "DNB kayıtlı; birincil FCA",
+    comp_dnb_remitly: "AB lisansları; birincil DNB değil",
+    comp_dnb_revolut: "AB banka lisansı (LT); DNB Hollanda",
+    comp_dnb_wu: "FCA/AB; birincil DNB değil",
+    topbar_brand: "SwiftBridge — Hollanda",
+    topbar_compliance: "Wwft ve GDPR uyumlu",
+    hero_compare_cta: "Bankanızla karşılaştırın →",
+    dnb_badge: "Düzenlenmiş",
+    dnb_card_sub: "Kayıtlı EMI ortağı aracılığıyla denetim",
+    dnb_card_quote: "\"EMI ortağımız aracılığıyla De Nederlandsche Bank denetiminde — kendi bankanızla aynı standart.\"",
+    dnb_pill_payments: "✓ Ödeme hizmetleri",
+    dnb_pill_regulated: "✓ Hollanda'da düzenlenmiş",
+    dnb_pill_wwft: "✓ Wwft uyumlu",
+    dnb_pill_avg: "✓ GDPR",
+    calc_heading: "Transferinizi hesaplayın",
+    calc_minmax: "Min. €50 · Maks. €5.000",
+    calc_speed_legend: "Hız",
+    calc_cur_try: "🇹🇷 TRY — Türk lirası",
+    calc_cur_azn: "🇦🇿 AZN — Azerbaycan manatı",
+    calc_cur_kzt: "🇰🇿 KZT — Kazak tengesi",
+    calc_cur_uzs: "🇺🇿 UZS — Özbek somu",
+    calc_cur_tmt: "🇹🇲 TMT — Türkmen manatı",
+    calc_cur_kgs: "🇰🇬 KGS — Kırgız somu",
+    calc_cur_usd: "🇺🇸 USD — ABD doları",
+    calc_cur_gbp: "🇬🇧 GBP — İngiliz sterlini",
+    calc_cur_mad: "🇲🇦 MAD — Fas dirhemi",
+    why_swiftbridge: "Neden SwiftBridge",
+    value_heading: "Banka düzeyinde güvenlik. Daha iyi maliyet. Daha hızlı.",
+    hiw_eyebrow: "Bu kadar kolay",
+    hiw_sub: "İlk transferiniz 10 dakikadan kısa sürede hazır. Bir kez doğrulayın, sonrasında her zaman anında hazırsınız.",
+    hiw_note: "† Ekspres transferler: canlı koridorlarda genellikle 5 dakikanın altında. Ekonomi: 1–2 iş günü. Kesin kur ve maliyetler her işlemden önce onaylanır.",
+    comparison_eyebrow: "Dürüst karşılaştırma",
+    comparison_sub: "Sabit ücretleri, kur marjını ve hızı karşılaştırın — şeffaf ve sürprizsiz.",
     skip_to_main: "Ana içeriğe geç",
-    nav_how_it_works: "Nasıl çalışır", nav_rates: "Üretler", nav_currencies: "Para birimleri",
+    nav_how_it_works: "Nasıl çalışır", nav_rates: "Ücretler", nav_currencies: "Para birimleri",
     nav_about: "Hakkımızda", nav_login: "Giriş yap", nav_send_money: "Para gönder →", nav_business: "Kurumsal", nav_download_app: "Uygulamayı indir", topbar_download: "Uygulamayı indir",
     hero_eyebrow: "EMI ortağımız aracılığıyla DNB denetimi altında",
     hero_headline: "Bankanız kadar güvenilir.\nSizin gibi insanlar için yapıldı.",
-    hero_subhead: "SwiftBridge, kendi bankanızı denetleyen aynı düzenleyici kurum olan De Nederlandsche Bank’ın EMI ortağımız aracılığıyla denetimi altında faaliyet gösterir. Tüm üretler şeffaf biçimde gösterilir; genellikle 5 dakika içinde alıcının hesabına para ulaşır.",
-    hero_cta: "Ücretsiз hesap aç", hero_microtrust: "EMI ortağı ile DNB denetimi · iDEAL ödeme · iDIN kimlik doğrulama · 256-bit şifreleme · Wwft uyumlu",
+    hero_subhead: "SwiftBridge, kendi bankanızı denetleyen aynı düzenleyici kurum olan De Nederlandsche Bank’ın EMI ortağımız aracılığıyla denetimi altında faaliyet gösterir. Tüm ücretler şeffaf biçimde gösterilir; genellikle 5 dakika içinde alıcının hesabına para ulaşır.",
+    hero_cta: "Ücretsiz hesap aç", hero_microtrust: "EMI ortağı ile DNB denetimi · iDEAL ödeme · iDIN kimlik doğrulama · 256-bit şifreleme · Wwft uyumlu",
     calc_label_amount: "Gönderilen tutar", calc_label_currency: "Para birimi",
-    calc_label_receive: "Alıcının alacağı (gösterge)", calc_speed_express: "Ekspres (genellikle < 5 dak.)",
-    calc_speed_express_short: "Ekspres", calc_speed_economy: "Ekonomi (1–2 iş günü)", calc_speed_economy_short: "Ekonomi",
+    calc_label_receive: "Alıcının alacağı (gösterge)", calc_speed_express: "(genellikle < 5 dk.)",
+    calc_speed_express_short: "Ekspres", calc_speed_economy: "(1–2 iş günü)", calc_speed_economy_short: "Ekonomi",
     calc_rate_label: "Döviz kuru", calc_fee_label: "İşlem ücreti",
     calc_indicatief_note: "† Gösterge nitelikte kur. Kurlar dalgalanabilir. Kesin kur transferiniz anında onaylanır.",
-    calc_cta: "Ücretsiз başla →",
+    calc_cta: "Ücretsiz başla →",
     trust_dnb: "EMI ortağı ile DNB denetimi", trust_ideal: "iDEAL ödeme", trust_idin: "iDIN kimlik doğrulama",
     trust_encryption: "256-bit şifreleme", trust_gdpr: "GDPR uyumlu", trust_wwft: "Wwft sertifikalı",
-    card1_title: "Bankanız gibi düzenlemiş ve güvenli",
-    card1_blurb: "SwiftBridge, De Nederlandsche Bank (DNB) denetimindeki kayıtlı bir EMI ortağı aracılığıyla faaliyet gösterir. Her işlem Wwft taraımasından ve yaptırım kontrolunden geçer.",
+    card1_title: "Bankanız gibi düzenlenmiş ve güvenli",
+    card1_blurb: "SwiftBridge, De Nederlandsche Bank (DNB) denetimindeki kayıtlı bir EMI ortağı aracılığıyla faaliyet gösterir. Her işlem Wwft taramasından ve yaptırım kontrolünden geçer.",
     card2_title: "Onaylamadan önce her kuruşu görün",
     card2_blurb: "Gizli döviz marjı yok. Sonradan ortaya çıkan ince yazı yok. Göndermeden önce tüm maliyetleri görürsünüz.",
     card3_title: "Aileniz beklemez",
     card3_blurb: "Ekspres’i seçin; transferiniz genellikle 5 dakika içinde alıcının hesabına ulaşır.",
     hiw_heading: "Dört adımda hazır — güvenli ve kolay",
-    hiw_step1_title: "Ücretsiз hesap oluşturun", hiw_step1_body: "Adınızı, e-posta adresinizi ve telefon numaranuası girin. Kredi kartı gerekmez.",
+    hiw_step1_title: "Ücretsiz hesap oluşturun", hiw_step1_body: "Adınızı, e-posta adresinizi ve telefon numaranızı girin. Kredi kartı gerekmez.",
     hiw_step2_title: "Kendi bankanız üzerinden bir kez kimlik doğrayın", hiw_step2_body: "iDIN, kimliğinizi güvenli biçimde doğrulamak için mevcut bankacılık uygulamanızı kullanır.",
-    hiw_step3_title: "Alışk olduğunuz şekilde ödeme yapın — iDEAL ile", hiw_step3_body: "Tutar ve hedef seçin, döviz kurunu inceleyin, ardından kendi Hollanda bankanızdan iDEAL ile onaylayın.",
+    hiw_step3_title: "Alıştığınız şekilde ödeme yapın — iDEAL ile", hiw_step3_body: "Tutar ve hedef seçin, döviz kurunu inceleyin, ardından kendi Hollanda bankanızdan iDEAL ile onaylayın.",
     hiw_step4_title: "Paranız ailenizin hesabına güvenle ulaşır", hiw_step4_body: "Ekspres ile genellikle 5 dakika içinde. Hem siz hem de alıcı WhatsApp onayı alır.",
     comparison_heading: "Bankanız üzerinden transfer ne kadara mal olur — ya SwiftBridge?",
     comparison_tab_banks: "Bankalar ile karşılaştırma", comparison_tab_fintech: "Fintechlerle karşılaştırma",
     comparison_disclaimer: "Tüm rakamlar, kamuya açık kaynaklara dayalı gösterge niteliğindedir. Ücretler değişebilir. SwiftBridge ücretleri her işlemden önce onaylanır.",
     corridor_heading: "45'ten fazla para birimi. Tek güvenilir platform.",
-    corridor_availability_disclaimer: "Koridor erişilebilirliği değişebilir. Hedef ülkenizin güncel durumu için uygulamaı kontrol edin.",
+    corridor_availability_disclaimer: "Koridor erişilebilirliği değişebilir. Hedef ülkenizin güncel durumu için uygulamayı kontrol edin.",
     corridor_waitlist_cta: "Bekleme listesine kaydol",
     app_heading: "SwiftBridge — her zaman elinizin altında",
     app_intro: "Transferlerinizi telefonunuzdan yönetin: canlı döviz kurları, genellikle 5 dakikadan kısa süren Ekspres transferler ve para ulaştığı anda ailenize WhatsApp onayı.",
     app_download_ios: "App Store'dan indirin", app_download_android: "Google Play'den indirin",
-    app_qr_help: "Uygulamaıyı indirmek için QR kodunu trayın",
-    app_trust_line: "Ücretsiз · Kredi kartı gerekmez · EMI ortağı ile DNB denetimi",
+    app_qr_help: "Uygulamayı indirmek için QR kodunu tarayın",
+    app_trust_line: "Ücretsiz · Kredi kartı gerekmez · EMI ortağı ile DNB denetimi",
     faq_q1: "Para ne kadar sürede ulaşır?", faq_a1: "Ekspres seçeneğinde, canlı koridorlarımızda bir transfer genellikle 5 dakikadan kısa sürer.",
+    nav_dashboard: "Panelim",
     faq_q2: "Transfer ücreti ne kadar?", faq_a2: "SwiftBridge sabit €4,95 işlem ücreti ve şeffaf, yaklaşık %1,2 döviz marjı alır (üyelik seviyesine göre %0,6'ya kadar düşer). Minimum transfer €50.",
     faq_q3: "SwiftBridge güvenli ve yasal mı?", faq_a3: "Evet. SwiftBridge, De Nederlandsche Bank (DNB) denetimindeki kayıtlı bir EMI ortağı aracılığıyla faaliyet gösterir.",
     cta_band_heading: "Geçiş yapmaya hazır mısınız?",
-    cta_band_sub: "2 dakikadan kısa sürede üretsiз hesap açın. EMI ortağımız aracılığıyla De Nederlandsche Bank denetimi altında.",
-    cta_band_button: "Ücretsiз hesap aç",
-    footer_legal_oneliner: "SwiftBridge bir banka değildir ve DNB bankacılık lisansına sahip değildir. Ödeme hizmetleri, PSD2 ve Wwft kapsamında DNB denetiminde faaliyet gösteren yetkili bir EMI ortağı aracılığıyla sunulmaktadır.",
+    cta_band_sub: "2 dakikadan kısa sürede ücretsiz hesap açın. EMI ortağımız aracılığıyla De Nederlandsche Bank denetimi altında.",
+    cta_band_button: "Ücretsiz hesap aç",
+    footer_legal_oneliner: "SwiftBridge bir banka değildir ve DNB bankacılık lisansına sahip değildir. Ödeme hizmetleri, PSD2 ve Wwft kapsamında DNB denetiminde faaliyet gösteren yetkili bir EMI ortağı aracılığıyla sunulmaktadır. Limitler: işlem başına min. €50 / maks. €5.000, haftalık maks. €5.000.",
     login_tab_login: "Giriş yap", login_tab_register: "Kayıt ol", login_label_email: "E-posta adresi",
-    login_label_password: "Şifre", login_forgot: "Şifremii unuttum?", login_btn_login: "Giriş yap",
+    login_label_password: "Şifre", login_forgot: "Şifremi unuttum?", login_btn_login: "Giriş yap",
     login_btn_register: "Hesap oluştur", login_show: "Göster", login_hide: "Gizle",
     login_err_email: "Lütfen geçerli bir e-posta adresi girin.", login_err_password: "Şifre en az 8 karakter içermelidir.",
     login_security_note: "256-bit şifreli · EMI ortağı ile DNB denetimi · iDIN doğrulama mevcut",
-    login_or_continue: "Ya da şunula devam et", login_remember: "Beni hatırla"
+    login_or_continue: "Ya da şununla devam et", login_remember: "Beni hatırla"
   },
   ar: {
+    corridor_eyebrow: "الممرات المتاحة",
+    corridor_sub: "سواء كانت عائلتك تعيش في تركيا أو المغرب أو أذربيجان أو كازاخستان أو أوزبكستان أو غيرها — SwiftBridge في خدمتك. تنظيم آمن، شفافية كاملة، وتكاليف مرئية دائمًا.",
+    corridor_turkey: "تركيا",
+    corridor_morocco: "المغرب",
+    corridor_azerbaijan: "أذربيجان",
+    corridor_kazakhstan: "كازاخستان",
+    corridor_uzbekistan: "أوزبكستان",
+    corridor_kyrgyzstan: "قيرغيزستان",
+    corridor_turkmenistan: "تركمانستان",
+    corridor_more: "+35 عملة",
+    corridor_more_sub: "جديد — قيد الإنشاء",
+    corridor_rates_indicative: "الأسعار استرشادية.",
+    app_pill_express: "إكسبريس عادةً <5 دقائق",
+    app_pill_alerts: "تنبيهات أسعار مباشرة",
+    pwa_install_btn: "⬇ ثبّت التطبيق على هاتفك",
+    pwa_install_fallback: "افتح حسابًا مجانيًا والتطبيق",
+    pwa_ios_1: "على iPhone/iPad: اضغط",
+    pwa_ios_share: "مشاركة",
+    pwa_ios_2: "أسفل Safari",
+    pwa_ios_home: "إضافة إلى الشاشة الرئيسية",
+    pwa_ios_3: "بعدها سيظهر SwiftBridge كتطبيق على جهازك.",
+    app_stores_soon: "قريبًا أيضًا في App Store وGoogle Play.",
+    trust_facts_heading: "مبني على الشفافية، لا على الوعود",
+    trust_fact1_title: "تحت إشراف DNB",
+    trust_fact1_body: "تُقدَّم خدمات الدفع عبر شريك EMI مرخَّص يخضع لإشراف De Nederlandsche Bank — نفس الجهة التي تراقب بنكك. SwiftBridge نفسها ليست بنكًا.",
+    trust_fact2_title: "ترى السعر قبل التأكيد",
+    trust_fact2_body: "لا هامش مخفي. ترى سعر الصرف وهامش الصرف (نحو 1.2٪) والتكاليف مفصَّلة بالكامل — قبل الضغط على إرسال. ما تراه هو ما تدفعه.",
+    trust_fact3_title: "أمان بمستوى البنوك",
+    trust_fact3_body: "تحقق بخطوتين عند كل تسجيل دخول، وجلسات تُغلق بعد فترة خمول قصيرة، وتخزين مشفَّر لبياناتك. التحقق من الهوية عبر iDIN مع بنكك.",
+    trust_facts_note: "لا ننشر مراجعات عملاء مختلقة. بمجرد توفر تجارب عملاء حقيقية وموثَّقة سنعرضها هنا — مع ذكر المصدر.",
+    faq_eyebrow: "الأسئلة الشائعة",
+    faq_heading: "كل ما تريد معرفته",
+    faq_q4: "ما الحد الأدنى والأقصى للمبالغ؟",
+    faq_a4: "يمكنك تحويل مبالغ من €50 حتى €5,000 لكل معاملة. الحد الأسبوعي €5,000. للحدود التجارية الأعلى، انظر",
+    faq_a4_link: "SwiftBridge للأعمال",
+    faq_q5: "كيف يعرف المستلم أن الأموال في الطريق؟",
+    faq_a5: "فور إرسال تحويلك، نرسل تلقائيًا تأكيدًا عبر WhatsApp إلى المستلم. وتتلقى أنت تأكيدًا أيضًا. هكذا تعرفان كلاكما بالضبط أن الأموال وصلت.",
+    faq_q6: "كيف تُقارن SwiftBridge بـ Wise أو Revolut؟",
+    faq_a6: "لدى Wise تكاليف إجمالية أقل على العديد من الممرات بفضل هامش الصرف 0٪ — ونقرّ بذلك بصدق. تتميز SwiftBridge بـ: تدفق دفع iDEAL + iDIN، إكسبريس <5 دقائق بسعر ثابت، إشراف DNB/EMI كإشارة ثقة، ممرات آسيا الوسطى، وتأكيد WhatsApp للمستلم. كلتا الخدمتين شفافتان — قارن على ممرك المحدد.",
+    cta_band_secondary: "قارن الأسعار",
+    cta_microcopy: "لا حاجة لبطاقة ائتمان · إشراف DNB عبر شريك EMI · دفع iDEAL · متوافق مع Wwft",
+    footer_desc: "أرسل الأموال بأمان من هولندا إلى أكثر من 45 دولة. تحت إشراف DNB عبر شريكنا EMI.",
+    footer_product: "المنتج",
+    footer_company: "الشركة",
+    footer_safety: "الأمان",
+    footer_status: "الحالة والتحديثات",
+    footer_contact: "اتصل بنا",
+    footer_legal_heading: "الشؤون القانونية والحساب",
+    footer_create_account: "إنشاء حساب",
+    footer_members: "برنامج العضوية",
+    footer_privacy: "الخصوصية",
+    footer_terms: "الشروط",
+    footer_aml: "سياسة مكافحة غسل الأموال",
+    footer_complaints: "الشكاوى",
+    footer_copyright: "© 2026 SwiftBridge B.V. جميع الحقوق محفوظة.",
+    comp_example_title: "مثال حسابي: €1,000 إلى تركيا (EUR → TRY)",
+    comp_example_note1: "توضيحي: سعر ECB الوسطي 1 يورو = 36.00 ليرة (افتراضي)؛ تعرفة SwiftBridge الاقتصادية. هوامش البنوك استرشادية ~1.5٪. تحقق من الأسعار الحالية قبل الإرسال.",
+    comp_example_note2: "توضيحي: سعر ECB الوسطي 1 يورو = 36.00 ليرة (افتراضي). تستخدم Wise سعر منتصف السوق (0٪ هامش). تحقق دائمًا من الأسعار لدى المزوِّد.",
+    comp_ex_sb_fees: "الرسوم: €4.95 · الهامش: 1.2٪",
+    comp_ex_sb_total: "التكلفة الإجمالية: ~€16.95",
+    comp_ex_ing_fees: "الرسوم: ~€6 · الهامش: ~1.5٪",
+    comp_ex_ing_total: "التكلفة الإجمالية: ~€21.60",
+    comp_ex_abn_fees: "الرسوم: €9 · الهامش: ~1.5٪",
+    comp_ex_abn_total: "التكلفة الإجمالية: ~€24.75",
+    comp_ex_rabo_fees: "الرسوم: €8 · الهامش: ~1.5٪",
+    comp_ex_rabo_total: "التكلفة الإجمالية: ~€23.70",
+    comp_ex_wise_fees: "الرسوم: ~€6.50 ·",
+    comp_ex_wise_total: "التكلفة الإجمالية: ~€6.50",
+    comp_ex_remitly_fees: "الرسوم: ~€1.99 · الهامش: ~1.5٪",
+    comp_ex_remitly_total: "التكلفة الإجمالية: ~€17.50",
+    comp_ex_wu_cost: "التكلفة: ~€6–€30*",
+    comp_ex_wu_note: "*يعتمد بشدة على الطريقة",
+    comp_tag_express_also: "إكسبريس أيضًا: <5 دقائق",
+    comp_tag_hours_day: "ساعات–يوم واحد",
+    comp_tag_bank_days: "البنك: 1–2 يوم عمل",
+    comp_takeaway_win_label: "أين تتفوق SwiftBridge",
+    comp_takeaway_win_text1: "تكاليف إجمالية أقل لمبالغ المغتربين، إكسبريس <5 دقائق (فريد)، شفافية كاملة للتكاليف قبل التأكيد، iDEAL + iDIN، تأكيد WhatsApp، ممرات آسيا الوسطى.",
+    comp_takeaway_peer_label1: "بصراحة: أين تتفوق البنوك",
+    comp_takeaway_peer_text1: "العملاء الذين يحوّلون نادرًا يترددون في التغيير. تقدم البنوك خدمات واسعة دون تطبيق جديد. بعض العملاء يفضلون البيئة المألوفة.",
+    comp_takeaway_win_text2: "iDEAL + iDIN (فريد)؛ إكسبريس <5 دقائق بسعر ثابت؛ إشراف DNB/EMI كإشارة ثقة هولندية؛ ممرات آسيا الوسطى؛ تأكيد WhatsApp للعائلة.",
+    comp_takeaway_peer_label2: "بصراحة: أين يتفوق المنافسون",
+    comp_peer_wise: "أقل تكلفة إجمالية (~€6.50)، 0٪ هامش صرف، شفافية ممتازة.",
+    comp_peer_revolut: "منظومة واسعة.",
+    comp_peer_wu: "استلام نقدي حول العالم.",
+    comp_peer_remitly: "تجربة مغتربين قوية.",
+    comp_disclaimer_checked: "استرشادي — تم التحقق في 14 يونيو 2026.",
+    comp_disclaimer_banks: "بيانات البنوك مستندة إلى تعريفات منشورة علنًا. هوامش الصرف تقديرات استرشادية.",
+    comp_col_feature: "الخاصية",
+    comp_row_fixed: "الرسوم الثابتة (خارج SEPA)",
+    comp_row_fixed2: "الرسوم الثابتة",
+    comp_row_fx: "هامش الصرف",
+    comp_row_speed: "السرعة خارج SEPA",
+    comp_row_transparency: "التكاليف مرئية بالكامل مسبقًا",
+    comp_row_transparency2: "التكاليف مرئية مسبقًا",
+    comp_row_express2: "إكسبريس <5 دقائق (سعر ثابت)",
+    comp_row_corridors: "ممرات آسيا الوسطى",
+    comp_row_whatsapp: "تأكيد عبر WhatsApp",
+    comp_row_dnb: "إشراف DNB/EMI في هولندا",
+    comp_sb_fixed: "€4.95 ثابتة",
+    comp_indicative: "(استرشادي)",
+    comp_shown_before: "(يُعرض قبل التأكيد)",
+    comp_not_published: "(غير منشور بشكل منفصل)",
+    comp_days_1_2: "1–2 يوم عمل",
+    comp_days_3_5: "3–5 أيام عمل",
+    comp_days_2: "~2 أيام عمل",
+    comp_full: "كامل",
+    comp_partial: "جزئي",
+    comp_limited: "محدود",
+    comp_yes: "نعم",
+    comp_no: "لا",
+    comp_yes_central: "نعم — مدمج",
+    comp_own_bank: "بنكك الخاص",
+    comp_yes_fixed: "نعم — €4.95 ثابتة",
+    comp_yes_corridors: "نعم (UZS, KZT, KGS, TMT, AZN)",
+    comp_sb_speed_badge: "إكسبريس: <5 دقائق",
+    comp_sb_speed_badge2: "إكسبريس: عادةً <5 دقائق",
+    comp_sb_speed_econ: "الاقتصادي: 1–2 يوم عمل",
+    comp_ing_fee: "~€6 لكل تحويل",
+    comp_abn_fee: "€9 لكل تحويل",
+    comp_rabo_fee: "€8 لكل تحويل",
+    comp_wise_fee: "~€6.50 إجمالًا لكل €1,000",
+    comp_remitly_fee: "~€1.49–€1.99 ثابتة",
+    comp_revolut_fee: "مجاني ضمن حد الخطة",
+    comp_revolut_fee_note: "(بعدها 1٪)",
+    comp_wu_fee: "يختلف حسب الطريقة",
+    comp_wise_fx_strong: "0٪ هامش صرف",
+    comp_wise_fx_rest: "— سعر منتصف السوق",
+    comp_wise_fx_note: "(رسوم تحويل صريحة فقط)",
+    comp_remitly_fx: "~0.5–3.0٪ فوق منتصف السوق",
+    comp_revolut_fx: "0٪ ضمن الحد؛ +1٪ في عطلة الأسبوع",
+    comp_wu_fx: "هامش الصرف مُضمَّن في السعر",
+    comp_wise_speed: "40٪ في ثوانٍ؛ الأغلب خلال ساعات إلى يوم",
+    comp_remitly_speed: "إكسبريس: \"قد يكون فوريًا\"؛ الاقتصادي: 3–5 أيام عمل",
+    comp_revolut_speed: "Revolut→Revolut: دقائق؛ بنك خارج SEPA: 3–5 أيام عمل",
+    comp_wu_speed: "البنك: 1–2 يوم عمل؛ الاستلام نقدًا: دقائق",
+    comp_excellent: "ممتاز",
+    comp_good: "جيد",
+    comp_fair: "متوسط",
+    comp_available: "متاح",
+    comp_not_prominent: "غير بارز",
+    comp_remitly_express: "Remitly Express (رسوم أعلى)",
+    comp_no_nonsepa: "لا للبنوك خارج SEPA",
+    comp_cash_pickup: "الاستلام نقدًا: دقائق",
+    comp_limited_nl: "محدود لهولندا",
+    comp_limited_nl_ca: "محدود لهولندا→آسيا الوسطى",
+    comp_not_focused: "ليست محور تركيز",
+    comp_dnb_sb: "نعم — عبر شريك EMI، DNB",
+    comp_dnb_wise: "مسجَّل لدى DNB؛ الجهة الأساسية FCA",
+    comp_dnb_remitly: "تراخيص أوروبية؛ DNB ليست الجهة الأساسية",
+    comp_dnb_revolut: "ترخيص مصرفي أوروبي (ليتوانيا)؛ DNB هولندا",
+    comp_dnb_wu: "FCA/الاتحاد الأوروبي؛ DNB ليست الجهة الأساسية",
+    topbar_brand: "SwiftBridge — هولندا",
+    topbar_compliance: "متوافق مع Wwft واللائحة الأوروبية GDPR",
+    hero_compare_cta: "قارن مع بنكك →",
+    dnb_badge: "خاضع للرقابة",
+    dnb_card_sub: "إشراف عبر شريك EMI مسجَّل",
+    dnb_card_quote: "\"تحت إشراف De Nederlandsche Bank عبر شريكنا EMI — بنفس معيار بنكك.\"",
+    dnb_pill_payments: "✓ خدمات الدفع",
+    dnb_pill_regulated: "✓ خاضع للرقابة في هولندا",
+    dnb_pill_wwft: "✓ متوافق مع Wwft",
+    dnb_pill_avg: "✓ GDPR",
+    calc_heading: "احسب تحويلك",
+    calc_minmax: "الحد الأدنى €50 · الحد الأقصى €5,000",
+    calc_speed_legend: "السرعة",
+    calc_cur_try: "🇹🇷 TRY — ليرة تركية",
+    calc_cur_azn: "🇦🇿 AZN — مانات أذربيجاني",
+    calc_cur_kzt: "🇰🇿 KZT — تينغ كازاخستاني",
+    calc_cur_uzs: "🇺🇿 UZS — سوم أوزبكي",
+    calc_cur_tmt: "🇹🇲 TMT — مانات تركمانستاني",
+    calc_cur_kgs: "🇰🇬 KGS — سوم قيرغيزستاني",
+    calc_cur_usd: "🇺🇸 USD — دولار أمريكي",
+    calc_cur_gbp: "🇬🇧 GBP — جنيه إسترليني",
+    calc_cur_mad: "🇲🇦 MAD — درهم مغربي",
+    why_swiftbridge: "لماذا SwiftBridge",
+    value_heading: "أمان بمستوى البنوك. تكاليف أفضل. أسرع.",
+    hiw_eyebrow: "بهذه البساطة",
+    hiw_sub: "يتم إعداد تحويلك الأول في أقل من 10 دقائق. تحقّق مرة واحدة، وبعدها تكون جاهزًا دائمًا.",
+    hiw_note: "† تحويلات إكسبريس: عادةً أقل من 5 دقائق على الممرات المباشرة. الاقتصادي: 1–2 يوم عمل. يُؤكَّد السعر والتكاليف النهائية قبل كل معاملة.",
+    comparison_eyebrow: "مقارنة نزيهة",
+    comparison_sub: "قارن الرسوم الثابتة وهامش سعر الصرف والسرعة — بشفافية ومن دون مفاجآت.",
     skip_to_main: "انتقل إلى المحتوى الرئيسي",
     nav_how_it_works: "كيف يعمل", nav_rates: "الأسعار", nav_currencies: "العملات",
     nav_about: "من نحن", nav_login: "تسجيل الدخول", nav_send_money: "أرسل الأموال →", nav_business: "الأعمال", nav_download_app: "تنزيل التطبيق", topbar_download: "نزّل التطبيق",
@@ -1428,8 +2151,8 @@ const I18N = {
     hero_microtrust: "إشراف DNB عبر شريك EMI · الدفع عبر iDEAL · التحقق عبر iDIN · تشفير 256 بت · متوافق مع Wwft",
     calc_label_amount: "أُرسل", calc_label_currency: "العملة",
     calc_label_receive: "المستلِم يحصل على (استرشادي)",
-    calc_speed_express: "إكسبريس (عادةً < 5 دقائق)", calc_speed_express_short: "إكسبريس",
-    calc_speed_economy: "اقتصادي (1–2 أيام عمل)", calc_speed_economy_short: "اقتصادي",
+    calc_speed_express: "(عادةً < 5 دقائق)", calc_speed_express_short: "إكسبريس",
+    calc_speed_economy: "(1–2 أيام عمل)", calc_speed_economy_short: "اقتصادي",
     calc_rate_label: "سعر الصرف", calc_fee_label: "رسوم المعاملة",
     calc_indicatief_note: "† سعر استرشادي. قد تتغيّر الأسعار. يُؤكّد السعر النهائي عند إجراء التحويل.",
     calc_cta: "ابدأ مجانًا →",
@@ -1459,12 +2182,13 @@ const I18N = {
     app_qr_help: "امسح رمز QR لتنزيل التطبيق",
     app_trust_line: "مجاني · لا حاجة لبطاقة ائتمان · إشراف DNB عبر شريك EMI",
     faq_q1: "كم يستغرق وصول الأموال؟", faq_a1: "مع إكسبريس، يستغرق التحويل عادةً أقل من 5 دقائق على ممراتنا المباشرة.",
-    faq_q2: "ما تكلفة التحويل؟", faq_a2: "تفرض SwiftBridge رسوم معاملة (€4,95 vast per overboeking) بالإضافة إلى هامش صرف استرشادي يبلغ نحو 1.2٪.",
+    nav_dashboard: "لوحتي",
+    faq_q2: "ما تكلفة التحويل؟", faq_a2: "تفرض SwiftBridge رسوم معاملة (€4.95 ثابتة لكل تحويل) بالإضافة إلى هامش صرف شفاف يبدأ من 1.2٪ وينخفض حسب مستوى العضوية حتى 0.6٪.",
     faq_q3: "هل SwiftBridge آمنة وقانونية؟", faq_a3: "نعم. تعمل SwiftBridge عبر شريك EMI مسجَّل تحت إشراف De Nederlandsche Bank (DNB).",
     cta_band_heading: "هل أنت مستعد للتحول؟",
     cta_band_sub: "أنشئ حسابًا مجانيًا في أقل من دقيقتين. تحت إشراف De Nederlandsche Bank عبر شريكنا EMI.",
     cta_band_button: "افتح حسابًا مجانيًا",
-    footer_legal_oneliner: "SwiftBridge ليست بنكًا ولا تمتلك ترخيص DNB المصرفي الخاص. تُقدَّم خدمات الدفع عبر شريك EMI مُرخَّص يعمل تحت إشراف DNB. الحدود: الحد الأدنى € 50 / الحد الأقصى € 5,000 لكل معاملة.",
+    footer_legal_oneliner: "SwiftBridge ليست بنكًا ولا تمتلك ترخيص DNB المصرفي الخاص. تُقدَّم خدمات الدفع عبر شريك EMI مُرخَّص يعمل تحت إشراف DNB. الحدود: الحد الأدنى € 50 / الحد الأقصى € 5,000 لكل معاملة، وبحد أقصى € 5,000 أسبوعيًا.",
     login_tab_login: "تسجيل الدخول", login_tab_register: "التسجيل",
     login_label_email: "عنوان البريد الإلكتروني", login_label_password: "كلمة المرور",
     login_forgot: "نسيت كلمة المرور؟", login_btn_login: "تسجيل الدخول",
@@ -1474,6 +2198,186 @@ const I18N = {
     login_or_continue: "أو تابع باستخدام", login_remember: "تذكّرني"
   },
   de: {
+    corridor_eyebrow: "Verfügbare Korridore",
+    corridor_sub: "Ob Ihre Familie in der Türkei, Marokko, Aserbaidschan, Kasachstan, Usbekistan oder anderswo lebt — SwiftBridge ist für Sie da. Sicher reguliert, voll transparent, Kosten immer sichtbar.",
+    corridor_turkey: "Türkei",
+    corridor_morocco: "Marokko",
+    corridor_azerbaijan: "Aserbaidschan",
+    corridor_kazakhstan: "Kasachstan",
+    corridor_uzbekistan: "Usbekistan",
+    corridor_kyrgyzstan: "Kirgisistan",
+    corridor_turkmenistan: "Turkmenistan",
+    corridor_more: "+35 Währungen",
+    corridor_more_sub: "Neu — im Aufbau",
+    corridor_rates_indicative: "Kurse sind indikativ.",
+    app_pill_express: "Express typ. <5 Min.",
+    app_pill_alerts: "Live-Kursalarme",
+    pwa_install_btn: "⬇ Installieren Sie die App auf Ihrem Handy",
+    pwa_install_fallback: "Kostenloses Konto & App öffnen",
+    pwa_ios_1: "Auf iPhone/iPad: Tippen Sie auf",
+    pwa_ios_share: "Teilen",
+    pwa_ios_2: "unten in Safari",
+    pwa_ios_home: "Zum Home-Bildschirm",
+    pwa_ios_3: "Danach ist SwiftBridge als App auf Ihrem Gerät.",
+    app_stores_soon: "Bald auch im App Store und bei Google Play.",
+    trust_facts_heading: "Auf Transparenz gebaut, nicht auf Versprechen",
+    trust_fact1_title: "Unter DNB-Aufsicht",
+    trust_fact1_body: "Zahlungsdienste werden über einen lizenzierten EMI-Partner unter Aufsicht der De Nederlandsche Bank erbracht — dieselbe Behörde, die Ihre eigene Bank überwacht. SwiftBridge selbst ist keine Bank.",
+    trust_fact2_title: "Den Kurs sehen Sie vor der Bestätigung",
+    trust_fact2_body: "Keine versteckte Marge. Sie sehen den Wechselkurs, die Devisenmarge (ca. 1,2 %) und die Kosten vollständig aufgeschlüsselt — bevor Sie auf Senden klicken. Was Sie sehen, ist, was Sie zahlen.",
+    trust_fact3_title: "Gesichert auf Bankniveau",
+    trust_fact3_body: "Zwei-Schritt-Verifizierung bei jeder Anmeldung, Sitzungen, die nach kurzer Inaktivität schließen, und verschlüsselte Speicherung Ihrer Daten. Identitätsprüfung via iDIN mit Ihrer eigenen Bank.",
+    trust_facts_note: "Wir veröffentlichen keine erfundenen Kundenbewertungen. Sobald echte, verifizierte Kundenerfahrungen vorliegen, zeigen wir sie hier — mit Quellenangabe.",
+    faq_eyebrow: "Häufige Fragen",
+    faq_heading: "Alles, was Sie wissen möchten",
+    faq_q4: "Was sind die Mindest- und Höchstbeträge?",
+    faq_a4: "Sie können Beträge von €50 bis €5.000 pro Transaktion überweisen. Das Wochenlimit beträgt €5.000. Für höhere Geschäftslimits siehe",
+    faq_a4_link: "SwiftBridge Business",
+    faq_q5: "Woher weiß der Empfänger, dass das Geld unterwegs ist?",
+    faq_a5: "Sobald Ihre Überweisung gesendet ist, schicken wir automatisch eine WhatsApp-Bestätigung an den Empfänger. Auch Sie erhalten eine Bestätigung. So wissen Sie beide genau, dass das Geld angekommen ist.",
+    faq_q6: "Wie schneidet SwiftBridge im Vergleich zu Wise oder Revolut ab?",
+    faq_a6: "Wise hat auf vielen Korridoren niedrigere Gesamtkosten dank 0 % FX-Aufschlag — das erkennen wir ehrlich an. SwiftBridge punktet mit: iDEAL + iDIN NL-nativem Zahlungsablauf, Express <5 Min. zum Festpreis, DNB/EMI-NL-Aufsicht als Vertrauenssignal, zentralasiatischen Korridoren und WhatsApp-Bestätigung für den Empfänger. Beide Dienste sind transparent — vergleichen Sie auf Ihrem Korridor.",
+    cta_band_secondary: "Tarife vergleichen",
+    cta_microcopy: "Keine Kreditkarte nötig · DNB-Aufsicht via EMI-Partner · iDEAL-Zahlung · Wwft-konform",
+    footer_desc: "Sicher Geld aus den Niederlanden in 45+ Länder senden. Unter DNB-Aufsicht über unseren EMI-Partner.",
+    footer_product: "Produkt",
+    footer_company: "Unternehmen",
+    footer_safety: "Sicherheit",
+    footer_status: "Status & Updates",
+    footer_contact: "Kontakt",
+    footer_legal_heading: "Rechtliches & Konto",
+    footer_create_account: "Konto erstellen",
+    footer_members: "Mitgliederprogramm",
+    footer_privacy: "Datenschutz",
+    footer_terms: "AGB",
+    footer_aml: "AML-Richtlinie",
+    footer_complaints: "Beschwerden",
+    footer_copyright: "© 2026 SwiftBridge B.V. Alle Rechte vorbehalten.",
+    comp_example_title: "Rechenbeispiel: €1.000 in die Türkei (EUR → TRY)",
+    comp_example_note1: "Illustrativ: EZB-Mittelkurs 1 EUR = 36,00 TRY (fiktiv); SwiftBridge-Economy-Tarif. Bankmargen indikativ ~1,5 %. Prüfen Sie aktuelle Kurse vor dem Senden.",
+    comp_example_note2: "Illustrativ: EZB-Mittelkurs 1 EUR = 36,00 TRY (fiktiv). Wise nutzt den Mid-Market-Kurs (0 % FX-Aufschlag). Prüfen Sie aktuelle Kurse stets beim Anbieter.",
+    comp_ex_sb_fees: "Gebühr: €4,95 · Marge: 1,2 %",
+    comp_ex_sb_total: "Gesamtkosten: ~€16,95",
+    comp_ex_ing_fees: "Gebühr: ~€6 · Marge: ~1,5 %",
+    comp_ex_ing_total: "Gesamtkosten: ~€21,60",
+    comp_ex_abn_fees: "Gebühr: €9 · Marge: ~1,5 %",
+    comp_ex_abn_total: "Gesamtkosten: ~€24,75",
+    comp_ex_rabo_fees: "Gebühr: €8 · Marge: ~1,5 %",
+    comp_ex_rabo_total: "Gesamtkosten: ~€23,70",
+    comp_ex_wise_fees: "Gebühr: ~€6,50 ·",
+    comp_ex_wise_total: "Gesamtkosten: ~€6,50",
+    comp_ex_remitly_fees: "Gebühr: ~€1,99 · Marge: ~1,5 %",
+    comp_ex_remitly_total: "Gesamtkosten: ~€17,50",
+    comp_ex_wu_cost: "Kosten: ~€6–€30*",
+    comp_ex_wu_note: "*stark methodenabhängig",
+    comp_tag_express_also: "Express auch: <5 Min.",
+    comp_tag_hours_day: "Stunden–1 Tag",
+    comp_tag_bank_days: "Bank: 1–2 Werktage",
+    comp_takeaway_win_label: "Hier gewinnt SwiftBridge",
+    comp_takeaway_win_text1: "Niedrigere Gesamtkosten für Diaspora-Beträge, Express <5 Min. (einzigartig), volle Kostentransparenz vor Bestätigung, iDEAL + iDIN NL-nativ, WhatsApp-Bestätigung, zentralasiatische Korridore.",
+    comp_takeaway_peer_label1: "Ehrlich: wo Banken punkten",
+    comp_takeaway_peer_text1: "Kunden, die nur gelegentlich überweisen, wechseln langsamer. Banken bieten breite Dienstleistungen ohne neue App. Manche Kunden bevorzugen die vertraute Umgebung.",
+    comp_takeaway_win_text2: "iDEAL + iDIN NL-nativ (einzigartig); Express <5 Min. zum Festpreis; DNB/EMI-Aufsicht als NL-Vertrauenssignal; zentralasiatische Korridore; WhatsApp-Bestätigung an die Familie.",
+    comp_takeaway_peer_label2: "Ehrlich: wo Wettbewerber glänzen",
+    comp_peer_wise: "niedrigste Gesamtkosten (~€6,50), 0 % FX-Aufschlag, hervorragende Transparenz.",
+    comp_peer_revolut: "breites Ökosystem.",
+    comp_peer_wu: "Barabholung weltweit.",
+    comp_peer_remitly: "starke Diaspora-UX.",
+    comp_disclaimer_checked: "Indikativ — geprüft am 14. Juni 2026.",
+    comp_disclaimer_banks: "Bankdaten basieren auf öffentlich publizierten Tarifen. Devisenmargen sind indikativ geschätzt.",
+    comp_col_feature: "Merkmal",
+    comp_row_fixed: "Fixkosten (nicht-SEPA)",
+    comp_row_fixed2: "Fixkosten",
+    comp_row_fx: "Devisenmarge",
+    comp_row_speed: "Geschwindigkeit nicht-SEPA",
+    comp_row_transparency: "Kosten vollständig vorab sichtbar",
+    comp_row_transparency2: "Kosten vorab sichtbar",
+    comp_row_express2: "Express <5 Min. (Festpreis)",
+    comp_row_corridors: "Zentralasiatische Korridore",
+    comp_row_whatsapp: "WhatsApp-Bestätigung",
+    comp_row_dnb: "DNB/EMI NL-Aufsicht",
+    comp_sb_fixed: "€4,95 fest",
+    comp_indicative: "(indikativ)",
+    comp_shown_before: "(vor Bestätigung angezeigt)",
+    comp_not_published: "(nicht separat veröffentlicht)",
+    comp_days_1_2: "1–2 Werktage",
+    comp_days_3_5: "3–5 Werktage",
+    comp_days_2: "~2 Werktage",
+    comp_full: "Vollständig",
+    comp_partial: "Teilweise",
+    comp_limited: "Begrenzt",
+    comp_yes: "Ja",
+    comp_no: "Nein",
+    comp_yes_central: "Ja — zentral",
+    comp_own_bank: "Eigene Bank",
+    comp_yes_fixed: "Ja — €4,95 fest",
+    comp_yes_corridors: "Ja (UZS, KZT, KGS, TMT, AZN)",
+    comp_sb_speed_badge: "Express: <5 Min.",
+    comp_sb_speed_badge2: "Express: typ. <5 Min.",
+    comp_sb_speed_econ: "Economy: 1–2 Werktage",
+    comp_ing_fee: "~€6 pro Überweisung",
+    comp_abn_fee: "€9 pro Überweisung",
+    comp_rabo_fee: "€8 pro Überweisung",
+    comp_wise_fee: "~€6,50 gesamt pro €1.000",
+    comp_remitly_fee: "~€1,49–€1,99 pauschal",
+    comp_revolut_fee: "Gratis innerhalb des Plan-Limits",
+    comp_revolut_fee_note: "(danach 1 %)",
+    comp_wu_fee: "Variabel je nach Methode",
+    comp_wise_fx_strong: "0 % FX-Aufschlag",
+    comp_wise_fx_rest: "— Mid-Market-Kurs",
+    comp_wise_fx_note: "(nur explizite Umrechnungsgebühr)",
+    comp_remitly_fx: "~0,5–3,0 % über Mid-Market",
+    comp_revolut_fx: "0 % im Limit; +1 % am Wochenende",
+    comp_wu_fx: "Devisenmarge im Kurs enthalten",
+    comp_wise_speed: "40 % in Sekunden; die meisten in Stunden–1 Tag",
+    comp_remitly_speed: "Express: \"kann sofort sein\"; Economy: 3–5 Werktage",
+    comp_revolut_speed: "Revolut→Revolut: Minuten; Bank nicht-SEPA: 3–5 Werktage",
+    comp_wu_speed: "Bank: 1–2 Werktage; Barabholung: Minuten",
+    comp_excellent: "Hervorragend",
+    comp_good: "Gut",
+    comp_fair: "Mäßig",
+    comp_available: "Verfügbar",
+    comp_not_prominent: "Nicht prominent",
+    comp_remitly_express: "Remitly Express (höhere Gebühr)",
+    comp_no_nonsepa: "Nein für nicht-SEPA-Bank",
+    comp_cash_pickup: "Barabholung: Minuten",
+    comp_limited_nl: "Begrenzt für NL",
+    comp_limited_nl_ca: "Begrenzt für NL→Zentralasien",
+    comp_not_focused: "Kein Fokus",
+    comp_dnb_sb: "Ja — über EMI-Partner, DNB",
+    comp_dnb_wise: "DNB-registriert; FCA primär",
+    comp_dnb_remitly: "EU-Lizenzen; nicht DNB-primär",
+    comp_dnb_revolut: "EU-Banklizenz (LT); DNB NL",
+    comp_dnb_wu: "FCA/EU; nicht DNB-primär",
+    topbar_brand: "SwiftBridge — Niederlande",
+    topbar_compliance: "Wwft- & DSGVO-konform",
+    hero_compare_cta: "Mit Ihrer Bank vergleichen →",
+    dnb_badge: "Reguliert",
+    dnb_card_sub: "Aufsicht über registrierten EMI-Partner",
+    dnb_card_quote: "\"Unter Aufsicht der De Nederlandsche Bank über unseren EMI-Partner — derselbe Standard wie Ihre eigene Bank.\"",
+    dnb_pill_payments: "✓ Zahlungsdienste",
+    dnb_pill_regulated: "✓ Reguliert NL",
+    dnb_pill_wwft: "✓ Wwft-konform",
+    dnb_pill_avg: "✓ DSGVO",
+    calc_heading: "Berechnen Sie Ihre Überweisung",
+    calc_minmax: "Min. €50 · Max. €5.000",
+    calc_speed_legend: "Geschwindigkeit",
+    calc_cur_try: "🇹🇷 TRY — Türkische Lira",
+    calc_cur_azn: "🇦🇿 AZN — Aserbaidschanischer Manat",
+    calc_cur_kzt: "🇰🇿 KZT — Kasachischer Tenge",
+    calc_cur_uzs: "🇺🇿 UZS — Usbekischer Sum",
+    calc_cur_tmt: "🇹🇲 TMT — Turkmenischer Manat",
+    calc_cur_kgs: "🇰🇬 KGS — Kirgisischer Som",
+    calc_cur_usd: "🇺🇸 USD — US-Dollar",
+    calc_cur_gbp: "🇬🇧 GBP — Britisches Pfund",
+    calc_cur_mad: "🇲🇦 MAD — Marokkanischer Dirham",
+    why_swiftbridge: "Warum SwiftBridge",
+    value_heading: "Sicherheit auf Bankniveau. Bessere Kosten. Schneller.",
+    hiw_eyebrow: "So einfach funktioniert es",
+    hiw_sub: "Ihre erste Überweisung ist in weniger als 10 Minuten eingerichtet. Einmal verifizieren, danach immer sofort startklar.",
+    hiw_note: "† Express-Überweisungen: typischerweise unter 5 Minuten auf Live-Korridoren. Economy: 1–2 Werktage. Endgültiger Kurs und Kosten werden vor jeder Transaktion bestätigt.",
+    comparison_eyebrow: "Ehrlich vergleichen",
+    comparison_sub: "Vergleichen Sie Fixkosten, Wechselkursmarge und Geschwindigkeit — transparent und ohne Überraschungen.",
     skip_to_main: "Zum Hauptinhalt springen",
     nav_how_it_works: "So funktioniert’s", nav_rates: "Preise", nav_currencies: "Währungen",
     nav_about: "Über uns", nav_login: "Anmelden", nav_send_money: "Geld senden →", nav_business: "Geschäftlich", nav_download_app: "App laden", topbar_download: "App herunterladen",
@@ -1483,8 +2387,8 @@ const I18N = {
     hero_cta: "Kostenloses Konto eröffnen",
     hero_microtrust: "DNB-Aufsicht via EMI-Partner · Zahlung per iDEAL · Identität per iDIN · 256-Bit-Verschlüsselung · Wwft-konform",
     calc_label_amount: "Ich sende", calc_label_currency: "Währung",
-    calc_label_receive: "Empfänger erhält (indikativ)", calc_speed_express: "Express (typischerweise < 5 Min.)",
-    calc_speed_express_short: "Express", calc_speed_economy: "Economy (1–2 Werktage)", calc_speed_economy_short: "Economy",
+    calc_label_receive: "Empfänger erhält (indikativ)", calc_speed_express: "(typischerweise < 5 Min.)",
+    calc_speed_express_short: "Express", calc_speed_economy: "(1–2 Werktage)", calc_speed_economy_short: "Economy",
     calc_rate_label: "Wechselkurs", calc_fee_label: "Transaktionsgebühr",
     calc_indicatief_note: "† Indikativer Kurs. Kurse können schwanken. Der endgültige Kurs wird zum Zeitpunkt Ihrer Überweisung bestätigt.",
     calc_cta: "Kostenlos starten →",
@@ -1513,12 +2417,13 @@ const I18N = {
     app_qr_help: "QR-Code scannen, um die App herunterzuladen",
     app_trust_line: "Kostenlos · Keine Kreditkarte · DNB-Aufsicht via EMI-Partner",
     faq_q1: "Wie schnell kommt das Geld an?", faq_a1: "Bei Express dauert eine Überweisung typischerweise unter 5 Minuten. Bei Economy rechnen Sie mit 1–2 Werktagen.",
-    faq_q2: "Was kostet eine Überweisung?", faq_a2: "SwiftBridge erhebt eine Transaktionsgebühr (€4,95 vast per overboeking) zuzüglich einer indikativen Devisenmarge von ca. 1,2 %.",
+    nav_dashboard: "Mein Dashboard",
+    faq_q2: "Was kostet eine Überweisung?", faq_a2: "SwiftBridge erhebt eine Transaktionsgebühr (fest €4,95 pro Überweisung) zuzüglich einer transparenten Devisenmarge ab 1,2 % — je Mitgliedsstufe sinkend bis 0,6 %. Die vollständige Kostenübersicht sehen Sie immer vor der Bestätigung. Keine versteckten Gebühren.",
     faq_q3: "Ist SwiftBridge sicher und legal?", faq_a3: "Ja. SwiftBridge operiert über einen registrierten EMI-Partner unter der Aufsicht der De Nederlandsche Bank (DNB).",
     cta_band_heading: "Bereit zum Wechseln?",
     cta_band_sub: "Kostenloses Konto in unter 2 Minuten erstellen. Unter Aufsicht der De Nederlandsche Bank über unseren EMI-Partner.",
     cta_band_button: "Kostenloses Konto eröffnen",
-    footer_legal_oneliner: "SwiftBridge ist keine Bank und verfügt über keine eigene DNB-Banklizenz. Zahlungsdienstleistungen werden über einen autorisierten EMI-Partner gemäß PSD2 und Wwft erbracht. Wechselkurse und Transaktionsgebühren sind indikativ. Limits: mind. € 50 / max. € 5.000 pro Transaktion.",
+    footer_legal_oneliner: "SwiftBridge ist keine Bank und verfügt über keine eigene DNB-Banklizenz. Zahlungsdienstleistungen werden über einen autorisierten EMI-Partner gemäß PSD2 und Wwft erbracht. Wechselkurse und Transaktionsgebühren sind indikativ. Limits: mind. € 50 / max. € 5.000 pro Transaktion, max. € 5.000 pro Woche.",
     login_tab_login: "Anmelden", login_tab_register: "Registrieren", login_label_email: "E-Mail-Adresse",
     login_label_password: "Passwort", login_forgot: "Passwort vergessen?", login_btn_login: "Anmelden",
     login_btn_register: "Konto erstellen", login_show: "Anzeigen", login_hide: "Verbergen",
@@ -1527,6 +2432,186 @@ const I18N = {
     login_or_continue: "Oder weiter mit", login_remember: "Angemeldet bleiben"
   },
   fr: {
+    corridor_eyebrow: "Corridors disponibles",
+    corridor_sub: "Que votre famille vive en Turquie, au Maroc, en Azerbaïdjan, au Kazakhstan, en Ouzbékistan ou ailleurs — SwiftBridge est là pour vous. Réglementé en toute sécurité, entièrement transparent, coûts toujours visibles.",
+    corridor_turkey: "Turquie",
+    corridor_morocco: "Maroc",
+    corridor_azerbaijan: "Azerbaïdjan",
+    corridor_kazakhstan: "Kazakhstan",
+    corridor_uzbekistan: "Ouzbékistan",
+    corridor_kyrgyzstan: "Kirghizistan",
+    corridor_turkmenistan: "Turkménistan",
+    corridor_more: "+35 devises",
+    corridor_more_sub: "Nouveau — en préparation",
+    corridor_rates_indicative: "Les taux sont indicatifs.",
+    app_pill_express: "Express généralement <5 min",
+    app_pill_alerts: "Alertes de taux en direct",
+    pwa_install_btn: "⬇ Installez l'app sur votre téléphone",
+    pwa_install_fallback: "Ouvrir un compte gratuit et l'app",
+    pwa_ios_1: "Sur iPhone/iPad : touchez",
+    pwa_ios_share: "Partager",
+    pwa_ios_2: "en bas de Safari",
+    pwa_ios_home: "Sur l'écran d'accueil",
+    pwa_ios_3: "SwiftBridge apparaîtra alors comme une app sur votre appareil.",
+    app_stores_soon: "Bientôt aussi sur l'App Store et Google Play.",
+    trust_facts_heading: "Bâti sur la transparence, pas sur des promesses",
+    trust_fact1_title: "Sous la supervision de la DNB",
+    trust_fact1_body: "Les services de paiement sont fournis via un partenaire EMI agréé, supervisé par De Nederlandsche Bank — le même régulateur qui surveille votre propre banque. SwiftBridge n'est pas une banque.",
+    trust_fact2_title: "Vous voyez le taux avant de confirmer",
+    trust_fact2_body: "Aucune marge cachée. Vous voyez le taux de change, la marge de change (env. 1,2 %) et les frais entièrement détaillés — avant de cliquer sur envoyer. Ce que vous voyez est ce que vous payez.",
+    trust_fact3_title: "Sécurisé au niveau bancaire",
+    trust_fact3_body: "Vérification en deux étapes à chaque connexion, sessions fermées après une courte inactivité et stockage chiffré de vos données. Contrôle d'identité via iDIN avec votre propre banque.",
+    trust_facts_note: "Nous ne publions pas de faux avis clients. Dès que de véritables expériences clients vérifiées seront disponibles, nous les afficherons ici — avec leurs sources.",
+    faq_eyebrow: "Questions fréquentes",
+    faq_heading: "Tout ce que vous voulez savoir",
+    faq_q4: "Quels sont les montants minimum et maximum ?",
+    faq_a4: "Vous pouvez transférer de €50 à €5 000 par transaction. La limite hebdomadaire est de €5 000. Pour des limites professionnelles plus élevées, voir",
+    faq_a4_link: "SwiftBridge Entreprises",
+    faq_q5: "Comment le bénéficiaire sait-il que l'argent est en route ?",
+    faq_a5: "Dès que votre virement est envoyé, nous envoyons automatiquement une confirmation WhatsApp au bénéficiaire. Vous recevez également une confirmation. Ainsi, vous savez tous les deux exactement que l'argent est arrivé.",
+    faq_q6: "Comment SwiftBridge se compare-t-il à Wise ou Revolut ?",
+    faq_a6: "Wise affiche un coût total plus bas sur de nombreux corridors grâce à sa marge de change de 0 % — nous le reconnaissons honnêtement. SwiftBridge se distingue par : un parcours de paiement iDEAL + iDIN, Express <5 min à prix fixe, la supervision DNB/EMI comme signal de confiance, les corridors d'Asie centrale et la confirmation WhatsApp pour le bénéficiaire. Les deux services sont transparents — comparez sur votre corridor.",
+    cta_band_secondary: "Comparer les tarifs",
+    cta_microcopy: "Pas de carte bancaire requise · Supervision DNB via partenaire EMI · Paiement iDEAL · Conforme Wwft",
+    footer_desc: "Envoyez de l'argent en toute sécurité depuis les Pays-Bas vers plus de 45 pays. Sous supervision DNB via notre partenaire EMI.",
+    footer_product: "Produit",
+    footer_company: "Entreprise",
+    footer_safety: "Sécurité",
+    footer_status: "Statut & mises à jour",
+    footer_contact: "Contact",
+    footer_legal_heading: "Juridique & compte",
+    footer_create_account: "Créer un compte",
+    footer_members: "Programme membres",
+    footer_privacy: "Confidentialité",
+    footer_terms: "Conditions",
+    footer_aml: "Politique AML",
+    footer_complaints: "Réclamations",
+    footer_copyright: "© 2026 SwiftBridge B.V. Tous droits réservés.",
+    comp_example_title: "Exemple : 1 000 € vers la Turquie (EUR → TRY)",
+    comp_example_note1: "Illustratif : cours moyen BCE 1 EUR = 36,00 TRY (fictif) ; tarif Économique SwiftBridge. Marges bancaires indicatives ~1,5 %. Vérifiez les taux actuels avant l'envoi.",
+    comp_example_note2: "Illustratif : cours moyen BCE 1 EUR = 36,00 TRY (fictif). Wise applique le taux du marché moyen (0 % de marge). Vérifiez toujours les taux actuels auprès du prestataire.",
+    comp_ex_sb_fees: "Frais : €4,95 · Marge : 1,2 %",
+    comp_ex_sb_total: "Coût total : ~€16,95",
+    comp_ex_ing_fees: "Frais : ~€6 · Marge : ~1,5 %",
+    comp_ex_ing_total: "Coût total : ~€21,60",
+    comp_ex_abn_fees: "Frais : €9 · Marge : ~1,5 %",
+    comp_ex_abn_total: "Coût total : ~€24,75",
+    comp_ex_rabo_fees: "Frais : €8 · Marge : ~1,5 %",
+    comp_ex_rabo_total: "Coût total : ~€23,70",
+    comp_ex_wise_fees: "Frais : ~€6,50 ·",
+    comp_ex_wise_total: "Coût total : ~€6,50",
+    comp_ex_remitly_fees: "Frais : ~€1,99 · Marge : ~1,5 %",
+    comp_ex_remitly_total: "Coût total : ~€17,50",
+    comp_ex_wu_cost: "Coût : ~€6–€30*",
+    comp_ex_wu_note: "*dépend fortement de la méthode",
+    comp_tag_express_also: "Express aussi : <5 min",
+    comp_tag_hours_day: "Heures–1 jour",
+    comp_tag_bank_days: "Banque : 1–2 jours ouvrables",
+    comp_takeaway_win_label: "Là où SwiftBridge gagne",
+    comp_takeaway_win_text1: "Coûts totaux plus bas pour les montants diaspora, Express <5 min (unique), transparence totale des coûts avant confirmation, iDEAL + iDIN, confirmation WhatsApp, corridors d'Asie centrale.",
+    comp_takeaway_peer_label1: "Honnêtement : là où les banques marquent des points",
+    comp_takeaway_peer_text1: "Les clients qui effectuent des virements occasionnels changent moins vite. Les banques offrent des services étendus sans nouvelle application. Certains clients préfèrent l'environnement familier.",
+    comp_takeaway_win_text2: "iDEAL + iDIN (unique) ; Express <5 min à prix fixe ; supervision DNB/EMI comme signal de confiance néerlandais ; corridors d'Asie centrale ; confirmation WhatsApp à la famille.",
+    comp_takeaway_peer_label2: "Honnêtement : là où les concurrents excellent",
+    comp_peer_wise: "coût total le plus bas (~€6,50), 0 % de marge de change, excellente transparence.",
+    comp_peer_revolut: "large écosystème.",
+    comp_peer_wu: "retrait en espèces dans le monde entier.",
+    comp_peer_remitly: "excellente expérience diaspora.",
+    comp_disclaimer_checked: "Indicatif — vérifié le 14 juin 2026.",
+    comp_disclaimer_banks: "Données bancaires basées sur les tarifs publiés publiquement. Les marges de change sont des estimations indicatives.",
+    comp_col_feature: "Critère",
+    comp_row_fixed: "Frais fixes (hors SEPA)",
+    comp_row_fixed2: "Frais fixes",
+    comp_row_fx: "Marge de change",
+    comp_row_speed: "Vitesse hors SEPA",
+    comp_row_transparency: "Coûts entièrement visibles à l'avance",
+    comp_row_transparency2: "Coûts visibles à l'avance",
+    comp_row_express2: "Express <5 min (prix fixe)",
+    comp_row_corridors: "Corridors d'Asie centrale",
+    comp_row_whatsapp: "Confirmation WhatsApp",
+    comp_row_dnb: "Supervision DNB/EMI NL",
+    comp_sb_fixed: "€4,95 fixe",
+    comp_indicative: "(indicatif)",
+    comp_shown_before: "(affiché avant confirmation)",
+    comp_not_published: "(non publié séparément)",
+    comp_days_1_2: "1–2 jours ouvrables",
+    comp_days_3_5: "3–5 jours ouvrables",
+    comp_days_2: "~2 jours ouvrables",
+    comp_full: "Complet",
+    comp_partial: "Partiel",
+    comp_limited: "Limité",
+    comp_yes: "Oui",
+    comp_no: "Non",
+    comp_yes_central: "Oui — intégré",
+    comp_own_bank: "Votre banque",
+    comp_yes_fixed: "Oui — €4,95 fixe",
+    comp_yes_corridors: "Oui (UZS, KZT, KGS, TMT, AZN)",
+    comp_sb_speed_badge: "Express : <5 min",
+    comp_sb_speed_badge2: "Express : généralement <5 min",
+    comp_sb_speed_econ: "Économique : 1–2 jours ouvrables",
+    comp_ing_fee: "~€6 par virement",
+    comp_abn_fee: "€9 par virement",
+    comp_rabo_fee: "€8 par virement",
+    comp_wise_fee: "~€6,50 au total par €1 000",
+    comp_remitly_fee: "~€1,49–€1,99 forfait",
+    comp_revolut_fee: "Gratuit dans la limite du forfait",
+    comp_revolut_fee_note: "(ensuite 1 %)",
+    comp_wu_fee: "Variable selon la méthode",
+    comp_wise_fx_strong: "0 % de marge de change",
+    comp_wise_fx_rest: "— taux du marché moyen",
+    comp_wise_fx_note: "(uniquement frais de conversion explicites)",
+    comp_remitly_fx: "~0,5–3,0 % au-dessus du marché moyen",
+    comp_revolut_fx: "0 % dans la limite ; +1 % le week-end",
+    comp_wu_fx: "Marge de change incluse dans le taux",
+    comp_wise_speed: "40 % en secondes ; la plupart en quelques heures à 1 jour",
+    comp_remitly_speed: "Express : \"peut être immédiat\" ; Économique : 3–5 jours ouvrables",
+    comp_revolut_speed: "Revolut→Revolut : minutes ; banque hors SEPA : 3–5 jours ouvrables",
+    comp_wu_speed: "Banque : 1–2 jours ouvrables ; retrait en espèces : minutes",
+    comp_excellent: "Excellent",
+    comp_good: "Bon",
+    comp_fair: "Moyen",
+    comp_available: "Disponible",
+    comp_not_prominent: "Peu mis en avant",
+    comp_remitly_express: "Remitly Express (frais plus élevés)",
+    comp_no_nonsepa: "Non pour les banques hors SEPA",
+    comp_cash_pickup: "Retrait en espèces : minutes",
+    comp_limited_nl: "Limité pour les Pays-Bas",
+    comp_limited_nl_ca: "Limité pour NL→Asie centrale",
+    comp_not_focused: "Pas une priorité",
+    comp_dnb_sb: "Oui — via partenaire EMI, DNB",
+    comp_dnb_wise: "Enregistré DNB ; FCA principal",
+    comp_dnb_remitly: "Licences UE ; DNB non principal",
+    comp_dnb_revolut: "Licence bancaire UE (LT) ; DNB NL",
+    comp_dnb_wu: "FCA/UE ; DNB non principal",
+    topbar_brand: "SwiftBridge — Pays-Bas",
+    topbar_compliance: "Conforme Wwft & RGPD",
+    hero_compare_cta: "Comparez avec votre banque →",
+    dnb_badge: "Réglementé",
+    dnb_card_sub: "Supervision via un partenaire EMI enregistré",
+    dnb_card_quote: "\"Sous la supervision de De Nederlandsche Bank via notre partenaire EMI — le même standard que votre propre banque.\"",
+    dnb_pill_payments: "✓ Services de paiement",
+    dnb_pill_regulated: "✓ Réglementé NL",
+    dnb_pill_wwft: "✓ Conforme Wwft",
+    dnb_pill_avg: "✓ RGPD",
+    calc_heading: "Calculez votre virement",
+    calc_minmax: "Min. €50 · Max. €5 000",
+    calc_speed_legend: "Vitesse",
+    calc_cur_try: "🇹🇷 TRY — Livre turque",
+    calc_cur_azn: "🇦🇿 AZN — Manat azerbaïdjanais",
+    calc_cur_kzt: "🇰🇿 KZT — Tenge kazakh",
+    calc_cur_uzs: "🇺🇿 UZS — Soum ouzbek",
+    calc_cur_tmt: "🇹🇲 TMT — Manat turkmène",
+    calc_cur_kgs: "🇰🇬 KGS — Som kirghize",
+    calc_cur_usd: "🇺🇸 USD — Dollar américain",
+    calc_cur_gbp: "🇬🇧 GBP — Livre sterling",
+    calc_cur_mad: "🇲🇦 MAD — Dirham marocain",
+    why_swiftbridge: "Pourquoi SwiftBridge",
+    value_heading: "Une sécurité digne d'une banque. De meilleurs coûts. Plus rapide.",
+    hiw_eyebrow: "C'est aussi simple que ça",
+    hiw_sub: "Votre premier virement est prêt en moins de 10 minutes. Vérifiez une seule fois, ensuite vous êtes toujours prêt.",
+    hiw_note: "† Virements Express : généralement moins de 5 minutes sur les corridors actifs. Économique : 1–2 jours ouvrables. Taux et frais définitifs confirmés avant chaque transaction.",
+    comparison_eyebrow: "Comparaison honnête",
+    comparison_sub: "Comparez les frais fixes, la marge de change et la vitesse — en toute transparence, sans surprises.",
     skip_to_main: "Aller au contenu principal",
     nav_how_it_works: "Comment ça marche", nav_rates: "Tarifs", nav_currencies: "Devises",
     nav_about: "À propos", nav_login: "Se connecter", nav_send_money: "Envoyer de l’argent →", nav_business: "Entreprises", nav_download_app: "Télécharger l’app", topbar_download: "Télécharger l’app",
@@ -1536,8 +2621,8 @@ const I18N = {
     hero_cta: "Ouvrir un compte gratuit",
     hero_microtrust: "Supervision DNB via partenaire EMI · Paiement par iDEAL · Identité via iDIN · Chiffrement 256 bits · Conforme Wwft",
     calc_label_amount: "J’envoie", calc_label_currency: "Devise",
-    calc_label_receive: "Le bénéficiaire reçoit (indicatif)", calc_speed_express: "Express (généralement < 5 min)",
-    calc_speed_express_short: "Express", calc_speed_economy: "Économique (1–2 jours ouvrables)", calc_speed_economy_short: "Économique",
+    calc_label_receive: "Le bénéficiaire reçoit (indicatif)", calc_speed_express: "(généralement < 5 min)",
+    calc_speed_express_short: "Express", calc_speed_economy: "(1–2 jours ouvrables)", calc_speed_economy_short: "Économique",
     calc_rate_label: "Taux de change", calc_fee_label: "Frais de transaction",
     calc_indicatief_note: "† Taux indicatif. Les taux peuvent fluctuer. Le taux définitif est confirmé au moment de votre virement.",
     calc_cta: "Commencer gratuitement →",
@@ -1566,12 +2651,13 @@ const I18N = {
     app_qr_help: "Scannez le code QR pour télécharger l’application",
     app_trust_line: "Gratuit · Sans carte bancaire · Supervision DNB via partenaire EMI",
     faq_q1: "Combien de temps faut-il pour que l’argent arrive ?", faq_a1: "Avec Express, un virement prend généralement moins de 5 minutes sur nos corridors actifs.",
-    faq_q2: "Combien coûte un virement ?", faq_a2: "SwiftBridge facture des frais de transaction (€4,95 vast per overboeking) plus une marge de change indicative d’environ 1,2 %.",
+    nav_dashboard: "Mon tableau de bord",
+    faq_q2: "Combien coûte un virement ?", faq_a2: "SwiftBridge facture des frais de transaction (€4,95 fixes par virement) plus une marge de change transparente à partir de 1,2 % — dégressive par niveau d'adhésion jusqu'à 0,6 %. Vous voyez toujours le détail complet des coûts avant de confirmer. Aucuns frais cachés.",
     faq_q3: "SwiftBridge est-il sûr et légal ?", faq_a3: "Oui. SwiftBridge opère via un partenaire EMI agréé sous la supervision de De Nederlandsche Bank (DNB).",
     cta_band_heading: "Prêt à passer le cap ?",
     cta_band_sub: "Créez un compte gratuit en moins de 2 minutes. Sous la supervision de De Nederlandsche Bank via notre partenaire EMI.",
     cta_band_button: "Ouvrir un compte gratuit",
-    footer_legal_oneliner: "SwiftBridge n’est pas une banque et ne détient pas sa propre licence bancaire DNB. Les services de paiement sont fournis via un partenaire EMI agréé opérant sous supervision DNB, conformément à PSD2 et à la Wwft. Limites : min. €50 / max. € 5 000 par transaction.",
+    footer_legal_oneliner: "SwiftBridge n'est pas une banque et ne détient pas sa propre licence bancaire DNB. Les services de paiement sont fournis via un partenaire EMI agréé opérant sous supervision DNB, conformément à PSD2 et à la Wwft. Limites : min. €50 / max. €5 000 par transaction, max. €5 000 par semaine.",
     login_tab_login: "Se connecter", login_tab_register: "S’inscrire", login_label_email: "Adresse e-mail",
     login_label_password: "Mot de passe", login_forgot: "Mot de passe oublié ?", login_btn_login: "Se connecter",
     login_btn_register: "Créer un compte", login_show: "Afficher", login_hide: "Masquer",
@@ -1723,8 +2809,9 @@ function runCalc() {
   const feeLabel = dict.calc_fee_label || 'Transactiekosten';
 
   resultEl.textContent = received.toLocaleString('nl-NL', { maximumFractionDigits: 0 }) + ' ' + currency;
-  if (rateLine) rateLine.textContent = rateLabel + ': 1 EUR = ' + effectiveRate.toFixed(4) + ' ' + currency + ' (± 1,2% marge)';
-  if (feeLine) feeLine.textContent = feeLabel + ': € ' + fee.toFixed(2) + ' (vast)';
+  // Taalneutraal: cijfers en symbolen, geen Nederlandse woorden in alle talen.
+  if (rateLine) rateLine.textContent = rateLabel + ': 1 EUR = ' + effectiveRate.toFixed(4) + ' ' + currency + ' (± 1,2%)';
+  if (feeLine) feeLine.textContent = feeLabel + ': € ' + fee.toFixed(2);
 }
 
 document.getElementById('calc-amount')?.addEventListener('input', runCalc);
@@ -1924,9 +3011,13 @@ if ('IntersectionObserver' in window) {
       if (!g || !g.id) return;
       var login = document.querySelector('.nav-login, a[data-i18n="nav_login"]');
       if (login) {
-        login.textContent = 'Mijn dashboard';
+        // Vertaalbaar via de gewone i18n-route: key omzetten i.p.v. hardcoded NL.
+        login.setAttribute('data-i18n', 'nav_dashboard');
+        try {
+          var dict = (typeof I18N !== 'undefined' && I18N[currentLang]) ? I18N[currentLang] : null;
+          login.textContent = (dict && dict.nav_dashboard) || 'Mijn dashboard';
+        } catch (e2) { login.textContent = 'Mijn dashboard'; }
         login.setAttribute('href', '/app');
-        login.removeAttribute('data-i18n');
       }
       var stuur = document.querySelector('.nav-actions a[data-i18n="nav_send_money"]');
       if (stuur) { stuur.setAttribute('href', '/app'); }
