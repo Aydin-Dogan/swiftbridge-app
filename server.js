@@ -101,6 +101,18 @@ const LANDING_ROUTES = {
   '/particulier': 'landing/particulier.html',
   '/zakelijk':    'landing/zakelijk.html',
   '/members':     'landing/members.html',
+  // Taal-URL's (hreflang/sitemap): één voorpagina voor iedereen — de landing
+  // leest de taal uit het pad (besluit Aydin 13-8: oude React-landing weg
+  // achter deze routes). ru/az hebben (nog) geen landing-vertaling en tonen
+  // de Engelse versie; de app zelf spreekt wél ru/az.
+  '/nl': 'landing/particulier.html',
+  '/en': 'landing/particulier.html',
+  '/tr': 'landing/particulier.html',
+  '/ar': 'landing/particulier.html',
+  '/de': 'landing/particulier.html',
+  '/fr': 'landing/particulier.html',
+  '/ru': 'landing/particulier.html',
+  '/az': 'landing/particulier.html',
 };
 
 const server = http.createServer((req, res) => {

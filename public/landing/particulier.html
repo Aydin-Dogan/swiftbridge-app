@@ -6,6 +6,13 @@
 <title>Betrouwbaar Geld Overmaken | SwiftBridge — Onder DNB-toezicht</title>
 <meta name="description" content="SwiftBridge — zo betrouwbaar als uw bank. Stuur geld naar 45+ landen vanuit Nederland. Express doorgaans &lt;5 minuten. Onder DNB-toezicht via EMI-partner. Volledig transparant."/>
 <link rel="canonical" href="https://www.swiftbridge.nl/"/>
+<link rel="alternate" hreflang="nl" href="https://www.swiftbridge.nl/nl"/>
+<link rel="alternate" hreflang="en" href="https://www.swiftbridge.nl/en"/>
+<link rel="alternate" hreflang="tr" href="https://www.swiftbridge.nl/tr"/>
+<link rel="alternate" hreflang="ar" href="https://www.swiftbridge.nl/ar"/>
+<link rel="alternate" hreflang="de" href="https://www.swiftbridge.nl/de"/>
+<link rel="alternate" hreflang="fr" href="https://www.swiftbridge.nl/fr"/>
+<link rel="alternate" hreflang="x-default" href="https://www.swiftbridge.nl/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="nl_NL"/>
 <meta property="og:site_name" content="SwiftBridge"/>
@@ -2681,6 +2688,15 @@ function saveLang(lang) {
 }
 
 function detectLang() {
+  // Taal-URL's (/nl, /tr, /ar, ... — hreflang/sitemap) winnen van alles: de
+  // bezoeker koos die link bewust. ru/az hebben geen landing-vertaling en
+  // vallen terug op Engels (de app zelf spreekt wel ru/az).
+  const padMatch = window.location.pathname.match(/^\/(nl|en|tr|ar|de|fr|ru|az)(\/|$)/);
+  if (padMatch) {
+    const padTaal = (padMatch[1] === 'ru' || padMatch[1] === 'az') ? 'en' : padMatch[1];
+    saveLang(padTaal);
+    return { lang: padTaal, fromStorage: false };
+  }
   const saved = getSavedLang();
   if (saved && SUPPORTED_LANGS.includes(saved)) return { lang: saved, fromStorage: true };
   const navLangs = (navigator.languages || [navigator.language || 'nl']);
