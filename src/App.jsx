@@ -56,6 +56,8 @@ const ServicePagina = lazy(() => import('./pages/Service'));
 const Betalingen = lazy(() => import('./components/opdrachten/Betalingen'));
 const Verzendlijst = lazy(() => import('./components/opdrachten/Verzendlijst'));
 const Overschrijven = lazy(() => import('./components/opdrachten/Overschrijven'));
+const Betaalverzoeken = lazy(() => import('./components/betaalverzoeken/Betaalverzoeken'));
+const BetaalPagina = lazy(() => import('./pages/BetaalPagina'));
 const Status = lazy(() => import('./pages/Status'));
 const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
@@ -288,7 +290,7 @@ function AppShell({ gebruiker, token, onLogout }) {
         return;
       }
       if (doel === 'betalingen') setBetalingenTab('alles');
-      if (['dashboard', 'betaling', 'overschrijven', 'kyc', 'alerts', 'profiel', 'inzicht', 'betalingen', 'verzendlijst', 'service', 'documenten'].includes(doel)) {
+      if (['dashboard', 'betaling', 'overschrijven', 'kyc', 'alerts', 'profiel', 'inzicht', 'betalingen', 'verzendlijst', 'service', 'documenten', 'betaalverzoek'].includes(doel)) {
         setActief(doel);
         window.scrollTo({ top: 0 });
       }
@@ -419,6 +421,7 @@ function AppShell({ gebruiker, token, onLogout }) {
               <div className="pb-1">
                 {[
                   ['overschrijven', t('actie_overschrijven'), () => { setActief('overschrijven'); window.scrollTo({ top: 0 }); }],
+                  ['betaalverzoek', t('zijbalk_betaalverzoek'), () => { setActief('betaalverzoek'); window.scrollTo({ top: 0 }); }],
                   ['verzendlijst', t('zijbalk_verzendlijst'), () => { setActief('verzendlijst'); window.scrollTo({ top: 0 }); }],
                   ['betalingen', t('zijbalk_betalingen'), () => { setBetalingenTab('alles'); setActief('betalingen'); window.scrollTo({ top: 0 }); }],
                   ['ingepland', t('direct_ingeplande'), () => { setBetalingenTab('gepland'); setActief('betalingen'); window.scrollTo({ top: 0 }); }],
@@ -467,6 +470,7 @@ function AppShell({ gebruiker, token, onLogout }) {
           {actief === 'inzicht' && <Inzicht />}
           {actief === 'betalingen' && <Betalingen beginTab={betalingenTab} />}
           {actief === 'verzendlijst' && <Verzendlijst />}
+          {actief === 'betaalverzoek' && <Betaalverzoeken />}
           {actief === 'service' && <ServicePagina />}
           {actief === 'documenten' && <Documenten />}
           {(actief === 'betaling' || actief === 'overschrijven') && (
@@ -890,6 +894,12 @@ export default function App() {
           } />
           <Route path="/r/:code" element={<ReferralRedirect />} />
           <Route path="/verifieer-email" element={<VerifyEmail />} />
+          {/* BETAALVERZOEK-1: publieke betaalpagina — geen account nodig */}
+          <Route path="/betaal/:token" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <BetaalPagina />
+            </Suspense>
+          } />
           {/* SS: E-mail wijzigen bevestig + intrek links (AVG art. 16) */}
           <Route path="/email-wijzigen-bevestigen" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>

@@ -18,7 +18,11 @@
     <!-- F22 fix (Cursor review): script-src 'unsafe-inline' verwijderd uit meta-CSP.
          Was: regressie bij cached load via service-worker — meta-CSP zou inline scripts
          toestaan terwijl server-CSP dat niet doet. Nu beide consistent strikt. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.nl https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" />
+    <!-- Geen upgrade-insecure-requests: die directive brak de app op LAN-adressen
+         (SB LOKAAL via 192.168.x.x en de KYC-telefoonflow: alle assets werden naar
+         https geforceerd dat daar niet bestaat). Productie draait al volledig
+         https en alle bronnen zijn relatief of expliciet https. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.nl https://swiftbridge-api-production.up.railway.app https://api.mollie.com; frame-ancestors 'none'; form-action 'self' https://www.mollie.com https://*.mollie.com; base-uri 'self'; object-src 'none'" />
 
     <!-- ═══ SEO ═══ -->
     <!-- F24 fix (Cursor review Ronde 2): "vanaf 0,8%" framing aangepast.
