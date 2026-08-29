@@ -1499,4 +1499,21 @@ export const tr = {
  bv_pagina_disclaimer:'SwiftBridge bir banka degildir; ödeme hizmetleri DNB lisansli bir EMI ortagi araciligiyla sunulur.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'Asistan, size daha hızlı yardımcı olmak için hesap bilgilerinizi görebilir.',
+ // TX-DOEL: doel van de uitgave
+ txdoel_titel:'Bu ödeme ne içindi?',
+ txdoel_cat_familie:'Aile destegi',
+ txdoel_cat_huur:'Kira',
+ txdoel_cat_zorg:'Saglik/tibbi',
+ txdoel_cat_onderwijs:'Egitim',
+ txdoel_cat_cadeau:'Hediye',
+ txdoel_cat_zakelijk:'Is/ticari',
+ txdoel_cat_anders:'Diger',
+ txdoel_omschrijving_placeholder:'Kisa açiklama (istege bagli)',
+ txdoel_opgeslagen:'Amaç kaydedildi.',
+ txdoel_fout:'Kaydedilemedi. Tekrar deneyin.',
+ txdoel_bewijs_knop:'Fis/fatura fotografi ekle',
+ txdoel_bewijs_vervang:'Fotografi degistir',
+ txdoel_bewijs_ok:'Fotograf güvenle kaydedildi.',
+ txdoel_bewijs_aanwezig:'Fotograf mevcut',
+ txdoel_privacy:'Istege bagli. Fotograf sifreli saklanir; yalnizca siz ve uyum ekibimiz görebilir.',
 };

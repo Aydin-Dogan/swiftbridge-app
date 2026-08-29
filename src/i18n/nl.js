@@ -1501,4 +1501,21 @@ export const nl = {
  bv_pagina_disclaimer:'SwiftBridge is geen bank; betaaldiensten lopen via een DNB-gelicentieerde EMI-partner.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'De assistent kan je rekeninggegevens inzien om je sneller te helpen.',
+ // TX-DOEL: doel van de uitgave
+ txdoel_titel:'Waarvoor was deze uitgave?',
+ txdoel_cat_familie:'Familie-ondersteuning',
+ txdoel_cat_huur:'Huur',
+ txdoel_cat_zorg:'Zorg/medisch',
+ txdoel_cat_onderwijs:'Onderwijs',
+ txdoel_cat_cadeau:'Cadeau',
+ txdoel_cat_zakelijk:'Zakelijk',
+ txdoel_cat_anders:'Anders',
+ txdoel_omschrijving_placeholder:'Korte omschrijving (optioneel)',
+ txdoel_opgeslagen:'Doel opgeslagen.',
+ txdoel_fout:'Opslaan is niet gelukt. Probeer het opnieuw.',
+ txdoel_bewijs_knop:'Foto van bon/factuur toevoegen',
+ txdoel_bewijs_vervang:'Foto vervangen',
+ txdoel_bewijs_ok:'Foto veilig opgeslagen.',
+ txdoel_bewijs_aanwezig:'Foto aanwezig',
+ txdoel_privacy:'Optioneel. De foto wordt versleuteld opgeslagen en is alleen zichtbaar voor jou en ons compliance-team.',
 };

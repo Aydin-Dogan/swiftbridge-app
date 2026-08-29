@@ -23,6 +23,7 @@ import CurrencySelector from './CurrencySelector'; // Global herpositionering
 import WachtlijstModal from './WachtlijstModal'; // WL-2: binnenkort-corridor opt-in
 import { useFavorieteValutas } from '../services/favorieteValutas'; // MMM
 import AppLockScherm from './pin/AppLockScherm'; // PIN-1: tx-confirm
+import TransactieDoel from './opdrachten/TransactieDoel'; // TX-DOEL: doel van de uitgave
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -1101,6 +1102,9 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
 
       {/* Push opt-in (Verbetering NN) — alleen tonen als browser ondersteunt en niet al beslist */}
       <PushOptInCard token={token} />
+
+      {/* TX-DOEL: direct na het versturen vragen waarvoor de uitgave was */}
+      {transactie?.id && <TransactieDoel transactieId={transactie.id} />}
 
       <button onClick={onNieuw} className="btn-inst w-full py-3">
         Nieuwe overschrijving

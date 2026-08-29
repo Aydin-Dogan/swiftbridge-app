@@ -1499,4 +1499,21 @@ export const en = {
  bv_pagina_disclaimer:'SwiftBridge is not a bank; payment services are provided via a DNB-licensed EMI partner.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'The assistant can view your account details to help you faster.',
+ // TX-DOEL: doel van de uitgave
+ txdoel_titel:'What was this payment for?',
+ txdoel_cat_familie:'Family support',
+ txdoel_cat_huur:'Rent',
+ txdoel_cat_zorg:'Health/medical',
+ txdoel_cat_onderwijs:'Education',
+ txdoel_cat_cadeau:'Gift',
+ txdoel_cat_zakelijk:'Business',
+ txdoel_cat_anders:'Other',
+ txdoel_omschrijving_placeholder:'Short description (optional)',
+ txdoel_opgeslagen:'Purpose saved.',
+ txdoel_fout:'Saving failed. Please try again.',
+ txdoel_bewijs_knop:'Add photo of receipt/invoice',
+ txdoel_bewijs_vervang:'Replace photo',
+ txdoel_bewijs_ok:'Photo stored securely.',
+ txdoel_bewijs_aanwezig:'Photo attached',
+ txdoel_privacy:'Optional. The photo is stored encrypted and visible only to you and our compliance team.',
 };

@@ -11,6 +11,7 @@ import { useTaal } from '../../i18n';
 import { apiFetch } from '../../services/api';
 import { formatBedrag } from '../../services/currencies';
 import { Send, Refresh, Calendar, AlertTriangle } from '../icons/Icons';
+import TransactieDoel from './TransactieDoel';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -85,6 +86,13 @@ function OpdrachtRij({ tx, t, open, onToggle, onOpnieuw }) {
               <Refresh className="w-4 h-4" aria-hidden="true" /> {t('opnieuw_versturen')}
             </button>
           )}
+          {/* TX-DOEL: waarvoor was deze uitgave (categorie + omschrijving + bon) */}
+          <TransactieDoel
+            transactieId={tx.id}
+            beginCategorie={tx.doelCategorie}
+            beginOmschrijving={tx.doelOmschrijving}
+            beginBewijs={tx.doelBewijsAanwezig}
+          />
         </div>
       )}
     </li>

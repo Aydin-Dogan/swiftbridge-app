@@ -1491,4 +1491,21 @@ export const ru = {
  bv_pagina_disclaimer:'SwiftBridge — не банк; платёжные услуги предоставляются через EMI-партнёра с лицензией DNB.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'Ассистент видит данные вашего счёта, чтобы помочь быстрее.',
+ // TX-DOEL: doel van de uitgave
+ txdoel_titel:'На что был этот платёж?',
+ txdoel_cat_familie:'Поддержка семьи',
+ txdoel_cat_huur:'Аренда',
+ txdoel_cat_zorg:'Здоровье/медицина',
+ txdoel_cat_onderwijs:'Образование',
+ txdoel_cat_cadeau:'Подарок',
+ txdoel_cat_zakelijk:'Бизнес',
+ txdoel_cat_anders:'Другое',
+ txdoel_omschrijving_placeholder:'Краткое описание (необязательно)',
+ txdoel_opgeslagen:'Назначение сохранено.',
+ txdoel_fout:'Не удалось сохранить. Попробуйте ещё раз.',
+ txdoel_bewijs_knop:'Добавить фото чека/счёта',
+ txdoel_bewijs_vervang:'Заменить фото',
+ txdoel_bewijs_ok:'Фото надёжно сохранено.',
+ txdoel_bewijs_aanwezig:'Фото прикреплено',
+ txdoel_privacy:'Необязательно. Фото хранится в зашифрованном виде и видно только вам и нашей команде комплаенс.',
 };

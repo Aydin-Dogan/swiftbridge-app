@@ -1491,4 +1491,21 @@ export const az = {
  bv_pagina_disclaimer:'SwiftBridge bank deyil; ödəniş xidmətləri DNB lisenziyalı EMI tərəfdaşı vasitəsilə göstərilir.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'Asistent sizə daha tez kömək etmək üçün hesab məlumatlarınızı görə bilir.',
+ // TX-DOEL: doel van de uitgave
+ txdoel_titel:'Bu ödəniş nə üçün idi?',
+ txdoel_cat_familie:'Ailə dəstəyi',
+ txdoel_cat_huur:'Kirayə',
+ txdoel_cat_zorg:'Sağlamlıq/tibbi',
+ txdoel_cat_onderwijs:'Təhsil',
+ txdoel_cat_cadeau:'Hədiyyə',
+ txdoel_cat_zakelijk:'Biznes',
+ txdoel_cat_anders:'Digər',
+ txdoel_omschrijving_placeholder:'Qısa təsvir (istəyə bağlı)',
+ txdoel_opgeslagen:'Təyinat yadda saxlanıldı.',
+ txdoel_fout:'Yadda saxlamaq alınmadı. Yenidən cəhd edin.',
+ txdoel_bewijs_knop:'Qəbz/faktura şəkli əlavə et',
+ txdoel_bewijs_vervang:'Şəkli dəyişdir',
+ txdoel_bewijs_ok:'Şəkil təhlükəsiz saxlanıldı.',
+ txdoel_bewijs_aanwezig:'Şəkil mövcuddur',
+ txdoel_privacy:'Istəyə bağlı. Şəkil şifrələnmiş saxlanılır; yalnız siz və uyğunluq komandamız görə bilər.',
 };
