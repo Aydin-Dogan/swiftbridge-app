@@ -1489,4 +1489,6 @@ export const ru = {
  bv_pagina_fout:'Что-то пошло не так. Попробуйте ещё раз.',
  bv_pagina_voetnoot:'Безопасная оплата через iDEAL. Аккаунт SwiftBridge не нужен.',
  bv_pagina_disclaimer:'SwiftBridge — не банк; платёжные услуги предоставляются через EMI-партнёра с лицензией DNB.',
+ // SB-ASSIST: rekening-context in de chat
+ support_context_disclosure:'Ассистент видит данные вашего счёта, чтобы помочь быстрее.',
 };

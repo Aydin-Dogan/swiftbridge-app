@@ -1499,4 +1499,6 @@ export const nl = {
  bv_pagina_fout:'Er ging iets mis. Probeer het opnieuw.',
  bv_pagina_voetnoot:'Veilig betalen via iDEAL. Je hebt geen SwiftBridge-account nodig.',
  bv_pagina_disclaimer:'SwiftBridge is geen bank; betaaldiensten lopen via een DNB-gelicentieerde EMI-partner.',
+ // SB-ASSIST: rekening-context in de chat
+ support_context_disclosure:'De assistent kan je rekeninggegevens inzien om je sneller te helpen.',
 };

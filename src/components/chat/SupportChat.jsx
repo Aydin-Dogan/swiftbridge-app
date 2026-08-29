@@ -437,6 +437,13 @@ export default function SupportChat({ gebruiker, actief = true }) {
             )}
           </div>
 
+          {/* SB-ASSIST: transparantie — ingelogd ziet de assistent rekening-context */}
+          {gebruiker && (
+            <p className="flex-shrink-0 text-[10px] text-gray-400 text-center bg-slate-50 border-t border-gray-100 px-3 py-1">
+              {t('support_context_disclosure')}
+            </p>
+          )}
+
           {/* Input */}
           <form
             onSubmit={verzendBericht}

@@ -1489,4 +1489,6 @@ export const az = {
  bv_pagina_fout:'Nəsə səhv getdi. Yenidən cəhd edin.',
  bv_pagina_voetnoot:'iDEAL ilə təhlükəsiz ödəniş. SwiftBridge hesabı lazım deyil.',
  bv_pagina_disclaimer:'SwiftBridge bank deyil; ödəniş xidmətləri DNB lisenziyalı EMI tərəfdaşı vasitəsilə göstərilir.',
+ // SB-ASSIST: rekening-context in de chat
+ support_context_disclosure:'Asistent sizə daha tez kömək etmək üçün hesab məlumatlarınızı görə bilir.',
 };
