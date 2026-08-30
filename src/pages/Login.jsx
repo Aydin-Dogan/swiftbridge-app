@@ -33,6 +33,7 @@ export default function Login({ onLogin }) {
   // F7 fix (Cursor review): pendingToken is nieuwe primaire identifier
   const [twofaPendingToken, setTwofaPendingToken] = useState(null);
   const [twofaCode, setTwofaCode ] = useState('');
+  const [twofaOefenCode, setTwofaOefenCode] = useState(null); // SB LOKAAL: geen mail — code op scherm
   const [twofaLaden, setTwofaLaden ] = useState(false);
   const [twofaFout, setTwofaFout ] = useState('');
   const [herverzendBericht, setHerverzendBericht] = useState('');
@@ -159,6 +160,7 @@ export default function Login({ onLogin }) {
       if (data.tweeFactor) {
         setTwofaUserId(data.userId);
         setTwofaPendingToken(data.pendingToken || null); // F7: primaire identifier
+        setTwofaOefenCode(data.codeOefen || null); // SB LOKAAL: code op het scherm
         return;
       }
 
@@ -255,6 +257,7 @@ export default function Login({ onLogin }) {
         body: { pendingToken: twofaPendingToken },
       });
       if (data?.pendingToken) setTwofaPendingToken(data.pendingToken);
+      if (data?.codeOefen) setTwofaOefenCode(data.codeOefen); // SB LOKAAL
       setHerverzendBericht('Nieuwe code verstuurd. Check ook je spam-map.');
       // 30s cooldown tegen spam
       setHerverzendCooldown(30);
@@ -289,6 +292,7 @@ export default function Login({ onLogin }) {
           setBevestigingToken(null);
           setTwofaUserId(d.userId);
           setTwofaPendingToken(d.pendingToken || null);
+          setTwofaOefenCode(d.codeOefen || null); // SB LOKAAL
         }}
         onTerug={() => setBevestigingToken(null)}
       />
@@ -349,6 +353,12 @@ export default function Login({ onLogin }) {
             </div>
             <h2 className="font-display text-xl font-medium text-ink-1">Inlogcode</h2>
             <p className="text-ink-2 text-sm">We hebben een 6-cijferige code naar je e-mail gestuurd. Check ook spam folder.</p>
+            {twofaOefenCode && (
+              <div className="mt-3 text-sm rounded-md p-3 border text-ink-1 bg-surface-2 border-border">
+                <p className="font-semibold mb-1">Oefenversie</p>
+                <p>Er wordt hier geen echte e-mail verstuurd. Je code is: <strong className="font-mono tracking-widest">{twofaOefenCode}</strong></p>
+              </div>
+            )}
           </div>
           <form id="twofa-form" onSubmit={verifieer2FA} className="space-y-4">
             <input

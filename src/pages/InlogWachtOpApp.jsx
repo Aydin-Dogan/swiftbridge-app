@@ -47,7 +47,13 @@ export default function InlogWachtOpApp({ bevestigingToken, onIngelogd, onFallba
       klaarRef.current = true;
       onFallback?.(d); // schakelt over naar het bestaande e-mailcode-scherm
     } catch (e) {
-      setFout(e.message || 'Overschakelen mislukt. Log opnieuw in.');
+      if (e.errorCode === 'EMAILCODE_NIET_BESCHIKBAAR') {
+        // Mail is tijdelijk stuk; het app-verzoek blijft geldig (de poll loopt
+        // door), dus bevestigen via de app kan gewoon nog.
+        setStatus('mailfout');
+      } else {
+        setFout(e.error || e.message || 'Overschakelen mislukt. Log opnieuw in.');
+      }
     } finally { setFallbackBezig(false); }
   }
 
@@ -75,6 +81,18 @@ export default function InlogWachtOpApp({ bevestigingToken, onIngelogd, onFallba
               </button>
               <button onClick={onTerug} className="w-full text-sm text-ink-2 hover:underline">Annuleren</button>
             </div>
+          </>
+        )}
+
+        {status === 'mailfout' && (
+          <>
+            <h2 className="font-display text-xl font-medium text-ink-1 mb-1">E-mailcode niet beschikbaar</h2>
+            <p className="text-ink-2 text-sm mb-6">
+              De e-mailcode kan op dit moment niet verstuurd worden. Je kunt deze inlog
+              nog steeds <strong>bevestigen in de SwiftBridge-app</strong> — deze pagina
+              logt dan vanzelf door. Of ga terug en probeer het later opnieuw.
+            </p>
+            <button onClick={onTerug} className="btn-inst w-full py-3.5">Terug naar inloggen</button>
           </>
         )}
 
