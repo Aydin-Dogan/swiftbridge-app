@@ -15,10 +15,14 @@
  *           (bv. tijdens KYC camera scan)
  */
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTaal } from '../../i18n';
 import { apiFetch } from '../../services/api';
 import ChatBubble from './ChatBubble';
 import QuickActions from './QuickActions';
+// Ingelogd: genummerd hulpmenu + "Ga naar"-knoppen in antwoorden (verzoek Aydin 17-9)
+import HulpMenu from './HulpMenu';
+import { CHAT_DOELEN } from './chatOpmaak';
 
 const STORAGE_KEY = 'sb_chat_history';
 const GESPREK_KEY = 'sb_chat_gesprek_id';
@@ -73,6 +77,10 @@ export default function SupportChat({ gebruiker, actief = true }) {
   const [invoer, setInvoer] = useState('');
   const [verzendt, setVerzendt] = useState(false);
   const [ongelezen, setOngelezen] = useState(0);
+  const [toonMenu, setToonMenu] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const ingelogd = !!gebruiker;
 
   const messageListRef = useRef(null);
   const textareaRef = useRef(null);
@@ -203,9 +211,9 @@ export default function SupportChat({ gebruiker, actief = true }) {
   }
 
   // ── Vrij bericht verzenden → AI-assistent (second brain) ─────────────────
-  async function verzendBericht(e) {
+  async function verzendBericht(e, vasteTekst) {
     e?.preventDefault();
-    const tekst = invoer.trim();
+    const tekst = (vasteTekst ?? invoer).trim();
     if (!tekst || verzendt) return;
 
     const nu = new Date().toISOString();
@@ -215,7 +223,8 @@ export default function SupportChat({ gebruiker, actief = true }) {
       tekst,
       timestamp: nu,
     });
-    setInvoer('');
+    if (vasteTekst == null) setInvoer('');
+    setToonMenu(false);
     setVerzendt(true);
 
     try {
@@ -244,6 +253,34 @@ export default function SupportChat({ gebruiker, actief = true }) {
       setVerzendt(false);
       textareaRef.current?.focus();
     }
+  }
+
+  // ── Vraag van buiten de chat (Service-pagina) → chat openen en versturen ──
+  const verzendRef = useRef(null);
+  useEffect(() => {
+    verzendRef.current = (tekst) => verzendBericht(null, tekst);
+  });
+  useEffect(() => {
+    const onVraag = (e) => {
+      const vraag = typeof e.detail === 'string' ? e.detail : e.detail?.vraag;
+      setOpen(true);
+      setOngelezen(0);
+      if (vraag) verzendRef.current?.(String(vraag).slice(0, 500));
+    };
+    window.addEventListener('swiftbridge_chat_vraag', onVraag);
+    return () => window.removeEventListener('swiftbridge_chat_vraag', onVraag);
+  }, []);
+
+  // ── "Ga naar"-knop in een antwoord: alleen doelen uit de allowlist ────────
+  function gaNaar(doel) {
+    const d = CHAT_DOELEN[doel];
+    if (!d) return;
+    // Mobiel bedekt de chat het hele scherm: sluiten zodat de klant het scherm ziet.
+    if (window.matchMedia('(max-width: 640px)').matches) sluit();
+    if (d.route) { navigate(d.route); return; }
+    const stuur = () => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: d.tab }));
+    if (location.pathname === '/app') stuur();
+    else { navigate('/app'); setTimeout(stuur, 150); }
   }
 
   // ── Escalatie: gesprek doorsturen naar een menselijke medewerker ─────────
@@ -402,13 +439,15 @@ export default function SupportChat({ gebruiker, actief = true }) {
                       : t('support_welkom')}
                   </p>
                 </div>
-                <QuickActions onKies={handleQuick} t={t} />
+                {ingelogd
+                  ? <HulpMenu t={t} onVraag={(v) => verzendBericht(null, v)} />
+                  : <QuickActions onKies={handleQuick} t={t} />}
               </div>
             )}
 
             {berichten.map((b) => (
               <div key={b.id}>
-                <ChatBubble bericht={b} />
+                <ChatBubble bericht={b} t={t} onActie={ingelogd ? gaNaar : undefined} />
                 {b.rol === 'support' && b.logId && (
                   b.feedback ? (
                     <p className="text-[10px] text-gray-400 ml-10 -mt-1 mb-2">{t('chat_feedback_dank')}</p>
@@ -427,6 +466,22 @@ export default function SupportChat({ gebruiker, actief = true }) {
                 )}
               </div>
             ))}
+
+            {/* Ingelogd: hulpmenu opnieuw oproepen midden in een gesprek */}
+            {ingelogd && heeftBerichten && !verzendt && (
+              toonMenu ? (
+                <div className="mt-2 mb-1">
+                  <HulpMenu t={t} onVraag={(v) => verzendBericht(null, v)} />
+                </div>
+              ) : (
+                <div className="flex justify-center mt-2">
+                  <button type="button" onClick={() => setToonMenu(true)}
+                    className="text-xs font-semibold text-brand-700 bg-white border border-gray-200 hover:border-brand-300 rounded-full px-3 py-1.5 min-h-[32px] transition">
+                    {t('hulp_menu_tonen')}
+                  </button>
+                </div>
+              )
+            )}
 
             {verzendt && (
               <div className="flex items-center gap-1 ml-2 mt-1" aria-label={t('support_aan_het_typen')}>
