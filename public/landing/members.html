@@ -109,8 +109,14 @@
   .cta-band p{color:rgba(255,255,255,.75);max-width:520px;margin:0 auto 20px;font-size:.95rem}
   .cta-band a{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;border-radius:8px;padding:13px 26px;transition:background .2s}
   .cta-band a:hover{background:var(--acc-hover)}
-  .foot{text-align:center;margin:52px 0 40px;font-size:.78rem;color:var(--txt-m)}
+  .foot{text-align:center;margin:28px 0 10px;font-size:.78rem;color:var(--txt-m)}
   .foot a{color:var(--txt-m)}
+  .foot-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px 32px;margin-top:52px;padding-top:28px;border-top:1px solid var(--border)}
+  .foot-kop{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--txt-m);margin-bottom:10px}
+  .foot-links ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .foot-links a{font-size:.88rem;color:var(--txt-b);text-decoration:none}
+  .foot-links a:hover,.foot-links a:focus-visible{color:var(--ink);text-decoration:underline}
+  .foot-disclosure{text-align:center;font-size:.72rem;line-height:1.7;color:var(--txt-m);max-width:90ch;margin:0 auto 40px}
 
   /* ---- i18n: taalkiezer + RTL (additief, verandert bestaande regels niet) ---- */
   #lang-switcher{position:relative;flex-shrink:0}
@@ -299,8 +305,31 @@
     <a href="/login?tab=register" data-i18n="cta_button">Gratis account openen</a>
   </div>
 
+  <div class="foot-links">
+    <div>
+      <p class="foot-kop" data-i18n="foot_col_legal">Juridisch</p>
+      <ul>
+        <li><a href="/voorwaarden" data-i18n="foot_link_terms">Voorwaarden</a></li>
+        <li><a href="/voorwaarden/betaaldiensten" data-i18n="foot_link_terms_payments">Voorwaarden Betaaldiensten</a></li>
+        <li><a href="/voorwaarden/digitale-toegang" data-i18n="foot_link_terms_digital">Voorwaarden Digitale Toegang</a></li>
+        <li><a href="/privacy" data-i18n="foot_link_privacy">Privacyverklaring</a></li>
+        <li><a href="/klachten" data-i18n="foot_link_complaints">Klachten</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="foot-kop" data-i18n="foot_col_safety">Veiligheid en geld</p>
+      <ul>
+        <li><a href="/veiligheid/regels" data-i18n="foot_link_security_rules">Veiligheidsregels</a></li>
+        <li><a href="/veiligheid/jouw-geld" data-i18n="foot_link_your_money">Hoe jouw geld beschermd is</a></li>
+        <li><a href="/tarieven" data-i18n="foot_link_fees">Tarieven</a></li>
+      </ul>
+    </div>
+  </div>
+
   <p class="foot"><span data-i18n="foot_disclaimer">Tarieven en drempels zijn indicatief en worden bevestigd vóór elke transactie · de Members Card is een merk-/loyaliteitselement, geen betaalpas</span> ·
-  <a href="/" data-i18n="foot_back">terug naar www.swiftbridge.nl</a> · <a href="/privacybeleid" data-i18n="foot_privacy">privacy</a> · <a href="/algemene-voorwaarden" data-i18n="foot_terms">voorwaarden</a></p>
+  <a href="/" data-i18n="foot_back">terug naar www.swiftbridge.nl</a> · <a href="/privacy" data-i18n="foot_privacy">privacy</a> · <a href="/voorwaarden" data-i18n="foot_terms">voorwaarden</a></p>
+  <!-- AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js) -->
+  <p class="foot-disclosure" data-i18n="foot_disclosure">SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel.</p>
 </div>
 </main>
 
@@ -393,7 +422,19 @@ const I18N = {
     foot_disclaimer: "Tarieven en drempels zijn indicatief en worden bevestigd vóór elke transactie · de Members Card is een merk-/loyaliteitselement, geen betaalpas",
     foot_back: "terug naar www.swiftbridge.nl",
     foot_privacy: "privacy",
-    foot_terms: "voorwaarden"
+    foot_terms: "voorwaarden",
+    foot_col_legal: "Juridisch",
+    foot_link_terms: "Voorwaarden",
+    foot_link_terms_payments: "Voorwaarden Betaaldiensten",
+    foot_link_terms_digital: "Voorwaarden Digitale Toegang",
+    foot_link_privacy: "Privacyverklaring",
+    foot_link_complaints: "Klachten",
+    foot_col_safety: "Veiligheid en geld",
+    foot_link_security_rules: "Veiligheidsregels",
+    foot_link_your_money: "Hoe jouw geld beschermd is",
+    foot_link_fees: "Tarieven",
+    // AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js)
+    foot_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel."
   },
   en: {
     nav_aria: "Main navigation",
@@ -476,7 +517,18 @@ const I18N = {
     foot_disclaimer: "Rates and thresholds are indicative and are confirmed before every transaction · the Members Card is a brand/loyalty element, not a payment card",
     foot_back: "back to www.swiftbridge.nl",
     foot_privacy: "privacy",
-    foot_terms: "terms"
+    foot_terms: "terms",
+    foot_col_legal: "Legal",
+    foot_link_terms: "Terms and conditions",
+    foot_link_terms_payments: "Payment Services Terms",
+    foot_link_terms_digital: "Digital Access Terms",
+    foot_link_privacy: "Privacy statement",
+    foot_link_complaints: "Complaints",
+    foot_col_safety: "Security and money",
+    foot_link_security_rules: "Security rules",
+    foot_link_your_money: "How your money is protected",
+    foot_link_fees: "Fees",
+    foot_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge will act as an agent of a licensed electronic money institution supervised by De Nederlandsche Bank; registration as an agent with DNB will follow once that partnership has been finalised. SwiftBridge is not a bank; funds are not covered by the deposit guarantee scheme."
   },
   tr: {
     nav_aria: "Ana gezinme",
@@ -559,7 +611,18 @@ const I18N = {
     foot_disclaimer: "Tarifeler ve eşikler gösterge niteliğindedir ve her işlemden önce teyit edilir · Members Card bir marka/sadakat unsurudur, ödeme kartı değildir",
     foot_back: "www.swiftbridge.nl adresine dön",
     foot_privacy: "gizlilik",
-    foot_terms: "koşullar"
+    foot_terms: "koşullar",
+    foot_col_legal: "Hukuki",
+    foot_link_terms: "Genel Koşullar",
+    foot_link_terms_payments: "Ödeme Hizmetleri Koşulları",
+    foot_link_terms_digital: "Dijital Erişim Koşulları",
+    foot_link_privacy: "Gizlilik bildirimi",
+    foot_link_complaints: "Şikayetler",
+    foot_col_safety: "Güvenlik ve para",
+    foot_link_security_rules: "Güvenlik kuralları",
+    foot_link_your_money: "Paranız nasıl korunuyor",
+    foot_link_fees: "Ücretler",
+    foot_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge, De Nederlandsche Bank denetimi altındaki lisanslı bir elektronik para kuruluşunun temsilcisi (agent) olarak faaliyet gösterecektir; DNB nezdinde temsilci olarak kayıt, bu iş birliği tamamlandığında yapılacaktır. SwiftBridge bir banka değildir; fonlar mevduat garanti sistemi kapsamında değildir."
   },
   ar: {
     nav_aria: "التنقل الرئيسي",
@@ -642,7 +705,18 @@ const I18N = {
     foot_disclaimer: "التعرفة والحدود إرشادية ويتم تأكيدها قبل كل معاملة · بطاقة الأعضاء عنصر علامة تجارية/ولاء، وليست بطاقة دفع",
     foot_back: "العودة إلى www.swiftbridge.nl",
     foot_privacy: "الخصوصية",
-    foot_terms: "الشروط"
+    foot_terms: "الشروط",
+    foot_col_legal: "الشؤون القانونية",
+    foot_link_terms: "الشروط العامة",
+    foot_link_terms_payments: "شروط خدمات الدفع",
+    foot_link_terms_digital: "شروط الوصول الرقمي",
+    foot_link_privacy: "بيان الخصوصية",
+    foot_link_complaints: "الشكاوى",
+    foot_col_safety: "الأمان والأموال",
+    foot_link_security_rules: "قواعد الأمان",
+    foot_link_your_money: "كيف تتم حماية أموالك",
+    foot_link_fees: "الرسوم",
+    foot_disclosure: "SwiftBridge B.V.، العنوان: Piet Heinstraat 137, 2518 CG Den Haag، رقم السجل التجاري (KvK): 42138434. ستعمل SwiftBridge بصفة وكيل لمؤسسة نقود إلكترونية مرخّصة تخضع لإشراف De Nederlandsche Bank؛ وسيتم تسجيلها كوكيل لدى DNB فور إتمام هذه الشراكة. SwiftBridge ليست بنكًا؛ والأموال غير مشمولة بنظام ضمان الودائع."
   },
   de: {
     nav_aria: "Hauptnavigation",
@@ -725,7 +799,18 @@ const I18N = {
     foot_disclaimer: "Tarife und Schwellen sind indikativ und werden vor jeder Transaktion bestätigt · die Members Card ist ein Marken-/Treueelement, keine Zahlungskarte",
     foot_back: "zurück zu www.swiftbridge.nl",
     foot_privacy: "Datenschutz",
-    foot_terms: "AGB"
+    foot_terms: "AGB",
+    foot_col_legal: "Rechtliches",
+    foot_link_terms: "AGB",
+    foot_link_terms_payments: "Bedingungen für Zahlungsdienste",
+    foot_link_terms_digital: "Bedingungen für den digitalen Zugang",
+    foot_link_privacy: "Datenschutzerklärung",
+    foot_link_complaints: "Beschwerden",
+    foot_col_safety: "Sicherheit und Geld",
+    foot_link_security_rules: "Sicherheitsregeln",
+    foot_link_your_money: "So ist Ihr Geld geschützt",
+    foot_link_fees: "Gebühren",
+    foot_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge wird als Agent eines zugelassenen E-Geld-Instituts unter der Aufsicht von De Nederlandsche Bank tätig werden; die Eintragung als Agent bei DNB erfolgt, sobald diese Zusammenarbeit abgeschlossen ist. SwiftBridge ist keine Bank; Guthaben fallen nicht unter die Einlagensicherung."
   },
   fr: {
     nav_aria: "Navigation principale",
@@ -808,7 +893,18 @@ const I18N = {
     foot_disclaimer: "Les tarifs et les seuils sont indicatifs et confirmés avant chaque transaction · la Members Card est un élément de marque/fidélité, pas une carte de paiement",
     foot_back: "retour à www.swiftbridge.nl",
     foot_privacy: "confidentialité",
-    foot_terms: "conditions"
+    foot_terms: "conditions",
+    foot_col_legal: "Juridique",
+    foot_link_terms: "Conditions générales",
+    foot_link_terms_payments: "Conditions des services de paiement",
+    foot_link_terms_digital: "Conditions d'accès numérique",
+    foot_link_privacy: "Déclaration de confidentialité",
+    foot_link_complaints: "Réclamations",
+    foot_col_safety: "Sécurité et argent",
+    foot_link_security_rules: "Règles de sécurité",
+    foot_link_your_money: "Comment votre argent est protégé",
+    foot_link_fees: "Tarifs",
+    foot_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge agira en tant qu'agent d'un établissement de monnaie électronique agréé, soumis au contrôle de De Nederlandsche Bank ; l'inscription en tant qu'agent auprès de DNB interviendra dès que ce partenariat aura été finalisé. SwiftBridge n'est pas une banque ; les avoirs ne sont pas couverts par le système de garantie des dépôts."
   }
 };
 

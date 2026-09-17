@@ -7,6 +7,33 @@ publieke release; semver-versies starten bij de eerste productie-go-live.
 ## [Unreleased]
 
 ### Toegevoegd
+- **Zakelijk SwiftBridge-profiel aanvragen (KYB) — beheer** (2026-09, WP4; contract
+  `swiftbridge-api/docs/KYB_API.md`): derde tab "Zakelijke aanvragen" in
+  `/admin/compliance` met wachtrij (filter open/ingediend/in behandeling/info nodig/
+  goedgekeurd/afgewezen/alle, zoeken, badges Sanctie-hit / Screening niet uitgevoerd /
+  KvK handmatig / Doorlooptijd overschreden, "In behandeling nemen"), volledig dossier
+  (Bedrijf met Handelsregister-vergelijking, Eigenaren en bestuurders met PEP en screening,
+  Identiteit met snapshot-vergelijking en goed-/afkeuren, Gebruik en doel, Aanvullend,
+  Verklaringen, Screening + herscreen, Documenten, Historie) en beoordeelpaneel
+  (6-punts checklist, interne notitie, Aanvullende informatie vragen, Afwijzen met
+  reden-code + tipping-off-waarschuwing, Goedkeuren pas na checklist + goedgekeurde
+  identiteit). Documenten openen via fetch -> blob -> nieuw tabblad (nooit iframe).
+  Componenten: `src/components/admin/kyb/*`. NL-fallbacks zolang de `kyb_admin_*`-keys
+  nog niet in i18n staan.
+- **AdminOverzicht**: tegel "Open zakelijke aanvragen" (uit `GET /admin/stats.kyb`).
+- **Landing zakelijk**: CTA's wijzen naar `/login?tab=register&type=zakelijk&next=/app/zakelijk-aanvraag`;
+  doorlooptijd in 6 talen naar "doorgaans binnen enkele werkdagen, uiterlijk binnen 5 werkdagen";
+  badge "KYB-geverifieerd" en microcopy "Gratis KYB-verificatie" naar
+  "KYB-beoordeling door een medewerker"; FAQ-fallback gelijk aan het NL-woordenboek.
+- **`scripts/claims-check.mjs`** (+ CI-stap): bewaakt `kyb_*`-teksten in 5 talen, de zakelijke
+  landing en de `kyb*`-mailtemplates van de API op bank/IBAN/betaalpas/NFC/liveness/
+  "automatisch goedgekeurd"/gratis-claims, emoji en "DNB-vergunning" zonder "EMI-partner".
+
+### Gewijzigd
+- **KYCReviewQueue**: veldnamen gelijkgetrokken met het contract (records: `id, userId,
+  userNaam, userEmail, documentType, bron, context, ingediendOp, status`); kolommen
+  Bron en Context (kyc/kyb) i.p.v. documentnummer/nationaliteit (data-minimalisatie).
+
 - **Recurring SEPA-incasso UI** (QQ): "Automatische incasso instellen"-banner in
   de recurring-pagina (→ Mollie-checkout) + "incasso actief"-indicator; alle 5 talen.
 - **Echte koers-sparkline**: `KoersSparkline` haalt nu echte 7-daagse historie op

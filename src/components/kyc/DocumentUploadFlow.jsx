@@ -178,7 +178,12 @@ function FileUploadVeld({ id, label, beschrijving, file, setFile, fout, setFout 
 }
 
 // ── Camera selfie (getUserMedia) ──────────────────────────────────────────────
-function CameraSelfie({ onCapture, onAnnuleer }) {
+/** Live camera kan alleen in een beveiligde context (https of localhost). */
+function liveCameraMogelijk() {
+  return typeof window !== 'undefined' && window.isSecureContext && !!navigator.mediaDevices?.getUserMedia;
+}
+
+function CameraSelfie({ onCapture, onAnnuleer, onTelefooncamera }) {
   const { t } = useTaal();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -245,6 +250,11 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
       <div className="bg-red-50 border border-red-200 rounded-md p-4 space-y-3">
         <p className="text-sm text-red-700 font-semibold">{t('kyc_camera_fout')}</p>
         <p className="text-xs text-red-600">{fout}</p>
+        {onTelefooncamera && (
+          <button type="button" onClick={onTelefooncamera} className="w-full btn-inst py-3 text-sm">
+            {t('kyc_upload_selfie_telefooncamera')}
+          </button>
+        )}
         <button
           type="button"
           onClick={annuleer}
@@ -305,11 +315,24 @@ function CameraSelfie({ onCapture, onAnnuleer }) {
 }
 
 // ── DocumentUploadFlow (main) ─────────────────────────────────────────────────
-export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken = null, beginWaarden = null }) {
+/**
+ * Props:
+ *   toegestaneTypes  lijst met DOC_TYPES-waarden die gekozen mogen worden
+ *                    (default: alle). De KYB-flow beperkt tot paspoort/ID-kaart.
+ *   context          'kyc' (default) | 'kyb' — wordt als veld `context`
+ *                    meegestuurd zodat het kyc_record de juiste context krijgt.
+ */
+export default function DocumentUploadFlow({
+  onSuccess, onAnnuleer, bearerToken = null, beginWaarden = null,
+  toegestaneTypes = null, context = 'kyc',
+}) {
   const { t } = useTaal();
   const [stap, setStap] = useState(0);
+  const docTypes = Array.isArray(toegestaneTypes) && toegestaneTypes.length > 0
+    ? DOC_TYPES.filter((d) => toegestaneTypes.includes(d.value))
+    : DOC_TYPES;
   const [form, setForm] = useState({
-    documentType: 'paspoort_eu',
+    documentType: docTypes.some((d) => d.value === 'paspoort_eu') ? 'paspoort_eu' : (docTypes[0]?.value || 'paspoort_eu'),
     documentNummer: '',
     // Telefoon-handoff: geboortedatum/nationaliteit komen van de computer-stap.
     // Geen land-default (merkregel: geen voorkeursland).
@@ -319,6 +342,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
   const [voorkant, setVoorkant] = useState(null);
   const [achterkant, setAchterkant] = useState(null);
   const [selfie, setSelfie] = useState(null);
+  const selfieCameraRef = useRef(null);
   const [foutVoorkant, setFoutVoorkant] = useState(null);
   const [foutAchterkant, setFoutAchterkant] = useState(null);
   const [foutSelfie, setFoutSelfie] = useState(null);
@@ -329,7 +353,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
   const [serverFout, setServerFout] = useState('');
   const [klaar, setKlaar] = useState(false);
 
-  const docConfig = DOC_TYPES.find((d) => d.value === form.documentType);
+  const docConfig = docTypes.find((d) => d.value === form.documentType) || docTypes[0];
   const heeftAchterkant = docConfig?.heeftAchterkant;
 
   // Berekent total aantal stappen (achterkant skip voor paspoort)
@@ -362,6 +386,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
       fd.append('document_nummer', form.documentNummer);
       fd.append('geboortedatum', form.geboortedatum);
       fd.append('nationaliteit', form.nationaliteit);
+      fd.append('context', context === 'kyb' ? 'kyb' : 'kyc');
       fd.append('document_voorkant', voorkant);
       if (achterkant) fd.append('document_achterkant', achterkant);
       fd.append('selfie', selfie);
@@ -450,7 +475,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
             <legend className="text-sm font-semibold text-ink-2 mb-1">
               {t('kyc_upload_kies_doctype')}
             </legend>
-            {DOC_TYPES.map((d) => (
+            {docTypes.map((d) => (
               <label
                 key={d.value}
                 className={`flex items-center p-3 border rounded-md cursor-pointer transition ${
@@ -635,6 +660,7 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
                 setToonCamera(false);
               }}
               onAnnuleer={() => setToonCamera(false)}
+              onTelefooncamera={() => { setToonCamera(false); setTimeout(() => selfieCameraRef.current?.click(), 0); }}
             />
           ) : (
             <>
@@ -647,9 +673,33 @@ export default function DocumentUploadFlow({ onSuccess, onAnnuleer, bearerToken 
                 fout={foutSelfie}
                 setFout={setFoutSelfie}
               />
+              {/* Live camera (getUserMedia) werkt alleen via https of localhost. Op een
+                  gewone http-verbinding (bv. SB LOKAAL op het netwerkadres) opent een
+                  bestandsveld met capture="user" direct de voorcamera van de telefoon. */}
+              <input
+                ref={selfieCameraRef}
+                type="file"
+                accept="image/jpeg,image/png"
+                capture="user"
+                className="hidden"
+                aria-hidden="true"
+                tabIndex={-1}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  e.target.value = '';
+                  if (!f) return;
+                  const v = valideerBestand(f, t);
+                  if (v) { setFoutSelfie(v); return; }
+                  setFoutSelfie(null);
+                  setSelfie(f);
+                }}
+              />
               <button
                 type="button"
-                onClick={() => setToonCamera(true)}
+                onClick={() => {
+                  if (liveCameraMogelijk()) setToonCamera(true);
+                  else selfieCameraRef.current?.click();
+                }}
                 className="w-full border border-brand-200 bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold py-3 rounded-md text-sm"
               >
                 {t('kyc_upload_selfie_camera_starten')}

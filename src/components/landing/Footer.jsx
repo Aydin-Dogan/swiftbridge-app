@@ -28,6 +28,41 @@ function TrustItem({ Icon, label, sub }) {
   );
 }
 
+// Juridische footer-kolommen. Labels via de link_*-keys uit src/i18n.
+const JURIDISCH_LINKS = [
+  { href: '/voorwaarden', key: 'link_voorwaarden' },
+  { href: '/voorwaarden/betaaldiensten', key: 'link_voorwaarden_betaaldiensten' },
+  { href: '/voorwaarden/digitale-toegang', key: 'link_voorwaarden_digitale_toegang' },
+  { href: '/privacy', key: 'link_privacy' },
+  { href: '/klachten', key: 'link_klachten' },
+  { href: '/aml-beleid', key: 'landing_footer_aml' },
+];
+
+const VEILIGHEID_GELD_LINKS = [
+  { href: '/veiligheid/regels', key: 'link_veiligheidsregels' },
+  { href: '/veiligheid/jouw-geld', key: 'link_jouw_geld' },
+  { href: '/tarieven', key: 'link_tarieven' },
+];
+
+function FooterKolom({ kop, links, t }) {
+  return (
+    <div>
+      <h4 className="text-[0.64rem] tracking-[0.26em] uppercase text-accent-400 mb-3 font-medium">
+        {kop}
+      </h4>
+      <ul className="space-y-2 text-[0.84rem] leading-[1.9]">
+        {links.map(({ href, key }) => (
+          <li key={href}>
+            <a href={href} className="hover:text-white transition">
+              {t(key)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function Footer() {
   const { t } = useTaal();
   const jaar = new Date().getFullYear();
@@ -58,9 +93,9 @@ export default function Footer() {
             sub={t('footer_trust_mollie_sub')}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-10">
           {/* Branding */}
-          <div className="md:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-6 h-6 text-accent-400" aria-hidden="true" />
               <span className="font-display text-white text-xl">
@@ -103,30 +138,6 @@ export default function Footer() {
                   {t('landing_nav_faq')}
                 </a>
               </li>
-            </ul>
-          </div>
-
-          {/* Juridisch */}
-          <div>
-            <h4 className="text-[0.64rem] tracking-[0.26em] uppercase text-accent-400 mb-3 font-medium">
-              {t('landing_footer_juridisch')}
-            </h4>
-            <ul className="space-y-2 text-[0.84rem] leading-[1.9]">
-              <li>
-                <a href="/algemene-voorwaarden" className="hover:text-white transition">
-                  {t('landing_footer_voorwaarden')}
-                </a>
-              </li>
-              <li>
-                <a href="/privacybeleid" className="hover:text-white transition">
-                  {t('landing_footer_privacy')}
-                </a>
-              </li>
-              <li>
-                <a href="/aml-beleid" className="hover:text-white transition">
-                  {t('landing_footer_aml')}
-                </a>
-              </li>
               <li>
                 <a href="/status" className="hover:text-white transition">
                   {t('status_page_title')}
@@ -134,6 +145,12 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Juridisch — documentenset v1.0 (zie src/content/juridisch). */}
+          <FooterKolom kop={t('footer_juridisch_kop')} links={JURIDISCH_LINKS} t={t} />
+
+          {/* Veiligheid en geld */}
+          <FooterKolom kop={t('footer_veiligheid_geld_kop')} links={VEILIGHEID_GELD_LINKS} t={t} />
 
           {/* Contact */}
           <div>
@@ -166,6 +183,11 @@ export default function Footer() {
             {t('landing_footer_dnb_disclaimer')}
           </p>
         </div>
+        {/* Verplichte disclosure (onderste regel, kleine letter).
+            AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js) */}
+        <p className="mt-4 text-[0.68rem] leading-[1.7] text-[#7388b3] text-center md:text-left">
+          {t('juridisch_disclosure')}
+        </p>
       </div>
     </footer>
   );

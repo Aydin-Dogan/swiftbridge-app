@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FinancialService","name":"SwiftBridge","url":"https://www.swiftbridge.nl/","description":"Internationaal geld overmaken vanuit Nederland. Express doorgaans binnen 5 minuten, Economy 1–2 werkdagen. Onder DNB-toezicht via EMI-partner.","areaServed":{"@type":"Country","name":"Netherlands"},"offers":[{"@type":"Offer","name":"Overboeking (vaste fee)","priceCurrency":"EUR","price":"4.95"}],"regulatoryOrganization":{"@type":"GovernmentOrganization","name":"De Nederlandsche Bank","url":"https://www.dnb.nl/"}}
+{"@context":"https://schema.org","@type":"FinancialService","name":"SwiftBridge","url":"https://www.swiftbridge.nl/","description":"Internationaal geld overmaken vanuit Nederland. Express doorgaans binnen 5 minuten, Economy 1–2 werkdagen. Onder DNB-toezicht via EMI-partner.","areaServed":{"@type":"Country","name":"Netherlands"},"offers":[{"@type":"Offer","name":"Overboeking (vast tarief)","priceCurrency":"EUR","price":"4.95"}],"regulatoryOrganization":{"@type":"GovernmentOrganization","name":"De Nederlandsche Bank","url":"https://www.dnb.nl/"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Wat is het verschil tussen een zakelijk en privé-account bij SwiftBridge?","acceptedAnswer":{"@type":"Answer","text":"Een zakelijk account geeft toegang tot batch-uitbetalingen via CSV, teamtoegang met rollen, exportdocumentatie voor de boekhouding en zakelijke limieten op maat na KYB-verificatie."}},{"@type":"Question","name":"Wat houdt de KYB-verificatie in?","acceptedAnswer":{"@type":"Answer","text":"KYB (Know Your Business) verifieert uw bedrijfsdocumenten, UBO-registratie en identiteit van de tekenbevoegde. Volledig digitaal, doorgaans binnen één werkdag afgerond."}},{"@type":"Question","name":"Is SwiftBridge Zakelijk veilig en compliant?","acceptedAnswer":{"@type":"Answer","text":"Ja. SwiftBridge opereert via een geregistreerde EMI-partner onder toezicht van De Nederlandsche Bank (DNB). Wwft en AVG/GDPR-conform. Sanctiescreening bij elke transactie. Zakelijke limieten op maat na KYB-verificatie."}}]}
@@ -349,7 +349,8 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
 
 /* ── FOOTER ── */
 #footer{background:var(--ink-dark);color:rgba(255,255,255,.72);padding:3.5rem 0 2rem}
-.footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:2.5rem;margin-bottom:3rem}
+.footer-grid{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:2.5rem;margin-bottom:3rem}
+@media(max-width:1100px){.footer-grid{grid-template-columns:repeat(4,1fr)}.footer-brand{grid-column:1/-1}}
 @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:540px){.footer-grid{grid-template-columns:1fr}}
 .footer-brand-name{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
@@ -364,6 +365,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:1.5rem}
 .footer-disclaimer{font-size:.725rem;line-height:1.7;color:rgba(255,255,255,.40);max-width:80ch}
 .footer-copy{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:.75rem}
+.footer-disclosure{font-size:.7rem;line-height:1.7;color:rgba(255,255,255,.45);max-width:90ch;margin-top:.75rem}
 
 /* ── Animations ── */
 @media(prefers-reduced-motion:no-preference){
@@ -461,10 +463,10 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
       <p class="hero-sub" data-i18n="z_hero_sub">Van internationale leveranciers tot freelancers in Centraal-Azië — SwiftBridge Zakelijk brengt uw betalingen razendsnel, transparant en volledig compliant naar meer dan 45 landen. Batch-uitbetalingen, zakelijke KYB-verificatie, en tarieven op maat. Alles op één platform, onder Nederlands toezicht.</p>
       <div class="hero-btns">
         <a class="btn btn-primary" href="#cta-band" data-i18n="z_cta_demo">Plan een demo</a>
-        <a class="btn btn-secondary" href="#batch" data-i18n="z_hero_btn_account">Vraag zakelijk account aan &rarr;</a>
+        <a class="btn btn-secondary" href="/login?tab=register&amp;type=zakelijk&amp;next=/app/zakelijk-aanvraag" data-i18n="z_hero_btn_account">Vraag zakelijk account aan &rarr;</a>
       </div>
       <div class="hero-trust" aria-label="Vertrouwenskenmerken">
-        <span data-i18n="z_trust_kyb_verified">KYB-geverifieerd</span>
+        <span data-i18n="z_trust_kyb_verified">KYB-beoordeling door een medewerker</span>
         <span data-i18n="z_trust_wwft">Wwft-compliant</span>
         <span data-i18n="z_trust_dnb">Onder toezicht DNB via onze EMI-partner</span>
         <span data-i18n="trust_encryption">256-bit encryptie</span>
@@ -634,7 +636,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
       <article class="step fade-in">
         <div class="step-num" aria-hidden="true">2</div>
         <h3 data-i18n="z_hiw2_title">KYB-verificatie</h3>
-        <p data-i18n="z_hiw2_body">Know Your Business-verificatie conform Wwft: bedrijfsdocumenten, UBO-registratie en identiteitsverificatie van de tekenbevoegde. Volledig digitaal, doorgaans binnen één werkdag. Zakelijke limieten op maat na verificatie.</p>
+        <p data-i18n="z_hiw2_body">Know Your Business-verificatie conform Wwft: bedrijfsdocumenten, UBO-registratie en identiteitsverificatie van de tekenbevoegde. Volledig digitaal, doorgaans binnen enkele werkdagen, uiterlijk binnen 5 werkdagen. Zakelijke limieten op maat na verificatie.</p>
       </article>
       <article class="step fade-in">
         <div class="step-num" aria-hidden="true">3</div>
@@ -1038,7 +1040,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
       </div>
     </div>
     <p class="corridor-note">&#8224; <span data-i18n="corridor_availability_disclaimer">Beschikbaarheid van corridors kan variëren. Controleer de app voor de actuele status van uw bestemming.</span> <span data-i18n="z_corr_rates_note">Koersen zijn indicatief.</span></p>
-    <a class="waitlist-btn" href="/login?tab=register" data-i18n="corridor_waitlist_cta">Meld me aan voor de wachtlijst</a>
+    <a class="waitlist-btn" href="/login?tab=register&amp;type=zakelijk&amp;next=/app/zakelijk-aanvraag" data-i18n="corridor_waitlist_cta">Meld me aan voor de wachtlijst</a>
   </div>
 </section>
 
@@ -1147,7 +1149,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
           <span data-i18n="z_faq_q2">Wat houdt de KYB-verificatie in en hoe lang duurt het?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body" data-i18n="z_faq_a2">KYB staat voor Know Your Business — de zakelijke equivalent van de KYC-identiteitscheck voor consumenten. Wij verifiëren uw bedrijfsdocumenten (KvK-inschrijving, statuten), UBO-registratie en de identiteit van de tekenbevoegde(n). Het proces verloopt volledig digitaal en duurt doorgaans één werkdag. Na goedkeuring kunt u direct aan de slag met uw zakelijke account en worden uw limieten op maat ingesteld.</div>
+        <div class="faq-body" data-i18n="z_faq_a2">KYB staat voor Know Your Business — de zakelijke equivalent van de KYC-identiteitscheck voor consumenten. Wij verifiëren uw bedrijfsdocumenten (KvK-inschrijving, statuten), UBO-registratie en de identiteit van de tekenbevoegde(n). Het proces verloopt volledig digitaal en duurt doorgaans enkele werkdagen, uiterlijk 5 werkdagen. Na goedkeuring kunt u direct aan de slag met uw zakelijke account en worden uw limieten op maat ingesteld.</div>
       </details>
 
       <details class="faq-item" role="listitem">
@@ -1179,7 +1181,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
           <span data-i18n="z_faq_q6">Wat kost een zakelijke overboeking (indicatief)?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <div class="faq-body" data-i18n="z_faq_a6">SwiftBridge Zakelijk hanteert indicatieve tarieven vanaf 0,8% per transactie, plus een vaste fee (€4,95 vast per overboeking). Zakelijke klanten kunnen in aanmerking komen voor volumegebonden maatwerkprijzen op aanvraag. Definitieve fees en wisselkoersen worden bevestigd vóór elke transactie.</div>
+        <div class="faq-body" data-i18n="z_faq_a6">SwiftBridge Zakelijk hanteert een vast tarief van €4,95 per overboeking plus een transparante wisselkoersmarge vanaf 1,2%, die per ledenniveau daalt tot 0,6%. Zakelijke klanten kunnen in aanmerking komen voor volumegebonden maatwerkprijzen op aanvraag. Definitieve kosten en wisselkoersen worden bevestigd vóór elke transactie.</div>
       </details>
 
     </div>
@@ -1193,9 +1195,9 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
     <p class="cta-sub" data-i18n="z_cta_sub">SwiftBridge Zakelijk is gebouwd voor ondernemers die geen tijd hebben voor gedoe. Snel geregeld, volledig transparant, volledig compliant. Plan een demo of open vandaag nog uw zakelijk account.</p>
     <div class="cta-btns">
       <a class="btn btn-white" href="mailto:info@swiftbridge.nl?subject=Demo%20SwiftBridge%20Zakelijk" data-i18n="z_cta_demo">Plan een demo</a>
-      <a class="btn btn-ghost-white" href="/login?tab=register" data-i18n="z_cta_account">Vraag zakelijk account aan</a>
+      <a class="btn btn-ghost-white" href="/login?tab=register&amp;type=zakelijk&amp;next=/app/zakelijk-aanvraag" data-i18n="z_cta_account">Vraag zakelijk account aan</a>
     </div>
-    <p class="cta-microcopy" data-i18n="z_cta_micro">Gratis KYB-verificatie &middot; Geen verborgen kosten &middot; Onder toezicht van DNB via onze EMI-partner</p>
+    <p class="cta-microcopy" data-i18n="z_cta_micro">KYB-beoordeling door een medewerker &middot; Geen verborgen kosten &middot; Onder toezicht van DNB via onze EMI-partner</p>
   </div>
 </section>
 
@@ -1205,15 +1207,15 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
 <footer id="footer" role="contentinfo">
   <div class="wrap">
     <div class="footer-grid">
-      <div>
+      <div class="footer-brand">
         <div class="footer-brand-name">
           <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#E8632A"/><polygon points="16,4 10,15 14,15 12,24 19,12 15,12" fill="#fff"/></svg>
           SwiftBridge
         </div>
         <p class="footer-brand-desc" data-i18n="z_footer_desc">Internationale betalingen voor bedrijven — batch-uitbetalingen, KYB-verificatie, 45+ valuta. Onder DNB-toezicht via onze EMI-partner.</p>
         <div class="footer-social" aria-label="Social media">
-          <a href="/login?tab=register" aria-label="Instagram">IG</a>
-          <a href="/login?tab=register" aria-label="LinkedIn">LI</a>
+          <a href="/login?tab=register&amp;type=zakelijk&amp;next=/app/zakelijk-aanvraag" aria-label="Instagram">IG</a>
+          <a href="/login?tab=register&amp;type=zakelijk&amp;next=/app/zakelijk-aanvraag" aria-label="LinkedIn">LI</a>
           <a href="https://x.com/swiftbridgenl" rel="noopener" aria-label="Twitter/X">X</a>
         </div>
       </div>
@@ -1225,6 +1227,8 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
           <li><a href="#corridors" data-i18n="nav_currencies">Valuta</a></li>
           <li><a href="/" data-i18n="z_nav_personal">Particulier</a></li>
           <li><a href="/zakelijk" data-i18n="z_footer_business_link">SwiftBridge Zakelijk</a></li>
+          <li><a href="/members" data-i18n="z_footer_members">Ledenprogramma</a></li>
+          <li><a href="/login?tab=register&amp;type=zakelijk&amp;next=/app/zakelijk-aanvraag" data-i18n="z_footer_request">Zakelijk account aanvragen</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1237,20 +1241,32 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-col-heading" data-i18n="z_footer_legal">Juridisch &amp; account</p>
+        <p class="footer-col-heading" data-i18n="z_footer_legal">Juridisch</p>
         <ul>
-          <li><a href="/login?tab=register" data-i18n="z_footer_request">Zakelijk account aanvragen</a></li>
-          <li><a href="/members" data-i18n="z_footer_members">Ledenprogramma</a></li>
-          <li><a href="/privacybeleid" data-i18n="z_footer_privacy">Privacy</a></li>
-          <li><a href="/algemene-voorwaarden" data-i18n="z_footer_terms">Voorwaarden</a></li>
-          <li><a href="/aml-beleid" data-i18n="z_footer_aml">AML-beleid</a></li>
+          <li><a href="/voorwaarden" data-i18n="z_footer_terms">Voorwaarden</a></li>
+          <li><a href="/voorwaarden/betaaldiensten" data-i18n="z_footer_terms_payments">Voorwaarden Betaaldiensten</a></li>
+          <li><a href="/voorwaarden/digitale-toegang" data-i18n="z_footer_terms_digital">Voorwaarden Digitale Toegang</a></li>
+          <li><a href="/privacy" data-i18n="z_footer_privacy">Privacyverklaring</a></li>
           <li><a href="/klachten" data-i18n="z_footer_complaints">Klachten</a></li>
+          <li><a href="/zakelijk/acceptatiecriteria" data-i18n="z_footer_acceptance">Acceptatiecriteria zakelijk</a></li>
+          <li><a href="/zakelijk/kenmerken" data-i18n="z_footer_features_business">Kenmerken zakelijk</a></li>
+          <li><a href="/aml-beleid" data-i18n="z_footer_aml">AML-beleid</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading" data-i18n="z_footer_safety_money">Veiligheid en geld</p>
+        <ul>
+          <li><a href="/veiligheid/regels" data-i18n="z_footer_security_rules">Veiligheidsregels</a></li>
+          <li><a href="/veiligheid/jouw-geld" data-i18n="z_footer_your_money">Hoe jouw geld beschermd is</a></li>
+          <li><a href="/tarieven" data-i18n="z_footer_fees">Tarieven</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-disclaimer" data-i18n="z_footer_disclaimer">SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Zakelijke limieten worden op maat vastgesteld na zakelijke verificatie (KYB). Batch-uitbetalingen en teamfuncties zijn concept-features; beschikbaarheid op aanvraag.</p>
-      <p class="footer-copy" data-i18n="z_footer_copy">&copy; 2026 SwiftBridge B.V. Alle rechten voorbehouden.</p>
+      <p class="footer-copy" data-i18n="z_footer_copy">&copy; 2026 SwiftBridge B.V. (KvK 42138434) Alle rechten voorbehouden.</p>
+      <!-- AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js) -->
+      <p class="footer-disclosure" data-i18n="z_footer_disclosure">SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel.</p>
     </div>
   </div>
 </footer>
@@ -1361,7 +1377,7 @@ const I18N = {
     z_hero_h1: "Betaal uw wereld zonder gedoe.",
     z_hero_sub: "Van internationale leveranciers tot freelancers in Centraal-Azië — SwiftBridge Zakelijk brengt uw betalingen razendsnel, transparant en volledig compliant naar meer dan 45 landen. Batch-uitbetalingen, zakelijke KYB-verificatie, en tarieven op maat. Alles op één platform, onder Nederlands toezicht.",
     z_hero_btn_account: "Vraag zakelijk account aan →",
-    z_trust_kyb_verified: "KYB-geverifieerd",
+    z_trust_kyb_verified: "KYB-beoordeling door een medewerker",
     z_trust_wwft: "Wwft-compliant",
     z_trust_dnb: "Onder toezicht DNB via onze EMI-partner",
     z_dnb_badge: "Gereguleerd",
@@ -1405,7 +1421,7 @@ const I18N = {
     z_hiw1_title: "Aanmelden",
     z_hiw1_body: "Registreer uw bedrijf met KvK-nummer, bedrijfsnaam en contactgegevens. Gratis en volledig online. Geen creditcard nodig om te starten.",
     z_hiw2_title: "KYB-verificatie",
-    z_hiw2_body: "Know Your Business-verificatie conform Wwft: bedrijfsdocumenten, UBO-registratie en identiteitsverificatie van de tekenbevoegde. Volledig digitaal, doorgaans binnen één werkdag. Zakelijke limieten op maat na verificatie.",
+    z_hiw2_body: "Know Your Business-verificatie conform Wwft: bedrijfsdocumenten, UBO-registratie en identiteitsverificatie van de tekenbevoegde. Volledig digitaal, doorgaans binnen enkele werkdagen, uiterlijk binnen 5 werkdagen. Zakelijke limieten op maat na verificatie.",
     z_hiw3_title: "Begunstigden toevoegen of CSV importeren",
     z_hiw3_body: "Sla begunstigden op met bankgegevens (IBAN, lokale rekening, valuta). Voor bulkuitbetalingen: upload een CSV-bestand met alle ontvangers en bedragen. Het systeem valideert automatisch en toont fouten vóór verzending.",
     z_hiw4_title: "In bulk uitbetalen",
@@ -1554,7 +1570,7 @@ const I18N = {
     z_faq_q1: "Wat is het verschil tussen een zakelijk account en een privé-account?",
     z_faq_a1: "Een zakelijk SwiftBridge-account geeft toegang tot functies die specifiek ontworpen zijn voor bedrijven: batch-uitbetalingen via CSV, teamtoegang met rollen, exportdocumentatie voor de boekhouding, en zakelijke limieten op maat na KYB-verificatie. Zakelijke klanten kunnen ook in aanmerking komen voor volumegebonden tarieven. Zakelijke limieten worden individueel vastgesteld na verificatie — los van de consumentenlimiet.",
     z_faq_q2: "Wat houdt de KYB-verificatie in en hoe lang duurt het?",
-    z_faq_a2: "KYB staat voor Know Your Business — de zakelijke equivalent van de KYC-identiteitscheck voor consumenten. Wij verifiëren uw bedrijfsdocumenten (KvK-inschrijving, statuten), UBO-registratie en de identiteit van de tekenbevoegde(n). Het proces verloopt volledig digitaal en duurt doorgaans één werkdag. Na goedkeuring kunt u direct aan de slag met uw zakelijke account en worden uw limieten op maat ingesteld.",
+    z_faq_a2: "KYB staat voor Know Your Business — de zakelijke equivalent van de KYC-identiteitscheck voor consumenten. Wij verifiëren uw bedrijfsdocumenten (KvK-inschrijving, statuten), UBO-registratie en de identiteit van de tekenbevoegde(n). Het proces verloopt volledig digitaal en duurt doorgaans enkele werkdagen, uiterlijk 5 werkdagen. Na goedkeuring kunt u direct aan de slag met uw zakelijke account en worden uw limieten op maat ingesteld.",
     z_faq_q3: "Naar hoeveel ontvangers kan ik tegelijk uitbetalen via een batch?",
     z_faq_a3: "Via een CSV-upload kunt u meerdere begunstigden tegelijk aanmaken en in één batch uitbetalen. Het maximale aantal ontvangers per batch en de bijbehorende zakelijke transactielimieten worden op maat vastgesteld na uw KYB-verificatie. Neem contact op met ons zakelijk team voor de mogelijkheden op basis van uw situatie.",
     z_faq_q4: "Hoe zit het met BTW en factuurvermelding voor internationale betalingen?",
@@ -1562,28 +1578,38 @@ const I18N = {
     z_faq_q5: "Wat gebeurt er als een betaling mislukt of niet aankomt?",
     z_faq_a5: "Als een betaling niet succesvol verwerkt kan worden, ontvangt u direct een melding per e-mail en in uw dashboard. De betaling wordt teruggestort naar uw zakelijke SwiftBridge-saldo of oorspronkelijke betaalrekening. In het dashboard kunt u de status van elke individuele transactie volgen.",
     z_faq_q6: "Wat kost een zakelijke overboeking (indicatief)?",
-    z_faq_a6: "SwiftBridge Zakelijk hanteert een vaste fee van €4,95 per overboeking plus een transparante wisselkoersmarge vanaf 1,2%, die per ledenniveau daalt tot 0,6%. Zakelijke klanten kunnen in aanmerking komen voor volumegebonden maatwerkprijzen op aanvraag. Definitieve fees en wisselkoersen worden bevestigd vóór elke transactie.",
+    z_faq_a6: "SwiftBridge Zakelijk hanteert een vast tarief van €4,95 per overboeking plus een transparante wisselkoersmarge vanaf 1,2%, die per ledenniveau daalt tot 0,6%. Zakelijke klanten kunnen in aanmerking komen voor volumegebonden maatwerkprijzen op aanvraag. Definitieve kosten en wisselkoersen worden bevestigd vóór elke transactie.",
     z_nav_dashboard: "Mijn dashboard",
     z_cta_heading: "Klaar om slimmer internationaal te betalen?",
     z_cta_sub: "SwiftBridge Zakelijk is gebouwd voor ondernemers die geen tijd hebben voor gedoe. Snel geregeld, volledig transparant, volledig compliant. Plan een demo of open vandaag nog uw zakelijk account.",
     z_cta_account: "Vraag zakelijk account aan",
-    z_cta_micro: "Gratis KYB-verificatie · Geen verborgen kosten · Onder toezicht van DNB via onze EMI-partner",
+    z_cta_micro: "KYB-beoordeling door een medewerker · Geen verborgen kosten · Onder toezicht van DNB via onze EMI-partner",
     z_footer_desc: "Internationale betalingen voor bedrijven — batch-uitbetalingen, KYB-verificatie, 45+ valuta. Onder DNB-toezicht via onze EMI-partner.",
     z_footer_product: "Product",
     z_footer_company: "Bedrijf",
-    z_footer_legal: "Juridisch & account",
+    z_footer_legal: "Juridisch",
     z_footer_business_link: "SwiftBridge Zakelijk",
     z_footer_security: "Veiligheid",
     z_footer_status: "Status & updates",
     z_footer_contact: "Contact",
     z_footer_request: "Zakelijk account aanvragen",
     z_footer_members: "Ledenprogramma",
-    z_footer_privacy: "Privacy",
+    z_footer_privacy: "Privacyverklaring",
     z_footer_terms: "Voorwaarden",
     z_footer_aml: "AML-beleid",
     z_footer_complaints: "Klachten",
     z_footer_disclaimer: "SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Zakelijke limieten worden op maat vastgesteld na zakelijke verificatie (KYB). Batch-uitbetalingen en teamfuncties zijn concept-features; beschikbaarheid op aanvraag.",
-    z_footer_copy: "© 2026 SwiftBridge B.V. Alle rechten voorbehouden."
+    z_footer_copy: "© 2026 SwiftBridge B.V. (KvK 42138434) Alle rechten voorbehouden.",
+    z_footer_terms_payments: "Voorwaarden Betaaldiensten",
+    z_footer_terms_digital: "Voorwaarden Digitale Toegang",
+    z_footer_acceptance: "Acceptatiecriteria zakelijk",
+    z_footer_features_business: "Kenmerken zakelijk",
+    z_footer_safety_money: "Veiligheid en geld",
+    z_footer_security_rules: "Veiligheidsregels",
+    z_footer_your_money: "Hoe jouw geld beschermd is",
+    z_footer_fees: "Tarieven",
+    // AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js)
+    z_footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel."
   },
   en: {
     skip_to_main: "Skip to main content",
@@ -1673,7 +1699,7 @@ const I18N = {
     z_hero_h1: "Pay your world without friction.",
     z_hero_sub: "From international suppliers to freelancers in Central Asia — SwiftBridge Business delivers your payments fast, transparently and fully compliant to more than 45 countries. Batch payouts, business KYB verification and tailored pricing. All on one platform, under Dutch supervision.",
     z_hero_btn_account: "Apply for a business account →",
-    z_trust_kyb_verified: "KYB verified",
+    z_trust_kyb_verified: "KYB review by a staff member",
     z_trust_wwft: "Wwft compliant",
     z_trust_dnb: "Supervised by DNB via our EMI partner",
     z_dnb_badge: "Regulated",
@@ -1717,7 +1743,7 @@ const I18N = {
     z_hiw1_title: "Sign up",
     z_hiw1_body: "Register your company with its Chamber of Commerce (KvK) number, company name and contact details. Free and fully online. No credit card required to get started.",
     z_hiw2_title: "KYB verification",
-    z_hiw2_body: "Know Your Business verification in accordance with the Wwft: company documents, UBO registration and identity verification of the authorised signatory. Fully digital, typically within one business day. Tailored business limits after verification.",
+    z_hiw2_body: "Know Your Business verification in accordance with the Wwft: company documents, UBO registration and identity verification of the authorised signatory. Fully digital, usually within a few business days, at the latest within 5 business days. Tailored business limits after verification.",
     z_hiw3_title: "Add beneficiaries or import CSV",
     z_hiw3_body: "Save beneficiaries with their bank details (IBAN, local account, currency). For bulk payouts: upload a CSV file with all recipients and amounts. The system validates automatically and flags errors before sending.",
     z_hiw4_title: "Pay out in bulk",
@@ -1866,7 +1892,7 @@ const I18N = {
     z_faq_q1: "What is the difference between a business account and a personal account?",
     z_faq_a1: "A SwiftBridge business account gives access to features designed specifically for companies: batch payouts via CSV, team access with roles, export documentation for your accounting, and tailored business limits after KYB verification. Business clients may also qualify for volume-based pricing. Business limits are set individually after verification — separate from the consumer limit.",
     z_faq_q2: "What does KYB verification involve and how long does it take?",
-    z_faq_a2: "KYB stands for Know Your Business — the business equivalent of the KYC identity check for consumers. We verify your company documents (Chamber of Commerce registration, articles of association), UBO registration and the identity of the authorised signatory or signatories. The process is fully digital and typically takes one business day. Once approved, you can start using your business account right away and your limits are set to fit your business.",
+    z_faq_a2: "KYB stands for Know Your Business — the business equivalent of the KYC identity check for consumers. We verify your company documents (Chamber of Commerce registration, articles of association), UBO registration and the identity of the authorised signatory or signatories. The process is fully digital and usually takes a few business days, at most 5 business days. Once approved, you can start using your business account right away and your limits are set to fit your business.",
     z_faq_q3: "How many recipients can I pay at once in a batch?",
     z_faq_a3: "Via a CSV upload you can create multiple beneficiaries at once and pay them in a single batch. The maximum number of recipients per batch and the corresponding business transaction limits are set individually after your KYB verification. Contact our business team to discuss the options for your situation.",
     z_faq_q4: "What about VAT and invoice references for international payments?",
@@ -1879,23 +1905,32 @@ const I18N = {
     z_cta_heading: "Ready to pay internationally the smarter way?",
     z_cta_sub: "SwiftBridge Business is built for entrepreneurs who have no time for hassle. Set up quickly, fully transparent, fully compliant. Book a demo or open your business account today.",
     z_cta_account: "Apply for a business account",
-    z_cta_micro: "Free KYB verification · No hidden fees · Supervised by DNB via our EMI partner",
+    z_cta_micro: "KYB review by a staff member · No hidden fees · Supervised by DNB via our EMI partner",
     z_footer_desc: "International payments for companies — batch payouts, KYB verification, 45+ currencies. Under DNB supervision via our EMI partner.",
     z_footer_product: "Product",
     z_footer_company: "Company",
-    z_footer_legal: "Legal & account",
+    z_footer_legal: "Legal",
     z_footer_business_link: "SwiftBridge Business",
     z_footer_security: "Security",
     z_footer_status: "Status & updates",
     z_footer_contact: "Contact",
     z_footer_request: "Apply for a business account",
     z_footer_members: "Membership programme",
-    z_footer_privacy: "Privacy",
-    z_footer_terms: "Terms & conditions",
+    z_footer_privacy: "Privacy statement",
+    z_footer_terms: "Terms and conditions",
     z_footer_aml: "AML policy",
     z_footer_complaints: "Complaints",
     z_footer_disclaimer: "SwiftBridge is not a bank and does not hold its own DNB banking licence. Payment services are provided via an authorised EMI partner operating under DNB supervision, in accordance with PSD2 and the Wwft. Exchange rates and transaction fees are indicative and confirmed before each transaction. Business limits are set individually after business verification (KYB). Batch payouts and team features are concept features; availability on request.",
-    z_footer_copy: "© 2026 SwiftBridge B.V. All rights reserved."
+    z_footer_copy: "© 2026 SwiftBridge B.V. (KvK 42138434) All rights reserved.",
+    z_footer_terms_payments: "Payment Services Terms",
+    z_footer_terms_digital: "Digital Access Terms",
+    z_footer_acceptance: "Business acceptance criteria",
+    z_footer_features_business: "Key features (business)",
+    z_footer_safety_money: "Security and money",
+    z_footer_security_rules: "Security rules",
+    z_footer_your_money: "How your money is protected",
+    z_footer_fees: "Fees",
+    z_footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge will act as an agent of a licensed electronic money institution supervised by De Nederlandsche Bank; registration as an agent with DNB will follow once that partnership has been finalised. SwiftBridge is not a bank; funds are not covered by the deposit guarantee scheme."
   },
   tr: {
     skip_to_main: "Ana içeriğe geç",
@@ -1958,7 +1993,7 @@ const I18N = {
     z_hero_h1: "Dünyanıza zahmetsizce ödeme yapın.",
     z_hero_sub: "Uluslararası tedarikçilerden Orta Asya'daki serbest çalışanlara kadar — SwiftBridge Kurumsal, ödemelerinizi hızlı, şeffaf ve tam uyumlu biçimde 45'ten fazla ülkeye ulaştırır. Toplu ödemeler, kurumsal KYB doğrulaması ve size özel fiyatlandırma. Hepsi tek platformda, Hollanda denetimi altında.",
     z_hero_btn_account: "Kurumsal hesap başvurusu yapın →",
-    z_trust_kyb_verified: "KYB doğrulanmış",
+    z_trust_kyb_verified: "Bir çalışan tarafından KYB değerlendirmesi",
     z_trust_wwft: "Wwft uyumlu",
     z_trust_dnb: "EMI ortağımız aracılığıyla DNB denetimi altında",
     z_dnb_badge: "Düzenlenmiş",
@@ -2002,7 +2037,7 @@ const I18N = {
     z_hiw1_title: "Kayıt olun",
     z_hiw1_body: "Şirketinizi KvK (ticaret sicili) numarası, şirket adı ve iletişim bilgileriyle kaydedin. Ücretsiz ve tamamen çevrimiçi. Başlamak için kredi kartı gerekmez.",
     z_hiw2_title: "KYB doğrulaması",
-    z_hiw2_body: "Wwft'ye uygun Know Your Business doğrulaması: şirket belgeleri, UBO kaydı ve imza yetkilisinin kimlik doğrulaması. Tamamen dijital, genellikle bir iş günü içinde. Doğrulamadan sonra size özel kurumsal limitler.",
+    z_hiw2_body: "Wwft'ye uygun Know Your Business doğrulaması: şirket belgeleri, UBO kaydı ve imza yetkilisinin kimlik doğrulaması. Tamamen dijital, genellikle birkaç iş günü içinde, en geç 5 iş günü içinde. Doğrulamadan sonra size özel kurumsal limitler.",
     z_hiw3_title: "Alıcı ekleyin veya CSV içe aktarın",
     z_hiw3_body: "Alıcıları banka bilgileriyle (IBAN, yerel hesap, para birimi) kaydedin. Toplu ödemeler için: tüm alıcıları ve tutarları içeren bir CSV dosyası yükleyin. Sistem otomatik olarak doğrular ve göndermeden önce hataları gösterir.",
     z_hiw4_title: "Toplu ödeme yapın",
@@ -2151,7 +2186,7 @@ const I18N = {
     z_faq_q1: "Kurumsal hesap ile bireysel hesap arasındaki fark nedir?",
     z_faq_a1: "Kurumsal SwiftBridge hesabı, şirketler için özel olarak tasarlanmış özelliklere erişim sağlar: CSV ile toplu ödemeler, rollerle ekip erişimi, muhasebeniz için dışa aktarma belgeleri ve KYB doğrulamasından sonra size özel kurumsal limitler. Kurumsal müşteriler ayrıca hacme dayalı fiyatlandırmadan yararlanabilir. Kurumsal limitler doğrulamadan sonra bireysel limitten bağımsız olarak ayrı ayrı belirlenir.",
     z_faq_q2: "KYB doğrulaması neleri kapsar ve ne kadar sürer?",
-    z_faq_a2: "KYB, Know Your Business anlamına gelir — tüketiciler için yapılan KYC kimlik kontrolünün kurumsal karşılığıdır. Şirket belgelerinizi (ticaret sicili kaydı, ana sözleşme), UBO kaydınızı ve imza yetkililerinin kimliğini doğrularız. Süreç tamamen dijitaldir ve genellikle bir iş günü sürer. Onaydan sonra kurumsal hesabınızı hemen kullanmaya başlayabilirsiniz ve limitleriniz size özel olarak belirlenir.",
+    z_faq_a2: "KYB, Know Your Business anlamına gelir — tüketiciler için yapılan KYC kimlik kontrolünün kurumsal karşılığıdır. Şirket belgelerinizi (ticaret sicili kaydı, ana sözleşme), UBO kaydınızı ve imza yetkililerinin kimliğini doğrularız. Süreç tamamen dijitaldir ve genellikle birkaç iş günü, en geç 5 iş günü sürer. Onaydan sonra kurumsal hesabınızı hemen kullanmaya başlayabilirsiniz ve limitleriniz size özel olarak belirlenir.",
     z_faq_q3: "Bir toplu ödemede aynı anda kaç alıcıya ödeme yapabilirim?",
     z_faq_a3: "CSV yüklemesiyle birden fazla alıcıyı aynı anda oluşturabilir ve tek bir toplu işlemde ödeyebilirsiniz. Toplu işlem başına maksimum alıcı sayısı ve ilgili kurumsal işlem limitleri, KYB doğrulamanızdan sonra size özel olarak belirlenir. Durumunuza uygun seçenekler için kurumsal ekibimizle iletişime geçin.",
     z_faq_q4: "Uluslararası ödemelerde KDV ve fatura referansı nasıl işler?",
@@ -2159,28 +2194,37 @@ const I18N = {
     z_faq_q5: "Bir ödeme başarısız olursa veya ulaşmazsa ne olur?",
     z_faq_a5: "Bir ödeme başarıyla işlenemezse, e-posta ile ve panelinizde anında bildirim alırsınız. Ödeme, kurumsal SwiftBridge bakiyenize veya orijinal ödeme hesabınıza iade edilir. Panelde her bir işlemin durumunu takip edebilirsiniz.",
     z_faq_q6: "Kurumsal bir transfer ne kadar tutar (gösterge niteliğinde)?",
-    z_faq_a6: "SwiftBridge Kurumsal, transfer başına €4,95 sabit ücret ve %1,2'den başlayıp üyelik seviyesine göre %0,6'ya kadar düşen şeffaf bir kur marjı uygular. Kurumsal müşteriler talep üzerine hacme dayalı özel fiyatlandırmadan yararlanabilir. Kesin ücretler ve döviz kurları her işlemden önce onaylanır.",
+    z_faq_a6: "SwiftBridge Kurumsal, transfer başına €4,95 işlem bedeli ve %1,2'den başlayıp üyelik seviyesine göre %0,6'ya kadar düşen şeffaf bir kur marjı uygular. Kurumsal müşteriler talep üzerine hacme dayalı özel fiyatlandırmadan yararlanabilir. Kesin ücretler ve döviz kurları her işlemden önce onaylanır.",
     z_nav_dashboard: "Panelim",
     z_cta_heading: "Uluslararası ödemeleri daha akıllıca yapmaya hazır mısınız?",
     z_cta_sub: "SwiftBridge Kurumsal, zahmete vakti olmayan girişimciler için tasarlandı. Hızlı kurulum, tam şeffaflık, tam uyumluluk. Bir demo planlayın veya kurumsal hesabınızı bugün açın.",
     z_cta_account: "Kurumsal hesap başvurusu yapın",
-    z_cta_micro: "Ücretsiz KYB doğrulaması · Gizli ücret yok · EMI ortağımız aracılığıyla DNB denetimi altında",
+    z_cta_micro: "Bir çalışan tarafından KYB değerlendirmesi · Gizli ücret yok · EMI ortağımız aracılığıyla DNB denetimi altında",
     z_footer_desc: "Şirketler için uluslararası ödemeler — toplu ödemeler, KYB doğrulaması, 45'ten fazla para birimi. EMI ortağımız aracılığıyla DNB denetimi altında.",
     z_footer_product: "Ürün",
     z_footer_company: "Şirket",
-    z_footer_legal: "Hukuki ve hesap",
+    z_footer_legal: "Hukuki",
     z_footer_business_link: "SwiftBridge Kurumsal",
     z_footer_security: "Güvenlik",
     z_footer_status: "Durum ve güncellemeler",
     z_footer_contact: "İletişim",
     z_footer_request: "Kurumsal hesap başvurusu",
     z_footer_members: "Üyelik programı",
-    z_footer_privacy: "Gizlilik",
-    z_footer_terms: "Koşullar",
+    z_footer_privacy: "Gizlilik bildirimi",
+    z_footer_terms: "Genel Koşullar",
     z_footer_aml: "Kara para aklamayı önleme (AML) politikası",
     z_footer_complaints: "Şikayetler",
     z_footer_disclaimer: "SwiftBridge bir banka değildir ve kendi DNB bankacılık lisansına sahip değildir. Ödeme hizmetleri, PSD2 ve Wwft'ye uygun olarak DNB denetimi altında faaliyet gösteren yetkili bir EMI ortağı aracılığıyla sunulmaktadır. Döviz kurları ve işlem ücretleri gösterge niteliğindedir ve her işlemden önce onaylanır. Kurumsal limitler, kurumsal doğrulamadan (KYB) sonra size özel olarak belirlenir. Toplu ödemeler ve ekip özellikleri konsept aşamasındadır; kullanılabilirlik talep üzerine.",
-    z_footer_copy: "© 2026 SwiftBridge B.V. Tüm hakları saklıdır."
+    z_footer_copy: "© 2026 SwiftBridge B.V. (KvK 42138434) Tüm hakları saklıdır.",
+    z_footer_terms_payments: "Ödeme Hizmetleri Koşulları",
+    z_footer_terms_digital: "Dijital Erişim Koşulları",
+    z_footer_acceptance: "Kurumsal müşteri kabul kriterleri",
+    z_footer_features_business: "Temel özellikler (kurumsal)",
+    z_footer_safety_money: "Güvenlik ve para",
+    z_footer_security_rules: "Güvenlik kuralları",
+    z_footer_your_money: "Paranız nasıl korunuyor",
+    z_footer_fees: "Ücretler",
+    z_footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge, De Nederlandsche Bank denetimi altındaki lisanslı bir elektronik para kuruluşunun temsilcisi (agent) olarak faaliyet gösterecektir; DNB nezdinde temsilci olarak kayıt, bu iş birliği tamamlandığında yapılacaktır. SwiftBridge bir banka değildir; fonlar mevduat garanti sistemi kapsamında değildir."
   },
   ar: {
     skip_to_main: "انتقل إلى المحتوى الرئيسي",
@@ -2247,7 +2291,7 @@ const I18N = {
     z_hero_h1: "ادفع لعالمك دون عناء.",
     z_hero_sub: "من المورّدين الدوليين إلى المستقلين في آسيا الوسطى — يوصل SwiftBridge للأعمال مدفوعاتكم بسرعة وشفافية وامتثال كامل إلى أكثر من 45 دولة. دفعات مجمّعة، وتحقق KYB للشركات، وأسعار مخصصة. كل ذلك على منصة واحدة، تحت الإشراف الهولندي.",
     z_hero_btn_account: "تقدَّم بطلب حساب أعمال ←",
-    z_trust_kyb_verified: "تم التحقق عبر KYB",
+    z_trust_kyb_verified: "مراجعة KYB بواسطة موظف",
     z_trust_wwft: "متوافق مع Wwft",
     z_trust_dnb: "تحت إشراف DNB عبر شريكنا EMI",
     z_dnb_badge: "خاضع للتنظيم",
@@ -2291,7 +2335,7 @@ const I18N = {
     z_hiw1_title: "التسجيل",
     z_hiw1_body: "سجّلوا شركتكم برقم السجل التجاري الهولندي (KvK) واسم الشركة وبيانات الاتصال. مجانًا وعبر الإنترنت بالكامل. لا حاجة لبطاقة ائتمان للبدء.",
     z_hiw2_title: "التحقق عبر KYB",
-    z_hiw2_body: "تحقق Know Your Business وفقًا لقانون Wwft: مستندات الشركة، وتسجيل المستفيد الحقيقي (UBO)، والتحقق من هوية المفوَّض بالتوقيع. رقمي بالكامل، وعادةً خلال يوم عمل واحد. حدود أعمال مخصصة بعد التحقق.",
+    z_hiw2_body: "تحقق Know Your Business وفقًا لقانون Wwft: مستندات الشركة، وتسجيل المستفيد الحقيقي (UBO)، والتحقق من هوية المفوَّض بالتوقيع. رقمي بالكامل، وعادةً خلال بضعة أيام عمل، وفي موعد أقصاه 5 أيام عمل. حدود أعمال مخصصة بعد التحقق.",
     z_hiw3_title: "إضافة مستفيدين أو استيراد CSV",
     z_hiw3_body: "احفظوا المستفيدين مع بياناتهم المصرفية (IBAN، الحساب المحلي، العملة). للدفعات المجمّعة: حمّلوا ملف CSV يتضمن جميع المستلمين والمبالغ. يتحقق النظام تلقائيًا ويعرض الأخطاء قبل الإرسال.",
     z_hiw4_title: "الدفع المجمّع",
@@ -2440,7 +2484,7 @@ const I18N = {
     z_faq_q1: "ما الفرق بين حساب الأعمال والحساب الشخصي؟",
     z_faq_a1: "يمنح حساب SwiftBridge للأعمال وصولًا إلى ميزات مصممة خصيصًا للشركات: دفعات مجمّعة عبر CSV، ووصول الفريق مع الأدوار، ومستندات تصدير للمحاسبة، وحدود أعمال مخصصة بعد التحقق عبر KYB. وقد تكون الشركات مؤهلة أيضًا لأسعار حسب الحجم. تُحدَّد حدود الأعمال فرديًا بعد التحقق — بمعزل عن حد المستهلك.",
     z_faq_q2: "ماذا يشمل التحقق عبر KYB وكم يستغرق؟",
-    z_faq_a2: "يرمز KYB إلى Know Your Business — المكافئ التجاري لفحص هوية KYC للمستهلكين. نتحقق من مستندات شركتكم (تسجيل السجل التجاري، النظام الأساسي)، وتسجيل المستفيد الحقيقي (UBO)، وهوية المفوَّضين بالتوقيع. العملية رقمية بالكامل وتستغرق عادةً يوم عمل واحدًا. بعد الموافقة يمكنكم البدء فورًا بحساب الأعمال وتُضبط حدودكم بما يناسبكم.",
+    z_faq_a2: "يرمز KYB إلى Know Your Business — المكافئ التجاري لفحص هوية KYC للمستهلكين. نتحقق من مستندات شركتكم (تسجيل السجل التجاري، النظام الأساسي)، وتسجيل المستفيد الحقيقي (UBO)، وهوية المفوَّضين بالتوقيع. العملية رقمية بالكامل وتستغرق عادةً بضعة أيام عمل، وبحد أقصى 5 أيام عمل. بعد الموافقة يمكنكم البدء فورًا بحساب الأعمال وتُضبط حدودكم بما يناسبكم.",
     z_faq_q3: "لكم مستلمًا يمكنني الدفع في دفعة مجمّعة واحدة؟",
     z_faq_a3: "عبر تحميل ملف CSV يمكنكم إنشاء عدة مستفيدين دفعة واحدة والدفع لهم في دفعة مجمّعة واحدة. يُحدَّد الحد الأقصى لعدد المستلمين لكل دفعة وحدود معاملات الأعمال المرتبطة بها بشكل مخصص بعد التحقق عبر KYB. تواصلوا مع فريق الأعمال لدينا لمعرفة الخيارات المناسبة لوضعكم.",
     z_faq_q4: "ماذا عن ضريبة القيمة المضافة ومرجع الفاتورة للمدفوعات الدولية؟",
@@ -2453,23 +2497,32 @@ const I18N = {
     z_cta_heading: "هل أنتم مستعدون للدفع دوليًا بذكاء أكبر؟",
     z_cta_sub: "صُمم SwiftBridge للأعمال لروّاد الأعمال الذين لا وقت لديهم للعناء. إعداد سريع، شفافية كاملة، امتثال كامل. احجزوا عرضًا توضيحيًا أو افتحوا حساب الأعمال اليوم.",
     z_cta_account: "تقدَّم بطلب حساب أعمال",
-    z_cta_micro: "تحقق KYB مجاني · لا رسوم مخفية · تحت إشراف DNB عبر شريكنا EMI",
+    z_cta_micro: "مراجعة KYB بواسطة موظف · لا رسوم مخفية · تحت إشراف DNB عبر شريكنا EMI",
     z_footer_desc: "مدفوعات دولية للشركات — دفعات مجمّعة، تحقق KYB، أكثر من 45 عملة. تحت إشراف DNB عبر شريكنا EMI.",
     z_footer_product: "المنتج",
     z_footer_company: "الشركة",
-    z_footer_legal: "الشؤون القانونية والحساب",
+    z_footer_legal: "الشؤون القانونية",
     z_footer_business_link: "SwiftBridge للأعمال",
     z_footer_security: "الأمان",
     z_footer_status: "الحالة والتحديثات",
     z_footer_contact: "اتصلوا بنا",
     z_footer_request: "طلب حساب أعمال",
     z_footer_members: "برنامج العضوية",
-    z_footer_privacy: "الخصوصية",
-    z_footer_terms: "الشروط والأحكام",
+    z_footer_privacy: "بيان الخصوصية",
+    z_footer_terms: "الشروط العامة",
     z_footer_aml: "سياسة مكافحة غسل الأموال",
     z_footer_complaints: "الشكاوى",
     z_footer_disclaimer: "SwiftBridge ليست بنكًا ولا تمتلك ترخيصًا مصرفيًا خاصًا من DNB. تُقدَّم خدمات الدفع عبر شريك EMI مُرخَّص يعمل تحت إشراف DNB، وفقًا لتوجيه PSD2 وقانون Wwft. أسعار الصرف ورسوم المعاملات استرشادية وتُؤكَّد قبل كل معاملة. تُحدَّد حدود الأعمال بشكل مخصص بعد التحقق التجاري (KYB). الدفعات المجمّعة وميزات الفريق ميزات في مرحلة المفهوم الأولي؛ التوفر عند الطلب.",
-    z_footer_copy: "© 2026 SwiftBridge B.V. جميع الحقوق محفوظة."
+    z_footer_copy: "© 2026 SwiftBridge B.V. (KvK 42138434) جميع الحقوق محفوظة.",
+    z_footer_terms_payments: "شروط خدمات الدفع",
+    z_footer_terms_digital: "شروط الوصول الرقمي",
+    z_footer_acceptance: "معايير قبول العملاء من الشركات",
+    z_footer_features_business: "الخصائص الرئيسية (الشركات)",
+    z_footer_safety_money: "الأمان والأموال",
+    z_footer_security_rules: "قواعد الأمان",
+    z_footer_your_money: "كيف تتم حماية أموالك",
+    z_footer_fees: "الرسوم",
+    z_footer_disclosure: "SwiftBridge B.V.، العنوان: Piet Heinstraat 137, 2518 CG Den Haag، رقم السجل التجاري (KvK): 42138434. ستعمل SwiftBridge بصفة وكيل لمؤسسة نقود إلكترونية مرخّصة تخضع لإشراف De Nederlandsche Bank؛ وسيتم تسجيلها كوكيل لدى DNB فور إتمام هذه الشراكة. SwiftBridge ليست بنكًا؛ والأموال غير مشمولة بنظام ضمان الودائع."
   },
   de: {
     skip_to_main: "Zum Hauptinhalt springen",
@@ -2533,7 +2586,7 @@ const I18N = {
     z_hero_h1: "Bezahlen Sie Ihre Welt ohne Umstände.",
     z_hero_sub: "Von internationalen Lieferanten bis zu Freelancern in Zentralasien — SwiftBridge Business bringt Ihre Zahlungen schnell, transparent und vollständig konform in mehr als 45 Länder. Batch-Auszahlungen, geschäftliche KYB-Verifizierung und maßgeschneiderte Konditionen. Alles auf einer Plattform, unter niederländischer Aufsicht.",
     z_hero_btn_account: "Geschäftskonto beantragen →",
-    z_trust_kyb_verified: "KYB-verifiziert",
+    z_trust_kyb_verified: "KYB-Prüfung durch einen Mitarbeiter",
     z_trust_wwft: "Wwft-konform",
     z_trust_dnb: "Unter DNB-Aufsicht über unseren EMI-Partner",
     z_dnb_badge: "Reguliert",
@@ -2577,7 +2630,7 @@ const I18N = {
     z_hiw1_title: "Anmelden",
     z_hiw1_body: "Registrieren Sie Ihr Unternehmen mit Handelsregisternummer (KvK), Firmennamen und Kontaktdaten. Kostenlos und vollständig online. Keine Kreditkarte erforderlich.",
     z_hiw2_title: "KYB-Verifizierung",
-    z_hiw2_body: "Know-Your-Business-Verifizierung gemäß Wwft: Unternehmensdokumente, UBO-Registrierung und Identitätsprüfung des Zeichnungsberechtigten. Vollständig digital, in der Regel innerhalb eines Werktags. Maßgeschneiderte Geschäftslimits nach der Verifizierung.",
+    z_hiw2_body: "Know-Your-Business-Verifizierung gemäß Wwft: Unternehmensdokumente, UBO-Registrierung und Identitätsprüfung des Zeichnungsberechtigten. Vollständig digital, in der Regel innerhalb weniger Werktage, spätestens innerhalb von 5 Werktagen. Maßgeschneiderte Geschäftslimits nach der Verifizierung.",
     z_hiw3_title: "Begünstigte hinzufügen oder CSV importieren",
     z_hiw3_body: "Speichern Sie Begünstigte mit Bankdaten (IBAN, lokales Konto, Währung). Für Sammelauszahlungen: Laden Sie eine CSV-Datei mit allen Empfängern und Beträgen hoch. Das System validiert automatisch und zeigt Fehler vor dem Versand an.",
     z_hiw4_title: "Gesammelt auszahlen",
@@ -2726,7 +2779,7 @@ const I18N = {
     z_faq_q1: "Was ist der Unterschied zwischen einem Geschäftskonto und einem Privatkonto?",
     z_faq_a1: "Ein SwiftBridge-Geschäftskonto bietet Zugang zu Funktionen, die speziell für Unternehmen entwickelt wurden: Batch-Auszahlungen per CSV, Teamzugang mit Rollen, Exportdokumentation für die Buchhaltung und maßgeschneiderte Geschäftslimits nach der KYB-Verifizierung. Geschäftskunden können zudem für volumenbasierte Konditionen infrage kommen. Geschäftslimits werden nach der Verifizierung individuell festgelegt — unabhängig vom Verbraucherlimit.",
     z_faq_q2: "Was beinhaltet die KYB-Verifizierung und wie lange dauert sie?",
-    z_faq_a2: "KYB steht für Know Your Business — das geschäftliche Pendant zur KYC-Identitätsprüfung für Verbraucher. Wir prüfen Ihre Unternehmensdokumente (Handelsregistereintrag, Satzung), die UBO-Registrierung und die Identität der Zeichnungsberechtigten. Der Prozess verläuft vollständig digital und dauert in der Regel einen Werktag. Nach der Freigabe können Sie sofort mit Ihrem Geschäftskonto starten, und Ihre Limits werden individuell eingerichtet.",
+    z_faq_a2: "KYB steht für Know Your Business — das geschäftliche Pendant zur KYC-Identitätsprüfung für Verbraucher. Wir prüfen Ihre Unternehmensdokumente (Handelsregistereintrag, Satzung), die UBO-Registrierung und die Identität der Zeichnungsberechtigten. Der Prozess verläuft vollständig digital und dauert in der Regel wenige Werktage, höchstens 5 Werktage. Nach der Freigabe können Sie sofort mit Ihrem Geschäftskonto starten, und Ihre Limits werden individuell eingerichtet.",
     z_faq_q3: "An wie viele Empfänger kann ich gleichzeitig per Batch auszahlen?",
     z_faq_a3: "Per CSV-Upload können Sie mehrere Begünstigte gleichzeitig anlegen und in einem Batch auszahlen. Die maximale Anzahl der Empfänger pro Batch und die zugehörigen geschäftlichen Transaktionslimits werden nach Ihrer KYB-Verifizierung individuell festgelegt. Kontaktieren Sie unser Business-Team, um die Möglichkeiten für Ihre Situation zu besprechen.",
     z_faq_q4: "Wie sieht es mit Umsatzsteuer und Rechnungsangaben bei internationalen Zahlungen aus?",
@@ -2739,23 +2792,32 @@ const I18N = {
     z_cta_heading: "Bereit, international smarter zu bezahlen?",
     z_cta_sub: "SwiftBridge Business ist für Unternehmer gemacht, die keine Zeit für Umstände haben. Schnell eingerichtet, vollständig transparent, vollständig konform. Vereinbaren Sie eine Demo oder eröffnen Sie noch heute Ihr Geschäftskonto.",
     z_cta_account: "Geschäftskonto beantragen",
-    z_cta_micro: "Kostenlose KYB-Verifizierung · Keine versteckten Kosten · Unter DNB-Aufsicht über unseren EMI-Partner",
+    z_cta_micro: "KYB-Prüfung durch einen Mitarbeiter · Keine versteckten Kosten · Unter DNB-Aufsicht über unseren EMI-Partner",
     z_footer_desc: "Internationale Zahlungen für Unternehmen — Batch-Auszahlungen, KYB-Verifizierung, 45+ Währungen. Unter DNB-Aufsicht über unseren EMI-Partner.",
     z_footer_product: "Produkt",
     z_footer_company: "Unternehmen",
-    z_footer_legal: "Rechtliches & Konto",
+    z_footer_legal: "Rechtliches",
     z_footer_business_link: "SwiftBridge Business",
     z_footer_security: "Sicherheit",
     z_footer_status: "Status & Updates",
     z_footer_contact: "Kontakt",
     z_footer_request: "Geschäftskonto beantragen",
     z_footer_members: "Mitgliederprogramm",
-    z_footer_privacy: "Datenschutz",
+    z_footer_privacy: "Datenschutzerklärung",
     z_footer_terms: "AGB",
     z_footer_aml: "AML-Richtlinie",
     z_footer_complaints: "Beschwerden",
     z_footer_disclaimer: "SwiftBridge ist keine Bank und verfügt über keine eigene DNB-Banklizenz. Zahlungsdienste werden über einen autorisierten EMI-Partner erbracht, der unter DNB-Aufsicht tätig ist, gemäß PSD2 und Wwft. Wechselkurse und Transaktionsgebühren sind indikativ und werden vor jeder Transaktion bestätigt. Geschäftslimits werden nach der geschäftlichen Verifizierung (KYB) individuell festgelegt. Batch-Auszahlungen und Teamfunktionen sind Konzept-Features; Verfügbarkeit auf Anfrage.",
-    z_footer_copy: "© 2026 SwiftBridge B.V. Alle Rechte vorbehalten."
+    z_footer_copy: "© 2026 SwiftBridge B.V. (KvK 42138434) Alle Rechte vorbehalten.",
+    z_footer_terms_payments: "Bedingungen für Zahlungsdienste",
+    z_footer_terms_digital: "Bedingungen für den digitalen Zugang",
+    z_footer_acceptance: "Annahmekriterien für Geschäftskunden",
+    z_footer_features_business: "Wesentliche Merkmale (Geschäftskunden)",
+    z_footer_safety_money: "Sicherheit und Geld",
+    z_footer_security_rules: "Sicherheitsregeln",
+    z_footer_your_money: "So ist Ihr Geld geschützt",
+    z_footer_fees: "Gebühren",
+    z_footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge wird als Agent eines zugelassenen E-Geld-Instituts unter der Aufsicht von De Nederlandsche Bank tätig werden; die Eintragung als Agent bei DNB erfolgt, sobald diese Zusammenarbeit abgeschlossen ist. SwiftBridge ist keine Bank; Guthaben fallen nicht unter die Einlagensicherung."
   },
   fr: {
     skip_to_main: "Aller au contenu principal",
@@ -2819,7 +2881,7 @@ const I18N = {
     z_hero_h1: "Payez votre monde sans tracas.",
     z_hero_sub: "Des fournisseurs internationaux aux freelances d'Asie centrale — SwiftBridge Entreprises achemine vos paiements rapidement, en toute transparence et en pleine conformité vers plus de 45 pays. Paiements par lots, vérification KYB professionnelle et tarifs sur mesure. Le tout sur une seule plateforme, sous supervision néerlandaise.",
     z_hero_btn_account: "Demander un compte professionnel →",
-    z_trust_kyb_verified: "Vérifié KYB",
+    z_trust_kyb_verified: "Examen KYB par un collaborateur",
     z_trust_wwft: "Conforme Wwft",
     z_trust_dnb: "Sous supervision DNB via notre partenaire EMI",
     z_dnb_badge: "Réglementé",
@@ -2863,7 +2925,7 @@ const I18N = {
     z_hiw1_title: "Inscription",
     z_hiw1_body: "Enregistrez votre entreprise avec son numéro de registre du commerce (KvK), sa raison sociale et ses coordonnées. Gratuit et entièrement en ligne. Aucune carte bancaire requise pour commencer.",
     z_hiw2_title: "Vérification KYB",
-    z_hiw2_body: "Vérification Know Your Business conforme à la Wwft : documents d'entreprise, enregistrement UBO et vérification d'identité du signataire autorisé. Entièrement numérique, généralement sous un jour ouvrable. Limites professionnelles sur mesure après vérification.",
+    z_hiw2_body: "Vérification Know Your Business conforme à la Wwft : documents d'entreprise, enregistrement UBO et vérification d'identité du signataire autorisé. Entièrement numérique, généralement sous quelques jours ouvrables, au plus tard sous 5 jours ouvrables. Limites professionnelles sur mesure après vérification.",
     z_hiw3_title: "Ajouter des bénéficiaires ou importer un CSV",
     z_hiw3_body: "Enregistrez les bénéficiaires avec leurs coordonnées bancaires (IBAN, compte local, devise). Pour les paiements groupés : téléversez un fichier CSV avec tous les destinataires et montants. Le système valide automatiquement et signale les erreurs avant l'envoi.",
     z_hiw4_title: "Payer en masse",
@@ -3012,7 +3074,7 @@ const I18N = {
     z_faq_q1: "Quelle est la différence entre un compte professionnel et un compte personnel ?",
     z_faq_a1: "Un compte professionnel SwiftBridge donne accès à des fonctionnalités conçues spécifiquement pour les entreprises : paiements par lots via CSV, accès équipe avec rôles, documentation exportable pour la comptabilité et limites professionnelles sur mesure après vérification KYB. Les clients professionnels peuvent également bénéficier de tarifs liés au volume. Les limites professionnelles sont fixées individuellement après vérification — indépendamment de la limite consommateur.",
     z_faq_q2: "En quoi consiste la vérification KYB et combien de temps prend-elle ?",
-    z_faq_a2: "KYB signifie Know Your Business — l'équivalent professionnel du contrôle d'identité KYC pour les consommateurs. Nous vérifions vos documents d'entreprise (immatriculation au registre du commerce, statuts), l'enregistrement UBO et l'identité du ou des signataires autorisés. Le processus est entièrement numérique et prend généralement un jour ouvrable. Une fois la validation obtenue, vous pouvez utiliser immédiatement votre compte professionnel et vos limites sont définies sur mesure.",
+    z_faq_a2: "KYB signifie Know Your Business — l'équivalent professionnel du contrôle d'identité KYC pour les consommateurs. Nous vérifions vos documents d'entreprise (immatriculation au registre du commerce, statuts), l'enregistrement UBO et l'identité du ou des signataires autorisés. Le processus est entièrement numérique et prend généralement quelques jours ouvrables, au plus 5 jours ouvrables. Une fois la validation obtenue, vous pouvez utiliser immédiatement votre compte professionnel et vos limites sont définies sur mesure.",
     z_faq_q3: "Combien de destinataires puis-je payer à la fois dans un lot ?",
     z_faq_a3: "Via un téléversement CSV, vous pouvez créer plusieurs bénéficiaires à la fois et les payer en un seul lot. Le nombre maximal de destinataires par lot et les limites de transaction professionnelles correspondantes sont fixés sur mesure après votre vérification KYB. Contactez notre équipe entreprises pour connaître les possibilités selon votre situation.",
     z_faq_q4: "Qu'en est-il de la TVA et des références de facture pour les paiements internationaux ?",
@@ -3025,23 +3087,32 @@ const I18N = {
     z_cta_heading: "Prêt à payer plus intelligemment à l'international ?",
     z_cta_sub: "SwiftBridge Entreprises est conçu pour les entrepreneurs qui n'ont pas de temps à perdre. Mise en place rapide, transparence totale, conformité totale. Planifiez une démo ou ouvrez votre compte professionnel dès aujourd'hui.",
     z_cta_account: "Demander un compte professionnel",
-    z_cta_micro: "Vérification KYB gratuite · Pas de frais cachés · Sous supervision DNB via notre partenaire EMI",
+    z_cta_micro: "Examen KYB par un collaborateur · Pas de frais cachés · Sous supervision DNB via notre partenaire EMI",
     z_footer_desc: "Paiements internationaux pour entreprises — paiements par lots, vérification KYB, plus de 45 devises. Sous supervision DNB via notre partenaire EMI.",
     z_footer_product: "Produit",
     z_footer_company: "Entreprise",
-    z_footer_legal: "Juridique & compte",
+    z_footer_legal: "Juridique",
     z_footer_business_link: "SwiftBridge Entreprises",
     z_footer_security: "Sécurité",
     z_footer_status: "Statut & mises à jour",
     z_footer_contact: "Contact",
     z_footer_request: "Demander un compte professionnel",
     z_footer_members: "Programme de fidélité",
-    z_footer_privacy: "Confidentialité",
+    z_footer_privacy: "Déclaration de confidentialité",
     z_footer_terms: "Conditions générales",
     z_footer_aml: "Politique LCB (AML)",
     z_footer_complaints: "Réclamations",
     z_footer_disclaimer: "SwiftBridge n'est pas une banque et ne détient pas sa propre licence bancaire DNB. Les services de paiement sont fournis via un partenaire EMI agréé opérant sous supervision DNB, conformément à la PSD2 et à la Wwft. Les taux de change et frais de transaction sont indicatifs et confirmés avant chaque transaction. Les limites professionnelles sont fixées sur mesure après la vérification professionnelle (KYB). Les paiements par lots et les fonctions d'équipe sont des fonctionnalités en concept ; disponibilité sur demande.",
-    z_footer_copy: "© 2026 SwiftBridge B.V. Tous droits réservés."
+    z_footer_copy: "© 2026 SwiftBridge B.V. (KvK 42138434) Tous droits réservés.",
+    z_footer_terms_payments: "Conditions des services de paiement",
+    z_footer_terms_digital: "Conditions d'accès numérique",
+    z_footer_acceptance: "Critères d'acceptation des clients professionnels",
+    z_footer_features_business: "Caractéristiques principales (professionnels)",
+    z_footer_safety_money: "Sécurité et argent",
+    z_footer_security_rules: "Règles de sécurité",
+    z_footer_your_money: "Comment votre argent est protégé",
+    z_footer_fees: "Tarifs",
+    z_footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge agira en tant qu'agent d'un établissement de monnaie électronique agréé, soumis au contrôle de De Nederlandsche Bank ; l'inscription en tant qu'agent auprès de DNB interviendra dès que ce partenariat aura été finalisé. SwiftBridge n'est pas une banque ; les avoirs ne sont pas couverts par le système de garantie des dépôts."
   }
 };
 

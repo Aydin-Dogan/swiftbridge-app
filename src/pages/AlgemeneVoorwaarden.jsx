@@ -1,6 +1,16 @@
+import { useEffect } from 'react';
 import { Zap } from '../components/icons/Icons';
 
 export default function AlgemeneVoorwaarden() {
+  // Anker-links (bv. #zakelijk-acceptatiecriteria vanuit de KYB-flow) werken
+  // ook als deze pagina lazy geladen wordt: na het renderen zelf scrollen.
+  useEffect(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    if (!hash) return;
+    const el = document.getElementById(hash.slice(1));
+    if (el) el.scrollIntoView({ block: 'start' });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-6 py-12">
@@ -10,7 +20,7 @@ export default function AlgemeneVoorwaarden() {
             <span className="font-bold text-xl text-brand-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Algemene Voorwaarden</h1>
-          <p className="text-sm text-gray-500 mb-8">Versie 1.0 — Datum: mei 2026</p>
+          <p className="text-sm text-gray-500 mb-8">Versie 2026-09 — Datum: september 2026</p>
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-sm text-amber-800">
             <strong>Let op:</strong> SwiftBridge is momenteel in bèta en biedt uitsluitend demonstratie- en testdiensten aan. Bij commerciële livegang worden betaaldiensten geleverd via een gelicentieerde EMI- of PSP-partner onder DNB-toezicht (agent-model). SwiftBridge B.V. heeft op dit moment geen eigen vergunning van De Nederlandsche Bank.
@@ -22,8 +32,9 @@ export default function AlgemeneVoorwaarden() {
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Artikel 1 — Definities</h2>
               <p className="mb-3">In deze Algemene Voorwaarden wordt verstaan onder:</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>SwiftBridge:</strong> SwiftBridge B.V., gevestigd in Nederland, ingeschreven bij de Kamer van Koophandel.</li>
+                <li><strong>SwiftBridge:</strong> SwiftBridge B.V., gevestigd in Nederland, ingeschreven bij de Kamer van Koophandel onder nummer 42138434.</li>
                 <li><strong>Gebruiker:</strong> elke natuurlijke persoon van 18 jaar of ouder die een account aanmaakt en gebruikmaakt van de diensten van SwiftBridge.</li>
+                <li><strong>Zakelijke Gebruiker:</strong> een onderneming die via een tekenbevoegde natuurlijke persoon een zakelijk SwiftBridge-profiel heeft aangevraagd en waarvan de aanvraag is goedgekeurd (artikel 12).</li>
                 <li><strong>Dienst:</strong> het online platform van SwiftBridge voor het internationaal overmaken van geld vanuit Nederland.</li>
                 <li><strong>Transactie:</strong> elke door de Gebruiker geïnitieerde overboeking van euro's (EUR) naar de valuta van het land van de ontvanger.</li>
                 <li><strong>KYC:</strong> Know Your Customer — identiteitsverificatieprocedure verplicht op grond van de Wet ter voorkoming van witwassen en financieren van terrorisme (Wwft).</li>
@@ -138,9 +149,46 @@ export default function AlgemeneVoorwaarden() {
               </ul>
             </section>
 
+            <section id="zakelijk-acceptatiecriteria" className="scroll-mt-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Artikel 12 — Zakelijk SwiftBridge-profiel en acceptatiecriteria</h2>
+              <p className="mb-3">
+                Een zakelijk SwiftBridge-profiel geeft een onderneming toegang tot internationale betalingen vanaf de eigen zakelijke
+                bankrekening. Het profiel is geen betaalrekening: SwiftBridge houdt geen gelden aan, verstrekt geen IBAN en geen betaalpas.
+                Een aanvraag wordt uitsluitend goedgekeurd als aan de onderstaande acceptatiecriteria is voldaan.
+              </p>
+              <h3 className="font-semibold text-gray-900 mb-2">12.1 Acceptatiecriteria</h3>
+              <ul className="list-disc pl-6 space-y-2 mb-4">
+                <li>De onderneming is ingeschreven in het Handelsregister van de Kamer van Koophandel en heeft een vestigingsadres in Nederland.</li>
+                <li>De rechtsvorm is een eenmanszaak, besloten vennootschap, vennootschap onder firma, stichting of een andere Nederlandse rechtsvorm die SwiftBridge na beoordeling accepteert.</li>
+                <li>De aanvraag wordt gedaan door een natuurlijke persoon van 18 jaar of ouder die bevoegd is de onderneming te vertegenwoordigen en wiens identiteit is vastgesteld met een geldig paspoort of Europese identiteitskaart, dan wel via iDIN.</li>
+                <li>Alle uiteindelijk belanghebbenden (personen met meer dan 25% van de aandelen, het stemrecht of het eigendom) en de bestuurders zijn volledig en naar waarheid opgegeven.</li>
+                <li>De onderneming, haar bestuurders en uiteindelijk belanghebbenden komen niet voor op nationale of internationale sanctielijsten.</li>
+                <li>Is de aanvrager, een uiteindelijk belanghebbende of een naaste betrokkene politiek prominent (PEP), dan vindt verscherpt cliëntenonderzoek plaats voordat een besluit wordt genomen.</li>
+                <li>Het doel van het gebruik, de verwachte omvang van de overboekingen en de herkomst van de middelen zijn plausibel en passen bij de aard en omvang van de onderneming.</li>
+                <li>De onderneming is niet actief in sectoren die SwiftBridge of haar EMI-partner uitsluit, waaronder: handel in wapens, kansspelen zonder vergunning, handel in of omwisseling van cryptovaluta, seksuele diensten, en vennootschappen zonder daadwerkelijke bedrijfsactiviteit.</li>
+                <li>Het e-mailadres van de aanvrager is bevestigd en de aanvrager heeft de verklaringen in de aanvraag afgegeven.</li>
+                <li>Bij handmatig ingevoerde bedrijfsgegevens is een KvK-uittreksel toegevoegd dat niet ouder is dan drie maanden.</li>
+              </ul>
+              <h3 className="font-semibold text-gray-900 mb-2">12.2 Beoordeling en besluit</h3>
+              <ul className="list-disc pl-6 space-y-2 mb-4">
+                <li>Een medewerker van SwiftBridge beoordeelt de aanvraag. De aanvrager ontvangt uiterlijk binnen 5 werkdagen na indiening bericht per e-mail.</li>
+                <li>SwiftBridge kan aanvullende informatie of documenten opvragen; tot die zijn ontvangen wordt de beoordeling opgeschort.</li>
+                <li>SwiftBridge kan een aanvraag zonder opgaaf van redenen afwijzen waar de Wwft dat vereist (artikel 23 Wwft). Een afwijzing geeft geen recht op schadevergoeding.</li>
+                <li>Tot goedkeuring van de aanvraag kan de Zakelijke Gebruiker geen zakelijke overboekingen doen.</li>
+                <li>Een niet-ingediende aanvraag wordt na 30 dagen zonder activiteit verwijderd. Een ingediende aanvraag wordt op grond van de Wwft 5 jaar bewaard.</li>
+              </ul>
+              <h3 className="font-semibold text-gray-900 mb-2">12.3 Gebruik na goedkeuring</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Voor zakelijke overboekingen geldt hetzelfde tarief als in artikel 7: EUR 4,95 per overboeking plus de wisselkoersmarge van het ledenniveau (vanaf 1,2%, tot 0,6%). De kosten zijn altijd zichtbaar vóór bevestiging.</li>
+                <li>Na goedkeuring gelden de standaardlimieten van artikel 6 (minimaal EUR 50, maximaal EUR 5.000 per overboeking en per week). Hogere zakelijke limieten worden individueel afgestemd na aanvullend onderzoek.</li>
+                <li>De Zakelijke Gebruiker informeert SwiftBridge binnen 14 dagen over wijzigingen in rechtsvorm, bestuur, uiteindelijk belanghebbenden of activiteiten. SwiftBridge mag het profiel opschorten of beëindigen wanneer niet langer aan de acceptatiecriteria wordt voldaan.</li>
+                <li>SwiftBridge is geen bank en heeft geen eigen DNB-vergunning; betaaldiensten lopen via een DNB-gelicentieerde EMI-partner (agent-model), conform PSD2 en de Wwft.</li>
+              </ul>
+            </section>
+
             <section className="border-t pt-6">
               <p className="text-sm text-gray-500">SwiftBridge B.V. — support@swiftbridge.nl — www.swiftbridge.nl</p>
-              <p className="text-sm text-gray-500 mt-1">Versie 1.0, mei 2026. Onderworpen aan periodieke herziening.</p>
+              <p className="text-sm text-gray-500 mt-1">Versie 2026-09, september 2026. Onderworpen aan periodieke herziening.</p>
             </section>
           </div>
         </div>

@@ -16,7 +16,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { API_URL } from '../services/api';
 import { useTaal } from '../i18n';
-import { Users, IdCard, Banknote, Calendar, Euro, Shield, Lock, Clock } from '../components/icons/Icons';
+import { Users, IdCard, Banknote, Calendar, Euro, Shield, Lock, Clock, Globe } from '../components/icons/Icons';
+import { useTx } from '../components/admin/kyb/kybAdminLabels';
 
 function KpiCard({ titel, waarde, sub, kleur = 'blue', icon: Icon }) {
   const kleurMap = {
@@ -46,6 +47,7 @@ function fmtEur(n) {
 
 export default function AdminOverzicht() {
   const { t } = useTaal();
+  const tx = useTx();
   const [params] = useSearchParams();
   const secret = params.get('secret') || '';
 
@@ -182,6 +184,14 @@ export default function AdminOverzicht() {
                 sub={t('admin_ov_actie_vereist')}
                 kleur={stats.kycInBehandeling > 0 ? 'amber' : 'green'}
                 icon={Clock}
+              />
+              {/* KYB: open zakelijke aanvragen uit GET /admin/stats.kyb (contract 2.7: { open, slaOverschreden }) */}
+              <KpiCard
+                titel={tx('kyb_admin_stats_open', 'Open zakelijke aanvragen')}
+                waarde={stats.kyb?.open ?? 0}
+                sub={`${stats.kyb?.slaOverschreden ?? 0} ${tx('kyb_admin_sla_overschreden', 'Doorlooptijd overschreden').toLowerCase()}`}
+                kleur={(stats.kyb?.slaOverschreden ?? 0) > 0 ? 'red' : ((stats.kyb?.open ?? 0) > 0 ? 'amber' : 'green')}
+                icon={Globe}
               />
             </div>
 

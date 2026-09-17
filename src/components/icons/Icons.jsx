@@ -433,3 +433,44 @@ export const Photo = (p) => (
     <path d="M21 15l-5-5L5 21" />
   </Icon>
 );
+
+// ── KYB (zakelijk SwiftBridge-profiel): bedrijf, werk, toestel, document, persoon ──
+export const Building = (p) => (
+  <Icon {...p}>
+    <rect x="4" y="2" width="16" height="20" rx="2" />
+    <path d="M9 22v-4h6v4" />
+    <path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01" />
+  </Icon>
+);
+
+export const Briefcase = (p) => (
+  <Icon {...p}>
+    <rect x="2" y="7" width="20" height="14" rx="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </Icon>
+);
+
+export const Smartphone = (p) => (
+  <Icon {...p}>
+    <rect x="5" y="2" width="14" height="20" rx="2" />
+    <path d="M12 18h.01" />
+  </Icon>
+);
+
+export const FileText = (p) => (
+  <Icon {...p}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+    <polyline points="10 9 9 9 8 9" />
+  </Icon>
+);
+
+export const UserCheck = (p) => (
+  <Icon {...p}>
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <polyline points="16 11 18 13 22 9" />
+  </Icon>
+);

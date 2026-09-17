@@ -1,25 +1,44 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import TaalKiezer from '../components/TaalKiezer';
 import { useTaal } from '../i18n';
 import { apiFetch, haalProfiel } from '../services/api';
-import { Mail, Lock, Zap, AlertTriangle } from '../components/icons/Icons';
+import { Mail, Lock, Zap, AlertTriangle, Eye, EyeOff } from '../components/icons/Icons';
 import DeviceLogin from './DeviceLogin';
 import InlogWachtOpApp from './InlogWachtOpApp';
+
+// Alleen paden binnen de app mogen als ?next= terugkeerdoel dienen (geen open redirect).
+// Niet geëxporteerd: dit bestand exporteert alleen de Login-component (fast refresh).
+function veiligNext(pad) {
+  if (typeof pad !== 'string') return null;
+  if (!/^\/app(\/[A-Za-z0-9._~\-/]*)?(\?[A-Za-z0-9._~\-=&%]*)?$/.test(pad)) return null;
+  if (pad.includes('//') || pad.includes('\\')) return null;
+  // Geen '.'/'..'-segmenten: '/app/../admin' zou anders buiten /app uitkomen.
+  if (pad.split('?')[0].split('/').some((seg) => seg === '.' || seg === '..')) return null;
+  return pad;
+}
 
 export default function Login({ onLogin }) {
   const [params] = useSearchParams();
   const { t } = useTaal();
-  const [tab, setTab] = useState(params.get('tab') === 'register' ? 'register' : 'login');
+  // KYB: ?type=zakelijk opent direct het registratietabblad met accounttype zakelijk
+  const typeZakelijk = params.get('type') === 'zakelijk';
+  const [tab, setTab] = useState(params.get('tab') === 'register' || typeZakelijk ? 'register' : 'login');
   const navigate = useNavigate();
+  // ?next= (alleen /app-paden): na inloggen/registreren daarheen i.p.v. /app
+  const next = veiligNext(params.get('next'));
 
   // Auto-vul referralCode uit URL ?ref=ABCD1234 (gedeeld via WhatsApp/email)
   const initialRef = params.get('ref') || params.get('r') || '';
-  const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '', referralCode: initialRef.toUpperCase(), accountType: 'particulier', bedrijfsnaam: '', kvkNummer: '' });
+  const [form, setForm] = useState({ email: '', password: '', naam: '', telefoon: '', referralCode: initialRef.toUpperCase(), accountType: typeZakelijk ? 'zakelijk' : 'particulier', bedrijfsnaam: '', kvkNummer: '' });
   // Referral validatie state
   const [refValidatie, setRefValidatie] = useState({ status: 'idle', uitnodigerNaam: '' }); // idle | bezig | geldig | ongeldig
   const [laden, setLaden] = useState(false);
   const [fout, setFout] = useState('');
+  // Juridisch akkoord bij registratie (Voorwaarden + Privacyverklaring): verplicht vinkje.
+  // De API legt bij voorwaardenAkkoord:true de versie + tijdstempel vast.
+  const [akkoord, setAkkoord] = useState(false);
+  const [akkoordFout, setAkkoordFout] = useState(false);
   const [toonVergeten, setToonVergeten] = useState(false);
   const [vergetenEmail, setVergetenEmail] = useState('');
   const [vergetenBericht, setVergetenBericht] = useState('');
@@ -44,6 +63,8 @@ export default function Login({ onLogin }) {
   const resetToken = params.get('reset');
   const [toonReset, setToonReset] = useState(!!resetToken);
   const [nieuwWachtwoord, setNieuwWachtwoord] = useState('');
+  // Op verzoek Aydin (16-9): wachtwoord kunnen tonen tijdens het typen.
+  const [toonWachtwoord, setToonWachtwoord] = useState(false);
   const [resetBericht, setResetBericht] = useState('');
   const [resetOk, setResetOk] = useState(false);
   const [resetLaden, setResetLaden] = useState(false);
@@ -57,6 +78,7 @@ export default function Login({ onLogin }) {
   const [metWachtwoord, setMetWachtwoord] = useState(false); // forceer volledig e-mail/wachtwoord-scherm
   const [toonKoppel, setToonKoppel] = useState(false);       // koppel-aanbod ná volledige login
   const [naProfiel, setNaProfiel] = useState(null);          // profiel om mee door te gaan na koppel
+  const [naDoel, setNaDoel] = useState('/app');              // waarheen na koppelen/annuleren
 
   useEffect(() => { setFout(''); }, [tab]);
 
@@ -81,12 +103,21 @@ export default function Login({ onLogin }) {
     return () => { weg = true; };
   }, [resetToken, navigate]);
 
+  // Bestemming na inloggen: ?next= (alleen /app-paden) wint; een nieuw
+  // zakelijk account landt op "Zakelijk profiel aanvragen"; anders /app.
+  function bepaalDoel(profiel, geregistreerd) {
+    if (next) return next;
+    if (geregistreerd && (profiel?.accountType === 'zakelijk' || form.accountType === 'zakelijk')) return '/app/zakelijk-aanvraag';
+    return '/app';
+  }
+
   // Na een geslaagde volledige login: als dit toestel nog niet gekoppeld is,
   // bied aan het te onthouden (6-cijferige code) — anders meteen door.
-  function naSuccesLogin(profiel) {
-    if (apparaatStatus !== 'gekoppeld') { setNaProfiel(profiel); setToonKoppel(true); return; }
+  function naSuccesLogin(profiel, geregistreerd = false) {
+    const doel = bepaalDoel(profiel, geregistreerd);
+    if (apparaatStatus !== 'gekoppeld') { setNaProfiel(profiel); setNaDoel(doel); setToonKoppel(true); return; }
     onLogin(null, profiel);
-    navigate('/app');
+    navigate(doel);
   }
 
   // Live validatie van referral code — debounced 400ms
@@ -131,6 +162,12 @@ export default function Login({ onLogin }) {
 
   async function submit(e) {
     e.preventDefault();
+    // Zonder akkoord met Voorwaarden + Privacyverklaring geen account aanmaken
+    if (tab === 'register' && !akkoord) {
+      setFout('');
+      setAkkoordFout(true);
+      return;
+    }
     setLaden(true);
     setFout('');
     try {
@@ -145,6 +182,7 @@ export default function Login({ onLogin }) {
             accountType: form.accountType,
             ...(form.accountType === 'zakelijk' ? { bedrijfsnaam: form.bedrijfsnaam, kvkNummer: form.kvkNummer } : {}),
             ...(form.referralCode ? { referralCode: form.referralCode.trim().toUpperCase() } : {}),
+            voorwaardenAkkoord: true,
           };
 
       // apiFetch zet `credentials: 'include'` — backend zet sb_token cookie.
@@ -166,7 +204,7 @@ export default function Login({ onLogin }) {
 
       // Cookie is gezet door server. Haal profiel op via /auth/me i.p.v. body te vertrouwen.
       const profiel = await haalProfiel();
-      naSuccesLogin(profiel || data.gebruiker);
+      naSuccesLogin(profiel || data.gebruiker, tab === 'register');
     } catch (e) {
       setFout(e.message);
     } finally {
@@ -305,8 +343,8 @@ export default function Login({ onLogin }) {
     return (
       <DeviceLogin
         modus="koppelen"
-        onGelukt={() => { onLogin(null, naProfiel); navigate('/app'); }}
-        onAnnuleer={() => { onLogin(null, naProfiel); navigate('/app'); }}
+        onGelukt={() => { onLogin(null, naProfiel); navigate(naDoel); }}
+        onAnnuleer={() => { onLogin(null, naProfiel); navigate(naDoel); }}
       />
     );
   }
@@ -318,7 +356,7 @@ export default function Login({ onLogin }) {
       <DeviceLogin
         modus="inloggen"
         apparaatNaam={apparaatNaam}
-        onGelukt={(p) => { onLogin(null, p); navigate('/app'); }}
+        onGelukt={(p) => { onLogin(null, p); navigate(next || '/app'); }}
         onAnderAccount={() => setMetWachtwoord(true)}
       />
     );
@@ -440,13 +478,20 @@ export default function Login({ onLogin }) {
             <p className="text-ink-2 text-sm">Kies een nieuw wachtwoord voor je account</p>
           </div>
           <form onSubmit={resetWachtwoord} className="space-y-4">
-            <input
-              type="password" value={nieuwWachtwoord}
-              onChange={e => setNieuwWachtwoord(e.target.value)}
-              placeholder="Nieuw wachtwoord (min. 8 tekens)"
-              minLength={8} required
-              className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface"
-            />
+            <div className="relative">
+              <input
+                type={toonWachtwoord ? 'text' : 'password'} value={nieuwWachtwoord}
+                onChange={e => setNieuwWachtwoord(e.target.value)}
+                placeholder="Nieuw wachtwoord (min. 8 tekens)"
+                minLength={8} required autoComplete="new-password"
+                className="w-full border border-border rounded-md pl-4 pr-12 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface"
+              />
+              <button type="button" onClick={() => setToonWachtwoord(v => !v)} aria-pressed={toonWachtwoord}
+                aria-label={toonWachtwoord ? t('wachtwoord_verbergen') : t('wachtwoord_tonen')}
+                className="absolute inset-y-0 right-0 w-12 flex items-center justify-center text-ink-2 hover:text-brand-700">
+                {toonWachtwoord ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
+              </button>
+            </div>
             {resetBericht && (
               <p className={`text-sm ${resetOk ? 'text-success-700' : 'text-red-500'}`}>{resetBericht}</p>
             )}
@@ -521,16 +566,32 @@ export default function Login({ onLogin }) {
           <button onClick={() => navigate('/')} className="inline-flex items-center gap-2 text-white">
             <Zap className="w-10 h-10 text-accent-400" />
             <div className="text-left">
-              <div className="font-display text-2xl font-medium">SwiftBridge</div>
+              <div className="font-display text-2xl font-medium">
+                SwiftBridge{form.accountType === 'zakelijk' && <span className="text-accent-400"> {t('login_portaal_zakelijk')}</span>}
+              </div>
               <div className="text-blue-200 text-xs">{t('slogan')}</div>
             </div>
           </button>
         </div>
 
+        {/* Portaalkeuze (verzoek Aydin 16-9): één duidelijke ingang voor particulier en
+            voor zakelijk, bij inloggen én registreren. Het account bepaalt daarna
+            zelf wat je ziet; de keuze stuurt registratie en de zakelijke aanvraag. */}
+        <div className="flex mb-3 rounded-md bg-white/10 p-1" role="group" aria-label={t('login_portaal_keuze')}>
+          {[['particulier', t('login_portaal_particulier')], ['zakelijk', t('login_portaal_zakelijk')]].map(([waarde, label]) => (
+            <button key={waarde} type="button" onClick={() => update('accountType', waarde)}
+              aria-pressed={form.accountType === waarde}
+              className={`flex-1 min-h-[44px] rounded text-sm font-semibold transition-colors
+                ${form.accountType === waarde ? 'bg-white text-brand-700' : 'text-white/80 hover:text-white'}`}>
+              {label}
+            </button>
+          ))}
+        </div>
+
         <div className="bg-surface border border-border rounded-md shadow-soft overflow-hidden">
           <div className="flex">
             {['login', 'register'].map(t => (
-              <button key={t} onClick={() => setTab(t)}
+              <button key={t} onClick={() => { setTab(t); setAkkoordFout(false); }}
                 className={`flex-1 py-4 text-[0.7rem] font-medium uppercase tracking-[0.2em] transition
                   ${tab === t ? 'text-brand-700 border-b-2 border-brand-600' : 'text-gray-500 hover:text-ink-2'}`}>
                 {t === 'login' ? 'Inloggen' : 'Registreren'}
@@ -541,19 +602,7 @@ export default function Login({ onLogin }) {
           <form onSubmit={submit} className="p-6 space-y-4">
             {tab === 'register' && (
               <>
-                {/* P1 (plan Aydin): Particulier/Zakelijk-keuze vanaf registratie */}
-                <div>
-                  <div className="flex rounded-md border border-border overflow-hidden" role="group" aria-label="Type account">
-                    {[['particulier', 'Particulier'], ['zakelijk', 'Zakelijk']].map(([waarde, label]) => (
-                      <button key={waarde} type="button" onClick={() => update('accountType', waarde)}
-                        aria-pressed={form.accountType === waarde}
-                        className={`flex-1 py-3 text-sm font-semibold transition-colors
-                          ${form.accountType === waarde ? 'bg-brand-500 text-white' : 'bg-surface text-ink-2 hover:bg-brand-50'}`}>
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                {/* P1 (plan Aydin): de Particulier/Zakelijk-keuze staat nu bovenaan (portaalkeuze) */}
                 {form.accountType === 'zakelijk' && (
                   <>
                     <div>
@@ -632,10 +681,18 @@ export default function Login({ onLogin }) {
 
             <div>
               <label htmlFor="auth-password" className="block text-xs font-semibold text-ink-2 mb-1">Wachtwoord</label>
-              <input id="auth-password" name="password" autoComplete={tab === 'login' ? 'current-password' : 'new-password'} value={form.password} onChange={e => update('password', e.target.value)}
-                placeholder="••••••••" type="password" required minLength={8}
-                aria-describedby={tab === 'register' ? 'pw-hint' : undefined}
-                className="w-full border border-border rounded-md px-4 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
+              <div className="relative">
+                <input id="auth-password" name="password" autoComplete={tab === 'login' ? 'current-password' : 'new-password'} value={form.password} onChange={e => update('password', e.target.value)}
+                  placeholder="••••••••" type={toonWachtwoord ? 'text' : 'password'} required minLength={8}
+                  aria-describedby={tab === 'register' ? 'pw-hint' : undefined}
+                  className="w-full border border-border rounded-md pl-4 pr-12 py-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 bg-surface" />
+                <button type="button" onClick={() => setToonWachtwoord(v => !v)} aria-pressed={toonWachtwoord}
+                  aria-label={toonWachtwoord ? t('wachtwoord_verbergen') : t('wachtwoord_tonen')}
+                  aria-controls="auth-password"
+                  className="absolute inset-y-0 right-0 w-12 flex items-center justify-center text-ink-2 hover:text-brand-700">
+                  {toonWachtwoord ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
+                </button>
+              </div>
               {tab === 'register' && form.password && (() => {
                 const s = wachtwoordSterkte(form.password);
                 return (
@@ -660,6 +717,40 @@ export default function Login({ onLogin }) {
                 </button>
               </div>
             )}
+
+            {tab === 'register' && (() => {
+              // Talen met leesteken aan het eind (EN/RU: ".") zonder spatie ervoor
+              const na = t('register_akkoord_na');
+              return (
+                <div>
+                  <div className="flex items-start gap-3 min-h-[44px] py-1">
+                    <input id="reg-akkoord" name="voorwaardenAkkoord" type="checkbox" checked={akkoord}
+                      onChange={e => { setAkkoord(e.target.checked); if (e.target.checked) setAkkoordFout(false); }}
+                      aria-invalid={akkoordFout || undefined}
+                      aria-describedby={akkoordFout ? 'reg-akkoord-fout' : undefined}
+                      className={`mt-0.5 h-5 w-5 flex-shrink-0 rounded cursor-pointer accent-brand-600 ${akkoordFout ? 'outline outline-2 outline-offset-2 outline-red-500' : ''}`} />
+                    <label htmlFor="reg-akkoord" className="text-sm text-ink-1 leading-snug cursor-pointer">
+                      {t('register_akkoord_voor')}{' '}
+                      <Link to="/voorwaarden" target="_blank" rel="noopener noreferrer"
+                        className="font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600">
+                        {t('link_voorwaarden')}
+                      </Link>{' '}
+                      {t('register_akkoord_en')}{' '}
+                      <Link to="/privacy" target="_blank" rel="noopener noreferrer"
+                        className="font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600">
+                        {t('link_privacy')}
+                      </Link>
+                      {/^[.,;:!?]/.test(na) ? '' : ' '}{na}
+                    </label>
+                  </div>
+                  {akkoordFout && (
+                    <p id="reg-akkoord-fout" role="alert" className="text-xs font-semibold text-red-600 mt-1">
+                      {t('register_akkoord_verplicht')}
+                    </p>
+                  )}
+                </div>
+              );
+            })()}
 
             {fout && (
               <div role="alert" aria-live="assertive" className="bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-md flex items-start gap-2">

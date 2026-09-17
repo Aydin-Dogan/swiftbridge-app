@@ -24,6 +24,7 @@ import WachtlijstModal from './WachtlijstModal'; // WL-2: binnenkort-corridor op
 import { useFavorieteValutas } from '../services/favorieteValutas'; // MMM
 import AppLockScherm from './pin/AppLockScherm'; // PIN-1: tx-confirm
 import TransactieDoel from './opdrachten/TransactieDoel'; // TX-DOEL: doel van de uitgave
+import ZinMetLinks from './ZinMetLinks'; // Juridische documenten v1.0: contextlinks
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -354,7 +355,8 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
   );
 }
 
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet, favorieten, toggleFavoriet }) {
+  const { t } = useTaal();
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
   const valutaInfo = getValuta(valuta);
@@ -509,6 +511,12 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           <div className="bg-brand-50 border border-brand-100 rounded-md px-2 py-1.5 text-[11px] text-brand-700 leading-snug">
             <Vlag land={valutaInfo.landCode} size={14} /> <strong>Dit ziet je ontvanger</strong> op zijn/haar {valutaInfo.land} bankrekening.
           </div>
+
+          {/* Juridische documenten v1.0: prijsspecificatie -> Tarievenoverzicht */}
+          <a href="/tarieven" target="_blank" rel="noopener noreferrer"
+            className="inline-block text-xs font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600">
+            {t('prijs_opbouw_link')}
+          </a>
         </div>
       )}
 
@@ -820,6 +828,11 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
             <span className="font-semibold tabular-nums text-ink-1 text-sm text-right">{value}</span>
           </div>
         ))}
+        {/* Juridische documenten v1.0: prijsspecificatie -> Tarievenoverzicht */}
+        <a href="/tarieven" target="_blank" rel="noopener noreferrer"
+          className="inline-block text-xs font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600">
+          {t('prijs_opbouw_link')}
+        </a>
       </div>
 
       {fout && (
@@ -880,7 +893,15 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
 
       <p className="text-xs text-gray-400 text-center">
         Door te bevestigen ga je akkoord met onze{' '}
-        <a href="/algemene-voorwaarden" target="_blank" className="text-brand-700 font-semibold hover:underline underline-offset-4">Algemene Voorwaarden</a>.
+        <a href="/voorwaarden" target="_blank" rel="noopener noreferrer" className="text-brand-700 font-semibold hover:underline underline-offset-4">Algemene Voorwaarden</a>.
+      </p>
+      {/* Juridische documenten v1.0: bij de overboeking gelden de Voorwaarden Betaaldiensten (02) */}
+      <p className="text-xs text-gray-500 text-center -mt-3">
+        <ZinMetLinks
+          tekst={t('overboeking_voorwaarden_zin')}
+          links={[{ label: t('link_voorwaarden_betaaldiensten'), to: '/voorwaarden/betaaldiensten' }]}
+          linkClassName="text-brand-700 font-semibold underline underline-offset-4 hover:text-brand-600"
+        />
       </p>
 
       <div className="flex gap-3">
@@ -1457,7 +1478,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag token={token} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
+      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
         // WL-2: bij binnenkort-valuta open de wachtlijst-modal i.p.v. door
         // naar betaling. Voorkomt dat klant iDEAL betaalt voor onmogelijke uitbetaling.
         if (getValuta(valuta)?.status === 'binnenkort') {

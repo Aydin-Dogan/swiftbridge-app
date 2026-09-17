@@ -3,11 +3,12 @@
  * Alle regels zijn échte functies: ingeplande opdrachten (recurring),
  * bevoegdheden (profiel), limieten (rekening-detail), afschrift- en
  * jaaroverzicht-download via het bestaande CSV-exportendpoint.
+ * Zakelijke accounts krijgen extra de rij "Zakelijk profiel" (KYB).
  */
 import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../../i18n';
 import { maandAfschriftUrl, jaarOverzichtUrl } from './ActieCirkels';
-import { Calendar, Users, Banknote, Download, Clipboard } from '../icons/Icons';
+import { Calendar, Users, Banknote, Download, Clipboard, Building } from '../icons/Icons';
 
 function Rij({ Icoon, label, onClick, href }) {
   const inhoud = (
@@ -24,7 +25,7 @@ function Rij({ Icoon, label, onClick, href }) {
   return <button type="button" onClick={onClick} className={klasse}>{inhoud}</button>;
 }
 
-export default function DirectNaar({ titel }) {
+export default function DirectNaar({ titel, zakelijk = false }) {
   const { t } = useTaal();
   const navigate = useNavigate();
 
@@ -37,6 +38,10 @@ export default function DirectNaar({ titel }) {
         </h3>
       </div>
       <div className="divide-y divide-border-subtle">
+        {zakelijk && (
+          <Rij Icoon={Building} label={t('kyb_direct_rij')}
+            onClick={() => navigate('/app/zakelijk-aanvraag')} />
+        )}
         <Rij Icoon={Calendar} label={t('direct_ingeplande')}
           onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betalingen_gepland' }))} />
         <Rij Icoon={Users} label={t('direct_bevoegdheden')}

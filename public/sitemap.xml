@@ -26,25 +26,99 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Juridisch — verplicht zichtbaar voor compliance + waardevol voor SEO trust -->
+  <!-- Juridisch — documentenset v1.0 (geldig vanaf 17 september 2026).
+       /algemene-voorwaarden en /privacybeleid zijn redirects naar /voorwaarden en /privacy
+       en staan daarom niet meer in de sitemap. De versie-detailpagina's
+       /voorwaarden/archief/:versie/:slug zijn bewust weggelaten (dubbele content met
+       de actuele documenten); het archief-overzicht linkt ernaar. -->
   <url>
-    <loc>https://www.swiftbridge.nl/algemene-voorwaarden</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>quarterly</changefreq>
+    <loc>https://www.swiftbridge.nl/voorwaarden</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/voorwaarden/betaaldiensten</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/voorwaarden/digitale-toegang</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://www.swiftbridge.nl/privacybeleid</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>quarterly</changefreq>
+    <loc>https://www.swiftbridge.nl/zakelijk/acceptatiecriteria</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/veiligheid/jouw-geld</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/veiligheid/regels</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/klachten/regeling</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/particulier/kenmerken</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/zakelijk/kenmerken</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/tarieven</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/privacy</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.swiftbridge.nl/voorwaarden/archief</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://www.swiftbridge.nl/aml-beleid</loc>
     <lastmod>2026-05-23</lastmod>
-    <changefreq>quarterly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
 

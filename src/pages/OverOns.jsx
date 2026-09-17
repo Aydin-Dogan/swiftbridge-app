@@ -3,8 +3,8 @@ import { Zap } from '../components/icons/Icons';
 /**
  * Over ons — een geldapp zonder gezicht wekt geen vertrouwen. Deze pagina
  * vertelt eerlijk waarom SwiftBridge bestaat en wie erachter zit, zonder
- * verzonnen cijfers of claims. Bewust nog GEEN KvK-nummer: de B.V. is in
- * oprichting (geen fake registratiegegevens tot de notaris klaar is).
+ * verzonnen cijfers of claims. KvK-gegevens zijn echt: SwiftBridge B.V. is
+ * ingeschreven in het Handelsregister onder nummer 42138434 (aug. 2026).
  */
 export default function OverOns() {
   return (
@@ -48,9 +48,9 @@ export default function OverOns() {
             <div className="bg-brand-50 border border-brand-200 rounded-xl p-5">
               <h3 className="font-semibold text-brand-900 mb-1">De onderneming</h3>
               <p className="text-sm text-brand-900">
-                SwiftBridge B.V. is in oprichting. Zodra de inschrijving bij de Kamer van Koophandel
-                is afgerond, vindt u hier onze KvK- en vestigingsgegevens. Tot die tijd bereikt u ons
-                gewoon via <a href="mailto:info@swiftbridge.nl" className="underline">info@swiftbridge.nl</a>.
+                SwiftBridge B.V. is ingeschreven in het Handelsregister van de Kamer van Koophandel
+                onder KvK-nummer 42138434. U bereikt ons via{' '}
+                <a href="mailto:info@swiftbridge.nl" className="underline">info@swiftbridge.nl</a>.
               </p>
             </div>
 

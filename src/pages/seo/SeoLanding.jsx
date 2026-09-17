@@ -212,12 +212,18 @@ export default function SeoLanding({
       {/* Minimal footer */}
       <footer className="bg-gray-900 text-gray-400 text-xs py-8 px-4">
         <div className="max-w-5xl mx-auto text-center space-y-2">
-          <p>© 2026 SwiftBridge — onder DNB-toezicht via EMI-partner</p>
-          <div className="space-x-4">
-            <Link to="/algemene-voorwaarden" className="hover:text-white">Algemene voorwaarden</Link>
-            <Link to="/privacybeleid" className="hover:text-white">Privacy</Link>
+          <p>© 2026 SwiftBridge B.V. (KvK 42138434) — onder DNB-toezicht via EMI-partner</p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+            <Link to="/voorwaarden" className="hover:text-white">Voorwaarden</Link>
+            <Link to="/privacy" className="hover:text-white">Privacyverklaring</Link>
+            <Link to="/tarieven" className="hover:text-white">Tarieven</Link>
             <Link to="/aml-beleid" className="hover:text-white">AML</Link>
           </div>
+          {/* Verplichte disclosure (NL; SEO-landings zijn Nederlandstalig).
+              AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js) */}
+          <p className="max-w-3xl mx-auto pt-2 text-[0.68rem] leading-relaxed">
+            SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel.
+          </p>
         </div>
       </footer>
     </div>

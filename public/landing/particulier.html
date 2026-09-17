@@ -356,7 +356,8 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
 
 /* ── FOOTER ── */
 #footer{background:var(--ink-dark);color:rgba(255,255,255,.72);padding:3.5rem 0 2rem}
-.footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:2.5rem;margin-bottom:3rem}
+.footer-grid{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:2.5rem;margin-bottom:3rem}
+@media(max-width:1100px){.footer-grid{grid-template-columns:repeat(4,1fr)}.footer-brand{grid-column:1/-1}}
 @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:540px){.footer-grid{grid-template-columns:1fr}}
 .footer-brand-name{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem}
@@ -371,6 +372,7 @@ hr.rule{border:none;border-top:1px solid var(--border);margin:0}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:1.5rem}
 .footer-disclaimer{font-size:.725rem;line-height:1.7;color:rgba(255,255,255,.40);max-width:80ch}
 .footer-copy{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:.75rem}
+.footer-disclosure{font-size:.7rem;line-height:1.7;color:rgba(255,255,255,.45);max-width:90ch;margin-top:.75rem}
 
 /* ── Animations ── */
 @media(prefers-reduced-motion:no-preference){
@@ -1147,7 +1149,7 @@ Gebouwd voor mensen zoals u.</h1>
 <footer id="footer" role="contentinfo">
   <div class="wrap">
     <div class="footer-grid">
-      <div>
+      <div class="footer-brand">
         <div class="footer-brand-name">
           <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#E8632A"/><polygon points="16,4 10,15 14,15 12,24 19,12 15,12" fill="#fff"/></svg>
           SwiftBridge
@@ -1166,6 +1168,8 @@ Gebouwd voor mensen zoals u.</h1>
           <li><a href="#comparison" data-i18n="nav_rates">Tarieven</a></li>
           <li><a href="#corridors" data-i18n="nav_currencies">Valuta</a></li>
           <li><a href="/zakelijk" data-i18n="nav_business">Zakelijk</a></li>
+          <li><a href="/members" data-i18n="footer_members">Ledenprogramma</a></li>
+          <li><a href="/login?tab=register" data-i18n="footer_create_account">Account aanmaken</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1178,20 +1182,31 @@ Gebouwd voor mensen zoals u.</h1>
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-col-heading" data-i18n="footer_legal_heading">Juridisch &amp; account</p>
+        <p class="footer-col-heading" data-i18n="footer_legal_heading">Juridisch</p>
         <ul>
-          <li><a href="/login?tab=register" data-i18n="footer_create_account">Account aanmaken</a></li>
-          <li><a href="/members" data-i18n="footer_members">Ledenprogramma</a></li>
-          <li><a href="/privacybeleid" data-i18n="footer_privacy">Privacy</a></li>
-          <li><a href="/algemene-voorwaarden" data-i18n="footer_terms">Voorwaarden</a></li>
-          <li><a href="/aml-beleid" data-i18n="footer_aml">AML-beleid</a></li>
+          <li><a href="/voorwaarden" data-i18n="footer_terms">Voorwaarden</a></li>
+          <li><a href="/voorwaarden/betaaldiensten" data-i18n="footer_terms_payments">Voorwaarden Betaaldiensten</a></li>
+          <li><a href="/voorwaarden/digitale-toegang" data-i18n="footer_terms_digital">Voorwaarden Digitale Toegang</a></li>
+          <li><a href="/privacy" data-i18n="footer_privacy">Privacyverklaring</a></li>
           <li><a href="/klachten" data-i18n="footer_complaints">Klachten</a></li>
+          <li><a href="/particulier/kenmerken" data-i18n="footer_features_personal">Kenmerken particulier</a></li>
+          <li><a href="/aml-beleid" data-i18n="footer_aml">AML-beleid</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-heading" data-i18n="footer_safety_money_heading">Veiligheid en geld</p>
+        <ul>
+          <li><a href="/veiligheid/regels" data-i18n="footer_security_rules">Veiligheidsregels</a></li>
+          <li><a href="/veiligheid/jouw-geld" data-i18n="footer_your_money">Hoe jouw geld beschermd is</a></li>
+          <li><a href="/tarieven" data-i18n="footer_fees">Tarieven</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-disclaimer" data-i18n="footer_legal_oneliner">SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB. Betaaldiensten worden aangeboden via een geautoriseerde EMI-partner die onder DNB-toezicht opereert, conform PSD2 en de Wwft. Wisselkoersen en transactiekosten zijn indicatief en worden bevestigd vóór elke transactie. Limieten: min. €50 / max. € 5.000 per transactie, max. € 5.000 per week.</p>
-      <p class="footer-copy" data-i18n="footer_copyright">&copy; 2026 SwiftBridge B.V. Alle rechten voorbehouden.</p>
+      <p class="footer-copy" data-i18n="footer_copyright">&copy; 2026 SwiftBridge B.V. (KvK 42138434) Alle rechten voorbehouden.</p>
+      <!-- AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js) -->
+      <p class="footer-disclosure" data-i18n="footer_disclosure">SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel.</p>
     </div>
   </div>
 </footer>
@@ -1255,14 +1270,23 @@ const I18N = {
     footer_safety: "Veiligheid",
     footer_status: "Status & updates",
     footer_contact: "Contact",
-    footer_legal_heading: "Juridisch & account",
+    footer_legal_heading: "Juridisch",
     footer_create_account: "Account aanmaken",
     footer_members: "Ledenprogramma",
-    footer_privacy: "Privacy",
+    footer_privacy: "Privacyverklaring",
     footer_terms: "Voorwaarden",
     footer_aml: "AML-beleid",
     footer_complaints: "Klachten",
-    footer_copyright: "© 2026 SwiftBridge B.V. Alle rechten voorbehouden.",
+    footer_copyright: "© 2026 SwiftBridge B.V. (KvK 42138434) Alle rechten voorbehouden.",
+    footer_terms_payments: "Voorwaarden Betaaldiensten",
+    footer_terms_digital: "Voorwaarden Digitale Toegang",
+    footer_features_personal: "Kenmerken particulier",
+    footer_safety_money_heading: "Veiligheid en geld",
+    footer_security_rules: "Veiligheidsregels",
+    footer_your_money: "Hoe jouw geld beschermd is",
+    footer_fees: "Tarieven",
+    // AGENT_GEREGISTREERD: tekst aanpassen zodra SwiftBridge als agent bij DNB is ingeschreven (zie src/content/juridisch/meta.js)
+    footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge gaat optreden als agent van een vergunninghoudende elektronischgeldinstelling onder toezicht van De Nederlandsche Bank; de inschrijving als agent bij DNB volgt zodra die samenwerking is afgerond. SwiftBridge is geen bank; tegoeden vallen niet onder het depositogarantiestelsel.",
     comp_example_title: "Rekenvoorbeeld: €1.000 naar Turkije (EUR → TRY)",
     comp_example_note1: "Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief); Economy-tarief SwiftBridge. Bankmarges indicatief ~1,5%. Controleer actuele tarieven vóór verzending.",
     comp_example_note2: "Illustratief: ECB-middenkoers 1 EUR = 36,00 TRY (fictief). Wise gebruikt mid-market rate (0% FX-opslag). Controleer actuele tarieven altijd bij de aanbieder.",
@@ -1522,14 +1546,22 @@ const I18N = {
     footer_safety: "Security",
     footer_status: "Status & updates",
     footer_contact: "Contact",
-    footer_legal_heading: "Legal & account",
+    footer_legal_heading: "Legal",
     footer_create_account: "Create account",
     footer_members: "Membership programme",
-    footer_privacy: "Privacy",
-    footer_terms: "Terms & conditions",
+    footer_privacy: "Privacy statement",
+    footer_terms: "Terms and conditions",
     footer_aml: "AML policy",
     footer_complaints: "Complaints",
-    footer_copyright: "© 2026 SwiftBridge B.V. All rights reserved.",
+    footer_copyright: "© 2026 SwiftBridge B.V. (KvK 42138434) All rights reserved.",
+    footer_terms_payments: "Payment Services Terms",
+    footer_terms_digital: "Digital Access Terms",
+    footer_features_personal: "Key features (personal)",
+    footer_safety_money_heading: "Security and money",
+    footer_security_rules: "Security rules",
+    footer_your_money: "How your money is protected",
+    footer_fees: "Fees",
+    footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge will act as an agent of a licensed electronic money institution supervised by De Nederlandsche Bank; registration as an agent with DNB will follow once that partnership has been finalised. SwiftBridge is not a bank; funds are not covered by the deposit guarantee scheme.",
     comp_example_title: "Worked example: €1,000 to Turkey (EUR → TRY)",
     comp_example_note1: "Illustrative: ECB mid-rate 1 EUR = 36.00 TRY (fictional); SwiftBridge Economy rate. Bank margins indicative ~1.5%. Check current rates before sending.",
     comp_example_note2: "Illustrative: ECB mid-rate 1 EUR = 36.00 TRY (fictional). Wise uses the mid-market rate (0% FX markup). Always check current rates with the provider.",
@@ -1782,14 +1814,22 @@ const I18N = {
     footer_safety: "Güvenlik",
     footer_status: "Durum ve güncellemeler",
     footer_contact: "İletişim",
-    footer_legal_heading: "Hukuki ve hesap",
+    footer_legal_heading: "Hukuki",
     footer_create_account: "Hesap oluştur",
     footer_members: "Üyelik programı",
-    footer_privacy: "Gizlilik",
-    footer_terms: "Koşullar",
+    footer_privacy: "Gizlilik bildirimi",
+    footer_terms: "Genel Koşullar",
     footer_aml: "AML politikası",
     footer_complaints: "Şikayetler",
-    footer_copyright: "© 2026 SwiftBridge B.V. Tüm hakları saklıdır.",
+    footer_copyright: "© 2026 SwiftBridge B.V. (KvK 42138434) Tüm hakları saklıdır.",
+    footer_terms_payments: "Ödeme Hizmetleri Koşulları",
+    footer_terms_digital: "Dijital Erişim Koşulları",
+    footer_features_personal: "Temel özellikler (bireysel)",
+    footer_safety_money_heading: "Güvenlik ve para",
+    footer_security_rules: "Güvenlik kuralları",
+    footer_your_money: "Paranız nasıl korunuyor",
+    footer_fees: "Ücretler",
+    footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge, De Nederlandsche Bank denetimi altındaki lisanslı bir elektronik para kuruluşunun temsilcisi (agent) olarak faaliyet gösterecektir; DNB nezdinde temsilci olarak kayıt, bu iş birliği tamamlandığında yapılacaktır. SwiftBridge bir banka değildir; fonlar mevduat garanti sistemi kapsamında değildir.",
     comp_example_title: "Örnek hesap: Türkiye'ye €1.000 (EUR → TRY)",
     comp_example_note1: "Örnek: ECB orta kuru 1 EUR = 36,00 TRY (varsayımsal); SwiftBridge Ekonomi tarifesi. Banka marjları gösterge ~%1,5. Göndermeden önce güncel kurları kontrol edin.",
     comp_example_note2: "Örnek: ECB orta kuru 1 EUR = 36,00 TRY (varsayımsal). Wise orta piyasa kurunu kullanır (%0 kur farkı). Güncel kurları her zaman sağlayıcıdan kontrol edin.",
@@ -2015,14 +2055,22 @@ const I18N = {
     footer_safety: "الأمان",
     footer_status: "الحالة والتحديثات",
     footer_contact: "اتصل بنا",
-    footer_legal_heading: "الشؤون القانونية والحساب",
+    footer_legal_heading: "الشؤون القانونية",
     footer_create_account: "إنشاء حساب",
     footer_members: "برنامج العضوية",
-    footer_privacy: "الخصوصية",
-    footer_terms: "الشروط",
+    footer_privacy: "بيان الخصوصية",
+    footer_terms: "الشروط العامة",
     footer_aml: "سياسة مكافحة غسل الأموال",
     footer_complaints: "الشكاوى",
-    footer_copyright: "© 2026 SwiftBridge B.V. جميع الحقوق محفوظة.",
+    footer_copyright: "© 2026 SwiftBridge B.V. (KvK 42138434) جميع الحقوق محفوظة.",
+    footer_terms_payments: "شروط خدمات الدفع",
+    footer_terms_digital: "شروط الوصول الرقمي",
+    footer_features_personal: "الخصائص الرئيسية (الأفراد)",
+    footer_safety_money_heading: "الأمان والأموال",
+    footer_security_rules: "قواعد الأمان",
+    footer_your_money: "كيف تتم حماية أموالك",
+    footer_fees: "الرسوم",
+    footer_disclosure: "SwiftBridge B.V.، العنوان: Piet Heinstraat 137, 2518 CG Den Haag، رقم السجل التجاري (KvK): 42138434. ستعمل SwiftBridge بصفة وكيل لمؤسسة نقود إلكترونية مرخّصة تخضع لإشراف De Nederlandsche Bank؛ وسيتم تسجيلها كوكيل لدى DNB فور إتمام هذه الشراكة. SwiftBridge ليست بنكًا؛ والأموال غير مشمولة بنظام ضمان الودائع.",
     comp_example_title: "مثال حسابي: €1,000 إلى تركيا (EUR → TRY)",
     comp_example_note1: "توضيحي: سعر ECB الوسطي 1 يورو = 36.00 ليرة (افتراضي)؛ تعرفة SwiftBridge الاقتصادية. هوامش البنوك استرشادية ~1.5٪. تحقق من الأسعار الحالية قبل الإرسال.",
     comp_example_note2: "توضيحي: سعر ECB الوسطي 1 يورو = 36.00 ليرة (افتراضي). تستخدم Wise سعر منتصف السوق (0٪ هامش). تحقق دائمًا من الأسعار لدى المزوِّد.",
@@ -2252,14 +2300,22 @@ const I18N = {
     footer_safety: "Sicherheit",
     footer_status: "Status & Updates",
     footer_contact: "Kontakt",
-    footer_legal_heading: "Rechtliches & Konto",
+    footer_legal_heading: "Rechtliches",
     footer_create_account: "Konto erstellen",
     footer_members: "Mitgliederprogramm",
-    footer_privacy: "Datenschutz",
+    footer_privacy: "Datenschutzerklärung",
     footer_terms: "AGB",
     footer_aml: "AML-Richtlinie",
     footer_complaints: "Beschwerden",
-    footer_copyright: "© 2026 SwiftBridge B.V. Alle Rechte vorbehalten.",
+    footer_copyright: "© 2026 SwiftBridge B.V. (KvK 42138434) Alle Rechte vorbehalten.",
+    footer_terms_payments: "Bedingungen für Zahlungsdienste",
+    footer_terms_digital: "Bedingungen für den digitalen Zugang",
+    footer_features_personal: "Wesentliche Merkmale (Privatkunden)",
+    footer_safety_money_heading: "Sicherheit und Geld",
+    footer_security_rules: "Sicherheitsregeln",
+    footer_your_money: "So ist Ihr Geld geschützt",
+    footer_fees: "Gebühren",
+    footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge wird als Agent eines zugelassenen E-Geld-Instituts unter der Aufsicht von De Nederlandsche Bank tätig werden; die Eintragung als Agent bei DNB erfolgt, sobald diese Zusammenarbeit abgeschlossen ist. SwiftBridge ist keine Bank; Guthaben fallen nicht unter die Einlagensicherung.",
     comp_example_title: "Rechenbeispiel: €1.000 in die Türkei (EUR → TRY)",
     comp_example_note1: "Illustrativ: EZB-Mittelkurs 1 EUR = 36,00 TRY (fiktiv); SwiftBridge-Economy-Tarif. Bankmargen indikativ ~1,5 %. Prüfen Sie aktuelle Kurse vor dem Senden.",
     comp_example_note2: "Illustrativ: EZB-Mittelkurs 1 EUR = 36,00 TRY (fiktiv). Wise nutzt den Mid-Market-Kurs (0 % FX-Aufschlag). Prüfen Sie aktuelle Kurse stets beim Anbieter.",
@@ -2486,14 +2542,22 @@ const I18N = {
     footer_safety: "Sécurité",
     footer_status: "Statut & mises à jour",
     footer_contact: "Contact",
-    footer_legal_heading: "Juridique & compte",
+    footer_legal_heading: "Juridique",
     footer_create_account: "Créer un compte",
     footer_members: "Programme membres",
-    footer_privacy: "Confidentialité",
-    footer_terms: "Conditions",
+    footer_privacy: "Déclaration de confidentialité",
+    footer_terms: "Conditions générales",
     footer_aml: "Politique AML",
     footer_complaints: "Réclamations",
-    footer_copyright: "© 2026 SwiftBridge B.V. Tous droits réservés.",
+    footer_copyright: "© 2026 SwiftBridge B.V. (KvK 42138434) Tous droits réservés.",
+    footer_terms_payments: "Conditions des services de paiement",
+    footer_terms_digital: "Conditions d'accès numérique",
+    footer_features_personal: "Caractéristiques principales (particuliers)",
+    footer_safety_money_heading: "Sécurité et argent",
+    footer_security_rules: "Règles de sécurité",
+    footer_your_money: "Comment votre argent est protégé",
+    footer_fees: "Tarifs",
+    footer_disclosure: "SwiftBridge B.V., Piet Heinstraat 137, 2518 CG Den Haag, KvK 42138434. SwiftBridge agira en tant qu'agent d'un établissement de monnaie électronique agréé, soumis au contrôle de De Nederlandsche Bank ; l'inscription en tant qu'agent auprès de DNB interviendra dès que ce partenariat aura été finalisé. SwiftBridge n'est pas une banque ; les avoirs ne sont pas couverts par le système de garantie des dépôts.",
     comp_example_title: "Exemple : 1 000 € vers la Turquie (EUR → TRY)",
     comp_example_note1: "Illustratif : cours moyen BCE 1 EUR = 36,00 TRY (fictif) ; tarif Économique SwiftBridge. Marges bancaires indicatives ~1,5 %. Vérifiez les taux actuels avant l'envoi.",
     comp_example_note2: "Illustratif : cours moyen BCE 1 EUR = 36,00 TRY (fictif). Wise applique le taux du marché moyen (0 % de marge). Vérifiez toujours les taux actuels auprès du prestataire.",

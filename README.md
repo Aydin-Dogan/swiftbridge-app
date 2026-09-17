@@ -45,6 +45,45 @@ node scripts/i18n-check.mjs --strict      # exit-code 1 bij missing (voor CI)
 
 CI draait dit automatisch op elke push (zie `.github/workflows/ci.yml`).
 
+## Claims check (KYB-teksten)
+
+SwiftBridge is geen bank: teksten over het zakelijk SwiftBridge-profiel mogen geen
+rekening/IBAN/betaalpas/spaar-claims, NFC- of liveness-beloftes, "automatisch
+goedgekeurd", "gratis" of emoji bevatten, en "DNB-vergunning" alleen samen met
+"EMI-partner" in dezelfde zin.
+
+```bash
+node scripts/claims-check.mjs               # rapport; exit 1 bij treffers
+node scripts/claims-check.mjs --strict      # ook falen als een verplichte bron ontbreekt (CI)
+```
+
+Gecontroleerd: `kyb_*`-keys in de 5 taalbestanden, `public/landing/zakelijk.html`
+(KYB-segmenten) en `../swiftbridge-api/src/services/email/templates/kyb*.js`.
+
+## Zakelijk profiel (KYB)
+
+Zakelijke klanten vragen een **zakelijk SwiftBridge-profiel** aan via
+`/app/zakelijk-aanvraag` (7 stappen: bedrijf via KvK-zoek, jij, toestel, gebruik,
+identiteit, aanvullend, akkoord). Een medewerker beoordeelt de aanvraag in
+`/admin/compliance` -> tab **Zakelijke aanvragen**. Bindend contract (endpoints,
+statusmachine, keuzecodes, i18n-keys): `../swiftbridge-api/docs/KYB_API.md`.
+
+```
+src/pages/ZakelijkAanvraag.jsx           klantflow (hub + stappen)
+src/components/kyb/                      stap-componenten, kybOpties.js (spiegel van API-KEUZES)
+src/components/admin/kyb/                beheer: KybReviewQueue, KybDossier, KybBeoordeelPaneel,
+                                         KybInfoNodigModal, KybDocumentKnop (+ tests)
+public/landing/zakelijk.html             statische landing; CTA's -> /login?tab=register&type=zakelijk
+```
+
+Regels die overal gelden: productnaam "zakelijk SwiftBridge-profiel" (geen rekening/IBAN/
+pas), prijs uitsluitend EUR 4,95 vast + wisselkoersmarge per ledenniveau (1,2% / 1,0% /
+0,8% / 0,6%), doorlooptijd "uiterlijk binnen 5 werkdagen", toezichtzin "onder toezicht
+van DNB via onze EMI-partner", geen emoji, 'je'-vorm. Admin-documenten worden nooit in een
+iframe geladen (API zet `frame-ancestors 'none'`): fetch met credentials -> blob ->
+nieuw tabblad. Beoordelaars: zie `../documentatie/KYB_werkinstructie_beoordelaar.md`;
+lokaal testen: `../_LAUNCHER/SwiftBridge-ZO-TEST-JE.md` (Testrondje 6).
+
 ## Architectuur
 
 ```

@@ -19,7 +19,7 @@ import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import {
   Users, Clock, CheckCircle, Euro, Calendar, Shield, Clipboard, Lock,
-  AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh, Info, XCircle,
+  AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh, Info, XCircle, Globe,
 } from '../components/icons/Icons';
 import { API_URL } from '../services/api';
 
@@ -28,6 +28,8 @@ import { API_URL } from '../services/api';
 const UserManagement = lazy(() => import('../components/admin/UserManagement'));
 const BannerBeheer = lazy(() => import('../components/admin/BannerBeheer'));
 const KYCReviewQueue = lazy(() => import('../components/admin/KYCReviewQueue'));
+// KYB: zakelijke aanvragen (wachtrij + dossier + beoordeelpaneel) — zie docs/KYB_API.md sectie 6.
+const KybReviewQueue = lazy(() => import('../components/admin/kyb/KybReviewQueue'));
 
 // Lichtgewicht fallback voor lazy admin tabs
 function AdminLazyFallback() {
@@ -137,6 +139,19 @@ function StatsTab({ stats, chain }) {
           kleur="text-brand-600"
         />
       </div>
+
+      {/* KYB: open zakelijke aanvragen (GET /admin/stats.kyb, contract 2.7) */}
+      {stats.kyb && (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <StatCard
+            icoon={Globe}
+            label="Open zakelijke aanvragen"
+            waarde={stats.kyb.open ?? 0}
+            sub={`${stats.kyb.slaOverschreden ?? 0} doorlooptijd overschreden`}
+            kleur={(stats.kyb.slaOverschreden ?? 0) > 0 ? 'text-red-700' : ((stats.kyb.open ?? 0) > 0 ? 'text-accent-600' : 'text-ink-1')}
+          />
+        </div>
+      )}
 
       <div className="text-xs text-gray-500 text-right">
         Bijgewerkt: {fmtDatum(stats.genereerdOp)}
@@ -680,6 +695,7 @@ export default function AdminCompliance() {
   const tabs = [
     { id: 'stats', label: 'Overzicht', icoon: null },
     { id: 'users', label: 'Gebruikers', icoon: Users },
+    { id: 'kyb', label: t('kyb_admin_titel') !== 'kyb_admin_titel' ? t('kyb_admin_titel') : 'Zakelijke aanvragen', icoon: Globe },
     { id: 'kycreview', label: 'KYC Review', icoon: IdCard },
     { id: 'infoverzoeken', label: 'Info-verzoeken', icoon: Info },
     { id: 'audit', label: 'Audit logs', icoon: Clipboard },
@@ -752,6 +768,7 @@ export default function AdminCompliance() {
         <Suspense fallback={<AdminLazyFallback />}>
           {tab === 'stats' && <StatsTab stats={stats} chain={chain} />}
           {tab === 'users' && <UserManagement />}
+          {tab === 'kyb' && <KybReviewQueue />}
           {tab === 'kycreview' && <KYCReviewQueue />}
           {tab === 'infoverzoeken' && <InfoVerzoekenTab />}
           {tab === 'audit' && <AuditTab />}

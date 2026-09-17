@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiFetch } from '../services/api';
 import { Info, Check, Camera, Photo, Shield, AlertTriangle } from '../components/icons/Icons';
+import { useTaal } from '../i18n';
 
 /**
  * InfoAanleveren.jsx — "Info nodig"-flow, klantkant (Wwft/compliance).
@@ -35,6 +36,7 @@ function DetailRij({ label, waarde, waardeKleur = 'text-ink-1' }) {
 export default function InfoAanleveren() {
   const navigate = useNavigate();
   const { transactieId } = useParams();
+  const { t } = useTaal();
 
   const [fase, setFase] = useState('laden'); // laden | geen | intro | formulier | klaar | uitslag
   const [verzoek, setVerzoek] = useState(null);
@@ -121,6 +123,13 @@ export default function InfoAanleveren() {
             <p className="text-ink-2 text-sm mb-4">
               We hebben aanvullende informatie nodig voor deze overboeking (wettelijk verplichte controle).
               {verzoek.reden ? <> Reden: {verzoek.reden}.</> : null}
+            </p>
+            {/* Juridische documenten v1.0: grondslag = artikel 9 Voorwaarden Betaaldiensten (02) */}
+            <p className="text-sm -mt-2 mb-4">
+              <a href="/voorwaarden/betaaldiensten#artikel-9" target="_blank" rel="noopener noreferrer"
+                className="font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600">
+                {t('info_nodig_waarom_link')}
+              </a>
             </p>
             <div className="border border-border rounded-xl overflow-hidden mb-5 bg-surface">
               <DetailRij label="Bedrag" waarde={fmtEur(tx.eurBedrag)} />

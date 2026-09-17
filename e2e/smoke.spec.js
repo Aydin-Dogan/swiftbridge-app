@@ -37,4 +37,17 @@ test.describe('SwiftBridge — smoke', () => {
     expect(res?.status()).toBeLessThan(500);
     await expect(page.locator('#root')).not.toBeEmpty();
   });
+
+  // KYB: zakelijk SwiftBridge-profiel aanvragen
+  test('zakelijke aanvraag zonder sessie stuurt door naar /login', async ({ page }) => {
+    await page.goto('/app/zakelijk-aanvraag');
+    await expect(page).toHaveURL(/\/login/);
+    await expect(page.locator('input').first()).toBeVisible();
+  });
+
+  test('registratie met ?type=zakelijk toont het bedrijfsnaam-veld', async ({ page }) => {
+    await page.goto('/login?tab=register&type=zakelijk');
+    await expect(page.locator('#reg-bedrijf')).toBeVisible();
+    await expect(page.locator('#reg-kvk')).toBeVisible();
+  });
 });

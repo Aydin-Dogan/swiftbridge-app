@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, Navigate, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import LiveKoersTicker from './components/LiveKoersTicker';
 import Landing from './pages/Landing';
@@ -17,6 +17,7 @@ import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi, apiFetch } from './services/api';
 import { Home, Send, Bell, User, IdCard, X as XIcon, AlertTriangle, Lock, Lightbulb, Clipboard, MessageCircle, Menu as MenuIcon, ChevronDown, ChevronUp } from './components/icons/Icons';
 import AppLockScherm from './components/pin/AppLockScherm';
+import { DOCUMENTEN as JURIDISCHE_DOCUMENTEN, ARCHIEF_ROUTE } from './content/juridisch/index';
 
 // Lazy load zware paginas (code splitting)
 const PaymentFlow = lazy(() => import('./components/PaymentFlow'));
@@ -24,8 +25,9 @@ const KYCFlow = lazy(() => import('./components/KYCFlow'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const KoersAlerts = lazy(() => import('./components/KoersAlerts'));
 const Profiel = lazy(() => import('./components/Profiel'));
-const AlgemeneVoorwaarden = lazy(() => import('./pages/AlgemeneVoorwaarden'));
-const Privacybeleid = lazy(() => import('./pages/Privacybeleid'));
+// Juridische documenten v1.0 (markdown in src/content/juridisch, gedeelde layout)
+const JuridischePagina = lazy(() => import('./pages/juridisch/JuridischePagina'));
+const JuridischArchief = lazy(() => import('./pages/juridisch/JuridischArchief'));
 const AMLBeleid = lazy(() => import('./pages/AMLBeleid'));
 const Klachten = lazy(() => import('./pages/Klachten'));
 const Veiligheid = lazy(() => import('./pages/Veiligheid'));
@@ -62,6 +64,23 @@ const Status = lazy(() => import('./pages/Status'));
 const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
 const AdminOverzicht = lazy(() => import('./pages/AdminOverzicht'));
+// KYB: zakelijk SwiftBridge-profiel aanvragen (hub + stappen, zonder AppShell)
+const ZakelijkAanvraag = lazy(() => import('./pages/ZakelijkAanvraag'));
+
+// Alleen paden binnen de app mogen als ?next= terugkeerdoel dienen (geen open redirect).
+function veiligAppPad(pad) {
+  if (typeof pad !== 'string') return null;
+  if (!/^\/app(\/[A-Za-z0-9._~\-/]*)?(\?[A-Za-z0-9._~\-=&%]*)?$/.test(pad)) return null;
+  if (pad.includes('//') || pad.includes('\\')) return null;
+  return pad;
+}
+
+// /login terwijl je al ingelogd bent: respecteer ?next= (bv. deep-link naar de zakelijke aanvraag).
+function LoginOmleiding() {
+  const [params] = useSearchParams();
+  const doel = veiligAppPad(params.get('next')) || '/app';
+  return <Navigate to={doel} replace />;
+}
 
 // Loading spinner voor lazy loaded routes
 function LaadSpinner() {
@@ -308,6 +327,10 @@ function AppShell({ gebruiker, token, onLogout }) {
   ];
 
   const kycGoedgekeurd = gebruiker?.kycStatus === 'goedgekeurd';
+  // KYB: zakelijke accounts zien de status van hun zakelijk profiel in de header
+  const isZakelijk = gebruiker?.accountType === 'zakelijk';
+  const kybStatus = gebruiker?.kybStatus || 'geen';
+  const kybStatusLabel = t(kybStatus === 'geen' ? 'kyb_status_concept' : `kyb_status_${kybStatus}`);
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -339,6 +362,14 @@ function AppShell({ gebruiker, token, onLogout }) {
                 aria-label="KYC verificatie nog vereist - klik om te starten"
                 className="text-xs bg-amber-100 hover:bg-amber-200 active:bg-amber-300 text-amber-800 font-semibold px-3 py-2 min-h-[36px] rounded-full transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400 inline-flex items-center gap-1">
                 <AlertTriangle className="w-3.5 h-3.5" /> KYC
+              </button>
+            )}
+            {isZakelijk && (
+              <button onClick={() => navigate('/app/zakelijk-aanvraag')}
+                aria-label={t('kyb_shell_pill', { status: kybStatusLabel })}
+                className={`hidden sm:inline-flex items-center gap-1 text-xs font-semibold px-3 py-2 min-h-[36px] rounded-full transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-brand-300
+                  ${kybStatus === 'goedgekeurd' ? 'bg-brand-50 text-brand-700 hover:bg-brand-100' : 'bg-brand-500 text-white hover:bg-brand-600'}`}>
+                {t('kyb_shell_pill', { status: kybStatusLabel })}
               </button>
             )}
             <ThemeToggle />
@@ -533,6 +564,15 @@ function ReferralRedirect() {
   const { code } = useParams();
   const safe = (code || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
   return <Navigate to={`/login?tab=register&ref=${encodeURIComponent(safe)}`} replace />;
+}
+
+// ── Oude juridische URL's → nieuwe documentroutes ──
+// /algemene-voorwaarden#zakelijk-acceptatiecriteria was het oude anker voor de
+// zakelijke acceptatiecriteria; dat is nu een eigen document.
+function AlgemeneVoorwaardenOmleiding() {
+  const { hash } = useLocation();
+  const doel = hash === '#zakelijk-acceptatiecriteria' ? '/zakelijk/acceptatiecriteria' : '/voorwaarden';
+  return <Navigate to={doel} replace />;
 }
 
 // ── Statische-landing redirect (productie) ──
@@ -753,6 +793,17 @@ export default function App() {
     setGebruiker(g);
   }
 
+  // Profiel opnieuw ophalen (o.a. kybStatus na indienen/goedkeuren van de zakelijke aanvraag).
+  async function laadProfiel() {
+    try {
+      const g = await haalProfiel();
+      if (g && g.id) setGebruiker(g);
+      return g;
+    } catch {
+      return null;
+    }
+  }
+
   async function handleLogout() {
     // PATCH-3: server-call best-effort, lokale cleanup altijd uitvoeren
     // (ook bij netwerk-fout zodat client zeker uitgelogd is).
@@ -853,8 +904,23 @@ export default function App() {
             </Suspense>
           } />
           <Route path="/login" element={
-            token ? <Navigate to="/app" replace /> :
+            token ? <LoginOmleiding /> :
             <Login onLogin={handleLogin} />
+          } />
+          {/* KYB: zakelijk SwiftBridge-profiel aanvragen — hub + deep-link per stap (zonder AppShell) */}
+          <Route path="/app/zakelijk-aanvraag" element={
+            token ? (
+              <Suspense fallback={<LaadSpinner />}>
+                <ZakelijkAanvraag gebruiker={gebruiker} onProfielVerversen={laadProfiel} />
+              </Suspense>
+            ) : <Navigate to="/login?next=%2Fapp%2Fzakelijk-aanvraag" replace />
+          } />
+          <Route path="/app/zakelijk-aanvraag/stap/:nr" element={
+            token ? (
+              <Suspense fallback={<LaadSpinner />}>
+                <ZakelijkAanvraag gebruiker={gebruiker} onProfielVerversen={laadProfiel} />
+              </Suspense>
+            ) : <Navigate to="/login?next=%2Fapp%2Fzakelijk-aanvraag" replace />
           } />
           {/* Inlog bevestigen via de app (ING-model) — push-notificatie wijst hierheen */}
           <Route path="/bevestig-inlog" element={
@@ -911,8 +977,14 @@ export default function App() {
               <EmailWijzigen modus="intrekken" />
             </Suspense>
           } />
-          <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
-          <Route path="/privacybeleid" element={<Privacybeleid />} />
+          {/* Juridische documenten (publiek): elk document een eigen route, plus archief */}
+          {JURIDISCHE_DOCUMENTEN.map((doc) => (
+            <Route key={doc.slug} path={doc.route} element={<JuridischePagina slug={doc.slug} />} />
+          ))}
+          <Route path={ARCHIEF_ROUTE} element={<JuridischArchief />} />
+          <Route path={`${ARCHIEF_ROUTE}/:versie/:slug`} element={<JuridischePagina />} />
+          <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaardenOmleiding />} />
+          <Route path="/privacybeleid" element={<Navigate to="/privacy" replace />} />
           <Route path="/aml-beleid" element={<AMLBeleid />} />
           <Route path="/klachten" element={<Klachten />} />
           <Route path="/veiligheid" element={<Veiligheid />} />

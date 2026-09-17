@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { apiFetch, haalProfiel } from '../services/api';
-import { Zap, Fingerprint } from '../components/icons/Icons';
+import { Fingerprint, Eye, EyeOff } from '../components/icons/Icons';
+import { useTaal } from '../i18n';
 // BIO-1: biometrisch inloggen met een passkey (Windows Hello/Face ID/vingerafdruk)
 import { passkeySupport, passkeyLogin, isGeannuleerd } from '../services/passkey';
+import ZinMetLinks from '../components/ZinMetLinks';
 
 /**
  * ING-stijl device-login. Twee modi:
@@ -20,8 +22,11 @@ export const CODE_LENGTE = 6;
 
 // Losse cijfervelden met auto-advance, backspace en plak-ondersteuning.
 // Ook gebruikt door het "Bevestig inlog"-scherm (BevestigInlog.jsx).
-export function CodeInvoer({ waarde, setWaarde, onCompleet, disabled, lengte = CODE_LENGTE }) {
+export function CodeInvoer({ waarde, setWaarde, onCompleet, disabled, lengte = CODE_LENGTE, metTonen = true }) {
+  const { t } = useTaal();
   const refs = useRef([]);
+  // Op verzoek Aydin (16-9): de gekozen code kunnen zien om typefouten te voorkomen.
+  const [zichtbaar, setZichtbaar] = useState(false);
   const cijfers = waarde.padEnd(lengte, ' ').slice(0, lengte).split('');
 
   function zet(i, v) {
@@ -49,12 +54,13 @@ export function CodeInvoer({ waarde, setWaarde, onCompleet, disabled, lengte = C
   useEffect(() => { refs.current[0]?.focus(); }, []);
 
   return (
+    <div>
     <div className="flex justify-center gap-2" onPaste={plak}>
       {cijfers.map((c, i) => (
         <input
           key={i}
           ref={(el) => (refs.current[i] = el)}
-          type="password"
+          type={zichtbaar ? 'text' : 'password'}
           inputMode="numeric"
           autoComplete="off"
           maxLength={1}
@@ -67,10 +73,23 @@ export function CodeInvoer({ waarde, setWaarde, onCompleet, disabled, lengte = C
         />
       ))}
     </div>
+    {metTonen && (
+      <button
+        type="button"
+        onClick={() => setZichtbaar((z) => !z)}
+        aria-pressed={zichtbaar}
+        className="mt-3 inline-flex items-center gap-1.5 text-sm text-brand-700 hover:underline min-h-[44px]"
+      >
+        {zichtbaar ? <EyeOff className="w-4 h-4" aria-hidden="true" /> : <Eye className="w-4 h-4" aria-hidden="true" />}
+        {zichtbaar ? t('code_verbergen') : t('code_tonen')}
+      </button>
+    )}
+    </div>
   );
 }
 
 export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer, onAnderAccount }) {
+  const { t } = useTaal();
   const [code, setCode] = useState('');
   const [code2, setCode2] = useState('');
   const [stap, setStap] = useState('code'); // koppelen: 'code' → 'herhaal'
@@ -146,11 +165,34 @@ export default function DeviceLogin({ modus, apparaatNaam, onGelukt, onAnnuleer,
   return (
     <div className="min-h-screen bg-brand-hero flex items-center justify-center px-4">
       <div className="w-full max-w-sm bg-surface border border-border rounded-2xl shadow-soft-lg p-7 text-center">
-        <div className="mx-auto w-14 h-14 rounded-full bg-brand-50 flex items-center justify-center mb-4">
-          <Zap className="w-7 h-7 text-brand-600" />
-        </div>
+        {/* SB-logo (zelfde als de Facebook-profielfoto). Bij inloggen klikbaar naar de
+            homepagina, zodat je na uitloggen altijd terug kunt (verzoek Aydin 16-9).
+            Volledige paginalading: '/' is de statische landing van de server. */}
+        {isKoppel ? (
+          <img src="/brand/sb-logo.png" alt="SwiftBridge" width="72" height="72"
+            className="mx-auto w-[72px] h-[72px] rounded-full shadow-soft mb-4" />
+        ) : (
+          <a href="/" aria-label={t('terug_naar_home')} title={t('terug_naar_home')}
+            className="block mx-auto w-[72px] h-[72px] mb-4 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 transition-transform hover:scale-105">
+            <img src="/brand/sb-logo.png" alt="SwiftBridge" width="72" height="72"
+              className="w-[72px] h-[72px] rounded-full shadow-soft" />
+          </a>
+        )}
         <h2 className="font-display text-xl font-medium text-ink-1 mb-1">{titel}</h2>
-        <p className="text-ink-2 text-sm mb-6">{uitleg}</p>
+        <p className={`text-ink-2 text-sm ${isKoppel ? 'mb-2' : 'mb-6'}`}>{uitleg}</p>
+        {/* Juridische documenten v1.0: apparaat koppelen -> Voorwaarden Digitale Toegang (03) + Veiligheidsregels (06) */}
+        {isKoppel && (
+          <p className="text-ink-3 text-xs leading-snug mb-6">
+            <ZinMetLinks
+              tekst={t('apparaat_voorwaarden_zin')}
+              links={[
+                { label: t('link_voorwaarden_digitale_toegang'), to: '/voorwaarden/digitale-toegang' },
+                { label: t('link_veiligheidsregels'), to: '/veiligheid/regels' },
+              ]}
+              linkClassName="font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-600"
+            />
+          </p>
+        )}
 
         <CodeInvoer waarde={huidig} setWaarde={setHuidig} onCompleet={onCompleet} disabled={laden} />
 

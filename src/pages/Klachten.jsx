@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Zap } from '../components/icons/Icons';
 import { apiFetch } from '../services/api';
+import { useTaal } from '../i18n';
 
 /**
  * Klachtenregeling — voor een betaaldienstverlener een feitelijk vereiste pagina
@@ -10,6 +12,7 @@ import { apiFetch } from '../services/api';
  * de definitieve contractstructuur met de EMI-partner rond is.
  */
 export default function Klachten() {
+  const { t } = useTaal();
   const [status, setStatus] = useState('idle'); // idle | bezig | ok | fout
   const [form, setForm] = useState({ naam: '', email: '', onderwerp: '', bericht: '' });
 
@@ -43,10 +46,17 @@ export default function Klachten() {
 
           <div className="bg-brand-50 border border-brand-200 rounded-xl p-4 mb-8 text-sm text-brand-900">
             <strong>Wij nemen klachten serieus.</strong> Bent u niet tevreden over onze dienst?
-            Laat het ons weten. Wij bevestigen uw klacht binnen <strong>2 werkdagen</strong> en geven
+            Laat het ons weten. Wij bevestigen uw klacht binnen <strong>1 werkdag</strong> en geven
             u een inhoudelijke reactie binnen <strong>15 werkdagen</strong>. Lukt dat uitzonderlijk niet,
             dan laten we u weten waarom en wanneer u wél een antwoord kunt verwachten.
           </div>
+
+          {/* Volledige regeling (document 07 van de juridische documenten) */}
+          <p className="-mt-4 mb-8 text-sm">
+            <Link to="/klachten/regeling" className="text-brand-600 underline underline-offset-4 hover:text-accent-600">
+              {t('link_klachtenregeling')}
+            </Link>
+          </p>
 
           <div className="space-y-8 text-gray-700 leading-relaxed">
             <section>
@@ -72,7 +82,7 @@ export default function Klachten() {
                   <tbody>
                     <tr>
                       <td className="p-3 border border-gray-200">Ontvangstbevestiging van uw klacht</td>
-                      <td className="p-3 border border-gray-200">binnen 2 werkdagen</td>
+                      <td className="p-3 border border-gray-200">binnen 1 werkdag</td>
                     </tr>
                     <tr className="bg-gray-50">
                       <td className="p-3 border border-gray-200">Inhoudelijke reactie</td>
@@ -120,7 +130,7 @@ export default function Klachten() {
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Klacht indienen</h2>
               {status === 'ok' ? (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-900">
-                  <strong>Bedankt — uw klacht is ontvangen.</strong> U krijgt binnen 2 werkdagen een
+                  <strong>Bedankt — uw klacht is ontvangen.</strong> U krijgt binnen 1 werkdag een
                   bevestiging op het opgegeven e-mailadres.
                 </div>
               ) : (

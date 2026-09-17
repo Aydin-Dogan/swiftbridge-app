@@ -5,15 +5,22 @@
  * Klik op record → modal met 3 thumbnails (voorkant/achterkant/selfie) +
  * approve/reject knoppen.
  *
- * Backend:
- * GET /admin/kyc/review-queue — { records: [...] }
+ * Backend (contract docs/KYB_API.md 2.7):
+ * GET /admin/kyc/review-queue — { records: [{ id, userId, userNaam, userEmail, documentType, bron, context, ingediendOp, status }] }
  * GET /admin/kyc/:id/document/:type — bytes (image/jpeg|png)
- * PATCH /admin/kyc/:id/beoordeel — { status, opmerking? }
+ * PATCH /admin/kyc/:id/beoordeel — { status: 'goedgekeurd'|'afgekeurd', opmerking? } -> { success, kycId, status }
+ *
+ * `context` is 'kyc' (particuliere identificatie) of 'kyb' (identiteit van de tekenbevoegde bij een
+ * zakelijke aanvraag). Documentnummer/geboortedatum staan bewust niet in de lijst (data-minimalisatie).
  */
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch, parseError, API_URL } from '../../services/api';
 import { useTaal } from '../../i18n';
 import { X, Refresh, Mail } from '../icons/Icons';
+import { useTx } from './kyb/kybAdminLabels';
+
+const BRON_LABEL = { upload_telefoon: 'Upload via telefoon', upload_web: 'Upload via web', document_upload: 'Document-upload' };
+const CONTEXT_LABEL = { kyc: 'KYC (particulier)', kyb: 'KYB (zakelijk)' };
 
 function fmtDatum(iso) {
   if (!iso) return '—';
@@ -75,6 +82,9 @@ function DocumentBeeld({ recordId, type, label }) {
 // ── Review modal ─────────────────────────────────────────────────────────────
 function ReviewModal({ record, onClose, onBeoordeeld }) {
   const { t } = useTaal();
+  const tx = useTx();
+  // Paspoorten hebben geen achterkant; ID-kaarten wel. Server-vlag (indien aanwezig) wint.
+  const toonAchterkant = record.heeftAchterkant ?? !/paspoort/i.test(record.documentType || '');
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState('');
   const [toonReject, setToonReject] = useState(false);
@@ -125,16 +135,16 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
         {/* Document info */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-xs">
           <div>
-            <div className="text-gray-500">{t('kyc_upload_document_nummer')}</div>
-            <div className="font-mono text-ink-1">{record.documentNummer}</div>
+            <div className="text-gray-500">{t('kyc_review_kol_doctype')}</div>
+            <div className="text-ink-1 capitalize">{record.documentType || '-'}</div>
           </div>
           <div>
-            <div className="text-gray-500">{t('kyc_upload_geboortedatum')}</div>
-            <div className="text-ink-1">{record.geboortedatum}</div>
+            <div className="text-gray-500">{tx('kyc_review_kol_bron', 'Bron')}</div>
+            <div className="text-ink-1">{BRON_LABEL[record.bron] || record.bron || '-'}</div>
           </div>
           <div>
-            <div className="text-gray-500">{t('kyc_upload_nationaliteit')}</div>
-            <div className="text-ink-1">{record.nationaliteit}</div>
+            <div className="text-gray-500">{tx('kyc_review_kol_context', 'Context')}</div>
+            <div className="text-ink-1">{CONTEXT_LABEL[record.context] || record.context || '-'}</div>
           </div>
           <div>
             <div className="text-gray-500">{t('kyc_review_ingediend_op')}</div>
@@ -145,7 +155,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
         {/* Documenten */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
           <DocumentBeeld recordId={record.id} type="voorkant" label={t('kyc_upload_voorkant_label')} />
-          {record.heeftAchterkant && (
+          {toonAchterkant && (
             <DocumentBeeld recordId={record.id} type="achterkant" label={t('kyc_upload_achterkant_label')} />
           )}
           <DocumentBeeld recordId={record.id} type="selfie" label={t('kyc_upload_selfie_label')} />
@@ -224,6 +234,7 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
 // ── Hoofdcomponent ────────────────────────────────────────────────────────────
 export default function KYCReviewQueue() {
   const { t } = useTaal();
+  const tx = useTx();
   const [records, setRecords] = useState([]);
   const [laden, setLaden] = useState(true);
   const [fout, setFout] = useState('');
@@ -288,8 +299,8 @@ export default function KYCReviewQueue() {
                 <tr className="text-left text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500">
                   <th className="px-4 py-3">{t('kyc_review_kol_gebruiker')}</th>
                   <th className="px-4 py-3">{t('kyc_review_kol_doctype')}</th>
-                  <th className="px-4 py-3">{t('kyc_review_kol_docnummer')}</th>
-                  <th className="px-4 py-3">{t('kyc_review_kol_nationaliteit')}</th>
+                  <th className="px-4 py-3">{tx('kyc_review_kol_bron', 'Bron')}</th>
+                  <th className="px-4 py-3">{tx('kyc_review_kol_context', 'Context')}</th>
                   <th className="px-4 py-3">{t('kyc_review_kol_ingediend')}</th>
                   <th className="px-4 py-3 text-right">{t('kyc_review_kol_actie')}</th>
                 </tr>
@@ -301,9 +312,13 @@ export default function KYCReviewQueue() {
                       <div className="text-ink-1">{r.userNaam || '—'}</div>
                       <div className="text-xs text-gray-500 font-mono">{r.userEmail}</div>
                     </td>
-                    <td className="px-4 py-3 text-ink-1 capitalize">{r.documentType}</td>
-                    <td className="px-4 py-3 text-ink-2 font-mono text-xs">{r.documentNummer}</td>
-                    <td className="px-4 py-3 text-ink-2">{r.nationaliteit}</td>
+                    <td className="px-4 py-3 text-ink-1 capitalize">{r.documentType || '-'}</td>
+                    <td className="px-4 py-3 text-ink-2 text-xs">{BRON_LABEL[r.bron] || r.bron || '-'}</td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full border ${r.context === 'kyb' ? 'bg-brand-50 text-brand-700 border-brand-100' : 'bg-surface-3 text-ink-2 border-border'}`}>
+                        {CONTEXT_LABEL[r.context] || r.context || CONTEXT_LABEL.kyc}
+                      </span>
+                    </td>
                     <td className="px-4 py-3 text-ink-2 text-xs">{fmtDatum(r.ingediendOp)}</td>
                     <td className="px-4 py-3 text-right">
                       <button

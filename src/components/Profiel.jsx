@@ -4,8 +4,11 @@
  * Beschikbaar na KYC verificatie
  */
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../i18n';
 import { parseError } from '../services/api';
+import { haalStatus as haalKybStatus } from '../services/kyb';
+import { statusTKey as kybStatusTKey } from './kyb/kybOpties';
 import Vlag from './Vlag';
 import GdprBeheer from './GdprBeheer';
 import TweeFactorInstellingen from './TweeFactorInstellingen';
@@ -18,7 +21,7 @@ import NotificatieVoorkeuren from './NotificatieVoorkeuren';
 import ReferralKaart from './referral/ReferralKaart';
 import BeneficiaryLijst from './beneficiaries/BeneficiaryLijst';
 import EmailWijzigenModal from './EmailWijzigenModal';
-import { IdCard, Bank, AlertTriangle, Refresh, Bell, MessageCircle, Download } from './icons/Icons';
+import { IdCard, Bank, AlertTriangle, Refresh, Bell, MessageCircle, Download, Briefcase } from './icons/Icons';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -35,7 +38,8 @@ const NL_BANKEN_IDIN = [
   { code: 'TRIONL2U', naam: 'Triodos Bank', kleur: '#00853E' },
 ];
 
-function IdinKnop({ token, onSucces }) {
+// Geexporteerd zodat de KYB-flow (stap 5) dezelfde iDIN-route hergebruikt.
+export function IdinKnop({ token, onSucces }) {
   const { t } = useTaal();
   const [open, setOpen] = useState(false);
   const [gekozen, setGekozen] = useState(null);
@@ -142,6 +146,58 @@ const LANDEN = [
   { code: 'GB', naam: 'Verenigd Koninkrijk' },
   { code: 'AT', naam: 'Oostenrijk' },
 ];
+
+// ── KYB: sectie "Zakelijk profiel" (alleen zakelijke accounts) ────────────────
+function ZakelijkProfielSectie({ profiel, gebruiker }) {
+  const { t } = useTaal();
+  const navigate = useNavigate();
+  const [kyb, setKyb] = useState(null);
+  const zakelijk = (profiel?.accountType || gebruiker?.accountType) === 'zakelijk';
+
+  useEffect(() => {
+    if (!zakelijk) return undefined;
+    let weg = false;
+    haalKybStatus().then((d) => { if (!weg && d) setKyb(d); }).catch(() => {});
+    return () => { weg = true; };
+  }, [zakelijk]);
+
+  if (!zakelijk) return null;
+  const status = kyb?.kybStatus || profiel?.kybStatus || gebruiker?.kybStatus || 'geen';
+  const pillKlasse = status === 'goedgekeurd' ? 'pill-success'
+    : (status === 'afgewezen' || status === 'ingetrokken') ? 'pill-error'
+    : (status === 'info_nodig' || status === 'concept') ? 'pill-warning' : 'pill-neutral';
+  const bedrijfsnaam = profiel?.bedrijfsnaam || gebruiker?.bedrijfsnaam || '';
+  const kvkNummer = profiel?.kvkNummer || gebruiker?.kvkNummer || '';
+  const knop = status === 'geen' ? t('kyb_dashboard_knop_start')
+    : status === 'concept' ? t('kyb_hervat_knop', { stap: Number(kyb?.volgendeStap) || 1 })
+    : t('kyb_dashboard_knop_bekijk');
+
+  return (
+    <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up border-l-4 border-l-brand-500 space-y-3"
+      aria-label={t('kyb_profiel_kop')}>
+      <div className="flex items-start gap-3">
+        <Briefcase className="w-6 h-6 text-brand-600 flex-shrink-0" aria-hidden="true" />
+        <div className="flex-1 min-w-0">
+          <h3 className="font-display font-medium text-ink-1 text-base flex items-center gap-2 flex-wrap">
+            {t('kyb_profiel_kop')}
+            <span className={pillKlasse}>{t(kybStatusTKey(status))}</span>
+          </h3>
+          <p className="text-xs text-ink-2 mt-1 leading-relaxed">{t('kyb_profiel_uitleg')}</p>
+          {(bedrijfsnaam || kvkNummer) && (
+            <dl className="mt-2 text-sm grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
+              {bedrijfsnaam && (<><dt className="text-ink-3">{t('kyb_bedrijf_naam')}</dt><dd className="text-ink-1 font-medium">{bedrijfsnaam}</dd></>)}
+              {kvkNummer && (<><dt className="text-ink-3">{t('kyb_bedrijf_kvk')}</dt><dd className="text-ink-1 font-mono">{kvkNummer}</dd></>)}
+            </dl>
+          )}
+        </div>
+      </div>
+      <button type="button" onClick={() => navigate('/app/zakelijk-aanvraag')}
+        className="btn-inst text-xs px-4 py-2.5 min-h-[40px]">
+        {knop}
+      </button>
+    </div>
+  );
+}
 
 export default function Profiel({ token, gebruiker, onUpdate }) {
   const { t } = useTaal();
@@ -296,6 +352,9 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
           </div>
         )}
       </div>
+
+      {/* KYB: zakelijk profiel — direct na de profielkaart, alleen zakelijke accounts */}
+      <ZakelijkProfielSectie profiel={profiel} gebruiker={gebruiker} />
 
       {/* iDIN verificatie via bank — snelste route naar KYC */}
       {!kycOk && (
@@ -528,6 +587,30 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
         </h3>
         <p className="text-xs text-ink-2 leading-relaxed">{t('profiel_benef_uitleg')}</p>
         <BeneficiaryLijst token={token} />
+      </div>
+
+      {/* ── Juridisch en veiligheid — juridische documenten v1.0 (publieke pagina's, nieuw tabblad) */}
+      <div className="bg-surface border border-border rounded-md shadow-soft p-5 animate-fade-up border-l-4 border-l-brand-500 space-y-2">
+        <h3 className="font-display font-medium text-ink-1 flex items-center gap-2 text-base">
+          {t('profiel_juridisch_kop')}
+        </h3>
+        <ul className="divide-y divide-border-subtle">
+          {[
+            ['/veiligheid/jouw-geld', 'link_jouw_geld'],
+            ['/veiligheid/regels', 'link_veiligheidsregels'],
+            ['/privacy', 'link_privacy'],
+            ['/voorwaarden', 'link_voorwaarden'],
+            ['/tarieven', 'link_tarieven'],
+          ].map(([href, sleutel]) => (
+            <li key={href}>
+              <a href={href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-between min-h-[44px] text-sm font-semibold text-brand-700 hover:text-brand-600 hover:underline underline-offset-4">
+                <span>{t(sleutel)}</span>
+                <span aria-hidden="true" className="text-ink-3">&rsaquo;</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* AVG / GDPR beheer — data export + account anonimiseren */}

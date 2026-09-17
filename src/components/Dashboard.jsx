@@ -33,6 +33,8 @@ import RekeningenCard from './dashboard/RekeningenCard';
 import CashflowCard from './dashboard/CashflowCard';
 import DirectNaar from './dashboard/DirectNaar';
 import Tijdlijn from './dashboard/Tijdlijn';
+// KYB: kaart "Zakelijk profiel" voor zakelijke accounts zonder goedgekeurd profiel
+import KybDashboardKaart from './kyb/KybDashboardKaart';
 import { Mail, Refresh, Gift, IdCard, Lock, Zap, Banknote, Settings } from './icons/Icons';
 
 // Onboarding wizard voor nieuwe gebruikers
@@ -401,6 +403,11 @@ export default function Dashboard({ gebruiker }) {
         </div>
       )}
 
+      {/* KYB: zakelijk profiel aanvragen / status (alleen zakelijke accounts, tot goedkeuring) */}
+      {gebruiker?.accountType === 'zakelijk' && gebruiker?.kybStatus !== 'goedgekeurd' && (
+        <KybDashboardKaart gebruiker={gebruiker} />
+      )}
+
       {/* Actiecirkels */}
       <ActieCirkels />
 
@@ -455,7 +462,7 @@ export default function Dashboard({ gebruiker }) {
 
         {/* Rechterkolom: Direct naar + Tijdlijn */}
         <div className="space-y-4">
-          <DirectNaar />
+          <DirectNaar zakelijk={gebruiker?.accountType === 'zakelijk'} />
           <section className="rounded-md border border-border bg-surface shadow-soft overflow-hidden"
             aria-label={t('tijdlijn_titel')}>
             <div className="px-4 py-3 border-b border-border-subtle">

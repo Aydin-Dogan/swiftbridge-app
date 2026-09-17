@@ -10,7 +10,7 @@ export default function Privacybeleid() {
             <span className="font-bold text-xl text-brand-600">SwiftBridge</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacybeleid</h1>
-          <p className="text-sm text-gray-500 mb-8">Versie 1.0 — Datum: mei 2026 — AVG/GDPR compliant</p>
+          <p className="text-sm text-gray-500 mb-8">Versie 2026-09 — Datum: september 2026 — AVG/GDPR compliant</p>
 
           <div className="bg-brand-50 border border-brand-200 rounded-xl p-4 mb-8 text-sm text-blue-800">
             <strong>Samenvatting:</strong> Wij verzamelen alleen de gegevens die nodig zijn om u veilig geld te laten overmaken. Wij verkopen uw gegevens nooit aan derden. U heeft altijd het recht uw gegevens in te zien, te corrigeren of te laten verwijderen.
@@ -115,11 +115,63 @@ export default function Privacybeleid() {
               </div>
             </section>
 
+            <section id="zakelijk-profiel">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">4. Zakelijk profiel en Wwft</h2>
+              <p className="mb-3">
+                Vraagt u een <strong>zakelijk SwiftBridge-profiel</strong> aan, dan zijn wij op grond van de Wet ter voorkoming van
+                witwassen en financieren van terrorisme (Wwft) verplicht uw onderneming en de personen daarachter te kennen
+                (cliëntenonderzoek). Daarvoor verwerken wij aanvullend:
+              </p>
+              <ul className="list-disc pl-6 space-y-1 mb-3">
+                <li><strong>Bedrijfsgegevens:</strong> KvK-nummer, statutaire naam en handelsnaam, rechtsvorm, vestigingsadres, activiteiten (SBI) en website; bij handmatige invoer een recent KvK-uittreksel.</li>
+                <li><strong>Eigenaren en bestuurders (UBO's):</strong> naam, geboortedatum, nationaliteit, aard en omvang van het belang en de vraag of iemand politiek prominent is (PEP).</li>
+                <li><strong>De tekenbevoegde aanvrager:</strong> naam, geboortedatum, nationaliteit, mobiel nummer, woonadres en een kopie van het identiteitsbewijs (voor- en achterkant) met selfie, óf een bevestiging via iDIN.</li>
+                <li><strong>Doel en aard van het gebruik:</strong> verwacht aantal en omvang van overboekingen, bestemmingslanden, herkomst van de middelen, jaaromzet en deelnemingen.</li>
+                <li><strong>Screening:</strong> een controle van bedrijf en personen tegen sanctielijsten; de uitkomst wordt bij het dossier bewaard.</li>
+                <li><strong>Verklaringen:</strong> welke voorwaarden u heeft geaccepteerd (versie, tijdstip, gehasht IP-adres) en of u productupdates wilt ontvangen.</li>
+              </ul>
+              <div className="overflow-x-auto mb-3">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="text-left p-3 border border-gray-200 font-semibold">Doel</th>
+                      <th className="text-left p-3 border border-gray-200 font-semibold">Rechtsgrondslag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-3 border border-gray-200">Concept-aanvraag opslaan en hervatten</td>
+                      <td className="p-3 border border-gray-200">Precontractuele maatregelen (Art. 6.1b AVG)</td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="p-3 border border-gray-200">Cliëntenonderzoek, identificatie, UBO-vaststelling en sanctiescreening</td>
+                      <td className="p-3 border border-gray-200">Wettelijke verplichting Wwft (Art. 6.1c AVG)</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 border border-gray-200">Productupdates per e-mail</td>
+                      <td className="p-3 border border-gray-200">Toestemming (Art. 6.1a AVG), altijd intrekbaar</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Beoordeling door een medewerker:</strong> een medewerker van SwiftBridge beoordeelt uw aanvraag binnen 5 werkdagen. Er vindt geen uitsluitend geautomatiseerde besluitvorming plaats.</li>
+                <li><strong>Bewaartermijnen:</strong> een niet-ingediend concept verwijderen wij na 30 dagen zonder activiteit. Een ingediend dossier (inclusief documenten en de kopie van het identiteitsbewijs) bewaren wij 5 jaar na het einde van de relatie of na het besluit (art. 33 Wwft).</li>
+                <li><strong>Beperking van uw rechten:</strong> zolang de Wwft-bewaarplicht loopt, kunnen wij een ingediend dossier niet wissen (art. 17 lid 3 sub b AVG). Uw overige rechten uit hoofdstuk 6 blijven van toepassing.</li>
+                <li><strong>Geen mededelingen bij bepaalde afwijzingen:</strong> op grond van art. 23 Wwft mogen wij bij een afwijzing om sanctie- of risicoredenen geen nadere toelichting geven.</li>
+                <li><strong>Verwerkers en ontvangers:</strong> de Kamer van Koophandel (Handelsregister), onze EMI-partner en, uitsluitend bij een wettelijke verplichting, de toezichthouder of FIU-Nederland. Gegevens worden versleuteld opgeslagen binnen de EER.</li>
+              </ul>
+              <p className="mt-3 text-sm text-gray-500">
+                SwiftBridge is geen bank en heeft geen eigen DNB-vergunning; betaaldiensten lopen via een DNB-gelicentieerde EMI-partner (agent-model), conform PSD2 en de Wwft.
+              </p>
+            </section>
+
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">4. Hoe lang bewaren wij uw gegevens?</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">5. Hoe lang bewaren wij uw gegevens?</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Accountgegevens:</strong> zolang uw account actief is, plus 2 jaar na beëindiging.</li>
                 <li><strong>KYC-documenten:</strong> 5 jaar na laatste transactie (wettelijk verplicht op grond van Wwft).</li>
+                <li><strong>Zakelijk dossier (Wwft):</strong> concept 30 dagen na laatste activiteit; ingediend dossier 5 jaar na einde relatie of besluit.</li>
                 <li><strong>Transactiegegevens:</strong> 7 jaar (fiscale bewaarplicht).</li>
                 <li><strong>Technische logs:</strong> maximaal 90 dagen.</li>
               </ul>
@@ -127,11 +179,12 @@ export default function Privacybeleid() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">5. Delen wij uw gegevens?</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">6. Delen wij uw gegevens?</h2>
               <p className="mb-3">Wij verkopen uw gegevens <strong>nooit</strong> aan derden. Wij delen gegevens alleen in de volgende gevallen:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Bankpartners:</strong> voor uitvoering van de geldoverdracht (strikt noodzakelijk).</li>
                 <li><strong>KYC-verificatiepartners:</strong> voor identiteitsverificatie (bijv. Onfido of Veriff).</li>
+                <li><strong>Kamer van Koophandel:</strong> voor het opvragen van bedrijfsgegevens uit het Handelsregister bij een zakelijke aanvraag.</li>
                 {/* F23 fix (Cursor review): expliciet "via EMI-partner" toegevoegd */}
                 <li><strong>Toezichthouders (via onze EMI-partner):</strong> DNB, FIU-Nederland, Belastingdienst — uitsluitend bij wettelijke verplichting.</li>
                 <li><strong>IT-dienstverleners:</strong> hosting en infrastructuur (verwerkerovereenkomst aanwezig).</li>
@@ -140,7 +193,7 @@ export default function Privacybeleid() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">6. Uw rechten (AVG)</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">7. Uw rechten (AVG)</h2>
               <p className="mb-3">U heeft de volgende rechten, die u kunt uitoefenen via privacy@swiftbridge.nl:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
@@ -164,7 +217,7 @@ export default function Privacybeleid() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">7. Beveiliging</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">8. Beveiliging</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Alle communicatie is versleuteld via TLS/HTTPS.</li>
                 <li>Wachtwoorden worden opgeslagen met bcrypt-hashing (niet leesbaar).</li>
@@ -175,7 +228,7 @@ export default function Privacybeleid() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">8. Cookies</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">9. Cookies</h2>
               <p className="mb-3">SwiftBridge gebruikt minimale cookies:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Functionele cookies:</strong> noodzakelijk voor inloggen en sessibeheer. Geen toestemming vereist.</li>
@@ -185,12 +238,12 @@ export default function Privacybeleid() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">9. Wijzigingen</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">10. Wijzigingen</h2>
               <p>SwiftBridge kan dit privacybeleid aanpassen. Bij wezenlijke wijzigingen ontvangt u hierover een e-mailbericht minimaal 30 dagen vóór de ingangsdatum.</p>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">10. Contact</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">11. Contact</h2>
               <div className="bg-gray-50 rounded-lg p-4 text-sm">
                 <p><strong>Privacyvragen of verzoeken:</strong> privacy@swiftbridge.nl</p>
                 <p><strong>Algemene ondersteuning:</strong> support@swiftbridge.nl</p>
@@ -199,7 +252,7 @@ export default function Privacybeleid() {
             </section>
 
             <section className="border-t pt-6">
-              <p className="text-sm text-gray-500">SwiftBridge B.V. — Versie 1.0, mei 2026 — AVG/GDPR compliant</p>
+              <p className="text-sm text-gray-500">SwiftBridge B.V. — Versie 2026-09, september 2026 — AVG/GDPR compliant</p>
             </section>
           </div>
         </div>
