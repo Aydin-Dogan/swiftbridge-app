@@ -43,6 +43,21 @@ function proxyNaarApi(req, res) {
   const peer = req.socket.remoteAddress || '';
   headers['x-forwarded-for'] = bestaandeXff ? `${bestaandeXff}, ${peer}` : peer;
   headers['x-forwarded-proto'] = 'https';
+  // Gereedheidscheck 21-9: de Railway-edge van de API vervangt X-Forwarded-For,
+  // waardoor de API bij elke websiteklant het IP van deze server zag (alle
+  // IP-limieten golden voor het hele platform). Daarom geven we het klant-IP
+  // apart door, met een gedeeld geheim zodat een klant het niet kan vervalsen.
+  // Het laatste XFF-adres is wat de Railway-edge van de app zelf toevoegde.
+  delete headers['x-sb-klant-ip'];
+  delete headers['x-sb-proxy-geheim'];
+  if (process.env.PROXY_GEHEIM) {
+    const xffDelen = String(bestaandeXff || '').split(',').map((s) => s.trim()).filter(Boolean);
+    const klantIp = xffDelen[xffDelen.length - 1] || String(req.headers['x-real-ip'] || '') || peer;
+    if (klantIp) {
+      headers['x-sb-klant-ip'] = klantIp.replace(/^::ffff:/, '');
+      headers['x-sb-proxy-geheim'] = process.env.PROXY_GEHEIM;
+    }
+  }
 
   const mod = doel.protocol === 'https:' ? https : http;
   const uit = mod.request({
