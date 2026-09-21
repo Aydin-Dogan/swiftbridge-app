@@ -47,12 +47,15 @@ function proxyNaarApi(req, res) {
   // waardoor de API bij elke websiteklant het IP van deze server zag (alle
   // IP-limieten golden voor het hele platform). Daarom geven we het klant-IP
   // apart door, met een gedeeld geheim zodat een klant het niet kan vervalsen.
-  // Het laatste XFF-adres is wat de Railway-edge van de app zelf toevoegde.
+  // De Railway-edge zet "…, <klant-IP>, <intern edge-adres>" in X-Forwarded-For
+  // (live gemeten 21-9: het laatste adres wisselt per verzoek). Het klant-IP is
+  // dus het één-na-laatste adres — hetzelfde dat de API zelf met
+  // TRUST_PROXY_HOPS=2 kiest. Adressen dáárvoor kan de klant zelf invullen.
   delete headers['x-sb-klant-ip'];
   delete headers['x-sb-proxy-geheim'];
   if (process.env.PROXY_GEHEIM) {
     const xffDelen = String(bestaandeXff || '').split(',').map((s) => s.trim()).filter(Boolean);
-    const klantIp = xffDelen[xffDelen.length - 1] || String(req.headers['x-real-ip'] || '') || peer;
+    const klantIp = (xffDelen.length >= 2 ? xffDelen[xffDelen.length - 2] : xffDelen[0]) || peer;
     if (klantIp) {
       headers['x-sb-klant-ip'] = klantIp.replace(/^::ffff:/, '');
       headers['x-sb-proxy-geheim'] = process.env.PROXY_GEHEIM;
@@ -226,3 +229,13 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`SwiftBridge draait op poort ${PORT}`);
 });
+
+// Nette afsluiting bij een deploy (gereedheidscheck 21-9): lopende /api-verzoeken
+// laten afronden i.p.v. hard afbreken (zie drainingSeconds in railway.json).
+function afsluiten() {
+  server.close(() => process.exit(0));
+  setTimeout(() => server.closeIdleConnections?.(), 3000).unref();
+  setTimeout(() => process.exit(0), 15000).unref();
+}
+process.on('SIGTERM', afsluiten);
+process.on('SIGINT', afsluiten);
