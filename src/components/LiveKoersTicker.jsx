@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { VALUTAS } from '../services/currencies';
+import { haalKoersen as haalGedeeldeKoersen, pollBijZichtbaar } from '../services/koersenBron';
 import Vlag from './Vlag';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 // Ticker valuta's (alles behalve EUR zelf)
 const TICKER_VALUTAS = VALUTAS.filter(v => v.code !== 'EUR');
@@ -14,9 +14,8 @@ export default function LiveKoersTicker() {
 
   async function haalKoersen() {
     try {
-      const res = await fetch(`${API}/transactions/koersen`, { credentials: 'include' });
-      if (!res.ok) throw new Error('API fout');
-      const data = await res.json();
+      // Gedeelde bron (20-9): ticker en overzicht halen samen één keer op.
+      const data = await haalGedeeldeKoersen();
       setKoersen(prev => prev.map(v => {
         const nieuweKoers = data.koersen?.[v.code] ?? v.huidigeKoers;
         const richting = nieuweKoers > v.huidigeKoers ? 1 : nieuweKoers < v.huidigeKoers ? -1 : v.richting;
@@ -33,11 +32,8 @@ export default function LiveKoersTicker() {
     }
   }
 
-  useEffect(() => {
-    haalKoersen();
-    const interval = setInterval(haalKoersen, 60000);
-    return () => clearInterval(interval);
-  }, []);
+  // Alleen ophalen als het tabblad zichtbaar is (scheelt verkeer bij groei).
+  useEffect(() => pollBijZichtbaar(haalKoersen, 60000), []);
 
   const items = [...koersen, ...koersen];
 

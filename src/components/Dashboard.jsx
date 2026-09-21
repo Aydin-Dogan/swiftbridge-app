@@ -46,6 +46,7 @@ import BannerLijst from './banners/BannerLijst';
 
 // API helper voor email verificatie resend
 import { apiFetch, parseError } from '../services/api';
+import { haalKoersen as haalGedeeldeKoersen, pollBijZichtbaar } from '../services/koersenBron';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TX_KEY = 'swiftbridge_transacties';
@@ -278,8 +279,8 @@ export default function Dashboard({ gebruiker }) {
   const haalKoers = useCallback(async () => {
     setLadenKoers(true);
     try {
-      const res = await fetch(`${API}/transactions/koersen`, { credentials: 'include' });
-      const json = await res.json();
+      // Gedeelde bron met de ticker (20-9): één aanvraag per 45 s voor de hele pagina.
+      const json = await haalGedeeldeKoersen();
       if (json.koersen?.TRY) {
         setKoers(prev => {
           if (prev != null && prev !== json.koersen.TRY) setKoersGisteren(prev);
@@ -309,11 +310,8 @@ export default function Dashboard({ gebruiker }) {
     }
   }, []);
 
-  useEffect(() => {
-    haalKoers();
-    const id = setInterval(haalKoers, 60_000);
-    return () => clearInterval(id);
-  }, [haalKoers]);
+  // Alleen verversen als het tabblad zichtbaar is (minder verkeer bij groei).
+  useEffect(() => pollBijZichtbaar(haalKoers, 60_000), [haalKoers]);
 
   useEffect(() => {
     haalTransacties();
