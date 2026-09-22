@@ -355,7 +355,7 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
   );
 }
 
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet, favorieten, toggleFavoriet }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, bankBeschikbaar = true, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet, favorieten, toggleFavoriet }) {
   const { t } = useTaal();
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
@@ -589,8 +589,9 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
-            onClick={() => setUitbetaalMethode('bank')}
-            className={`p-3 rounded-md text-left border transition-colors active:scale-[0.99] ${
+            onClick={() => bankBeschikbaar && setUitbetaalMethode('bank')}
+            disabled={!bankBeschikbaar}
+            className={`p-3 rounded-md text-left border transition-colors active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed ${
               uitbetaalMethode === 'bank'
                 ? 'bg-brand-600 border-brand-600 text-white shadow-soft'
                 : 'bg-surface border-border text-ink-2 hover:bg-surface-3'
@@ -601,7 +602,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-semibold text-sm">Bankrekening</span>
             </div>
             <div className={`text-[10px] ${uitbetaalMethode === 'bank' ? 'text-blue-100' : 'text-gray-500'}`}>
-              Rechtstreeks op de rekening
+              {bankBeschikbaar ? 'Rechtstreeks op de rekening' : 'Binnenkort beschikbaar'}
             </div>
           </button>
           <button
@@ -1150,6 +1151,20 @@ export default function PaymentFlow({ token }) {
   const [ontvangerLabel, setOntvangerLabel] = useState(null);
   const [iban, setIban ] = useState('');
   const [uitbetaalMethode, setUitbetaalMethode] = useState('bank'); // bank | papara
+  // Welke uitbetaalmethodes kunnen nu echt (21-9): in live-modus zonder bank-rail
+  // weigert de API 'bank'; dan kiezen we vooraf de wallet i.p.v. een fout bij bevestigen.
+  const [bankBeschikbaar, setBankBeschikbaar] = useState(true);
+  useEffect(() => {
+    let weg = false;
+    Promise.resolve()
+      .then(() => apiFetch('/transactions/uitbetaalmethodes'))
+      .then((m) => {
+        if (weg || !m) return;
+        if (m.bank === false) { setBankBeschikbaar(false); setUitbetaalMethode('papara'); }
+      })
+      .catch(() => { /* onbekend: niets blokkeren, de API controleert toch */ });
+    return () => { weg = true; };
+  }, []);
   const [paparaIdentifier, setPaparaIdentifier] = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
   const [methode, setMethode ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
@@ -1478,7 +1493,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
+      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} bankBeschikbaar={bankBeschikbaar} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
         // WL-2: bij binnenkort-valuta open de wachtlijst-modal i.p.v. door
         // naar betaling. Voorkomt dat klant iDEAL betaalt voor onmogelijke uitbetaling.
         if (getValuta(valuta)?.status === 'binnenkort') {
