@@ -238,7 +238,8 @@ function StapKlaar({ form }) {
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 text-center space-y-5">
       <div><Sparkles className="w-16 h-16 mx-auto text-brand-600" /></div>
       <h2 className="font-display text-2xl font-medium text-ink-1">KYC ingediend!</h2>
-      <p className="text-ink-2 text-sm">Je aanvraag is ontvangen en wordt binnen 5 minuten beoordeeld.</p>
+      {/* Eerlijke verwachting (gereedheidscheck 21-9): een medewerker beoordeelt elk dossier. */}
+      <p className="text-ink-2 text-sm">Je aanvraag is ontvangen. Een medewerker beoordeelt je gegevens, meestal binnen 1 werkdag.</p>
 
       <div className="bg-amber-50 border border-amber-200 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
@@ -251,7 +252,7 @@ function StapKlaar({ form }) {
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Verwacht klaar</span>
-          <span className="font-semibold text-success-700">&lt; 5 minuten</span>
+          <span className="font-semibold text-ink-1">binnen 1 werkdag</span>
         </div>
       </div>
 
@@ -304,7 +305,7 @@ function KYCInBehandeling({ naam }) {
       </div>
       <h2 className="font-display text-2xl font-medium text-ink-1">Aanvraag in behandeling</h2>
       <p className="text-ink-2 text-sm">
-        Hoi {naam}, we controleren je documenten. Dit duurt normaal <strong>minder dan 5 minuten</strong>.
+        Hoi {naam}, een medewerker controleert je documenten. Dit duurt meestal <strong>maximaal 1 werkdag</strong>.
       </p>
       <div className="bg-amber-50 border border-amber-200 rounded-md p-4 text-left space-y-3">
         <div className="flex justify-between text-sm">
@@ -317,11 +318,11 @@ function KYCInBehandeling({ naam }) {
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Verwacht klaar</span>
-          <span className="font-semibold text-success-700">&lt; 5 minuten</span>
+          <span className="font-semibold text-ink-1">binnen 1 werkdag</span>
         </div>
       </div>
       <div className="space-y-2">
-        {['Documenten ontvangen', 'Identiteitscontrole bezig...', 'AML/compliance check...'].map((stap, i) => (
+        {['Documenten ontvangen', 'Beoordeling door een medewerker', 'Je krijgt bericht per e-mail'].map((stap, i) => (
           <div key={i} className={`flex items-center gap-3 p-3 rounded-md text-sm ${i === 0 ? 'bg-success-50 text-success-700' : i === 1 ? 'bg-amber-50 text-amber-700' : 'bg-gray-50 text-gray-400'}`}>
             <span>{i === 0 ? <CheckCircle className="w-4 h-4" /> : i === 1 ? <Refresh className="w-4 h-4" /> : <Clock className="w-4 h-4" />}</span>
             <span className={i < 2 ? 'font-medium' : ''}>{stap}</span>

@@ -83,6 +83,11 @@ function proxyNaarApi(req, res) {
     res.writeHead(apiRes.statusCode || 502, uitHeaders);
     apiRes.pipe(res); // streamt ook SSE (/status live-updates) gewoon door
   });
+  // Een hangende API mag de verbinding van de klant niet eindeloos vasthouden
+  // (gereedheidscheck 21-9). Live-streams (SSE, pad eindigt op /stream) uitgezonderd.
+  if (!/\/stream(\?|$)/.test(pad)) {
+    uit.setTimeout(30000, () => uit.destroy(new Error('API reageert niet binnen 30 s')));
+  }
   uit.on('error', (err) => {
     console.error('API-proxy fout:', err.message);
     if (!res.headersSent) {
