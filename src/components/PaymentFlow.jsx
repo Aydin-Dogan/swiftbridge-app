@@ -9,7 +9,7 @@
  */
 import { useState, useEffect } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
-import { berekenKosten } from '../services/kosten';
+import { berekenKosten, prijsopbouw, welkomstDealActief, MIN_BEDRAG } from '../services/kosten';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import Vlag from './Vlag';
@@ -380,7 +380,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   const ontvangerInfoOK = uitbetaalMethode === 'papara'
     ? !!paparaIdentifier
     : (iban && ibanCheck?.geldig);
-  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= 10 && ontvanger && ontvangerInfoOK;
+  // De ondergrens komt uit het prijsmodel, niet uit een los getal. Hier stond 10,
+  // waardoor een klant met EUR 30 helemaal tot het bevestigingsscherm kwam en pas
+  // bij Versturen te horen kreeg dat het niet kan.
+  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= MIN_BEDRAG && ontvanger && ontvangerInfoOK;
 
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5 animate-fade-up">
@@ -798,7 +801,7 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
 }
 
 // ── Stap 2: Bevestiging ───────────────────────────────────────────────────────
-function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie }) {
+function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, gratisEersteTx, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie }) {
   const { t } = useTaal();
   const valutaInfo = getValuta(valuta);
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
@@ -806,6 +809,21 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
   // PSD2 compliant cost breakdown
   const kosten = berekenKosten(bedragNum, methode || 'ideal', 'express', effectieveKoers);
+
+  // De welkomstactie maakt de fee nul. Dit scherm kende die actie niet en toonde
+  // dus EUR 4,95 servicekosten en een lager ontvangstbedrag dan de server boekte
+  // — precies omgekeerd aan wat een klant mag verwachten van een bevestiging.
+  // Het bedrag dat hier staat, is het bedrag dat wordt toegepast.
+  const dealActief = welkomstDealActief(bedragNum, gratisEersteTx);
+  const feeGetoond = dealActief ? 0 : kosten.klantBetaaltFee;
+  const opbouw = prijsopbouw({
+    bedrag: bedragNum,
+    feeEur: feeGetoond,
+    midMarketRate: effectieveKoers,
+    niveau: kosten.niveau,
+  });
+  const totaleKostenEur = feeGetoond + opbouw.fxMargeEur;
+  const totaleKostenPct = bedragNum > 0 ? (totaleKostenEur / bedragNum) * 100 : 0;
 
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5 animate-fade-up">
@@ -816,12 +834,12 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
           ['Betaalmethode', methodeObj?.label || methode],
           ['Naar', ontvanger],
           ['IBAN', `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
-          ['Servicekosten', `€${kosten.klantBetaaltFee.toFixed(2)}`],
-          [`Wisselkoers marge (${kosten.fxAfwijkingPct}%)`, `€${kosten.fxKostenEur.toFixed(2)}`],
-          ['Totale kosten', `€${kosten.totaleKostenEur.toFixed(2)} (${kosten.totaleKostenPct}%)`],
-          ['Mid-market koers (ECB)', `1 EUR = ${kosten.midMarketRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],
-          ['Onze wisselkoers', `1 EUR = ${kosten.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
-          ['Ontvanger krijgt', formatBedrag(kosten.ontvangenBedrag, valuta)],
+          ['Servicekosten', dealActief ? 'Gratis (welkomstactie)' : `€${feeGetoond.toFixed(2)}`],
+          [`Wisselkoers marge (${opbouw.fxMargePct}%)`, `€${opbouw.fxMargeEur.toFixed(2)}`],
+          ['Totale kosten', `€${totaleKostenEur.toFixed(2)} (${totaleKostenPct.toFixed(2)}%)`],
+          ['Mid-market koers (ECB)', `1 EUR = ${opbouw.midMarketKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],
+          ['Onze wisselkoers', `1 EUR = ${opbouw.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
+          ['Ontvanger krijgt', formatBedrag(opbouw.ontvangenBedrag, valuta)],
           ['Aankomsttijd', methode === 'ideal' ? '< 5 minuten' : '1–2 werkdagen'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
@@ -1165,6 +1183,19 @@ export default function PaymentFlow({ token }) {
       .catch(() => { /* onbekend: niets blokkeren, de API controleert toch */ });
     return () => { weg = true; };
   }, []);
+  // Staat de welkomstactie nog open? Nodig om op het bevestigingsscherm de
+  // bedragen te tonen die de server werkelijk toepast. Lukt het ophalen niet,
+  // dan gaan we uit van 'nee': dan ziet de klant de normale servicekosten en
+  // valt de uitkomst mee, in plaats van dat we gratis beloven en toch rekenen.
+  const [gratisEersteTx, setGratisEersteTx] = useState(false);
+  useEffect(() => {
+    let weg = false;
+    Promise.resolve()
+      .then(() => apiFetch('/users/me'))
+      .then((u) => { if (!weg && u) setGratisEersteTx(Boolean(u.gratisEersteTx)); })
+      .catch(() => { /* onbekend: normale kosten tonen */ });
+    return () => { weg = true; };
+  }, []);
   const [paparaIdentifier, setPaparaIdentifier] = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
   const [methode, setMethode ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
@@ -1375,11 +1406,16 @@ export default function PaymentFlow({ token }) {
         }).catch(err => console.warn('Notitie opslaan faalde:', err.message));
       }
 
-      // Bereken ontvangen bedrag in gekozen valuta
-      const valutaInfo = getValuta(valuta);
-      const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
-      const eurNetto = data.transactie.eurBedrag * 0.978;
-      const ontvangenBedrag = eurNetto * effectieveKoers;
+      // Ontvangen bedrag en koers komen van de SERVER — dat zijn de bedragen die
+      // daadwerkelijk geboekt zijn. Hier stond eerder een eigen berekening
+      // (bedrag x 0,978 x de live tickerkoers) die de vaste fee en de marge
+      // samenperste in één aftrek van 2,2% en vervolgens de referentiekoers
+      // gebruikte in plaats van de toegepaste. Op EUR 100 beloofde dat scherm de
+      // klant ruim 4% meer dan de server had geboekt, en bij de welkomst-deal
+      // week het er de andere kant op vanaf. Nooit zelf herrekenen wat de server
+      // al heeft vastgelegd.
+      const ontvangenBedrag = data.transactie.tryBedrag;
+      const effectieveKoers = data.transactie.wisselKoers;
 
       // ── Start Mollie betaling — krijg checkoutUrl en redirect gebruiker ──
       try {
@@ -1503,7 +1539,7 @@ export default function PaymentFlow({ token }) {
         }
       }} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} gratisEersteTx={gratisEersteTx} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
 
       {/* PIN-1: tx-confirm PIN-prompt voor Mollie-redirect */}
       {pinPromptOpen && (

@@ -102,8 +102,8 @@ export default function Veiligheid() {
                 SwiftBridge is <strong>geen bank</strong> en heeft geen eigen bankvergunning van De
                 Nederlandsche Bank. De betaaldiensten worden geleverd via een door DNB gelicentieerde
                 EMI-partner (Electronic Money Institution), waarvoor SwiftBridge als agent optreedt —
-                conform PSD2 en de Wwft. Dezelfde toezichthouder die uw eigen bank bewaakt, houdt dus
-                ook toezicht op de diensten die u via ons afneemt.
+                conform PSD2 en de Wwft. Het toezicht van DNB op onze EMI-partner is toezicht op een
+                betaalinstelling, niet op een bank: uw geld valt niet onder het depositogarantiestelsel.
               </p>
             </section>
 

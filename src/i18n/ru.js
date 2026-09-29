@@ -1,7 +1,7 @@
 export const ru = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Надёжен, как ваш банк',
+ slogan:'Под надзором. Полностью прозрачно.',
  laden:'Загрузка...',
  opslaan:'Сохранить',
  annuleren:'Отмена',
@@ -622,7 +622,7 @@ export const ru = {
  CONFLICT:'Это действие не удалось выполнить.',
 
  // Transactie
- TX_INVALID_AMOUNT:'Сумма должна быть от €10 до €5 000.',
+ TX_INVALID_AMOUNT:'Сумма должна быть от €50 до €5 000.',
  TX_INVALID_IBAN:'Недействительный IBAN. Проверьте IBAN получателя.',
  TX_INSUFFICIENT_KYC:'Перед переводом денег необходима верификация KYC.',
  TX_VALUTA_NIET_BESCHIKBAAR:'Эта валюта сейчас недоступна.',
@@ -1170,14 +1170,14 @@ export const ru = {
  recurring_form_titel:'Новый повторяющийся перевод',
  recurring_form_opslaan:'Сохранить расписание',
  recurring_form_fout_naam:'Дайте расписанию узнаваемое имя (например,"Мама ежемесячно").',
- recurring_form_fout_bedrag:'Сумма должна быть от €10 до €5 000.',
+ recurring_form_fout_bedrag:'Сумма должна быть от €50 до €5 000.',
  recurring_form_fout_ontvanger:'Имя получателя обязательно.',
  recurring_form_fout_iban:'IBAN обязателен.',
  recurring_form_fout_start:'Дата начала обязательна.',
  recurring_veld_naam:'Название (для себя)',
  recurring_veld_naam_placeholder:'Мама ежемесячно',
  recurring_veld_bedrag:'Сумма',
- recurring_veld_bedrag_hint:'Минимум €10 · Максимум €5 000 за перевод',
+ recurring_veld_bedrag_hint:'Минимум €50 · Максимум €5 000 за перевод',
  recurring_veld_ontvanger:'Имя получателя',
  recurring_veld_ontvanger_placeholder:'Анна Йылмаз',
  recurring_veld_iban:'IBAN получателя',

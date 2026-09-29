@@ -66,6 +66,41 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
   };
 }
 
+// Welkomstactie: geen fee op de eerste overboeking tot en met dit bedrag.
+// Moet gelijk blijven aan WELKOMST_DEAL_MAX in de API (matrixSync.test.js).
+export const WELKOMST_DEAL_MAX = 800;
+
+/** Geldt de welkomstactie voor deze overboeking? Spiegelt welkomstDealActief in de API. */
+export function welkomstDealActief(bedrag, heeftGratisEersteTx) {
+  if (!heeftGratisEersteTx) return false;
+  return (parseFloat(bedrag) || 0) <= WELKOMST_DEAL_MAX;
+}
+
+/**
+ * DE ENE berekening van koers, marge en ontvangstbedrag — spiegelt prijsopbouw
+ * in de API. Gebruik deze overal waar de fee nul kan zijn (welkomstactie);
+ * berekenKosten gaat er altijd van uit dat de klant de vaste fee betaalt en
+ * toont dan een te laag ontvangstbedrag.
+ */
+export function prijsopbouw({ bedrag, feeEur, midMarketRate, niveau = 'basis' }) {
+  const b = Math.max(0, parseFloat(bedrag) || 0);
+  const fee = Math.max(0, parseFloat(feeEur) || 0);
+  const mid = parseFloat(midMarketRate) || 0;
+  const marge = fxMarge(niveau);
+
+  const netto = Math.max(0, b - fee);
+  const appliedRate = mid * (1 - marge);
+
+  return {
+    fxMargePct: round(marge * 100, 2),
+    fxMargeEur: round(netto * marge, 2),
+    midMarketKoers: round(mid, 4),
+    appliedRate: round(appliedRate, 4),
+    ontvangenBedrag: round(netto * appliedRate, 2),
+    niveau: FX_MARGE_NIVEAUS[niveau] ? niveau : 'basis',
+  };
+}
+
 export const KOSTEN_LABELS = {
   fee: { label: 'Vaste servicekosten', uitleg: 'Eén vast bedrag per overboeking — geen verborgen kosten' },
 };

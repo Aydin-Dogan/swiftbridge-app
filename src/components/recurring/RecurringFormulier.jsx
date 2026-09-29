@@ -10,7 +10,9 @@
  * - Optionele einddatum
  *
  * Validatie:
- * - Bedrag €10 – €5000
+ * - Bedrag: de grenzen uit het prijsmodel (services/kosten.js), niet zelf
+ *   ingetypt. Hier stond €10 terwijl de server alles onder €50 weigert; een
+ *   klant kwam dan met €20 door dit formulier heen en liep op de server vast.
  * - IBAN niet leeg (server doet mod-97; we doen lichte client check)
  * - Naam ≥ 2 tekens
  * - Startdatum verplicht en niet in het verleden
@@ -20,6 +22,7 @@
 import { useState } from 'react';
 import { useTaal } from '../../i18n';
 import { apiFetch, parseError } from '../../services/api';
+import { MIN_BEDRAG, MAX_BEDRAG } from '../../services/kosten';
 import FrequentiePicker from './FrequentiePicker';
 import { X } from '../icons/Icons';
 
@@ -64,7 +67,7 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
       setFout(t('recurring_form_fout_naam'));
       return;
     }
-    if (!isFinite(b) || b < 10 || b > 5000) {
+    if (!isFinite(b) || b < MIN_BEDRAG || b > MAX_BEDRAG) {
       setFout(t('recurring_form_fout_bedrag'));
       return;
     }
@@ -157,8 +160,8 @@ export default function RecurringFormulier({ open, onSluit, onAangemaakt }) {
               <input
                 type="number"
                 value={bedrag}
-                min="10"
-                max="5000"
+                min={MIN_BEDRAG}
+                max={MAX_BEDRAG}
                 step="0.01"
                 onChange={(e) => setBedrag(e.target.value)}
                 placeholder="100.00"

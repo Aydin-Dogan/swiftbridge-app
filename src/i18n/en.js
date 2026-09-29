@@ -1,7 +1,7 @@
 export const en = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'As reliable as your bank',
+ slogan:'Supervised. Fully transparent.',
  laden:'Loading...',
  opslaan:'Save',
  annuleren:'Cancel',
@@ -687,7 +687,7 @@ export const en = {
  CONFLICT:'This action could not be completed.',
 
  // Transaction
- TX_INVALID_AMOUNT:'Amount must be between €10 and €5,000.',
+ TX_INVALID_AMOUNT:'Amount must be between €50 and €5,000.',
  TX_INVALID_IBAN:'Invalid IBAN. Please check the recipient\'s IBAN.',
  TX_INSUFFICIENT_KYC:'KYC verification is required before you can send money.',
  TX_VALUTA_NIET_BESCHIKBAAR:'This currency is currently unavailable.',
@@ -1261,14 +1261,14 @@ export const en = {
  recurring_form_titel:'New recurring transfer',
  recurring_form_opslaan:'Save schedule',
  recurring_form_fout_naam:'Give the schedule a recognisable name (e.g."Mom monthly").',
- recurring_form_fout_bedrag:'Amount must be between €10 and €5,000.',
+ recurring_form_fout_bedrag:'Amount must be between €50 and €5,000.',
  recurring_form_fout_ontvanger:'Recipient name is required.',
  recurring_form_fout_iban:'IBAN is required.',
  recurring_form_fout_start:'Start date is required.',
  recurring_veld_naam:'Name (for yourself)',
  recurring_veld_naam_placeholder:'Mom monthly',
  recurring_veld_bedrag:'Amount',
- recurring_veld_bedrag_hint:'Minimum €10 · Maximum €5,000 per transfer',
+ recurring_veld_bedrag_hint:'Minimum €50 · Maximum €5,000 per transfer',
  recurring_veld_ontvanger:'Recipient name',
  recurring_veld_ontvanger_placeholder:'Anne Yilmaz',
  recurring_veld_iban:'Recipient IBAN',

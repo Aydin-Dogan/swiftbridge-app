@@ -35,7 +35,11 @@ export default function OverOns() {
               <li><strong>Eerlijke prijs.</strong> Vaste, zichtbare kosten en een transparante wisselkoers — u ziet altijd precies wat de ontvanger krijgt.</li>
               <li><strong>Snelheid.</strong> Express-overboekingen doorgaans binnen 5 minuten, ook in het weekend.</li>
               <li><strong>Uw taal.</strong> De app en onze hulp werken in vijf talen — en er komen er meer bij.</li>
-              <li><strong>Veiligheid op bankniveau.</strong> Sterke verificatie en versleuteling — lees hoe op onze <a href="/veiligheid" className="text-brand-600 underline">veiligheidspagina</a>.</li>
+              {/* Hier stond een vergelijking met het veiligheidsniveau van een
+                  bank. Dat is geen bestaande norm en suggereert dat wij dezelfde
+                  bescherming bieden; dat doen wij niet. Noem wat er werkelijk is.
+                  Zie lib/geenBankclaim.test.js. */}
+              <li><strong>Verificatie in twee stappen.</strong> Sterke verificatie en versleuteling — lees hoe op onze <a href="/veiligheid" className="text-brand-600 underline">veiligheidspagina</a>.</li>
             </ul>
 
             <h2 className="text-xl font-semibold text-gray-900 pt-2">Eerlijk over wat wij zijn</h2>

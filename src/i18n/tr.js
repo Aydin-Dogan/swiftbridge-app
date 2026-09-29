@@ -1,7 +1,7 @@
 export const tr = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Bankanız kadar güvenilir',
+ slogan:'Denetim altında. Tümüyle şeffaf.',
  laden:'İşleniyor...',
  opslaan:'Kaydet',
  annuleren:'İptal',
@@ -687,7 +687,7 @@ export const tr = {
  CONFLICT:'Bu işlem gerçekleştirilemedi.',
 
  // İşlem
- TX_INVALID_AMOUNT:'Tutar €10 ile €5.000 arasında olmalıdır.',
+ TX_INVALID_AMOUNT:'Tutar €50 ile €5.000 arasında olmalıdır.',
  TX_INVALID_IBAN:'Geçersiz IBAN. Alıcının IBAN numarasını kontrol edin.',
  TX_INSUFFICIENT_KYC:'Para gönderebilmek için önce kimlik doğrulaması (KYC) yapın.',
  TX_VALUTA_NIET_BESCHIKBAAR:'Bu para birimi şu anda kullanılamıyor.',
@@ -1261,14 +1261,14 @@ export const tr = {
  recurring_form_titel:'Yeni tekrarlayan transfer',
  recurring_form_opslaan:'Planı kaydet',
  recurring_form_fout_naam:'Plana tanınabilir bir ad verin (örn."Anne aylık").',
- recurring_form_fout_bedrag:'Tutar €10 ile €5.000 arasında olmalıdır.',
+ recurring_form_fout_bedrag:'Tutar €50 ile €5.000 arasında olmalıdır.',
  recurring_form_fout_ontvanger:'Alıcı adı zorunludur.',
  recurring_form_fout_iban:'IBAN zorunludur.',
  recurring_form_fout_start:'Başlangıç tarihi zorunludur.',
  recurring_veld_naam:'Ad (kendiniz için)',
  recurring_veld_naam_placeholder:'Anne aylık',
  recurring_veld_bedrag:'Tutar',
- recurring_veld_bedrag_hint:'Minimum €10 · Maksimum €5.000 transfer başına',
+ recurring_veld_bedrag_hint:'Minimum €50 · Maksimum €5.000 transfer başına',
  recurring_veld_ontvanger:'Alıcı adı',
  recurring_veld_ontvanger_placeholder:'Ayşe Yılmaz',
  recurring_veld_iban:'Alıcı IBAN',

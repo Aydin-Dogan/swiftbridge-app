@@ -1,7 +1,7 @@
 export const nl = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Zo betrouwbaar als uw bank',
+ slogan:'Onder toezicht. Volledig transparant.',
  laden:'Bezig...',
  opslaan:'Opslaan',
  annuleren:'Annuleren',
@@ -688,7 +688,7 @@ export const nl = {
  CONFLICT:'Deze actie kon niet worden uitgevoerd.',
 
  // Transactie
- TX_INVALID_AMOUNT:'Bedrag moet tussen €10 en €5.000 zijn.',
+ TX_INVALID_AMOUNT:'Bedrag moet tussen €50 en €5.000 zijn.',
  TX_INVALID_IBAN:'Ongeldig IBAN nummer. Controleer het IBAN van de ontvanger.',
  TX_INSUFFICIENT_KYC:'KYC verificatie is vereist voordat je geld kunt overmaken.',
  TX_VALUTA_NIET_BESCHIKBAAR:'Deze valuta is op dit moment niet beschikbaar.',
@@ -1141,14 +1141,14 @@ export const nl = {
  recurring_form_titel:'Nieuwe terugkerende overboeking',
  recurring_form_opslaan:'Schedule opslaan',
  recurring_form_fout_naam:'Geef het schedule een herkenbare naam (bv"Mama maandelijks").',
- recurring_form_fout_bedrag:'Bedrag moet tussen €10 en €5.000 zijn.',
+ recurring_form_fout_bedrag:'Bedrag moet tussen €50 en €5.000 zijn.',
  recurring_form_fout_ontvanger:'Ontvanger naam is verplicht.',
  recurring_form_fout_iban:'IBAN is verplicht.',
  recurring_form_fout_start:'Startdatum is verplicht.',
  recurring_veld_naam:'Naam (voor jezelf)',
  recurring_veld_naam_placeholder:'Mama maandelijks',
  recurring_veld_bedrag:'Bedrag',
- recurring_veld_bedrag_hint:'Minimum €10 · Maximum €5.000 per overboeking',
+ recurring_veld_bedrag_hint:'Minimum €50 · Maximum €5.000 per overboeking',
  recurring_veld_ontvanger:'Naam ontvanger',
  recurring_veld_ontvanger_placeholder:'Annemarie Yilmaz',
  recurring_veld_iban:'IBAN ontvanger',

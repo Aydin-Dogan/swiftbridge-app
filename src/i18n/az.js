@@ -1,7 +1,7 @@
 export const az = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Bankınız qədər etibarlı',
+ slogan:'Nəzarət altında. Tam şəffaf.',
  laden:'Yüklənir...',
  opslaan:'Yadda saxla',
  annuleren:'Ləğv et',
@@ -622,7 +622,7 @@ export const az = {
  CONFLICT:'Bu əməliyyat yerinə yetirilə bilmədi.',
 
  // Əməliyyat
- TX_INVALID_AMOUNT:'Məbləğ €10 və €5 000 arasında olmalıdır.',
+ TX_INVALID_AMOUNT:'Məbləğ €50 və €5 000 arasında olmalıdır.',
  TX_INVALID_IBAN:'Yanlış IBAN nömrəsi. Qəbul edənin IBAN-ını yoxlayın.',
  TX_INSUFFICIENT_KYC:'Pul köçürməzdən əvvəl KYC doğrulaması tələb olunur.',
  TX_VALUTA_NIET_BESCHIKBAAR:'Bu valyuta hazırda əlçatan deyil.',
@@ -1170,14 +1170,14 @@ export const az = {
  recurring_form_titel:'Yeni təkrarlanan köçürmə',
  recurring_form_opslaan:'Qrafiki yadda saxla',
  recurring_form_fout_naam:'Qrafikə tanınan ad verin (məs."Ana aylıq").',
- recurring_form_fout_bedrag:'Məbləğ €10 ilə €5 000 arasında olmalıdır.',
+ recurring_form_fout_bedrag:'Məbləğ €50 ilə €5 000 arasında olmalıdır.',
  recurring_form_fout_ontvanger:'Alıcı adı tələb olunur.',
  recurring_form_fout_iban:'IBAN tələb olunur.',
  recurring_form_fout_start:'Başlama tarixi tələb olunur.',
  recurring_veld_naam:'Ad (özünüz üçün)',
  recurring_veld_naam_placeholder:'Ana aylıq',
  recurring_veld_bedrag:'Məbləğ',
- recurring_veld_bedrag_hint:'Minimum €10 · Maksimum €5 000 köçürmə başına',
+ recurring_veld_bedrag_hint:'Minimum €50 · Maksimum €5 000 köçürmə başına',
  recurring_veld_ontvanger:'Alıcı adı',
  recurring_veld_ontvanger_placeholder:'Aysel Yılmaz',
  recurring_veld_iban:'Alıcı IBAN',
