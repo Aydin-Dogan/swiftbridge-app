@@ -32,8 +32,6 @@ const AMLBeleid = lazy(() => import('./pages/AMLBeleid'));
 const Klachten = lazy(() => import('./pages/Klachten'));
 const Veiligheid = lazy(() => import('./pages/Veiligheid'));
 const OverOns = lazy(() => import('./pages/OverOns'));
-const AdminPanel = lazy(() => import('./pages/AdminPanel'));
-const AdminCompliance = lazy(() => import('./pages/AdminCompliance'));
 const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 const EmailWijzigen = lazy(() => import('./pages/EmailWijzigen'));
 const Recurring = lazy(() => import('./pages/Recurring'));
@@ -61,9 +59,7 @@ const Overschrijven = lazy(() => import('./components/opdrachten/Overschrijven')
 const Betaalverzoeken = lazy(() => import('./components/betaalverzoeken/Betaalverzoeken'));
 const BetaalPagina = lazy(() => import('./pages/BetaalPagina'));
 const Status = lazy(() => import('./pages/Status'));
-const AdminErrors = lazy(() => import('./pages/AdminErrors'));
 const TransactieTracking = lazy(() => import('./pages/TransactieTracking'));
-const AdminOverzicht = lazy(() => import('./pages/AdminOverzicht'));
 // KYB: zakelijk SwiftBridge-profiel aanvragen (hub + stappen, zonder AppShell)
 const ZakelijkAanvraag = lazy(() => import('./pages/ZakelijkAanvraag'));
 
@@ -995,29 +991,15 @@ export default function App() {
               <Status />
             </Suspense>
           } />
-          <Route path="/admin" element={
-            token ? <AdminPanel /> : <Navigate to="/login" replace />
-          } />
-          <Route path="/admin/compliance" element={
-            token ? <AdminCompliance /> : <Navigate to="/login" replace />
-          } />
+          {/* De beheerschermen zijn hier weg (ronde 0, 29-9-2026). Ze staan nu
+              in src/intern/ met een eigen bundel en een eigen voordeur, zodat
+              de compliance-code niet met de klantbundel wordt meegestuurd.
+              Zie intern.html en het architectuurbesluit. */}
           {/* Publieke transactie tracking-link (Verbetering OO) — ontvanger
               kan status zien zonder login, geen PII zichtbaar. */}
           <Route path="/tx/:token" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
               <TransactieTracking />
-            </Suspense>
-          } />
-          {/* Admin KPI dashboard (Verbetering XX) — top-level overzicht */}
-          <Route path="/admin/overzicht" element={
-            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
-              <AdminOverzicht />
-            </Suspense>
-          } />
-          {/* Admin errors viewer (Verbetering Z) — hangt aan U backend endpoint */}
-          <Route path="/admin/errors" element={
-            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
-              <AdminErrors />
             </Suspense>
           } />
           {/* Custom 404 ipv silent redirect — geeft bezoeker feedback + navigatie-suggesties */}

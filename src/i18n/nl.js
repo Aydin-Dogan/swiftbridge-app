@@ -752,7 +752,7 @@ export const nl = {
  KYB_INVALID_DECISION:'Ongeldig besluit.',
  KYB_CHECKLIST_ONVOLLEDIG:'Vink eerst alle controlepunten af.',
  KYB_KYC_VEREIST:'Keur eerst de identiteit van de aanvrager goed.',
- KYB_VEREIST:'Je zakelijk profiel is nog niet goedgekeurd.',
+ KYB_VEREIST:'Je zakelijk profiel is nog niet goedgekeurd.'
  },
 
  // ── Terugkerende overboekingen (recurring) ──────────────────────────────
@@ -1740,52 +1740,52 @@ export const nl = {
  kyb_profiel_uitleg:'Bedrijfsgegevens en status van je zakelijke SwiftBridge-profiel.',
  kyb_shell_pill:'Zakelijk: {status}',
  // Admin
- kyb_admin_titel:'Zakelijke aanvragen',
- kyb_admin_leeg:'Geen aanvragen in deze status.',
- kyb_admin_filter_open:'Open', kyb_admin_filter_ingediend:'Ingediend', kyb_admin_filter_in_behandeling:'In behandeling', kyb_admin_filter_info_nodig:'Info nodig', kyb_admin_filter_goedgekeurd:'Goedgekeurd', kyb_admin_filter_afgewezen:'Afgewezen', kyb_admin_filter_alle:'Alle',
- kyb_admin_kol_bedrijf:'Bedrijf', kyb_admin_kol_aanvrager:'Aanvrager', kyb_admin_kol_status:'Status', kyb_admin_kol_ingediend:'Ingediend', kyb_admin_kol_uiterlijk:'Uiterlijk', kyb_admin_kol_versie:'Poging',
- kyb_admin_sla_overschreden:'Doorlooptijd overschreden',
- kyb_admin_sanctie_hit:'Sanctie-hit',
- kyb_admin_screening_onbeschikbaar:'Screening niet uitgevoerd',
- kyb_admin_kvk_handmatig:'KvK handmatig',
- kyb_admin_claim:'In behandeling nemen',
- kyb_admin_in_behandeling_bij:'In behandeling bij {naam}',
- kyb_admin_sectie_bedrijf:'Bedrijf', kyb_admin_sectie_personen:'Eigenaren en bestuurders', kyb_admin_sectie_identiteit:'Identiteit', kyb_admin_sectie_gebruik:'Gebruik en doel', kyb_admin_sectie_aanvullend:'Aanvullend', kyb_admin_sectie_toestemming:'Verklaringen', kyb_admin_sectie_screening:'Screening', kyb_admin_sectie_documenten:'Documenten', kyb_admin_sectie_historie:'Historie',
- kyb_admin_kvk_profiel:'Handelsregister', kyb_admin_opgegeven:'Opgegeven', kyb_admin_afwijking:'Wijkt af',
- kyb_admin_document_open:'Openen',
- kyb_admin_id_goedkeuren:'Identiteit goedkeuren', kyb_admin_id_afwijzen:'Identiteit afwijzen',
- kyb_admin_id_mismatch:'Geboortedatum wijkt af van het identiteitsbewijs',
- kyb_admin_geen_documentkopie:'Geen documentkopie (iDIN)',
- kyb_admin_checklist_kop:'Controlepunten (verplicht voor goedkeuren)',
- kyb_admin_check_identiteit_geverifieerd:'Identiteit van de tekenbevoegde geverifieerd',
- kyb_admin_check_kvk_gecontroleerd:'Bedrijfsgegevens gecontroleerd met het Handelsregister',
- kyb_admin_check_ubo_compleet:'Eigenaren en bestuurders compleet en plausibel',
- kyb_admin_check_sancties_gecontroleerd:'Sanctiescreening gecontroleerd',
- kyb_admin_check_pep_beoordeeld:'PEP-status beoordeeld',
- kyb_admin_check_doel_aard_begrepen:'Doel en aard van het gebruik begrepen',
- kyb_admin_notitie:'Interne notitie (nooit zichtbaar voor de klant)',
- kyb_admin_notitie_opslaan:'Notitie opslaan',
- kyb_admin_bericht_klant:'Bericht aan de klant',
- kyb_admin_stappen_heropenen:'Welke stappen mag de klant aanpassen?',
- kyb_admin_documenten_vragen:'Gevraagde documenten',
- kyb_admin_reden:'Reden',
- kyb_admin_reden_identiteit_niet_verifieerbaar:'Identiteit niet verifieerbaar', kyb_admin_reden_kvk_niet_gevonden:'KvK niet gevonden', kyb_admin_reden_kvk_afwijking:'Afwijking Handelsregister', kyb_admin_reden_ubo_onvolledig:'UBO onvolledig', kyb_admin_reden_documenten_onleesbaar:'Documenten onleesbaar', kyb_admin_reden_doel_onduidelijk:'Doel onduidelijk', kyb_admin_reden_sanctie:'Sanctie (klant krijgt generieke tekst)', kyb_admin_reden_pep_niet_acceptabel:'PEP niet acceptabel (generieke tekst)', kyb_admin_reden_risico_te_hoog:'Risico te hoog (generieke tekst)', kyb_admin_reden_overig:'Overig (generieke tekst)',
- kyb_admin_tipping_off:'Let op: bij sanctie-, PEP- of risicoredenen ontvangt de klant uitsluitend de generieke tekst (Wwft art. 23). Overweeg een FIU- of DNB-melding via de compliance-procedure.',
- kyb_admin_info_vragen:'Aanvullende informatie vragen',
- kyb_admin_afwijzen:'Afwijzen',
- kyb_admin_goedkeuren:'Goedkeuren',
- kyb_admin_bevestig_goedkeuren:'Weet je zeker dat je {bedrijf} wilt goedkeuren? De klant kan daarna zakelijk overboeken.',
- kyb_admin_bevestig_afwijzen:'Weet je zeker dat je deze aanvraag wilt afwijzen? Dit is definitief.',
- kyb_admin_herscreen:'Opnieuw screenen',
- kyb_admin_stats_open:'Open zakelijke aanvragen',
- kyb_admin_kol_naam:'Naam', kyb_admin_aanvrager:'Aanvrager', kyb_admin_totaal_label:'aanvragen', kyb_admin_zoek:'Zoeken op bedrijf, KvK of e-mail',
- kyb_admin_beoordeeld_op:'Beoordeeld', kyb_admin_akkoord_op:'Akkoord op', kyb_admin_screening_op:'Uitgevoerd op', kyb_admin_kvk_opgehaald:'KvK opgehaald',
- kyb_admin_id_snapshot:'Identiteitsbewijs', kyb_admin_beelden:'Beelden', kyb_admin_geverifieerd:'geverifieerd', kyb_admin_niet_geverifieerd:'niet geverifieerd',
- kyb_admin_eerdere:'Eerdere pogingen', kyb_admin_versies:'Versies', kyb_admin_verwijderd:'verwijderd',
- kyb_admin_notitie_opgeslagen:'Notitie opgeslagen.', kyb_admin_bericht_klant_hint:'Dit bericht ziet de klant letterlijk in de app en in de e-mail.',
- kyb_admin_signaal_pep:'PEP', kyb_admin_signaal_sanctie_bedrijf:'Sanctie-hit bedrijf', kyb_admin_signaal_sanctie_persoon:'Sanctie-hit persoon', kyb_admin_signaal_structuur_complex:'Complexe structuur', kyb_admin_signaal_identiteit_mismatch:'Identiteit wijkt af', kyb_admin_signaal_omzet_volume_mismatch:'Omzet en volume passen niet bij elkaar',
- kyb_admin_bron_kvk:'Handelsregister (KvK-API)', kyb_admin_bron_kvk_mock:'Oefenmodus (voorbeeldbedrijf)', kyb_admin_bron_handmatig:'Handmatig ingevuld',
- kyb_admin_idbron_idin:'iDIN', kyb_admin_idbron_kyc_bestaand:'Eerder goedgekeurde KYC', kyb_admin_idbron_upload_telefoon:'Foto-upload via telefoon', kyb_admin_idbron_upload_web:'Foto-upload via web',
+ 
+ 
+       
+      
+ 
+ 
+ 
+ 
+ 
+ 
+         
+   
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    
+    
+   
+  
+      
+   
+    
  // Feedback Aydin 16-9: code/wachtwoord tonen, portaalkeuze, rode markering, selfie-terugval
  code_tonen:'Code tonen',
  code_verbergen:'Code verbergen',
@@ -1859,5 +1859,5 @@ export const nl = {
  hulp_v_toegangscode:'Ik ben mijn toegangscode vergeten. Wat nu?',
  hulp_v_niet_versturen:'Waarom kan ik nog geen geld versturen?',
  hulp_v_kyc:'Hoe werkt de identiteitsverificatie?',
- hulp_v_zakelijk:'Hoe vraag ik een zakelijk profiel aan?',
+ hulp_v_zakelijk:'Hoe vraag ik een zakelijk profiel aan?'
 };

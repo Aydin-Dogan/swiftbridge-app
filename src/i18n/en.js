@@ -751,7 +751,7 @@ export const en = {
  KYB_INVALID_DECISION:'Invalid decision.',
  KYB_CHECKLIST_ONVOLLEDIG:'Tick all checkpoints first.',
  KYB_KYC_VEREIST:'Approve the applicant\'s identity first.',
- KYB_VEREIST:'Your business profile has not been approved yet.',
+ KYB_VEREIST:'Your business profile has not been approved yet.'
  },
 
  // Support chat widget
@@ -1738,52 +1738,52 @@ export const en = {
  kyb_profiel_uitleg:'Company details and status of your SwiftBridge business profile.',
  kyb_shell_pill:'Business: {status}',
  // Admin
- kyb_admin_titel:'Business applications',
- kyb_admin_leeg:'No applications with this status.',
- kyb_admin_filter_open:'Open', kyb_admin_filter_ingediend:'Submitted', kyb_admin_filter_in_behandeling:'Under review', kyb_admin_filter_info_nodig:'Info needed', kyb_admin_filter_goedgekeurd:'Approved', kyb_admin_filter_afgewezen:'Rejected', kyb_admin_filter_alle:'All',
- kyb_admin_kol_bedrijf:'Company', kyb_admin_kol_aanvrager:'Applicant', kyb_admin_kol_status:'Status', kyb_admin_kol_ingediend:'Submitted', kyb_admin_kol_uiterlijk:'Due', kyb_admin_kol_versie:'Attempt',
- kyb_admin_sla_overschreden:'Turnaround time exceeded',
- kyb_admin_sanctie_hit:'Sanctions hit',
- kyb_admin_screening_onbeschikbaar:'Screening not performed',
- kyb_admin_kvk_handmatig:'KvK entered manually',
- kyb_admin_claim:'Take into review',
- kyb_admin_in_behandeling_bij:'Under review by {naam}',
- kyb_admin_sectie_bedrijf:'Company', kyb_admin_sectie_personen:'Owners and directors', kyb_admin_sectie_identiteit:'Identity', kyb_admin_sectie_gebruik:'Usage and purpose', kyb_admin_sectie_aanvullend:'Additional', kyb_admin_sectie_toestemming:'Declarations', kyb_admin_sectie_screening:'Screening', kyb_admin_sectie_documenten:'Documents', kyb_admin_sectie_historie:'History',
- kyb_admin_kvk_profiel:'Trade Register', kyb_admin_opgegeven:'Provided', kyb_admin_afwijking:'Differs',
- kyb_admin_document_open:'Open',
- kyb_admin_id_goedkeuren:'Approve identity', kyb_admin_id_afwijzen:'Reject identity',
- kyb_admin_id_mismatch:'Date of birth differs from the identity document',
- kyb_admin_geen_documentkopie:'No document copy (iDIN)',
- kyb_admin_checklist_kop:'Checkpoints (required for approval)',
- kyb_admin_check_identiteit_geverifieerd:'Identity of the authorised signatory verified',
- kyb_admin_check_kvk_gecontroleerd:'Company details checked against the Trade Register',
- kyb_admin_check_ubo_compleet:'Owners and directors complete and plausible',
- kyb_admin_check_sancties_gecontroleerd:'Sanctions screening checked',
- kyb_admin_check_pep_beoordeeld:'PEP status assessed',
- kyb_admin_check_doel_aard_begrepen:'Purpose and nature of use understood',
- kyb_admin_notitie:'Internal note (never visible to the customer)',
- kyb_admin_notitie_opslaan:'Save note',
- kyb_admin_bericht_klant:'Message to the customer',
- kyb_admin_stappen_heropenen:'Which steps may the customer edit?',
- kyb_admin_documenten_vragen:'Requested documents',
- kyb_admin_reden:'Reason',
- kyb_admin_reden_identiteit_niet_verifieerbaar:'Identity not verifiable', kyb_admin_reden_kvk_niet_gevonden:'KvK not found', kyb_admin_reden_kvk_afwijking:'Trade Register mismatch', kyb_admin_reden_ubo_onvolledig:'UBO incomplete', kyb_admin_reden_documenten_onleesbaar:'Documents unreadable', kyb_admin_reden_doel_onduidelijk:'Purpose unclear', kyb_admin_reden_sanctie:'Sanctions (customer receives generic text)', kyb_admin_reden_pep_niet_acceptabel:'PEP not acceptable (generic text)', kyb_admin_reden_risico_te_hoog:'Risk too high (generic text)', kyb_admin_reden_overig:'Other (generic text)',
- kyb_admin_tipping_off:'Note: for sanctions, PEP or risk reasons the customer receives only the generic text (Wwft art. 23). Consider an FIU or DNB report via the compliance procedure.',
- kyb_admin_info_vragen:'Request additional information',
- kyb_admin_afwijzen:'Reject',
- kyb_admin_goedkeuren:'Approve',
- kyb_admin_bevestig_goedkeuren:'Are you sure you want to approve {bedrijf}? The customer can then make business transfers.',
- kyb_admin_bevestig_afwijzen:'Are you sure you want to reject this application? This is final.',
- kyb_admin_herscreen:'Screen again',
- kyb_admin_stats_open:'Open business applications',
- kyb_admin_kol_naam:'Name', kyb_admin_aanvrager:'Applicant', kyb_admin_totaal_label:'applications', kyb_admin_zoek:'Search by company, KvK or e-mail',
- kyb_admin_beoordeeld_op:'Reviewed', kyb_admin_akkoord_op:'Agreed on', kyb_admin_screening_op:'Performed on', kyb_admin_kvk_opgehaald:'KvK retrieved',
- kyb_admin_id_snapshot:'Identity document', kyb_admin_beelden:'Images', kyb_admin_geverifieerd:'verified', kyb_admin_niet_geverifieerd:'not verified',
- kyb_admin_eerdere:'Previous attempts', kyb_admin_versies:'Versions', kyb_admin_verwijderd:'removed',
- kyb_admin_notitie_opgeslagen:'Note saved.', kyb_admin_bericht_klant_hint:'The customer sees this message word for word in the app and in the e-mail.',
- kyb_admin_signaal_pep:'PEP', kyb_admin_signaal_sanctie_bedrijf:'Sanctions hit on company', kyb_admin_signaal_sanctie_persoon:'Sanctions hit on person', kyb_admin_signaal_structuur_complex:'Complex structure', kyb_admin_signaal_identiteit_mismatch:'Identity does not match', kyb_admin_signaal_omzet_volume_mismatch:'Revenue and volume do not match',
- kyb_admin_bron_kvk:'Trade register (KvK API)', kyb_admin_bron_kvk_mock:'Practice mode (sample company)', kyb_admin_bron_handmatig:'Entered manually',
- kyb_admin_idbron_idin:'iDIN', kyb_admin_idbron_kyc_bestaand:'Previously approved KYC', kyb_admin_idbron_upload_telefoon:'Photo upload via phone', kyb_admin_idbron_upload_web:'Photo upload via web',
+ 
+ 
+       
+      
+ 
+ 
+ 
+ 
+ 
+ 
+         
+   
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    
+    
+   
+  
+      
+   
+    
  // Feedback Aydin 16-9: code/wachtwoord tonen, portaalkeuze, rode markering, selfie-terugval
  code_tonen:'Show code',
  code_verbergen:'Hide code',
@@ -1857,5 +1857,5 @@ export const en = {
  hulp_v_toegangscode:'I forgot my access code. What now?',
  hulp_v_niet_versturen:'Why can I not send money yet?',
  hulp_v_kyc:'How does identity verification work?',
- hulp_v_zakelijk:'How do I apply for a business profile?',
+ hulp_v_zakelijk:'How do I apply for a business profile?'
 };

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         SwiftBridge — INTERNE OMGEVING (compliance)
+
+         Tweede voordeur, ronde 0 uit het architectuurbesluit van 29-9-2026.
+         Deze pagina hoort NOOIT bij www te staan waar klanten komen; hij is
+         bedoeld voor intern.swiftbridge.nl.
+
+         Verschillen met de klantpagina, en waarom:
+         - noindex/nofollow: deze omgeving hoort niet in een zoekmachine.
+         - Geen PWA, geen service worker: een compliance-werkplek mag niets
+           cachen. Dossiergegevens in een browsercache zijn precies wat je niet
+           wilt op een gedeelde computer.
+         - Geen SEO-teksten, geen social-media-kaarten, geen verkooppraat.
+         - Strengere CSP: geen externe afbeeldingen, geen formulieren naar
+           betaalpartijen. Deze omgeving praat alleen met de eigen API.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1B3252" />
+
+    <script src="/theme-init.js"></script>
+
+    <!-- ═══ Buiten zoekmachines houden (ronde 0, stap 7) ═══ -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="googlebot" content="noindex, nofollow" />
+
+    <!-- ═══ Beveiliging ═══ -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="no-referrer" />
+    <!-- Strenger dan de klantpagina: img-src zonder https: (geen externe
+         afbeeldingen), form-action alleen naar de eigen oorsprong (geen
+         betaalpartijen), en dezelfde API-hosts als de klantapp omdat het
+         dezelfde backend is. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.nl https://swiftbridge-api-production.up.railway.app; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'" />
+
+    <title>SwiftBridge compliance</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main-intern.jsx"></script>
+  </body>
+</html>

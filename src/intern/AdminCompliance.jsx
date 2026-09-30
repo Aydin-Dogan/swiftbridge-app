@@ -2,13 +2,17 @@
  * AdminCompliance.jsx — Compliance dashboard voor DNB-toezicht
  *
  * Tabs:
- * 1. Stats — kerncijfers
- * 2. Gebruikers — user management
- * 3. Audit logs — paginated met filter
- * 4. Sanctie matches — Wwft Art. 33
- * 5. GDPR acties — AVG Art. 15/17
- * 6. Transactie monitoring — geanonimiseerd
- * 7. Banners — app-wide announcement banners beheren
+ *  1. Overzicht — kerncijfers en de integriteit van de audit-keten
+ *  2. Gebruikers — user management
+ *  3. Zakelijke aanvragen — KYB-wachtrij en dossier
+ *  4. Particuliere aanvragen — KYC-dossier met risicoklasse en wat er ontbreekt
+ *  5. KYC Review — de documentfoto's bij een particuliere aanvraag
+ *  6. Info-verzoeken — de "Info nodig"-flow bij transacties
+ *  7. Audit logs — paginated met filter
+ *  8. Sanctie matches — Wwft Art. 33
+ *  9. GDPR acties — AVG Art. 15/17
+ * 10. Transacties — geanonimiseerde monitoring
+ * 11. Banners — app-wide announcement banners beheren
  *
  * Toegang: gebruiker moet ingelogd zijn EN in ADMIN_EMAILS staan
  * (backend check in src/middleware/admin.js).
@@ -18,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import {
-  Users, Clock, CheckCircle, Euro, Calendar, Shield, Clipboard, Lock,
+  Users, Clock, CheckCircle, Euro, Calendar, Shield, ShieldCheck, Clipboard, Lock,
   AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh, Info, XCircle, Globe,
 } from '../components/icons/Icons';
 import { API_URL } from '../services/api';
@@ -30,6 +34,10 @@ const BannerBeheer = lazy(() => import('../components/admin/BannerBeheer'));
 const KYCReviewQueue = lazy(() => import('../components/admin/KYCReviewQueue'));
 // KYB: zakelijke aanvragen (wachtrij + dossier + beoordeelpaneel) — zie docs/KYB_API.md sectie 6.
 const KybReviewQueue = lazy(() => import('../components/admin/kyb/KybReviewQueue'));
+// KYC-dossiers: particuliere aanvragen met risicoklasse en wat er ontbreekt om te
+// kunnen beoordelen (werkpakket 4 en 6 van het KYC-masterdocument). Staat naast
+// "KYC Review", dat alleen de documentfoto's toont.
+const KycDossiers = lazy(() => import('../components/admin/kyc/KycDossiers'));
 
 // Lichtgewicht fallback voor lazy admin tabs
 function AdminLazyFallback() {
@@ -696,6 +704,11 @@ export default function AdminCompliance() {
     { id: 'stats', label: 'Overzicht', icoon: null },
     { id: 'users', label: 'Gebruikers', icoon: Users },
     { id: 'kyb', label: t('kyb_admin_titel') !== 'kyb_admin_titel' ? t('kyb_admin_titel') : 'Zakelijke aanvragen', icoon: Globe },
+    // Naam en icoon bewust anders dan 'KYC Review': dat scherm toont de
+    // documentfoto's, dit scherm het dossier met risico en wat er ontbreekt.
+    // Twee tabs die allebei "KYC" heten met hetzelfde icoon zijn in de tabbalk
+    // niet uit elkaar te houden.
+    { id: 'kycdossiers', label: 'Particuliere aanvragen', icoon: ShieldCheck },
     { id: 'kycreview', label: 'KYC Review', icoon: IdCard },
     { id: 'infoverzoeken', label: 'Info-verzoeken', icoon: Info },
     { id: 'audit', label: 'Audit logs', icoon: Clipboard },
@@ -769,6 +782,7 @@ export default function AdminCompliance() {
           {tab === 'stats' && <StatsTab stats={stats} chain={chain} />}
           {tab === 'users' && <UserManagement />}
           {tab === 'kyb' && <KybReviewQueue />}
+          {tab === 'kycdossiers' && <KycDossiers />}
           {tab === 'kycreview' && <KYCReviewQueue />}
           {tab === 'infoverzoeken' && <InfoVerzoekenTab />}
           {tab === 'audit' && <AuditTab />}

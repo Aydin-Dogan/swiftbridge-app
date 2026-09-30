@@ -751,7 +751,7 @@ export const tr = {
  KYB_INVALID_DECISION:'Geçersiz karar.',
  KYB_CHECKLIST_ONVOLLEDIG:'Önce tüm kontrol noktalarını işaretleyin.',
  KYB_KYC_VEREIST:'Önce başvuranın kimliğini onaylayın.',
- KYB_VEREIST:'Kurumsal profiliniz henüz onaylanmadı.',
+ KYB_VEREIST:'Kurumsal profiliniz henüz onaylanmadı.'
  },
 
  // Destek sohbet widget
@@ -1738,52 +1738,52 @@ export const tr = {
  kyb_profiel_uitleg:'Kurumsal SwiftBridge profilinizin şirket bilgileri ve durumu.',
  kyb_shell_pill:'Kurumsal: {status}',
  // Yönetim
- kyb_admin_titel:'Kurumsal başvurular',
- kyb_admin_leeg:'Bu durumda başvuru yok.',
- kyb_admin_filter_open:'Açık', kyb_admin_filter_ingediend:'Gönderildi', kyb_admin_filter_in_behandeling:'İnceleniyor', kyb_admin_filter_info_nodig:'Bilgi gerekli', kyb_admin_filter_goedgekeurd:'Onaylandı', kyb_admin_filter_afgewezen:'Reddedildi', kyb_admin_filter_alle:'Tümü',
- kyb_admin_kol_bedrijf:'Şirket', kyb_admin_kol_aanvrager:'Başvuran', kyb_admin_kol_status:'Durum', kyb_admin_kol_ingediend:'Gönderildi', kyb_admin_kol_uiterlijk:'Son tarih', kyb_admin_kol_versie:'Deneme',
- kyb_admin_sla_overschreden:'İşlem süresi aşıldı',
- kyb_admin_sanctie_hit:'Yaptırım eşleşmesi',
- kyb_admin_screening_onbeschikbaar:'Tarama yapılmadı',
- kyb_admin_kvk_handmatig:'KvK elle girildi',
- kyb_admin_claim:'İncelemeye al',
- kyb_admin_in_behandeling_bij:'{naam} tarafından inceleniyor',
- kyb_admin_sectie_bedrijf:'Şirket', kyb_admin_sectie_personen:'Sahipler ve yöneticiler', kyb_admin_sectie_identiteit:'Kimlik', kyb_admin_sectie_gebruik:'Kullanım ve amaç', kyb_admin_sectie_aanvullend:'Ek bilgiler', kyb_admin_sectie_toestemming:'Beyanlar', kyb_admin_sectie_screening:'Tarama', kyb_admin_sectie_documenten:'Belgeler', kyb_admin_sectie_historie:'Geçmiş',
- kyb_admin_kvk_profiel:'Ticaret Sicili', kyb_admin_opgegeven:'Beyan edilen', kyb_admin_afwijking:'Farklı',
- kyb_admin_document_open:'Aç',
- kyb_admin_id_goedkeuren:'Kimliği onayla', kyb_admin_id_afwijzen:'Kimliği reddet',
- kyb_admin_id_mismatch:'Doğum tarihi kimlik belgesinden farklı',
- kyb_admin_geen_documentkopie:'Belge kopyası yok (iDIN)',
- kyb_admin_checklist_kop:'Kontrol noktaları (onay için zorunlu)',
- kyb_admin_check_identiteit_geverifieerd:'İmza yetkilisinin kimliği doğrulandı',
- kyb_admin_check_kvk_gecontroleerd:'Şirket bilgileri Ticaret Sicili ile karşılaştırıldı',
- kyb_admin_check_ubo_compleet:'Sahipler ve yöneticiler eksiksiz ve makul',
- kyb_admin_check_sancties_gecontroleerd:'Yaptırım taraması kontrol edildi',
- kyb_admin_check_pep_beoordeeld:'PEP durumu değerlendirildi',
- kyb_admin_check_doel_aard_begrepen:'Kullanımın amacı ve niteliği anlaşıldı',
- kyb_admin_notitie:'Dahili not (müşteri asla göremez)',
- kyb_admin_notitie_opslaan:'Notu kaydet',
- kyb_admin_bericht_klant:'Müşteriye mesaj',
- kyb_admin_stappen_heropenen:'Müşteri hangi adımları düzenleyebilir?',
- kyb_admin_documenten_vragen:'İstenen belgeler',
- kyb_admin_reden:'Neden',
- kyb_admin_reden_identiteit_niet_verifieerbaar:'Kimlik doğrulanamıyor', kyb_admin_reden_kvk_niet_gevonden:'KvK bulunamadı', kyb_admin_reden_kvk_afwijking:'Ticaret Sicili ile uyumsuz', kyb_admin_reden_ubo_onvolledig:'UBO eksik', kyb_admin_reden_documenten_onleesbaar:'Belgeler okunamıyor', kyb_admin_reden_doel_onduidelijk:'Amaç belirsiz', kyb_admin_reden_sanctie:'Yaptırım (müşteri genel metni alır)', kyb_admin_reden_pep_niet_acceptabel:'PEP kabul edilemez (genel metin)', kyb_admin_reden_risico_te_hoog:'Risk çok yüksek (genel metin)', kyb_admin_reden_overig:'Diğer (genel metin)',
- kyb_admin_tipping_off:'Dikkat: yaptırım, PEP veya risk nedenlerinde müşteri yalnızca genel metni alır (Wwft md. 23). Uyum prosedürü üzerinden FIU veya DNB bildirimini değerlendirin.',
- kyb_admin_info_vragen:'Ek bilgi iste',
- kyb_admin_afwijzen:'Reddet',
- kyb_admin_goedkeuren:'Onayla',
- kyb_admin_bevestig_goedkeuren:'{bedrijf} şirketini onaylamak istediğinizden emin misiniz? Müşteri ardından kurumsal transfer yapabilir.',
- kyb_admin_bevestig_afwijzen:'Bu başvuruyu reddetmek istediğinizden emin misiniz? Bu işlem kesindir.',
- kyb_admin_herscreen:'Yeniden tara',
- kyb_admin_stats_open:'Açık kurumsal başvurular',
- kyb_admin_kol_naam:'Ad', kyb_admin_aanvrager:'Başvuran', kyb_admin_totaal_label:'başvuru', kyb_admin_zoek:'Şirket, KvK veya e-posta ile ara',
- kyb_admin_beoordeeld_op:'Değerlendirildi', kyb_admin_akkoord_op:'Onay tarihi', kyb_admin_screening_op:'Yapıldığı tarih', kyb_admin_kvk_opgehaald:'KvK verisi alındı',
- kyb_admin_id_snapshot:'Kimlik belgesi', kyb_admin_beelden:'Görseller', kyb_admin_geverifieerd:'doğrulandı', kyb_admin_niet_geverifieerd:'doğrulanmadı',
- kyb_admin_eerdere:'Önceki denemeler', kyb_admin_versies:'Sürümler', kyb_admin_verwijderd:'silindi',
- kyb_admin_notitie_opgeslagen:'Not kaydedildi.', kyb_admin_bericht_klant_hint:'Müşteri bu mesajı uygulamada ve e-postada birebir görür.',
- kyb_admin_signaal_pep:'PEP', kyb_admin_signaal_sanctie_bedrijf:'Şirkette yaptırım eşleşmesi', kyb_admin_signaal_sanctie_persoon:'Kişide yaptırım eşleşmesi', kyb_admin_signaal_structuur_complex:'Karmaşık yapı', kyb_admin_signaal_identiteit_mismatch:'Kimlik uyuşmuyor', kyb_admin_signaal_omzet_volume_mismatch:'Ciro ve hacim birbiriyle uyuşmuyor',
- kyb_admin_bron_kvk:'Ticaret sicili (KvK API)', kyb_admin_bron_kvk_mock:'Deneme modu (örnek şirket)', kyb_admin_bron_handmatig:'Elle girildi',
- kyb_admin_idbron_idin:'iDIN', kyb_admin_idbron_kyc_bestaand:'Daha önce onaylanmış KYC', kyb_admin_idbron_upload_telefoon:'Telefonla fotoğraf yükleme', kyb_admin_idbron_upload_web:'Web üzerinden fotoğraf yükleme',
+ 
+ 
+       
+      
+ 
+ 
+ 
+ 
+ 
+ 
+         
+   
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    
+    
+   
+  
+      
+   
+    
  // Feedback Aydin 16-9: code/wachtwoord tonen, portaalkeuze, rode markering, selfie-terugval
  code_tonen:'Kodu göster',
  code_verbergen:'Kodu gizle',
@@ -1857,5 +1857,5 @@ export const tr = {
  hulp_v_toegangscode:'Erişim kodumu unuttum. Ne yapmalıyım?',
  hulp_v_niet_versturen:'Neden henüz para gönderemiyorum?',
  hulp_v_kyc:'Kimlik doğrulama nasıl işliyor?',
- hulp_v_zakelijk:'Kurumsal profile nasıl başvururum?',
+ hulp_v_zakelijk:'Kurumsal profile nasıl başvururum?'
 };

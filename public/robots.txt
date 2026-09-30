@@ -8,6 +8,11 @@ Allow: /
 # Privé / auth-gated routes — geen waarde voor zoekmachines
 Disallow: /admin
 Disallow: /admin/
+# De interne compliance-omgeving (ronde 0, 29-9-2026). Die hoort op
+# intern.swiftbridge.nl te draaien met een eigen robots.txt die alles weigert;
+# zolang hij ook vanaf dit domein bereikbaar is, sluiten we hem hier uit.
+Disallow: /intern.html
+Disallow: /intern
 Disallow: /profiel
 Disallow: /dashboard
 Disallow: /auth

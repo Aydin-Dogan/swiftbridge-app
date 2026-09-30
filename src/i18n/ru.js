@@ -686,7 +686,7 @@ export const ru = {
  KYB_INVALID_DECISION:'Недопустимое решение.',
  KYB_CHECKLIST_ONVOLLEDIG:'Сначала отметьте все контрольные пункты.',
  KYB_KYC_VEREIST:'Сначала подтвердите личность заявителя.',
- KYB_VEREIST:'Ваш бизнес-профиль ещё не одобрен.',
+ KYB_VEREIST:'Ваш бизнес-профиль ещё не одобрен.'
  },
 
  // ── Подтверждение e-mail (страница /verifieer-email + баннер дашборда) ──
@@ -1730,52 +1730,52 @@ export const ru = {
  kyb_profiel_uitleg:'Данные компании и статус вашего бизнес-профиля SwiftBridge.',
  kyb_shell_pill:'Бизнес: {status}',
  // Админ
- kyb_admin_titel:'Бизнес-заявки',
- kyb_admin_leeg:'Заявок с таким статусом нет.',
- kyb_admin_filter_open:'Открытые', kyb_admin_filter_ingediend:'Отправлены', kyb_admin_filter_in_behandeling:'На рассмотрении', kyb_admin_filter_info_nodig:'Нужна информация', kyb_admin_filter_goedgekeurd:'Одобрены', kyb_admin_filter_afgewezen:'Отклонены', kyb_admin_filter_alle:'Все',
- kyb_admin_kol_bedrijf:'Компания', kyb_admin_kol_aanvrager:'Заявитель', kyb_admin_kol_status:'Статус', kyb_admin_kol_ingediend:'Отправлена', kyb_admin_kol_uiterlijk:'Срок', kyb_admin_kol_versie:'Попытка',
- kyb_admin_sla_overschreden:'Срок рассмотрения превышен',
- kyb_admin_sanctie_hit:'Совпадение по санкциям',
- kyb_admin_screening_onbeschikbaar:'Проверка не выполнена',
- kyb_admin_kvk_handmatig:'KvK введён вручную',
- kyb_admin_claim:'Взять в работу',
- kyb_admin_in_behandeling_bij:'В работе у {naam}',
- kyb_admin_sectie_bedrijf:'Компания', kyb_admin_sectie_personen:'Владельцы и руководители', kyb_admin_sectie_identiteit:'Личность', kyb_admin_sectie_gebruik:'Использование и цель', kyb_admin_sectie_aanvullend:'Дополнительно', kyb_admin_sectie_toestemming:'Заявления', kyb_admin_sectie_screening:'Проверка', kyb_admin_sectie_documenten:'Документы', kyb_admin_sectie_historie:'История',
- kyb_admin_kvk_profiel:'Торговый реестр', kyb_admin_opgegeven:'Указано', kyb_admin_afwijking:'Отличается',
- kyb_admin_document_open:'Открыть',
- kyb_admin_id_goedkeuren:'Подтвердить личность', kyb_admin_id_afwijzen:'Отклонить личность',
- kyb_admin_id_mismatch:'Дата рождения отличается от документа',
- kyb_admin_geen_documentkopie:'Нет копии документа (iDIN)',
- kyb_admin_checklist_kop:'Контрольные пункты (обязательны для одобрения)',
- kyb_admin_check_identiteit_geverifieerd:'Личность лица с правом подписи подтверждена',
- kyb_admin_check_kvk_gecontroleerd:'Данные компании сверены с Торговым реестром',
- kyb_admin_check_ubo_compleet:'Владельцы и руководители указаны полно и правдоподобно',
- kyb_admin_check_sancties_gecontroleerd:'Санкционная проверка выполнена',
- kyb_admin_check_pep_beoordeeld:'Статус PEP оценён',
- kyb_admin_check_doel_aard_begrepen:'Цель и характер использования понятны',
- kyb_admin_notitie:'Внутренняя заметка (клиент никогда не видит)',
- kyb_admin_notitie_opslaan:'Сохранить заметку',
- kyb_admin_bericht_klant:'Сообщение клиенту',
- kyb_admin_stappen_heropenen:'Какие шаги клиент может изменить?',
- kyb_admin_documenten_vragen:'Запрошенные документы',
- kyb_admin_reden:'Причина',
- kyb_admin_reden_identiteit_niet_verifieerbaar:'Личность невозможно подтвердить', kyb_admin_reden_kvk_niet_gevonden:'KvK не найден', kyb_admin_reden_kvk_afwijking:'Расхождение с Торговым реестром', kyb_admin_reden_ubo_onvolledig:'UBO указаны не полностью', kyb_admin_reden_documenten_onleesbaar:'Документы нечитаемы', kyb_admin_reden_doel_onduidelijk:'Цель неясна', kyb_admin_reden_sanctie:'Санкции (клиент получает общий текст)', kyb_admin_reden_pep_niet_acceptabel:'PEP неприемлем (общий текст)', kyb_admin_reden_risico_te_hoog:'Риск слишком высок (общий текст)', kyb_admin_reden_overig:'Другое (общий текст)',
- kyb_admin_tipping_off:'Внимание: при причинах, связанных с санкциями, PEP или риском, клиент получает только общий текст (ст. 23 Wwft). Рассмотрите уведомление FIU или DNB по процедуре комплаенса.',
- kyb_admin_info_vragen:'Запросить дополнительную информацию',
- kyb_admin_afwijzen:'Отклонить',
- kyb_admin_goedkeuren:'Одобрить',
- kyb_admin_bevestig_goedkeuren:'Вы уверены, что хотите одобрить {bedrijf}? После этого клиент сможет делать бизнес-переводы.',
- kyb_admin_bevestig_afwijzen:'Вы уверены, что хотите отклонить эту заявку? Это окончательно.',
- kyb_admin_herscreen:'Проверить повторно',
- kyb_admin_stats_open:'Открытые бизнес-заявки',
- kyb_admin_kol_naam:'Имя', kyb_admin_aanvrager:'Заявитель', kyb_admin_totaal_label:'заявок', kyb_admin_zoek:'Поиск по компании, KvK или e-mail',
- kyb_admin_beoordeeld_op:'Рассмотрено', kyb_admin_akkoord_op:'Согласие дано', kyb_admin_screening_op:'Выполнено', kyb_admin_kvk_opgehaald:'Данные KvK получены',
- kyb_admin_id_snapshot:'Документ, удостоверяющий личность', kyb_admin_beelden:'Изображения', kyb_admin_geverifieerd:'подтверждено', kyb_admin_niet_geverifieerd:'не подтверждено',
- kyb_admin_eerdere:'Предыдущие попытки', kyb_admin_versies:'Версии', kyb_admin_verwijderd:'удалено',
- kyb_admin_notitie_opgeslagen:'Заметка сохранена.', kyb_admin_bericht_klant_hint:'Клиент видит это сообщение дословно в приложении и в письме.',
- kyb_admin_signaal_pep:'PEP', kyb_admin_signaal_sanctie_bedrijf:'Совпадение по санкциям: компания', kyb_admin_signaal_sanctie_persoon:'Совпадение по санкциям: лицо', kyb_admin_signaal_structuur_complex:'Сложная структура', kyb_admin_signaal_identiteit_mismatch:'Личность не совпадает', kyb_admin_signaal_omzet_volume_mismatch:'Оборот и объём не соответствуют друг другу',
- kyb_admin_bron_kvk:'Торговый реестр (KvK API)', kyb_admin_bron_kvk_mock:'Учебный режим (пример компании)', kyb_admin_bron_handmatig:'Введено вручную',
- kyb_admin_idbron_idin:'iDIN', kyb_admin_idbron_kyc_bestaand:'Ранее одобренная KYC', kyb_admin_idbron_upload_telefoon:'Загрузка фото с телефона', kyb_admin_idbron_upload_web:'Загрузка фото через веб',
+ 
+ 
+       
+      
+ 
+ 
+ 
+ 
+ 
+ 
+         
+   
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    
+    
+   
+  
+      
+   
+    
  // Feedback Aydin 16-9: code/wachtwoord tonen, portaalkeuze, rode markering, selfie-terugval
  code_tonen:'Показать код',
  code_verbergen:'Скрыть код',
@@ -1849,5 +1849,5 @@ export const ru = {
  hulp_v_toegangscode:'Я забыл код доступа. Что делать?',
  hulp_v_niet_versturen:'Почему я пока не могу отправлять деньги?',
  hulp_v_kyc:'Как проходит проверка личности?',
- hulp_v_zakelijk:'Как подать заявку на бизнес-профиль?',
+ hulp_v_zakelijk:'Как подать заявку на бизнес-профиль?'
 };

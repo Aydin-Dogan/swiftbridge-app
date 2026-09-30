@@ -686,7 +686,7 @@ export const az = {
  KYB_INVALID_DECISION:'Yanlış qərar.',
  KYB_CHECKLIST_ONVOLLEDIG:'Əvvəlcə bütün yoxlama bəndlərini işarələyin.',
  KYB_KYC_VEREIST:'Əvvəlcə müraciət edənin şəxsiyyətini təsdiqləyin.',
- KYB_VEREIST:'Biznes profiliniz hələ təsdiqlənməyib.',
+ KYB_VEREIST:'Biznes profiliniz hələ təsdiqlənməyib.'
  },
 
  // ── E-poçt doğrulaması (/verifieer-email səhifəsi + dashboard banneri) ──
@@ -1730,52 +1730,52 @@ export const az = {
  kyb_profiel_uitleg:'SwiftBridge biznes profilinizin şirkət məlumatları və statusu.',
  kyb_shell_pill:'Biznes: {status}',
  // Admin
- kyb_admin_titel:'Biznes müraciətləri',
- kyb_admin_leeg:'Bu statusda müraciət yoxdur.',
- kyb_admin_filter_open:'Açıq', kyb_admin_filter_ingediend:'Göndərildi', kyb_admin_filter_in_behandeling:'Baxılır', kyb_admin_filter_info_nodig:'Məlumat lazımdır', kyb_admin_filter_goedgekeurd:'Təsdiqləndi', kyb_admin_filter_afgewezen:'Rədd edildi', kyb_admin_filter_alle:'Hamısı',
- kyb_admin_kol_bedrijf:'Şirkət', kyb_admin_kol_aanvrager:'Müraciət edən', kyb_admin_kol_status:'Status', kyb_admin_kol_ingediend:'Göndərildi', kyb_admin_kol_uiterlijk:'Son tarix', kyb_admin_kol_versie:'Cəhd',
- kyb_admin_sla_overschreden:'Baxılma müddəti aşılıb',
- kyb_admin_sanctie_hit:'Sanksiya uyğunluğu',
- kyb_admin_screening_onbeschikbaar:'Yoxlama aparılmayıb',
- kyb_admin_kvk_handmatig:'KvK əl ilə daxil edilib',
- kyb_admin_claim:'Baxılmağa götür',
- kyb_admin_in_behandeling_bij:'{naam} tərəfindən baxılır',
- kyb_admin_sectie_bedrijf:'Şirkət', kyb_admin_sectie_personen:'Sahiblər və rəhbərlər', kyb_admin_sectie_identiteit:'Şəxsiyyət', kyb_admin_sectie_gebruik:'İstifadə və məqsəd', kyb_admin_sectie_aanvullend:'Əlavə', kyb_admin_sectie_toestemming:'Bəyanatlar', kyb_admin_sectie_screening:'Yoxlama', kyb_admin_sectie_documenten:'Sənədlər', kyb_admin_sectie_historie:'Tarixçə',
- kyb_admin_kvk_profiel:'Ticarət Reyestri', kyb_admin_opgegeven:'Bəyan edilən', kyb_admin_afwijking:'Fərqlidir',
- kyb_admin_document_open:'Aç',
- kyb_admin_id_goedkeuren:'Şəxsiyyəti təsdiqlə', kyb_admin_id_afwijzen:'Şəxsiyyəti rədd et',
- kyb_admin_id_mismatch:'Doğum tarixi şəxsiyyət sənədindən fərqlənir',
- kyb_admin_geen_documentkopie:'Sənəd surəti yoxdur (iDIN)',
- kyb_admin_checklist_kop:'Yoxlama bəndləri (təsdiq üçün məcburidir)',
- kyb_admin_check_identiteit_geverifieerd:'İmza səlahiyyətli şəxsin şəxsiyyəti təsdiqlənib',
- kyb_admin_check_kvk_gecontroleerd:'Şirkət məlumatları Ticarət Reyestri ilə yoxlanılıb',
- kyb_admin_check_ubo_compleet:'Sahiblər və rəhbərlər tam və inandırıcıdır',
- kyb_admin_check_sancties_gecontroleerd:'Sanksiya yoxlaması nəzərdən keçirilib',
- kyb_admin_check_pep_beoordeeld:'PEP statusu qiymətləndirilib',
- kyb_admin_check_doel_aard_begrepen:'İstifadənin məqsədi və xarakteri aydındır',
- kyb_admin_notitie:'Daxili qeyd (müştəri heç vaxt görmür)',
- kyb_admin_notitie_opslaan:'Qeydi saxla',
- kyb_admin_bericht_klant:'Müştəriyə mesaj',
- kyb_admin_stappen_heropenen:'Müştəri hansı addımları dəyişə bilər?',
- kyb_admin_documenten_vragen:'Tələb olunan sənədlər',
- kyb_admin_reden:'Səbəb',
- kyb_admin_reden_identiteit_niet_verifieerbaar:'Şəxsiyyət təsdiqlənə bilmir', kyb_admin_reden_kvk_niet_gevonden:'KvK tapılmadı', kyb_admin_reden_kvk_afwijking:'Ticarət Reyestri ilə uyğunsuzluq', kyb_admin_reden_ubo_onvolledig:'UBO natamamdır', kyb_admin_reden_documenten_onleesbaar:'Sənədlər oxunmur', kyb_admin_reden_doel_onduidelijk:'Məqsəd aydın deyil', kyb_admin_reden_sanctie:'Sanksiya (müştəri ümumi mətn alır)', kyb_admin_reden_pep_niet_acceptabel:'PEP qəbuledilməzdir (ümumi mətn)', kyb_admin_reden_risico_te_hoog:'Risk çox yüksəkdir (ümumi mətn)', kyb_admin_reden_overig:'Digər (ümumi mətn)',
- kyb_admin_tipping_off:'Diqqət: sanksiya, PEP və ya risk səbəblərində müştəri yalnız ümumi mətni alır (Wwft mad. 23). Uyğunluq proseduru vasitəsilə FIU və ya DNB bildirişini nəzərdən keçirin.',
- kyb_admin_info_vragen:'Əlavə məlumat tələb et',
- kyb_admin_afwijzen:'Rədd et',
- kyb_admin_goedkeuren:'Təsdiqlə',
- kyb_admin_bevestig_goedkeuren:'{bedrijf} şirkətini təsdiqləmək istədiyinizə əminsiniz? Bundan sonra müştəri biznes köçürmələri edə bilər.',
- kyb_admin_bevestig_afwijzen:'Bu müraciəti rədd etmək istədiyinizə əminsiniz? Bu qətidir.',
- kyb_admin_herscreen:'Yenidən yoxla',
- kyb_admin_stats_open:'Açıq biznes müraciətləri',
- kyb_admin_kol_naam:'Ad', kyb_admin_aanvrager:'Müraciətçi', kyb_admin_totaal_label:'müraciət', kyb_admin_zoek:'Şirkət, KvK və ya e-poçt üzrə axtar',
- kyb_admin_beoordeeld_op:'Qiymətləndirilib', kyb_admin_akkoord_op:'Razılıq tarixi', kyb_admin_screening_op:'İcra tarixi', kyb_admin_kvk_opgehaald:'KvK məlumatı alınıb',
- kyb_admin_id_snapshot:'Şəxsiyyət sənədi', kyb_admin_beelden:'Şəkillər', kyb_admin_geverifieerd:'təsdiqlənib', kyb_admin_niet_geverifieerd:'təsdiqlənməyib',
- kyb_admin_eerdere:'Əvvəlki cəhdlər', kyb_admin_versies:'Versiyalar', kyb_admin_verwijderd:'silinib',
- kyb_admin_notitie_opgeslagen:'Qeyd yadda saxlanıldı.', kyb_admin_bericht_klant_hint:'Müştəri bu mesajı tətbiqdə və e-poçtda eynilə görür.',
- kyb_admin_signaal_pep:'PEP', kyb_admin_signaal_sanctie_bedrijf:'Şirkət üzrə sanksiya uyğunluğu', kyb_admin_signaal_sanctie_persoon:'Şəxs üzrə sanksiya uyğunluğu', kyb_admin_signaal_structuur_complex:'Mürəkkəb struktur', kyb_admin_signaal_identiteit_mismatch:'Şəxsiyyət uyğun gəlmir', kyb_admin_signaal_omzet_volume_mismatch:'Dövriyyə və həcm bir-birinə uyğun gəlmir',
- kyb_admin_bron_kvk:'Ticarət reyestri (KvK API)', kyb_admin_bron_kvk_mock:'Məşq rejimi (nümunə şirkət)', kyb_admin_bron_handmatig:'Əl ilə daxil edilib',
- kyb_admin_idbron_idin:'iDIN', kyb_admin_idbron_kyc_bestaand:'Əvvəl təsdiqlənmiş KYC', kyb_admin_idbron_upload_telefoon:'Telefonla foto yükləmə', kyb_admin_idbron_upload_web:'Veb üzərindən foto yükləmə',
+ 
+ 
+       
+      
+ 
+ 
+ 
+ 
+ 
+ 
+         
+   
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    
+    
+   
+  
+      
+   
+    
  // Feedback Aydin 16-9: code/wachtwoord tonen, portaalkeuze, rode markering, selfie-terugval
  code_tonen:'Kodu göstər',
  code_verbergen:'Kodu gizlət',
@@ -1849,5 +1849,5 @@ export const az = {
  hulp_v_toegangscode:'Giriş kodumu unutmuşam. İndi nə etməliyəm?',
  hulp_v_niet_versturen:'Niyə hələ pul göndərə bilmirəm?',
  hulp_v_kyc:'Şəxsiyyətin doğrulanması necə işləyir?',
- hulp_v_zakelijk:'Biznes profilinə necə müraciət edə bilərəm?',
+ hulp_v_zakelijk:'Biznes profilinə necə müraciət edə bilərəm?'
 };

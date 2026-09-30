@@ -170,9 +170,16 @@ const server = http.createServer((req, res) => {
       res.end('Forbidden');
       return;
     }
-    // SPA fallback: bestanden die niet bestaan → index.html (React-app)
+    // SPA fallback: bestanden die niet bestaan → index.html (React-app).
+    // Uitzondering: de interne compliance-omgeving heeft een eigen ingang met
+    // een eigen router (ronde 0, 29-9-2026). Alles onder /intern valt daarom
+    // terug op intern.html, zodat een verversing op /intern/beheer niet in de
+    // klantapplicatie belandt. Dit is GEEN beveiliging — die zit in de
+    // rolcontrole op de server bij elk /admin-endpoint. Zodra de omgeving op
+    // intern.swiftbridge.nl draait, hoort dit pad hier helemaal niet meer thuis.
+    const naarIntern = decodedPath === '/intern' || decodedPath.startsWith('/intern/');
     if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-      filePath = path.join(DIST, 'index.html');
+      filePath = path.join(DIST, naarIntern ? 'intern.html' : 'index.html');
     }
   }
 

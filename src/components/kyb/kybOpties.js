@@ -21,8 +21,12 @@ export const KEUZES = Object.freeze({
   HERKOMST: Object.freeze(['omzet_onderneming', 'eigen_inbreng', 'investering_derden', 'lening', 'verkoop_activa', 'subsidie_overheid', 'overig']),
   JAAROMZET: Object.freeze(['lt_50k', '50k_100k', '100k_500k', '500k_1m', '1m_10m', 'gte_10m']),
   DOC_SOORT: Object.freeze(['kvk_uittreksel', 'statuten', 'aandeelhoudersregister', 'ubo_verklaring', 'info_antwoord', 'overig']),
-  REDEN_CODE: Object.freeze(['identiteit_niet_verifieerbaar', 'kvk_niet_gevonden', 'kvk_afwijking', 'ubo_onvolledig', 'documenten_onleesbaar', 'doel_onduidelijk', 'sanctie', 'pep_niet_acceptabel', 'risico_te_hoog', 'overig']),
-  CHECKLIST: Object.freeze(['identiteit_geverifieerd', 'kvk_gecontroleerd', 'ubo_compleet', 'sancties_gecontroleerd', 'pep_beoordeeld', 'doel_aard_begrepen']),
+  // REDEN_CODE en CHECKLIST staan hier BEWUST NIET MEER (ronde 0, 29-9-2026).
+  // Dat zijn de interne afwijzingsredenen en de beoordelingschecklist: die
+  // horen bij het werk van een medewerker, niet bij de aanvraag van een klant.
+  // Ze stonden in dit bestand en werden dus meegestuurd naar elke bezoeker,
+  // terwijl geen enkel klantscherm ze gebruikt. Ze staan waar ze horen:
+  // components/admin/kyb/kybAdminLabels.js, dat alleen in de interne bundel zit.
   STATUS: Object.freeze(['geen', 'concept', 'ingediend', 'in_behandeling', 'info_nodig', 'goedgekeurd', 'afgewezen', 'ingetrokken']),
   IDENTITEIT_BRON: Object.freeze(['idin', 'kyc_bestaand', 'upload_telefoon', 'upload_web']),
   RISICO_SIGNAAL: Object.freeze(['pep', 'sanctie_bedrijf', 'sanctie_persoon', 'sanctie_niet_gescreend', 'kvk_handmatig', 'structuur_complex', 'identiteit_mismatch', 'geen_documentkopie', 'omzet_volume_mismatch']),
@@ -31,8 +35,9 @@ export const KEUZES = Object.freeze({
 /** Aantal stappen in de klantflow (1 = bedrijf ... 7 = akkoord). */
 export const AANTAL_STAPPEN = 7;
 
-/** Reden-codes waarbij de klant uitsluitend de generieke tekst krijgt (Wwft art. 23). */
-export const GENERIEKE_REDEN_CODES = Object.freeze(['sanctie', 'pep_niet_acceptabel', 'risico_te_hoog', 'overig']);
+// GENERIEKE_REDEN_CODES staat hier ook niet meer: zie de opmerking hierboven.
+// De klant krijgt bij een afwijzing een tekst van de server, niet een code die
+// hij zelf moet vertalen.
 
 export const MAX_DOCUMENTEN = 8;
 export const MAX_PERSONEN = 10;
@@ -50,8 +55,10 @@ const PREFIX = Object.freeze({
   VOLUME_KWARTAAL: 'kyb_volume_',
   HERKOMST: 'kyb_herkomst_',
   JAAROMZET: 'kyb_omzet_',
-  REDEN_CODE: 'kyb_admin_reden_',
-  CHECKLIST: 'kyb_admin_check_',
+  // REDEN_CODE en CHECKLIST hoorden hier nooit: het zijn beheerlabels
+  // (kyb_admin_*), geen keuzes die een klant in zijn aanvraag maakt. Ze staan nu
+  // in components/admin/kyb/kybAdminLabels.js, dat alleen in de interne bundel
+  // zit. Zie ronde 0 van het architectuurbesluit.
 });
 
 function maakOpties(groep) {

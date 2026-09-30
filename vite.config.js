@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -19,6 +20,18 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 600,
     rollupOptions: {
+      // Twee voordeuren uit dezelfde codebase (ronde 0, architectuurbesluit
+      // 29-9-2026): index.html voor klanten, intern.html voor de
+      // compliance-omgeving. Dat levert twee losse bundels op, zodat de
+      // compliance-code niet meer met de klantbundel wordt meegestuurd en dus
+      // niet door bezoekers te downloaden en te lezen is.
+      // Let op: dit is geen beveiliging. De beveiliging is de rolcontrole op de
+      // server bij elk endpoint. Dit voorkomt alleen dat de werkwijze op straat
+      // ligt.
+      input: {
+        klant: resolve(__dirname, 'index.html'),
+        intern: resolve(__dirname, 'intern.html'),
+      },
       output: {
         manualChunks: (id) => {
           // React-vendor — groot maar uitstekend cacheable

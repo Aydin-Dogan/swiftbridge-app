@@ -25,15 +25,42 @@ const SPIEGEL = {
   HERKOMST: ['omzet_onderneming', 'eigen_inbreng', 'investering_derden', 'lening', 'verkoop_activa', 'subsidie_overheid', 'overig'],
   JAAROMZET: ['lt_50k', '50k_100k', '100k_500k', '500k_1m', '1m_10m', 'gte_10m'],
   DOC_SOORT: ['kvk_uittreksel', 'statuten', 'aandeelhoudersregister', 'ubo_verklaring', 'info_antwoord', 'overig'],
-  REDEN_CODE: ['identiteit_niet_verifieerbaar', 'kvk_niet_gevonden', 'kvk_afwijking', 'ubo_onvolledig', 'documenten_onleesbaar', 'doel_onduidelijk', 'sanctie', 'pep_niet_acceptabel', 'risico_te_hoog', 'overig'],
-  CHECKLIST: ['identiteit_geverifieerd', 'kvk_gecontroleerd', 'ubo_compleet', 'sancties_gecontroleerd', 'pep_beoordeeld', 'doel_aard_begrepen'],
   STATUS: ['geen', 'concept', 'ingediend', 'in_behandeling', 'info_nodig', 'goedgekeurd', 'afgewezen', 'ingetrokken'],
 };
+
+/**
+ * Codes die het werk van een MEDEWERKER beschrijven, niet de aanvraag van een
+ * klant. Ze hoorden nooit in deze klantspiegel en zijn er op 29-9-2026
+ * uitgehaald (ronde 0 van het architectuurbesluit): ze werden meegestuurd naar
+ * elke bezoeker terwijl geen enkel klantscherm ze gebruikt.
+ * Ze staan nu in components/admin/kyb/kybAdminLabels.js.
+ */
+const ALLEEN_INTERN = ['REDEN_CODE', 'CHECKLIST'];
 
 describe('kybOpties — spiegel van api KEUZES', () => {
   test('KEUZES bevat exact de vaste spiegel (contract 2.1)', () => {
     for (const [groep, waarden] of Object.entries(SPIEGEL)) {
       expect([...KEUZES[groep]], groep).toEqual(waarden);
+    }
+  });
+
+  test('DE INTERNE CODES ZITTEN NIET IN DE KLANTSPIEGEL', () => {
+    // Dit is de bewaking die ontbrak. Zou iemand REDEN_CODE hier terugzetten,
+    // dan zouden de interne afwijzingsredenen weer met de klantbundel
+    // meegestuurd worden, en dat is precies wat het architectuurbesluit verbiedt.
+    for (const groep of ALLEEN_INTERN) {
+      expect(KEUZES[groep], `${groep} hoort alleen in de interne bundel`).toBeUndefined();
+    }
+  });
+
+  test('en ze staan wel in de interne labels, zodat het beoordeelpaneel werkt', async () => {
+    const admin = await import('../admin/kyb/kybAdminLabels');
+    expect(admin.REDEN_CODES).toContain('identiteit_niet_verifieerbaar');
+    expect(admin.REDEN_CODES).toContain('pep_niet_acceptabel');
+    expect(admin.CHECKLIST).toContain('sancties_gecontroleerd');
+    // De generieke codes zijn een deelverzameling van alle redenen.
+    for (const code of admin.GENERIEKE_REDEN_CODES) {
+      expect(admin.REDEN_CODES, code).toContain(code);
     }
   });
 
