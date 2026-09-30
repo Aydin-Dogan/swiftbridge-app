@@ -21,6 +21,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import InternAanmelden from './InternAanmelden';
+import InternWachtwoord from './InternWachtwoord';
 
 const AdminCompliance = lazy(() => import('./AdminCompliance'));
 const AdminPanel = lazy(() => import('./AdminPanel'));
@@ -87,7 +88,7 @@ function useMedewerker() {
   return [stand, setStand];
 }
 
-function Kop({ medewerker, opAfmelden }) {
+function Kop({ medewerker, opAfmelden, opWachtwoord }) {
   // Bewust tolerant: een ontbrekend veld mag nooit het hele scherm wit maken.
   // Dat gebeurde wel toen hier een verzonnen object binnenkwam zonder rol.
   const naam = medewerker?.naam || 'Medewerker';
@@ -97,15 +98,21 @@ function Kop({ medewerker, opAfmelden }) {
       <span className="text-sm text-ink-2">
         {naam}{rol ? <> · <span className="text-ink-3">{rol}</span></> : null}
       </span>
-      <button type="button" onClick={opAfmelden} className="text-sm text-ink-3 hover:text-ink-1 hover:underline">
-        Afmelden
-      </button>
+      <span className="flex items-center gap-4">
+        <button type="button" onClick={opWachtwoord} className="text-sm text-ink-3 hover:text-ink-1 hover:underline">
+          Wachtwoord
+        </button>
+        <button type="button" onClick={opAfmelden} className="text-sm text-ink-3 hover:text-ink-1 hover:underline">
+          Afmelden
+        </button>
+      </span>
     </div>
   );
 }
 
 export default function InternApp() {
   const [stand, setStand] = useMedewerker();
+  const [wachtwoordScherm, setWachtwoordScherm] = useState(false);
 
   async function afmelden() {
     try {
@@ -122,9 +129,19 @@ export default function InternApp() {
     return <InternAanmelden opAangemeld={(m) => setStand({ bezig: false, medewerker: m })} />;
   }
 
+  // Bewust buiten de router: het wachtwoordscherm hoort niet in de
+  // browsergeschiedenis, zodat een terug-knop er niet middenin terugkomt.
+  if (wachtwoordScherm) {
+    return <InternWachtwoord opKlaar={() => setWachtwoordScherm(false)} />;
+  }
+
   return (
     <BrowserRouter basename={basisPad()}>
-      <Kop medewerker={stand.medewerker} opAfmelden={afmelden} />
+      <Kop
+        medewerker={stand.medewerker}
+        opAfmelden={afmelden}
+        opWachtwoord={() => setWachtwoordScherm(true)}
+      />
       <Suspense fallback={<Laden />}>
         <Routes>
           {/* De compliance-werkplek is de startpagina van deze omgeving. */}
