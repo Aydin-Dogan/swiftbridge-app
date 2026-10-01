@@ -33,8 +33,13 @@
     <!-- Strenger dan de klantpagina: img-src zonder https: (geen externe
          afbeeldingen), form-action alleen naar de eigen oorsprong (geen
          betaalpartijen), en dezelfde API-hosts als de klantapp omdat het
-         dezelfde backend is. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.nl https://swiftbridge-api-production.up.railway.app; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'" />
+         dezelfde backend is.
+         blob: is nodig voor het KYC-reviewscherm: dat haalt een document met
+         fetch op (de sessiecookie moet mee) en toont het als blob:-adres in een
+         <img>. Zonder blob: blokkeert de browser dat zonder netwerkfout, dus
+         zonder zichtbare melding — je ziet enkel een leeg vak (1-10-2026).
+         Een blob: is lokaal en kortstondig; dit opent niets naar buiten. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://api.swiftbridge.nl https://swiftbridge-api-production.up.railway.app; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'" />
 
     <title>SwiftBridge compliance</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

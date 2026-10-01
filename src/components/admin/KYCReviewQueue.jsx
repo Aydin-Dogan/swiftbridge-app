@@ -83,8 +83,17 @@ function DocumentBeeld({ recordId, type, label }) {
 function ReviewModal({ record, onClose, onBeoordeeld }) {
   const { t } = useTaal();
   const tx = useTx();
-  // Paspoorten hebben geen achterkant; ID-kaarten wel. Server-vlag (indien aanwezig) wint.
+  // Welke beelden er zijn weet alleen de server: die kijkt of de padkolommen
+  // gevuld zijn. Ontbreekt een vlag (oudere API tijdens een uitrol), dan vallen
+  // we terug op het oude raadwerk — liever een vak te veel dan een document
+  // missen dat er wel is.
+  const toonVoorkant = record.heeftVoorkant ?? true;
   const toonAchterkant = record.heeftAchterkant ?? !/paspoort/i.test(record.documentType || '');
+  const toonSelfie = record.heeftSelfie ?? true;
+  // Bij iDIN stelt de bank de identiteit vast en wordt er niets geupload. Dan
+  // drie vakken met "HTTP 404" tonen is misleidend: een beoordelaar kan daaraan
+  // niet zien of het document ontbreekt of of het ophalen stuk is (1-10-2026).
+  const geenDocumenten = !toonVoorkant && !toonAchterkant && !toonSelfie;
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState('');
   const [toonReject, setToonReject] = useState(false);
@@ -153,13 +162,31 @@ function ReviewModal({ record, onClose, onBeoordeeld }) {
         </div>
 
         {/* Documenten */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-          <DocumentBeeld recordId={record.id} type="voorkant" label={t('kyc_upload_voorkant_label')} />
-          {toonAchterkant && (
-            <DocumentBeeld recordId={record.id} type="achterkant" label={t('kyc_upload_achterkant_label')} />
-          )}
-          <DocumentBeeld recordId={record.id} type="selfie" label={t('kyc_upload_selfie_label')} />
-        </div>
+        {geenDocumenten ? (
+          <div className="bg-surface-3 border border-border rounded-md p-4 mb-5 text-sm text-ink-2">
+            <div className="font-semibold text-ink-1 mb-1">
+              {tx('kyc_review_geen_documenten_titel', 'Geen documenten bij dit dossier')}
+            </div>
+            <p>
+              {tx(
+                'kyc_review_geen_documenten_uitleg',
+                'Er is niets geupload. Bij iDIN stelt de bank de identiteit vast; is die verificatie niet afgerond, dan ligt er geen identiteitsbewijs. Vraag de klant om een document te uploaden voordat u beslist.'
+              )}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+            {toonVoorkant && (
+              <DocumentBeeld recordId={record.id} type="voorkant" label={t('kyc_upload_voorkant_label')} />
+            )}
+            {toonAchterkant && (
+              <DocumentBeeld recordId={record.id} type="achterkant" label={t('kyc_upload_achterkant_label')} />
+            )}
+            {toonSelfie && (
+              <DocumentBeeld recordId={record.id} type="selfie" label={t('kyc_upload_selfie_label')} />
+            )}
+          </div>
+        )}
 
         {fout && (
           <div role="alert" className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 text-sm mb-3">
