@@ -242,6 +242,7 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                 { id: 'profiel', label: 'Profiel', icoon: User },
                 { id: 'transacties',label: 'Transacties', icoon: Banknote },
                 { id: 'kyc', label: 'KYC', icoon: IdCard },
+                { id: 'notities', label: 'Notities', icoon: Clipboard },
                 { id: 'audit', label: 'Audit', icoon: Clipboard },
                 { id: 'acties', label: 'Acties', icoon: Settings },
               ].map((tt) => (
@@ -336,7 +337,22 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
               {tab === 'kyc' && (
                 <div>
                   {data.kycRecords.length === 0 ? (
-                    <div className="text-center text-ink-2 py-8">Geen KYC records</div>
+                    <div className="text-center py-8">
+                      <div className="text-ink-2">Geen KYC records</div>
+                      <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
+                        Deze rekeninghouder heeft nooit iets ingediend, dus er is geen
+                        dossier om te beoordelen. Wilt u iets van hem weten of een
+                        identiteitsbewijs opvragen, gebruik dan Informatie opvragen
+                        onder Acties.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setTab('acties')}
+                        className="mt-3 px-4 py-2 rounded-md bg-accent-600 hover:bg-accent-500 text-sm text-white font-semibold"
+                      >
+                        Naar Acties
+                      </button>
+                    </div>
                   ) : (
                     <div className="space-y-3">
                       {data.kycRecords.map((k) => (
@@ -384,8 +400,21 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                 </div>
               )}
 
+              {tab === 'notities' && (
+                <NotitiesTab
+                  userId={userId}
+                  notities={data.notities || []}
+                  onToegevoegd={laad}
+                />
+              )}
+
               {tab === 'acties' && (
                 <div className="space-y-3">
+                  <VerzoekKaart
+                    userId={userId}
+                    verzoeken={data.verzoeken || []}
+                    onGewijzigd={laad}
+                  />
                   <ActieKaart
                     icoon={IdCard}
                     titel="KYC status wijzigen"
@@ -502,6 +531,220 @@ function Veld({ label, waarde, mono }) {
     <div>
       <div className="text-[0.7rem] font-medium uppercase tracking-[0.16em] text-gray-500">{label}</div>
       <div className={`text-sm text-ink-1 ${mono ? 'font-mono' : ''}`}>{waarde}</div>
+    </div>
+  );
+}
+
+/**
+ * Aantekeningen bij een rekeninghouder.
+ *
+ * Bewust een eigen tabblad en niet het Audit-tabblad. Dat laatste is een
+ * hash-geketend feitenspoor zonder schrijfroute: wat daarin komt staat
+ * onherroepelijk vast en is niet te corrigeren. Een aantekening als "klant belde
+ * en vroeg naar zijn rekening" hoort in een eigen bak, die je wel kunt bijhouden.
+ */
+function NotitiesTab({ userId, notities, onToegevoegd }) {
+  const [tekst, setTekst] = useState('');
+  const [bezig, setBezig] = useState(false);
+  const [fout, setFout] = useState('');
+
+  async function bewaar() {
+    if (!tekst.trim()) return;
+    setBezig(true); setFout('');
+    try {
+      await apiFetch(`/admin/users/${userId}/notitie`, { method: 'POST', body: { tekst } });
+      setTekst('');
+      onToegevoegd?.();
+    } catch (e) {
+      setFout(e?.body?.error || e?.message || 'Opslaan is niet gelukt.');
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-surface-3 border border-border rounded-md p-3">
+        <label htmlFor="nieuweNotitie" className="block text-sm font-semibold text-ink-1 mb-1">
+          Aantekening toevoegen
+        </label>
+        <p className="text-xs text-ink-2 mb-2">
+          Bijvoorbeeld: wie er belde, wat er is gevraagd en wat er is afgesproken.
+          Alleen zichtbaar voor medewerkers; de rekeninghouder ziet dit niet.
+        </p>
+        <textarea
+          id="nieuweNotitie"
+          rows={3}
+          value={tekst}
+          onChange={(e) => setTekst(e.target.value)}
+          placeholder="Klant belde op ... en vroeg naar ..."
+          className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-200"
+        />
+        {fout && <div role="alert" className="text-sm text-red-700 mt-2">{fout}</div>}
+        <div className="flex justify-end mt-2">
+          <button
+            type="button"
+            onClick={bewaar}
+            disabled={bezig || !tekst.trim()}
+            className="px-4 py-2 rounded-md bg-brand-600 hover:bg-brand-700 text-sm text-white font-semibold disabled:opacity-40"
+          >
+            Aantekening bewaren
+          </button>
+        </div>
+      </div>
+
+      {notities.length === 0 ? (
+        <div className="text-center text-ink-2 py-6">Nog geen aantekeningen</div>
+      ) : (
+        <div className="space-y-2">
+          {notities.map((n) => (
+            <div key={n.id} className="bg-surface border border-border rounded-md p-3">
+              <div className="flex items-center justify-between gap-2 text-xs text-gray-500">
+                <span>{n.medewerker}</span>
+                <span>{fmtDatum(n.aangemaaktOp)}</span>
+              </div>
+              <p className="text-sm text-ink-1 mt-1 whitespace-pre-wrap">{n.tekst}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Informatie opvragen bij de rekeninghouder.
+ *
+ * Het bestaande informatieverzoek hangt aan een transactie; een klant zonder
+ * transacties kon daar nooit in komen. Dit verzoek hangt aan de klant zelf: hij
+ * krijgt een melding, ziet de vraag in de app en kan antwoorden.
+ */
+function VerzoekKaart({ userId, verzoeken, onGewijzigd }) {
+  const [open, setOpen] = useState(false);
+  const [vraag, setVraag] = useState('');
+  const [soort, setSoort] = useState('informatie');
+  const [bezig, setBezig] = useState(false);
+  const [fout, setFout] = useState('');
+
+  async function verstuur() {
+    if (!vraag.trim()) return;
+    setBezig(true); setFout('');
+    try {
+      await apiFetch(`/admin/users/${userId}/verzoek`, { method: 'POST', body: { soort, vraag } });
+      setVraag(''); setOpen(false);
+      onGewijzigd?.();
+    } catch (e) {
+      setFout(e?.body?.error || e?.message || 'Versturen is niet gelukt.');
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  async function handelAf(verzoekId) {
+    setBezig(true); setFout('');
+    try {
+      await apiFetch(`/admin/users/${userId}/verzoek/${verzoekId}/afhandelen`, { method: 'POST', body: {} });
+      onGewijzigd?.();
+    } catch (e) {
+      setFout(e?.body?.error || e?.message || 'Afhandelen is niet gelukt.');
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  const lopend = verzoeken.filter((v) => v.status !== 'afgehandeld');
+
+  return (
+    <div className="bg-surface-3 border border-border rounded-md p-3">
+      <div className="font-semibold text-ink-1">Informatie opvragen</div>
+      <p className="text-xs text-ink-2 mt-0.5">
+        Stel de rekeninghouder een vraag of vraag een document op. Hij krijgt een
+        melding en kan in de app antwoorden. Dit werkt ook als er nog geen
+        transactie en geen KYC-dossier is.
+      </p>
+
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="mt-2 px-4 py-2 rounded-md bg-accent-600 hover:bg-accent-500 text-sm text-white font-semibold"
+        >
+          Vraag stellen
+        </button>
+      ) : (
+        <div className="mt-2 space-y-2">
+          <div className="flex gap-2">
+            {[
+              { w: 'informatie', l: 'Een vraag' },
+              { w: 'document', l: 'Een document' },
+              { w: 'identiteit', l: 'Identiteitsbewijs' },
+            ].map((s) => (
+              <button
+                key={s.w}
+                type="button"
+                onClick={() => setSoort(s.w)}
+                aria-pressed={soort === s.w}
+                className={`px-3 py-1 rounded-md border text-xs font-medium ${
+                  soort === s.w ? 'bg-brand-600 text-white border-brand-600' : 'bg-surface text-ink-2 border-border'}`}
+              >
+                {s.l}
+              </button>
+            ))}
+          </div>
+          <textarea
+            rows={3}
+            value={vraag}
+            onChange={(e) => setVraag(e.target.value)}
+            placeholder="Wat heeft u van de rekeninghouder nodig? Dit is wat hij te lezen krijgt."
+            aria-label="Wat heeft u nodig"
+            className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-ink-1 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-200"
+          />
+          <div className="flex gap-2 justify-end">
+            <button type="button" onClick={() => { setOpen(false); setFout(''); }} disabled={bezig}
+              className="px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 disabled:opacity-40">
+              Annuleren
+            </button>
+            <button type="button" onClick={verstuur} disabled={bezig || !vraag.trim()}
+              className="px-4 py-2 rounded-md bg-accent-600 hover:bg-accent-500 text-sm text-white font-semibold disabled:opacity-40">
+              Versturen
+            </button>
+          </div>
+        </div>
+      )}
+
+      {fout && <div role="alert" className="text-sm text-red-700 mt-2">{fout}</div>}
+
+      {lopend.length > 0 && (
+        <div className="mt-3 space-y-2">
+          <div className="text-[0.7rem] uppercase tracking-[0.14em] text-gray-500">Lopende verzoeken</div>
+          {lopend.map((v) => (
+            <div key={v.id} className="bg-surface border border-border rounded-md p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs text-gray-500">{fmtDatum(v.aangemaaktOp)}</span>
+                <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${
+                  v.status === 'beantwoord'
+                    ? 'bg-success-50 text-success-700 border-success-200'
+                    : 'bg-surface-3 text-ink-2 border-border'}`}>
+                  {v.status === 'beantwoord' ? 'Beantwoord' : 'Wacht op de klant'}
+                </span>
+              </div>
+              <p className="text-sm text-ink-1 mt-1 whitespace-pre-wrap">{v.vraag}</p>
+              {v.antwoord && (
+                <div className="mt-2 border-l-2 border-success-600 pl-2">
+                  <div className="text-[0.7rem] uppercase tracking-[0.12em] text-gray-500">Antwoord van de klant</div>
+                  <p className="text-sm text-ink-1 whitespace-pre-wrap">{v.antwoord}</p>
+                </div>
+              )}
+              <div className="flex justify-end mt-2">
+                <button type="button" onClick={() => handelAf(v.id)} disabled={bezig}
+                  className="px-3 py-1 rounded-md bg-surface-3 border border-border text-xs text-ink-1 disabled:opacity-40">
+                  Afronden
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -28,6 +28,7 @@ import InsightsCard from './dashboard/InsightsCard';
 import Spaardoelen from './dashboard/Spaardoelen';
 import MaandOverzicht from './dashboard/MaandOverzicht';
 import QuickResend from './dashboard/QuickResend';
+import OpenstaandeVerzoeken from './dashboard/OpenstaandeVerzoeken';
 import ActieCirkels from './dashboard/ActieCirkels';
 import RekeningenCard from './dashboard/RekeningenCard';
 import CashflowCard from './dashboard/CashflowCard';
@@ -344,6 +345,9 @@ export default function Dashboard({ gebruiker }) {
       {gebruiker?.emailGeverifieerd === false && (
         <EmailVerificatieBanner email={gebruiker?.email} />
       )}
+      {/* Vragen die compliance bij deze klant heeft neergelegd. Blijft staan tot
+          hij antwoordt; een melding alleen verdwijnt te makkelijk. */}
+      <OpenstaandeVerzoeken />
       <BannerLijst />
 
       {/* Kop: Overzicht + vernieuwen + Personaliseer (bank-concept) */}
