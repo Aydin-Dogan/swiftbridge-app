@@ -225,9 +225,93 @@ function VraagRisico({ risico, tx }) {
   );
 }
 
-function VraagBesluit({ besluit, tx }) {
+/** De drie antwoorden die de API per checklistpunt accepteert. */
+const ANTWOORDEN = [
+  { waarde: 'akkoord', kort: 'Ja' },
+  { waarde: 'niet_akkoord', kort: 'Nee' },
+  { waarde: 'niet_van_toepassing', kort: 'N.v.t.' },
+];
+
+/**
+ * Een checklistpunt met zijn drie antwoorden.
+ *
+ * Bewust geen enkel vinkje: de API kent drie antwoorden, en "niet van
+ * toepassing" is iets anders dan "niet afgevinkt". Een vakje dat beide zou
+ * moeten betekenen, laat een beoordelaar denken dat hij iets heeft vastgelegd
+ * wat er niet staat.
+ */
+function ChecklistPunt({ punt, waarde, bezig, onKies, tx }) {
+  return (
+    <li className="flex items-center justify-between gap-3 py-1.5">
+      <span className="text-sm text-ink-2">{label(CHECKLIST_LABEL, punt)}</span>
+      <span className="flex shrink-0 rounded-md border border-border overflow-hidden" role="group"
+        aria-label={label(CHECKLIST_LABEL, punt)}>
+        {ANTWOORDEN.map((a) => (
+          <button
+            key={a.waarde}
+            type="button"
+            disabled={bezig}
+            aria-pressed={waarde === a.waarde}
+            onClick={() => onKies(punt, a.waarde)}
+            className={`px-2.5 py-1 text-xs font-medium border-l first:border-l-0 border-border transition
+              disabled:opacity-40
+              ${waarde === a.waarde
+                ? (a.waarde === 'akkoord' ? 'bg-success-600 text-white'
+                  : a.waarde === 'niet_akkoord' ? 'bg-red-600 text-white'
+                  : 'bg-ink-2 text-white')
+                : 'bg-surface text-ink-2 hover:bg-surface-3'}`}
+          >
+            {tx(`kyc_admin_antwoord_${a.waarde}`, a.kort)}
+          </button>
+        ))}
+      </span>
+    </li>
+  );
+}
+
+function VraagBesluit({ besluit, checklist, magBeoordelen, status, dossierId, tx, onBijgewerkt }) {
   const blokkerend = besluit.ontbreekt.filter((o) => o.blokkerend);
   const overig = besluit.ontbreekt.filter((o) => !o.blokkerend);
+  const [bezig, setBezig] = useState(false);
+  const [fout, setFout] = useState('');
+  const [ontbreekt, setOntbreekt] = useState([]);
+  const wachtOpTweede = status === 'wacht_op_tweede';
+
+  async function kiesAntwoord(punt, waarde) {
+    setBezig(true);
+    setFout('');
+    try {
+      await apiFetch(`/admin/kyc/dossier/${dossierId}/checklist`, {
+        method: 'PUT',
+        body: { checklist: { [punt]: waarde } },
+      });
+      onBijgewerkt?.();
+    } catch (e) {
+      setFout(e?.body?.error || e?.message || 'Opslaan is niet gelukt.');
+    } finally {
+      setBezig(false);
+    }
+  }
+
+  async function neemBesluit(welk) {
+    setBezig(true);
+    setFout('');
+    setOntbreekt([]);
+    try {
+      await apiFetch(`/admin/kyc/dossier/${dossierId}/besluit`, {
+        method: 'POST',
+        body: { besluit: welk },
+      });
+      onBijgewerkt?.();
+    } catch (e) {
+      setFout(e?.body?.error || e?.message || 'Het besluit kon niet worden vastgelegd.');
+      // De API vertelt WELKE punten nog ontbreken; dat is bruikbaarder dan
+      // alleen "checklist niet volledig".
+      if (Array.isArray(e?.body?.ontbreekt)) setOntbreekt(e.body.ontbreekt);
+    } finally {
+      setBezig(false);
+    }
+  }
 
   return (
     <Blok nummer={2} vraag={tx('kyc_admin_vraag2', 'Accepteer ik hem, en waarom?')}>
@@ -270,18 +354,67 @@ function VraagBesluit({ besluit, tx }) {
       <div className="text-[0.7rem] uppercase tracking-[0.14em] text-gray-500 mb-2">
         {tx('kyc_admin_checklist', 'Checklist bij deze risicoklasse')}
       </div>
-      <ul className="space-y-1">
+      <ul className="divide-y divide-border mb-4">
         {besluit.checklist.map((punt) => (
-          <li key={punt} className="flex items-center gap-2 text-sm text-ink-2">
-            <span className="w-4 h-4 rounded border border-border bg-surface-3 shrink-0" aria-hidden="true" />
-            {label(CHECKLIST_LABEL, punt)}
-          </li>
+          <ChecklistPunt
+            key={punt}
+            punt={punt}
+            waarde={checklist?.[punt]}
+            bezig={bezig}
+            onKies={kiesAntwoord}
+            tx={tx}
+          />
         ))}
       </ul>
-      <p className="text-xs text-gray-500 mt-3">
-        {tx('kyc_admin_checklist_uit',
-          'De checklist en de besluitknoppen worden actief zodra het vierogenprincipe op de database is aangesloten.')}
-      </p>
+
+      {wachtOpTweede && (
+        <div className="rounded-md border border-brand-100 bg-brand-50 p-3 mb-3 text-sm text-ink-1">
+          {magBeoordelen?.mag
+            ? tx('kyc_admin_tweede_jij', 'Een collega heeft dit dossier al beoordeeld. Jij kunt het bevestigen.')
+            : (magBeoordelen?.reden
+              || tx('kyc_admin_tweede_ander', 'Dit dossier wacht op een tweede beoordelaar.'))}
+        </div>
+      )}
+
+      {fout && (
+        <div role="alert" className="rounded-md border border-red-200 bg-red-50 p-3 mb-3 text-sm text-red-700">
+          {fout}
+          {ontbreekt.length > 0 && (
+            <ul className="mt-1 list-disc list-inside">
+              {ontbreekt.map((p) => <li key={p}>{label(CHECKLIST_LABEL, p)}</li>)}
+            </ul>
+          )}
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2 justify-end">
+        <button
+          type="button"
+          disabled={bezig}
+          onClick={() => neemBesluit('info_nodig')}
+          className="px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40"
+        >
+          {tx('kyc_admin_knop_info', 'Informatie opvragen')}
+        </button>
+        <button
+          type="button"
+          disabled={bezig || !magBeoordelen?.mag}
+          onClick={() => neemBesluit('afgewezen')}
+          className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40"
+        >
+          {tx('kyc_admin_knop_afwijzen', 'Afwijzen')}
+        </button>
+        <button
+          type="button"
+          disabled={bezig || !magBeoordelen?.mag}
+          onClick={() => neemBesluit('goedgekeurd')}
+          className="px-4 py-2 rounded-md bg-success-600 hover:bg-success-700 text-sm text-white font-semibold disabled:opacity-40"
+        >
+          {wachtOpTweede
+            ? tx('kyc_admin_knop_bevestigen', 'Bevestigen als tweede beoordelaar')
+            : tx('kyc_admin_knop_goedkeuren', 'Goedkeuren')}
+        </button>
+      </div>
     </Blok>
   );
 }
@@ -398,6 +531,20 @@ function DossierPaneel({ dossierId, onSluit, tx }) {
     return () => { geannuleerd = true; };
   }, [dossierId, t]);
 
+  // Na elk vinkje en elk besluit het dossier opnieuw ophalen, zodat de status,
+  // de checklist en "mag ik nog beslissen" van de server komen en niet van wat
+  // het scherm dacht. Dit loopt vanuit een klik, niet vanuit een effect, dus
+  // hier mag de status gewoon direct worden gezet.
+  const herlaadDossier = useCallback(async () => {
+    try {
+      const d = await apiFetch(`/admin/kyc/dossier/${dossierId}`);
+      setDossier(d);
+      setFout('');
+    } catch (e) {
+      setFout(parseError(e, t));
+    }
+  }, [dossierId, t]);
+
   return (
     <div
       className="fixed inset-0 z-[70] flex items-start justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto"
@@ -437,7 +584,15 @@ function DossierPaneel({ dossierId, onSluit, tx }) {
           {dossier && !laden && (
             <>
               <VraagRisico risico={dossier.risico} tx={tx} />
-              <VraagBesluit besluit={dossier.besluit} tx={tx} />
+              <VraagBesluit
+                besluit={dossier.besluit}
+                checklist={dossier.checklist}
+                magBeoordelen={dossier.magBeoordelen}
+                status={dossier.status}
+                dossierId={dossierId}
+                tx={tx}
+                onBijgewerkt={herlaadDossier}
+              />
               <VraagVastlegging vastlegging={dossier.vastlegging} tx={tx} />
               <VraagGedrag gedrag={dossier.gedrag} tx={tx} />
             </>

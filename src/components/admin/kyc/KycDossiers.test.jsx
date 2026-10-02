@@ -47,6 +47,8 @@ const WACHTRIJ = {
 
 const DOSSIER = {
   id: 'k1', userId: 'u1', type: 'particulier', status: 'in_behandeling',
+  checklist: {},
+  magBeoordelen: { mag: true },
   ingediendOp: '2026-05-13 14:01:10', dagenWachtend: 138, buitenTermijn: true,
   risico: {
     klasse: 'hoog', score: 70,
@@ -86,17 +88,26 @@ const DOSSIER = {
   },
 };
 
-const toon = () => render(<TaalProvider><KycDossiers /></TaalProvider>);
+/** Het dossier dat de nagebootste server teruggeeft; per test te overschrijven. */
+let dossierAntwoord = DOSSIER;
+
+const toon = (overschrijf = {}) => {
+  dossierAntwoord = { ...DOSSIER, ...overschrijf };
+  return render(<TaalProvider><KycDossiers /></TaalProvider>);
+};
 
 beforeEach(() => {
   // Zonder dit draait de testomgeving in het Engels en heet de sluitknop
   // "Close": de generieke sleutels zijn wel vertaald, de kyc_admin_*-teksten nog niet.
   localStorage.clear();
   forceerNederlands();
+  dossierAntwoord = DOSSIER;
   apiFetch.mockReset();
   apiFetch.mockImplementation(async (pad) => {
     if (pad === '/admin/kyc/wachtrij') return WACHTRIJ;
-    if (pad.startsWith('/admin/kyc/dossier/')) return DOSSIER;
+    if (pad.includes('/checklist')) return { checklist: {} };
+    if (pad.includes('/besluit')) return { status: 'wacht_op_tweede', definitief: false };
+    if (pad.startsWith('/admin/kyc/dossier/')) return dossierAntwoord;
     throw new Error(`onverwacht pad: ${pad}`);
   });
 });
@@ -215,15 +226,50 @@ describe('het dossier toont de vier vragen', () => {
   });
 });
 
-describe('het scherm neemt geen besluiten', () => {
-  test('er staan geen goedkeur- of afwijsknoppen zolang het vierogenprincipe niet is aangesloten', async () => {
+describe('het scherm neemt besluiten', () => {
+  // Deze beschrijving stond tot 2-10-2026 op "neemt GEEN besluiten" en legde de
+  // toenmalige beperking vast: de checklist was niet aan te vinken en er waren
+  // geen knoppen, omdat het vierogenprincipe nog niet op de database was
+  // aangesloten. Dat is nu wel zo, dus de test legt het nieuwe gedrag vast.
+
+  test('de checklist is aan te vinken en wordt naar de server gestuurd', async () => {
     toon();
-    const knoppen = await screen.findAllByRole('button', { name: /bekijken/i });
-    fireEvent.click(knoppen[0]);
+    fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
     await screen.findByText(/Wat is het risico van deze klant/);
-    expect(screen.queryByRole('button', { name: /^goedkeuren$/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /^afwijzen$/i })).not.toBeInTheDocument();
-    // En het scherm legt uit waarom die knoppen er nog niet zijn.
-    expect(screen.getByText(/worden actief zodra het vierogenprincipe/i)).toBeInTheDocument();
+
+    // Per punt drie antwoorden: ja, nee, niet van toepassing. Bewust geen enkel
+    // vinkje, want "niet van toepassing" is iets anders dan "niet afgevinkt".
+    const jaKnoppen = screen.getAllByRole('button', { name: /^ja$/i });
+    expect(jaKnoppen.length).toBeGreaterThan(0);
+
+    apiFetch.mockClear();
+    fireEvent.click(jaKnoppen[0]);
+    await waitFor(() => {
+      const aanroep = apiFetch.mock.calls.find(([pad]) => String(pad).includes('/checklist'));
+      expect(aanroep).toBeDefined();
+      expect(aanroep[1].method).toBe('PUT');
+    });
+  });
+
+  test('de besluitknoppen staan er, en zijn uit als deze medewerker niet mag', async () => {
+    // magBeoordelen komt van de server. Staat die op false, dan heeft deze
+    // medewerker de eerste beoordeling zelf gedaan en mag hij zijn eigen besluit
+    // niet bevestigen. De knop uitzetten is alleen een vriendelijkheid; de
+    // echte blokkade zit in de API.
+    toon({ magBeoordelen: { mag: false, reden: 'Een tweede beoordeling moet door een andere medewerker gebeuren.' } });
+    fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
+    await screen.findByText(/Wat is het risico van deze klant/);
+
+    expect(screen.getByRole('button', { name: /goedkeuren|bevestigen/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^afwijzen$/i })).toBeDisabled();
+    // Informatie opvragen is geen afsluitend besluit en mag altijd.
+    expect(screen.getByRole('button', { name: /informatie opvragen/i })).not.toBeDisabled();
+  });
+
+  test('de oude uitleg dat de knoppen nog niet werken is weg', async () => {
+    toon();
+    fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
+    await screen.findByText(/Wat is het risico van deze klant/);
+    expect(screen.queryByText(/worden actief zodra het vierogenprincipe/i)).not.toBeInTheDocument();
   });
 });
