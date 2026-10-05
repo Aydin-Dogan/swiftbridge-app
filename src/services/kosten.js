@@ -67,7 +67,17 @@ export function berekenKosten(eurBedrag, methode = 'ideal', snelheid = 'express'
 }
 
 // Welkomstactie: geen fee op de eerste overboeking tot en met dit bedrag.
-// Moet gelijk blijven aan WELKOMST_DEAL_MAX in de API (matrixSync.test.js).
+//
+// Moet gelijk blijven aan WELKOMST_DEAL_MAX in de API. Dat wordt bewaakt door
+// swiftbridge-api/tests/prijsopbouwEen.test.js, dat dit bestand inleest en de
+// constanten vergelijkt — niet door matrixSync.test.js, waar dit commentaar
+// eerder naar verwees.
+//
+// De grens is sinds 5-10-2026 ook in de API vast en niet meer per omgeving in
+// te stellen (welkomstGrensVast.test.js). Hij staat bovendien in vier
+// winkeltekstvelden en in twee bannerbeelden voor de App Store en Google Play;
+// wijzigen betekent dus ook winkelmateriaal/00-TEKSTEN-EN-MATEN.md en opnieuw
+// exporteren.
 export const WELKOMST_DEAL_MAX = 800;
 
 /** Geldt de welkomstactie voor deze overboeking? Spiegelt welkomstDealActief in de API. */
