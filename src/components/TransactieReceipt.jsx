@@ -91,7 +91,7 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
         {tx.welkomstDeal && (
           <div className="bg-accent-400/15 border border-accent-400/40 rounded-md p-3 text-accent-600 text-xs font-semibold flex items-center gap-2">
             <Gift className="w-4 h-4 flex-shrink-0" />
-            <span>Welkomst-deal toegepast — fee gratis op deze transactie!</span>
+            <span>Welkomstactie toegepast — de vaste kosten zijn vervallen</span>
           </div>
         )}
 
@@ -172,11 +172,29 @@ export default function TransactieReceipt({ tx, onSluit, onHerhaal }) {
             <span className="font-mono font-semibold tabular-nums">1 EUR = {tx.wisselKoers || tx.wissel_koers || '—'} {tx.valuta || 'TRY'}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-ink-3">Servicekosten</span>
+            <span className="text-ink-3">Vaste kosten</span>
             <span className={`font-mono font-semibold tabular-nums ${tx.welkomstDeal ? 'text-success-600' : 'text-ink-1'}`}>
-              {tx.welkomstDeal ? 'GRATIS' : `€${(tx.feeEur || tx.fee_eur || 0).toFixed(2)}`}
+              €{(tx.feeEur || tx.fee_eur || 0).toFixed(2)}
             </span>
           </div>
+          {/* De koersopslag hoort op de kwitantie te staan, juist bij de
+              welkomstactie. Zonder deze regel waren de vaste kosten van 0,00 de
+              enige kostenmededeling op het document dat de klant bewaart,
+              terwijl er wel marge is ingehouden — bij de actie zelfs over het
+              volledige bedrag, want er gaat geen fee meer vanaf. De lijst-route
+              doet SELECT *, dus het veld komt in beide schrijfwijzen binnen. */}
+          {(tx.fxMargeEur ?? tx.fx_marge_eur) != null && (
+            <div className="flex justify-between">
+              <span className="text-ink-3">
+                Koersopslag{(tx.fxMargePct ?? tx.fx_marge_pct) != null
+                  ? ` (${String(tx.fxMargePct ?? tx.fx_marge_pct).replace('.', ',')}%)`
+                  : ''}
+              </span>
+              <span className="font-mono font-semibold tabular-nums text-ink-1">
+                €{Number(tx.fxMargeEur ?? tx.fx_marge_eur).toFixed(2)}
+              </span>
+            </div>
+          )}
           <div className="flex justify-between">
             <span className="text-ink-3">Bank ontvanger</span>
             <span className="font-semibold text-ink-1">{tx.ontvangerBank || tx.ontvanger_bank || '—'}</span>

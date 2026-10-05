@@ -834,7 +834,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
           ['Betaalmethode', methodeObj?.label || methode],
           ['Naar', ontvanger],
           ['IBAN', `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
-          ['Servicekosten', dealActief ? 'Gratis (welkomstactie)' : `€${feeGetoond.toFixed(2)}`],
+          ['Vaste kosten', dealActief ? '€0,00 (welkomstactie)' : `€${feeGetoond.toFixed(2)}`],
           [`Wisselkoers marge (${opbouw.fxMargePct}%)`, `€${opbouw.fxMargeEur.toFixed(2)}`],
           ['Totale kosten', `€${totaleKostenEur.toFixed(2)} (${totaleKostenPct.toFixed(2)}%)`],
           ['Mid-market koers (ECB)', `1 EUR = ${opbouw.midMarketKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],

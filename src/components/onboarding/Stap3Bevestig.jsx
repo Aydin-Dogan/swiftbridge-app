@@ -3,13 +3,10 @@
  *
  * - Toont alleen als gebruiker.kycStatus === 'goedgekeurd'
  * - Gradient achtergrond met confetti pattern (CSS only)
- * - Promo code "WELKOM800" tonen (mock, in productie genereert backend dit)
  * - CTA naar Stap 4
  */
 import { useTaal } from '../../i18n';
 import { Sparkles, Check } from '../icons/Icons';
-
-const PROMO_CODE = 'WELKOM800';
 
 export default function Stap3Bevestig({ onVolgende }) {
   const { t } = useTaal();
@@ -54,13 +51,15 @@ export default function Stap3Bevestig({ onVolgende }) {
           <p className="text-xs font-bold uppercase tracking-widest text-white/80">
             {t('onb_bevestig_promo_label')}
           </p>
-          <p className="text-3xl font-extrabold">{t('onb_bevestig_promo_titel')}</p>
-          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 inline-block border border-white/30">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-white/70 mb-1">
-              {t('onb_bevestig_promo_code_label')}
-            </p>
-            <p className="font-mono text-xl font-bold tracking-wider">{PROMO_CODE}</p>
-          </div>
+          {/* text-2xl en niet 3xl: de titel noemt nu ook waar de actie voor
+              geldt ("Eerste overboeking: geen vaste kosten") in plaats van een
+              kaal bedrag. Zonder die binding las de grootste tekst op het scherm
+              als een blijvend tarief voor elk bedrag onder de 800 euro. */}
+          <p className="text-2xl font-extrabold">{t('onb_bevestig_promo_titel')}</p>
+          {/* Hier stond een code "WELKOM800" onder het kopje "Promo code". Die
+              code bestond niet: de backend kent geen enkele promocode-afhandeling
+              en de actie staat automatisch aan (gratis_eerste_tx DEFAULT 1).
+              Klanten kregen dus een code te zien die nergens in te voeren was. */}
           <p className="text-xs text-white/90 max-w-xs mx-auto">
             {t('onb_bevestig_promo_uitleg')}
           </p>

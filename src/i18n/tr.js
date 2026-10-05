@@ -606,7 +606,7 @@ export const tr = {
  onb_welkom_subtitel:'Dünyanın her yerine para göndermek için hesabını 2 dakikada hazırlayalım.',
  onb_welkom_punt_1:'Hesap oluşturuldu',
  onb_welkom_punt_2:'Kimliğini doğrula (1 dakika, Hollanda bankan üzerinden)',
- onb_welkom_punt_3:'İlk transferin ücretsiz (€800\'e kadar)',
+ onb_welkom_punt_3:'İlk transferini sabit ücret ödemeden gönder (en çok €800)',
  onb_welkom_cta:'Hadi başlayalım',
 
  // Adım 2 — KYC yönlendirme
@@ -614,7 +614,7 @@ export const tr = {
  onb_kyc_subtitel:'Yasal olarak zorunlu (Wwft) — kendi bankan üzerinden 60 saniye sürer.',
  onb_kyc_via_bank:'Hollanda bankanla çalışır',
  onb_kyc_waarom_titel:'Neden gerekli?',
- onb_kyc_reden_1:'DNB denetimi altında tüm kullanıcıları doğrulamamız gerekir (kara para önleme yasası).',
+ onb_kyc_reden_1:'EMI ortağı aracılığıyla DNB denetimi altında tüm kullanıcıları doğrulamamız gerekir (kara para önleme yasası).',
  onb_kyc_reden_2:'iDIN güvenlidir — şifre yok, sadece bankan kimliğini doğrular.',
  onb_kyc_reden_3:'Verilerin bizimle kalır (GDPR uyumlu, üçüncü taraflara satılmaz).',
  onb_kyc_start_idin:'iDIN doğrulamasını başlat',
@@ -622,11 +622,10 @@ export const tr = {
 
  // Adım 3 — Onay + hoş geldin fırsatı
  onb_bevestig_titel:'Doğrulandın',
- onb_bevestig_subtitel:'Artık hoş geldin fırsatınla para gönderebilirsin: €800\'e kadar €0 ücret.',
+ onb_bevestig_subtitel:'Artık para gönderebilirsin. En çok €800 olan ilk transferinde €4,95 sabit ücret alınmaz; kur marjı yine de geçerli.',
  onb_bevestig_promo_label:'Hoş geldin fırsatı',
- onb_bevestig_promo_titel:'€800\'e kadar €0 ücret',
- onb_bevestig_promo_code_label:'Promo kod',
- onb_bevestig_promo_uitleg:'İlk transferine otomatik uygulanır. 30 gün geçerli.',
+ onb_bevestig_promo_titel:'İlk transfer: sabit ücret yok',
+ onb_bevestig_promo_uitleg:'Otomatik uygulanır, kod girmene gerek yok ve son kullanma tarihi yok. İlk transferin €800\'ü aşarsa fırsat sonraki transfere kalır.',
  onb_bevestig_volgende_label:'Sıradaki adım',
  onb_bevestig_volgende_tekst:'İlk transferini yap',
  onb_bevestig_cta:'Devam',
@@ -639,8 +638,8 @@ export const tr = {
  onb_klaar_tip_pwa_knop:'Şimdi yükle',
  onb_klaar_tip_notif_titel:'Bildirimleri aç',
  onb_klaar_tip_notif_tekst:'Başarılı transferler ve kur uyarıları için bildirim al.',
- onb_klaar_tip_deel_titel:'Ailenle paylaş',
- onb_klaar_tip_deel_tekst:'Aile de ücretsiz alabilir — SwiftBridge\'i paylaş.',
+ onb_klaar_tip_deel_titel:'Ailenle ve arkadaşlarınla paylaş',
+ onb_klaar_tip_deel_tekst:'Yurt dışına para gönderen aile ve arkadaşlarınla uygulamayı paylaş.',
  onb_klaar_cta:'Transferime git',
 
  // ── Yararlanıcılar (favori alıcılar) ────────────────────────────────────

@@ -606,7 +606,7 @@ export const en = {
  onb_welkom_subtitel:'Let\'s get your account ready in 2 minutes so you can send money worldwide.',
  onb_welkom_punt_1:'Account created',
  onb_welkom_punt_2:'Verify your identity (1 minute, via your Dutch bank)',
- onb_welkom_punt_3:'Send your first transfer for free (up to €800)',
+ onb_welkom_punt_3:'Send your first transfer with no fixed fee (€800 or less)',
  onb_welkom_cta:'Let\'s get started',
 
  // Step 2 — KYC nudge
@@ -614,7 +614,7 @@ export const en = {
  onb_kyc_subtitel:'Legally required (Wwft) — takes 60 seconds via your own bank.',
  onb_kyc_via_bank:'Works with your Dutch bank',
  onb_kyc_waarom_titel:'Why is this required?',
- onb_kyc_reden_1:'Under DNB supervision we must identify all users (anti-money laundering law).',
+ onb_kyc_reden_1:'Under DNB supervision via EMI partner we must identify all users (anti-money laundering law).',
  onb_kyc_reden_2:'iDIN is secure — no passwords, only your bank verifies your identity.',
  onb_kyc_reden_3:'Your data stays with us (GDPR-compliant, never sold to third parties).',
  onb_kyc_start_idin:'Start iDIN verification',
@@ -622,11 +622,10 @@ export const en = {
 
  // Step 3 — Confirm + welcome deal
  onb_bevestig_titel:'You\'re verified',
- onb_bevestig_subtitel:'You can now send money with your welcome deal: €0 fee up to €800.',
+ onb_bevestig_subtitel:'You can now send money. On your first transfer of €800 or less the €4.95 fixed fee is waived; the exchange rate margin still applies.',
  onb_bevestig_promo_label:'Welcome deal',
- onb_bevestig_promo_titel:'€0 fee up to €800',
- onb_bevestig_promo_code_label:'Promo code',
- onb_bevestig_promo_uitleg:'Automatically applied to your first transfer. Valid for 30 days.',
+ onb_bevestig_promo_titel:'First transfer: no fixed fee',
+ onb_bevestig_promo_uitleg:'Applied automatically, no code needed and no end date. If you send more than €800, the deal stays for later.',
  onb_bevestig_volgende_label:'Next step',
  onb_bevestig_volgende_tekst:'Make your first transfer',
  onb_bevestig_cta:'Continue',
@@ -639,8 +638,8 @@ export const en = {
  onb_klaar_tip_pwa_knop:'Install now',
  onb_klaar_tip_notif_titel:'Turn on notifications',
  onb_klaar_tip_notif_tekst:'Get alerts for successful transfers and rate updates.',
- onb_klaar_tip_deel_titel:'Share with family',
- onb_klaar_tip_deel_tekst:'Family can receive for free too — share SwiftBridge.',
+ onb_klaar_tip_deel_titel:'Share with family and friends',
+ onb_klaar_tip_deel_tekst:'Tell family and friends about the app so they can send money too.',
  onb_klaar_cta:'Go to my transfer',
 
  // ── Beneficiaries (favorite recipients) ──────────────────────────────────

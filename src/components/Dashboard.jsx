@@ -366,7 +366,9 @@ export default function Dashboard({ gebruiker }) {
         </div>
       </div>
 
-      {/* Welkomst-deal — eerste transactie gratis */}
+      {/* Welkomstactie — vaste kosten vervallen op de eerste overboeking t/m €800.
+          Niet "gratis": de koersopslag wordt gewoon ingehouden, bij deze actie
+          zelfs over het volledige bedrag. Zie src/test/welkomstactieClaims.test.js */}
       {gebruiker?.gratisEersteTx && kycGoedgekeurd && (
         <div className="bg-surface border border-accent-400 rounded-md p-4 shadow-soft animate-fade-up">
           <div className="flex items-center gap-3">
@@ -374,15 +376,15 @@ export default function Dashboard({ gebruiker }) {
               <Gift className="w-7 h-7 text-accent-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-display font-medium text-sm text-ink-1">Welkomst-deal: 1e transactie GRATIS!</div>
-              <div className="text-xs text-gray-600 mt-0.5">Geen servicekosten op je eerste overboeking (tot €800)</div>
+              <div className="font-display font-medium text-sm text-ink-1">Welkomstactie: geen vaste kosten</div>
+              <div className="text-xs text-gray-600 mt-0.5">Op je eerste overboeking t/m €800. De koersopslag betaal je wel.</div>
             </div>
           </div>
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }))}
             className="btn-inst w-full mt-3 py-2.5 text-sm"
           >
-            Verstuur je eerste gratis transactie →
+            Naar je eerste overboeking →
           </button>
         </div>
       )}

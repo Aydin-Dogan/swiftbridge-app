@@ -607,7 +607,7 @@ export const nl = {
  onb_welkom_subtitel:'Laten we je account in 2 minuten klaarmaken om wereldwijd geld te sturen.',
  onb_welkom_punt_1:'Account aangemaakt',
  onb_welkom_punt_2:'Identificeer jezelf (1 minuut, via je Nederlandse bank)',
- onb_welkom_punt_3:'Verstuur je eerste overboeking gratis (tot €800)',
+ onb_welkom_punt_3:'Verstuur je eerste overboeking zonder vaste kosten (t/m €800)',
  onb_welkom_cta:'Laten we beginnen',
 
  // Stap 2 — KYC nudge
@@ -615,7 +615,7 @@ export const nl = {
  onb_kyc_subtitel:'Wettelijk verplicht (Wwft) — neemt 60 seconden via je eigen bank.',
  onb_kyc_via_bank:'Werkt met jouw Nederlandse bank',
  onb_kyc_waarom_titel:'Waarom moet dit?',
- onb_kyc_reden_1:'Onder DNB-toezicht moeten we alle gebruikers identificeren (anti-witwaswet).',
+ onb_kyc_reden_1:'Onder DNB-toezicht via EMI-partner moeten we alle gebruikers identificeren (anti-witwaswet).',
  onb_kyc_reden_2:'iDIN is veilig — geen wachtwoorden, alleen je bank verifieert je identiteit.',
  onb_kyc_reden_3:'Je gegevens blijven bij ons (AVG-conform, geen verkoop aan derden).',
  onb_kyc_start_idin:'Start iDIN identificatie',
@@ -623,11 +623,10 @@ export const nl = {
 
  // Stap 3 — Bevestig + welkomstdeal
  onb_bevestig_titel:'Je bent geverifieerd',
- onb_bevestig_subtitel:'Je kunt nu geld versturen met je welkomstdeal: €0 fee tot €800.',
+ onb_bevestig_subtitel:'Je kunt nu geld versturen. Bij je eerste overboeking t/m €800 vervallen de vaste kosten van €4,95; de koersmarge blijft gelden.',
  onb_bevestig_promo_label:'Welkomstdeal',
- onb_bevestig_promo_titel:'€0 fee tot €800',
- onb_bevestig_promo_code_label:'Promo code',
- onb_bevestig_promo_uitleg:'Wordt automatisch toegepast op je eerste overboeking. Geldig 30 dagen.',
+ onb_bevestig_promo_titel:'Eerste overboeking: geen vaste kosten',
+ onb_bevestig_promo_uitleg:'Gaat automatisch mee, je hebt geen code nodig en er is geen einddatum. Stuur je meer dan €800, dan blijft de deal staan.',
  onb_bevestig_volgende_label:'Volgende stap',
  onb_bevestig_volgende_tekst:'Maak je eerste overboeking',
  onb_bevestig_cta:'Verder',
@@ -640,8 +639,8 @@ export const nl = {
  onb_klaar_tip_pwa_knop:'Installeer nu',
  onb_klaar_tip_notif_titel:'Zet notificaties aan',
  onb_klaar_tip_notif_tekst:'Krijg meldingen bij geslaagde overboekingen en koersalerts.',
- onb_klaar_tip_deel_titel:'Deel met familie',
- onb_klaar_tip_deel_tekst:'Familie kan ook gratis ontvangen — deel SwiftBridge.',
+ onb_klaar_tip_deel_titel:'Deel met familie en vrienden',
+ onb_klaar_tip_deel_tekst:'Deel de app met familie of vrienden die ook geld versturen.',
  onb_klaar_cta:'Naar mijn overboeking',
 
  // ── Beneficiaries (favoriete ontvangers) ─────────────────────────────────
