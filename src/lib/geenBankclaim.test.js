@@ -146,6 +146,42 @@ describe('SwiftBridge presenteert zich nergens als bank', () => {
     expect(alles).toEqual([]);
   });
 
+  test('geen enkele paginatitel noemt DNB', () => {
+    /*
+     * Besluit Aydin, 5-10-2026: DNB hoort niet in een paginatitel.
+     *
+     * Twee titels zeiden kaal "Onder DNB-toezicht", zonder "via EMI-partner".
+     * Deze test keek daar niet naar: hij zoekt bankvergelijkingen, een al
+     * voltooide inschrijving en een eigen vergunning, en een kale mededeling
+     * over toezicht is geen van drieen. De meta-omschrijving en de voetnoot op
+     * dezelfde pagina's waren wel zorgvuldig.
+     *
+     * Ook de derde titel is weg, terwijl die de nuance WEL had. Reden: een
+     * titel van 76 tekens wordt door Google rond de zestig afgekapt, en dan
+     * blijft in het zoekresultaat precies het onvoorwaardelijke deel staan en
+     * valt de nuance eraf. Een claim die alleen klopt zolang hij niet wordt
+     * afgekapt, is in een zoekresultaat geen claim die klopt.
+     *
+     * De og:title en twitter:title van alle drie noemden DNB al niet, dus de
+     * titels zijn nu gelijk aan wat er in een gedeelde link al stond.
+     */
+    const paginas = [
+      'public/landing/particulier.html',
+      'public/landing/zakelijk.html',
+      'index.html',
+    ];
+    const treffers = [];
+    for (const pagina of paginas) {
+      const html = leesAls(pagina);
+      const m = html.match(/<title>([\s\S]*?)<\/title>/i);
+      if (!m) { treffers.push(`${pagina} — geen <title> gevonden`); continue; }
+      if (/\bDNB\b|Nederlandsche Bank/i.test(m[1])) {
+        treffers.push(`${pagina} — titel noemt DNB: "${m[1].trim()}"`);
+      }
+    }
+    expect(treffers, treffers.join('\n')).toEqual([]);
+  });
+
   test('de meta-teksten claimen het ook niet — die worden buiten de pagina om gelezen', () => {
     const html = leesAls('public/landing/particulier.html');
     expect(html).not.toBeNull();
