@@ -4,7 +4,7 @@
  * Toont:
  * - Totaal overgemaakt deze maand (€)
  * - Aantal transacties
- * - Gemiddelde aankomsttijd (mock 4 min)
+ * - Gemiddelde aankomsttijd (toont een streepje tot de uitbetaling live is)
  * - Besparing tov bank (mock berekening: 2.5% extra marge gemiddelde bank)
  *
  * Glassmorphism cards met gradient accents. Mobile-first: 2×2 op <md, 4×1 op md+.
@@ -43,7 +43,7 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
     return {
       totaal,
       aantal: dezeMaand.length,
-      gemTijd: dezeMaand.length > 0 ? 4 : 5, // mock: <5 min typische aankomst
+      gemTijd: dezeMaand.length > 0 ? 4 : 5, // mock-waarde; wordt niet getoond zolang er geen echte aankomsttijd is
       bespaard: berekenBesparing(transacties.reduce((s, tx) => s + (tx.eurBedrag || 0), 0)),
     };
   }, [transacties, laden]);
@@ -64,7 +64,7 @@ export default function StatistiekCards({ transacties = [], laden = false }) {
     {
       Icoon: Clock,
       label: t('dashboard_stats_gem_tijd'),
-      waarde: stats ? `${stats.gemTijd} ${t('dashboard_stats_min')}` : null,
+      waarde: stats ? '—' : null,
       accent: 'text-accent-600',
     },
     {

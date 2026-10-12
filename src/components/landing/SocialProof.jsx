@@ -29,10 +29,10 @@ const TESTIMONIALS = [];
 // HARDE REGEL: geen verzonnen statistieken op landing. Tot we échte data
 // hebben (geverifieerd via admin/stats endpoint of Trustpilot-koppeling)
 // gebruiken we feitelijke beschrijvingen — geen aantallen.
+// 12-10-2026: 'banken' (100+) en 'snelheid' weggehaald — er is nog geen
+// uitbetaalpartner, dus geen ondersteunde banken en geen levertijd om te tonen.
 const STATS = [
-  { key: 'banken', getal: '100+' }, // echt — turkstaligeBanken.js
   { key: 'talen', getal: '5' }, // echt — i18n/{nl,en,tr,ru,az}
-  { key: 'snelheid', getal: '<5 min' }, // echt — gemiddeld via iDEAL
   // F24 fix (Cursor review): los "vanaf"-percentage AFM-richtlijn
   // problematisch. Vaste fee is het enige harde getal; de koersmarge
   // (1,2% → 0,6% per ledenniveau) staat in de tariefkaart-sectie ernaast.

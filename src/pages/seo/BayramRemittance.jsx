@@ -19,7 +19,7 @@ export default function BayramRemittance() {
       heroSubtitel="Bayram is voor veel Turkse families het belangrijkste moment om elkaar te steunen. Hier alles wat je moet weten over geld sturen rondom Ramazan en Kurban Bayramı."
       voorbeeldBedrag={500}
       cta="Bereken Bayram-transfer"
-      bullets={['Vooraf plannen', 'Geen vertraging risico', 'TR-banken-status zichtbaar']}
+      bullets={['Vooraf plannen', 'Bayram-datums op een rij', 'TR-banken-status zichtbaar']}
       content={
         <>
           <p>
@@ -49,8 +49,8 @@ export default function BayramRemittance() {
           <p>
             <strong>Onze sterke aanbeveling:</strong> stuur minimaal <strong>2-3 dagen
             voor</strong> Bayram begint. Reden: Turkse banken hebben tijdens de feestdagen
-            beperkte werkuren en transactie-verwerking is vaak vertraagd. Een normaal
-            5-minuten transfer kan dan oplopen tot 1-2 werkdagen.
+            beperkte werkuren en transactie-verwerking is vaak vertraagd. De precieze
+            levertijd maken wij bekend zodra de uitbetaling in Turkije live is.
           </p>
           <p>
             Concreet voor Ramazan Bayramı 2026 (start 20 maart):
@@ -115,7 +115,7 @@ export default function BayramRemittance() {
       faq={[
         {
           vraag: 'Werkt SwiftBridge tijdens Bayram zelf?',
-          antwoord: 'Ja, onze infrastructuur draait 24/7 — ook op feestdagen. Maar Turkse banken aan het ontvangende einde hebben beperkte verwerkingstijden, dus transacties tijdens Bayram kunnen tot 1-2 werkdagen duren. Plan daarom altijd 2-3 dagen vooruit.',
+          antwoord: 'De app is 24/7 bereikbaar, ook op feestdagen. Turkse banken aan het ontvangende einde hebben tijdens Bayram beperkte verwerkingstijden; plan daarom altijd 2-3 dagen vooruit. De precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is.',
         },
         {
           vraag: 'Verzendt SwiftBridge een Bayram-bericht naar de ontvanger?',

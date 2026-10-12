@@ -9,13 +9,13 @@ export default function WiseVsSwiftbridge() {
   return (
     <SeoLanding
       title="Wise vs SwiftBridge — eerlijke vergelijking"
-      description="Wise of SwiftBridge voor geld naar Türkiye? Eerlijke vergelijking: tarieven, snelheid, ondersteunde banken, klantenservice. Bekijk concrete cijfers voor €100/€500/€1.000."
+      description="Wise of SwiftBridge voor geld naar Türkiye? Eerlijke vergelijking: tarieven en klantenservice. Bekijk concrete cijfers voor €100/€500/€1.000."
       canonicalPath="/wise-vs-swiftbridge"
       heroEyebrow="Eerlijke vergelijking"
       heroSubtitel="Geen marketing-spin — concrete cijfers op €100, €500 en €1.000. Bepaal zelf welke beter past bij jouw situatie."
       voorbeeldBedrag={500}
       cta="Bereken jouw transfer"
-      bullets={['Tarief-tabel per bedrag', 'Snelheid vergeleken', '100+ TR-banken']}
+      bullets={['Tarief-tabel per bedrag', 'Eerlijk over de levertijd', 'Te beginnen met Turkije']}
       content={
         <>
           <p>
@@ -72,10 +72,10 @@ export default function WiseVsSwiftbridge() {
             actuele tarieven op wise.com vóór beslissing.
           </p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Snelheid vergeleken</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Levertijd</h2>
           <ul className="list-disc pl-5 space-y-1.5 text-gray-700">
-            <li><strong>SwiftBridge iDEAL Express:</strong> doorgaans &lt;5 minuten op TR-rekening</li>
-            <li><strong>SwiftBridge SEPA Economy:</strong> 1-2 werkdagen</li>
+            <li><strong>SwiftBridge iDEAL Express:</strong> de precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is</li>
+            <li><strong>SwiftBridge SEPA Economy:</strong> ook hiervoor volgt de levertijd zodra de uitbetaling in Turkije live is</li>
             <li><strong>Wise:</strong> 1-2 dagen voor TRY in de meeste gevallen (afhankelijk van betaalmethode)</li>
             <li><strong>Wise instant via debitcard:</strong> minuten, hoger tarief (~2,5% extra)</li>
           </ul>
@@ -86,7 +86,7 @@ export default function WiseVsSwiftbridge() {
             <div className="bg-success-50 border border-success-100 rounded-xl p-4">
               <p className="font-semibold text-success-900 mb-1 flex items-center gap-1.5"><Check className="w-4 h-4" /> SwiftBridge sterke punten</p>
               <ul className="text-sm text-gray-700 space-y-1">
-                <li>Native iDEAL → directe overboeking, &lt;5 min op TR-bank</li>
+                <li>Betalen met iDEAL vanuit je eigen bank-app</li>
                 <li>Nederlandstalige support die Turkse banken kent</li>
                 <li>Tariefkaart volledig zichtbaar vooraf (geen verrassingen)</li>
                 <li>App gebouwd voor diaspora — Turkse feestdagen-kalender ingebouwd</li>
@@ -99,20 +99,19 @@ export default function WiseVsSwiftbridge() {
                 <li>Mid-market rate zonder marge (transparant 100%)</li>
                 <li>Multi-currency wallet — handig voor reizen</li>
                 <li>1.000+ valuta&apos;s ondersteund</li>
-                <li>Lagere totaalkosten als snelheid niet kritiek is</li>
+                <li>Lagere totaalkosten</li>
               </ul>
             </div>
           </div>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Onze eerlijke aanbeveling</h2>
           <p>
-            <strong>Kies Wise als:</strong> de laagste totaalprijs doorslaggevend is en
-            1-2 dagen wachten geen probleem is, of je een multi-currency wallet nodig hebt.
+            <strong>Kies Wise als:</strong> de laagste totaalprijs doorslaggevend is, of je
+            een multi-currency wallet nodig hebt.
           </p>
           <p>
-            <strong>Kies SwiftBridge als:</strong> snelheid belangrijk is (minuten in
-            plaats van dagen), je Nederlandse klantenservice wilt, of je vaak stuurt en
-            via de ledenniveaus een lagere marge opbouwt.
+            <strong>Kies SwiftBridge als:</strong> je Nederlandse klantenservice wilt, of je
+            vaak stuurt en via de ledenniveaus een lagere marge opbouwt.
           </p>
           <p>
             <strong>Pro tip:</strong> probeer beide één keer. Het prijsverschil bij
@@ -123,8 +122,8 @@ export default function WiseVsSwiftbridge() {
       }
       faq={[
         {
-          vraag: 'Welke is veiliger, Wise of SwiftBridge?',
-          antwoord: 'Beide zijn gelicentieerd en veilig. Wise heeft eigen FCA/EMI-licentie in UK + EU. SwiftBridge werkt onder DNB-toezicht via EMI-partner. Verschil in praktijk: nihil voor klant.',
+          vraag: 'Hoe zit het met toezicht bij Wise en SwiftBridge?',
+          antwoord: 'Wise heeft een eigen FCA/EMI-licentie in UK + EU. SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die samenwerking rond is.',
         },
         {
           vraag: 'Kan ik dezelfde ontvanger bij beide gebruiken?',

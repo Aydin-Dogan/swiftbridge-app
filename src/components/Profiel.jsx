@@ -369,7 +369,7 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
             <div>
               <h3 className="font-display font-medium text-ink-1 text-sm">KYC verificatie nodig</h3>
               <p className="text-xs text-ink-2 mt-1">
-                Voltooi eerst je identiteitsverificatie om je profielgegevens aan te kunnen passen. Gebruik bij voorkeur iDIN hierboven — snelste en veiligste manier via je bank.
+                Voltooi eerst je identiteitscontrole met je paspoort of ID-kaart om je profielgegevens aan te kunnen passen.
               </p>
             </div>
           </div>

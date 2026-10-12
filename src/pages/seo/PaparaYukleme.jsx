@@ -9,13 +9,13 @@ export default function PaparaYukleme() {
   return (
     <SeoLanding
       title="Papara hesabına Hollanda'dan para yükleme"
-      description="Hollanda'dan Papara hesabına EUR ile para yükle. iDEAL ile <5 dakika. SwiftBridge ile Papara cüzdanına doğrudan ödeme — TRY olarak alıcı alır."
+      description="Hollanda'dan Papara hesabına EUR ile para yükle, iDEAL ile öde. SwiftBridge ile Papara cüzdanına ödeme — TRY olarak alıcı alır."
       canonicalPath="/papara-yukleme"
       heroEyebrow="Papara wallet"
-      heroSubtitel="Papara hesabın olan ailene veya kendine Hollanda'dan EUR gönder. iDEAL ile 5 dakikada Papara cüzdanında TRY olarak hazır."
+      heroSubtitel="Papara hesabın olan ailene veya kendine Hollanda'dan EUR gönder; alıcı TRY olarak alır. Kesin teslim süresini, Türkiye'ye ödemeler başladığında duyuracağız."
       voorbeeldBedrag={300}
       cta="Papara'ya gönder"
-      bullets={["iDEAL'den Papara'ya", '<5 dakika', 'Wwft uyumlu']}
+      bullets={["iDEAL'den Papara'ya", 'Şeffaf kur marjı', 'Kimlik kontrolü zorunlu']}
       content={
         <>
           <p>
@@ -47,14 +47,15 @@ export default function PaparaYukleme() {
               Vul bedrag in (vanaf €50, tot €5.000 per week in eerste 90 dagen).
             </li>
             <li>
-              Betaal met iDEAL — geld staat doorgaans binnen <strong>5 minuten</strong>
-              op de Papara wallet als TRY-saldo.
+              Betaal met iDEAL. Wij verwerken je overboeking naar Turkije en houden je
+              op de hoogte. De precieze levertijd maken wij bekend zodra de uitbetaling
+              in Turkije live is.
             </li>
           </ol>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Papara wallet kullanım örnekleri</h2>
           <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            <li>Yeğenin doğum günü hediyesi (anlık para gönderme)</li>
+            <li>Yeğenin doğum günü hediyesi</li>
             <li>Türkiye&apos;deki üniversite öğrencisine aylık harçlık</li>
             <li>Online alışveriş için Papara cüzdanı dolduma</li>
             <li>Acil durum para transferi (sağlık, kaza)</li>
@@ -74,14 +75,15 @@ export default function PaparaYukleme() {
             tier — KYC1 / KYC2 / KYC3) — check hun app voor jouw specifieke limiet.
           </p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Papara vs traditionele bank — wat is sneller?</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Papara of traditionele bank?</h2>
           <p>
-            <strong>Naar Papara wallet:</strong> doorgaans &lt;5 minuten, automatisch
-            beschikbaar in de Papara-app.
+            <strong>Naar Papara wallet:</strong> het bedrag komt beschikbaar in de
+            Papara-app.
           </p>
           <p>
-            <strong>Naar traditionele bank (Garanti, Akbank, etc.):</strong> ook doorgaans
-            &lt;5 minuten, maar afhankelijk van bank-werktijden kan het tot 15 min duren.
+            <strong>Naar traditionele bank (Garanti, Akbank, etc.):</strong> het bedrag
+            komt op de bankrekening van de ontvanger. De precieze levertijd maken wij
+            bekend zodra de uitbetaling in Turkije live is.
           </p>
           <p>
             Voor jonge Turkse ontvangers is Papara vaak gemakkelijker omdat zij geen

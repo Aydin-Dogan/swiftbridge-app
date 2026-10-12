@@ -103,12 +103,11 @@ export default function Klachten() {
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-3">3. Stap 2 — Niet tevreden met onze reactie?</h2>
               <p className="mb-3">
-                Komen we er samen niet uit, dan kunt u uw klacht voorleggen aan onze
-                betaaldienstverlener (de door DNB gelicentieerde EMI-partner via wie de betaaldiensten
-                worden geleverd) en, als consument, aan het onafhankelijke klachteninstituut voor de
-                financiële dienstverlening in Nederland (Kifid). De exacte contactgegevens van de
-                EMI-partner en de aansluitingsgegevens bij Kifid vindt u zodra u een inhoudelijke
-                reactie van ons ontvangt; ze staan ook in onze algemene voorwaarden.
+                Komen we er samen niet uit, dan kunt u uw klacht als consument voorleggen aan het
+                onafhankelijke klachteninstituut voor de financiële dienstverlening in Nederland (Kifid).
+                Zodra SwiftBridge als agent optreedt voor een vergunninghoudende EMI-partner, kunt u
+                uw klacht ook aan die betaaldienstverlener voorleggen; de contactgegevens maken wij
+                dan bekend in onze algemene voorwaarden en in onze inhoudelijke reactie.
               </p>
               <p className="text-sm text-gray-500">
                 U behoudt daarnaast altijd het recht om uw geschil aan de bevoegde rechter voor te leggen.
@@ -171,9 +170,9 @@ export default function Klachten() {
             <section className="border-t pt-6">
               <p className="text-sm text-gray-500">SwiftBridge — klachten@swiftbridge.nl</p>
               <p className="text-sm text-gray-500 mt-1">
-                SwiftBridge is geen bank en beschikt niet over een eigen bankvergunning van DNB.
-                Betaaldiensten worden aangeboden via een door DNB gelicentieerde EMI-partner (agent-model),
-                conform PSD2 en de Wwft.
+                SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent
+                van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die
+                samenwerking rond is.
               </p>
             </section>
           </div>

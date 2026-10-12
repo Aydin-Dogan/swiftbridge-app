@@ -1,7 +1,7 @@
 export const nl = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Onder toezicht. Volledig transparant.',
+ slogan:'Nederlandse B.V. Volledig transparant.',
  laden:'Bezig...',
  opslaan:'Opslaan',
  annuleren:'Annuleren',
@@ -23,10 +23,10 @@ export const nl = {
  tab_profiel:'Profiel',
 
  // Landing page
- landing_titel:'Geld wereldwijd versturen',
- landing_ondertitel:'in minder dan 5 minuten',
- landing_uitleg:'Goedkoper dan je bank. Razendsnel. 24/7 beschikbaar.',
- gratis_starten:'Gratis starten →',
+ landing_titel:'Geld versturen naar Turkije',
+ landing_ondertitel:'andere landen volgen later',
+ landing_uitleg:'Goedkoper dan je bank. Volledig transparant.',
+ gratis_starten:'Start nu →',
  download_app:'Download de app',
  inloggen:'Inloggen',
  registreren:'Registreren',
@@ -44,9 +44,9 @@ export const nl = {
 
  // Dashboard
  dashboard_hallo:'Hallo {naam}',
- dashboard_subtitel:'Wereldwijd geld overmaken',
+ dashboard_subtitel:'Geld overmaken naar Turkije',
  dashboard_kyc_vereist:'KYC verificatie vereist',
- dashboard_kyc_uitleg:'Verifieer je identiteit om geld over te kunnen maken. Duurt minder dan 5 minuten.',
+ dashboard_kyc_uitleg:'Verifieer je identiteit met je paspoort of ID-kaart om geld over te kunnen maken.',
  dashboard_live_koers:'Live wisselkoers',
  dashboard_swiftbridge_koers:'SwiftBridge koers',
  dashboard_na_kosten:'na 2,2% kosten',
@@ -68,7 +68,7 @@ export const nl = {
  dashboard_stats_bespaard:'Bespaard tov bank',
  dashboard_stats_min:'min',
  dashboard_quick_nieuwe_tx:'Nieuwe overboeking',
- dashboard_quick_nieuwe_tx_sub:'Stuur geld in <5 min',
+ dashboard_quick_nieuwe_tx_sub:'Stuur geld naar Turkije',
  dashboard_quick_koersen:'Bekijk koersen',
  dashboard_quick_koersen_sub:'Live wisselkoersen',
  dashboard_quick_alert:'Maak alert',
@@ -85,11 +85,11 @@ export const nl = {
  dashboard_recent_leeg_bereken:'Eerst berekenen',
  dashboard_recent_leeg_stap1:'Bedrag invullen',
  dashboard_recent_leeg_stap2:'Betalen met iDEAL',
- dashboard_recent_leeg_stap3:'Aankomst <5 min',
+ dashboard_recent_leeg_stap3:'Wij houden je op de hoogte',
  dashboard_tips_titel:'Wist je dat?',
  dashboard_tip_1:'TRY koers is {pct}% gunstiger dan vorige week — handig moment om over te maken.',
  dashboard_tip_2:'Je hebt al {bedrag} bespaard ten opzichte van je bank.',
- dashboard_tip_3:'Met iDEAL ontvangt familie het geld vaak binnen 5 minuten.',
+ dashboard_tip_3:'Met iDEAL betaal je je overboeking vanuit je eigen bank-app.',
  dashboard_tip_4:'Stel een koers-alert in en je krijgt automatisch bericht bij een betere koers.',
  dashboard_tip_5:'Bekijk je transactiehistorie altijd via Profiel → Mijn data (AVG-recht).',
  dashboard_notif_titel:'Meldingen',
@@ -159,9 +159,9 @@ export const nl = {
  kyc_selfie:'Selfie',
  kyc_klaar:'Klaar',
  kyc_goedgekeurd_titel:'Verificatie voltooid!',
- kyc_goedgekeurd_uitleg:'Hoi {naam}, je identiteit is bevestigd. Je kunt nu wereldwijd geld overmaken.',
+ kyc_goedgekeurd_uitleg:'Hoi {naam}, je identiteit is bevestigd. Je kunt nu geld overmaken.',
  kyc_in_behandeling_titel:'Aanvraag in behandeling',
- kyc_in_behandeling_uitleg:'Hoi {naam}, we controleren je documenten. Dit duurt normaal minder dan 5 minuten.',
+ kyc_in_behandeling_uitleg:'Hoi {naam}, een medewerker controleert je documenten. Je krijgt bericht zodra de controle klaar is.',
  kyc_afgewezen_titel:'Verificatie afgewezen',
  kyc_afgewezen_uitleg:'Helaas, {naam}, konden we je identiteit niet bevestigen. Je kunt het opnieuw proberen.',
  kyc_geblokkeerd_titel:'Account geblokkeerd',
@@ -189,7 +189,7 @@ export const nl = {
  uitloggen:'Uitloggen',
 
  // Voettekst
- beveiligd_via_jwt:'Onder DNB-toezicht via EMI-partner · 256-bit versleuteling · Wwft-conform',
+ beveiligd_via_jwt:'Nederlandse B.V. · KvK 42138434 · 256-bit versleuteling',
 
  // ── Profiel: WhatsApp opt-in ─────────────────────────────────────────────
  profiel_whatsapp_titel:'WhatsApp bevestiging voor familie',
@@ -222,9 +222,9 @@ export const nl = {
  referral_hoe_stap1:'Deel je code of link met vrienden via WhatsApp of e-mail.',
  referral_hoe_stap2:'Je vriend registreert met jouw code en doet een eerste overboeking.',
  referral_hoe_stap3:'Jullie krijgen allebei €{bedrag} korting op een volgende overboeking.',
- referral_share_whatsapp:'Hey! Ik gebruik SwiftBridge om geld naar het buitenland te sturen — sneller en goedkoper dan de bank. Krijg €{bedrag} bonus als je via mijn code registreert: {url}',
+ referral_share_whatsapp:'Hey! Ik gebruik SwiftBridge om geld naar het buitenland te sturen — voordelig en met alle kosten vooraf zichtbaar. Krijg €{bedrag} bonus als je via mijn code registreert: {url}',
  referral_share_email_onderwerp:'Probeer SwiftBridge — krijg €5 bonus',
- referral_share_email_tekst:'Hoi!\n\nIk gebruik SwiftBridge om snel en goedkoop geld naar het buitenland te sturen. Als je je registreert via mijn link krijg je €{bedrag} bonus op je eerste overboeking, en ik ook!\n\n{url}\n\nGroet,',
+ referral_share_email_tekst:'Hoi!\n\nIk gebruik SwiftBridge om voordelig geld naar het buitenland te sturen, met alle kosten vooraf zichtbaar. Als je je registreert via mijn link krijg je €{bedrag} bonus op je eerste overboeking, en ik ook!\n\n{url}\n\nGroet,',
  // Registratie veld
  registreer_referral_label:'Heeft iemand je uitgenodigd? (optioneel)',
  registreer_referral_placeholder:'ABCD1234',
@@ -268,18 +268,18 @@ export const nl = {
  landing_nav_faq:'FAQ',
 
  // Hero
- landing_pill_route:'Nederland → wereldwijd',
- landing_pill_wereldwijd:'Live koersen · {landen}+ valuta wereldwijd',
+ landing_pill_route:'Nederland → Turkije',
+ landing_pill_wereldwijd:'Live koersen · {landen}+ valuta',
  landing_hero_titel_1:'Stuur geld naar je dierbaren,',
- landing_hero_titel_2:'overal ter wereld',
- landing_hero_subline:'Live wisselkoersen voor {landen}+ valuta. Versturen naar een groeiend netwerk van landen wereldwijd — en er komen er steeds meer bij. Eerlijke tarieven, geen verborgen kosten.',
- landing_hero_cta_primary:'Gratis starten',
+ landing_hero_titel_2:'te beginnen in Turkije',
+ landing_hero_subline:'Live wisselkoersen voor {landen}+ valuta. Te beginnen met Turkije; andere landen volgen later. Eerlijke tarieven, geen verborgen kosten.',
+ landing_hero_cta_primary:'Start nu',
  landing_hero_cta_secondary:'Bekijk hoe het werkt',
  // F23 fix (Cursor review): qualifier"via EMI-partner"ingebed in label zelf
- landing_trust_dnb:'Wwft · via DNB-EMI-partner',
- landing_trust_ideal:'iDEAL & iDIN',
+ landing_trust_dnb:'Nederlandse B.V. · KvK 42138434',
+ landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit versleuteld',
- landing_trust_reviews:'4,8 uit 1.240 reviews',
+ landing_trust_reviews:'Reviews volgen na de start',
 
  // Currency widget
  landing_widget_titel:'Bereken je overboeking',
@@ -294,27 +294,27 @@ export const nl = {
 
  // Features
  landing_features_eyebrow:'Waarom SwiftBridge',
- landing_features_titel:'Snel, transparant en veilig',
+ landing_features_titel:'Eerlijk, transparant en veilig',
  landing_features_subtitel:'Voor iedereen die dierbaren over de grens steunt — gebouwd door mensen die de pijn kennen van te dure bankoverboekingen.',
- landing_feature_snel_titel:'Razendsnel',
- landing_feature_snel_tekst:'Geld op de rekening van je dierbaren binnen 5 minuten — ook in het weekend en buiten kantooruren, op onze live corridors.',
+ landing_feature_snel_titel:'Eerlijk over de levertijd',
+ landing_feature_snel_tekst:'De precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is.',
  landing_feature_goedkoop_titel:'Eerlijk geprijsd',
  landing_feature_goedkoop_tekst:'Eén vaste fee van €4,95 en een transparante koersmarge vanaf 1,2% die per ledenniveau daalt tot 0,6%. Alles vooraf zichtbaar.',
- landing_feature_veilig_titel:'Veilig & gereguleerd',
- landing_feature_veilig_tekst:'Onder DNB-toezicht via onze EMI-partner, sanctielijst-check op iedere ontvanger, iDIN-identificatie.',
+ landing_feature_veilig_titel:'Veilig & transparant',
+ landing_feature_veilig_tekst:'Nederlandse B.V. (KvK 42138434), sanctielijst-check op iedere ontvanger en identiteitscontrole met je paspoort of ID-kaart.',
 
  // How it works
  landing_how_eyebrow:'Zo werkt het',
- landing_how_titel:'In 4 stappen wereldwijd verstuurd',
- landing_how_subtitel:'Snel registreren, één keer identificeren — daarna in seconden geld versturen.',
+ landing_how_titel:'In 4 stappen verstuurd',
+ landing_how_subtitel:'Snel registreren, één keer identificeren — daarna eenvoudig geld versturen.',
  landing_step_account_titel:'Maak je account aan',
  landing_step_account_tekst:'Registratie in 2 minuten — alleen e-mail en wachtwoord.',
- landing_step_idin_titel:'Identificeer met iDIN',
- landing_step_idin_tekst:'Snel & veilig via je eigen Nederlandse bank — geen scans of selfies nodig.',
+ landing_step_idin_titel:'Identiteitscontrole met je paspoort of ID-kaart',
+ landing_step_idin_tekst:'Je uploadt een foto van je paspoort of Europese identiteitskaart en een selfie; een medewerker beoordeelt dit. Dat is wettelijk verplicht voordat je geld kunt overmaken.',
  landing_step_ideal_titel:'Betaal met iDEAL',
  landing_step_ideal_tekst:'Voer het bedrag in en bevestig met één tik in je bank-app.',
  landing_step_ontvangen_titel:'Familie ontvangt geld',
- landing_step_ontvangen_tekst:'Geld staat binnen 5 minuten op de rekening van de ontvanger. WhatsApp-melding incl.',
+ landing_step_ontvangen_tekst:'Wij verwerken je overboeking naar de ontvanger en houden je op de hoogte. De precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is.',
 
  // Tariefkaart sectie
  tariefkaart_eyebrow:'Onze tarieven',
@@ -338,7 +338,7 @@ export const nl = {
  landing_stat_fee:'Vaste fee per overboeking',
  landing_reviews_eyebrow:'Wat onze klanten zeggen',
  landing_reviews_titel:'Vertrouwd door onze klanten',
- landing_reviews_aantal:'1.240 reviews',
+ landing_reviews_aantal:'Reviews volgen na de start',
  landing_testimonial_aydin:'Eindelijk een app die werkt zoals het hoort. €15 bespaard ten opzichte van mijn bank en mijn moeder had het geld in 4 minuten.',
  landing_testimonial_elif:'Heel transparant — je ziet meteen wat de ontvanger krijgt. Geen verborgen kosten zoals bij Western Union.',
  landing_testimonial_mehmet:'Maak elke maand geld over voor mijn vader. Stabiel, snel en de WhatsApp-bevestiging is een gouden detail.',
@@ -358,40 +358,40 @@ export const nl = {
 
  // Country support
  landing_landen_eyebrow:'Bestemmingen',
- landing_landen_titel:'Vandaag al live in 7 landen',
- landing_landen_subtitel:'Live koersen voor {landen}+ valuta wereldwijd — van Europa en Azië tot Afrika en de Amerika\'s. Nieuwe uitbetaallanden komen er steeds bij.',
+ landing_landen_titel:'Te beginnen met Turkije',
+ landing_landen_subtitel:'Live koersen voor {landen}+ valuta. Uitbetalen kan straks eerst naar Turkije; andere landen volgen later.',
  landing_landen_banken:'banken',
 
  // FAQ
  landing_faq_eyebrow:'Veelgestelde vragen',
  landing_faq_titel:'Antwoord op je vragen',
- landing_faq_subtitel:'Niet gevonden wat je zocht? Stuur ons een mailtje — we reageren binnen 24 uur.',
+ landing_faq_subtitel:'Niet gevonden wat je zocht? Stuur ons een mailtje — we reageren zo snel mogelijk, in je eigen taal.',
  landing_faq_snelheid_vraag:'Hoe snel komt het geld aan bij de ontvanger?',
- landing_faq_snelheid_antwoord:'In de meeste gevallen binnen 5 minuten na bevestiging van je iDEAL-betaling. Bij grote bedragen of buiten kantooruren kan dit oplopen tot maximaal 1 uur. Voor de allereerste transactie kan het iets langer duren omdat we je KYC eenmalig verifiëren.',
+ landing_faq_snelheid_antwoord:'De precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is. Voor je allereerste overboeking controleren we eerst eenmalig je identiteit.',
  landing_faq_kosten_vraag:'Wat zijn de werkelijke kosten?',
  landing_faq_kosten_antwoord:'Eén vaste transactiefee van €4,95 per overboeking, plus een transparante koersmarge van 1,2% (Basis) die per ledenniveau daalt tot 0,6% (Black). Minimum overboekbedrag €50. Geen abonnement, geen verborgen kosten — je ziet alles vóór bevestiging.',
  landing_faq_veiligheid_vraag:'Is mijn geld veilig bij SwiftBridge?',
- landing_faq_veiligheid_antwoord:'Ja. Betalingen lopen via een DNB-gelicentieerde EMI-partner (agent-model onder DNB-toezicht). We checken iedere ontvanger op de internationale sanctielijst, gebruiken 256-bit versleuteling en bewaren je gegevens conform AVG en Wwft.',
+ landing_faq_veiligheid_antwoord:'SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die samenwerking rond is. We checken iedere ontvanger op de internationale sanctielijst, gebruiken 256-bit versleuteling en gaan met je gegevens om volgens de AVG en de Wwft.',
  landing_faq_banken_vraag:'Welke banken worden ondersteund?',
- landing_faq_banken_antwoord:'Alle grote banken in onze uitbetaallanden, plus populaire digitale wallets. Kies bij het overmaken het land van de ontvanger en je ziet direct welke banken en wallets beschikbaar zijn.',
- landing_faq_idin_vraag:'Wat is iDIN-identificatie?',
- landing_faq_idin_antwoord:'iDIN is het officiële Nederlandse identificatiesysteem van de banken. Je identificeert je via je eigen Nederlandse bank-app — geen paspoort scannen, geen selfie, geen wachten. Eenmaal geverifieerd hoef je dit nooit meer te doen.',
+ landing_faq_banken_antwoord:'Te beginnen met Turkije; andere landen volgen later. Naar welke banken je kunt uitbetalen, maken wij bekend zodra de uitbetaling in Turkije live is.',
+ landing_faq_idin_vraag:'Hoe controleren jullie mijn identiteit?',
+ landing_faq_idin_antwoord:'Je uploadt een foto van je paspoort of Europese identiteitskaart en een selfie; een medewerker beoordeelt dit. Dat is wettelijk verplicht voordat je geld kunt overmaken.',
  landing_faq_contact_vraag:'Hoe kan ik contact opnemen?',
- landing_faq_contact_antwoord:'Stuur een mail naar support@swiftbridge.nl. We helpen je in meerdere talen en reageren doorgaans binnen 4 uur tijdens kantooruren.',
+ landing_faq_contact_antwoord:'Stuur een mail naar support@swiftbridge.nl. Wij reageren zo snel mogelijk, in je eigen taal.',
 
  // FAQ — Sprint 3: 6 nieuwe long-tail SEO vragen
  landing_faq_limieten_vraag:'Wat zijn de limieten per maand of dag?',
- landing_faq_limieten_antwoord:'In de eerste 90 dagen na KYC-goedkeuring geldt een weeklimiet van €5.000. Daarna wordt dit automatisch verhoogd op basis van je transactie-historie en Wwft-risicoprofiel. Wil je éénmalig een groter bedrag versturen? Neem contact op met support — we kunnen op aanvraag een hogere limiet activeren tot maximaal €25.000 per transactie.',
+ landing_faq_limieten_antwoord:'In de eerste 90 dagen na KYC-goedkeuring geldt een weeklimiet van €5.000. Daarna wordt dit automatisch verhoogd op basis van je transactie-historie en Wwft-risicoprofiel. Het maximum is €5.000 per overboeking.',
  landing_faq_wise_vergelijk_vraag:'Hoe verhoudt SwiftBridge zich tot Wise?',
- landing_faq_wise_vergelijk_antwoord:'Wise is wereldwijd en handelt 1.000+ valuta\'s. SwiftBridge focust op een gerichte set uitbetaallanden met directe bankkoppelingen — daardoor vaak sneller (<5 min via iDEAL) en met persoonlijke, Nederlandstalige klantenservice. Op een €500 transactie zit ons tarief €1-2 boven Wise — voor die meerprijs krijg je meer snelheid en betere begeleiding.',
+ landing_faq_wise_vergelijk_antwoord:'Wise is een grote internationale aanbieder met veel valuta\'s. SwiftBridge begint met één route, Nederland naar Turkije, met persoonlijke klantenservice in je eigen taal. Wise is op veel bedragen goedkoper; bij ons krijg je persoonlijke begeleiding in je eigen taal en zie je alle kosten vooraf.',
  landing_faq_annuleren_vraag:'Kan ik een transactie annuleren of terugdraaien?',
  landing_faq_annuleren_antwoord:'Vóór de iDEAL-betaling is afgerond: ja, transactie vervalt automatisch binnen 1 uur als je niet betaalt. Na betaling maar vóór uitbetaling (status \'in_behandeling\'): meestal niet meer, omdat het bedrag al onderweg is naar de bank van de ontvanger. Na voltooiing: alleen via een terugvraag aan de ontvanger. Bel of mail support binnen 30 minuten na betaling voor de hoogste kans op annulering.',
  landing_faq_koers_wijzigt_vraag:'Wat als de wisselkoers wijzigt tijdens mijn betaling?',
  landing_faq_koers_wijzigt_antwoord:'De koers wordt vastgezet op het moment dat je de transactie bevestigt, niet bij betaling. Vanaf bevestiging heb je 15 minuten om de iDEAL-betaling af te ronden tegen de getoonde koers. Duurt het langer? Dan herberekenen we tegen de actuele koers en informeren we je vóór de betaling wordt verwerkt.',
  landing_faq_feestdagen_vraag:'Werkt SwiftBridge ook in het weekend en op feestdagen?',
- landing_faq_feestdagen_antwoord:'Ja — onze infrastructuur draait 24/7, ook in het weekend. Lokale banken kunnen op feestdagen wel iets trager zijn met verwerken (tot 1 werkdag i.p.v. <5 minuten). Plan je een overboeking rond een feestdag, dan sturen we vooraf een melding.',
+ landing_faq_feestdagen_antwoord:'Je kunt op elk moment een overboeking aanmaken. Rond weekenden en feestdagen kan de verwerking door banken langer duren. De precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is.',
  landing_faq_belgie_duitsland_vraag:'Werkt SwiftBridge ook vanuit België of Duitsland?',
- landing_faq_belgie_duitsland_antwoord:'Ja. Vanuit België ondersteunen we Bancontact als equivalent van iDEAL. Vanuit Duitsland werkt Sofort en SEPA. De ontvanger heeft een rekening nodig in een van onze uitbetaallanden. Tarieven zijn identiek: €4,95 vast plus de transparante koersmarge.',
+ landing_faq_belgie_duitsland_antwoord:'Ja. Vanuit België ondersteunen we Bancontact als equivalent van iDEAL. Vanuit Duitsland werkt Sofort en SEPA. De ontvanger heeft een rekening in Turkije nodig; andere landen volgen later. Tarieven zijn identiek: €4,95 vast plus de transparante koersmarge.',
 
  // ── Calculator-pagina (zonder account) — Sprint 4 ──────────────────────
  calc_titel:'Bereken je overboeking',
@@ -405,7 +405,7 @@ export const nl = {
  calc_servicekosten:'Servicekosten',
  calc_levertijd:'Levertijd',
  calc_cta_doorgaan:'Account aanmaken & sturen',
- calc_trust_dnb:'Onder DNB-toezicht via EMI-partner',
+ calc_trust_dnb:'Nederlandse B.V. · KvK 42138434',
  calc_trust_geen_verplichting:'Geen verplichting — pas in laatste stap registreren',
  calc_vergelijk_titel:'Vergelijk betaalmethodes',
  calc_vergelijk_kol_methode:'Methode',
@@ -477,7 +477,7 @@ export const nl = {
  status_auto_refresh:'auto-refresh elke 30s',
  status_refresh:'Vernieuwen',
  status_help_title:'Probleem ervaren?',
- status_help_desc:'Als je een storing ervaart die hier niet wordt getoond, laat het ons weten. We reageren meestal binnen een uur.',
+ status_help_desc:'Als je een storing ervaart die hier niet wordt getoond, laat het ons weten. Wij reageren zo snel mogelijk, in je eigen taal.',
 
  // ── Sticky mobile CTA ────────────────────────────────────────────────────
  sticky_cta_label:'Begin overboeking',
@@ -559,10 +559,10 @@ export const nl = {
  tour_naar_stap:'Naar stap',
 
  // ── Footer trust-row ─────────────────────────────────────────────────────
- footer_trust_dnb_label:'DNB-toezicht',
- footer_trust_dnb_sub:'Via EMI-partner — Wwft-compliant',
- footer_trust_wwft_label:'AVG & Wwft',
- footer_trust_wwft_sub:'Persoonsgegevens beschermd, sanctielijst-screening',
+ footer_trust_dnb_label:'Nederlandse B.V.',
+ footer_trust_dnb_sub:'KvK 42138434',
+ footer_trust_wwft_label:'Identiteitscontrole verplicht',
+ footer_trust_wwft_sub:'Paspoort of ID-kaart, sanctielijst-screening',
  footer_trust_ssl_label:'256-bit SSL/TLS',
  footer_trust_ssl_sub:'End-to-end versleuteling, MFA voor login',
  footer_trust_mollie_label:'Mollie betalingen',
@@ -571,20 +571,20 @@ export const nl = {
 
  // CTA
  landing_cta_titel:'Klaar om te beginnen?',
- landing_cta_subtitel:'Registreer in 2 minuten en stuur je eerste overboeking nog vandaag.',
- landing_cta_primary:'Gratis account aanmaken',
+ landing_cta_subtitel:'Registreer in 2 minuten; na de identiteitscontrole kun je je eerste overboeking doen.',
+ landing_cta_primary:'Account aanmaken',
  landing_cta_secondary:'Inloggen',
  landing_cta_disclaimer:'Geen abonnement. Geen verborgen kosten. Annuleer wanneer je wil.',
  // CTA trust-bullets
- landing_cta_bullet_snel_titel:'<5 minuten',
- landing_cta_bullet_snel_sub:'Geld op TR-rekening',
- landing_cta_bullet_veilig_titel:'Onder DNB-toezicht',
- landing_cta_bullet_veilig_sub:'Via EMI-partner',
+ landing_cta_bullet_snel_titel:'Te beginnen met Turkije',
+ landing_cta_bullet_snel_sub:'Andere landen volgen later',
+ landing_cta_bullet_veilig_titel:'Nederlandse B.V.',
+ landing_cta_bullet_veilig_sub:'KvK 42138434',
  landing_cta_bullet_geen_account_titel:'Geen account nodig',
  landing_cta_bullet_geen_account_sub:'Bereken eerst, registreer later',
 
  // Footer
- landing_footer_slogan:'Snel en goedkoop geld overmaken naar je dierbaren wereldwijd — live koersen, eerlijke tarieven, binnen 5 minuten op rekening waar onze corridor live is.',
+ landing_footer_slogan:'Voordelig geld overmaken naar je dierbaren — live koersen en eerlijke tarieven. Te beginnen met Turkije; andere landen volgen later.',
  landing_footer_product:'Product',
  landing_footer_juridisch:'Juridisch',
  landing_footer_contact:'Contact',
@@ -592,7 +592,7 @@ export const nl = {
  landing_footer_privacy:'Privacybeleid (AVG)',
  landing_footer_aml:'AML-beleid',
  landing_footer_rechten:'Alle rechten voorbehouden.',
- landing_footer_dnb_disclaimer:'SwiftBridge B.V. opereert in bèta. Betaaldiensten worden geleverd via een door DNB gelicentieerde EMI-partner (agent-model). Wij beschikken momenteel niet over een eigen DNB-vergunning.',
+ landing_footer_dnb_disclaimer:'SwiftBridge B.V. opereert in bèta. SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die samenwerking rond is.',
 
  // ── Onboarding wizard (4-staps) ───────────────────────────────────────────
  onb_stap_van_totaal:'Stap {huidige} van {totaal}',
@@ -604,9 +604,9 @@ export const nl = {
 
  // Stap 1 — Welkom
  onb_welkom_titel:'Welkom bij SwiftBridge, {naam}!',
- onb_welkom_subtitel:'Laten we je account in 2 minuten klaarmaken om wereldwijd geld te sturen.',
+ onb_welkom_subtitel:'Laten we je account in 2 minuten klaarmaken om geld te sturen.',
  onb_welkom_punt_1:'Account aangemaakt',
- onb_welkom_punt_2:'Identificeer jezelf (1 minuut, via je Nederlandse bank)',
+ onb_welkom_punt_2:'Identiteitscontrole met je paspoort of ID-kaart',
  onb_welkom_punt_3:'Verstuur je eerste overboeking zonder vaste kosten (t/m €800)',
  onb_welkom_cta:'Laten we beginnen',
 
@@ -615,7 +615,7 @@ export const nl = {
  onb_kyc_subtitel:'Wettelijk verplicht (Wwft) — neemt 60 seconden via je eigen bank.',
  onb_kyc_via_bank:'Werkt met jouw Nederlandse bank',
  onb_kyc_waarom_titel:'Waarom moet dit?',
- onb_kyc_reden_1:'Onder DNB-toezicht via EMI-partner moeten we alle gebruikers identificeren (anti-witwaswet).',
+ onb_kyc_reden_1:'De wet verplicht ons om alle gebruikers te identificeren (anti-witwaswet, Wwft).',
  onb_kyc_reden_2:'iDIN is veilig — geen wachtwoorden, alleen je bank verifieert je identiteit.',
  onb_kyc_reden_3:'Je gegevens blijven bij ons (AVG-conform, geen verkoop aan derden).',
  onb_kyc_start_idin:'Start iDIN identificatie',
@@ -986,12 +986,12 @@ export const nl = {
  // ── F37: simulatie-banner (tot EMI-partner live) ─────────────────────────
  simulatie_banner_kort:'Test-modus',
  simulatie_banner_titel:'Test-modus: geen echte overboeking',
- simulatie_banner_bericht:'SwiftBridge draait momenteel in simulatie-modus tot onze EMI-partner-integratie live gaat. Je iDEAL-betaling wordt NIET daadwerkelijk doorgestuurd naar de ontvanger — dit is alleen voor tests. Gebruik geen echt geld dat je niet wilt verliezen.',
+ simulatie_banner_bericht:'SwiftBridge draait momenteel in simulatie-modus tot de samenwerking met een vergunninghoudende instelling rond is. Je iDEAL-betaling wordt NIET daadwerkelijk doorgestuurd naar de ontvanger — dit is alleen voor tests. Gebruik geen echt geld dat je niet wilt verliezen.',
 
  // ── Wachtlijst-modal voor'binnenkort'-corridors (WL-2) ──────────────────
  wachtlijst_titel:'Uitbetaling naar {land} komt eraan',
  wachtlijst_subtitel:'In {valuta} — uitbetaling-corridor wordt nu voorbereid',
- wachtlijst_uitleg:'We rollen nieuwe corridors stap voor stap uit. Zet je e-mailadres op de wachtlijst en je krijgt een persoonlijk bericht zodra je deze overboeking direct kunt doen — vaak binnen enkele weken.',
+ wachtlijst_uitleg:'We rollen nieuwe corridors stap voor stap uit. Zet je e-mailadres op de wachtlijst en je krijgt een persoonlijk bericht zodra je deze overboeking kunt doen.',
  wachtlijst_email_label:'E-mailadres voor bericht',
  wachtlijst_cta:'Zet me op de wachtlijst',
  wachtlijst_annuleer:'Annuleer',
@@ -1179,16 +1179,16 @@ export const nl = {
  support_invoer_label:'Typ je bericht aan support',
  support_verstuur:'Verstuur bericht',
  support_aan_het_typen:'Support is aan het typen',
- support_bericht_ontvangen:'Bericht ontvangen — we reageren binnen 2 uur.',
+ support_bericht_ontvangen:'Bericht ontvangen — wij reageren zo snel mogelijk, in je eigen taal.',
  support_offline_fallback:'Bericht is opgeslagen. We kunnen je nu niet online beantwoorden — mail support@swiftbridge.nl voor snelle hulp.',
  support_footer_mail:'Of mail naar',
  support_ongelezen:'{aantal} ongelezen berichten',
  support_qa_kyc_vraag:'Hoe upload ik mijn KYC documenten?',
- support_qa_kyc_antwoord:'Ga naar het tabblad Verificatie en klik op"Document scannen". Je hebt nodig:\n• Paspoort of ID-kaart (geldig)\n• Bewijs van woonadres (max 3 maanden oud)\n• Selfie ter bevestiging\n\nDe scan duurt minder dan 5 minuten en je krijgt direct feedback.',
+ support_qa_kyc_antwoord:'Ga naar het tabblad Verificatie en klik op"Document scannen". Je hebt nodig:\n• Paspoort of ID-kaart (geldig)\n• Bewijs van woonadres (max 3 maanden oud)\n• Selfie ter bevestiging\n\nEen medewerker beoordeelt je documenten; je krijgt bericht zodra de controle klaar is.',
  support_qa_kosten_vraag:'Wat zijn de kosten van een overboeking?',
  support_qa_kosten_antwoord:'SwiftBridge rekent één vaste fee van €4,95 per overboeking plus een transparante koersmarge:\n• Basis: 1,2%\n• Plus: 1,0%\n• Premium: 0,8%\n• Black: 0,6%\n\nMinimum overboekbedrag €50. Geen verborgen kosten — je ziet de exacte uitkomst voor je bevestigt.',
  support_qa_status_vraag:'Mijn geld is nog niet aangekomen — wat nu?',
- support_qa_status_antwoord:'Geen paniek — check eerst de status op je Dashboard. Stuur me het referentienummer (TX-XXXXXX) in een volgend bericht, dan zoek ik het direct voor je op.\n\n• Express: < 5 min\n• Economy: tot 2 werkdagen',
+ support_qa_status_antwoord:'Geen paniek — check eerst de status op je Dashboard. Stuur me het referentienummer (TX-XXXXXX) in een volgend bericht, dan zoek ik het direct voor je op.\n\nDe precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is.',
 
  // ── E-mail verificatie (publieke pagina /verifieer-email + dashboard banner) ──
  verify_email_geen_token:'Geen verificatiecode in de link gevonden. Vraag een nieuwe link aan.',
@@ -1518,7 +1518,7 @@ export const nl = {
  bv_pagina_ingetrokken:'Dit betaalverzoek is ingetrokken.',
  bv_pagina_fout:'Er ging iets mis. Probeer het opnieuw.',
  bv_pagina_voetnoot:'Veilig betalen via iDEAL. Je hebt geen SwiftBridge-account nodig.',
- bv_pagina_disclaimer:'SwiftBridge is geen bank; betaaldiensten lopen via een DNB-gelicentieerde EMI-partner.',
+ bv_pagina_disclaimer:'SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die samenwerking rond is.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'De assistent kan je rekeninggegevens inzien om je sneller te helpen.',
  // TX-DOEL: doel van de uitgave
@@ -1545,7 +1545,7 @@ export const nl = {
  kyb_product_uitleg:'Een zakelijk SwiftBridge-profiel voor internationale betalingen vanuit je bedrijf, vanaf je eigen zakelijke bankrekening. Geen betaalrekening, geen IBAN, geen pas.',
  kyb_prijs_regel:'Vast tarief van EUR 4,95 per overboeking plus een wisselkoersmarge volgens je ledenniveau (vanaf 1,2%, tot 0,6%). Je ziet de exacte kosten altijd voordat je een overboeking bevestigt.',
  kyb_limieten_regel:'Na goedkeuring gelden de standaardlimieten (min. EUR 50, max. EUR 5.000 per overboeking en per week). Hogere zakelijke limieten stemmen we individueel met je af.',
- kyb_disclaimer_emi:'SwiftBridge is geen bank en heeft geen eigen DNB-vergunning; betaaldiensten lopen via een DNB-gelicentieerde EMI-partner (agent-model), conform PSD2 en de Wwft.',
+ kyb_disclaimer_emi:'SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die samenwerking rond is.',
  kyb_intro_kop:'Dit ga je doen',
  kyb_intro_tekst:'In zeven korte stappen vertel je ons over je bedrijf, jezelf en hoe je SwiftBridge wilt gebruiken. Je kunt tussendoor stoppen; we bewaren je antwoorden.',
  kyb_intro_nodig_kop:'Dit heb je nodig',

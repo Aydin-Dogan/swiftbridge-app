@@ -2,7 +2,7 @@
  * Stap1Welkom.jsx — Eerste stap: welkomstheet + 3-punt overzicht
  *
  * - Persoonlijke begroeting met voornaam
- * - 3 checklist punten (account gereed, KYC pending, eerste tx gratis)
+ * - 3 checklist punten (account gereed, KYC pending, welkomstactie zonder vaste kosten)
  * - CTA "Laten we beginnen" → naar volgende stap
  */
 import { useTaal } from '../../i18n';

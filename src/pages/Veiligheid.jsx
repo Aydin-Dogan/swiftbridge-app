@@ -68,8 +68,9 @@ export default function Veiligheid() {
                   verwijderen — uw recht onder de AVG, direct in de app.
                 </Punt>
                 <Punt titel="Uw geld gescheiden bewaard">
-                  Klantgelden worden via onze EMI-partner afgescheiden aangehouden (safeguarding),
-                  los van het bedrijfsvermogen — zoals de wet voor betaaldiensten voorschrijft.
+                  Zodra wij als agent werken voor een instelling met een vergunning, houdt die instelling
+                  klantgelden afgescheiden aan (safeguarding), los van het bedrijfsvermogen — zoals de
+                  wet voor betaaldiensten voorschrijft.
                 </Punt>
               </div>
             </section>
@@ -86,8 +87,9 @@ export default function Veiligheid() {
                   patronen worden automatisch gesignaleerd, conform de Wwft.
                 </Punt>
                 <Punt titel="Identiteitsverificatie (KYC)">
-                  Vóór uw eerste overboeking verifiëren wij uw identiteit — via iDIN (uw eigen bank) en
-                  een selfie-controle. Zo weten wij zeker dat ú het bent.
+                  Vóór uw eerste overboeking controleren wij uw identiteit. U uploadt een foto van uw
+                  paspoort of Europese identiteitskaart en een selfie; een medewerker beoordeelt dit.
+                  Dat is wettelijk verplicht voordat u geld kunt overmaken.
                 </Punt>
                 <Punt titel="Betalen via iDEAL">
                   Betalingen lopen via iDEAL — u betaalt in uw eigen vertrouwde bankomgeving. Wij zien
@@ -97,13 +99,13 @@ export default function Veiligheid() {
             </section>
 
             <section className="bg-brand-50 border border-brand-200 rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-brand-900 mb-2">Onder toezicht — maar eerlijk over wat wij zijn</h2>
+              <h2 className="text-lg font-semibold text-brand-900 mb-2">Eerlijk over wat wij zijn</h2>
               <p className="text-sm text-brand-900">
-                SwiftBridge is <strong>geen bank</strong> en heeft geen eigen bankvergunning van De
-                Nederlandsche Bank. De betaaldiensten worden geleverd via een door DNB gelicentieerde
-                EMI-partner (Electronic Money Institution), waarvoor SwiftBridge als agent optreedt —
-                conform PSD2 en de Wwft. Het toezicht van DNB op onze EMI-partner is toezicht op een
-                betaalinstelling, niet op een bank: uw geld valt niet onder het depositogarantiestelsel.
+                SwiftBridge is <strong>geen bank</strong> en heeft geen eigen DNB-vergunning.
+                Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als
+                agent volgt zodra die samenwerking rond is. Het toezicht van DNB op zulke instellingen
+                is toezicht op een betaalinstelling, niet op een bank: uw geld valt niet onder het
+                depositogarantiestelsel.
               </p>
             </section>
 

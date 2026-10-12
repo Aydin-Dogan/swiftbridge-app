@@ -1,7 +1,7 @@
 export const en = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Supervised. Fully transparent.',
+ slogan:'Dutch B.V. Fully transparent.',
  laden:'Loading...',
  opslaan:'Save',
  annuleren:'Cancel',
@@ -23,10 +23,10 @@ export const en = {
  tab_profiel:'Profile',
 
  // Landing page
- landing_titel:'Send money worldwide',
- landing_ondertitel:'in less than 5 minutes',
- landing_uitleg:'Cheaper than your bank. Lightning fast. 24/7 available.',
- gratis_starten:'Get started for free →',
+ landing_titel:'Send money to Türkiye',
+ landing_ondertitel:'more countries will follow',
+ landing_uitleg:'Cheaper than your bank. Fully transparent.',
+ gratis_starten:'Start now →',
  download_app:'Download the app',
  inloggen:'Log in',
  registreren:'Register',
@@ -44,9 +44,9 @@ export const en = {
 
  // Dashboard
  dashboard_hallo:'Hi {naam}',
- dashboard_subtitel:'Send money worldwide',
+ dashboard_subtitel:'Send money to Türkiye',
  dashboard_kyc_vereist:'KYC verification required',
- dashboard_kyc_uitleg:'Verify your identity to send money. Takes less than 5 minutes.',
+ dashboard_kyc_uitleg:'Verify your identity with your passport or ID card to send money.',
  dashboard_live_koers:'Live exchange rate',
  dashboard_swiftbridge_koers:'SwiftBridge rate',
  dashboard_na_kosten:'after 2.2% fees',
@@ -68,7 +68,7 @@ export const en = {
  dashboard_stats_bespaard:'Saved vs bank',
  dashboard_stats_min:'min',
  dashboard_quick_nieuwe_tx:'New transfer',
- dashboard_quick_nieuwe_tx_sub:'Send in <5 minutes',
+ dashboard_quick_nieuwe_tx_sub:'Send money to Türkiye',
  dashboard_quick_koersen:'View rates',
  dashboard_quick_koersen_sub:'Live exchange rates',
  dashboard_quick_alert:'Create alert',
@@ -85,11 +85,11 @@ export const en = {
  dashboard_recent_leeg_bereken:'Calculate first',
  dashboard_recent_leeg_stap1:'Enter amount',
  dashboard_recent_leeg_stap2:'Pay with iDEAL',
- dashboard_recent_leeg_stap3:'Arrives <5 min',
+ dashboard_recent_leeg_stap3:'We keep you informed',
  dashboard_tips_titel:'Did you know?',
  dashboard_tip_1:'The TRY rate is {pct}% better than last week — good moment to send.',
  dashboard_tip_2:'You\'ve already saved {bedrag} compared to your bank.',
- dashboard_tip_3:'With iDEAL family usually receives the money within 5 minutes.',
+ dashboard_tip_3:'With iDEAL you pay for your transfer from your own banking app.',
  dashboard_tip_4:'Set a rate alert and we\'ll notify you automatically when the rate improves.',
  dashboard_tip_5:'You can view your transaction history any time via Profile → My data (GDPR right).',
  dashboard_notif_titel:'Notifications',
@@ -159,9 +159,9 @@ export const en = {
  kyc_selfie:'Selfie',
  kyc_klaar:'Done',
  kyc_goedgekeurd_titel:'Verification complete!',
- kyc_goedgekeurd_uitleg:'Hi {naam}, your identity is confirmed. You can now send money worldwide.',
+ kyc_goedgekeurd_uitleg:'Hi {naam}, your identity is confirmed. You can now send money.',
  kyc_in_behandeling_titel:'Request being processed',
- kyc_in_behandeling_uitleg:'Hi {naam}, we\'re checking your documents. Usually takes less than 5 minutes.',
+ kyc_in_behandeling_uitleg:'Hi {naam}, a member of our team is checking your documents. We\'ll let you know as soon as the check is complete.',
  kyc_afgewezen_titel:'Verification rejected',
  kyc_afgewezen_uitleg:'Sorry {naam}, we couldn\'t confirm your identity. You can try again.',
  kyc_geblokkeerd_titel:'Account blocked',
@@ -189,7 +189,7 @@ export const en = {
  uitloggen:'Log out',
 
  // Voettekst
- beveiligd_via_jwt:'DNB supervision via EMI partner · 256-bit encryption · Wwft compliant',
+ beveiligd_via_jwt:'Dutch B.V. · Chamber of Commerce 42138434 · 256-bit encryption',
 
  // ── Profile: WhatsApp opt-in ─────────────────────────────────────────────
  profiel_whatsapp_titel:'WhatsApp confirmation for family',
@@ -222,9 +222,9 @@ export const en = {
  referral_hoe_stap1:'Share your code or link with friends via WhatsApp or email.',
  referral_hoe_stap2:'Your friend signs up with your code and makes a first transfer.',
  referral_hoe_stap3:'You both get €{bedrag} off your next transfer.',
- referral_share_whatsapp:'Hey! I use SwiftBridge to send money abroad — faster and cheaper than the bank. Get €{bedrag} bonus when you sign up with my code: {url}',
+ referral_share_whatsapp:'Hey! I use SwiftBridge to send money abroad — affordable, with all costs shown upfront. Get €{bedrag} bonus when you sign up with my code: {url}',
  referral_share_email_onderwerp:'Try SwiftBridge — get €5 bonus',
- referral_share_email_tekst:'Hi!\n\nI use SwiftBridge to send money abroad quickly and cheaply. Sign up via my link and you get €{bedrag} bonus on your first transfer, and so do I!\n\n{url}\n\nCheers,',
+ referral_share_email_tekst:'Hi!\n\nI use SwiftBridge to send money abroad affordably, with all costs shown upfront. Sign up via my link and you get €{bedrag} bonus on your first transfer, and so do I!\n\n{url}\n\nCheers,',
  registreer_referral_label:'Did someone invite you? (optional)',
  registreer_referral_placeholder:'ABCD1234',
  registreer_referral_check:'Checking code...',
@@ -267,18 +267,18 @@ export const en = {
  landing_nav_faq:'FAQ',
 
  // Hero
- landing_pill_route:'Netherlands → worldwide',
- landing_pill_wereldwijd:'Live rates · {landen}+ currencies worldwide',
+ landing_pill_route:'Netherlands → Türkiye',
+ landing_pill_wereldwijd:'Live rates · {landen}+ currencies',
  landing_hero_titel_1:'Send money to your loved ones,',
- landing_hero_titel_2:'anywhere in the world',
- landing_hero_subline:'Live exchange rates for {landen}+ currencies. Send to a growing network of countries worldwide — with more added all the time. Fair rates, no hidden costs.',
- landing_hero_cta_primary:'Start for free',
+ landing_hero_titel_2:'starting with Türkiye',
+ landing_hero_subline:'Live exchange rates for {landen}+ currencies. Starting with Türkiye; more countries will follow. Fair rates, no hidden costs.',
+ landing_hero_cta_primary:'Start now',
  landing_hero_cta_secondary:'See how it works',
  // F23 fix (Cursor review): qualifier embedded in label
- landing_trust_dnb:'Wwft · via DNB EMI-partner',
- landing_trust_ideal:'iDEAL & iDIN',
+ landing_trust_dnb:'Dutch B.V. · Chamber of Commerce 42138434',
+ landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit encryption',
- landing_trust_reviews:'4.8 from 1,240 reviews',
+ landing_trust_reviews:'Reviews will follow after launch',
 
  // Currency widget
  landing_widget_titel:'Calculate your transfer',
@@ -293,27 +293,27 @@ export const en = {
 
  // Features
  landing_features_eyebrow:'Why SwiftBridge',
- landing_features_titel:'Fast, transparent and secure',
+ landing_features_titel:'Fair, transparent and secure',
  landing_features_subtitel:'For anyone supporting loved ones across borders — built by people who know the pain of expensive bank transfers.',
- landing_feature_snel_titel:'Lightning fast',
- landing_feature_snel_tekst:'Money on your loved one\'s account within 5 minutes — including weekends and outside business hours, on our live corridors.',
+ landing_feature_snel_titel:'Honest about delivery time',
+ landing_feature_snel_tekst:'We will publish the exact delivery time once payouts to Türkiye are live.',
  landing_feature_goedkoop_titel:'Fairly priced',
  landing_feature_goedkoop_tekst:'One fixed €4.95 fee and a transparent FX margin from 1.2%, decreasing to 0.6% per membership level. Everything visible upfront.',
- landing_feature_veilig_titel:'Secure & regulated',
- landing_feature_veilig_tekst:'Under DNB supervision via our EMI partner, sanctions list check on every recipient, iDIN identification.',
+ landing_feature_veilig_titel:'Secure & transparent',
+ landing_feature_veilig_tekst:'Dutch B.V. (Chamber of Commerce 42138434), sanctions list check on every recipient and an identity check with your passport or ID card.',
 
  // How it works
  landing_how_eyebrow:'How it works',
- landing_how_titel:'Sent worldwide in 4 steps',
- landing_how_subtitel:'Quick sign-up, one-time identification — after that send money in seconds.',
+ landing_how_titel:'Sent in 4 steps',
+ landing_how_subtitel:'Quick sign-up, one-time identification — after that sending money is easy.',
  landing_step_account_titel:'Create your account',
  landing_step_account_tekst:'Sign up in 2 minutes — email and password only.',
- landing_step_idin_titel:'Verify with iDIN',
- landing_step_idin_tekst:'Fast & secure via your own Dutch bank — no scans or selfies.',
+ landing_step_idin_titel:'Identity check with your passport or ID card',
+ landing_step_idin_tekst:'You upload a photo of your passport or European ID card and a selfie; a member of our team reviews it. This is required by law before you can send money.',
  landing_step_ideal_titel:'Pay with iDEAL',
  landing_step_ideal_tekst:'Enter the amount and confirm with one tap in your bank app.',
  landing_step_ontvangen_titel:'Family receives',
- landing_step_ontvangen_tekst:'Money arrives in the recipient bank account within 5 minutes. WhatsApp confirmation included.',
+ landing_step_ontvangen_tekst:'We process your transfer to the recipient and keep you informed. We will publish the exact delivery time once payouts to Türkiye are live.',
 
  // Pricing table section
  tariefkaart_eyebrow:'Our pricing',
@@ -337,7 +337,7 @@ export const en = {
  landing_stat_fee:'Fixed fee per transfer',
  landing_reviews_eyebrow:'What our customers say',
  landing_reviews_titel:'Trusted by our customers',
- landing_reviews_aantal:'1,240 reviews',
+ landing_reviews_aantal:'Reviews will follow after launch',
  landing_testimonial_aydin:'Finally an app that does it right. Saved €15 vs my bank and my mom had the money in 4 minutes.',
  landing_testimonial_elif:'Super transparent — you see right away what the recipient gets. No hidden fees like Western Union.',
  landing_testimonial_mehmet:'Send money for my dad every month. Stable, fast and the WhatsApp confirmation is gold.',
@@ -357,40 +357,40 @@ export const en = {
 
  // Country support
  landing_landen_eyebrow:'Destinations',
- landing_landen_titel:'Live in 7 countries today',
- landing_landen_subtitel:'Live rates for {landen}+ currencies worldwide — from Europe and Asia to Africa and the Americas. New payout countries added regularly.',
+ landing_landen_titel:'Starting with Türkiye',
+ landing_landen_subtitel:'Live rates for {landen}+ currencies. Payouts will start with Türkiye; more countries will follow.',
  landing_landen_banken:'banks',
 
  // FAQ
  landing_faq_eyebrow:'Frequently asked',
  landing_faq_titel:'Answers to your questions',
- landing_faq_subtitel:'Didn\'t find what you were looking for? Send us an email — we reply within 24h.',
+ landing_faq_subtitel:'Didn\'t find what you were looking for? Send us an email — we reply as soon as possible, in your own language.',
  landing_faq_snelheid_vraag:'How fast does the money reach the recipient?',
- landing_faq_snelheid_antwoord:'In most cases within 5 minutes after your iDEAL payment is confirmed. For large amounts or outside business hours it can take up to 1 hour. The very first transfer can be slightly slower because we verify your KYC once.',
+ landing_faq_snelheid_antwoord:'We will publish the exact delivery time once payouts to Türkiye are live. Before your very first transfer we check your identity once.',
  landing_faq_kosten_vraag:'What does it really cost?',
  landing_faq_kosten_antwoord:'One fixed transaction fee of €4.95 per transfer, plus a transparent FX margin of 1.2% (Basic) decreasing per membership level to 0.6% (Black). Minimum transfer €50. No subscription, no hidden costs — you see everything before confirming.',
  landing_faq_veiligheid_vraag:'Is my money safe with SwiftBridge?',
- landing_faq_veiligheid_antwoord:'Yes. Payments are handled by a DNB-licensed EMI partner (agent model under DNB supervision). We check every recipient against the international sanctions list, use 256-bit encryption and store your data in line with GDPR and Wwft.',
+ landing_faq_veiligheid_antwoord:'SwiftBridge is not a bank and does not hold its own DNB licence. We will operate as an agent of a licensed institution; our registration as an agent will follow once that partnership is in place. We check every recipient against the international sanctions list, use 256-bit encryption and handle your data in line with the GDPR and the Wwft.',
  landing_faq_banken_vraag:'Which banks are supported?',
- landing_faq_banken_antwoord:'All major banks in our payout countries, plus popular digital wallets. Select the recipient country when sending and you will instantly see the available banks and wallets.',
- landing_faq_idin_vraag:'What is iDIN identification?',
- landing_faq_idin_antwoord:'iDIN is the official Dutch identification system run by the banks. You verify your identity via your own Dutch bank app — no passport scan, no selfie, no waiting. Once verified, you never have to do it again.',
+ landing_faq_banken_antwoord:'Starting with Türkiye; more countries will follow. We will publish which banks you can send to once payouts to Türkiye are live.',
+ landing_faq_idin_vraag:'How do you check my identity?',
+ landing_faq_idin_antwoord:'You upload a photo of your passport or European ID card and a selfie; a member of our team reviews it. This is required by law before you can send money.',
  landing_faq_contact_vraag:'How can I get in touch?',
- landing_faq_contact_antwoord:'Email support@swiftbridge.nl. We support multiple languages and typically reply within 4 hours during business hours.',
+ landing_faq_contact_antwoord:'Email support@swiftbridge.nl. We reply as soon as possible, in your own language.',
 
  // FAQ — Sprint 3: 6 new long-tail SEO questions
  landing_faq_limieten_vraag:'What are the monthly or daily limits?',
- landing_faq_limieten_antwoord:'In the first 90 days after KYC approval, a weekly limit of €5,000 applies. After that, it is automatically raised based on your transaction history and Wwft risk profile. Want to send a larger amount one-time? Contact support — we can activate a higher limit on request up to €25,000 per transaction.',
+ landing_faq_limieten_antwoord:'In the first 90 days after KYC approval, a weekly limit of €5,000 applies. After that, it is automatically raised based on your transaction history and Wwft risk profile. The maximum is €5,000 per transfer.',
  landing_faq_wise_vergelijk_vraag:'How does SwiftBridge compare to Wise?',
- landing_faq_wise_vergelijk_antwoord:'Wise is global and handles 1,000+ currencies. SwiftBridge focuses on a targeted set of payout countries with direct bank connections — often faster (<5 min via iDEAL) and with personal, Dutch-speaking customer service. On a €500 transaction our rate is €1-2 above Wise — for that extra cost you get more speed and better guidance.',
+ landing_faq_wise_vergelijk_antwoord:'Wise is a large international provider with many currencies. SwiftBridge starts with one route, the Netherlands to Türkiye, with personal customer service in your own language. Wise is cheaper on many amounts; with us you get personal guidance in your own language and see all costs upfront.',
  landing_faq_annuleren_vraag:'Can I cancel or reverse a transaction?',
  landing_faq_annuleren_antwoord:'Before iDEAL payment is completed: yes, transaction expires automatically within 1 hour if you don\'t pay. After payment but before payout (status \'in_progress\'): usually not, because the amount is already on its way to the recipient bank. After completion: only via a refund request to the recipient. Call or email support within 30 minutes after payment for the best chance at cancellation.',
  landing_faq_koers_wijzigt_vraag:'What if the exchange rate changes during my payment?',
  landing_faq_koers_wijzigt_antwoord:'The rate is locked when you confirm the transaction, not at payment. From confirmation you have 15 minutes to complete the iDEAL payment at the shown rate. Takes longer? We recalculate at the current rate and inform you before processing.',
  landing_faq_feestdagen_vraag:'Does SwiftBridge work on weekends and holidays?',
- landing_faq_feestdagen_antwoord:'Yes — our infrastructure runs 24/7, including weekends. Local banks can be a bit slower processing on public holidays (up to 1 business day instead of <5 minutes). If you schedule a transfer around a holiday, we notify you in advance.',
+ landing_faq_feestdagen_antwoord:'You can create a transfer at any time. Around weekends and public holidays, processing by banks can take longer. We will publish the exact delivery time once payouts to Türkiye are live.',
  landing_faq_belgie_duitsland_vraag:'Does SwiftBridge also work from Belgium or Germany?',
- landing_faq_belgie_duitsland_antwoord:'Yes. From Belgium we support Bancontact as the iDEAL equivalent. From Germany, Sofort and SEPA work. The recipient needs an account in one of our payout countries. Pricing is identical: €4.95 fixed plus the transparent FX margin.',
+ landing_faq_belgie_duitsland_antwoord:'Yes. From Belgium we support Bancontact as the iDEAL equivalent. From Germany, Sofort and SEPA work. The recipient needs an account in Türkiye; more countries will follow. Pricing is identical: €4.95 fixed plus the transparent FX margin.',
 
  // ── Calculator page (no account required) — Sprint 4 ─────────────────────
  calc_titel:'Calculate your transfer',
@@ -404,7 +404,7 @@ export const en = {
  calc_servicekosten:'Service fee',
  calc_levertijd:'Delivery time',
  calc_cta_doorgaan:'Create account & send',
- calc_trust_dnb:'Under DNB supervision via EMI partner',
+ calc_trust_dnb:'Dutch B.V. · Chamber of Commerce 42138434',
  calc_trust_geen_verplichting:'No commitment — register only in the final step',
  calc_vergelijk_titel:'Compare payment methods',
  calc_vergelijk_kol_methode:'Method',
@@ -476,7 +476,7 @@ export const en = {
  status_auto_refresh:'auto-refresh every 30s',
  status_refresh:'Refresh',
  status_help_title:'Experiencing issues?',
- status_help_desc:'If you are experiencing an issue not shown here, let us know. We usually respond within an hour.',
+ status_help_desc:'If you are experiencing an issue not shown here, let us know. We reply as soon as possible, in your own language.',
 
  // ── Sticky mobile CTA ────────────────────────────────────────────────────
  sticky_cta_label:'Start transfer',
@@ -558,10 +558,10 @@ export const en = {
  tour_naar_stap:'Go to step',
 
  // ── Footer trust-row ─────────────────────────────────────────────────────
- footer_trust_dnb_label:'DNB-supervised',
- footer_trust_dnb_sub:'Via EMI partner — AML compliant',
- footer_trust_wwft_label:'GDPR & AML',
- footer_trust_wwft_sub:'Personal data protected, sanctions screening',
+ footer_trust_dnb_label:'Dutch B.V.',
+ footer_trust_dnb_sub:'Chamber of Commerce 42138434',
+ footer_trust_wwft_label:'Identity check required',
+ footer_trust_wwft_sub:'Passport or ID card, sanctions screening',
  footer_trust_ssl_label:'256-bit SSL/TLS',
  footer_trust_ssl_sub:'End-to-end encryption, MFA at login',
  footer_trust_mollie_label:'Mollie payments',
@@ -570,20 +570,20 @@ export const en = {
 
  // CTA
  landing_cta_titel:'Ready to get started?',
- landing_cta_subtitel:'Sign up in 2 minutes and send your first transfer today.',
- landing_cta_primary:'Create free account',
+ landing_cta_subtitel:'Sign up in 2 minutes; after the identity check you can make your first transfer.',
+ landing_cta_primary:'Create account',
  landing_cta_secondary:'Log in',
  landing_cta_disclaimer:'No subscription. No hidden costs. Cancel anytime.',
  // CTA trust-bullets
- landing_cta_bullet_snel_titel:'<5 minutes',
- landing_cta_bullet_snel_sub:'Money on TR account',
- landing_cta_bullet_veilig_titel:'Under DNB supervision',
- landing_cta_bullet_veilig_sub:'Via EMI partner',
+ landing_cta_bullet_snel_titel:'Starting with Türkiye',
+ landing_cta_bullet_snel_sub:'More countries will follow',
+ landing_cta_bullet_veilig_titel:'Dutch B.V.',
+ landing_cta_bullet_veilig_sub:'Chamber of Commerce 42138434',
  landing_cta_bullet_geen_account_titel:'No account required',
  landing_cta_bullet_geen_account_sub:'Calculate first, register later',
 
  // Footer
- landing_footer_slogan:'Fast and affordable money transfers to your loved ones worldwide — live rates, fair pricing, on the account within 5 minutes on our live corridors.',
+ landing_footer_slogan:'Affordable money transfers to your loved ones — live rates and fair pricing. Starting with Türkiye; more countries will follow.',
  landing_footer_product:'Product',
  landing_footer_juridisch:'Legal',
  landing_footer_contact:'Contact',
@@ -591,7 +591,7 @@ export const en = {
  landing_footer_privacy:'Privacy policy (GDPR)',
  landing_footer_aml:'AML policy',
  landing_footer_rechten:'All rights reserved.',
- landing_footer_dnb_disclaimer:'SwiftBridge B.V. is in beta. Payment services are delivered via a DNB-licensed EMI partner (agent model). We do not currently hold our own DNB licence.',
+ landing_footer_dnb_disclaimer:'SwiftBridge B.V. is in beta. SwiftBridge is not a bank and does not hold its own DNB licence. We will operate as an agent of a licensed institution; our registration as an agent will follow once that partnership is in place.',
 
  // ── Onboarding wizard (4-step) ────────────────────────────────────────────
  onb_stap_van_totaal:'Step {huidige} of {totaal}',
@@ -603,9 +603,9 @@ export const en = {
 
  // Step 1 — Welcome
  onb_welkom_titel:'Welcome to SwiftBridge, {naam}!',
- onb_welkom_subtitel:'Let\'s get your account ready in 2 minutes so you can send money worldwide.',
+ onb_welkom_subtitel:'Let\'s get your account ready in 2 minutes so you can send money.',
  onb_welkom_punt_1:'Account created',
- onb_welkom_punt_2:'Verify your identity (1 minute, via your Dutch bank)',
+ onb_welkom_punt_2:'Identity check with your passport or ID card',
  onb_welkom_punt_3:'Send your first transfer with no fixed fee (€800 or less)',
  onb_welkom_cta:'Let\'s get started',
 
@@ -614,7 +614,7 @@ export const en = {
  onb_kyc_subtitel:'Legally required (Wwft) — takes 60 seconds via your own bank.',
  onb_kyc_via_bank:'Works with your Dutch bank',
  onb_kyc_waarom_titel:'Why is this required?',
- onb_kyc_reden_1:'Under DNB supervision via EMI partner we must identify all users (anti-money laundering law).',
+ onb_kyc_reden_1:'The law requires us to identify all users (anti-money laundering law, Wwft).',
  onb_kyc_reden_2:'iDIN is secure — no passwords, only your bank verifies your identity.',
  onb_kyc_reden_3:'Your data stays with us (GDPR-compliant, never sold to third parties).',
  onb_kyc_start_idin:'Start iDIN verification',
@@ -768,16 +768,16 @@ export const en = {
  support_invoer_label:'Type your message to support',
  support_verstuur:'Send message',
  support_aan_het_typen:'Support is typing',
- support_bericht_ontvangen:'Message received — we will reply within 2 hours.',
+ support_bericht_ontvangen:'Message received — we reply as soon as possible, in your own language.',
  support_offline_fallback:'Message saved. We cannot respond online right now — email support@swiftbridge.nl for faster help.',
  support_footer_mail:'Or email us at',
  support_ongelezen:'{aantal} unread messages',
  support_qa_kyc_vraag:'How do I upload my KYC documents?',
- support_qa_kyc_antwoord:'Go to the Verification tab and click"Scan document". You\'ll need:\n• Passport or ID card (valid)\n• Proof of residence (max 3 months old)\n• Selfie for confirmation\n\nThe scan takes less than 5 minutes and you get instant feedback.',
+ support_qa_kyc_antwoord:'Go to the Verification tab and click"Scan document". You\'ll need:\n• Passport or ID card (valid)\n• Proof of residence (max 3 months old)\n• Selfie for confirmation\n\nA member of our team reviews your documents; we\'ll let you know as soon as the check is complete.',
  support_qa_kosten_vraag:'What does a transfer cost?',
  support_qa_kosten_antwoord:'SwiftBridge charges one fixed fee of €4.95 per transfer plus a transparent FX margin:\n• Basic: 1.2%\n• Plus: 1.0%\n• Premium: 0.8%\n• Black: 0.6%\n\nMinimum transfer €50. No hidden costs — you see the exact outcome before you confirm.',
  support_qa_status_vraag:'My money hasn\'t arrived yet — what now?',
- support_qa_status_antwoord:'No worries — first check the status on your Dashboard. Send me the reference number (TX-XXXXXX) in the next message and I\'ll look it up right away.\n\n• Express: < 5 min\n• Economy: up to 2 business days',
+ support_qa_status_antwoord:'No worries — first check the status on your Dashboard. Send me the reference number (TX-XXXXXX) in the next message and I\'ll look it up right away.\n\nWe will publish the exact delivery time once payouts to Türkiye are live.',
 
  // ── Email verification (public /verifieer-email page + dashboard banner) ──
  verify_email_geen_token:'No verification code found in the link. Please request a new link.',
@@ -1106,12 +1106,12 @@ export const en = {
  // ── F37: simulation-mode banner (until EMI-partner live) ─────────────────
  simulatie_banner_kort:'Test mode',
  simulatie_banner_titel:'Test mode: no real transfer',
- simulatie_banner_bericht:'SwiftBridge runs in simulation mode until our EMI-partner integration goes live. Your iDEAL payment will NOT actually be forwarded to the recipient — this is only for testing. Do not use real money you cannot afford to lose.',
+ simulatie_banner_bericht:'SwiftBridge runs in simulation mode until the partnership with a licensed institution is in place. Your iDEAL payment will NOT actually be forwarded to the recipient — this is only for testing. Do not use real money you cannot afford to lose.',
 
  // Waitlist modal for"coming soon"corridors (WL-2)
  wachtlijst_titel:'Payouts to {land} are coming',
  wachtlijst_subtitel:'In {valuta} — payout corridor in preparation',
- wachtlijst_uitleg:'We roll out new corridors step by step. Add your email to the waitlist and you\'ll be the first to know once you can send to this country — often within a few weeks.',
+ wachtlijst_uitleg:'We roll out new corridors step by step. Add your email to the waitlist and you\'ll be the first to know once you can send to this country.',
  wachtlijst_email_label:'Email address for notification',
  wachtlijst_cta:'Join the waitlist',
  wachtlijst_annuleer:'Cancel',
@@ -1516,7 +1516,7 @@ export const en = {
  bv_pagina_ingetrokken:'This payment request has been withdrawn.',
  bv_pagina_fout:'Something went wrong. Please try again.',
  bv_pagina_voetnoot:'Pay securely with iDEAL. No SwiftBridge account needed.',
- bv_pagina_disclaimer:'SwiftBridge is not a bank; payment services are provided via a DNB-licensed EMI partner.',
+ bv_pagina_disclaimer:'SwiftBridge is not a bank and does not hold its own DNB licence. We will operate as an agent of a licensed institution; our registration as an agent will follow once that partnership is in place.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'The assistant can view your account details to help you faster.',
  // TX-DOEL: doel van de uitgave
@@ -1543,7 +1543,7 @@ export const en = {
  kyb_product_uitleg:'A SwiftBridge business profile for international payments from your company, funded from your own business bank account. No payment account, no IBAN, no card.',
  kyb_prijs_regel:'A set amount of EUR 4.95 per transfer plus an exchange rate margin based on your membership level (from 1.2% down to 0.6%). You always see the exact costs before you confirm a transfer.',
  kyb_limieten_regel:'After approval the standard limits apply (min. EUR 50, max. EUR 5,000 per transfer and per week). Higher business limits are agreed with you individually.',
- kyb_disclaimer_emi:'SwiftBridge is not a bank and holds no DNB licence of its own; payment services are provided through a DNB-licensed EMI partner (agent model), in line with PSD2 and the Dutch Wwft.',
+ kyb_disclaimer_emi:'SwiftBridge is not a bank and does not hold its own DNB licence. We will operate as an agent of a licensed institution; our registration as an agent will follow once that partnership is in place.',
  kyb_intro_kop:'What you will do',
  kyb_intro_tekst:'In seven short steps you tell us about your company, yourself and how you want to use SwiftBridge. You can stop at any time; we save your answers.',
  kyb_intro_nodig_kop:'What you need',

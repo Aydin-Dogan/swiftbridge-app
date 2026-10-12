@@ -6,6 +6,15 @@
 
 ---
 
+## 12 oktober 2026 — website rechtgezet, twee punten bewust later
+
+Op 12-10 zijn de onjuiste claims van de website gehaald (toezicht via "onze EMI-partner", "gereguleerd", "binnen 5 minuten", iDIN-reclame, "gratis", "45+ landen", "Wwft-conform"). Bewaakt door `src/lib/geenLiveClaim.test.js`. Twee punten vallen daar bewust buiten en staan hier open:
+
+1. **Juridische documenten** (`AlgemeneVoorwaarden.jsx`, `Privacybeleid.jsx`, `AMLBeleid.jsx`) zeggen nog "via onze EMI-partner". Dat is onjuist zolang `AGENT_GEREGISTREERD` false is. Correctie als nieuwe versie volgens `src/content/juridisch/meta.js` (nieuwe versiemap, GELDIG_VANAF, API-versie mee), bij voorkeur na een blik van de jurist. Daarna de uitsluiting in `geenLiveClaim.test.js` weghalen.
+2. **iDIN-knop in het identiteitsproces** (`Profiel.jsx`, `onboarding/Stap2KYC.jsx`, `kyb/StapIdentiteit.jsx`, `kyc/DocumentUploadFlow.jsx` en de sleutels `IDIN_*`, `onb_kyc_*`, `kyc_fallback_*`, `kyb_id_idin_*`). iDIN is niet aangesloten (geen Buckaroo-sleutels op Railway); in productie weigert de API de proefversie, dus er wordt niemand onterecht goedgekeurd, maar de klant krijgt wel een foutmelding. Besluit nodig: knop verbergen tot iDIN echt is aangesloten. Raakt de lopende KYC-klus (`KYCFlow.jsx`), dus samen oppakken.
+
+---
+
 ## 🟢 ACTUELE STAND — 1 juli 2026 (dit blok is leidend; de tekst hieronder is historie)
 
 **Sinds 26 mei is er veel afgerond.** De "deferred" lijst hieronder klopt grotendeels niet meer:

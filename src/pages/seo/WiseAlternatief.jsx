@@ -8,13 +8,13 @@ export default function WiseAlternatief() {
   return (
     <SeoLanding
       title="Wise alternatief voor geld naar Türkiye"
-      description="Op zoek naar een Wise-alternatief voor EUR→TRY transfers? SwiftBridge: €4,95 vast + transparante koersmarge, binnen 5 minuten op de Turkse rekening. Vergelijking + tarieven."
+      description="Op zoek naar een Wise-alternatief voor EUR→TRY transfers? SwiftBridge: €4,95 vast + transparante koersmarge. Vergelijking + tarieven."
       canonicalPath="/wise-alternatief"
       heroEyebrow="Alternatief"
-      heroSubtitel="Voor de NL→TR corridor specifiek gebouwd: sneller op Turkse banken, eigen Nederlandstalige support, transparante tariefkaart."
+      heroSubtitel="Voor de NL→TR corridor specifiek gebouwd: eigen Nederlandstalige support, transparante tariefkaart."
       voorbeeldBedrag={500}
       cta="Vergelijk tarieven nu"
-      bullets={['<5 minuten via iDEAL', '€4,95 vast + transparante marge', '100+ Turkse banken']}
+      bullets={['Betalen met iDEAL', '€4,95 vast + transparante marge', 'Te beginnen met Turkije']}
       content={
         <>
           <p>
@@ -36,18 +36,17 @@ export default function WiseAlternatief() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Wanneer kies je SwiftBridge?</h2>
           <p>
-            SwiftBridge is geoptimaliseerd voor één specifieke route: NL → Türkiye en
-            Turkic landen (Azerbeidzjan, Kazachstan, Oezbekistan, Turkmenistan, Kirgizië,
-            Tadzjikistan). Voor deze corridor bieden we:
+            SwiftBridge is gebouwd voor één specifieke route: Nederland → Türkiye. Te
+            beginnen met Turkije; andere landen volgen later. Voor deze corridor bieden we:
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-gray-700">
             <li>
-              <strong>Snelheid:</strong> doorgaans &lt;5 minuten op de Turkse rekening via
-              iDEAL Express. Wise duurt 1-2 dagen voor TRY in de meeste gevallen.
+              <strong>Eerlijk over de levertijd:</strong> de precieze levertijd maken wij
+              bekend zodra de uitbetaling in Turkije live is.
             </li>
             <li>
-              <strong>Native ondersteuning</strong> voor alle grote Turkse banken
-              (Garanti BBVA, Akbank, İş Bankası, Ziraat Bankası, Yapı Kredi en 100+ anderen).
+              <strong>Gebouwd voor Turkse rekeningen</strong>, zoals bij Garanti BBVA, Akbank,
+              İş Bankası, Ziraat Bankası en Yapı Kredi, met automatische IBAN-controle.
             </li>
             <li>
               <strong>Nederlandstalige klantenservice</strong> die de Turkse banken kent —
@@ -64,35 +63,33 @@ export default function WiseAlternatief() {
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 my-4">
             <p className="font-semibold text-gray-900 mb-2">€500 EUR → TRY:</p>
             <ul className="text-sm space-y-1 text-gray-700">
-              <li><strong>SwiftBridge iDEAL Express:</strong> €4,95 vast + 1,2% marge (Basis) = €10,95 · &lt;5 min</li>
+              <li><strong>SwiftBridge iDEAL Express:</strong> €4,95 vast + 1,2% marge (Basis) = €10,95</li>
               <li><strong>Wise:</strong> €4,38 fee + 0% FX-marge · 1-2 dagen</li>
-              <li><strong>Verschil:</strong> SwiftBridge ~€6,57 duurder, ~24-48 uur sneller</li>
+              <li><strong>Verschil:</strong> SwiftBridge ~€6,57 duurder</li>
             </ul>
           </div>
 
           <p>
-            Voor de meeste klanten in de Turks-Nederlandse diaspora wegen die 24-48 uur
-            extra snelheid + Nederlandstalige support ruim op tegen de ~€7 prijsverschil.
-            Zeker voor noodgevallen (ziekenhuiskosten, ondernemerskosten, familie-bijdrage
-            voor Bayram).
+            Voor veel klanten in de Turks-Nederlandse diaspora weegt persoonlijke support
+            in de eigen taal op tegen het prijsverschil van ~€7.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Voor wie is welk het best?</h2>
           <p>
-            <strong>Wise:</strong> bezoek je een eenmalige cross-border transactie, ben je
-            geduldig (1-2 dagen OK), of stuur je vaker naar verschillende landen.
+            <strong>Wise:</strong> doe je een eenmalige cross-border transactie, of stuur
+            je vaker naar verschillende landen.
           </p>
           <p>
             <strong>SwiftBridge:</strong> ben je Turks-Nederlands en stuur je regelmatig
-            naar Türkiye? Heb je snelheid nodig (familie wacht, medische rekening, etc.)?
-            Wil je Nederlandse klantenservice? Dan ben je hier op de goede plek.
+            naar Türkiye? Wil je Nederlandse klantenservice? Dan ben je hier op de goede
+            plek.
           </p>
         </>
       }
       faq={[
         {
-          vraag: 'Is SwiftBridge net zo veilig als Wise?',
-          antwoord: 'Beide werken onder financiële toezicht: Wise heeft een eigen UK/EU-licentie, SwiftBridge werkt onder DNB-toezicht via EMI-partner. Beide volgen Wwft + AVG. Beide gebruiken 256-bit encryptie.',
+          vraag: 'Hoe verhoudt SwiftBridge zich tot Wise qua toezicht?',
+          antwoord: 'Wise heeft een eigen UK/EU-licentie. SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent van een vergunninghoudende EMI-partner; de inschrijving als agent volgt zodra die samenwerking rond is. SwiftBridge gebruikt 256-bit encryptie en verificatie in twee stappen.',
         },
         {
           vraag: 'Kan ik mijn Wise-account met SwiftBridge gebruiken?',

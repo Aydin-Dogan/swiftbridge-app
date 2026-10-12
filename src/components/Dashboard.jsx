@@ -367,7 +367,7 @@ export default function Dashboard({ gebruiker }) {
       </div>
 
       {/* Welkomstactie — vaste kosten vervallen op de eerste overboeking t/m €800.
-          Niet "gratis": de koersopslag wordt gewoon ingehouden, bij deze actie
+          Nooit als kosteloos aanprijzen: de koersopslag wordt gewoon ingehouden, bij deze actie
           zelfs over het volledige bedrag. Zie src/test/welkomstactieClaims.test.js */}
       {gebruiker?.gratisEersteTx && kycGoedgekeurd && (
         <div className="bg-surface border border-accent-400 rounded-md p-4 shadow-soft animate-fade-up">
@@ -450,8 +450,8 @@ export default function Dashboard({ gebruiker }) {
           {/* Info balk — vertrouwenssignalen */}
           <div className="grid grid-cols-3 gap-2 text-center pt-1">
             {[
-              { Icoon: Zap,      tekst: '< 5 min aankomst',           kleur: 'text-brand-600' },
-              { Icoon: Lock,     tekst: 'Veilig via licentiepartner', kleur: 'text-success-600' },
+              { Icoon: Zap,      tekst: 'Betalen met iDEAL',          kleur: 'text-brand-600' },
+              { Icoon: Lock,     tekst: 'Nederlandse B.V. · KvK 42138434', kleur: 'text-success-600' },
               { Icoon: Banknote, tekst: 'Tarief vooraf zichtbaar',    kleur: 'text-accent-600' },
             ].map(({ Icoon, tekst, kleur }) => (
               <div key={tekst} className="bg-surface rounded-md border border-border shadow-soft p-3">

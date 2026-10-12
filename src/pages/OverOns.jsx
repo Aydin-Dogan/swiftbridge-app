@@ -33,7 +33,7 @@ export default function OverOns() {
             <h2 className="text-xl font-semibold text-gray-900 pt-2">Waar wij voor staan</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Eerlijke prijs.</strong> Vaste, zichtbare kosten en een transparante wisselkoers — u ziet altijd precies wat de ontvanger krijgt.</li>
-              <li><strong>Snelheid.</strong> Express-overboekingen doorgaans binnen 5 minuten, ook in het weekend.</li>
+              <li><strong>Eerlijk over de levertijd.</strong> De precieze levertijd maken wij bekend zodra de uitbetaling in Turkije live is.</li>
               <li><strong>Uw taal.</strong> De app en onze hulp werken in vijf talen — en er komen er meer bij.</li>
               {/* Hier stond een vergelijking met het veiligheidsniveau van een
                   bank. Dat is geen bestaande norm en suggereert dat wij dezelfde
@@ -44,9 +44,9 @@ export default function OverOns() {
 
             <h2 className="text-xl font-semibold text-gray-900 pt-2">Eerlijk over wat wij zijn</h2>
             <p>
-              SwiftBridge is geen bank. De betaaldiensten worden geleverd via een door De Nederlandsche
-              Bank gelicentieerde EMI-partner, waarvoor wij als agent optreden — conform PSD2 en de Wwft.
-              Wij zeggen dit met opzet duidelijk: vertrouwen begint bij eerlijkheid over hoe het werkt.
+              SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan optreden als agent
+              van een instelling met een vergunning; de inschrijving als agent volgt zodra die
+              samenwerking rond is. Wij zeggen dit met opzet duidelijk: vertrouwen begint bij eerlijkheid over hoe het werkt.
             </p>
 
             <div className="bg-brand-50 border border-brand-200 rounded-xl p-5">

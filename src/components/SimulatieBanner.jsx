@@ -44,7 +44,7 @@ export default function SimulatieBanner({ kort = false }) {
           </h3>
           <p className="text-xs sm:text-sm text-amber-800 mt-1 leading-relaxed">
             {t('simulatie_banner_bericht') ||
-              'SwiftBridge draait momenteel in simulatie-modus tot onze EMI-partner-integratie live gaat. ' +
+              'SwiftBridge draait momenteel in simulatie-modus tot de samenwerking met een vergunninghoudende instelling rond is. ' +
               'Je iDEAL-betaling wordt NIET daadwerkelijk doorgestuurd naar de ontvanger — dit is alleen voor tests. ' +
               'Gebruik geen echt geld dat je niet wilt verliezen.'}
           </p>

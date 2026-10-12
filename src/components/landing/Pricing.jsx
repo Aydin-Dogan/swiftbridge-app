@@ -99,7 +99,7 @@ export default function Pricing({ embedded = false }) {
       highlight: true,
       fee: `${String(sbKosten.zichtbarePct).replace('.', ',')}%`,
       marge: 'inbegrepen',
-      snelheid: '< 5 min',
+      snelheid: 'Wordt nog bekendgemaakt',
       totaal: `€${sbKosten.klantBetaaltFee.toFixed(2).replace('.', ',')}`,
       ontvanger: `~₺${sbOntvangenFmt}`,
       badge: 'landing_pricing_aanbevolen',

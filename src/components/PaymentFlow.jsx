@@ -65,7 +65,7 @@ const BETAALMETHODEN = [
     label: 'SEPA bankoverboeking',
     iconType: 'icon', Icon: Euro,
     desc: 'Standaard bankoverboeking',
-    sub: '1-2 dagen · goedkoopste optie',
+    sub: 'Standaard · goedkoopste optie',
   },
   // ── BE klanten — vlag als logo ──
   {
@@ -434,7 +434,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-semibold text-sm">Express</span>
             </div>
             <div className={`text-[10px] tabular-nums ${snelheid === 'express' ? 'text-blue-100' : 'text-gray-500'}`}>
-              &lt;5 min · €{previewFee('express').toFixed(2)}
+              Express · €{previewFee('express').toFixed(2)}
             </div>
           </button>
           <button
@@ -451,7 +451,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <span className="font-semibold text-sm">Economy</span>
             </div>
             <div className={`text-[10px] tabular-nums ${snelheid === 'economy' ? 'text-success-100' : 'text-gray-500'}`}>
-              1-2 dagen · €{previewFee('economy').toFixed(2)} · zeer voordelig
+              Standaard · €{previewFee('economy').toFixed(2)} · zeer voordelig
             </div>
           </button>
         </div>
@@ -840,7 +840,7 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
           ['Mid-market koers (ECB)', `1 EUR = ${opbouw.midMarketKoers.toLocaleString('nl-NL', { maximumFractionDigits: 4 })}`],
           ['Onze wisselkoers', `1 EUR = ${opbouw.appliedRate.toLocaleString('nl-NL', { maximumFractionDigits: 4 })} ${valutaInfo.code}`],
           ['Ontvanger krijgt', formatBedrag(opbouw.ontvangenBedrag, valuta)],
-          ['Aankomsttijd', methode === 'ideal' ? '< 5 minuten' : '1–2 werkdagen'],
+          ['Aankomsttijd', 'Wordt gemeld na verwerking'],
         ].map(([label, value]) => (
           <div key={label} className="flex justify-between">
             <span className="text-gray-500 text-sm">{label}</span>
@@ -1115,7 +1115,7 @@ function StapVerzonden({ transactie, methode, onNieuw, token }) {
       <h2 className="font-display text-2xl font-medium text-success-700">Geld onderweg!</h2>
       <p className="text-ink-2 text-sm">
         {methode === 'ideal'
-          ? `Je iDEAL betaling is verwerkt. Het geld is binnen 5 minuten op de rekening in ${valutaInfo.land}.`
+          ? `Je iDEAL betaling is verwerkt. Wij verwerken je overboeking naar ${valutaInfo.land} en houden je op de hoogte.`
           : `Je SEPA overboeking is geregistreerd. Na ontvangst sturen we het geld door naar ${valutaInfo.land}.`}
       </p>
       <div className="rounded-md p-4 space-y-2 text-left bg-success-50 border border-success-100">
@@ -1186,7 +1186,7 @@ export default function PaymentFlow({ token }) {
   // Staat de welkomstactie nog open? Nodig om op het bevestigingsscherm de
   // bedragen te tonen die de server werkelijk toepast. Lukt het ophalen niet,
   // dan gaan we uit van 'nee': dan ziet de klant de normale servicekosten en
-  // valt de uitkomst mee, in plaats van dat we gratis beloven en toch rekenen.
+  // valt de uitkomst mee, in plaats van dat we kosteloos beloven en toch rekenen.
   const [gratisEersteTx, setGratisEersteTx] = useState(false);
   useEffect(() => {
     let weg = false;

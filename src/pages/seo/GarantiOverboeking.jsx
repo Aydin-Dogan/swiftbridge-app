@@ -9,13 +9,13 @@ export default function GarantiOverboeking() {
   return (
     <SeoLanding
       title="Geld overmaken naar Garanti BBVA in Türkiye"
-      description="Stuur geld vanuit Nederland naar een Garanti BBVA rekening. Binnen 5 minuten op de Turkse rekening via iDEAL. €4,95 vast + transparante koersmarge. IBAN-validatie + Wwft compliance."
+      description="Stuur geld vanuit Nederland naar een Garanti BBVA rekening en betaal met iDEAL. €4,95 vast + transparante koersmarge. IBAN-validatie ingebouwd."
       canonicalPath="/garanti-overboeking"
       heroEyebrow="Garanti BBVA"
       heroSubtitel="Garanti is een van de grootste banken van Türkiye. Wij ondersteunen alle Garanti-rekeningen, zowel particulier als zakelijk."
       voorbeeldBedrag={500}
       cta="Bereken Garanti-transfer"
-      bullets={['Particulier + zakelijk', 'IBAN-validatie ingebouwd', '<5 minuten levering']}
+      bullets={['Particulier + zakelijk', 'IBAN-validatie ingebouwd', 'Betalen met iDEAL']}
       content={
         <>
           <p>
@@ -45,9 +45,9 @@ export default function GarantiOverboeking() {
               de betaling. Doorgaans 30-60 seconden.
             </li>
             <li>
-              <strong>Wacht 5 minuten</strong> — de ontvanger krijgt een SMS van
-              Garanti dat het geld is binnengekomen. Wij sturen ook een WhatsApp/email
-              bevestiging als je opt-in hebt aangezet.
+              <strong>Wij verwerken je overboeking</strong> naar Turkije en houden je op
+              de hoogte. De precieze levertijd maken wij bekend zodra de uitbetaling in
+              Turkije live is.
             </li>
           </ol>
 
@@ -60,12 +60,11 @@ export default function GarantiOverboeking() {
             <li>Vaste transactiefee: €4,95 per overboeking</li>
             <li>Koersmarge: 1,2% (Basis), per ledenniveau dalend tot 0,6% (Black)</li>
             <li>Minimum overboekbedrag: €50 · maximum €5.000 per week</li>
-            <li>Voorbeeld: op €500 betaal je in totaal ongeveer €10,89</li>
+            <li>Voorbeeld: op €500 betaal je in totaal ongeveer €10,95 (€4,95 + 1,2% koersmarge)</li>
           </ul>
           <p>
-            Garanti zelf rekent geen extra kosten voor inkomende EUR→TRY transfers vanuit
-            de EU. De koers die we hanteren is de mid-market koers + ~1,2% verborgen
-            marge (iDEAL Express).
+            De koers die we hanteren is de middenkoers plus een koersmarge van 1,2% (Basis),
+            die u vooraf als apart bedrag op uw scherm ziet.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Zakelijke rekening (Garanti BBVA Ticari)</h2>

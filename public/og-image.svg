@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="SwiftBridge - Geld naar Turkiye in 5 minuten vanaf 0,8 procent">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="SwiftBridge - Geld naar Turkiye met vaste kosten en een transparante koers">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e3a8a"/>
@@ -41,27 +41,27 @@
     Geld naar Türkiye
   </text>
   <text x="90" y="400" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="78" font-weight="800" fill="url(#accent)" letter-spacing="-2">
-    in 5 minuten
+    met vaste kosten
   </text>
 
   <!-- Slogan / route -->
   <text x="90" y="470" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#bfdbfe">
-    NL → TR · vanaf 0,8% per overboeking
+    NL → TR · €4,95 vast + transparante koers
   </text>
 
   <!-- Trust badges (geen overstatement van DNB-licentie, geen fake ratings) -->
   <g transform="translate(90, 520)">
-    <!-- EMI-partner badge -->
-    <rect x="0" y="0" width="280" height="60" rx="30" fill="#ffffff" opacity="0.12" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
-    <text x="140" y="38" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">DNB-toezicht via EMI-partner</text>
+    <!-- KvK badge -->
+    <rect x="0" y="0" width="400" height="60" rx="30" fill="#ffffff" opacity="0.12" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">Nederlandse B.V. · KvK 42138434</text>
 
     <!-- iDEAL badge -->
-    <rect x="300" y="0" width="140" height="60" rx="30" fill="#ffffff" opacity="0.12" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
-    <text x="370" y="38" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">iDEAL</text>
+    <rect x="420" y="0" width="140" height="60" rx="30" fill="#ffffff" opacity="0.12" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="490" y="38" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">iDEAL</text>
 
     <!-- 256-bit badge -->
-    <rect x="460" y="0" width="200" height="60" rx="30" fill="#ffffff" opacity="0.12" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
-    <text x="560" y="38" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">256-bit versleuteld</text>
+    <rect x="580" y="0" width="200" height="60" rx="30" fill="#ffffff" opacity="0.12" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="680" y="38" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">256-bit versleuteld</text>
   </g>
 
   <!-- Decorative arrow NL → TR -->

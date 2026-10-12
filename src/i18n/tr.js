@@ -1,7 +1,7 @@
 export const tr = {
  // Algemeen
  app_naam:'SwiftBridge',
- slogan:'Denetim altında. Tümüyle şeffaf.',
+ slogan:'Güvenli. Tümüyle şeffaf.',
  laden:'İşleniyor...',
  opslaan:'Kaydet',
  annuleren:'İptal',
@@ -23,10 +23,10 @@ export const tr = {
  tab_profiel:'Profil',
 
  // Landing page
- landing_titel:'Dünyaya para gönder',
- landing_ondertitel:'5 dakikadan kısa sürede',
- landing_uitleg:'Bankanızdan daha ucuz. Şimşek hızında. 7/24 erişilebilir.',
- gratis_starten:'Ücretsiz başla →',
+ landing_titel:'Türkiye\'ye para gönder',
+ landing_ondertitel:'Şeffaf ücretlerle',
+ landing_uitleg:'Bankanızdan daha ucuz. Tümüyle şeffaf. 7/24 erişilebilir.',
+ gratis_starten:'Hemen başla →',
  download_app:'Uygulamayı indir',
  inloggen:'Giriş Yap',
  registreren:'Kayıt Ol',
@@ -44,9 +44,9 @@ export const tr = {
 
  // Dashboard
  dashboard_hallo:'Merhaba {naam}',
- dashboard_subtitel:'Dünyanın her yerine para gönder',
+ dashboard_subtitel:'Sevdiklerinize para gönderin',
  dashboard_kyc_vereist:'Kimlik doğrulama gerekli',
- dashboard_kyc_uitleg:'Para gönderebilmek için kimliğinizi doğrulayın. 5 dakikadan az sürer.',
+ dashboard_kyc_uitleg:'Para gönderebilmek için kimliğinizi doğrulayın. Bu yasal olarak zorunludur.',
  dashboard_live_koers:'Canlı döviz kuru',
  dashboard_swiftbridge_koers:'SwiftBridge kuru',
  dashboard_na_kosten:'masraflar sonrası (%2,2)',
@@ -68,7 +68,7 @@ export const tr = {
  dashboard_stats_bespaard:'Bankaya göre tasarruf',
  dashboard_stats_min:'dk',
  dashboard_quick_nieuwe_tx:'Yeni transfer',
- dashboard_quick_nieuwe_tx_sub:'<5 dakikada gönder',
+ dashboard_quick_nieuwe_tx_sub:'Sevdiklerinize para gönderin',
  dashboard_quick_koersen:'Kurları gör',
  dashboard_quick_koersen_sub:'Canlı döviz kurları',
  dashboard_quick_alert:'Uyarı oluştur',
@@ -85,11 +85,11 @@ export const tr = {
  dashboard_recent_leeg_bereken:'Önce hesapla',
  dashboard_recent_leeg_stap1:'Tutarı girin',
  dashboard_recent_leeg_stap2:'iDEAL ile öde',
- dashboard_recent_leeg_stap3:'Varış <5 dk',
+ dashboard_recent_leeg_stap3:'Durumu takip edin',
  dashboard_tips_titel:'Biliyor muydun?',
  dashboard_tip_1:'TRY kuru geçen haftaya göre %{pct} daha iyi — şimdi göndermek için ideal.',
  dashboard_tip_2:'Bankana göre şimdiye kadar {bedrag} tasarruf ettin.',
- dashboard_tip_3:'iDEAL ile aile genelde 5 dakika içinde parayı alır.',
+ dashboard_tip_3:'Kesin teslimat süresini, Türkiye\'ye ödemeler başladığında duyuracağız.',
  dashboard_tip_4:'Kur uyarısı kur daha iyi olduğunda seni otomatik haber verir.',
  dashboard_tip_5:'İşlem geçmişini istediğin zaman Profil → Verilerim üzerinden görebilirsin.',
  dashboard_notif_titel:'Bildirimler',
@@ -159,9 +159,9 @@ export const tr = {
  kyc_selfie:'Selfie',
  kyc_klaar:'Tamamlandı',
  kyc_goedgekeurd_titel:'Doğrulama tamamlandı!',
- kyc_goedgekeurd_uitleg:'Merhaba {naam}, kimliğiniz onaylandı. Artık dünyanın her yerine para gönderebilirsiniz.',
+ kyc_goedgekeurd_uitleg:'Merhaba {naam}, kimliğiniz onaylandı. Artık para gönderebilirsiniz.',
  kyc_in_behandeling_titel:'Başvuru işleniyor',
- kyc_in_behandeling_uitleg:'Merhaba {naam}, belgelerinizi kontrol ediyoruz. Genellikle 5 dakikadan kısa sürer.',
+ kyc_in_behandeling_uitleg:'Merhaba {naam}, belgelerinizi kontrol ediyoruz. Ekibimizden bir çalışan inceledikten sonra size haber vereceğiz.',
  kyc_afgewezen_titel:'Doğrulama reddedildi',
  kyc_afgewezen_uitleg:'Üzgünüz {naam}, kimliğinizi onaylayamadık. Tekrar deneyebilirsiniz.',
  kyc_geblokkeerd_titel:'Hesap engellendi',
@@ -189,7 +189,7 @@ export const tr = {
  uitloggen:'Çıkış yap',
 
  // Voettekst
- beveiligd_via_jwt:'EMI ortağımız aracılığıyla DNB denetimi · 256-bit şifreleme · Wwft uyumlu',
+ beveiligd_via_jwt:'Hollanda B.V. · KvK 42138434 · 256-bit şifreleme',
 
  // ── Profil: WhatsApp opt-in ──────────────────────────────────────────────
  profiel_whatsapp_titel:'Aile için WhatsApp onayı',
@@ -222,9 +222,9 @@ export const tr = {
  referral_hoe_stap1:'Kodunu ya da linkini WhatsApp veya e-posta ile arkadaşlarınla paylaş.',
  referral_hoe_stap2:'Arkadaşın kodunla kayıt olur ve ilk transferini yapar.',
  referral_hoe_stap3:'İkiniz de bir sonraki transferde €{bedrag} indirim kazanırsınız.',
- referral_share_whatsapp:'Selam! Yurt dışına para göndermek için SwiftBridge kullanıyorum — bankadan hızlı ve ucuz. Benim kodumla kayıt olursan €{bedrag} bonus kazanırsın: {url}',
+ referral_share_whatsapp:'Selam! Yurt dışına para göndermek için SwiftBridge kullanıyorum — uygun fiyatlı, tüm masraflar önceden görünür. Benim kodumla kayıt olursan €{bedrag} bonus kazanırsın: {url}',
  referral_share_email_onderwerp:'SwiftBridge\'i dene — €5 bonus kazan',
- referral_share_email_tekst:'Selam!\n\nYurt dışına hızlı ve ucuz para göndermek için SwiftBridge kullanıyorum. Linkimle kayıt olursan ilk transferinde €{bedrag} bonus, ben de kazanıyorum!\n\n{url}\n\nSelamlar,',
+ referral_share_email_tekst:'Selam!\n\nYurt dışına uygun fiyatla, tüm masrafları önceden görerek para göndermek için SwiftBridge kullanıyorum. Linkimle kayıt olursan ilk transferinde €{bedrag} bonus, ben de kazanıyorum!\n\n{url}\n\nSelamlar,',
  registreer_referral_label:'Seni davet eden var mı? (isteğe bağlı)',
  registreer_referral_placeholder:'ABCD1234',
  registreer_referral_check:'Kod kontrol ediliyor...',
@@ -267,16 +267,16 @@ export const tr = {
  landing_nav_faq:'SSS',
 
  // Hero
- landing_pill_route:'Hollanda → tüm dünya',
- landing_pill_wereldwijd:'Canlı kurlar · dünya çapında {landen}+ para birimi',
+ landing_pill_route:'Hollanda → Türkiye',
+ landing_pill_wereldwijd:'Canlı kurlar · {landen}+ para birimi',
  landing_hero_titel_1:'Sevdiklerinize para gönderin,',
- landing_hero_titel_2:'dünyanın her yerine',
- landing_hero_subline:'{landen}+ para birimi için canlı döviz kurları. Dünya çapında büyüyen bir ülke ağına gönderin — sürekli yenileri ekleniyor. Adil tarifeler, gizli masraf yok.',
- landing_hero_cta_primary:'Ücretsiz başla',
+ landing_hero_titel_2:'önce Türkiye\'ye',
+ landing_hero_subline:'{landen}+ para birimi için canlı döviz kurları. Türkiye ile başlıyoruz; diğer ülkeler daha sonra gelecek. Adil tarifeler, gizli masraf yok.',
+ landing_hero_cta_primary:'Hemen başla',
  landing_hero_cta_secondary:'Nasıl çalıştığını gör',
  // F23 fix (Cursor review): EMI ortağı qualifier eklendi
- landing_trust_dnb:'Wwft · DNB EMI ortağı üzerinden',
- landing_trust_ideal:'iDEAL ve iDIN',
+ landing_trust_dnb:'Hollanda B.V. · KvK 42138434',
+ landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit şifreli',
  landing_trust_reviews:'4,8 — 1.240 yorum',
 
@@ -295,25 +295,25 @@ export const tr = {
  landing_features_eyebrow:'Neden SwiftBridge',
  landing_features_titel:'Hızlı, şeffaf ve güvenli',
  landing_features_subtitel:'Sınır ötesinde sevdiklerine destek olan herkes için — pahalı banka transferlerinin acısını bilen insanlar tarafından geliştirildi.',
- landing_feature_snel_titel:'Şimşek hızında',
- landing_feature_snel_tekst:'Sevdiklerinizin hesabına 5 dakika içinde para — hafta sonları ve mesai dışı dahil, canlı koridorlarımızda.',
+ landing_feature_snel_titel:'Önce Türkiye',
+ landing_feature_snel_tekst:'Türkiye ile başlıyoruz; diğer ülkeler daha sonra gelecek. Kesin teslimat süresini, Türkiye\'ye ödemeler başladığında duyuracağız.',
  landing_feature_goedkoop_titel:'Adil fiyatlı',
  landing_feature_goedkoop_tekst:'Sabit €4,95 ücret ve %1,2\'den başlayan şeffaf kur marjı — üyelik seviyesine göre %0,6\'ya düşer. Her şey önceden görünür.',
- landing_feature_veilig_titel:'Güvenli ve denetimli',
- landing_feature_veilig_tekst:'EMI ortağımız aracılığıyla DNB denetiminde, her alıcı için yaptırım listesi kontrolü, iDIN kimlik doğrulama.',
+ landing_feature_veilig_titel:'Güvenli ve şeffaf',
+ landing_feature_veilig_tekst:'Hollanda B.V. · KvK 42138434. Her alıcı için yaptırım listesi kontrolü; pasaportunuz veya kimlik kartınızla kimlik kontrolü.',
 
  // How it works
  landing_how_eyebrow:'Nasıl çalışır',
- landing_how_titel:'4 adımda dünyaya gönderin',
- landing_how_subtitel:'Hızlı kayıt, tek seferlik kimlik doğrulama — sonrasında saniyeler içinde para gönder.',
+ landing_how_titel:'4 adımda Türkiye\'ye gönderin',
+ landing_how_subtitel:'Hızlı kayıt, tek seferlik kimlik doğrulama — sonrasında kolayca para gönder.',
  landing_step_account_titel:'Hesabını oluştur',
  landing_step_account_tekst:'2 dakikada kayıt — sadece e-posta ve şifre.',
- landing_step_idin_titel:'iDIN ile kimlik doğrula',
- landing_step_idin_tekst:'Kendi Hollanda bankan üzerinden hızlı ve güvenli — tarama veya selfie yok.',
+ landing_step_idin_titel:'Pasaport veya kimlik kartıyla kimlik kontrolü',
+ landing_step_idin_tekst:'Pasaportunun veya Avrupa kimlik kartının bir fotoğrafını ve bir selfie yüklersin; ekibimizden bir çalışan bunu inceler. Para gönderebilmen için bu yasal olarak zorunludur.',
  landing_step_ideal_titel:'iDEAL ile öde',
  landing_step_ideal_tekst:'Tutarı gir, banka uygulamandan tek dokunuşla onayla.',
  landing_step_ontvangen_titel:'Aile parayı alır',
- landing_step_ontvangen_tekst:'Para 5 dakika içinde alıcının banka hesabında. WhatsApp bildirimi dahil.',
+ landing_step_ontvangen_tekst:'Transferini Türkiye\'ye işleme alırız ve seni haberdar ederiz. WhatsApp bildirimi dahil.',
 
  // Tarife kartı bölümü
  tariefkaart_eyebrow:'Tarifelerimiz',
@@ -357,40 +357,40 @@ export const tr = {
 
  // Country support
  landing_landen_eyebrow:'Varış noktaları',
- landing_landen_titel:'Bugün 7 ülkede canlı',
- landing_landen_subtitel:'Dünya çapında {landen}+ para birimi için canlı kurlar — Avrupa\'dan Asya\'ya, Afrika\'dan Amerika\'lara. Yeni ödeme ülkeleri düzenli olarak ekleniyor.',
+ landing_landen_titel:'Türkiye ile başlıyoruz',
+ landing_landen_subtitel:'Türkiye ile başlıyoruz; diğer ülkeler daha sonra gelecek.',
  landing_landen_banken:'banka',
 
  // FAQ
  landing_faq_eyebrow:'Sıkça sorulan sorular',
  landing_faq_titel:'Sorularınızın cevapları',
- landing_faq_subtitel:'Aradığını bulamadın mı? Bize mail at — 24 saat içinde dönüş yapıyoruz.',
+ landing_faq_subtitel:'Aradığını bulamadın mı? Bize mail at — mümkün olan en kısa sürede, kendi dilinde yanıt veriyoruz.',
  landing_faq_snelheid_vraag:'Para alıcıya ne kadar sürede ulaşır?',
- landing_faq_snelheid_antwoord:'Çoğu durumda iDEAL ödemenin onayından sonra 5 dakika içinde. Büyük tutarlar veya mesai dışı saatlerde en fazla 1 saate kadar uzayabilir. İlk transferde KYC doğrulamasından dolayı biraz daha sürebilir.',
+ landing_faq_snelheid_antwoord:'Kesin teslimat süresini, Türkiye\'ye ödemeler başladığında duyuracağız. İlk transferden önce kimliğinizi doğrulamamız gerekir.',
  landing_faq_kosten_vraag:'Gerçek maliyet nedir?',
  landing_faq_kosten_antwoord:'Transfer başına sabit €4,95 işlem ücreti, artı şeffaf %1,2 kur marjı (Basis) — üyelik seviyesine göre %0,6\'ya (Black) düşer. Minimum transfer €50. Abonelik yok, gizli maliyet yok.',
  landing_faq_veiligheid_vraag:'Param SwiftBridge\'de güvende mi?',
- landing_faq_veiligheid_antwoord:'Evet. Ödemeler DNB lisanslı bir EMI ortağı aracılığıyla yürütülür (DNB denetimi altında acente modeli). Her alıcıyı uluslararası yaptırım listesinde kontrol ederiz, 256-bit şifreleme kullanırız ve verilerinizi GDPR ve Wwft uyarınca saklarız.',
+ landing_faq_veiligheid_antwoord:'SwiftBridge bir banka değildir ve kendi faaliyet iznine sahip değildir. Faaliyet izni bulunan bir kuruluşun temsilcisi (agent) olarak çalışacağız; temsilci kaydımız bu iş birliği kesinleştiğinde yapılacaktır. Her alıcıyı uluslararası yaptırım listesinde kontrol ederiz, 256-bit şifreleme kullanırız ve verilerinizi GDPR ve Wwft uyarınca saklarız.',
  landing_faq_banken_vraag:'Hangi bankalar destekleniyor?',
- landing_faq_banken_antwoord:'Ödeme yaptığımız ülkelerdeki tüm büyük bankalar ve popüler dijital cüzdanlar. Gönderirken alıcının ülkesini seçin, kullanılabilir banka ve cüzdanları anında görün.',
- landing_faq_idin_vraag:'iDIN kimlik doğrulaması nedir?',
- landing_faq_idin_antwoord:'iDIN, Hollanda bankalarının resmi kimlik doğrulama sistemidir. Kendi Hollanda banka uygulaman üzerinden doğrularsın — pasaport taraması yok, selfie yok, bekleme yok. Bir kez doğrulandı mı, tekrar gerekmez.',
+ landing_faq_banken_antwoord:'Türkiye ile başlıyoruz; diğer ülkeler daha sonra gelecek. Hangi bankalara ödeme yapılabileceğini, Türkiye\'ye ödemeler başladığında duyuracağız.',
+ landing_faq_idin_vraag:'Kimliğimi nasıl kontrol ediyorsunuz?',
+ landing_faq_idin_antwoord:'Pasaportunuzun veya Avrupa kimlik kartınızın bir fotoğrafını ve bir selfie yüklersiniz; ekibimizden bir çalışan bunu inceler. Para gönderebilmeniz için bu yasal olarak zorunludur.',
  landing_faq_contact_vraag:'Sizinle nasıl iletişime geçebilirim?',
- landing_faq_contact_antwoord:'support@swiftbridge.nl adresine mail atın. Birden fazla dilde yardımcı oluyoruz ve mesai saatlerinde genellikle 4 saat içinde yanıt veriyoruz.',
+ landing_faq_contact_antwoord:'support@swiftbridge.nl adresine mail atın. Size mümkün olan en kısa sürede, kendi dilinizde yanıt veriyoruz.',
 
  // FAQ — Sprint 3: 6 yeni long-tail SEO sorusu
  landing_faq_limieten_vraag:'Aylık veya günlük limitler nelerdir?',
- landing_faq_limieten_antwoord:'KYC onayından sonraki ilk 90 günde haftalık €5.000 limit geçerlidir. Sonrasında işlem geçmişin ve Wwft risk profilin temelinde otomatik artırılır. Tek seferlik daha büyük bir tutar göndermek istiyorsan? Destek ile iletişime geç — talep üzerine işlem başına maksimum €25.000\'e kadar daha yüksek bir limit aktif edebiliriz.',
+ landing_faq_limieten_antwoord:'KYC onayından sonraki ilk 90 günde haftalık €5.000 limit geçerlidir. Sonrasında işlem geçmişin ve Wwft risk profilin temelinde otomatik artırılır. Transfer başına üst sınır €5.000\'dir.',
  landing_faq_wise_vergelijk_vraag:'SwiftBridge Wise ile nasıl karşılaştırılır?',
- landing_faq_wise_vergelijk_antwoord:'Wise küresel ve 1.000+ para birimi işliyor. SwiftBridge, doğrudan banka bağlantılarıyla odaklı bir ödeme ülkesi setine yoğunlaşıyor — bu sayede genellikle daha hızlı (iDEAL ile <5 dk) ve kişisel müşteri hizmeti sunuyor. €500 işlemde tarifemiz Wise\'ın €1-2 üstünde — bu ek maliyetle daha fazla hız ve daha iyi destek alıyorsun.',
+ landing_faq_wise_vergelijk_antwoord:'Wise küresel ve 1.000+ para birimi işliyor. SwiftBridge, Türkiye ile başlıyor; diğer ülkeler daha sonra gelecek. Kendi dilinde kişisel müşteri hizmetine odaklanıyoruz. Wise birçok tutarda daha ucuz; bizde kendi dilinde kişisel destek alırsın ve tüm masrafları önceden görürsün.',
  landing_faq_annuleren_vraag:'Bir işlemi iptal edebilir veya geri alabilir miyim?',
  landing_faq_annuleren_antwoord:'iDEAL ödemesi tamamlanmadan önce: evet, ödeme yapmazsan işlem 1 saat içinde otomatik olarak iptal olur. Ödeme sonrası ancak çıkış öncesi (\'işleniyor\' durumu): tutar alıcının bankasına doğru yolda olduğu için genellikle artık değil. Tamamlandıktan sonra: yalnızca alıcıya iade talebi yoluyla. İptal şansını maksimuma çıkarmak için ödeme sonrası 30 dakika içinde destek ile iletişime geç.',
  landing_faq_koers_wijzigt_vraag:'Ödememle sırasında döviz kuru değişirse ne olur?',
  landing_faq_koers_wijzigt_antwoord:'Kur, ödeme anında değil, işlemi onayladığında sabitlenir. Onaydan itibaren gösterilen kur ile iDEAL ödemesini tamamlamak için 15 dakikan var. Daha uzun mu sürüyor? Güncel kurla yeniden hesaplıyoruz ve işlem yapılmadan önce seni bilgilendiriyoruz.',
  landing_faq_feestdagen_vraag:'SwiftBridge hafta sonu ve resmi tatillerde çalışır mı?',
- landing_faq_feestdagen_antwoord:'Evet — altyapımız hafta sonları dahil 7/24 çalışır. Yerel bankalar resmi tatillerde işlemleri biraz daha yavaş işleyebilir (<5 dakika yerine 1 iş gününe kadar). Tatil civarında bir transfer planlarsan önceden bildirim gönderiyoruz.',
+ landing_faq_feestdagen_antwoord:'Uygulamayı ve web sitesini 7/24 kullanabilirsin. Kesin teslimat süresini, Türkiye\'ye ödemeler başladığında duyuracağız.',
  landing_faq_belgie_duitsland_vraag:'SwiftBridge Belçika veya Almanya\'dan da çalışır mı?',
- landing_faq_belgie_duitsland_antwoord:'Evet. Belçika\'dan Bancontact, Almanya\'dan Sofort ve SEPA çalışır. Alıcının ödeme yaptığımız ülkelerden birinde hesabı olmalı. Fiyatlar aynı: sabit €4,95 artı şeffaf kur marjı.',
+ landing_faq_belgie_duitsland_antwoord:'Evet. Belçika\'dan Bancontact, Almanya\'dan Sofort ve SEPA çalışır. Türkiye ile başlıyoruz; diğer ülkeler daha sonra gelecek. Fiyatlar aynı: sabit €4,95 artı şeffaf kur marjı.',
 
  // ── Hesap makinesi sayfası (hesap gerekmeden) — Sprint 4 ─────────────────
  calc_titel:'Transferini hesapla',
@@ -404,7 +404,7 @@ export const tr = {
  calc_servicekosten:'Hizmet ücreti',
  calc_levertijd:'Teslimat süresi',
  calc_cta_doorgaan:'Hesap oluştur ve gönder',
- calc_trust_dnb:'EMI ortağı aracılığıyla DNB denetimi altında',
+ calc_trust_dnb:'Hollanda B.V. · KvK 42138434',
  calc_trust_geen_verplichting:'Taahhüt yok — yalnızca son adımda kaydolun',
  calc_vergelijk_titel:'Ödeme yöntemlerini karşılaştır',
  calc_vergelijk_kol_methode:'Yöntem',
@@ -476,7 +476,7 @@ export const tr = {
  status_auto_refresh:'her 30 sn otomatik yenileme',
  status_refresh:'Yenile',
  status_help_title:'Sorun mu yaşıyorsunuz?',
- status_help_desc:'Burada gösterilmeyen bir sorun yaşıyorsanız bize bildirin. Genellikle bir saat içinde yanıt veriyoruz.',
+ status_help_desc:'Burada gösterilmeyen bir sorun yaşıyorsanız bize bildirin. Size mümkün olan en kısa sürede, kendi dilinizde yanıt veriyoruz.',
 
  // ── Yapışkan mobil CTA ───────────────────────────────────────────────────
  sticky_cta_label:'Transfere başla',
@@ -558,9 +558,9 @@ export const tr = {
  tour_naar_stap:'Adıma git',
 
  // ── Footer güven satırı ──────────────────────────────────────────────────
- footer_trust_dnb_label:'DNB denetimi',
- footer_trust_dnb_sub:'EMI ortağı üzerinden — Wwft uyumlu',
- footer_trust_wwft_label:'KVKK & AML',
+ footer_trust_dnb_label:'Hollanda B.V.',
+ footer_trust_dnb_sub:'KvK 42138434',
+ footer_trust_wwft_label:'Kimlik kontrolü zorunlu',
  footer_trust_wwft_sub:'Kişisel veri korumalı, yaptırım taraması',
  footer_trust_ssl_label:'256-bit SSL/TLS',
  footer_trust_ssl_sub:'Uçtan uca şifreleme, girişte MFA',
@@ -570,20 +570,20 @@ export const tr = {
 
  // CTA
  landing_cta_titel:'Başlamaya hazır mısın?',
- landing_cta_subtitel:'2 dakikada kayıt ol ve ilk transferini bugün gönder.',
- landing_cta_primary:'Ücretsiz hesap oluştur',
+ landing_cta_subtitel:'2 dakikada kayıt ol ve transferini hesapla.',
+ landing_cta_primary:'Hesap oluştur',
  landing_cta_secondary:'Giriş Yap',
  landing_cta_disclaimer:'Abonelik yok. Gizli maliyet yok. İstediğin zaman iptal et.',
  // CTA trust-bullets
- landing_cta_bullet_snel_titel:'<5 dakika',
- landing_cta_bullet_snel_sub:'TR hesabına para',
- landing_cta_bullet_veilig_titel:'DNB denetimi altında',
- landing_cta_bullet_veilig_sub:'EMI ortağı aracılığıyla',
+ landing_cta_bullet_snel_titel:'Önce Türkiye',
+ landing_cta_bullet_snel_sub:'Diğer ülkeler daha sonra',
+ landing_cta_bullet_veilig_titel:'Hollanda B.V.',
+ landing_cta_bullet_veilig_sub:'KvK 42138434',
  landing_cta_bullet_geen_account_titel:'Hesap gerekmez',
  landing_cta_bullet_geen_account_sub:'Önce hesapla, sonra kaydol',
 
  // Footer
- landing_footer_slogan:'Sevdiklerinize dünya çapında hızlı ve ucuz para transferi — canlı kurlar, adil tarifeler, canlı koridorlarımızda 5 dakika içinde hesapta.',
+ landing_footer_slogan:'Sevdiklerinize uygun maliyetli para transferi — canlı kurlar, adil tarifeler. Türkiye ile başlıyoruz; diğer ülkeler daha sonra gelecek.',
  landing_footer_product:'Ürün',
  landing_footer_juridisch:'Yasal',
  landing_footer_contact:'İletişim',
@@ -591,7 +591,7 @@ export const tr = {
  landing_footer_privacy:'Gizlilik politikası (GDPR)',
  landing_footer_aml:'AML politikası',
  landing_footer_rechten:'Tüm hakları saklıdır.',
- landing_footer_dnb_disclaimer:'SwiftBridge B.V. beta aşamasındadır. Ödeme hizmetleri DNB lisanslı bir EMI ortağı aracılığıyla sunulur (acente modeli). Şu anda kendi DNB lisansımız yoktur.',
+ landing_footer_dnb_disclaimer:'SwiftBridge B.V. beta aşamasındadır. SwiftBridge bir banka değildir ve kendi faaliyet iznine sahip değildir. Faaliyet izni bulunan bir kuruluşun temsilcisi (agent) olarak çalışacağız; temsilci kaydımız bu iş birliği kesinleştiğinde yapılacaktır.',
 
  // ── Onboarding sihirbazı (4 adım) ──────────────────────────────────────────
  onb_stap_van_totaal:'Adım {huidige} / {totaal}',
@@ -603,9 +603,9 @@ export const tr = {
 
  // Adım 1 — Hoş geldin
  onb_welkom_titel:'SwiftBridge\'e hoş geldin, {naam}!',
- onb_welkom_subtitel:'Dünyanın her yerine para göndermek için hesabını 2 dakikada hazırlayalım.',
+ onb_welkom_subtitel:'Para göndermek için hesabını 2 dakikada hazırlayalım.',
  onb_welkom_punt_1:'Hesap oluşturuldu',
- onb_welkom_punt_2:'Kimliğini doğrula (1 dakika, Hollanda bankan üzerinden)',
+ onb_welkom_punt_2:'Kimliğini doğrula (pasaport veya kimlik kartı ile)',
  onb_welkom_punt_3:'İlk transferini sabit ücret ödemeden gönder (en çok €800)',
  onb_welkom_cta:'Hadi başlayalım',
 
@@ -614,7 +614,7 @@ export const tr = {
  onb_kyc_subtitel:'Yasal olarak zorunlu (Wwft) — kendi bankan üzerinden 60 saniye sürer.',
  onb_kyc_via_bank:'Hollanda bankanla çalışır',
  onb_kyc_waarom_titel:'Neden gerekli?',
- onb_kyc_reden_1:'EMI ortağı aracılığıyla DNB denetimi altında tüm kullanıcıları doğrulamamız gerekir (kara para önleme yasası).',
+ onb_kyc_reden_1:'Kara para aklamanın önlenmesi yasası gereği tüm kullanıcıların kimliğini doğrulamamız gerekir.',
  onb_kyc_reden_2:'iDIN güvenlidir — şifre yok, sadece bankan kimliğini doğrular.',
  onb_kyc_reden_3:'Verilerin bizimle kalır (GDPR uyumlu, üçüncü taraflara satılmaz).',
  onb_kyc_start_idin:'iDIN doğrulamasını başlat',
@@ -768,16 +768,16 @@ export const tr = {
  support_invoer_label:'Destek için mesajınızı yazın',
  support_verstuur:'Mesaj gönder',
  support_aan_het_typen:'Destek yazıyor',
- support_bericht_ontvangen:'Mesaj alındı — 2 saat içinde yanıt vereceğiz.',
+ support_bericht_ontvangen:'Mesaj alındı — size mümkün olan en kısa sürede, kendi dilinizde yanıt vereceğiz.',
  support_offline_fallback:'Mesajınız kaydedildi. Şu an çevrimiçi yanıt veremiyoruz — hızlı yardım için support@swiftbridge.nl adresine e-posta gönderin.',
  support_footer_mail:'Veya e-posta gönderin:',
  support_ongelezen:'{aantal} okunmamış mesaj',
  support_qa_kyc_vraag:'KYC belgelerimi nasıl yüklerim?',
- support_qa_kyc_antwoord:'Doğrulama sekmesine gidin ve"Belge tara"düğmesine tıklayın. Gerekenler:\n• Pasaport veya kimlik kartı (geçerli)\n• İkamet kanıtı (en fazla 3 ay eski)\n• Onay için selfie\n\nTarama 5 dakikadan az sürer ve anında geri bildirim alırsınız.',
+ support_qa_kyc_antwoord:'Doğrulama sekmesine gidin ve"Belge tara"düğmesine tıklayın. Gerekenler:\n• Pasaport veya kimlik kartı (geçerli)\n• İkamet kanıtı (en fazla 3 ay eski)\n• Onay için selfie\n\nEkibimizden bir çalışan belgelerinizi inceler ve sonucu size bildiririz.',
  support_qa_kosten_vraag:'Para transferinin maliyeti nedir?',
  support_qa_kosten_antwoord:'SwiftBridge transfer başına sabit €4,95 ücret artı şeffaf kur marjı alır:\n• Basis: %1,2\n• Plus: %1,0\n• Premium: %0,8\n• Black: %0,6\n\nMinimum transfer €50. Gizli maliyet yok.',
  support_qa_status_vraag:'Param henüz gelmedi — şimdi ne yapmalıyım?',
- support_qa_status_antwoord:'Endişelenmeyin — önce Panel\'den durumu kontrol edin. Referans numarasını (TX-XXXXXX) bir sonraki mesajda gönderin, sizin için hemen kontrol edeyim.\n\n• Express: < 5 dk\n• Economy: 2 iş gününe kadar',
+ support_qa_status_antwoord:'Endişelenmeyin — önce Panel\'den durumu kontrol edin. Referans numarasını (TX-XXXXXX) bir sonraki mesajda gönderin, sizin için hemen kontrol edeyim.\n\nKesin teslimat süresini, Türkiye\'ye ödemeler başladığında duyuracağız.',
 
  // ── E-posta doğrulama (genel /verifieer-email sayfası + dashboard banner) ──
  verify_email_geen_token:'Bağlantıda doğrulama kodu bulunamadı. Yeni bir bağlantı talep edin.',
@@ -1106,12 +1106,12 @@ export const tr = {
  // ── F37: simülasyon modu banner (EMI-partner canlıya geçene kadar) ──────
  simulatie_banner_kort:'Test modu',
  simulatie_banner_titel:'Test modu: gerçek transfer yok',
- simulatie_banner_bericht:'SwiftBridge, EMI-partner entegrasyonumuz canlıya geçene kadar simülasyon modunda çalışıyor. iDEAL ödemeniz aslında alıcıya iletilmeyecek — bu yalnızca test içindir. Kaybetmeyi göze alamayacağınız parayı kullanmayın.',
+ simulatie_banner_bericht:'SwiftBridge, faaliyet izni bulunan bir kuruluşla iş birliği kesinleşene kadar simülasyon modunda çalışıyor. iDEAL ödemeniz aslında alıcıya iletilmeyecek — bu yalnızca test içindir. Kaybetmeyi göze alamayacağınız parayı kullanmayın.',
 
  //"Yakında"koridorları için bekleme listesi modalı (WL-2)
  wachtlijst_titel:'{land} ülkesine ödeme yakında',
  wachtlijst_subtitel:'{valuta} para birimi — ödeme koridoru hazırlanıyor',
- wachtlijst_uitleg:'Yeni koridorları adım adım yayınlıyoruz. E-posta adresinizi bekleme listesine ekleyin, bu transfer doğrudan yapılabildiğinde size kişisel olarak haber verelim — genellikle birkaç hafta içinde.',
+ wachtlijst_uitleg:'Yeni koridorları adım adım yayınlıyoruz. E-posta adresinizi bekleme listesine ekleyin, bu transfer doğrudan yapılabildiğinde size kişisel olarak haber verelim.',
  wachtlijst_email_label:'Bildirim için e-posta adresi',
  wachtlijst_cta:'Bekleme listesine ekle',
  wachtlijst_annuleer:'İptal',
@@ -1516,7 +1516,7 @@ export const tr = {
  bv_pagina_ingetrokken:'Bu ödeme talebi geri çekildi.',
  bv_pagina_fout:'Bir seyler ters gitti. Tekrar deneyin.',
  bv_pagina_voetnoot:'iDEAL ile güvenli ödeme. SwiftBridge hesabi gerekmez.',
- bv_pagina_disclaimer:'SwiftBridge bir banka degildir; ödeme hizmetleri DNB lisansli bir EMI ortagi araciligiyla sunulur.',
+ bv_pagina_disclaimer:'SwiftBridge bir banka değildir ve kendi faaliyet iznine sahip değildir. Faaliyet izni bulunan bir kuruluşun temsilcisi (agent) olarak çalışacağız; temsilci kaydımız bu iş birliği kesinleştiğinde yapılacaktır.',
  // SB-ASSIST: rekening-context in de chat
  support_context_disclosure:'Asistan, size daha hızlı yardımcı olmak için hesap bilgilerinizi görebilir.',
  // TX-DOEL: doel van de uitgave
@@ -1543,7 +1543,7 @@ export const tr = {
  kyb_product_uitleg:'Şirketinizden, kendi kurumsal banka hesabınız üzerinden uluslararası ödemeler yapmak için bir kurumsal SwiftBridge profili. Ödeme hesabı yok, IBAN yok, kart yok.',
  kyb_prijs_regel:'Transfer başına EUR 4,95 tutarında değişmeyen bir bedel artı üyelik seviyenize göre bir döviz kuru marjı (%1,2\'den başlayıp %0,6\'ya kadar). Bir transferi onaylamadan önce kesin maliyeti her zaman görürsünüz.',
  kyb_limieten_regel:'Onaydan sonra standart limitler geçerlidir (transfer başına ve haftalık en az EUR 50, en fazla EUR 5.000). Daha yüksek kurumsal limitleri sizinle ayrıca belirleriz.',
- kyb_disclaimer_emi:'SwiftBridge bir banka değildir ve kendine ait bir DNB lisansı yoktur; ödeme hizmetleri, PSD2 ve Hollanda Wwft yasasına uygun olarak DNB lisanslı bir EMI ortağı (acente modeli) üzerinden sunulur.',
+ kyb_disclaimer_emi:'SwiftBridge bir banka değildir ve kendi faaliyet iznine sahip değildir. Faaliyet izni bulunan bir kuruluşun temsilcisi (agent) olarak çalışacağız; temsilci kaydımız bu iş birliği kesinleştiğinde yapılacaktır.',
  kyb_intro_kop:'Yapacaklarınız',
  kyb_intro_tekst:'Yedi kısa adımda bize şirketinizi, kendinizi ve SwiftBridge\'i nasıl kullanmak istediğinizi anlatırsınız. İstediğiniz an ara verebilirsiniz; cevaplarınızı saklarız.',
  kyb_intro_nodig_kop:'İhtiyacınız olanlar',

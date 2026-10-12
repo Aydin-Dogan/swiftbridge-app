@@ -31,9 +31,9 @@ const SNEL_BEDRAGEN = [100, 250, 500, 1000, 2500];
 
 // Methodes — alleen werkende (Klarna pas terug als Mollie 'm activeert)
 const METHODEN = [
-  { id: 'ideal', Icon: Bank, label: 'iDEAL', snelheid: 'express', sub: 'Aanrader · <5 min' },
-  { id: 'card', Icon: Card, label: 'Creditcard', snelheid: 'express', sub: 'Visa/Mastercard · <5 min' },
-  { id: 'sepa', Icon: Bank, label: 'SEPA', snelheid: 'economy', sub: 'Goedkoopst · 1-2 dagen' },
+  { id: 'ideal', Icon: Bank, label: 'iDEAL', snelheid: 'express', sub: 'Aanrader' },
+  { id: 'card', Icon: Card, label: 'Creditcard', snelheid: 'express', sub: 'Visa/Mastercard' },
+  { id: 'sepa', Icon: Bank, label: 'SEPA', snelheid: 'economy', sub: 'Goedkoopst' },
 ];
 
 export default function Calculator() {
@@ -299,7 +299,7 @@ export default function Calculator() {
                     {t('calc_levertijd')}
                   </dt>
                   <dd className="font-semibold text-ink-1">
-                    {methodeInfo.snelheid === 'express' ? '< 5 min' : '1-2 dagen'}
+                    {methodeInfo.snelheid === 'express' ? 'Express' : 'Standaard'}
                   </dd>
                 </div>
               </dl>
@@ -366,7 +366,7 @@ export default function Calculator() {
                         {valutaInfo.symbool}{(v.ontvangen || 0).toLocaleString(valutaInfo.locale, { minimumFractionDigits: valutaInfo.decimals, maximumFractionDigits: valutaInfo.decimals })}
                       </td>
                       <td className="px-4 py-3 text-right text-ink-3 hidden sm:table-cell">
-                        {v.snelheid === 'express' ? '< 5 min' : '1-2 dgn'}
+                        {v.snelheid === 'express' ? 'Express' : 'Standaard'}
                       </td>
                     </tr>
                   );

@@ -106,9 +106,8 @@ export default function Footer() {
               {t('landing_footer_slogan')}
             </p>
             <div className="flex flex-wrap gap-2">
-              <Badge>DNB</Badge>
-              <Badge>Wwft</Badge>
-              <Badge>AVG / GDPR</Badge>
+              <Badge>Nederlandse B.V.</Badge>
+              <Badge>KvK 42138434</Badge>
             </div>
           </div>
 

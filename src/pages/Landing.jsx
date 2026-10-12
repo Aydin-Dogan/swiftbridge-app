@@ -60,28 +60,30 @@ export default function Landing() {
       <div className="sr-only">
         <h2>SwiftBridge — Goedkoop alternatief voor Wise, Remitly en Western Union</h2>
         <p>
-          SwiftBridge is een snelle en transparante manier om internationaal geld
-          over te maken vanuit Nederland. Eén vaste fee van €4,95 per overboeking
-          plus een transparante koersmarge vanaf 1,2% (lager per ledenniveau, tot
-          0,6%), en betaling via iDEAL, creditcard, PayPal of SEPA. Het bedrag
-          staat doorgaans binnen 5 minuten op de bankrekening van de ontvanger,
-          bij alle grote banken in onze uitbetaallanden.
+          SwiftBridge is een transparante manier om geld over te maken vanuit
+          Nederland. Te beginnen met Turkije; andere landen volgen later. Eén vaste
+          fee van €4,95 per overboeking plus een transparante koersmarge vanaf 1,2%
+          (lager per ledenniveau, tot 0,6%), en betaling via iDEAL, creditcard,
+          PayPal of SEPA. De precieze levertijd maken wij bekend zodra de
+          uitbetaling in Turkije live is.
         </p>
         <h2>Waarom SwiftBridge een goed Wise- en Remitly-alternatief is</h2>
         <ul>
           <li>Eén vaste fee van €4,95 plus transparante koersmarge (lager per ledenniveau)</li>
-          <li>Onder DNB-toezicht via EMI-partner (Wwft-compliant)</li>
-          <li>Wwft- en AVG-compliant, EU-sanctielijst screening op iedere ontvanger</li>
+          <li>Nederlandse B.V. · KvK 42138434</li>
+          <li>Identiteitscontrole verplicht, EU-sanctielijst screening op iedere ontvanger</li>
           <li>256-bit encryptie en multi-factor authenticatie</li>
           <li>Volledige tariefkaart vooraf zichtbaar — geen verborgen kosten</li>
         </ul>
         <h2>Veelgestelde vragen — internationaal geld sturen</h2>
         <p>
-          Hoe snel komt het geld aan bij de ontvanger? Doorgaans binnen 5 minuten
-          via iDEAL. Wat zijn de kosten? Eén vaste fee van €4,95 plus een
-          transparante koersmarge vanaf 1,2%; de volledige tariefkaart staat op
-          de landing-pagina. Is SwiftBridge veilig? Ja — onder DNB-toezicht via
-          EMI-partner, volledig Wwft- en AVG-compliant.
+          Hoe snel komt het geld aan bij de ontvanger? De precieze levertijd maken
+          wij bekend zodra de uitbetaling in Turkije live is. Wat zijn de kosten?
+          Eén vaste fee van €4,95 plus een transparante koersmarge vanaf 1,2%; de
+          volledige tariefkaart staat op de landing-pagina. Is SwiftBridge veilig?
+          SwiftBridge is geen bank en heeft geen eigen DNB-vergunning. Wij gaan
+          optreden als agent van een vergunninghoudende EMI-partner; de inschrijving
+          als agent volgt zodra die samenwerking rond is.
         </p>
       </div>
 

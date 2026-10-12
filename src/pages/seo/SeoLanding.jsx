@@ -212,7 +212,7 @@ export default function SeoLanding({
       {/* Minimal footer */}
       <footer className="bg-gray-900 text-gray-400 text-xs py-8 px-4">
         <div className="max-w-5xl mx-auto text-center space-y-2">
-          <p>© 2026 SwiftBridge B.V. (KvK 42138434) — onder DNB-toezicht via EMI-partner</p>
+          <p>© 2026 SwiftBridge B.V. · Nederlandse B.V. · KvK 42138434</p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
             <Link to="/voorwaarden" className="hover:text-white">Voorwaarden</Link>
             <Link to="/privacy" className="hover:text-white">Privacyverklaring</Link>
