@@ -12,6 +12,8 @@ import MaintenanceBanner from './components/MaintenanceBanner';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import SupportChat from './components/chat/SupportChat';
 import ErrorBoundary from './components/ErrorBoundary';
+import OudAdresNaarApp from './components/OudAdresNaarApp';
+import { OUDE_APP_PADEN } from './lib/oudeAppPaden';
 import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi, apiFetch } from './services/api';
@@ -1002,6 +1004,8 @@ export default function App() {
               <TransactieTracking />
             </Suspense>
           } />
+          {/* Adressen uit oude mails en de terugkeer na iDEAL → /app */}
+          {OUDE_APP_PADEN.map((pad) => <Route key={pad} path={pad} element={<OudAdresNaarApp />} />)}
           {/* Custom 404 ipv silent redirect — geeft bezoeker feedback + navigatie-suggesties */}
           <Route path="*" element={
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
