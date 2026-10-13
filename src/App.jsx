@@ -14,6 +14,7 @@ import SupportChat from './components/chat/SupportChat';
 import ErrorBoundary from './components/ErrorBoundary';
 import OudAdresNaarApp from './components/OudAdresNaarApp';
 import { OUDE_APP_PADEN } from './lib/oudeAppPaden';
+import { betaalTerugId, loginPadVoor } from './lib/betaalTerug';
 import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi, apiFetch } from './services/api';
@@ -23,6 +24,8 @@ import { DOCUMENTEN as JURIDISCHE_DOCUMENTEN, ARCHIEF_ROUTE } from './content/ju
 
 // Lazy load zware paginas (code splitting)
 const PaymentFlow = lazy(() => import('./components/PaymentFlow'));
+// Terug van iDEAL (/app?payment=<id>): status van die betaling
+const BetaalStatusKaart = lazy(() => import('./components/payment/BetaalStatusKaart'));
 const KYCFlow = lazy(() => import('./components/KYCFlow'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const KoersAlerts = lazy(() => import('./components/KoersAlerts'));
@@ -296,6 +299,17 @@ function AppShell({ gebruiker, token, onLogout }) {
   const [zijOpen, setZijOpen] = useState({ opdrachten: true, meer: false });
   const navigate = useNavigate();
   const { t } = useTaal();
+  // Terug van iDEAL: Mollie stuurt naar /app?payment=<transactie-id>. Die
+  // parameter werd nergens gelezen (analyse aanmeldroute 13-10-2026); nu toont
+  // de BetaalStatusKaart wat er met de betaling is gebeurd.
+  const locatie = useLocation();
+  const betaalTerug = betaalTerugId(locatie.search);
+  function sluitBetaalStatus() {
+    const rest = new URLSearchParams(locatie.search);
+    rest.delete('payment');
+    const zoek = rest.toString();
+    navigate({ pathname: locatie.pathname, search: zoek ? `?${zoek}` : '' }, { replace: true });
+  }
 
   // Luister naar interne navigatie events (bijv. van FeestKalender, Direct naar)
   useEffect(() => {
@@ -495,6 +509,14 @@ function AppShell({ gebruiker, token, onLogout }) {
 
         <main id="inhoud" className="max-w-2xl mx-auto px-4 py-5 pb-28 lg:mx-0 lg:flex-1 lg:pb-10 lg:px-0 lg:max-w-none">
         <Suspense fallback={<LaadSpinner />}>
+          {betaalTerug && (
+            <BetaalStatusKaart
+              key={betaalTerug}
+              transactieId={betaalTerug}
+              onSluit={sluitBetaalStatus}
+              onNieuweOverboeking={() => { sluitBetaalStatus(); setActief('betaling'); window.scrollTo({ top: 0 }); }}
+            />
+          )}
           {actief === 'dashboard' && <Dashboard gebruiker={gebruiker} />}
           {actief === 'inzicht' && <Inzicht />}
           {actief === 'betalingen' && <Betalingen beginTab={betalingenTab} />}
@@ -552,7 +574,9 @@ function AppShell({ gebruiker, token, onLogout }) {
 }
 
 function ProtectedRoute({ token, gebruiker, onLogout, children }) {
-  if (!token) return <Navigate to="/login" replace />;
+  // Sessie verlopen tijdens iDEAL: na het inloggen terug naar de betaalstatus.
+  const locatie = useLocation();
+  if (!token) return <Navigate to={loginPadVoor(locatie.search)} replace />;
   return <AppShell token={token} gebruiker={gebruiker} onLogout={onLogout} />;
 }
 
