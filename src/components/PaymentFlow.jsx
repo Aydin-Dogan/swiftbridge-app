@@ -16,7 +16,7 @@ import Vlag from './Vlag';
 import { TR_BANKEN_COMPLEET, CATEGORIE_LABELS, bankenPerCategorie } from '../services/trBanken';
 import { bankenPerLand, bankenPerLandPerCategorie, LAND_INFO } from '../services/turkstaligeBanken';
 import BeneficiaryKiezer from './beneficiaries/BeneficiaryKiezer';
-import { Bank, Card, Wallet, Euro, Globe, Zap, Clock, Bell, Check, X, Send, Sparkles, AlertTriangle } from './icons/Icons';
+import { Bank, Card, Wallet, Zap, Clock, Bell, Check, X, Send, Sparkles, AlertTriangle } from './icons/Icons';
 import PaymentLoadingOverlay from './payment/PaymentLoadingOverlay';
 import SimulatieBanner from './SimulatieBanner'; // F37 fix Ronde 3
 import CurrencySelector from './CurrencySelector'; // Global herpositionering
@@ -25,6 +25,8 @@ import { useFavorieteValutas } from '../services/favorieteValutas'; // MMM
 import AppLockScherm from './pin/AppLockScherm'; // PIN-1: tx-confirm
 import TransactieDoel from './opdrachten/TransactieDoel'; // TX-DOEL: doel van de uitgave
 import ZinMetLinks from './ZinMetLinks'; // Juridische documenten v1.0: contextlinks
+import { methodeKanNu, geldigeMethode } from '../services/betaalmethodes'; // alleen wat de server aanneemt
+import { startBetaling, doorsturenNaar } from '../services/betaalStart'; // geen vals "gelukt" meer
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -37,6 +39,11 @@ const SNELLE_BEDRAGEN = [100, 250, 500, 1000, 2000];
 // Betaalmethodes — SVG iconen (Sprint 2: emoji-overload weg).
 // Type-veld bepaalt welk icon getoond wordt; renderer logica zit in JSX
 // (zodat zowel Icon-component als Vlag-component werken).
+// Alleen methodes die de server aanneemt (services/betaalmethodes.js). PayPal,
+// SEPA bankoverboeking, KBC/CBC, Belfius, Pay By Bank en Billie stonden hier
+// ook; de server weigerde ze pas na "Bevestigen & betalen" (analyse
+// aanmeldroute 13-10-2026). Of een methode nu kan, bepaalt methodeKanNu met de
+// lijst die GET /payments/methodes teruggeeft.
 const BETAALMETHODEN = [
   // ── Aanbevolen (NL klanten) ──
   {
@@ -53,20 +60,6 @@ const BETAALMETHODEN = [
     desc: 'Visa, Mastercard',
     sub: 'Wereldwijd',
   },
-  {
-    id: 'paypal',
-    label: 'PayPal',
-    iconType: 'icon', Icon: Wallet,
-    desc: 'Betalen met je PayPal account',
-    sub: 'Internationaal',
-  },
-  {
-    id: 'banktransfer',
-    label: 'SEPA bankoverboeking',
-    iconType: 'icon', Icon: Euro,
-    desc: 'Standaard bankoverboeking',
-    sub: 'Standaard · goedkoopste optie',
-  },
   // ── BE klanten — vlag als logo ──
   {
     id: 'bancontact',
@@ -75,52 +68,20 @@ const BETAALMETHODEN = [
     desc: 'Direct via Belgische bank',
     sub: 'Voor BE klanten',
   },
-  {
-    id: 'kbc',
-    label: 'KBC/CBC',
-    iconType: 'vlag', land: 'BE',
-    desc: 'KBC of CBC bank knop',
-    sub: 'Belgische banken',
-  },
-  {
-    id: 'belfius',
-    label: 'Belfius Pay',
-    iconType: 'vlag', land: 'BE',
-    desc: 'Belfius bank app',
-    sub: 'Voor Belfius klanten',
-  },
-  // ── UK ──
-  {
-    id: 'paybybank',
-    label: 'Pay By Bank',
-    iconType: 'vlag', land: 'GB',
-    desc: 'UK Open Banking',
-    sub: 'Voor UK klanten',
-  },
-  // ── B2B ──
-  {
-    id: 'billie',
-    label: 'Billie (factuur)',
-    iconType: 'icon', Icon: Globe,
-    desc: 'Pay by Invoice voor zakelijk',
-    sub: 'Achteraf betalen',
-  },
-  // ── Nog te activeren ──
+  // ── Alleen als ze bij Mollie aan staan ──
   {
     id: 'applepay',
     label: 'Apple Pay',
     iconType: 'icon', Icon: Card,
-    desc: 'Activeer eerst in Mollie',
-    sub: 'Touch/Face ID',
-    disabled: true,
+    desc: 'Touch/Face ID',
+    sub: '',
   },
   {
     id: 'klarna',
     label: 'Klarna',
     iconType: 'icon', Icon: Card,
-    desc: 'Activeer eerst in Mollie',
-    sub: 'Achteraf betalen',
-    disabled: true,
+    desc: 'Achteraf betalen',
+    sub: '',
   },
 ];
 
@@ -216,14 +177,6 @@ async function slaBeneficiaryOpAPI({ token, naam, iban, bank, valuta, bijnaam })
   } catch (e) {
     // Best-effort — niet fataal voor de transactie
     console.warn('Beneficiary opslaan mislukt:', e?.message);
-  }
-}
-
-async function stuurPushNotificatie(titel, tekst) {
-  if (!('Notification' in window)) return;
-  if (Notification.permission === 'default') await Notification.requestPermission();
-  if (Notification.permission === 'granted') {
-    new Notification(titel, { body: tekst, icon: '/icon-192.png', badge: '/icon-192.png' });
   }
 }
 
@@ -743,14 +696,15 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
 }
 
 // ── Stap 1: Betaalmethode ─────────────────────────────────────────────────────
-function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
+function StapBetaalmethode({ methode, setMethode, beschikbaar, onVolgende, onTerug }) {
+  const { t } = useTaal();
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5">
       <h2 className="font-display text-xl font-medium text-ink-1">Kies betaalmethode</h2>
       <div className="space-y-2.5">
         {BETAALMETHODEN.map(m => {
-          const selected = methode === m.id;
-          const disabled = m.disabled;
+          const disabled = !methodeKanNu(m.id, beschikbaar);
+          const selected = methode === m.id && !disabled;
           return (
             <label key={m.id}
               className={`flex items-center gap-4 p-4 rounded-md cursor-pointer transition-colors ${
@@ -771,7 +725,9 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-ink-1">{m.label}</div>
                 <div className="text-sm text-gray-500 truncate">{m.desc}</div>
-                <div className="text-xs text-gray-400 mt-0.5">{m.sub}</div>
+                {(disabled || m.sub) && (
+                  <div className="text-xs text-gray-400 mt-0.5">{disabled ? t('betaal_methode_niet_beschikbaar') : m.sub}</div>
+                )}
               </div>
               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                 selected ? 'border-brand-600 bg-brand-600' : 'border-gray-300'}`}>
@@ -782,18 +738,13 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
         })}
       </div>
 
-      {methode === 'sepa' && (
-        <div className="bg-amber-50 border border-amber-200 rounded-md p-4 text-sm text-amber-700 space-y-1">
-          <p className="font-semibold">Maak over naar SwiftBridge:</p>
-          <p className="font-mono text-xs">IBAN: NL12SWFT0000000001</p>
-          <p className="font-mono text-xs">BIC: SWFTNL2A</p>
-          <p className="text-xs text-amber-600 mt-1">Vermeld je e-mailadres als omschrijving.</p>
-        </div>
-      )}
+      {/* Hier stond een instructieblok "Maak over naar SwiftBridge" met een
+          verzonnen rekeningnummer. Het verscheen nooit (de tegel had een ander
+          id) en een bankoverboeking neemt de server niet aan; weg ermee. */}
 
       <div className="flex gap-3">
         <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 font-semibold py-3 hover:bg-surface-3 transition">← Terug</button>
-        <button onClick={onVolgende} disabled={!methode}
+        <button onClick={onVolgende} disabled={!methodeKanNu(methode, beschikbaar)}
           className="flex-1 btn-inst py-3 disabled:bg-gray-300">Controleren →</button>
       </div>
     </div>
@@ -801,7 +752,7 @@ function StapBetaalmethode({ methode, setMethode, onVolgende, onTerug }) {
 }
 
 // ── Stap 2: Bevestiging ───────────────────────────────────────────────────────
-function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, gratisEersteTx, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie }) {
+function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, gratisEersteTx, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie, betaalStartFout, onOpnieuwBetalen, onNieuweOverboeking }) {
   const { t } = useTaal();
   const valutaInfo = getValuta(valuta);
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
@@ -923,13 +874,35 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
         />
       </p>
 
-      <div className="flex gap-3">
-        <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 font-semibold py-3 hover:bg-surface-3 transition">← Terug</button>
-        <button onClick={onVerstuur} disabled={laden}
-          className="flex-1 bg-success-600 hover:bg-success-700 disabled:bg-gray-300 text-white font-semibold py-3 rounded-md transition">
-          {laden ? 'Verwerken...' : 'Bevestigen & betalen'}
-        </button>
-      </div>
+      {betaalStartFout ? (
+        // De overboeking bestaat al, maar de betaling is niet gestart. Eerlijk
+        // zeggen, en DEZELFDE overboeking opnieuw laten betalen: nog een keer
+        // "Bevestigen & betalen" zou een tweede overboeking aanmaken.
+        <div role="alert" className="bg-amber-50 border border-amber-200 rounded-md p-4 space-y-3 text-amber-800">
+          <p className="font-semibold">{t('betaal_start_mislukt_titel')}</p>
+          <p className="text-sm">{t('betaal_start_mislukt_tekst')}</p>
+          {betaalStartFout.melding && <p className="text-sm">{betaalStartFout.melding}</p>}
+          {betaalStartFout.opnieuwMogelijk ? (
+            <button type="button" onClick={onOpnieuwBetalen} disabled={laden}
+              className="w-full btn-inst py-3 disabled:bg-gray-300">
+              {laden ? t('laden') : t('betaal_opnieuw')}
+            </button>
+          ) : (
+            <button type="button" onClick={onNieuweOverboeking}
+              className="w-full btn-inst py-3">
+              {t('betaal_nieuwe_overboeking')}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="flex gap-3">
+          <button onClick={onTerug} className="flex-1 border border-border rounded-md text-ink-2 font-semibold py-3 hover:bg-surface-3 transition">← Terug</button>
+          <button onClick={onVerstuur} disabled={laden}
+            className="flex-1 bg-success-600 hover:bg-success-700 disabled:bg-gray-300 text-white font-semibold py-3 rounded-md transition">
+            {laden ? 'Verwerken...' : 'Bevestigen & betalen'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1101,23 +1074,24 @@ function TrackingShareCard({ trackingToken }) {
   );
 }
 
-// ── Stap 3: Verzonden ─────────────────────────────────────────────────────────
+// ── Stap 3: Verzonden (alleen simulatie) ──────────────────────────────────────
+// Met Mollie gaat de klant na "Bevestigen & betalen" naar de betaalpagina en
+// komt hij terug op /app?payment=<id> (BetaalStatusKaart). Dit scherm verschijnt
+// alleen als de server zegt dat betalen hier uit staat (PAY_NIET_GECONFIGUREERD).
+// Het zei "Geld onderweg! Je iDEAL betaling is verwerkt", ook als er niets was
+// betaald (analyse aanmeldroute 13-10-2026); nu zegt het wat er echt gebeurde.
 function StapVerzonden({ transactie, methode, onNieuw, token }) {
+  const { t } = useTaal();
   const methodeObj = BETAALMETHODEN.find(m => m.id === methode);
   const valuta = transactie?.valuta || 'TRY';
-  const valutaInfo = getValuta(valuta);
   const ontvangenBedrag = transactie?.ontvangenBedrag ?? transactie?.tryBedrag ?? 0;
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 text-center space-y-5 animate-fade-up">
-      <div className="w-16 h-16 mx-auto bg-success-100 rounded-full flex items-center justify-center">
-        <Sparkles className="w-8 h-8 text-success-600" />
+      <div className="w-16 h-16 mx-auto bg-brand-100 rounded-full flex items-center justify-center">
+        <Sparkles className="w-8 h-8 text-brand-600" />
       </div>
-      <h2 className="font-display text-2xl font-medium text-success-700">Geld onderweg!</h2>
-      <p className="text-ink-2 text-sm">
-        {methode === 'ideal'
-          ? `Je iDEAL betaling is verwerkt. Wij verwerken je overboeking naar ${valutaInfo.land} en houden je op de hoogte.`
-          : `Je SEPA overboeking is geregistreerd. Na ontvangst sturen we het geld door naar ${valutaInfo.land}.`}
-      </p>
+      <h2 className="font-display text-2xl font-medium text-ink-1">{t('betaal_simulatie_titel')}</h2>
+      <p className="text-ink-2 text-sm">{t('betaal_simulatie_tekst')}</p>
       <div className="rounded-md p-4 space-y-2 text-left bg-success-50 border border-success-100">
         {[
           ['Verstuurd', `€${transactie?.eurBedrag?.toFixed(2)}`],
@@ -1199,6 +1173,26 @@ export default function PaymentFlow({ token }) {
   const [paparaIdentifier, setPaparaIdentifier] = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
   const [methode, setMethode ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
+  // Welke methodes staan bij Mollie aan (GET /payments/methodes)? null = onbekend:
+  // dan geldt de standaard uit services/betaalmethodes.js.
+  const [beschikbaar, setBeschikbaar] = useState(null);
+  useEffect(() => {
+    let weg = false;
+    Promise.resolve()
+      .then(() => apiFetch('/payments/methodes'))
+      .then((d) => {
+        if (weg || !Array.isArray(d?.beschikbaar)) return;
+        setBeschikbaar(d.beschikbaar);
+        // Staat de gekozen methode (bv. uit een oud concept) niet aan: eerste die wel kan.
+        setMethode((m) => geldigeMethode(m, d.beschikbaar));
+      })
+      .catch(() => { /* onbekend: standaard tonen, de server controleert toch */ });
+    return () => { weg = true; };
+  }, []);
+  // Overboeking aangemaakt, maar de betaling startte niet: die overboeking
+  // opnieuw laten betalen in plaats van een tweede aan te maken.
+  const [openTx, setOpenTx] = useState(null);
+  const [betaalStartFout, setBetaalStartFout] = useState(null); // null | { melding, opnieuwMogelijk }
   const [notitie, setNotitie ] = useState(''); // VVV — persoonlijke notitie per transactie
   const [ontvangerBank, setOntvangerBank ] = useState('Ziraat Bankası');
   const [liveKoersTry, setLiveKoersTry ] = useState(null);
@@ -1248,7 +1242,8 @@ export default function PaymentFlow({ token }) {
           // Geen window.confirm meer — silent restore want geen PII
           if (d.bedrag) setBedrag(String(d.bedrag));
           if (d.valuta) setValuta(d.valuta);
-          if (d.methode) setMethode(d.methode);
+          // Een oud concept kan een methode bevatten die de server niet aanneemt.
+          if (d.methode) setMethode(geldigeMethode(d.methode, null));
           if (d.snelheid) setSnelheid(d.snelheid);
         } else {
           sessionStorage.removeItem('swiftbridge_payment_draft_v2');
@@ -1418,50 +1413,10 @@ export default function PaymentFlow({ token }) {
       const effectieveKoers = data.transactie.wisselKoers;
 
       // ── Start Mollie betaling — krijg checkoutUrl en redirect gebruiker ──
-      try {
-        const betalingRes = await fetch(`${API}/payments/start`, {
-        credentials: 'include',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            transactieId: data.transactie.id,
-            methode,
-          }),
-        });
-        const betalingData = await betalingRes.json();
-        if (betalingRes.ok && betalingData.checkoutUrl) {
-          // Bewaar transactie lokaal vóór redirect
-          slaTransactieOp({
-            id: data.transactie.id,
-            eurBedrag: data.transactie.eurBedrag,
-            tryBedrag: data.transactie.tryBedrag,
-            valuta,
-            ontvangenBedrag,
-            feeEur: data.transactie.feeEur,
-            wisselKoers: effectieveKoers,
-            ontvangerNaam: data.transactie.ontvangerNaam,
-            ontvangerIBAN: iban,
-            methode,
-            status: 'wacht_op_betaling',
-            datum: new Date().toISOString(),
-          });
-          slaOntvangerOp(ontvanger, iban, ontvangerLabel);
-          if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
-            await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
-          }
-
-          // Redirect naar Mollie checkout
-          window.location.href = betalingData.checkoutUrl;
-          return;
-        }
-        // Als betaling niet kon worden gestart, val terug op simulatie modus
-        console.warn('Mollie betaling kon niet worden gestart, val terug op demo modus');
-      } catch (e) {
-        console.warn('Mollie niet beschikbaar, demo modus:', e.message);
-      }
+      // Lukt dat niet, dan GEEN terugval op een succesmelding meer: alleen als de
+      // server zegt dat betalen hier uit staat (simulatie) gaat het hieronder door.
+      const uitkomst = await betaal(data.transactie);
+      if (uitkomst !== 'simulatie') return;
 
       const tx = {
         id: data.transactie.id,
@@ -1484,12 +1439,8 @@ export default function PaymentFlow({ token }) {
         await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
       }
       setTransactie(tx);
-
-      await stuurPushNotificatie(
-        'SwiftBridge — Betaling verstuurd!',
-        `€${tx.eurBedrag.toFixed(2)} → ${formatBedrag(ontvangenBedrag, valuta)} voor ${ontvanger}`
-      );
-
+      // Geen browsermelding "Betaling verstuurd!" meer: in de simulatie is er
+      // niets betaald.
       setStap(3);
     } catch (e) {
       // Netwerk fout of timeout — parseError zorgt voor i18n vertaling
@@ -1499,9 +1450,62 @@ export default function PaymentFlow({ token }) {
     }
   }
 
+  // Start (of herstart) de betaling van een aangemaakte overboeking.
+  // 'doorgestuurd' = naar Mollie, 'simulatie' = betalen staat op de server uit,
+  // 'fout' = niet gestart: eerlijke melding met "Opnieuw betalen".
+  async function betaal(serverTx) {
+    const uit = await startBetaling({ transactieId: serverTx.id, methode });
+    if (uit.soort === 'doorsturen') {
+      // Bewaar transactie lokaal vóór redirect
+      slaTransactieOp({
+        id: serverTx.id,
+        eurBedrag: serverTx.eurBedrag,
+        tryBedrag: serverTx.tryBedrag,
+        valuta,
+        ontvangenBedrag: serverTx.tryBedrag,
+        feeEur: serverTx.feeEur,
+        wisselKoers: serverTx.wisselKoers,
+        ontvangerNaam: serverTx.ontvangerNaam,
+        ontvangerIBAN: iban,
+        methode,
+        status: 'wacht_op_betaling',
+        datum: new Date().toISOString(),
+      });
+      slaOntvangerOp(ontvanger, iban, ontvangerLabel);
+      if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
+        await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
+      }
+      setBetaalStartFout(null);
+      // Redirect naar Mollie checkout
+      doorsturenNaar(uit.checkoutUrl);
+      return 'doorgestuurd';
+    }
+    if (uit.soort === 'simulatie') return 'simulatie';
+
+    // Niet gestart. Bij deze codes heeft opnieuw proberen geen zin: de
+    // overboeking is verlopen, de welkomstactie hoort bij een andere, of er
+    // loopt al een betaling. Dan een nieuwe overboeking.
+    const code = uit.fout?.errorCode || null;
+    const geenZin = ['PAY_NIET_MEER_TE_BETALEN', 'PAY_WELKOMST_ELDERS', 'PAY_REEDS_VOLTOOID'].includes(code);
+    setOpenTx(serverTx);
+    setBetaalStartFout({ melding: parseError(uit.fout, t), opnieuwMogelijk: !geenZin });
+    return 'fout';
+  }
+
+  async function opnieuwBetalen() {
+    if (!openTx) return;
+    setLaden(true);
+    try {
+      await betaal(openTx);
+    } finally {
+      setLaden(false);
+    }
+  }
+
   function reset() {
     setStap(0); setTransactie(null); setBedrag('500');
-    setOntvanger(''); setIban(''); setMethode('ideal'); setFout('');
+    setOntvanger(''); setIban(''); setMethode(geldigeMethode('ideal', beschikbaar)); setFout('');
+    setOpenTx(null); setBetaalStartFout(null);
   }
 
   return (
@@ -1538,8 +1542,8 @@ export default function PaymentFlow({ token }) {
           setStap(1);
         }
       }} />}
-      {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} gratisEersteTx={gratisEersteTx} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} />}
+      {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} beschikbaar={beschikbaar} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} gratisEersteTx={gratisEersteTx} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} betaalStartFout={betaalStartFout} onOpnieuwBetalen={opnieuwBetalen} onNieuweOverboeking={reset} />}
 
       {/* PIN-1: tx-confirm PIN-prompt voor Mollie-redirect */}
       {pinPromptOpen && (

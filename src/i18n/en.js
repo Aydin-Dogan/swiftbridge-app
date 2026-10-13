@@ -703,6 +703,8 @@ export const en = {
  PAY_REEDS_VOLTOOID:'A payment has already been started for this transaction.',
  PAY_NIET_GECONFIGUREERD:'Payments are temporarily unavailable.',
  PAY_MISSING_FIELDS:'transactieId and methode are required.',
+ PAY_NIET_MEER_TE_BETALEN:'This transfer can no longer be paid. Please create a new transfer.',
+ PAY_WELKOMST_ELDERS:'Your welcome deal now belongs to another transfer. Please create a new transfer.',
 
  // KYC
  KYC_BEELD_FOUT:'There\'s an issue with the photo. Try a clearer image.',
@@ -1856,5 +1858,31 @@ export const en = {
  hulp_v_toegangscode:'I forgot my access code. What now?',
  hulp_v_niet_versturen:'Why can I not send money yet?',
  hulp_v_kyc:'How does identity verification work?',
- hulp_v_zakelijk:'How do I apply for a business profile?'
+ hulp_v_zakelijk:'How do I apply for a business profile?',
+
+ // ── Payment route: honest status and paying again (13-10-2026) ─────────
+ betaal_methode_niet_beschikbaar:'Not available right now',
+ betaal_start_mislukt_titel:'Your payment has not started',
+ betaal_start_mislukt_tekst:'Your transfer is ready, but nothing has been debited yet.',
+ betaal_opnieuw:'Pay again',
+ betaal_verder:'Continue paying',
+ betaal_nieuwe_overboeking:'New transfer',
+ betaal_simulatie_titel:'Test transfer processed',
+ betaal_simulatie_tekst:'Payments are switched off in this environment. Nothing has been debited and no real money goes to the recipient.',
+ betaalstatus_laden:'Checking the status of your payment…',
+ betaalstatus_betaald_titel:'Payment received',
+ betaalstatus_betaald_tekst:'Your payment has arrived. We are processing your transfer; you can follow the status in your overview.',
+ betaalstatus_bezig_titel:'Your payment is not complete yet',
+ betaalstatus_bezig_tekst:'Your bank has not confirmed the payment yet. Not finished paying? Then continue where you left off.',
+ betaalstatus_afgebroken_titel:'Payment cancelled',
+ betaalstatus_afgebroken_tekst:'The payment was not completed. Nothing has been debited.',
+ betaalstatus_mislukt_titel:'Payment failed',
+ betaalstatus_mislukt_tekst:'The payment did not go through. Nothing has been debited.',
+ betaalstatus_niet_gestart_titel:'Payment not started',
+ betaalstatus_niet_gestart_tekst:'Nothing has been debited yet.',
+ betaalstatus_welkomstactie:'Your welcome deal still applies: no fixed fee on this transfer.',
+ betaalstatus_onbekend:'We could not retrieve the status of your payment. You can also see it in your overview.',
+ betaalstatus_bedrag:'Amount',
+ betaalstatus_ontvanger_krijgt:'Recipient gets',
+ betaalstatus_sluiten:'Close'
 };

@@ -703,6 +703,8 @@ export const tr = {
  PAY_REEDS_VOLTOOID:'Bu işlem için ödeme zaten başlatıldı.',
  PAY_NIET_GECONFIGUREERD:'Ödemeler şu anda kullanılamıyor.',
  PAY_MISSING_FIELDS:'transactieId ve methode zorunludur.',
+ PAY_NIET_MEER_TE_BETALEN:'Bu transfer artık ödenemez. Lütfen yeni bir transfer oluşturun.',
+ PAY_WELKOMST_ELDERS:'Hoş geldin fırsatınız artık başka bir transfere ait. Lütfen yeni bir transfer oluşturun.',
 
  // KYC
  KYC_BEELD_FOUT:'Fotoğrafla ilgili bir sorun var. Daha net bir fotoğraf deneyin.',
@@ -1856,5 +1858,31 @@ export const tr = {
  hulp_v_toegangscode:'Erişim kodumu unuttum. Ne yapmalıyım?',
  hulp_v_niet_versturen:'Neden henüz para gönderemiyorum?',
  hulp_v_kyc:'Kimlik doğrulama nasıl işliyor?',
- hulp_v_zakelijk:'Kurumsal profile nasıl başvururum?'
+ hulp_v_zakelijk:'Kurumsal profile nasıl başvururum?',
+
+ // ── Ödeme akışı: dürüst durum ve tekrar ödeme (13-10-2026) ─────────
+ betaal_methode_niet_beschikbaar:'Şu anda kullanılamıyor',
+ betaal_start_mislukt_titel:'Ödemeniz başlatılmadı',
+ betaal_start_mislukt_tekst:'Transferiniz hazır, ancak hesabınızdan henüz hiçbir tutar çekilmedi.',
+ betaal_opnieuw:'Tekrar öde',
+ betaal_verder:'Ödemeye devam et',
+ betaal_nieuwe_overboeking:'Yeni transfer',
+ betaal_simulatie_titel:'Test transferi işlendi',
+ betaal_simulatie_tekst:'Bu ortamda ödemeler kapalıdır. Hesabınızdan hiçbir tutar çekilmedi ve alıcıya gerçek para gönderilmiyor.',
+ betaalstatus_laden:'Ödemenizin durumunu kontrol ediyoruz…',
+ betaalstatus_betaald_titel:'Ödeme alındı',
+ betaalstatus_betaald_tekst:'Ödemeniz bize ulaştı. Transferinizi işliyoruz; durumu genel bakış sayfanızda görebilirsiniz.',
+ betaalstatus_bezig_titel:'Ödemeniz henüz tamamlanmadı',
+ betaalstatus_bezig_tekst:'Bankanız ödemeyi henüz onaylamadı. Ödemeyi bitirmediyseniz kaldığınız yerden devam edin.',
+ betaalstatus_afgebroken_titel:'Ödeme iptal edildi',
+ betaalstatus_afgebroken_tekst:'Ödeme tamamlanmadı. Hesabınızdan hiçbir tutar çekilmedi.',
+ betaalstatus_mislukt_titel:'Ödeme başarısız oldu',
+ betaalstatus_mislukt_tekst:'Ödeme gerçekleşmedi. Hesabınızdan hiçbir tutar çekilmedi.',
+ betaalstatus_niet_gestart_titel:'Ödeme başlatılmadı',
+ betaalstatus_niet_gestart_tekst:'Hesabınızdan henüz hiçbir tutar çekilmedi.',
+ betaalstatus_welkomstactie:'Hoş geldin fırsatınız geçerli: bu transferde sabit ücret yok.',
+ betaalstatus_onbekend:'Ödemenizin durumu alınamadı. Durumu genel bakış sayfanızda da görebilirsiniz.',
+ betaalstatus_bedrag:'Tutar',
+ betaalstatus_ontvanger_krijgt:'Alıcı alacak',
+ betaalstatus_sluiten:'Kapat'
 };

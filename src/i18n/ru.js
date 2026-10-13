@@ -639,6 +639,8 @@ export const ru = {
  PAY_REEDS_VOLTOOID:'Платёж по этой транзакции уже начат.',
  PAY_NIET_GECONFIGUREERD:'Платежи временно недоступны.',
  PAY_MISSING_FIELDS:'transactieId и methode обязательны.',
+ PAY_NIET_MEER_TE_BETALEN:'Этот перевод больше нельзя оплатить. Создайте новый перевод.',
+ PAY_WELKOMST_ELDERS:'Ваш приветственный бонус теперь относится к другому переводу. Создайте новый перевод.',
 
  // KYC
  KYC_BEELD_FOUT:'Что-то не так с фотографией. Попробуйте более чёткое изображение.',
@@ -1848,5 +1850,31 @@ export const ru = {
  hulp_v_toegangscode:'Я забыл код доступа. Что делать?',
  hulp_v_niet_versturen:'Почему я пока не могу отправлять деньги?',
  hulp_v_kyc:'Как проходит проверка личности?',
- hulp_v_zakelijk:'Как подать заявку на бизнес-профиль?'
+ hulp_v_zakelijk:'Как подать заявку на бизнес-профиль?',
+
+ // ── Оплата: честный статус и повторная оплата (13-10-2026) ─────────
+ betaal_methode_niet_beschikbaar:'Сейчас недоступно',
+ betaal_start_mislukt_titel:'Оплата не началась',
+ betaal_start_mislukt_tekst:'Ваш перевод готов, но деньги ещё не списаны.',
+ betaal_opnieuw:'Оплатить снова',
+ betaal_verder:'Продолжить оплату',
+ betaal_nieuwe_overboeking:'Новый перевод',
+ betaal_simulatie_titel:'Тестовый перевод обработан',
+ betaal_simulatie_tekst:'В этой среде оплата отключена. Деньги не списаны, и получателю не отправляются настоящие деньги.',
+ betaalstatus_laden:'Проверяем статус вашего платежа…',
+ betaalstatus_betaald_titel:'Платёж получен',
+ betaalstatus_betaald_tekst:'Ваш платёж поступил. Мы обрабатываем перевод; статус можно посмотреть в обзоре.',
+ betaalstatus_bezig_titel:'Оплата ещё не завершена',
+ betaalstatus_bezig_tekst:'Ваш банк ещё не подтвердил платёж. Если вы не закончили оплату, продолжите с того места, где остановились.',
+ betaalstatus_afgebroken_titel:'Оплата отменена',
+ betaalstatus_afgebroken_tekst:'Оплата не завершена. Деньги не списаны.',
+ betaalstatus_mislukt_titel:'Оплата не удалась',
+ betaalstatus_mislukt_tekst:'Оплата не прошла. Деньги не списаны.',
+ betaalstatus_niet_gestart_titel:'Оплата не начата',
+ betaalstatus_niet_gestart_tekst:'Деньги ещё не списаны.',
+ betaalstatus_welkomstactie:'Ваш приветственный бонус сохраняется: без фиксированной комиссии за этот перевод.',
+ betaalstatus_onbekend:'Не удалось получить статус платежа. Его также можно посмотреть в обзоре.',
+ betaalstatus_bedrag:'Сумма',
+ betaalstatus_ontvanger_krijgt:'Получатель получит',
+ betaalstatus_sluiten:'Закрыть'
 };

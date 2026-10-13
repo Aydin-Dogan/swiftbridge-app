@@ -704,6 +704,8 @@ export const nl = {
  PAY_REEDS_VOLTOOID:'Voor deze transactie is al een betaling gestart.',
  PAY_NIET_GECONFIGUREERD:'Betalingen zijn tijdelijk niet beschikbaar.',
  PAY_MISSING_FIELDS:'transactieId en methode zijn verplicht.',
+ PAY_NIET_MEER_TE_BETALEN:'Deze overboeking kan niet meer worden betaald. Maak een nieuwe overboeking.',
+ PAY_WELKOMST_ELDERS:'Je welkomstactie hoort nu bij een andere overboeking. Maak een nieuwe overboeking.',
 
  // KYC
  KYC_BEELD_FOUT:'Er is iets mis met de foto. Probeer een scherpere foto.',
@@ -1858,5 +1860,31 @@ export const nl = {
  hulp_v_toegangscode:'Ik ben mijn toegangscode vergeten. Wat nu?',
  hulp_v_niet_versturen:'Waarom kan ik nog geen geld versturen?',
  hulp_v_kyc:'Hoe werkt de identiteitsverificatie?',
- hulp_v_zakelijk:'Hoe vraag ik een zakelijk profiel aan?'
+ hulp_v_zakelijk:'Hoe vraag ik een zakelijk profiel aan?',
+
+ // ── Betaalroute: eerlijke status en opnieuw betalen (13-10-2026) ─────────
+ betaal_methode_niet_beschikbaar:'Nu niet beschikbaar',
+ betaal_start_mislukt_titel:'Je betaling is niet gestart',
+ betaal_start_mislukt_tekst:'Je overboeking staat klaar, maar er is nog niets afgeschreven.',
+ betaal_opnieuw:'Opnieuw betalen',
+ betaal_verder:'Verder met betalen',
+ betaal_nieuwe_overboeking:'Nieuwe overboeking',
+ betaal_simulatie_titel:'Testoverboeking verwerkt',
+ betaal_simulatie_tekst:'Betalen staat in deze omgeving uit. Er is niets afgeschreven en er gaat geen echt geld naar de ontvanger.',
+ betaalstatus_laden:'We kijken hoe je betaling ervoor staat…',
+ betaalstatus_betaald_titel:'Betaling ontvangen',
+ betaalstatus_betaald_tekst:'Je betaling is binnen. We verwerken je overboeking; de status zie je in je overzicht.',
+ betaalstatus_bezig_titel:'Je betaling is nog niet afgerond',
+ betaalstatus_bezig_tekst:'Je bank heeft de betaling nog niet bevestigd. Ben je nog niet klaar met betalen? Ga dan verder waar je was.',
+ betaalstatus_afgebroken_titel:'Betaling afgebroken',
+ betaalstatus_afgebroken_tekst:'De betaling is niet afgerond. Er is niets afgeschreven.',
+ betaalstatus_mislukt_titel:'Betaling mislukt',
+ betaalstatus_mislukt_tekst:'De betaling is niet gelukt. Er is niets afgeschreven.',
+ betaalstatus_niet_gestart_titel:'Betaling niet gestart',
+ betaalstatus_niet_gestart_tekst:'Er is nog niets afgeschreven.',
+ betaalstatus_welkomstactie:'Je welkomstactie blijft staan: geen vaste kosten op deze overboeking.',
+ betaalstatus_onbekend:'We konden de status van je betaling niet ophalen. Je ziet hem ook in je overzicht.',
+ betaalstatus_bedrag:'Bedrag',
+ betaalstatus_ontvanger_krijgt:'Ontvanger krijgt',
+ betaalstatus_sluiten:'Sluiten'
 };

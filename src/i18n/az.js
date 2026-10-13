@@ -639,6 +639,8 @@ export const az = {
  PAY_REEDS_VOLTOOID:'Bu əməliyyat üçün ödəniş artıq başladılıb.',
  PAY_NIET_GECONFIGUREERD:'Ödənişlər müvəqqəti olaraq əlçatan deyil.',
  PAY_MISSING_FIELDS:'transactieId və methode tələb olunur.',
+ PAY_NIET_MEER_TE_BETALEN:'Bu köçürmə artıq ödənilə bilməz. Yeni köçürmə yaradın.',
+ PAY_WELKOMST_ELDERS:'Xoş gəlmə bonusunuz artıq başqa köçürməyə aiddir. Yeni köçürmə yaradın.',
 
  // KYC
  KYC_BEELD_FOUT:'Şəkildə problem var. Daha aydın şəkil yoxlayın.',
@@ -1848,5 +1850,31 @@ export const az = {
  hulp_v_toegangscode:'Giriş kodumu unutmuşam. İndi nə etməliyəm?',
  hulp_v_niet_versturen:'Niyə hələ pul göndərə bilmirəm?',
  hulp_v_kyc:'Şəxsiyyətin doğrulanması necə işləyir?',
- hulp_v_zakelijk:'Biznes profilinə necə müraciət edə bilərəm?'
+ hulp_v_zakelijk:'Biznes profilinə necə müraciət edə bilərəm?',
+
+ // ── Ödəniş: dürüst vəziyyət və yenidən ödəniş (13-10-2026) ─────────
+ betaal_methode_niet_beschikbaar:'Hazırda mövcud deyil',
+ betaal_start_mislukt_titel:'Ödənişiniz başlamadı',
+ betaal_start_mislukt_tekst:'Köçürməniz hazırdır, lakin hesabınızdan hələ heç nə silinməyib.',
+ betaal_opnieuw:'Yenidən ödə',
+ betaal_verder:'Ödənişə davam et',
+ betaal_nieuwe_overboeking:'Yeni köçürmə',
+ betaal_simulatie_titel:'Test köçürməsi işləndi',
+ betaal_simulatie_tekst:'Bu mühitdə ödənişlər söndürülüb. Hesabınızdan heç nə silinməyib və alıcıya real pul göndərilmir.',
+ betaalstatus_laden:'Ödənişinizin vəziyyətini yoxlayırıq…',
+ betaalstatus_betaald_titel:'Ödəniş alındı',
+ betaalstatus_betaald_tekst:'Ödənişiniz daxil oldu. Köçürmənizi emal edirik; vəziyyəti icmal səhifənizdə görə bilərsiniz.',
+ betaalstatus_bezig_titel:'Ödənişiniz hələ tamamlanmayıb',
+ betaalstatus_bezig_tekst:'Bankınız ödənişi hələ təsdiqləməyib. Ödənişi bitirməmisinizsə, qaldığınız yerdən davam edin.',
+ betaalstatus_afgebroken_titel:'Ödəniş ləğv edildi',
+ betaalstatus_afgebroken_tekst:'Ödəniş tamamlanmadı. Hesabınızdan heç nə silinməyib.',
+ betaalstatus_mislukt_titel:'Ödəniş uğursuz oldu',
+ betaalstatus_mislukt_tekst:'Ödəniş baş tutmadı. Hesabınızdan heç nə silinməyib.',
+ betaalstatus_niet_gestart_titel:'Ödəniş başlanmayıb',
+ betaalstatus_niet_gestart_tekst:'Hesabınızdan hələ heç nə silinməyib.',
+ betaalstatus_welkomstactie:'Xoş gəlmə bonusunuz qüvvədədir: bu köçürmədə sabit komissiya yoxdur.',
+ betaalstatus_onbekend:'Ödənişinizin vəziyyətini əldə edə bilmədik. Onu icmal səhifənizdə də görə bilərsiniz.',
+ betaalstatus_bedrag:'Məbləğ',
+ betaalstatus_ontvanger_krijgt:'Qəbul edən alır',
+ betaalstatus_sluiten:'Bağla'
 };
