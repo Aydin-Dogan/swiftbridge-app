@@ -999,6 +999,24 @@ export const en = {
  admin_ov_link_compliance:'️ Compliance',
  admin_ov_link_kyc:'KYC review queue',
 
+ // ── Sign-up funnel on the admin overview (sign-up route, section 6) ────
+ admin_tr_titel:'Sign-up funnel per week',
+ admin_tr_uitleg:'How many new accounts reached each step, by week of sign-up. A step only counts customers who also completed every previous step. Below the number: the percentage of the previous step. Counts only, no personal data.',
+ admin_tr_taal:'Language',
+ admin_tr_alle_talen:'All languages',
+ admin_tr_week:'Week',
+ admin_tr_totaal:'Total',
+ admin_tr_stap_account:'Account',
+ admin_tr_stap_email:'Email confirmed',
+ admin_tr_stap_kyc_ingediend:'KYC submitted',
+ admin_tr_stap_kyc_goedgekeurd:'KYC approved',
+ admin_tr_stap_tx_aangemaakt:'First transfer',
+ admin_tr_stap_tx_betaald:'First paid',
+ admin_tr_stap_tweede:'Second within 30 days',
+ admin_tr_nog_mogelijk:'{n} customers are still within their 30 days for a second transfer.',
+ admin_tr_taal_let_op:'Note: the language is currently only recorded when the customer changes it in their profile.',
+ admin_tr_fout:'Could not load the funnel',
+
  // ── Accountant share-links (Improvement ZZ) ──────────────────────────────
  accountant_titel:'Accountant access',
  accountant_uitleg:'Generate a read-only link for your bookkeeper or accountant. They can only download your transactions as CSV — no password or login needed.',

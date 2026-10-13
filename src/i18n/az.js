@@ -909,6 +909,24 @@ export const az = {
  admin_ov_link_compliance:'️ Uyğunluq',
  admin_ov_link_kyc:'KYC nəzərdən keçirmə',
 
+ // ── İdarə icmalında qeydiyyat qıfı (qeydiyyat yolu, bölmə 6) ────────────
+ admin_tr_titel:'Həftəlik qeydiyyat qıfı',
+ admin_tr_uitleg:'Qeydiyyat həftəsinə görə yeni hesabların neçəsinin hər addıma çatdığı. Addım yalnız bütün əvvəlki addımları da keçən müştəriləri sayır. Rəqəmin altında: əvvəlki addıma görə faiz. Yalnız saylar, şəxsi məlumat yoxdur.',
+ admin_tr_taal:'Dil',
+ admin_tr_alle_talen:'Bütün dillər',
+ admin_tr_week:'Həftə',
+ admin_tr_totaal:'Cəmi',
+ admin_tr_stap_account:'Hesab',
+ admin_tr_stap_email:'E-poçt təsdiqləndi',
+ admin_tr_stap_kyc_ingediend:'KYC göndərildi',
+ admin_tr_stap_kyc_goedgekeurd:'KYC təsdiqləndi',
+ admin_tr_stap_tx_aangemaakt:'İlk köçürmə',
+ admin_tr_stap_tx_betaald:'İlk ödəniş',
+ admin_tr_stap_tweede:'30 gün ərzində ikinci',
+ admin_tr_nog_mogelijk:'{n} müştəri ikinci köçürmə üçün hələ 30 günlük müddət daxilindədir.',
+ admin_tr_taal_let_op:'Qeyd: dil hazırda yalnız müştəri onu profilində dəyişdikdə qeydə alınır.',
+ admin_tr_fout:'Qıf yüklənmədi',
+
  // ── Mühasib linkləri (Təkmilləşdirmə ZZ) ─────────────────────────────────
  accountant_titel:'Mühasib girişi',
  accountant_uitleg:'Mühasibiniz üçün yalnız-oxuma linki yaradın. Onlar yalnız əməliyyatlarınızı CSV kimi yükləyə bilərlər — şifrə və ya giriş lazım deyil.',

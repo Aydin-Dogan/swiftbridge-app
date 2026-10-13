@@ -879,6 +879,24 @@ export const nl = {
  admin_ov_link_compliance:'️ Compliance',
  admin_ov_link_kyc:'KYC review queue',
 
+ // ── Aanmeldtrechter op het beheeroverzicht (aanmeldroute, sectie 6) ─────
+ admin_tr_titel:'Aanmeldtrechter per week',
+ admin_tr_uitleg:'Hoeveel nieuwe accounts elke stap haalden, per week van aanmelden. Een stap telt alleen wie ook alle vorige stappen haalde. Onder het aantal: het percentage van de vorige stap. Alleen aantallen, geen persoonsgegevens.',
+ admin_tr_taal:'Taal',
+ admin_tr_alle_talen:'Alle talen',
+ admin_tr_week:'Week',
+ admin_tr_totaal:'Totaal',
+ admin_tr_stap_account:'Account',
+ admin_tr_stap_email:'E-mail bevestigd',
+ admin_tr_stap_kyc_ingediend:'KYC ingediend',
+ admin_tr_stap_kyc_goedgekeurd:'KYC goedgekeurd',
+ admin_tr_stap_tx_aangemaakt:'Eerste overboeking',
+ admin_tr_stap_tx_betaald:'Eerste betaald',
+ admin_tr_stap_tweede:'Tweede binnen 30 dagen',
+ admin_tr_nog_mogelijk:'{n} klanten zitten nog binnen hun 30 dagen voor een tweede overboeking.',
+ admin_tr_taal_let_op:'Let op: de taal wordt nu alleen vastgelegd als de klant hem in zijn profiel wijzigt.',
+ admin_tr_fout:'Trechter kon niet worden geladen',
+
  // ── Accountant deel-links (Verbetering ZZ) ───────────────────────────────
  accountant_titel:'Accountant toegang',
  accountant_uitleg:'Genereer een read-only link voor je boekhouder of accountant. Ze kunnen alleen je transacties als CSV downloaden — geen wachtwoord of inloggen nodig.',

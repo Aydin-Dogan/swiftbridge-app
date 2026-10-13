@@ -999,6 +999,24 @@ export const tr = {
  admin_ov_link_compliance:'️ Uyumluluk',
  admin_ov_link_kyc:'KYC inceleme',
 
+ // ── Yönetim özetinde kayıt hunisi (kayıt akışı, bölüm 6) ────────────────
+ admin_tr_titel:'Haftalık kayıt hunisi',
+ admin_tr_uitleg:'Kayıt haftasına göre yeni hesapların kaçının her adıma ulaştığı. Bir adım yalnızca önceki tüm adımları da tamamlayan müşterileri sayar. Sayının altında: önceki adıma göre yüzde. Yalnızca sayılar, kişisel veri yok.',
+ admin_tr_taal:'Dil',
+ admin_tr_alle_talen:'Tüm diller',
+ admin_tr_week:'Hafta',
+ admin_tr_totaal:'Toplam',
+ admin_tr_stap_account:'Hesap',
+ admin_tr_stap_email:'E-posta onaylandı',
+ admin_tr_stap_kyc_ingediend:'KYC gönderildi',
+ admin_tr_stap_kyc_goedgekeurd:'KYC onaylandı',
+ admin_tr_stap_tx_aangemaakt:'İlk transfer',
+ admin_tr_stap_tx_betaald:'İlk ödeme',
+ admin_tr_stap_tweede:'30 gün içinde ikinci',
+ admin_tr_nog_mogelijk:'{n} müşteri ikinci transfer için hâlâ 30 günlük süre içinde.',
+ admin_tr_taal_let_op:'Not: dil şu anda yalnızca müşteri profilinde değiştirdiğinde kaydediliyor.',
+ admin_tr_fout:'Huni yüklenemedi',
+
  // ── Muhasebeci paylaşım linkleri (İyileştirme ZZ) ────────────────────────
  accountant_titel:'Muhasebeci erişimi',
  accountant_uitleg:'Muhasebeciniz veya defterciniz için salt-okunur link oluşturun. Sadece işlem CSV indirebilirler — şifre veya giriş gerekmez.',

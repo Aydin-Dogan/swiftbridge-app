@@ -9,6 +9,7 @@
  * - Transacties 7d / 30d (aantal + volume EUR)
  * - Totaal volume EUR
  * - Sanctie hits + GDPR acties
+ * - De aanmeldtrechter per week (TrechterOverzicht, GET /admin/trechter)
  *
  * Auto-refresh elke 60s. Quick-links naar admin sub-pagina's.
  */
@@ -18,6 +19,7 @@ import { API_URL } from '../services/api';
 import { useTaal } from '../i18n';
 import { Users, IdCard, Banknote, Calendar, Euro, Shield, Lock, Clock, Globe } from '../components/icons/Icons';
 import { useTx } from '../components/admin/kyb/kybAdminLabels';
+import TrechterOverzicht from './TrechterOverzicht';
 
 function KpiCard({ titel, waarde, sub, kleur = 'blue', icon: Icon }) {
   const kleurMap = {
@@ -194,6 +196,9 @@ export default function AdminOverzicht() {
                 icon={Globe}
               />
             </div>
+
+            {/* Aanmeldroute, sectie 6: waar haken nieuwe klanten af (GET /admin/trechter) */}
+            <TrechterOverzicht />
 
             {/* Quick-links naar sub-paginas */}
             <div className="bg-surface rounded-md border border-border p-5 shadow-soft">
