@@ -159,6 +159,55 @@ describe('PaymentFlow: snel opnieuw', () => {
     expect(screen.getByDisplayValue('Akbank')).toBeInTheDocument();
   });
 
+  // Review 13-10-2026: tijdens het ophalen van de pinstatus gebeurde er zichtbaar
+  // niets en bleef de knop actief. Een tweede tik maakte dan een tweede
+  // overboeking aan (elke poging heeft een eigen idempotency-sleutel).
+  test('twee keer tikken terwijl de pinstatus nog onderweg is: maar één overboeking', async () => {
+    let geefPinStatus;
+    const pinStatusBinnen = new Promise((klaar) => { geefPinStatus = klaar; });
+    const basis = maakFetchMock(routes({ pin: false }));
+    globalThis.fetch = vi.fn(async (url, opties) => {
+      if (String(url).includes('/auth/pin/status')) await pinStatusBinnen;
+      return basis(url, opties);
+    });
+    snelOpnieuw();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    const knop = screen.getByRole('button', { name: 'Bevestigen & betalen' });
+    fireEvent.click(knop);
+    fireEvent.click(knop);
+    geefPinStatus();
+
+    await waitFor(() => expect(doorsturenNaar).toHaveBeenCalledWith('https://mollie.test/c/snel'));
+    const aanmaken = aanroepen().filter((a) => a.methode === 'POST' && /\/transactions$/.test(a.url));
+    expect(aanmaken).toHaveLength(1);
+  });
+
+  // Review 13-10-2026: Apple Pay en Klarna staan uit tot de server zegt dat ze
+  // aan staan. De onthouden methode viel daardoor altijd terug op iDEAL.
+  test('Apple Pay als vorige methode staat voorgekozen zodra de server hem aanbiedt', async () => {
+    globalThis.fetch = maakFetchMock([
+      { pad: '/payments/methodes', body: { methodes: [], beschikbaar: ['ideal', 'applepay'] } },
+      ...routes(),
+    ]);
+    localStorage.setItem(LAATSTE_METHODE_SLEUTEL, 'applepay');
+    snelOpnieuw();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    expect(await screen.findByText('Apple Pay')).toBeInTheDocument();
+  });
+
+  test('Apple Pay als vorige methode maar nu niet aangeboden: iDEAL', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    localStorage.setItem(LAATSTE_METHODE_SLEUTEL, 'applepay');
+    snelOpnieuw();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    await waitFor(() => expect(aanroepen().some((a) => a.url.includes('/payments/methodes'))).toBe(true));
+    expect(await screen.findByText('iDEAL')).toBeInTheDocument();
+    expect(screen.queryByText('Apple Pay')).not.toBeInTheDocument();
+  });
+
   test('de laatst gebruikte methode staat ook in de gewone route voorgekozen', async () => {
     globalThis.fetch = maakFetchMock(routes());
     localStorage.setItem(LAATSTE_METHODE_SLEUTEL, 'bancontact');

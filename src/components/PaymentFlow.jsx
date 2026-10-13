@@ -1194,7 +1194,14 @@ export default function PaymentFlow({ token }) {
         if (weg || !Array.isArray(d?.beschikbaar)) return;
         setBeschikbaar(d.beschikbaar);
         // Staat de gekozen methode (bv. uit een oud concept) niet aan: eerste die wel kan.
-        setMethode((m) => geldigeMethode(m, d.beschikbaar));
+        // Apple Pay en Klarna staan uit tot de server ze noemt; was een van die
+        // twee de vorige methode en staat er nog de terugval, dan nu alsnog
+        // voorkiezen (review 13-10-2026).
+        setMethode((m) => {
+          const vorige = leesLaatsteBetaalmethode();
+          if (vorige && m === geldigeMethode(vorige, null) && methodeKanNu(vorige, d.beschikbaar)) return vorige;
+          return geldigeMethode(m, d.beschikbaar);
+        });
       })
       .catch(() => { /* onbekend: standaard tonen, de server controleert toch */ });
     return () => { weg = true; };
@@ -1346,15 +1353,23 @@ export default function PaymentFlow({ token }) {
       .catch(() => setPinStatusVoorTx(false));
   }, [token]);
 
+  // Loopt het ophalen van de pinstatus in startVerstuur nog? Dan telt een tweede
+  // tik niet. De knop staat dan nog aan en elke poging krijgt een eigen
+  // idempotency-sleutel, dus anders twee overboekingen (review 13-10-2026).
+  const pinStatusOphalenRef = useRef(false);
+
   // Wrapper die de PIN-prompt eventueel toont vóór verstuur()
   async function startVerstuur() {
+    if (pinStatusOphalenRef.current) return;
     // Bij "Snel opnieuw" staat het bevestigscherm er meteen; tikt de klant vóór
     // de pinstatus binnen is, dan eerst die status ophalen in plaats van zonder
     // pincode door te gaan (de server zou dan weigeren).
     let pinAan = pinStatusVoorTx;
     if (pinAan === null && token) {
+      pinStatusOphalenRef.current = true;
       try { pinAan = !!(await apiFetch('/auth/pin/status'))?.ingeschakeld; }
       catch { pinAan = false; }
+      finally { pinStatusOphalenRef.current = false; }
       setPinStatusVoorTx(pinAan);
     }
     if (pinAan === true && !txConfirmToken) {
