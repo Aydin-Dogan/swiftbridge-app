@@ -16,6 +16,7 @@ import { formatBedrag } from '../../services/currencies';
 import { useTaal } from '../../i18n';
 import { apiFetch } from '../../services/api';
 import { CheckCircle, Clock, XCircle, X as XIcon, Zap, Info, Calendar, Refresh } from '../icons/Icons';
+import { gegevensUitTransactie, isGeslaagd, zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
 
 // Gapanalyse §3 — statustabs zoals zakelijk bankieren:
 // Geweigerd = mislukt/geannuleerd; In behandeling omvat ook de "Info nodig"-
@@ -129,14 +130,10 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
     return () => { weg = true; };
   }, [statusFilter]);
 
+  // Geweigerde overboeking opnieuw: alles klaarzetten, maar op het eerste
+  // scherm beginnen; daar was iets mis (services/opnieuwVersturen.js).
   function opnieuwVersturen(tx) {
-    localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
-      ontvanger: tx.ontvangerNaam || tx.ontvanger_naam,
-      iban: tx.ontvangerIBAN || tx.ontvanger_iban,
-      bedrag: tx.eurBedrag || tx.eur_bedrag,
-      valuta: tx.valuta || 'TRY',
-    }));
-    window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+    zetOpnieuwKlaar(gegevensUitTransactie(tx));
   }
 
   const gefilterd = transacties.filter(tx => {
@@ -417,14 +414,10 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
         tx={detailTx}
         onSluit={() => setDetailTx(null)}
         onHerhaal={(tx) => {
-          localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
-            ontvanger: tx.ontvangerNaam || tx.ontvanger_naam,
-            iban: tx.ontvangerIBAN || tx.ontvanger_iban,
-            bedrag: tx.eurBedrag || tx.eur_bedrag,
-            valuta: tx.valuta || 'TRY',
-          }));
           setDetailTx(null);
-          window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+          // Geslaagde overboeking: meteen naar bevestigen (aanmeldroute punt 11).
+          const gegevens = gegevensUitTransactie(tx);
+          zetOpnieuwKlaar(gegevens, { direct: isGeslaagd(tx) && Boolean(gegevens.iban) });
         }}
       />
     </section>

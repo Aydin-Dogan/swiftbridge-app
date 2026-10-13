@@ -3,11 +3,14 @@
  * - iDEAL + SEPA keuze
  * - Multi-currency: TRY, AZN, KZT, UZS, TMT, KGS, USD, GBP, EUR, MAD
  * - Snelle bedragknoppen
- * - Opgeslagen ontvangers (localStorage)
+ * - Opgeslagen ontvangers (server, /beneficiaries; de server bewaart ze zelf na
+ *   een geslaagde betaling — aanmeldroute punt 11)
+ * - "Snel opnieuw": klaargezette ontvanger + bank + bedrag → meteen bevestigen
+ * - Laatst gebruikte betaalmethode voorgekozen (alleen de naam, op dit toestel)
  * - Transactie opslaan + dashboard notificatie
  * - Browser push notificatie na voltooiing
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VALUTAS, getValuta, formatBedrag } from '../services/currencies';
 import { berekenKosten, prijsopbouw, welkomstDealActief, MIN_BEDRAG } from '../services/kosten';
 import { apiFetch, parseError } from '../services/api';
@@ -27,6 +30,8 @@ import TransactieDoel from './opdrachten/TransactieDoel'; // TX-DOEL: doel van d
 import ZinMetLinks from './ZinMetLinks'; // Juridische documenten v1.0: contextlinks
 import { methodeKanNu, geldigeMethode } from '../services/betaalmethodes'; // alleen wat de server aanneemt
 import { startBetaling, doorsturenNaar } from '../services/betaalStart'; // geen vals "gelukt" meer
+import { haalOpnieuwKlaar } from '../services/opnieuwVersturen'; // "Snel opnieuw" / "Opnieuw versturen"
+import { leesLaatsteBetaalmethode, bewaarLaatsteBetaalmethode } from '../services/laatsteBetaalmethode';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -126,29 +131,22 @@ const FAMILIE_LABELS = [
 ];
 
 // ── localStorage helpers ──────────────────────────────────────────────────────
+// Oude lijst "Kies opgeslagen" (naam + IBAN op het toestel). Sinds aanmeldroute
+// punt 11 (13-10-2026) schrijven we hier niets meer bij: ontvangers staan op de
+// server (de server bewaart ze na een geslaagde betaling) en bankgegevens horen
+// niet in localStorage. Wat er nog staat, toont "Kies opgeslagen" tot de
+// volgende keer uitloggen (App.jsx wist de sleutel dan).
 function laadOntvangers() {
   try { return JSON.parse(localStorage.getItem(ONTV_KEY) || '[]'); }
   catch { return []; }
-}
-
-function slaOntvangerOp(naam, iban, label = null) {
-  const bestaand = laadOntvangers();
-  const bestaat = bestaand.some(o => o.iban === iban);
-  if (!bestaat && naam && iban) {
-    const bijgewerkt = [{
-      naam, iban,
-      label: label || null,
-      datum: new Date().toISOString(),
-      laatsteBedrag: null,
-    }, ...bestaand].slice(0, 10);
-    localStorage.setItem(ONTV_KEY, JSON.stringify(bijgewerkt));
-  }
 }
 
 function getLabelInfo(labelId) {
   return FAMILIE_LABELS.find(l => l.id === labelId);
 }
 
+// Transactie-cache op het toestel (terugval van het overzicht als de server even
+// niet antwoordt). Zonder IBAN: die staat op de server (aanmeldroute punt 11).
 function slaTransactieOp(tx) {
   const bestaand = JSON.parse(localStorage.getItem(TX_KEY) || '[]');
   localStorage.setItem(TX_KEY, JSON.stringify([tx, ...bestaand]));
@@ -752,7 +750,7 @@ function StapBetaalmethode({ methode, setMethode, beschikbaar, onVolgende, onTer
 }
 
 // ── Stap 2: Bevestiging ───────────────────────────────────────────────────────
-function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTry, gratisEersteTx, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie, betaalStartFout, onOpnieuwBetalen, onNieuweOverboeking }) {
+function StapBevestiging({ bedrag, valuta, ontvanger, iban, ontvangerBank, uitbetaalMethode, methode, liveKoersTry, gratisEersteTx, laden, fout, emailNietGeverifieerd, resendLaden, resendBericht, resendOk, onResendEmail, onVerstuur, onTerug, notitie, setNotitie, betaalStartFout, onOpnieuwBetalen, onNieuweOverboeking }) {
   const { t } = useTaal();
   const valutaInfo = getValuta(valuta);
   const effectieveKoers = valuta === 'TRY' && liveKoersTry ? liveKoersTry : valutaInfo.koers;
@@ -785,6 +783,9 @@ function StapBevestiging({ bedrag, valuta, ontvanger, iban, methode, liveKoersTr
           ['Betaalmethode', methodeObj?.label || methode],
           ['Naar', ontvanger],
           ['IBAN', `${iban.slice(0,4)} •••• ${iban.slice(-4)}`],
+          // Bij "Snel opnieuw" komt de klant hier zonder het eerste scherm te
+          // zien; dan moet hij ook de bank kunnen nakijken.
+          ...(uitbetaalMethode === 'bank' && ontvangerBank ? [[t('benef_bank'), ontvangerBank]] : []),
           ['Vaste kosten', dealActief ? '€0,00 (welkomstactie)' : `€${feeGetoond.toFixed(2)}`],
           [`Wisselkoers marge (${opbouw.fxMargePct}%)`, `€${opbouw.fxMargeEur.toFixed(2)}`],
           ['Totale kosten', `€${totaleKostenEur.toFixed(2)} (${totaleKostenPct.toFixed(2)}%)`],
@@ -1146,13 +1147,20 @@ export default function PaymentFlow({ token }) {
   // Welke uitbetaalmethodes kunnen nu echt (21-9): in live-modus zonder bank-rail
   // weigert de API 'bank'; dan kiezen we vooraf de wallet i.p.v. een fout bij bevestigen.
   const [bankBeschikbaar, setBankBeschikbaar] = useState(true);
+  // "Snel opnieuw" opende meteen het bevestigscherm (zie het voorvullen hieronder).
+  const snelOpnieuwRef = useRef(false);
   useEffect(() => {
     let weg = false;
     Promise.resolve()
       .then(() => apiFetch('/transactions/uitbetaalmethodes'))
       .then((m) => {
         if (weg || !m) return;
-        if (m.bank === false) { setBankBeschikbaar(false); setUitbetaalMethode('papara'); }
+        if (m.bank === false) {
+          setBankBeschikbaar(false); setUitbetaalMethode('papara');
+          // Een klaargezette bankontvanger kan nu niet: terug naar het eerste
+          // scherm om de wallet in te vullen, niet bevestigen wat niet kan.
+          if (snelOpnieuwRef.current) { snelOpnieuwRef.current = false; setStap(0); }
+        }
       })
       .catch(() => { /* onbekend: niets blokkeren, de API controleert toch */ });
     return () => { weg = true; };
@@ -1172,7 +1180,9 @@ export default function PaymentFlow({ token }) {
   }, []);
   const [paparaIdentifier, setPaparaIdentifier] = useState('');
   const [paparaIdentifierType,setPaparaIdentifierType]= useState('papara_nummer'); // papara_nummer | telefoon | email
-  const [methode, setMethode ] = useState('ideal'); // iDEAL default — meest gebruikt in NL
+  // De methode van de vorige overboeking op dit toestel, anders iDEAL (meest
+  // gebruikt in NL). Kan die nu niet, dan corrigeert GET /payments/methodes hem.
+  const [methode, setMethode ] = useState(() => geldigeMethode(leesLaatsteBetaalmethode() || 'ideal', null));
   // Welke methodes staan bij Mollie aan (GET /payments/methodes)? null = onbekend:
   // dan geldt de standaard uit services/betaalmethodes.js.
   const [beschikbaar, setBeschikbaar] = useState(null);
@@ -1212,19 +1222,32 @@ export default function PaymentFlow({ token }) {
       .then(j => { if (j.rate) setLiveKoersTry(j.rate); })
       .catch(() => {});
 
-    // Repeat transactie: pre-fill velden vanuit localStorage
-    try {
-      const repeatRaw = localStorage.getItem('swiftbridge_repeat_tx');
-      if (repeatRaw) {
-        const r = JSON.parse(repeatRaw);
-        if (r.ontvanger) setOntvanger(r.ontvanger);
-        if (r.iban) setIban(r.iban);
-        if (r.bedrag) setBedrag(String(r.bedrag));
-        if (r.valuta) setValuta(r.valuta);
-        localStorage.removeItem('swiftbridge_repeat_tx');
-        return; // niet ook draft laden
+    // Opnieuw versturen: velden voorvullen met wat klaargezet is
+    // (services/opnieuwVersturen.js: ontvanger, IBAN, bank, laatste bedrag, valuta).
+    const r = haalOpnieuwKlaar();
+    if (r) {
+      const ibanSchoon = String(r.iban || '').replace(/\s/g, '').toUpperCase();
+      if (r.ontvanger) setOntvanger(r.ontvanger);
+      if (ibanSchoon) setIban(ibanSchoon);
+      if (r.bedrag) setBedrag(String(r.bedrag));
+      if (r.valuta) setValuta(r.valuta);
+      if (r.bank) setOntvangerBank(r.bank);
+      // "Snel opnieuw" (aanmeldroute punt 11): alles bekend en geldig → meteen
+      // het bevestigscherm. Zelfde voorwaarden als de knop op het eerste scherm;
+      // anders begint de klant daar, met alles ingevuld. De server controleert
+      // de overboeking daarna zoals altijd (KYC, limieten, screening).
+      const bedragNum = parseFloat(r.bedrag);
+      const kanMeteenBevestigen = r.direct === true
+        && String(r.ontvanger || '').trim().length >= 2
+        && valideerIBAN(ibanSchoon).geldig
+        && bedragNum >= MIN_BEDRAG
+        && getValuta(r.valuta || 'TRY')?.status !== 'binnenkort';
+      if (kanMeteenBevestigen) {
+        snelOpnieuwRef.current = true;
+        setStap(2);
       }
-    } catch {/* private mode */}
+      return; // niet ook draft laden
+    }
 
     // SSS+F42 (Cursor review Ronde 3): laad concept als die bestaat.
     // BELANGRIJK: draft bevat GEEN IBAN of ontvanger-naam meer — die
@@ -1325,7 +1348,16 @@ export default function PaymentFlow({ token }) {
 
   // Wrapper die de PIN-prompt eventueel toont vóór verstuur()
   async function startVerstuur() {
-    if (pinStatusVoorTx === true && !txConfirmToken) {
+    // Bij "Snel opnieuw" staat het bevestigscherm er meteen; tikt de klant vóór
+    // de pinstatus binnen is, dan eerst die status ophalen in plaats van zonder
+    // pincode door te gaan (de server zou dan weigeren).
+    let pinAan = pinStatusVoorTx;
+    if (pinAan === null && token) {
+      try { pinAan = !!(await apiFetch('/auth/pin/status'))?.ingeschakeld; }
+      catch { pinAan = false; }
+      setPinStatusVoorTx(pinAan);
+    }
+    if (pinAan === true && !txConfirmToken) {
       setPinPromptOpen(true);
       return;
     }
@@ -1427,14 +1459,12 @@ export default function PaymentFlow({ token }) {
         feeEur: data.transactie.feeEur,
         wisselKoers: effectieveKoers,
         ontvangerNaam: data.transactie.ontvangerNaam,
-        ontvangerIBAN: iban,
         methode,
         status: data.transactie.status, // 'in_behandeling' van server
         datum: new Date().toISOString(),
       };
 
       slaTransactieOp(tx);
-      slaOntvangerOp(ontvanger, iban, ontvangerLabel);
       if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
         await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
       }
@@ -1455,6 +1485,8 @@ export default function PaymentFlow({ token }) {
   // 'fout' = niet gestart: eerlijke melding met "Opnieuw betalen".
   async function betaal(serverTx) {
     const uit = await startBetaling({ transactieId: serverTx.id, methode });
+    // De server nam deze methode aan: volgende keer staat hij voorgekozen.
+    if (uit.soort === 'doorsturen' || uit.soort === 'simulatie') bewaarLaatsteBetaalmethode(methode);
     if (uit.soort === 'doorsturen') {
       // Bewaar transactie lokaal vóór redirect
       slaTransactieOp({
@@ -1466,12 +1498,10 @@ export default function PaymentFlow({ token }) {
         feeEur: serverTx.feeEur,
         wisselKoers: serverTx.wisselKoers,
         ontvangerNaam: serverTx.ontvangerNaam,
-        ontvangerIBAN: iban,
         methode,
         status: 'wacht_op_betaling',
         datum: new Date().toISOString(),
       });
-      slaOntvangerOp(ontvanger, iban, ontvangerLabel);
       if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
         await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
       }
@@ -1543,7 +1573,7 @@ export default function PaymentFlow({ token }) {
         }
       }} />}
       {stap === 1 && <StapBetaalmethode methode={methode} setMethode={setMethode} beschikbaar={beschikbaar} onVolgende={() => setStap(2)} onTerug={() => setStap(0)} />}
-      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} methode={methode} liveKoersTry={liveKoersTry} gratisEersteTx={gratisEersteTx} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} betaalStartFout={betaalStartFout} onOpnieuwBetalen={opnieuwBetalen} onNieuweOverboeking={reset} />}
+      {stap === 2 && <StapBevestiging bedrag={bedrag} valuta={valuta} ontvanger={ontvanger} iban={iban} ontvangerBank={ontvangerBank} uitbetaalMethode={uitbetaalMethode} methode={methode} liveKoersTry={liveKoersTry} gratisEersteTx={gratisEersteTx} laden={laden} fout={fout} emailNietGeverifieerd={emailNietGeverifieerd} resendLaden={resendLaden} resendBericht={resendBericht} resendOk={resendOk} onResendEmail={verstuurEmailOpnieuw} onVerstuur={startVerstuur} onTerug={() => setStap(1)} notitie={notitie} setNotitie={setNotitie} betaalStartFout={betaalStartFout} onOpnieuwBetalen={opnieuwBetalen} onNieuweOverboeking={reset} />}
 
       {/* PIN-1: tx-confirm PIN-prompt voor Mollie-redirect */}
       {pinPromptOpen && (

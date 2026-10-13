@@ -654,7 +654,7 @@ const TOKEN_SENTINEL = 'cookie';
 const GEVOELIGE_STORAGE_KEYS = [
   'swiftbridge_ontvangers',    // begunstigden (naam + IBAN)
   'swiftbridge_transacties',   // transactie-cache (bedragen)
-  'swiftbridge_repeat_tx',     // "stuur opnieuw" hand-off (naam + IBAN + bedrag)
+  'swiftbridge_repeat_tx',     // "stuur opnieuw" hand-off — oude kopie; staat sinds 13-10-2026 in sessionStorage
   'swiftbridge_payment_draft', // F42 — concept-transactie
   'sb_chat_history',           // support-chat (vrije tekst, kan PII bevatten)
   'sb_user',                   // gecachede gebruikersdata

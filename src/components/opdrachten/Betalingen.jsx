@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../../i18n';
 import { apiFetch } from '../../services/api';
 import { formatBedrag } from '../../services/currencies';
+import { gegevensUitTransactie, zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
 import { Send, Refresh, Calendar, AlertTriangle } from '../icons/Icons';
 import TransactieDoel from './TransactieDoel';
 
@@ -154,12 +155,10 @@ export default function Betalingen({ beginTab = 'alles' }) {
     } catch { /* stil — rij blijft staan */ }
   }
 
+  // Klaarzetten in de betaalflow (sessionStorage, met bank) — de klant begint
+  // op het eerste scherm (services/opnieuwVersturen.js).
   function opnieuwVersturen(tx) {
-    localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
-      ontvanger: tx.ontvangerNaam, iban: tx.ontvangerIBAN,
-      bedrag: tx.eurBedrag, valuta: tx.valuta || 'TRY',
-    }));
-    window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+    zetOpnieuwKlaar(gegevensUitTransactie(tx));
   }
 
   const tabs = [

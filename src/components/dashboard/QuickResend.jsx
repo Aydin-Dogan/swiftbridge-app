@@ -1,34 +1,41 @@
 /**
  * QuickResend.jsx — Dashboard widget met laatste 3 ontvangers (Verbetering PPP).
  *
- * 1-tap "Stuur opnieuw" → bevoegt naam+IBAN+bedrag uit laatste transactie naar
- * deze ontvanger, slaat op in swiftbridge_repeat_tx localStorage, opent
- * PaymentFlow (zelfde mechaniek als TransactieReceipt onHerhaal).
+ * 1-tap "Stuur opnieuw" → zet naam + IBAN + bank + het laatste bedrag naar deze
+ * ontvanger klaar (services/opnieuwVersturen.js) en opent de betaalflow meteen
+ * op het bevestigscherm. De klant tikt daar "Bevestigen & betalen": de tweede
+ * overboeking in twee tikken (aanmeldroute punt 11, 13-10-2026). De server
+ * controleert die overboeking zoals elke andere.
  *
- * Verbergt zichzelf als <2 voltooide transacties (clutter-vrij voor nieuwe users).
+ * Zichtbaar vanaf de EERSTE geslaagde overboeking (voltooid, of betaald en
+ * onderweg). Tot 13-10-2026 pas vanaf twee voltooide, dus juist bij overboeking
+ * 2 ontbrak hij.
  */
 import { useMemo } from 'react';
 import { useTaal } from '../../i18n';
 import Avatar from '../Avatar';
 import { Zap } from '../icons/Icons';
+import { isGeslaagd, gegevensUitTransactie, zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
 
 export default function QuickResend({ transacties = [] }) {
   const { t } = useTaal();
 
-  // Unieke laatste-3 ontvangers (deduplicate op naam, behoud meest recente)
+  // Unieke laatste-3 ontvangers (op IBAN, anders naam; behoud meest recente)
   const ontvangers = useMemo(() => {
-    const voltooid = transacties.filter(tx => tx.status === 'voltooid');
-    if (voltooid.length < 2) return [];
+    const geslaagd = transacties.filter(isGeslaagd);
+    if (geslaagd.length < 1) return [];
 
-    const sorted = [...voltooid].sort(
+    const sorted = [...geslaagd].sort(
       (a, b) => new Date(b.aangemaaktOp || 0) - new Date(a.aangemaaktOp || 0)
     );
     const seen = new Set();
     const uniek = [];
     for (const tx of sorted) {
       const naam = tx.ontvangerNaam || tx.ontvanger_naam;
-      if (!naam || seen.has(naam)) continue;
-      seen.add(naam);
+      const iban = tx.ontvangerIBAN || tx.ontvanger_iban;
+      const sleutel = iban ? `iban:${String(iban).replace(/\s/g, '').toUpperCase()}` : `naam:${naam}`;
+      if (!naam || seen.has(sleutel)) continue;
+      seen.add(sleutel);
       uniek.push(tx);
       if (uniek.length >= 3) break;
     }
@@ -38,16 +45,9 @@ export default function QuickResend({ transacties = [] }) {
   if (!ontvangers.length) return null;
 
   function stuurOpnieuw(tx) {
-    try {
-      localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
-        ontvanger: tx.ontvangerNaam || tx.ontvanger_naam,
-        iban: tx.ontvangerIBAN || tx.ontvanger_iban,
-        bedrag: tx.eurBedrag || tx.eur_bedrag,
-        valuta: tx.valuta || 'TRY',
-      }));
-    } catch {/* private mode */}
-    // Dispatch event om naar betaling-tab te navigeren
-    window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+    const gegevens = gegevensUitTransactie(tx);
+    // Meteen naar bevestigen kan alleen met een IBAN (bankuitbetaling).
+    zetOpnieuwKlaar(gegevens, { direct: Boolean(gegevens.iban) });
   }
 
   return (

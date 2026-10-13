@@ -4,7 +4,7 @@
  *
  * Gedrag per planning:
  *  - Eenmalig, uitvoerdatum = vandaag  → hand-off naar de bestaande betaalflow
- *    (localStorage 'swiftbridge_repeat_tx' + navigate 'betaling'); daar kiest
+ *    (services/opnieuwVersturen.js: sessionStorage + navigate 'betaling'); daar kiest
  *    de gebruiker de betaalmethode en bevestigt (incl. PIN/SCA).
  *  - Eenmalig, latere datum            → POST /opdrachten (geplande opdracht;
  *    de backend-cron voert uit op de uitvoerdatum).
@@ -18,6 +18,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTaal } from '../../i18n';
 import { apiFetch, parseError } from '../../services/api';
 import { VALUTAS } from '../../services/currencies';
+import { zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
 import { LANDEN } from '../kyc/landen';
 import Card from '../ui/Card';
 import Knop from '../ui/Knop';
@@ -174,11 +175,11 @@ export default function Overschrijven() {
     // Vandaag = direct: hand-off naar de betaalflow (methode + bevestiging daar).
     if (isVandaag) {
       if (bewaren && !gekozenId) await bewaarInAdresboek();
-      localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
+      // Via sessionStorage en met de bank (services/opnieuwVersturen.js).
+      zetOpnieuwKlaar({
         ontvanger: naam.trim(), iban: iban.replace(/\s/g, '').toUpperCase(),
-        bedrag: b, valuta,
-      }));
-      window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+        bank: bank || '', bedrag: b, valuta,
+      });
       return;
     }
 

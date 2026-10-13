@@ -12,6 +12,7 @@ import TransactieReceipt from '../TransactieReceipt';
 import { formatBedrag } from '../../services/currencies';
 import { useTaal } from '../../i18n';
 import { CheckCircle, Clock, XCircle, X as XIcon, Info } from '../icons/Icons';
+import { gegevensUitTransactie, isGeslaagd, zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
@@ -214,14 +215,10 @@ export default function Tijdlijn({
         tx={detailTx}
         onSluit={() => setDetailTx(null)}
         onHerhaal={(tx) => {
-          localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
-            ontvanger: tx.ontvangerNaam || tx.ontvanger_naam,
-            iban: tx.ontvangerIBAN || tx.ontvanger_iban,
-            bedrag: tx.eurBedrag || tx.eur_bedrag,
-            valuta: tx.valuta || 'TRY',
-          }));
           setDetailTx(null);
-          window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+          // Geslaagde overboeking: meteen naar bevestigen (aanmeldroute punt 11).
+          const gegevens = gegevensUitTransactie(tx);
+          zetOpnieuwKlaar(gegevens, { direct: isGeslaagd(tx) && Boolean(gegevens.iban) });
         }}
       />
     </div>

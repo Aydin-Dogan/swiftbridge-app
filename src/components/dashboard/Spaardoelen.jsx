@@ -11,6 +11,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch, parseError } from '../../services/api';
+import { zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
 import { useTaal } from '../../i18n';
 import ConfirmDialog from '../ConfirmDialog';
 import { Star, Gift, Globe, Home, Lightbulb, User, Key, Sparkles, Calendar, Users, Check, X } from '../icons/Icons';
@@ -176,14 +177,11 @@ export default function Spaardoelen() {
                   const bedrag = item.suggestedPerWeek
                     ? Math.min(item.suggestedPerWeek, resterend || item.suggestedPerWeek)
                     : (resterend || 100);
-                  try {
-                    localStorage.setItem('swiftbridge_repeat_tx', JSON.stringify({
-                      ontvanger: item.ontvanger_naam || '',
-                      bedrag,
-                      valuta: item.valuta_doel || 'TRY',
-                    }));
-                  } catch {/* private mode */}
-                  window.dispatchEvent(new CustomEvent('swiftbridge_navigate', { detail: 'betaling' }));
+                  zetOpnieuwKlaar({
+                    ontvanger: item.ontvanger_naam || '',
+                    bedrag,
+                    valuta: item.valuta_doel || 'TRY',
+                  });
                 }}
               />
             ))}
