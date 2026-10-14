@@ -27,6 +27,8 @@ const PaymentFlow = lazy(() => import('./components/PaymentFlow'));
 // Terug van iDEAL (/app?payment=<id>): status van die betaling
 const BetaalStatusKaart = lazy(() => import('./components/payment/BetaalStatusKaart'));
 const KYCFlow = lazy(() => import('./components/KYCFlow'));
+// Vijf vragen over doel en gebruik vóór de eerste betaling (aanmeldroute stap 6)
+const VragenVoorBetalen = lazy(() => import('./components/kyc/VragenVoorBetalen'));
 const Calculator = lazy(() => import('./pages/Calculator'));
 const KoersAlerts = lazy(() => import('./components/KoersAlerts'));
 const Profiel = lazy(() => import('./components/Profiel'));
@@ -339,6 +341,11 @@ function AppShell({ gebruiker, token, onLogout }) {
   ];
 
   const kycGoedgekeurd = gebruiker?.kycStatus === 'goedgekeurd';
+  // Wacht de klant nog op goedkeuring? Dan krijgt hij de vragen over doel en
+  // gebruik ook vóór zijn identificatie: zonder die antwoorden keurt de KYC-poort
+  // niemand goed. Na een afwijzing of blokkade niet: daar gaat het om iets anders.
+  const kycNogTeBeoordelen = !['goedgekeurd', 'afgewezen', 'geblokkeerd', 'beeindigd', 'ingetrokken']
+    .includes(gebruiker?.kycStatus);
   // KYB: zakelijke accounts zien de status van hun zakelijk profiel in de header
   const isZakelijk = gebruiker?.accountType === 'zakelijk';
   const kybStatus = gebruiker?.kybStatus || 'geen';
@@ -525,7 +532,10 @@ function AppShell({ gebruiker, token, onLogout }) {
           {actief === 'service' && <ServicePagina />}
           {actief === 'documenten' && <Documenten />}
           {(actief === 'betaling' || actief === 'overschrijven') && (
-            kycGoedgekeurd
+            // Ontbreken de antwoorden over doel en gebruik, dan eerst die vijf
+            // vragen en daarna meteen verder; wie al antwoordde, merkt niets.
+            <VragenVoorBetalen gebruikerId={gebruiker?.id}>
+            {kycGoedgekeurd
               ? (actief === 'betaling' ? <PaymentFlow token={token} /> : <Overschrijven />)
               : (
                 <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
@@ -539,11 +549,17 @@ function AppShell({ gebruiker, token, onLogout }) {
                     Verificatie starten →
                   </button>
                 </div>
-              )
+              )}
+            </VragenVoorBetalen>
           )}
           {actief === 'alerts' && <KoersAlerts token={token} />}
           {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} />}
-          {actief === 'kyc' && <KYCFlow token={token} gebruiker={gebruiker} />}
+          {actief === 'kyc' && (
+            // Nog niet goedgekeurd: eerst de vragen (stap 6), dan de identificatie.
+            <VragenVoorBetalen gebruikerId={gebruiker?.id} overslaan={!kycNogTeBeoordelen}>
+              <KYCFlow token={token} gebruiker={gebruiker} />
+            </VragenVoorBetalen>
+          )}
         </Suspense>
         </main>
       </div>
