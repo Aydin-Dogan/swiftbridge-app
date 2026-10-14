@@ -1133,6 +1133,19 @@ export const tr = {
  notif_push_uitleg:'Kur uyarıları ve işlem durumu için hızlı bildirim',
  notif_whatsapp_label:'WhatsApp',
  notif_whatsapp_uitleg:'Para teslim edildiğinde takip güncellemesi',
+ notif_herinneringen_label:'Hatırlatmalar',
+ notif_herinneringen_uitleg:'Kaydınız henüz tamamlanmadıysa e-posta ile hatırlatma',
+ notif_altijd:'Kimlik doğrulamanızla ilgili mesajlar, bizden gelen sorular ve ödeme onayları size her zaman gönderilir. Bunları kapatamazsınız.',
+
+ // ── Hatırlatmalardan çıkış: /afmelden ────────────────────────────────────
+ afmelden_klaar_titel:'Artık hatırlatma almayacaksınız',
+ afmelden_klaar_uitleg:'Hatırlatmaları profilinizden istediğiniz zaman yeniden açabilirsiniz.',
+ afmelden_fout_titel:'Bu işlem şu anda yapılamadı',
+ afmelden_fout_uitleg:'Lütfen daha sonra tekrar deneyin. Hatırlatmaları profilinizden de kapatabilirsiniz.',
+ afmelden_onvolledig_titel:'Bu bağlantı eksik',
+ afmelden_onvolledig_uitleg:'Hatırlatmaları profilinizden de kapatabilirsiniz.',
+ afmelden_naar_voorkeuren:'Tercihlerime gidin',
+ afmelden_opnieuw:'Tekrar deneyin',
 
  // ── Tekrarlayan ical (İyileştirme III) ───────────────────────────────────
  recurring_ical_knop:'Takvim (.ics)',

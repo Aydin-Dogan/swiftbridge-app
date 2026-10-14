@@ -1043,6 +1043,19 @@ export const az = {
  notif_push_uitleg:'Məzənnə və əməliyyat statusu üçün sürətli bildiriş',
  notif_whatsapp_label:'WhatsApp',
  notif_whatsapp_uitleg:'Pul çatdırıldıqda izləmə yeniləməsi',
+ notif_herinneringen_label:'Xatırlatmalar',
+ notif_herinneringen_uitleg:'Qeydiyyatınız hələ tamamlanmayıbsa, e-poçtla xatırlatma',
+ notif_altijd:'Şəxsiyyətinizin yoxlanılması ilə bağlı mesajlar, bizim suallarımız və ödəniş təsdiqləri sizə həmişə göndərilir. Bunları söndürə bilməzsiniz.',
+
+ // ── Xatırlatmalardan imtina: /afmelden ───────────────────────────────────
+ afmelden_klaar_titel:'Artıq xatırlatma almayacaqsınız',
+ afmelden_klaar_uitleg:'Onları istənilən vaxt profilinizdə yenidən aktiv edə bilərsiniz.',
+ afmelden_fout_titel:'Bu, hazırda alınmadı',
+ afmelden_fout_uitleg:'Zəhmət olmasa, bir az sonra yenidən cəhd edin. Xatırlatmaları profilinizdə də söndürə bilərsiniz.',
+ afmelden_onvolledig_titel:'Bu keçid natamamdır',
+ afmelden_onvolledig_uitleg:'Xatırlatmaları profilinizdə də söndürə bilərsiniz.',
+ afmelden_naar_voorkeuren:'Tərcihlərimə keçin',
+ afmelden_opnieuw:'Yenidən cəhd edin',
 
  // ── Təkrarlanan ical (Təkmilləşdirmə III) ────────────────────────────────
  recurring_ical_knop:'Təqvim (.ics)',

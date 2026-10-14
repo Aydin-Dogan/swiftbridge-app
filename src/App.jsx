@@ -42,6 +42,8 @@ const Veiligheid = lazy(() => import('./pages/Veiligheid'));
 const OverOns = lazy(() => import('./pages/OverOns'));
 const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 const EmailWijzigen = lazy(() => import('./pages/EmailWijzigen'));
+// Afmelden voor herinneringen: de link onderaan de herinneringsmail
+const Afmelden = lazy(() => import('./pages/Afmelden'));
 const Recurring = lazy(() => import('./pages/Recurring'));
 
 // SEO landings (Sprint 3 deel 2) — long-tail Google traffic per query.
@@ -1032,9 +1034,18 @@ export default function App() {
           <Route path="/r/:code" element={<ReferralRedirect />} />
           {/* "Voorkeuren beheren" en "Uitschrijven" (?unsubscribe=1) onderaan
               elke mail. Ingelogd: Profiel, bij de meldingsvoorkeuren; uitgelogd:
-              eerst inloggen, daarna daarheen. ?unsubscribe=1 zet nog niets
-              automatisch uit: daarvoor is eerst een ondertekend afmeldtoken nodig. */}
+              eerst inloggen, daarna daarheen. ?unsubscribe=1 zet niets
+              automatisch uit: deze algemene link draagt geen token. Alleen de
+              herinneringsmail heeft een eigen afmeldlink met token (/afmelden). */}
           <Route path="/account/notificaties" element={<Navigate to={voorkeurenPad(!!token)} replace />} />
+          {/* Afmelden voor herinneringen met één klik, zonder inloggen (onderdeel 8):
+              de link onderaan de herinneringsmail. De pagina POST het token en
+              toont altijd dezelfde neutrale bevestiging. */}
+          <Route path="/afmelden" element={
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Laden...</div>}>
+              <Afmelden />
+            </Suspense>
+          } />
           <Route path="/verifieer-email" element={<VerifyEmail />} />
           {/* BETAALVERZOEK-1: publieke betaalpagina — geen account nodig */}
           <Route path="/betaal/:token" element={

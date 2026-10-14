@@ -1026,6 +1026,23 @@ export const nl = {
  notif_push_uitleg:'Snelle melding bij koers-alerts en transactie-status',
  notif_whatsapp_label:'WhatsApp',
  notif_whatsapp_uitleg:'Tracking-update wanneer geld is afgeleverd',
+ // Eigen schakelaar voor de herinneringen bij een onafgemaakte aanmelding
+ // (ronde 3, onderdeel 8). Besluit-, informatie- en betaalmails lezen hem niet.
+ notif_herinneringen_label:'Herinneringen',
+ notif_herinneringen_uitleg:'Een herinnering per e-mail als je aanmelding nog niet af is',
+ notif_altijd:'Berichten over je identificatie, vragen van ons en betaalbevestigingen krijg je altijd. Die kun je niet uitzetten.',
+
+ // ── Afmelden voor herinneringen: /afmelden, de link onderaan de mail ─────
+ // Altijd dezelfde bevestiging, of het token nu klopt of niet: de pagina
+ // verraadt niet of een link geldig is of een account bestaat.
+ afmelden_klaar_titel:'Je ontvangt geen herinneringen meer',
+ afmelden_klaar_uitleg:'Je kunt ze altijd weer aanzetten in je profiel.',
+ afmelden_fout_titel:'Dat lukte nu niet',
+ afmelden_fout_uitleg:'Probeer het later opnieuw. Herinneringen zet je ook uit in je profiel.',
+ afmelden_onvolledig_titel:'Deze link is niet compleet',
+ afmelden_onvolledig_uitleg:'Herinneringen zet je ook uit in je profiel.',
+ afmelden_naar_voorkeuren:'Naar mijn voorkeuren',
+ afmelden_opnieuw:'Opnieuw proberen',
 
  // ── Recurring ical export (Verbetering III) ──────────────────────────────
  recurring_ical_knop:'Calendar (.ics)',

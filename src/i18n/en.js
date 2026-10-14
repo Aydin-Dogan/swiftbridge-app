@@ -1133,6 +1133,19 @@ export const en = {
  notif_push_uitleg:'Quick alerts for rate changes and transaction status',
  notif_whatsapp_label:'WhatsApp',
  notif_whatsapp_uitleg:'Tracking update when money is delivered',
+ notif_herinneringen_label:'Reminders',
+ notif_herinneringen_uitleg:'A reminder by email if your sign-up is not finished yet',
+ notif_altijd:'Messages about your identity verification, questions from us and payment confirmations always reach you. You cannot turn these off.',
+
+ // ── Unsubscribe from reminders: /afmelden ────────────────────────────────
+ afmelden_klaar_titel:'You will no longer receive reminders',
+ afmelden_klaar_uitleg:'You can turn them back on at any time in your profile.',
+ afmelden_fout_titel:'That did not work just now',
+ afmelden_fout_uitleg:'Please try again later. You can also turn reminders off in your profile.',
+ afmelden_onvolledig_titel:'This link is incomplete',
+ afmelden_onvolledig_uitleg:'You can also turn reminders off in your profile.',
+ afmelden_naar_voorkeuren:'Go to my preferences',
+ afmelden_opnieuw:'Try again',
 
  // ── Recurring ical export (Improvement III) ──────────────────────────────
  recurring_ical_knop:'Calendar (.ics)',
