@@ -348,10 +348,13 @@ function AppShell({ gebruiker, token, onLogout }) {
     .includes(gebruiker?.kycStatus);
   // KYB: zakelijke accounts zien de status van hun zakelijk profiel in de header
   const isZakelijk = gebruiker?.accountType === 'zakelijk';
-  // Zakelijke accounts beantwoorden doel, herkomst, landen en de PEP-vraag in de
-  // zakelijke aanvraag (KYB); die gaat in de KYC-poort voor. De vijf vragen
-  // zouden hun route alleen langer maken.
-  const vragenOverslaan = isZakelijk;
+  // De vijf vragen over doel en gebruik: of ze nodig zijn, zegt de server
+  // (GET /kyc/antwoorden), ook voor zakelijke accounts. Beantwoordt hun
+  // zakelijke aanvraag ze al voor de KYC-poort, dan krijgen ze het scherm niet.
+  // Hier stond tot de review van ronde 2 "zakelijk = altijd overslaan"; maar de
+  // poort leest die aanvraag alleen bij een zakelijk dossier, dus wie zich via
+  // de gewone verificatie identificeerde, kreeg de vragen nooit en kon nooit
+  // worden goedgekeurd.
   const kybStatus = gebruiker?.kybStatus || 'geen';
   const kybStatusLabel = t(kybStatus === 'geen' ? 'kyb_status_concept' : `kyb_status_${kybStatus}`);
 
@@ -538,7 +541,7 @@ function AppShell({ gebruiker, token, onLogout }) {
           {(actief === 'betaling' || actief === 'overschrijven') && (
             // Ontbreken de antwoorden over doel en gebruik, dan eerst die vijf
             // vragen en daarna meteen verder; wie al antwoordde, merkt niets.
-            <VragenVoorBetalen gebruikerId={gebruiker?.id} overslaan={vragenOverslaan}>
+            <VragenVoorBetalen gebruikerId={gebruiker?.id}>
             {kycGoedgekeurd
               ? (actief === 'betaling' ? <PaymentFlow token={token} /> : <Overschrijven />)
               : (
@@ -560,7 +563,7 @@ function AppShell({ gebruiker, token, onLogout }) {
           {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} />}
           {actief === 'kyc' && (
             // Nog niet goedgekeurd: eerst de vragen (stap 6), dan de identificatie.
-            <VragenVoorBetalen gebruikerId={gebruiker?.id} overslaan={vragenOverslaan || !kycNogTeBeoordelen}>
+            <VragenVoorBetalen gebruikerId={gebruiker?.id} overslaan={!kycNogTeBeoordelen}>
               <KYCFlow token={token} gebruiker={gebruiker} />
             </VragenVoorBetalen>
           )}
