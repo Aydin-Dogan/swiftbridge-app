@@ -9,7 +9,7 @@
  * zou een taalwissel ook naam en adres meesturen.
  * Mislukt de PATCH, dan wisselt de taal in de app toch.
  */
-import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useEffect } from 'react';
 import { render, screen, act } from '@testing-library/react';
 
@@ -257,6 +257,71 @@ describe('taal naar de server bij inloggen en registreren', () => {
     await rustig();
 
     expect(apiFetch).not.toHaveBeenCalled();
+  });
+
+  // Op een toestel waar nooit een taal is gekozen, gokt de app hem uit de
+  // browser (navigator.language; in jsdom 'en-US'). Die gok mag bij inloggen
+  // niet de taal overschrijven die de klant elders koos (review ronde 3). Hij
+  // mag wel de standaardtaal 'nl' van een nieuw account vervangen: de API legt
+  // bij registreren geen taal vast, en anders kreeg een klant met een Turkse
+  // browser na registreren Nederlandse mails.
+  describe('geen keuze op dit toestel, alleen de browsertaal', () => {
+    beforeEach(() => { localStorage.removeItem('swiftbridge_taal'); });
+    afterEach(() => { window.history.replaceState({}, '', '/'); });
+
+    test('de server heeft Turks: geen PATCH', async () => {
+      start();
+      act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'tr' }, { naarServer: true }));
+      await rustig();
+
+      expect(patches()).toHaveLength(0);
+      expect(localStorage.getItem('swiftbridge_taal')).toBeNull();
+    });
+
+    test('profiel zonder taal, de server heeft Turks: lezen, maar geen PATCH', async () => {
+      apiFetch.mockImplementation(() => Promise.resolve({ taal: 'tr' }));
+      start();
+      act(() => taalCtx.koppelAccount({ id: 'u1' }, { naarServer: true }));
+      await rustig();
+
+      expect(lezingen()).toHaveLength(1);
+      expect(patches()).toHaveLength(0);
+    });
+
+    test("de server heeft de standaardtaal 'nl' (nieuw account): de taal van de app gaat mee", async () => {
+      start();
+      act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'nl' }, { naarServer: true }));
+      await rustig();
+
+      expect(patches().map(([, o]) => o.body)).toEqual([{ taal: 'en' }]);
+    });
+
+    test('daarna een keuze via de taalkiezer: die gaat wel naar de server', async () => {
+      start();
+      act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'tr' }, { naarServer: true }));
+      act(() => taalCtx.zetTaal('ru'));
+      await rustig();
+
+      expect(patches().map(([, o]) => o.body)).toEqual([{ taal: 'ru' }]);
+    });
+
+    test('een taal uit het adres (/ru/...) is een keuze', async () => {
+      window.history.replaceState({}, '', '/ru/');
+      start();
+      act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'tr' }, { naarServer: true }));
+      await rustig();
+
+      expect(patches().map(([, o]) => o.body)).toEqual([{ taal: 'ru' }]);
+    });
+
+    test('alleen weergeven (de afmeldpagina) maakt van de gok geen keuze', async () => {
+      start();
+      act(() => taalCtx.zetTaal('nl', { bewaar: false }));
+      act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'tr' }, { naarServer: true }));
+      await rustig();
+
+      expect(patches()).toHaveLength(0);
+    });
   });
 
   test('een andere klant logt in: de taal van de vorige telt niet', async () => {
