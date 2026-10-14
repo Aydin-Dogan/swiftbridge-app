@@ -15,7 +15,9 @@
  *   via List-Unsubscribe-Post op de API;
  * - geen info-lek: de API antwoordt altijd { ok: true }, de pagina toont dus
  *   voor elk token dezelfde neutrale bevestiging en vraagt verder niets op;
- * - in de taal van de mail (?taal=), anders de taal van de app;
+ * - in de taal van de mail (?taal=), anders de taal van de app; ?taal= is
+ *   alleen voor deze pagina: niets in localStorage, geen PATCH naar de server,
+ *   en daarna weer de bewaarde taal;
  * - een storing (500, 429, geen verbinding) geeft 'Opnieuw proberen';
  * - zonder token gaat er niets naar de server;
  * - het token komt niet in de console.
@@ -259,6 +261,62 @@ describe('in de taal van de klant', () => {
         expect(verboden.test(waarde), `${taal}.${sleutel}: ${waarde}`).toBe(false);
       }
     }
+  });
+});
+
+// ?taal= is alleen de taal van deze pagina (review ronde 3). Een oude mail in
+// het Nederlands mag de taal die de klant later koos niet terugzetten: niet in
+// localStorage, en niet op de server, want mails en pushberichten volgen
+// gebruikers.taal.
+describe('?taal= geldt alleen voor deze pagina', () => {
+  const taalPatches = () => apiFetch.mock.calls.filter(([pad, o]) => pad === '/users/me' && o?.method === 'PATCH');
+
+  test('de pagina staat in de taal van de mail; de bewaarde taal blijft', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    start(`/afmelden?token=${TOKEN}&taal=nl`);
+
+    expect(await screen.findByText(nl.afmelden_vraag_titel)).toBeInTheDocument();
+    await rustig();
+    expect(localStorage.getItem('swiftbridge_taal')).toBe('tr');
+  });
+
+  test('ingelogd, Turks op de server: geen PATCH /users/me naar de taal van de mail', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    haalProfiel.mockResolvedValue(KLANT);
+    apiFetch.mockImplementation(async (pad, o) => {
+      if (pad === '/auth/pin/status') return { ingeschakeld: false };
+      if (pad === '/users/me' && !o?.method) return { taal: 'tr' };
+      return { ok: true };
+    });
+    start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
+    await screen.findByText(nl.afmelden_klaar_titel);
+    await rustig();
+
+    expect(taalPatches()).toHaveLength(0);
+    expect(localStorage.getItem('swiftbridge_taal')).toBe('tr');
+  });
+
+  test('na de pagina staat de app weer in de bewaarde taal', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
+    fireEvent.click(await screen.findByRole('button', { name: nl.afmelden_naar_voorkeuren }));
+
+    expect(await screen.findByTestId('inloggen')).toBeInTheDocument();
+    expect(document.documentElement.lang).toBe('tr');
+    expect(localStorage.getItem('swiftbridge_taal')).toBe('tr');
+  });
+
+  test('de taalkiezer op de pagina is wel een bewuste keuze: die blijft bewaard', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await screen.findByText(nl.afmelden_vraag_titel);
+
+    fireEvent.click(screen.getByTitle('Kies taal'));
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+    expect(await screen.findByText(en.afmelden_vraag_titel)).toBeInTheDocument();
+    expect(localStorage.getItem('swiftbridge_taal')).toBe('en');
   });
 });
 

@@ -26,6 +26,7 @@ function Kijker() {
 }
 const taalCtx = {
   zetTaal: (...a) => gevangen.ctx.zetTaal(...a),
+  herstelTaal: (...a) => gevangen.ctx.herstelTaal(...a),
   koppelAccount: (...a) => gevangen.ctx.koppelAccount(...a),
 };
 
@@ -170,6 +171,50 @@ describe('taalwissel naar de server', () => {
     await rustig();
 
     expect(patches()).toHaveLength(0);
+  });
+});
+
+// De afmeldpagina toont de taal van de mail (?taal=). Dat is geen keuze van de
+// klant: een oude mail mag zijn taal niet terugzetten (review ronde 3).
+describe('alleen weergeven: zetTaal(taal, { bewaar: false })', () => {
+  test('wisselt wat je ziet, maar niets in localStorage en niets naar de server', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    start();
+    act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'tr' }));
+    act(() => taalCtx.zetTaal('nl', { bewaar: false }));
+    await rustig();
+
+    expect(screen.getByTestId('tab').textContent).toBe('Profiel');
+    expect(document.documentElement.lang).toBe('nl');
+    expect(localStorage.getItem('swiftbridge_taal')).toBe('tr');
+    expect(apiFetch).not.toHaveBeenCalled();
+  });
+
+  test('herstelTaal zet de bewaarde taal terug, zonder aanroep', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    start();
+    act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'nl' }));
+    act(() => taalCtx.zetTaal('nl', { bewaar: false }));
+    act(() => taalCtx.herstelTaal());
+    await rustig();
+
+    expect(screen.getByTestId('tab').textContent).toBe('Profil');
+    expect(document.documentElement.lang).toBe('tr');
+    expect(apiFetch).not.toHaveBeenCalled();
+  });
+
+  test('daarna een echte keuze: die wordt wel bewaard en gaat naar de server', async () => {
+    localStorage.setItem('swiftbridge_taal', 'tr');
+    start();
+    act(() => taalCtx.koppelAccount({ id: 'u1', taal: 'tr' }));
+    act(() => taalCtx.zetTaal('nl', { bewaar: false }));
+    act(() => taalCtx.zetTaal('en'));
+    act(() => taalCtx.herstelTaal());
+    await rustig();
+
+    expect(screen.getByTestId('tab').textContent).toBe('Profile');
+    expect(localStorage.getItem('swiftbridge_taal')).toBe('en');
+    expect(patches().map(([, o]) => o.body)).toEqual([{ taal: 'en' }]);
   });
 });
 

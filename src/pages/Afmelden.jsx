@@ -21,6 +21,9 @@
  *   een foutmelding, met 'Opnieuw proberen'.
  * - Zonder token gaat er niets naar de server.
  * - In de taal van de mail (?taal=); ontbreekt die, dan de taal van de app.
+ *   ?taal= geldt alleen voor deze pagina (review ronde 3): niets in
+ *   localStorage, geen PATCH naar de server, en bij het verlaten weer de
+ *   bewaarde taal. De taalkiezer op de pagina is wel een keuze en wordt bewaard.
  * - Het token gaat niet naar de console of naar analytics.
  */
 import { useEffect, useRef, useState } from 'react';
@@ -34,7 +37,7 @@ const GELDIGE_TALEN = TALEN.map((l) => l.code);
 
 export default function Afmelden() {
   const [params] = useSearchParams();
-  const { t, taal, zetTaal } = useTaal();
+  const { t, taal, zetTaal, herstelTaal } = useTaal();
   const navigate = useNavigate();
 
   // Eén keer lezen bij het openen.
@@ -58,9 +61,16 @@ export default function Afmelden() {
 
   useEffect(() => {
     actief.current = true;
-    // De taal van de mail; een onbekende waarde negeren.
-    if (GELDIGE_TALEN.includes(linkTaal) && linkTaal !== taal) zetTaal(linkTaal);
-    return () => { actief.current = false; };
+    // De taal van de mail, alleen voor deze pagina: niet bewaren en niet naar
+    // de server, anders zet een oude mail de taal van de klant terug. Een
+    // onbekende waarde negeren.
+    const tijdelijk = GELDIGE_TALEN.includes(linkTaal) && linkTaal !== taal;
+    if (tijdelijk) zetTaal(linkTaal, { bewaar: false });
+    return () => {
+      actief.current = false;
+      // Weg van deze pagina: weer de bewaarde taal (of wat de klant hier zelf koos).
+      if (tijdelijk) herstelTaal();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

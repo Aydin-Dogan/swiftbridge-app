@@ -1,7 +1,7 @@
 /**
  * i18n — Eenvoudig, lichtgewicht (geen externe library)
  *
- * Gebruik: const { t, taal, zetTaal } = useTaal();
+ * Gebruik: const { t, taal, zetTaal, herstelTaal } = useTaal();
  *          <h1>{t('welkom')}</h1>
  *          {t('hallo_naam', { naam: 'Aydin' })}
  */
@@ -35,7 +35,7 @@ function detecteerTaal() {
   return VERTALINGEN[browserTaal] ? browserTaal : 'nl';
 }
 
-const TaalContext = createContext({ taal: 'nl', t: k => k, zetTaal: () => {}, koppelAccount: () => {} });
+const TaalContext = createContext({ taal: 'nl', t: k => k, zetTaal: () => {}, herstelTaal: () => {}, koppelAccount: () => {} });
 
 export function TaalProvider({ children }) {
   const [taal, setTaal] = useState(detecteerTaal);
@@ -80,13 +80,24 @@ export function TaalProvider({ children }) {
     if (naarServer) taalNaarServer(taalNu.current);
   }, [taalNaarServer]);
 
-  function zetTaal(nieuweTaal) {
+  // Met { bewaar: false } wisselt alleen wat je ziet: niets in localStorage,
+  // niets naar de server, en taalNu blijft de bewaarde taal. Voor de
+  // afmeldpagina in de taal van de mail; een oude mail mag de taal die de klant
+  // later koos niet terugzetten (review ronde 3). herstelTaal() zet daarna de
+  // bewaarde taal weer terug.
+  function zetTaal(nieuweTaal, { bewaar = true } = {}) {
     if (!VERTALINGEN[nieuweTaal]) return;
     setTaal(nieuweTaal);
+    document.documentElement.lang = nieuweTaal;
+    if (!bewaar) return;
     taalNu.current = nieuweTaal;
     localStorage.setItem(STORAGE_KEY, nieuweTaal);
-    document.documentElement.lang = nieuweTaal;
     taalNaarServer(nieuweTaal);
+  }
+
+  function herstelTaal() {
+    setTaal(taalNu.current);
+    document.documentElement.lang = taalNu.current;
   }
 
   useEffect(() => {
@@ -125,7 +136,7 @@ export function TaalProvider({ children }) {
   }, [taal]);
 
   return (
-    <TaalContext.Provider value={{ taal, t, zetTaal, koppelAccount }}>
+    <TaalContext.Provider value={{ taal, t, zetTaal, herstelTaal, koppelAccount }}>
       {children}
     </TaalContext.Provider>
   );
