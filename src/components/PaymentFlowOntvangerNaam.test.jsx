@@ -64,7 +64,7 @@ describe('PaymentFlow: naam van de ontvanger', () => {
   });
   afterEach(() => { globalThis.fetch = origineleFetch; vi.restoreAllMocks(); });
 
-  test('een naam van alleen een spatie of één letter wordt geweigerd, met uitleg', async () => {
+  test('een naam van alleen een spatie of één letter wordt geweigerd, met uitleg na het verlaten van het veld', async () => {
     globalThis.fetch = maakFetchMock(routes());
     vulOverboekingVooraf();
     renderMetRouter(<PaymentFlow token="oefen-token" />);
@@ -74,10 +74,50 @@ describe('PaymentFlow: naam van de ontvanger', () => {
 
     fireEvent.change(veld, { target: { value: ' ' } });
     expect(knop()).toBeDisabled();
+    fireEvent.blur(veld);
     expect(screen.getByText(FOUT)).toBeInTheDocument();
 
     fireEvent.change(veld, { target: { value: ' A ' } });
     expect(knop()).toBeDisabled();
+  });
+
+  // Review ronde 3: na de 'M' van 'Mehmet' verscheen meteen een rode
+  // role=alert, die een schermlezer midden in het typen onderbreekt. Net als
+  // Overschrijven pas een fout na een poging: hier het verlaten van het veld.
+  test('tijdens het typen nog geen foutmelding: na de eerste letter alleen de hint en een uitgeschakelde knop', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    const veld = await screen.findByPlaceholderText('Mehmet Yilmaz');
+    fireEvent.focus(veld);
+    fireEvent.change(veld, { target: { value: 'M' } });
+
+    expect(knop()).toBeDisabled();
+    expect(screen.queryByText(FOUT)).not.toBeInTheDocument();
+    expect(screen.queryAllByRole('alert').filter((e) => e.textContent === FOUT)).toHaveLength(0);
+    expect(screen.getByText(HINT)).toBeInTheDocument();
+    expect(veld).toHaveAttribute('aria-describedby', 'pf-ontvanger-hint');
+
+    fireEvent.blur(veld);
+    expect(screen.getByText(FOUT)).toHaveAttribute('role', 'alert');
+    expect(veld).toHaveAttribute('aria-describedby', 'pf-ontvanger-fout');
+
+    // Verder typen tot een geldige naam: de fout verdwijnt weer.
+    fireEvent.change(veld, { target: { value: 'Mehmet' } });
+    expect(screen.queryByText(FOUT)).not.toBeInTheDocument();
+    expect(screen.getByText(HINT)).toBeInTheDocument();
+  });
+
+  test('een leeg veld verlaten geeft geen foutmelding, alleen een uitgeschakelde knop', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    const veld = await screen.findByPlaceholderText('Mehmet Yilmaz');
+    fireEvent.focus(veld);
+    fireEvent.blur(veld);
+
+    expect(knop()).toBeDisabled();
+    expect(screen.queryByText(FOUT)).not.toBeInTheDocument();
   });
 
   test.each(['Mehmet Yilmaz', 'Oefen Ontvanger', 'Oefen Broer', 'Al'])('%s blijft geldig', async (naam) => {

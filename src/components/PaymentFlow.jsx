@@ -214,7 +214,8 @@ function OntvangerModal({ onKies, onSluit }) {
 // Op klik op suggestie → vult IBAN + bank + label automatisch in.
 // Vereist >=2 karakters om suggesties te tonen. Hoofdletters en Turkse letters
 // tellen niet: 'yilmaz' vindt 'Yılmaz' (lib/naamNormaal).
-function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setBijnaam, beschrijvingId }) {
+// onVerlaat: het veld verliest de focus (StapBedrag toont pas dan een fout).
+function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setBijnaam, beschrijvingId, onVerlaat }) {
   const [alle, setAlle] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -250,7 +251,7 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
         value={ontvanger}
         onChange={(e) => { setOntvanger(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 200)}
+        onBlur={() => { onVerlaat?.(); setTimeout(() => setOpen(false), 200); }}
         placeholder="Mehmet Yilmaz"
         className="w-full border border-border rounded-md px-4 py-3 outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
         autoComplete="off"
@@ -318,6 +319,12 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   // Hier was elke niet-lege tekst goed, ook een spatie (bouwplan ronde 3, onderdeel 4).
   const naamOK = ontvangerNaamGeldig(ontvanger);
   const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= MIN_BEDRAG && naamOK && ontvangerInfoOK;
+  // De fout pas na het verlaten van het veld, zoals Overschrijven pas na een
+  // poging. Anders verscheen na de 'M' van 'Mehmet' al een rode role=alert die
+  // een schermlezer midden in het typen onderbreekt (review ronde 3). Tijdens
+  // het typen staan de hint en een uitgeschakelde knop.
+  const [naamAangeraakt, setNaamAangeraakt] = useState(false);
+  const naamFout = naamAangeraakt && !!ontvanger && !naamOK;
 
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5 animate-fade-up">
@@ -485,11 +492,13 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           setIban={setIban}
           setOntvangerBank={setOntvangerBank}
           setBijnaam={setBijnaam}
-          beschrijvingId={ontvanger && !naamOK ? 'pf-ontvanger-fout' : 'pf-ontvanger-hint'}
+          beschrijvingId={naamFout ? 'pf-ontvanger-fout' : 'pf-ontvanger-hint'}
+          onVerlaat={() => setNaamAangeraakt(true)}
         />
         {/* Zelfde opbouw als VeldGroep: een fout vervangt de hint. Pas een fout
-            als er iets staat; een leeg veld zet alleen de knop uit. */}
-        {ontvanger && !naamOK ? (
+            als er iets staat en het veld verlaten is; een leeg veld zet alleen
+            de knop uit. */}
+        {naamFout ? (
           <p id="pf-ontvanger-fout" role="alert" className="text-[11px] text-fg-error mt-1">{t('ovs_naam_fout')}</p>
         ) : (
           <p id="pf-ontvanger-hint" className="text-[11px] text-ink-3 mt-1">{t('ontvanger_naam_hint')}</p>
