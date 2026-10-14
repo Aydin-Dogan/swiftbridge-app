@@ -541,7 +541,7 @@ function AppShell({ gebruiker, token, onLogout }) {
           {(actief === 'betaling' || actief === 'overschrijven') && (
             // Ontbreken de antwoorden over doel en gebruik, dan eerst die vijf
             // vragen en daarna meteen verder; wie al antwoordde, merkt niets.
-            <VragenVoorBetalen gebruikerId={gebruiker?.id}>
+            <VragenVoorBetalen gebruikerId={gebruiker?.id} goedgekeurd={kycGoedgekeurd}>
             {kycGoedgekeurd
               ? (actief === 'betaling' ? <PaymentFlow token={token} /> : <Overschrijven />)
               : (

@@ -14,7 +14,7 @@
  * ander land kan uit een lijst.
  *
  * Props: gebruikerId, beginwaarden (eerdere antwoorden of null),
- *        onKlaar({ beantwoord, opnieuwInBeoordeling })
+ *        onKlaar({ beantwoord, opnieuwInBeoordeling, pep })
  */
 import { useId, useMemo, useState } from 'react';
 import { useTaal } from '../../i18n';

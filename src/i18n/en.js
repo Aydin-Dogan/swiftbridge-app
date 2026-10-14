@@ -722,6 +722,18 @@ export const en = {
  benef_bijnaam:'Nickname (optional)',
  benef_bijnaam_placeholder:'e.g. Mom, Brother Ahmet',
  benef_bijnaam_uitleg:'After a successful payment, this recipient is listed in My recipients. You can delete them there at any time.',
+ benef_wie_titel:'Who is this to you?',
+ benef_snel_mama:'Mom',
+ benef_snel_papa:'Dad',
+ benef_snel_oma:'Grandma',
+ benef_snel_opa:'Grandpa',
+ benef_snel_broer:'Brother',
+ benef_snel_zus:'Sister',
+ benef_snel_oom:'Uncle',
+ benef_snel_tante:'Aunt',
+ benef_snel_partner:'Partner',
+ benef_snel_kind:'Child',
+ benef_snel_vriend:'Friend',
  benef_iban:'IBAN',
  benef_iban_geldig:'Valid IBAN',
  benef_bank:'Bank',
@@ -2004,5 +2016,8 @@ export const en = {
  kyc_vragen_verder:'Save and continue',
  kyc_vragen_nakijken_titel:'Thank you for your answers',
  kyc_vragen_nakijken_tekst:'We will review them first. We will let you know as soon as you can send money again.',
- kyc_vragen_naar_overzicht:'Go to your overview'
+ kyc_vragen_naar_overzicht:'Go to your overview',
+ kyc_vragen_pep_tekst:'You indicated that you, or someone in your family, are politically exposed. That is why we review your application separately, which takes longer than usual. We will let you know by email how things proceed.',
+ kyc_vragen_pep_apart_tekst:'You indicated that you, or someone in your family, are politically exposed. That is why we review your application separately, which takes longer than usual. Have you not finished your identification yet? Please do that first; without it we cannot review anything. After that, we will let you know by email how things proceed.',
+ kyc_vragen_pep_verder:'Continue'
 };

@@ -723,6 +723,18 @@ export const nl = {
  benef_bijnaam:'Bijnaam (optioneel)',
  benef_bijnaam_placeholder:'bijv. Mama, Broer Ahmet',
  benef_bijnaam_uitleg:'Na een geslaagde betaling staat deze ontvanger in Mijn ontvangers. Daar kun je hem altijd verwijderen.',
+ benef_wie_titel:'Wie is dit voor jou?',
+ benef_snel_mama:'Mama',
+ benef_snel_papa:'Papa',
+ benef_snel_oma:'Oma',
+ benef_snel_opa:'Opa',
+ benef_snel_broer:'Broer',
+ benef_snel_zus:'Zus',
+ benef_snel_oom:'Oom',
+ benef_snel_tante:'Tante',
+ benef_snel_partner:'Partner',
+ benef_snel_kind:'Kind',
+ benef_snel_vriend:'Vriend',
  benef_iban:'IBAN',
  benef_iban_geldig:'Geldig IBAN',
  benef_bank:'Bank',
@@ -2006,5 +2018,8 @@ export const nl = {
  kyc_vragen_verder:'Opslaan en verder',
  kyc_vragen_nakijken_titel:'Bedankt voor je antwoorden',
  kyc_vragen_nakijken_tekst:'We bekijken ze eerst. Je krijgt bericht zodra je weer geld kunt overmaken.',
- kyc_vragen_naar_overzicht:'Naar je overzicht'
+ kyc_vragen_naar_overzicht:'Naar je overzicht',
+ kyc_vragen_pep_tekst:'Je hebt aangegeven dat jij of iemand uit je familie politiek prominent is. Daarom beoordelen we je aanvraag apart, en dat duurt langer dan normaal. We laten je per e-mail weten hoe het verder gaat.',
+ kyc_vragen_pep_apart_tekst:'Je hebt aangegeven dat jij of iemand uit je familie politiek prominent is. Daarom beoordelen we je aanvraag apart, en dat duurt langer dan normaal. Heb je je identificatie nog niet afgerond? Doe dat dan eerst; zonder identificatie kunnen we niets beoordelen. Daarna laten we je per e-mail weten hoe het verder gaat.',
+ kyc_vragen_pep_verder:'Verder'
 };

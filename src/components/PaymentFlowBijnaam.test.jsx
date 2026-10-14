@@ -120,6 +120,86 @@ describe('PaymentFlow: bijnaam in plaats van het vinkje', () => {
     expect(await screen.findByLabelText('Bijnaam (optioneel)')).toHaveValue('');
   });
 
+  // Besluit Aydin 14-10-2026: de knoppen "Wie is dit voor jou?" (Mama, Papa, …)
+  // bewaarden sinds de bijnaam niets meer. Nu vullen ze de bijnaam in.
+  test('knop Mama vult de bijnaam in, en die gaat mee met de opgeslagen ontvanger', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    vulOverboekingVooraf();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    const knop = await screen.findByRole('button', { name: 'Mama' });
+    expect(knop).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.click(knop);
+    expect(screen.getByLabelText('Bijnaam (optioneel)')).toHaveValue('Mama');
+    expect(knop).toHaveAttribute('aria-pressed', 'true');
+
+    await bevestigEnBetaal();
+    const bewaar = aanroepen().find((a) => a.methode === 'POST' && /\/beneficiaries$/.test(a.url));
+    expect(JSON.parse(bewaar.body)).toMatchObject({ bijnaam: 'Mama' });
+  });
+
+  test('nog eens op dezelfde knop: de bijnaam is weer leeg', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    vulOverboekingVooraf();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    const knop = await screen.findByRole('button', { name: 'Papa' });
+    fireEvent.click(knop);
+    fireEvent.click(knop);
+    expect(screen.getByLabelText('Bijnaam (optioneel)')).toHaveValue('');
+    expect(knop).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('een andere knop vervangt de bijnaam; zelf typen kan altijd', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    vulOverboekingVooraf();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Mama' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Oma' }));
+    const veld = screen.getByLabelText('Bijnaam (optioneel)');
+    expect(veld).toHaveValue('Oma');
+
+    fireEvent.change(veld, { target: { value: 'Oma Ayse' } });
+    expect(screen.getByRole('button', { name: 'Oma' })).toHaveAttribute('aria-pressed', 'false');
+    // "Anders" is geen bijnaam: wie iets anders wil, typt het zelf.
+    expect(screen.queryByRole('button', { name: 'Anders' })).not.toBeInTheDocument();
+  });
+
+  // Review 14-10-2026: na een snelknop een bestaande ontvanger kiezen liet de
+  // oude bijnaam staan. Na de betaling kreeg die ontvanger dan de verkeerde
+  // bijnaam (POST → 409 → PATCH).
+  test('bestaande ontvanger kiezen: zijn eigen bijnaam staat er, niet die van de knop', async () => {
+    const lijst = [
+      { id: 'b1', naam: 'Oefen Zus', iban: 'NL91ABNA0417164300', bank: 'ABN AMRO', valuta: 'TRY', bijnaam: 'Zus' },
+      { id: 'b2', naam: 'Oefen Neef', iban: 'NL02RABO0123456789', bank: 'Rabobank', valuta: 'TRY', bijnaam: null },
+    ];
+    globalThis.fetch = maakFetchMock(routes().map((r) => (r.pad === '/beneficiaries' && !r.methode
+      ? { ...r, body: { beneficiaries: lijst } } : r)));
+    vulOverboekingVooraf();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Broer' }));
+    fireEvent.click(screen.getByRole('button', { name: /Kies bestaande ontvanger/ }));
+    fireEvent.click(await screen.findByRole('button', { name: /Oefen Zus/ }));
+    expect(await screen.findByLabelText('Bijnaam (optioneel)')).toHaveValue('Zus');
+    expect(screen.getByRole('button', { name: 'Broer' })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: 'Zus' })).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.click(screen.getByRole('button', { name: /Kies bestaande ontvanger/ }));
+    fireEvent.click(await screen.findByRole('button', { name: /Oefen Neef/ }));
+    expect(await screen.findByLabelText('Bijnaam (optioneel)')).toHaveValue('');
+  });
+
+  test('de knop Vriend vult "Vriend" in, zonder "(in)"', async () => {
+    globalThis.fetch = maakFetchMock(routes());
+    vulOverboekingVooraf();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Vriend' }));
+    expect(screen.getByLabelText('Bijnaam (optioneel)')).toHaveValue('Vriend');
+  });
+
   test('bijnaam leeg: de app slaat zelf niets op (dat doet de server na de betaling)', async () => {
     globalThis.fetch = maakFetchMock(routes());
     vulOverboekingVooraf();

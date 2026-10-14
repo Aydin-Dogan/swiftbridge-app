@@ -722,6 +722,18 @@ export const tr = {
  benef_bijnaam:'Takma ad (isteğe bağlı)',
  benef_bijnaam_placeholder:'örn. Anne, Kardeş Ahmet',
  benef_bijnaam_uitleg:'Başarılı bir ödemeden sonra bu alıcı Alıcılarım listesinde yer alır. Onu orada istediğiniz zaman silebilirsiniz.',
+ benef_wie_titel:'Bu kişi sizin neyiniz?',
+ benef_snel_mama:'Anne',
+ benef_snel_papa:'Baba',
+ benef_snel_oma:'Büyükanne',
+ benef_snel_opa:'Dede',
+ benef_snel_broer:'Erkek kardeş',
+ benef_snel_zus:'Kız kardeş',
+ benef_snel_oom:'Amca',
+ benef_snel_tante:'Teyze',
+ benef_snel_partner:'Eş',
+ benef_snel_kind:'Çocuk',
+ benef_snel_vriend:'Arkadaş',
  benef_iban:'IBAN',
  benef_iban_geldig:'Geçerli IBAN',
  benef_bank:'Banka',
@@ -2004,5 +2016,8 @@ export const tr = {
  kyc_vragen_verder:'Kaydet ve devam et',
  kyc_vragen_nakijken_titel:'Yanıtlarınız için teşekkürler',
  kyc_vragen_nakijken_tekst:'Önce yanıtlarınızı inceliyoruz. Tekrar para gönderebildiğinizde size haber vereceğiz.',
- kyc_vragen_naar_overzicht:'Genel bakışa dön'
+ kyc_vragen_naar_overzicht:'Genel bakışa dön',
+ kyc_vragen_pep_tekst:'Sizin veya ailenizden birinin siyasi nüfuz sahibi bir kişi olduğunu belirttiniz. Bu nedenle başvurunuzu ayrıca değerlendiriyoruz; bu, normalden uzun sürer. Sürecin nasıl ilerleyeceğini size e-posta ile bildireceğiz.',
+ kyc_vragen_pep_apart_tekst:'Sizin veya ailenizden birinin siyasi nüfuz sahibi bir kişi olduğunu belirttiniz. Bu nedenle başvurunuzu ayrıca değerlendiriyoruz; bu, normalden uzun sürer. Kimlik doğrulamanızı henüz tamamlamadınız mı? Lütfen önce bunu yapın; kimlik doğrulaması olmadan hiçbir değerlendirme yapamayız. Ardından sürecin nasıl ilerleyeceğini size e-posta ile bildireceğiz.',
+ kyc_vragen_pep_verder:'Devam et'
 };

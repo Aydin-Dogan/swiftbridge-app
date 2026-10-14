@@ -29,12 +29,28 @@ const beantwoordDoor = new Set();
 // tik op Overmaken weer in de betaalflow, en weigerde de server pas aan het eind.
 const terugInBeoordeling = new Set();
 
+// Zei de klant politiek prominent te zijn, dan beslist later de EMI-partner
+// (besluit Aydin 14-10-2026). De app belooft dan niet dat hij straks weer kan
+// overmaken, maar zegt dat het apart en langer gaat, ook bij het volgende scherm.
+const pepGemeld = new Set();
+
 export function isBekendBeantwoord(gebruikerId) {
   return Boolean(gebruikerId) && beantwoordDoor.has(gebruikerId);
 }
 
 export function isTerugInBeoordeling(gebruikerId) {
   return Boolean(gebruikerId) && terugInBeoordeling.has(gebruikerId);
+}
+
+export function isPepGemeld(gebruikerId) {
+  return Boolean(gebruikerId) && pepGemeld.has(gebruikerId);
+}
+
+// Een goedgekeurde klant die zegt politiek prominent te zijn, betaalt in deze
+// sessie niet meer, ook als het antwoord van de server niet aankwam en een
+// tweede poging "niets veranderd" teruggaf (review 14-10-2026).
+export function markeerTerugInBeoordeling(gebruikerId) {
+  if (gebruikerId) terugInBeoordeling.add(gebruikerId);
 }
 
 // GET /kyc/antwoorden → { beantwoord, antwoorden }
@@ -45,20 +61,27 @@ export async function haalAntwoorden(gebruikerId) {
   return { beantwoord, antwoorden: d?.antwoorden || null };
 }
 
-// PUT /kyc/antwoorden → { beantwoord, opnieuwInBeoordeling }
+// PUT /kyc/antwoorden → { beantwoord, opnieuwInBeoordeling, pep }
 // opnieuwInBeoordeling: een al goedgekeurde klant gaf een antwoord dat het
 // risico verandert; een medewerker kijkt eerst, de klant kan nog niet betalen.
+// pep: wat de klant zelf antwoordde op de vraag of hij politiek prominent is.
 export async function slaAntwoordenOp(gebruikerId, antwoorden) {
   const d = await apiFetch('/kyc/antwoorden', { method: 'PUT', body: antwoorden });
   const beantwoord = d?.beantwoord === true;
   const opnieuwInBeoordeling = d?.opnieuwInBeoordeling === true;
+  const pep = antwoorden?.pep === true;
   if (beantwoord && gebruikerId) beantwoordDoor.add(gebruikerId);
   if (opnieuwInBeoordeling && gebruikerId) terugInBeoordeling.add(gebruikerId);
-  return { beantwoord, opnieuwInBeoordeling };
+  if (gebruikerId) {
+    if (pep) pepGemeld.add(gebruikerId);
+    else pepGemeld.delete(gebruikerId);
+  }
+  return { beantwoord, opnieuwInBeoordeling, pep };
 }
 
 // Alleen voor de tests: begin met een lege sessie.
 export function vergeetBeantwoord() {
   beantwoordDoor.clear();
   terugInBeoordeling.clear();
+  pepGemeld.clear();
 }

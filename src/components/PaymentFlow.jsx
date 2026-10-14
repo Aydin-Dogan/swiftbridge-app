@@ -116,7 +116,11 @@ function valideerIBAN(iban) {
   return { geldig: true, fout: null };
 }
 
-// ── Emotionele labels voor begunstigden (familie-focus) ───────────────────────
+// ── Snelknoppen voor de bijnaam (besluit Aydin 14-10-2026) ────────────────────
+// Vertaald via benef_snel_<id>. Geen "Anders": wie iets anders wil, typt het zelf.
+const BIJNAAM_SNELKEUZES = ['mama', 'papa', 'oma', 'opa', 'broer', 'zus', 'oom', 'tante', 'partner', 'kind', 'vriend'];
+
+// ── Oude labels, alleen nog voor de lijst "Kies opgeslagen" op het toestel ───
 const FAMILIE_LABELS = [
   { id: 'mama', label: 'Mama' },
   { id: 'papa', label: 'Papa' },
@@ -208,7 +212,7 @@ function OntvangerModal({ onKies, onSluit }) {
 // Input voor ontvanger-naam met live suggesties uit /beneficiaries.
 // Op klik op suggestie → vult IBAN + bank + label automatisch in.
 // Vereist >=2 karakters om suggesties te tonen.
-function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setOntvangerLabel }) {
+function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setBijnaam }) {
   const [alle, setAlle] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -238,7 +242,7 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
     setOntvanger(b.naam);
     if (b.iban && setIban) setIban(b.iban);
     if (b.bank && setOntvangerBank) setOntvangerBank(b.bank);
-    if (b.bijnaam && setOntvangerLabel) setOntvangerLabel(b.bijnaam);
+    setBijnaam?.(b.bijnaam || '');
     setOpen(false);
   }
 
@@ -283,7 +287,7 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
   );
 }
 
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, bankBeschikbaar = true, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bijnaam, setBijnaam, favorieten, toggleFavoriet }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, bankBeschikbaar = true, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, token, bijnaam, setBijnaam, favorieten, toggleFavoriet }) {
   const { t } = useTaal();
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
@@ -459,7 +463,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           if (b?.iban) setIban(b.iban);
           if (b?.bank) setOntvangerBank(b.bank);
           if (b?.valuta) setValuta(b.valuta);
-          if (b?.bijnaam || b?.label) setOntvangerLabel?.(b.bijnaam || b.label);
+          // De bijnaam van de gekozen ontvanger, nooit een oude (review 14-10-2026).
+          setBijnaam?.(b?.bijnaam || '');
         }}
       />
 
@@ -477,28 +482,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           setOntvanger={setOntvanger}
           setIban={setIban}
           setOntvangerBank={setOntvangerBank}
-          setOntvangerLabel={setOntvangerLabel}
+          setBijnaam={setBijnaam}
         />
-
-        {/* Familie label selector */}
-        {ontvanger && (
-          <div className="mt-3">
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">Wie is dit voor jou?</p>
-            <div className="flex gap-1.5 flex-wrap">
-              {FAMILIE_LABELS.map(l => (
-                <button key={l.id} type="button"
-                  onClick={() => setOntvangerLabel?.(l.id === ontvangerLabel ? null : l.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition flex items-center gap-1 ${
-                    l.id === ontvangerLabel
-                      ? 'bg-brand-600 text-white'
-                      : 'bg-gray-100 text-ink-2 hover:bg-brand-100 hover:text-brand-700'
-                  }`}>
-                  <span>{l.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Uitbetaal methode toggle: bank vs Papara */}
@@ -612,6 +597,26 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
                 className="w-full border border-border rounded-md px-4 py-3 outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
               />
               <p className="text-[10px] text-gray-400 mt-1">{t('benef_bijnaam_uitleg')}</p>
+              {/* Snelknoppen vullen de bijnaam in (besluit Aydin 14-10-2026); nog
+                  eens tikken maakt hem leeg. Zelf typen kan altijd. */}
+              <p id="pf-bijnaam-snel" className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mt-3 mb-2">{t('benef_wie_titel')}</p>
+              <div role="group" aria-labelledby="pf-bijnaam-snel" className="flex gap-1.5 flex-wrap">
+                {BIJNAAM_SNELKEUZES.map((id) => {
+                  const tekst = t(`benef_snel_${id}`);
+                  const gekozen = (bijnaam || '').trim().toLocaleLowerCase() === tekst.toLocaleLowerCase();
+                  return (
+                    <button key={id} type="button" aria-pressed={gekozen}
+                      onClick={() => setBijnaam?.(gekozen ? '' : tekst)}
+                      className={`px-3 py-1.5 min-h-[36px] rounded-full text-xs font-semibold transition ${
+                        gekozen
+                          ? 'bg-brand-600 text-white'
+                          : 'bg-gray-100 text-ink-2 hover:bg-brand-100 hover:text-brand-700'
+                      }`}>
+                      {tekst}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
@@ -666,7 +671,7 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           onKies={o => {
             setOntvanger(o.naam);
             setIban(o.iban);
-            setOntvangerLabel?.(o.label || null);
+            setBijnaam?.('');
             setToonOntvangers(false);
           }}
           onSluit={() => setToonOntvangers(false)} />
@@ -1123,7 +1128,6 @@ export default function PaymentFlow({ token }) {
   const [valuta, setValuta ] = useState('TRY');
   const [snelheid, setSnelheid ] = useState('express'); // express | economy
   const [ontvanger, setOntvanger ] = useState('');
-  const [ontvangerLabel, setOntvangerLabel] = useState(null);
   const [iban, setIban ] = useState('');
   const [uitbetaalMethode, setUitbetaalMethode] = useState('bank'); // bank | papara
   // Welke uitbetaalmethodes kunnen nu echt (21-9): in live-modus zonder bank-rail
@@ -1566,7 +1570,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bijnaam={bijnaam} setBijnaam={setBijnaam} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} bankBeschikbaar={bankBeschikbaar} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
+      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bijnaam={bijnaam} setBijnaam={setBijnaam} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} bankBeschikbaar={bankBeschikbaar} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
         // WL-2: bij binnenkort-valuta open de wachtlijst-modal i.p.v. door
         // naar betaling. Voorkomt dat klant iDEAL betaalt voor onmogelijke uitbetaling.
         if (getValuta(valuta)?.status === 'binnenkort') {

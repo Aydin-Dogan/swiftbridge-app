@@ -658,6 +658,18 @@ export const az = {
  benef_bijnaam:'Ləqəb (istəyə bağlı)',
  benef_bijnaam_placeholder:'məs. Ana, Qardaş Əhməd',
  benef_bijnaam_uitleg:'Uğurlu ödənişdən sonra bu alıcı Alıcılarım siyahısında görünür. Onu orada istənilən vaxt silə bilərsiniz.',
+ benef_wie_titel:'Bu şəxs sizin nəyinizdir?',
+ benef_snel_mama:'Ana',
+ benef_snel_papa:'Ata',
+ benef_snel_oma:'Nənə',
+ benef_snel_opa:'Baba',
+ benef_snel_broer:'Qardaş',
+ benef_snel_zus:'Bacı',
+ benef_snel_oom:'Əmi',
+ benef_snel_tante:'Xala',
+ benef_snel_partner:'Həyat yoldaşı',
+ benef_snel_kind:'Uşaq',
+ benef_snel_vriend:'Dost',
  benef_iban:'IBAN',
  benef_iban_geldig:'Etibarlı IBAN',
  benef_bank:'Bank',
@@ -1996,5 +2008,8 @@ export const az = {
  kyc_vragen_verder:'Yadda saxla və davam et',
  kyc_vragen_nakijken_titel:'Cavablarınız üçün təşəkkür edirik',
  kyc_vragen_nakijken_tekst:'Əvvəlcə cavablarınızı nəzərdən keçiririk. Yenidən pul göndərə bildiyiniz zaman sizə xəbər verəcəyik.',
- kyc_vragen_naar_overzicht:'İcmala qayıt'
+ kyc_vragen_naar_overzicht:'İcmala qayıt',
+ kyc_vragen_pep_tekst:'Sizin və ya ailənizdən kiminsə siyasi nüfuzlu şəxs olduğunu qeyd etdiniz. Buna görə müraciətinizi ayrıca nəzərdən keçiririk və bu, adi haldan daha uzun çəkir. Prosesin necə davam edəcəyini sizə e-poçtla bildirəcəyik.',
+ kyc_vragen_pep_apart_tekst:'Sizin və ya ailənizdən kiminsə siyasi nüfuzlu şəxs olduğunu qeyd etdiniz. Buna görə müraciətinizi ayrıca nəzərdən keçiririk və bu, adi haldan daha uzun çəkir. Şəxsiyyətinizin təsdiqini hələ tamamlamamısınız? Əvvəlcə bunu edin; təsdiq olmadan heç nəyi nəzərdən keçirə bilmərik. Bundan sonra prosesin necə davam edəcəyini sizə e-poçtla bildirəcəyik.',
+ kyc_vragen_pep_verder:'Davam et'
 };

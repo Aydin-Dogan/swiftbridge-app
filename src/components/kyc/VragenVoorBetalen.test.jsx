@@ -199,6 +199,86 @@ describe('VragenVoorBetalen', () => {
     expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
   });
 
+  // Besluit Aydin 14-10-2026: over een politiek prominente klant beslist later de
+  // EMI-partner. De app belooft dan niet "zodra je weer geld kunt overmaken",
+  // maar zegt eerlijk dat het apart en langer gaat.
+  test('PEP ja (nieuwe klant): eerlijke uitleg, en daarna kan hij verder met zijn aanvraag', async () => {
+    toon([
+      { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },
+      { methode: 'PUT', pad: '/kyc/antwoorden', body: { beantwoord: true, versie: 1, opnieuwInBeoordeling: false } },
+    ]);
+    await screen.findByRole('heading', { name: 'Vijf korte vragen' });
+
+    beantwoordAlles({ pep: 'Ja' });
+    fireEvent.click(screen.getByRole('button', { name: 'Opslaan en verder' }));
+
+    expect(await screen.findByText(/beoordelen we je aanvraag apart/)).toBeInTheDocument();
+    expect(screen.getByText(/duurt langer dan normaal/)).toBeInTheDocument();
+    // Review 14-10-2026: zonder identificatie is er niets te beoordelen en komt
+    // er ook geen mail. De klant moet dus weten dat die stap eerst komt.
+    expect(screen.getByText(/Heb je je identificatie nog niet afgerond\? Doe dat dan eerst/)).toBeInTheDocument();
+    expect(screen.queryByText(/zodra je weer geld kunt overmaken/)).not.toBeInTheDocument();
+    expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Verder' }));
+    expect(await screen.findByText('Stand-in betaalflow')).toBeInTheDocument();
+  });
+
+  test('PEP ja (al goedgekeurd, terug in beoordeling): geen belofte, ook niet bij de volgende keer', async () => {
+    const eerste = toon([
+      { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },
+      { methode: 'PUT', pad: '/kyc/antwoorden', body: { beantwoord: true, versie: 2, opnieuwInBeoordeling: true } },
+    ]);
+    await screen.findByRole('heading', { name: 'Vijf korte vragen' });
+    beantwoordAlles({ pep: 'Ja' });
+    fireEvent.click(screen.getByRole('button', { name: 'Opslaan en verder' }));
+
+    expect(await screen.findByRole('heading', { name: 'Bedankt voor je antwoorden' })).toBeInTheDocument();
+    expect(screen.getByText(/beoordelen we je aanvraag apart/)).toBeInTheDocument();
+    expect(screen.queryByText(/zodra je weer geld kunt overmaken/)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Verder' })).not.toBeInTheDocument();
+    eerste.unmount();
+
+    toon([{ pad: '/kyc/antwoorden', body: { beantwoord: true, antwoorden: null } }]);
+    expect(screen.getByText(/beoordelen we je aanvraag apart/)).toBeInTheDocument();
+    expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
+  });
+
+  // Review 14-10-2026: kwam het antwoord van de server niet aan (netwerk weg) en
+  // tikte de klant opnieuw, dan zei de server "niets veranderd" en kreeg een
+  // goedgekeurde PEP-klant een Verder-knop naar de betaalflow.
+  test('goedgekeurde klant zegt PEP ja, server meldt geen terugzetting: toch geen betaalflow', async () => {
+    const eerste = toon([
+      { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },
+      { methode: 'PUT', pad: '/kyc/antwoorden', body: { beantwoord: true, versie: 2, opnieuwInBeoordeling: false } },
+    ], { goedgekeurd: true });
+    await screen.findByRole('heading', { name: 'Vijf korte vragen' });
+    beantwoordAlles({ pep: 'Ja' });
+    fireEvent.click(screen.getByRole('button', { name: 'Opslaan en verder' }));
+
+    expect(await screen.findByText(/beoordelen we je aanvraag apart/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Verder' })).not.toBeInTheDocument();
+    expect(screen.queryByText(/identificatie nog niet afgerond/)).not.toBeInTheDocument();
+    expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
+    eerste.unmount();
+
+    toon([{ pad: '/kyc/antwoorden', body: { beantwoord: true, antwoorden: null } }], { goedgekeurd: true });
+    expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
+  });
+
+  test('PEP nee en terug in beoordeling: de gewone tekst', async () => {
+    toon([
+      { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },
+      { methode: 'PUT', pad: '/kyc/antwoorden', body: { beantwoord: true, versie: 2, opnieuwInBeoordeling: true } },
+    ]);
+    await screen.findByRole('heading', { name: 'Vijf korte vragen' });
+    beantwoordAlles();
+    fireEvent.click(screen.getByRole('button', { name: 'Opslaan en verder' }));
+
+    expect(await screen.findByRole('heading', { name: 'Bedankt voor je antwoorden' })).toBeInTheDocument();
+    expect(screen.queryByText(/beoordelen we je aanvraag apart/)).not.toBeInTheDocument();
+  });
+
   test('opslaan mislukt: de klant ziet een melding en blijft op het scherm', async () => {
     toon([
       { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },
