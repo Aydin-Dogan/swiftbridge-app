@@ -98,7 +98,9 @@ describe('BetaalStatusKaart', () => {
     toon([{
       pad: `/payments/${TX}/status`,
       body: () => { n += 1; return status({ uitkomst: n < 2 ? 'bezig' : 'betaald' }); },
-    }]);
+    // 400 ms in plaats van 5: met 5 ms is de status op een drukke machine al
+    // 'betaald' voordat de test de knop 'Verder met betalen' zoekt.
+    }], { pollMs: 400 });
     expect(await screen.findByText('Je betaling is nog niet afgerond')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Verder met betalen' })).toBeInTheDocument();
     expect(await screen.findByText('Betaling ontvangen')).toBeInTheDocument();

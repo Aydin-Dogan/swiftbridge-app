@@ -37,7 +37,7 @@ const UITGESLOTEN = [
 // besluit over dat proces: in productie weigert de API de proefversie, er wordt dus
 // niemand onterecht goedgekeurd. Uitleg en reclame over iDIN mogen nergens meer.
 const IDIN_FUNCTIONEEL_BESTAND = /src[\\/]components[\\/](Profiel\.jsx|onboarding[\\/]Stap2KYC\.jsx|kyb[\\/]StapIdentiteit\.jsx|kyc[\\/]DocumentUploadFlow\.jsx)$/;
-const IDIN_FUNCTIONELE_SLEUTEL = /^\s*(IDIN_[A-Z_]+|onb_kyc_[a-z0-9_]+|kyc_fallback_[a-z0-9_]+|kyb_id_idin_[a-z0-9_]+|gdpr_modal_li_kyc)\s*:/;
+const IDIN_FUNCTIONELE_SLEUTEL = /^\s*(IDIN_[A-Z_]+|onb_kyc_[a-z0-9_]+|kyc_fallback_[a-z0-9_]+|kyb_id_idin_[a-z0-9_]+|kyc_admin_[a-z0-9_]+|gdpr_modal_li_kyc)\s*:/;
 
 function bestanden() {
   const lijst = ['index.html', 'public/og-image.svg'];
