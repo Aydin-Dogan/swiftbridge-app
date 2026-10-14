@@ -49,6 +49,14 @@ describe('bewaarBijnaam', () => {
     });
   });
 
+  test('geen bank gekozen: het veld blijft weg (de server weigert null)', async () => {
+    globalThis.fetch = maakFetchMock([
+      { methode: 'POST', pad: '/beneficiaries', status: 201, body: { beneficiary: { id: 'nieuw' } } },
+    ]);
+    await bewaarBijnaam({ naam: 'Oefen Ontvanger', iban: IBAN, bank: '', valuta: 'TRY', bijnaam: 'Oom' });
+    expect(aanroepen()[0].body).not.toHaveProperty('bank');
+  });
+
   test('ontvanger bestaat al (409): die krijgt de bijnaam', async () => {
     globalThis.fetch = maakFetchMock([
       { methode: 'POST', pad: '/beneficiaries', status: 409, body: { errorCode: 'CONFLICT', error: 'x', bestaandId: BESTAAND } },

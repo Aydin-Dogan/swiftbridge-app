@@ -42,7 +42,8 @@ export async function bewaarBijnaam({ naam, iban, bank, valuta, bijnaam, token }
       body: {
         naam,
         iban: ibanSchoon,
-        bank: bank || null,
+        // Geen bank: veld weglaten. De invoercontrole van de server (zod) weigert null.
+        ...(bank ? { bank } : {}),
         valuta,
         // Zonder land neemt de server TR aan; dan valt een NL-rekening erbuiten.
         land: ibanSchoon.slice(0, 2),
