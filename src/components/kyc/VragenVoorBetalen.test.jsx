@@ -178,6 +178,27 @@ describe('VragenVoorBetalen', () => {
     expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
   });
 
+  // Review ronde 2: het profiel in de app (kycStatus) blijft tot een nieuwe
+  // sessie op 'goedgekeurd' staan. Bij de volgende tik op Overmaken zag de klant
+  // dan weer de hele betaalflow, en pas aan het eind "KYC verificatie is
+  // vereist" van de server.
+  test('terug in beoordeling: ook bij de volgende keer Overmaken in deze sessie geen betaalflow', async () => {
+    const eerste = toon([
+      { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },
+      { methode: 'PUT', pad: '/kyc/antwoorden', body: { beantwoord: true, versie: 2, opnieuwInBeoordeling: true } },
+    ]);
+    await screen.findByRole('heading', { name: 'Vijf korte vragen' });
+    beantwoordAlles({ pep: 'Ja' });
+    fireEvent.click(screen.getByRole('button', { name: 'Opslaan en verder' }));
+    await screen.findByRole('heading', { name: 'Bedankt voor je antwoorden' });
+    eerste.unmount();
+
+    toon([{ pad: '/kyc/antwoorden', body: { beantwoord: true, antwoorden: null } }]);
+
+    expect(screen.getByRole('heading', { name: 'Bedankt voor je antwoorden' })).toBeInTheDocument();
+    expect(screen.queryByText('Stand-in betaalflow')).not.toBeInTheDocument();
+  });
+
   test('opslaan mislukt: de klant ziet een melding en blijft op het scherm', async () => {
     toon([
       { pad: '/kyc/antwoorden', body: { beantwoord: false, antwoorden: null } },

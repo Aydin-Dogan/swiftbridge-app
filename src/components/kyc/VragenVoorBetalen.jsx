@@ -19,7 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import { useTaal } from '../../i18n';
-import { haalAntwoorden, isBekendBeantwoord } from '../../services/kycAntwoorden';
+import { haalAntwoorden, isBekendBeantwoord, isTerugInBeoordeling } from '../../services/kycAntwoorden';
 import KycVragen from './KycVragen';
 
 function Nakijken() {
@@ -38,8 +38,13 @@ function Nakijken() {
 
 export default function VragenVoorBetalen({ gebruikerId, overslaan = false, children }) {
   const { t } = useTaal();
-  // 'laden' | 'vragen' | 'nakijken' | 'klaar'
-  const [stand, setStand] = useState(() => (overslaan || isBekendBeantwoord(gebruikerId) ? 'klaar' : 'laden'));
+  // 'laden' | 'vragen' | 'nakijken' | 'klaar'. Terug in beoordeling gaat voor op
+  // "al beantwoord": de kycStatus in App.jsx is dan nog die van vóór het opslaan.
+  const [stand, setStand] = useState(() => {
+    if (overslaan) return 'klaar';
+    if (isTerugInBeoordeling(gebruikerId)) return 'nakijken';
+    return isBekendBeantwoord(gebruikerId) ? 'klaar' : 'laden';
+  });
   const [eerder, setEerder] = useState(null);
 
   useEffect(() => {

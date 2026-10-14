@@ -23,8 +23,18 @@ export function opties(lijst, voorvoegsel) {
 // anders inloggen, en die moet de vragen wel krijgen.
 const beantwoordDoor = new Set();
 
+// Zette een antwoord de klant terug in beoordeling, dan blijft "We bekijken ze
+// eerst" staan zolang deze sessie duurt. Het profiel in de app (kycStatus)
+// ververst pas bij een nieuwe sessie; zonder dit kwam de klant bij de volgende
+// tik op Overmaken weer in de betaalflow, en weigerde de server pas aan het eind.
+const terugInBeoordeling = new Set();
+
 export function isBekendBeantwoord(gebruikerId) {
   return Boolean(gebruikerId) && beantwoordDoor.has(gebruikerId);
+}
+
+export function isTerugInBeoordeling(gebruikerId) {
+  return Boolean(gebruikerId) && terugInBeoordeling.has(gebruikerId);
 }
 
 // GET /kyc/antwoorden → { beantwoord, antwoorden }
@@ -41,11 +51,14 @@ export async function haalAntwoorden(gebruikerId) {
 export async function slaAntwoordenOp(gebruikerId, antwoorden) {
   const d = await apiFetch('/kyc/antwoorden', { method: 'PUT', body: antwoorden });
   const beantwoord = d?.beantwoord === true;
+  const opnieuwInBeoordeling = d?.opnieuwInBeoordeling === true;
   if (beantwoord && gebruikerId) beantwoordDoor.add(gebruikerId);
-  return { beantwoord, opnieuwInBeoordeling: d?.opnieuwInBeoordeling === true };
+  if (opnieuwInBeoordeling && gebruikerId) terugInBeoordeling.add(gebruikerId);
+  return { beantwoord, opnieuwInBeoordeling };
 }
 
 // Alleen voor de tests: begin met een lege sessie.
 export function vergeetBeantwoord() {
   beantwoordDoor.clear();
+  terugInBeoordeling.clear();
 }
