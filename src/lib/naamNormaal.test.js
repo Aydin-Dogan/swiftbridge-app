@@ -11,11 +11,38 @@
  *  - uitkomst 'gelijk', 'twijfel' of 'anders'. Nooit een afwijzing: bij twijfel
  *    kijkt een mens.
  * Fictieve namen.
+ *
+ * naamVoorbeelden.json is een letterlijke kopie van de afspraak met de API
+ * (swiftbridge-api/tests/fixtures/naamVoorbeelden.json). Wijzigt daar een
+ * regel, kopieer dan het bestand opnieuw; deze test laat zien wat de app nog
+ * anders doet.
  */
 import { describe, test, expect } from 'vitest';
 import {
   normaliseerNaam, vergelijkNamen, naamBevat, ontvangerNaamGeldig, REGELVERSIE,
 } from './naamNormaal';
+import afspraak from './naamVoorbeelden.json';
+
+describe('dezelfde voorbeeldtabel als de API', () => {
+  test('dezelfde versie van de regels', () => {
+    expect(REGELVERSIE).toBe(afspraak.regelversie);
+  });
+
+  test.each(afspraak.normaliseren.map((v) => [v.invoer, v.verwacht, v.toelichting]))(
+    'normaliseren: %j wordt %j (%s)',
+    (invoer, verwacht) => {
+      expect(normaliseerNaam(invoer)).toBe(verwacht);
+    },
+  );
+
+  test.each(afspraak.vergelijken.map((v) => [v.a, v.b, v.uitkomst, v.toelichting]))(
+    'vergelijken: %j tegen %j geeft %s (%s)',
+    (a, b, verwacht) => {
+      expect(vergelijkNamen(a, b).uitkomst).toBe(verwacht);
+      expect(vergelijkNamen(b, a).uitkomst).toBe(verwacht);
+    },
+  );
+});
 
 // [a, b, verwachte uitkomst]
 const VOORBEELDEN = [
