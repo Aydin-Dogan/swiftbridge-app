@@ -10,7 +10,7 @@
  * wat ontbrak: de dossiers waren zichtbaar, maar dat ze onbeoordeelbaar waren
  * niet.
  */
-import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { TaalProvider } from '../../../i18n';
 import { forceerNederlands } from '../../kyb/kybTestHulp';
@@ -576,5 +576,91 @@ describe('punt c: afwijzen met reden, en een mogelijke treffer bewust verwerpen'
     await waitFor(() => {
       expect(apiFetch.mock.calls.filter(([pad]) => pad === '/admin/kyc/dossier/k1').length).toBeGreaterThan(voor);
     });
+  });
+
+  test('ook met de echte foutvorm van apiFetch (data, niet body) haalt hij het dossier opnieuw op', async () => {
+    // apiFetch zet het antwoord van de server op fout.data. Het scherm las
+    // alleen fout.body; in productie gebeurde het opnieuw ophalen dus nooit.
+    await openDossierMet();
+    apiFetch.mockImplementation(async (pad) => {
+      if (pad.includes('/besluit')) {
+        const e = new Error('Dit dossier kan (nog) niet worden goedgekeurd.');
+        e.status = 409;
+        e.errorCode = 'KYC_POORT_GEWEIGERD';
+        e.data = {
+          errorCode: 'KYC_POORT_GEWEIGERD',
+          error: 'Dit dossier kan (nog) niet worden goedgekeurd.',
+          redenen: [{ code: 'sanctie_mogelijke_treffer', wat: 'De sanctiescreening geeft een mogelijke treffer.' }],
+        };
+        throw e;
+      }
+      if (pad.startsWith('/admin/kyc/dossier/')) return dossierAntwoord;
+      return WACHTRIJ;
+    });
+    const voor = apiFetch.mock.calls.filter(([pad]) => pad === '/admin/kyc/dossier/k1').length;
+
+    fireEvent.click(screen.getByRole('button', { name: /^goedkeuren$/i }));
+
+    await screen.findByText(/kan \(nog\) niet worden goedgekeurd/);
+    await waitFor(() => {
+      expect(apiFetch.mock.calls.filter(([pad]) => pad === '/admin/kyc/dossier/k1').length).toBeGreaterThan(voor);
+    });
+  });
+});
+
+describe('onderdeel 7: het dossierscherm vervangt het oude KYC-reviewscherm', () => {
+  // Sinds 14-10-2026 is de tab "KYC Review" weg (besluit Aydin). Dat was de
+  // enige plek waar de foto's van een particulier identiteitsbewijs te zien
+  // waren. Zonder die foto's kan niemand de identiteit beoordelen, dus staan ze
+  // nu in het dossier zelf, bij vraag 3.
+  let geopend;
+
+  beforeEach(() => {
+    geopend = { location: { href: '' }, closed: false, close: vi.fn() };
+    vi.stubGlobal('open', vi.fn(() => geopend));
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true, status: 200,
+      blob: async () => new Blob([new Uint8Array([0xff, 0xd8, 0xff])], { type: 'image/jpeg' }),
+    })));
+    URL.createObjectURL = vi.fn(() => 'blob:http://app.test/abc');
+    URL.revokeObjectURL = vi.fn();
+  });
+
+  afterEach(() => { vi.unstubAllGlobals(); });
+
+  test('vraag 3: de foto\'s die er zijn, zijn vanuit het dossier te openen', async () => {
+    await openDossierMet({
+      vastlegging: {
+        ...DOSSIER.vastlegging,
+        identiteit: { ...DOSSIER.vastlegging.identiteit, bron: 'upload_telefoon', beeldenBeschikbaar: ['voorkant', 'selfie'] },
+      },
+    });
+
+    expect(screen.getByRole('button', { name: 'Foto voorkant' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Selfie met document' })).toBeInTheDocument();
+    // Alleen wat er is: geen vak voor een achterkant die niet bestaat.
+    expect(screen.queryByRole('button', { name: 'Foto achterkant' })).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Foto voorkant' }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(
+      'http://api.test/admin/kyc/k1/document/voorkant', { credentials: 'include' }
+    ));
+    await waitFor(() => expect(geopend.location.href).toBe('blob:http://app.test/abc'));
+  });
+
+  test('vraag 3: zonder foto\'s staat er met zoveel woorden "geen", en wordt niets opgehaald', async () => {
+    await openDossierMet();
+    const rij = screen.getByText('Beschikbare foto’s').closest('div');
+    expect(within(rij).getByText('geen')).toBeInTheDocument();
+    expect(within(rij).queryByRole('button')).toBeNull();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  test('een dossier is van buitenaf direct te openen (Open dossier bij Gebruikers)', async () => {
+    dossierAntwoord = { ...DOSSIER, id: 'k9', status: 'goedgekeurd' };
+    render(<TaalProvider><KycDossiers startDossier="k9" /></TaalProvider>);
+
+    await screen.findByRole('dialog', { name: 'Particulier dossier' });
+    expect(apiFetch).toHaveBeenCalledWith('/admin/kyc/dossier/k9');
   });
 });

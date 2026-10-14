@@ -18,6 +18,10 @@
  * Deze test bewaakt dat blob: in img-src blijft staan zolang compliance
  * documenten op die manier bekijkt. Haal je het weg, dan vallen de foto's
  * opnieuw stil op een manier die niemand aan het scherm kan aflezen.
+ *
+ * Sinds 14-10-2026 is KYCReviewQueue weg; de foto's staan in het dossier en
+ * openen via KybDocumentKnop als blob: in een nieuw tabblad. Ook dat is een
+ * blob:-adres uit deze pagina, dus de regel blijft nodig.
  */
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';

@@ -5,13 +5,22 @@
  * - Zoek users op email / naam / telefoon (300ms debounce)
  * - Paginatie via offset/limit
  * - Klik op user → details drawer (rechts) met tabs: Profiel / Transacties / KYC / Audit / Acties
- * - Acties: KYC status wijzigen, account suspenderen/heractiveren, wachtwoord reset triggeren
+ * - Acties: dossier openen, KYC-tussenbesluit, account suspenderen/heractiveren, wachtwoord reset triggeren
  * - Bevestigings-modals voor destructieve acties
+ *
+ * KYC-BESLUITEN (14-10-2026, besluit Aydin)
+ * Goedkeuren, afwijzen en beëindigen gebeurt alleen nog in het dossierscherm
+ * (tab Particuliere aanvragen), bij midden en hoog risico met twee medewerkers.
+ * Hier staat daarvoor "Open dossier" (prop onOpenDossier). Wat hier wel blijft
+ * zijn de tussenbesluiten die één medewerker mag nemen: terug in behandeling,
+ * en bij spoed blokkeren. Het keuzevenster stond tot vandaag standaard op
+ * "Goedgekeurd"; nu kiest het niets vooraf.
  *
  * Backend endpoints:
  * GET /admin/users?q=&limit=&offset=
  * GET /admin/users/:id
- * PATCH /admin/users/:id/kyc-status
+ * PATCH /admin/users/:id/kyc-status  (alleen nog in_behandeling)
+ * PATCH /kyc/:kycId/beoordeel        (alleen nog geblokkeerd)
  * PATCH /admin/users/:id/status
  * POST /admin/users/:id/wachtwoord-reset
  */
@@ -70,8 +79,10 @@ function AccountBadge({ status }) {
 }
 
 // ── BevestigingsModal ────────────────────────────────────────────────────────
+// Een veld met verplicht: true houdt de bevestigknop dicht tot het is ingevuld.
 function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red-600 hover:bg-red-700', velden = [], onBevestig, onAnnuleer, bezig }) {
   const [values, setValues] = useState({});
+  const onvolledig = velden.some((v) => v.verplicht && !(values[v.naam] || v.default));
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -120,7 +131,7 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
               }
               onBevestig(final);
             }}
-            disabled={bezig}
+            disabled={bezig || onvolledig}
             className={`px-4 py-2 rounded-md text-sm text-white font-semibold transition disabled:opacity-40 ${knopKleur}`}
           >
             {bezig ? 'Bezig…' : knopLabel}
@@ -132,7 +143,7 @@ function BevestigingsModal({ titel, beschrijving, knopLabel, knopKleur = 'bg-red
 }
 
 // ── User Detail Drawer ───────────────────────────────────────────────────────
-function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
+function UserDetailDrawer({ userId, onClose, onUserUpdated, onOpenDossier }) {
   const { t } = useTaal();
   const [data, setData] = useState(null);
   const [laden, setLaden] = useState(true);
@@ -160,14 +171,30 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
   if (!userId) return null;
 
   const u = data?.user;
+  // De API geeft de dossiers nieuwste eerst; het eerste is het lopende.
+  const laatsteDossier = data?.kycRecords?.[0] || null;
 
+  /**
+   * Een tussenbesluit: terug in behandeling, of bij spoed blokkeren. Beide mag
+   * één medewerker. Blokkeren kent de gebruikersroute niet; dat gaat op het
+   * nieuwste dossier via PATCH /kyc/:id/beoordeel.
+   */
   async function bevestigKyc(vals) {
+    if (vals.status !== 'in_behandeling' && vals.status !== 'geblokkeerd') return;
+    if (vals.status === 'geblokkeerd' && !laatsteDossier) return;
     setActieBezig(true);
     try {
-      await apiFetch(`/admin/users/${userId}/kyc-status`, {
-        method: 'PATCH',
-        body: { status: vals.status, reden: vals.reden },
-      });
+      if (vals.status === 'geblokkeerd') {
+        await apiFetch(`/kyc/${laatsteDossier.id}/beoordeel`, {
+          method: 'PATCH',
+          body: { beslissing: 'geblokkeerd', reden: vals.reden || undefined },
+        });
+      } else {
+        await apiFetch(`/admin/users/${userId}/kyc-status`, {
+          method: 'PATCH',
+          body: { status: vals.status, reden: vals.reden },
+        });
+      }
       setActieMelding({ soort: 'ok', tekst: `KYC status gewijzigd naar ${vals.status}` });
       setModal(null);
       await laad();
@@ -368,8 +395,23 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                             Ingediend: {fmtDatum(k.ingediendOp)}
                             {k.beoordeeldOp && <> · Beoordeeld: {fmtDatum(k.beoordeeldOp)}</>}
                           </div>
+                          {onOpenDossier && (
+                            <div className="flex justify-end mt-2">
+                              <button
+                                type="button"
+                                onClick={() => onOpenDossier(k.id)}
+                                className="px-3 py-1.5 rounded-md bg-brand-600 hover:bg-brand-700 text-xs text-white font-semibold"
+                              >
+                                Open dossier
+                              </button>
+                            </div>
+                          )}
                         </div>
                       ))}
+                      <p className="text-xs text-gray-500">
+                        Goedkeuren, afwijzen en beëindigen gebeurt in het dossier.
+                        Bij midden en hoog risico tekenen daar twee medewerkers.
+                      </p>
                     </div>
                   )}
                 </div>
@@ -415,11 +457,21 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
                     verzoeken={data.verzoeken || []}
                     onGewijzigd={laad}
                   />
+                  {laatsteDossier && onOpenDossier && (
+                    <ActieKaart
+                      icoon={IdCard}
+                      titel="KYC-dossier"
+                      beschrijving="Goedkeuren, afwijzen en beëindigen gebeurt in het dossier: daar staan het risico, de checklist en de foto's. Bij midden en hoog risico tekenen twee medewerkers."
+                      knop="Open dossier"
+                      knopKleur="bg-brand-600 hover:bg-brand-700"
+                      onClick={() => onOpenDossier(laatsteDossier.id)}
+                    />
+                  )}
                   <ActieKaart
                     icoon={IdCard}
-                    titel="KYC status wijzigen"
-                    beschrijving="Manueel goedkeuren, afkeuren of terugzetten naar in behandeling. Genereert een email naar de gebruiker."
-                    knop="KYC wijzigen"
+                    titel="KYC-status: tussenbesluit"
+                    beschrijving="Terugzetten naar in behandeling, of bij spoed blokkeren. Dat mag één medewerker; een afsluitend besluit volgt daarna in het dossier."
+                    knop="Status wijzigen"
                     onClick={() => setModal({ soort: 'kyc' })}
                   />
                   {u.accountStatus !== 'gesuspendeerd' ? (
@@ -458,18 +510,21 @@ function UserDetailDrawer({ userId, onClose, onUserUpdated }) {
 
       {modal?.soort === 'kyc' && (
         <BevestigingsModal
-          titel="KYC status wijzigen"
-          beschrijving="Selecteer een nieuwe status. De gebruiker krijgt een notificatie e-mail."
+          titel="KYC-status wijzigen"
+          beschrijving="Alleen een tussenbesluit. Goedkeuren, afwijzen en beëindigen gebeurt in het dossier."
           knopLabel="Bevestigen"
           knopKleur="bg-accent-600 hover:bg-accent-500"
           velden={[
             {
+              // Bewust geen standaardkeuze: tot 14-10-2026 stond hier
+              // 'goedgekeurd', en dan keurde één klik op Bevestigen goed.
               naam: 'status', label: 'Nieuwe status', type: 'select',
-              default: 'goedgekeurd',
+              default: '', verplicht: true,
               opties: [
-                { id: 'goedgekeurd', label: 'Goedgekeurd' },
-                { id: 'afgekeurd', label: 'Afgekeurd' },
-                { id: 'in_behandeling', label: 'In behandeling' },
+                { id: '', label: 'Kies een status' },
+                { id: 'in_behandeling', label: 'Terug in behandeling' },
+                // Blokkeren gaat op een dossier; zonder dossier valt er niets te blokkeren.
+                ...(laatsteDossier ? [{ id: 'geblokkeerd', label: 'Blokkeren (spoed)' }] : []),
               ],
             },
             { naam: 'reden', label: 'Reden (optioneel)', placeholder: 'Bijv. document onleesbaar' },
@@ -770,7 +825,11 @@ function ActieKaart({ icoon: Icoon, titel, beschrijving, knop, knopKleur = 'bg-a
 }
 
 // ── Hoofdcomponent ───────────────────────────────────────────────────────────
-export default function UserManagement() {
+/**
+ * @param {function} [onOpenDossier] — (kycId) => void; opent dat dossier in het
+ *   dossierscherm. De compliancewerkplek geeft hem mee.
+ */
+export default function UserManagement({ onOpenDossier } = {}) {
   const { t } = useTaal();
   const [zoekterm, setZoekterm] = useState('');
   const [users, setUsers] = useState([]);
@@ -900,6 +959,7 @@ export default function UserManagement() {
           userId={actieveUser}
           onClose={() => setActieveUser(null)}
           onUserUpdated={() => laad(zoekterm, offset)}
+          onOpenDossier={onOpenDossier}
         />
       )}
     </div>

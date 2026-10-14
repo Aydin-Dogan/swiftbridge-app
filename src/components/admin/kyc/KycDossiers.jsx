@@ -9,12 +9,12 @@
  *   3. Waar leg ik dat vast?
  *   4. Klopt zijn gedrag later nog met zijn verhaal?
  *
- * WAT DIT SCHERM ANDERS DOET DAN DE BESTAANDE REVIEW-WACHTRIJ
- * De bestaande KYCReviewQueue toont wie er wacht. Dit scherm toont daarnaast
- * WAAROM een dossier nog niet beoordeeld kan worden. Dat is hier de kern: van de
- * drie aanvragen die op 28 september 2026 wachtten was er geen enkele
- * beoordeelbaar, en dat was niet te zien. Een scherm dat lege velden netjes
- * toont, verbergt het probleem in plaats van het te laten zien.
+ * WAT DIT SCHERM DOET
+ * Het toont wie er wacht, en daarnaast WAAROM een dossier nog niet beoordeeld
+ * kan worden. Dat is hier de kern: van de drie aanvragen die op 28 september
+ * 2026 wachtten was er geen enkele beoordeelbaar, en dat was niet te zien. Een
+ * scherm dat lege velden netjes toont, verbergt het probleem in plaats van het
+ * te laten zien.
  *
  * BESLUITEN
  * Sinds 2-10-2026 neemt dit scherm ook besluiten, via de KYC-poort in de API.
@@ -22,14 +22,21 @@
  * eerste besloot (wie, wanneer, met welke reden) en bevestigt precies dat
  * besluit; iets anders kiezen kan alleen bewust, met een reden (14-10-2026).
  *
+ * Sinds 14-10-2026 is dit de ENIGE plek voor goedkeuren, afwijzen en beëindigen
+ * (besluit Aydin). Het oude reviewscherm (KYCReviewQueue) en /beheer zijn weg;
+ * de documentfoto's die daar stonden, staan nu bij vraag 3. Gebruikersbeheer
+ * opent een dossier hier via de prop startDossier.
+ *
  * Endpoints: GET /admin/kyc/wachtrij, GET /admin/kyc/dossier/:id,
- * PUT /admin/kyc/dossier/:id/checklist en POST /admin/kyc/dossier/:id/besluit
+ * PUT /admin/kyc/dossier/:id/checklist, POST /admin/kyc/dossier/:id/besluit en
+ * GET /admin/kyc/:id/document/:type (de foto's, via KybDocumentKnop)
  */
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch, parseError } from '../../../services/api';
 import { useTaal } from '../../../i18n';
 import { Refresh, X } from '../../icons/Icons';
 import { useTx, fmtDatum } from '../kyb/kybAdminLabels';
+import KybDocumentKnop from '../kyb/KybDocumentKnop';
 import {
   RISICO_STIJL, RISICO_LABEL, KYC_STATUS_STIJL, STATUS_LABEL,
   DOCUMENT_LABEL, BRON_LABEL, CHECKLIST_LABEL, ACTIE_LABEL,
@@ -346,7 +353,15 @@ function RedenKeuze({ id, codes, waarde, onKies, tx }) {
   );
 }
 
-const KNOP_NEUTRAAL = 'px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40';
+/**
+ * Het antwoord van de server bij een weigering. apiFetch zet dat op fout.data;
+ * fout.body blijft gelezen voor wie de fout zelf zo opbouwt. Tot 14-10-2026 las
+ * dit scherm alleen body, en daardoor bleven in productie de ontbrekende punten
+ * en het opnieuw ophalen na een weigering van de poort achterwege.
+ */
+const serverAntwoord = (e) => e?.data || e?.body || null;
+
+const KNOP_NEUTRAAL ='px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40';
 const KNOP_ROOD = 'px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40';
 const KNOP_GROEN = 'px-4 py-2 rounded-md bg-success-600 hover:bg-success-700 text-sm text-white font-semibold disabled:opacity-40';
 const TEKSTVAK = 'w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-ink-1';
@@ -405,7 +420,7 @@ function VraagBesluit({
       });
       onBijgewerkt?.();
     } catch (e) {
-      setFout(e?.body?.error || e?.message || 'Opslaan is niet gelukt.');
+      setFout(serverAntwoord(e)?.error || e?.message || 'Opslaan is niet gelukt.');
     } finally {
       setBezig(false);
     }
@@ -426,14 +441,15 @@ function VraagBesluit({
       setTrefferVerworpen(false);
       onBijgewerkt?.();
     } catch (e) {
-      setFout(e?.body?.error || e?.message || 'Het besluit kon niet worden vastgelegd.');
+      const antwoord = serverAntwoord(e);
+      setFout(antwoord?.error || e?.message || 'Het besluit kon niet worden vastgelegd.');
       // De API vertelt WELKE punten nog ontbreken; dat is bruikbaarder dan
       // alleen "checklist niet volledig".
-      if (Array.isArray(e?.body?.ontbreekt)) setOntbreekt(e.body.ontbreekt);
+      if (Array.isArray(antwoord?.ontbreekt)) setOntbreekt(antwoord.ontbreekt);
       // De poort screende de klant zojuist opnieuw. Het dossier opnieuw
       // ophalen laat de verse uitslag zien, en zo nodig de vraag of de
       // beoordelaar een mogelijke treffer zelf heeft verworpen.
-      if (e?.body?.errorCode === 'KYC_POORT_GEWEIGERD') onBijgewerkt?.();
+      if (antwoord?.errorCode === 'KYC_POORT_GEWEIGERD') onBijgewerkt?.();
     } finally {
       setBezig(false);
     }
@@ -713,7 +729,7 @@ function VrijeTekst({ id, label: tekstLabel, waarde, onWijzig, max }) {
   );
 }
 
-function VraagVastlegging({ vastlegging, tx }) {
+function VraagVastlegging({ vastlegging, dossierId, tx }) {
   const { identiteit, akkoord, account } = vastlegging;
   return (
     <Blok nummer={3} vraag={tx('kyc_admin_vraag3', 'Waar leg ik dat vast?')}>
@@ -730,9 +746,20 @@ function VraagVastlegging({ vastlegging, tx }) {
           )}
           <Regel naam={tx('kyc_admin_doctype', 'Documenttype')}>{label(DOCUMENT_LABEL, identiteit.documentType)}</Regel>
           <Regel naam={tx('kyc_admin_nationaliteit', 'Nationaliteit')}>{identiteit.nationaliteit || '-'}</Regel>
+          {/* Alleen de foto's die de API noemt: die kijkt of het bestand er is.
+              Openen gaat met de sessiecookie naar een blob in een nieuw
+              tabblad, nooit als <img src> naar de API (KybDocumentKnop). */}
           <Regel naam={tx('kyc_admin_beelden', 'Beschikbare foto’s')}>
             {identiteit.beeldenBeschikbaar?.length
-              ? identiteit.beeldenBeschikbaar.join(', ')
+              ? identiteit.beeldenBeschikbaar.map((type) => (
+                <KybDocumentKnop
+                  key={type}
+                  pad={`/admin/kyc/${dossierId}/document/${type}`}
+                  label={tx(`kyc_upload_${type}_label`, type)}
+                  klein
+                  className="ml-2 mb-1"
+                />
+              ))
               : <span className="text-red-600">{tx('kyc_admin_geen_beelden', 'geen')}</span>}
           </Regel>
         </div>
@@ -968,7 +995,7 @@ function DossierPaneel({ dossierId, onSluit, tx }) {
                 tx={tx}
                 onBijgewerkt={herlaadDossier}
               />
-              <VraagVastlegging vastlegging={dossier.vastlegging} tx={tx} />
+              <VraagVastlegging vastlegging={dossier.vastlegging} dossierId={dossierId} tx={tx} />
               <VraagGedrag gedrag={dossier.gedrag} antwoorden={dossier.antwoorden} tx={tx} />
             </>
           )}
@@ -980,13 +1007,18 @@ function DossierPaneel({ dossierId, onSluit, tx }) {
 
 // ── Hoofdcomponent ───────────────────────────────────────────────────────────
 
-export default function KycDossiers() {
+/**
+ * @param {string} [startDossier] — kycId van een dossier dat meteen open moet,
+ *   bijvoorbeeld na "Open dossier" bij Gebruikers. Ook een afgesloten dossier,
+ *   dat niet in de wachtrij staat.
+ */
+export default function KycDossiers({ startDossier = null } = {}) {
   const { t } = useTaal();
   const tx = useTx();
   const [data, setData] = useState({ dossiers: [], tellers: null });
   const [fout, setFout] = useState('');
   const [laden, setLaden] = useState(true);
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(startDossier);
   // Vernieuwen gebeurt door deze teller op te hogen. Het ophalen zit in het
   // effect zelf, met een annuleervlag, zodat een antwoord dat binnenkomt nadat
   // het scherm is gesloten geen state meer zet.

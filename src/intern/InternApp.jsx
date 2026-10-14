@@ -24,7 +24,6 @@ import InternAanmelden from './InternAanmelden';
 import InternWachtwoord from './InternWachtwoord';
 
 const AdminCompliance = lazy(() => import('./AdminCompliance'));
-const AdminPanel = lazy(() => import('./AdminPanel'));
 const AdminOverzicht = lazy(() => import('./AdminOverzicht'));
 const AdminErrors = lazy(() => import('./AdminErrors'));
 
@@ -147,7 +146,10 @@ export default function InternApp() {
           {/* De compliance-werkplek is de startpagina van deze omgeving. */}
           <Route path="/" element={<AdminCompliance />} />
           <Route path="/compliance" element={<Navigate to="/" replace />} />
-          <Route path="/beheer" element={<AdminPanel />} />
+          {/* /beheer (AdminPanel) is weg sinds 14-10-2026 (besluit Aydin): hij
+              nam KYC-besluiten buiten het dossier om. Een oude bladwijzer komt
+              op de werkplek uit, zonder het oude ?secret= in de adresbalk. */}
+          <Route path="/beheer" element={<Navigate to="/" replace />} />
           <Route path="/overzicht" element={<AdminOverzicht />} />
           <Route path="/fouten" element={<AdminErrors />} />
           <Route path="*" element={<Onbekend />} />

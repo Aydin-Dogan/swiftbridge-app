@@ -1,42 +1,47 @@
 /**
- * AdminCompliance.jsx — Compliance dashboard voor DNB-toezicht
+ * AdminCompliance.jsx — De compliancewerkplek (Wwft, AVG)
  *
  * Tabs:
- *  1. Overzicht — kerncijfers en de integriteit van de audit-keten
+ *  1. Overzicht — kerncijfers, de integriteit van de audit-keten en de
+ *     vastgehouden uitbetalingen
  *  2. Gebruikers — user management
  *  3. Zakelijke aanvragen — KYB-wachtrij en dossier
- *  4. Particuliere aanvragen — KYC-dossier met risicoklasse en wat er ontbreekt
- *  5. KYC Review — de documentfoto's bij een particuliere aanvraag
- *  6. Info-verzoeken — de "Info nodig"-flow bij transacties
- *  7. Audit logs — paginated met filter
- *  8. Sanctie matches — Wwft Art. 33
- *  9. GDPR acties — AVG Art. 15/17
- * 10. Transacties — geanonimiseerde monitoring
- * 11. Banners — app-wide announcement banners beheren
+ *  4. Particuliere aanvragen — KYC-dossier met risicoklasse, wat er ontbreekt,
+ *     de documentfoto's en het besluit
+ *  5. Info-verzoeken — de "Info nodig"-flow bij transacties
+ *  6. Audit logs — paginated met filter
+ *  7. Sanctie matches — Wwft Art. 33
+ *  8. GDPR acties — AVG Art. 15/17
+ *  9. Transacties — geanonimiseerde monitoring
+ * 10. Banners — app-wide announcement banners beheren
  *
- * Toegang: gebruiker moet ingelogd zijn EN in ADMIN_EMAILS staan
- * (backend check in src/middleware/admin.js).
+ * Sinds 14-10-2026 (besluit Aydin) zijn de tab "KYC Review" en de pagina
+ * /beheer weg: daar kon één medewerker een klant goedkeuren of afwijzen buiten
+ * het dossier en de tweede beoordelaar om. Afsluitende KYC-besluiten vallen nu
+ * alleen in Particuliere aanvragen. De vastgehouden uitbetalingen van /beheer
+ * staan op het overzicht.
+ *
+ * Toegang: een medewerkerssessie (backend check in src/middleware/admin.js).
  */
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
 import {
   Users, Clock, CheckCircle, Euro, Calendar, Shield, ShieldCheck, Clipboard, Lock,
-  AlertTriangle, IdCard, Banknote, Bell, Zap, Refresh, Info, XCircle, Globe,
+  AlertTriangle, Banknote, Bell, Zap, Refresh, Info, XCircle, Globe,
 } from '../components/icons/Icons';
 import { API_URL } from '../services/api';
+import VastgehoudenUitbetalingen from './VastgehoudenUitbetalingen';
 
 // Lazy load heavy admin sub-components — alleen ophalen wanneer tab geopend wordt.
 // Houdt de initial AdminCompliance bundle ~1MB+ kleiner (UserManagement 664 LOC + BannerBeheer 412 LOC).
 const UserManagement = lazy(() => import('../components/admin/UserManagement'));
 const BannerBeheer = lazy(() => import('../components/admin/BannerBeheer'));
-const KYCReviewQueue = lazy(() => import('../components/admin/KYCReviewQueue'));
 // KYB: zakelijke aanvragen (wachtrij + dossier + beoordeelpaneel) — zie docs/KYB_API.md sectie 6.
 const KybReviewQueue = lazy(() => import('../components/admin/kyb/KybReviewQueue'));
-// KYC-dossiers: particuliere aanvragen met risicoklasse en wat er ontbreekt om te
-// kunnen beoordelen (werkpakket 4 en 6 van het KYC-masterdocument). Staat naast
-// "KYC Review", dat alleen de documentfoto's toont.
+// KYC-dossiers: particuliere aanvragen met risicoklasse, wat er ontbreekt om te
+// kunnen beoordelen, de documentfoto's en het besluit (werkpakket 4 en 6 van het
+// KYC-masterdocument).
 const KycDossiers = lazy(() => import('../components/admin/kyc/KycDossiers'));
 
 // Lichtgewicht fallback voor lazy admin tabs
@@ -109,6 +114,9 @@ function StatsTab({ stats, chain }) {
   return (
     <div className="space-y-6">
       <ChainStatus resultaat={chain} />
+
+      {/* Verhuisd van /beheer (14-10-2026). Toont niets als er niets wacht. */}
+      <VastgehoudenUitbetalingen />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icoon={Users} label="Gebruikers totaal" waarde={stats.gebruikers} />
@@ -675,8 +683,10 @@ function TransactieTab() {
 // ── Hoofdpagina ───────────────────────────────────────────────────────────────
 export default function AdminCompliance() {
   const { t } = useTaal();
-  const navigate = useNavigate();
   const [tab, setTab] = useState('stats');
+  // Het dossier dat "Open dossier" bij Gebruikers meteen moet openen. Alleen voor
+  // die ene sprong: wie daarna zelf een tab kiest, krijgt de gewone wachtrij.
+  const [startDossier, setStartDossier] = useState(null);
   const [stats, setStats] = useState(null);
   const [chain, setChain] = useState(null);
   const [fout, setFout] = useState('');
@@ -700,16 +710,21 @@ export default function AdminCompliance() {
 
   useEffect(() => { laadStats(); }, [laadStats]);
 
+  function kiesTab(id) {
+    setStartDossier(null);
+    setTab(id);
+  }
+
+  function openDossier(kycId) {
+    setStartDossier(kycId);
+    setTab('kycdossiers');
+  }
+
   const tabs = [
     { id: 'stats', label: 'Overzicht', icoon: null },
     { id: 'users', label: 'Gebruikers', icoon: Users },
     { id: 'kyb', label: t('kyb_admin_titel') !== 'kyb_admin_titel' ? t('kyb_admin_titel') : 'Zakelijke aanvragen', icoon: Globe },
-    // Naam en icoon bewust anders dan 'KYC Review': dat scherm toont de
-    // documentfoto's, dit scherm het dossier met risico en wat er ontbreekt.
-    // Twee tabs die allebei "KYC" heten met hetzelfde icoon zijn in de tabbalk
-    // niet uit elkaar te houden.
     { id: 'kycdossiers', label: 'Particuliere aanvragen', icoon: ShieldCheck },
-    { id: 'kycreview', label: 'KYC Review', icoon: IdCard },
     { id: 'infoverzoeken', label: 'Info-verzoeken', icoon: Info },
     { id: 'audit', label: 'Audit logs', icoon: Clipboard },
     { id: 'sanctie', label: 'Sanctie matches', icoon: Shield },
@@ -725,11 +740,13 @@ export default function AdminCompliance() {
           <Lock className="w-12 h-12 mx-auto mb-4 text-gray-500" />
           <h2 className="font-display text-xl font-medium text-ink-1 mb-2">Geen admin toegang</h2>
           <p className="text-ink-2 text-sm mb-6">{fout}</p>
+          {/* Er is in de interne omgeving geen /app om naar terug te gaan.
+              Opnieuw proberen; is de sessie verlopen, dan zegt de server dat. */}
           <button
-            onClick={() => navigate('/app')}
+            onClick={laadStats}
             className="btn-inst"
           >
-            ← Terug naar app
+            Opnieuw proberen
           </button>
         </div>
       </div>
@@ -742,10 +759,14 @@ export default function AdminCompliance() {
       <header className="bg-surface border-b border-border sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/app')} className="text-brand-600"><Zap className="w-7 h-7" /></button>
+            {/* Tot 14-10-2026 ging dit naar /app, en dat bestaat in de interne
+                omgeving niet ("pagina niet gevonden"). Nu: terug naar het overzicht. */}
+            <button onClick={() => kiesTab('stats')} className="text-brand-600" aria-label="Naar het overzicht" title="Naar het overzicht">
+              <Zap className="w-7 h-7" />
+            </button>
             <div>
               <div className="font-display font-medium text-ink-1 leading-none">SwiftBridge Compliance</div>
-              <div className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-600">DNB toezicht · Wwft · AVG</div>
+              <div className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-600">Wwft · AVG</div>
             </div>
           </div>
           <button
@@ -763,7 +784,7 @@ export default function AdminCompliance() {
           {tabs.map((tt) => (
             <button
               key={tt.id}
-              onClick={() => setTab(tt.id)}
+              onClick={() => kiesTab(tt.id)}
               className={`relative flex items-center gap-2 px-4 py-2.5 text-[0.7rem] font-medium uppercase tracking-[0.16em] whitespace-nowrap transition border-b-2 ${
                 tab === tt.id
                   ? 'text-brand-700 border-brand-500'
@@ -780,10 +801,10 @@ export default function AdminCompliance() {
       <main className="max-w-7xl mx-auto px-4 py-6">
         <Suspense fallback={<AdminLazyFallback />}>
           {tab === 'stats' && <StatsTab stats={stats} chain={chain} />}
-          {tab === 'users' && <UserManagement />}
+          {tab === 'users' && <UserManagement onOpenDossier={openDossier} />}
           {tab === 'kyb' && <KybReviewQueue />}
-          {tab === 'kycdossiers' && <KycDossiers />}
-          {tab === 'kycreview' && <KYCReviewQueue />}
+          {/* key: elke sprong vanuit Gebruikers begint met een vers scherm. */}
+          {tab === 'kycdossiers' && <KycDossiers key={startDossier || 'wachtrij'} startDossier={startDossier} />}
           {tab === 'infoverzoeken' && <InfoVerzoekenTab />}
           {tab === 'audit' && <AuditTab />}
           {tab === 'sanctie' && <SanctieTab />}
