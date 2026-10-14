@@ -16,11 +16,14 @@
  * beoordeelbaar, en dat was niet te zien. Een scherm dat lege velden netjes
  * toont, verbergt het probleem in plaats van het te laten zien.
  *
- * Dit scherm NEEMT GEEN BESLUITEN. De besluitknoppen komen pas als het
- * vierogenprincipe is aangesloten op de database. Tot die tijd is dit het scherm
- * waarmee je ziet wat er speelt en wat er moet gebeuren.
+ * BESLUITEN
+ * Sinds 2-10-2026 neemt dit scherm ook besluiten, via de KYC-poort in de API.
+ * Bij midden en hoog risico tekenen twee medewerkers: de tweede ziet wat de
+ * eerste besloot (wie, wanneer, met welke reden) en bevestigt precies dat
+ * besluit; iets anders kiezen kan alleen bewust, met een reden (14-10-2026).
  *
- * Endpoints: GET /admin/kyc/wachtrij en GET /admin/kyc/dossier/:id
+ * Endpoints: GET /admin/kyc/wachtrij, GET /admin/kyc/dossier/:id,
+ * PUT /admin/kyc/dossier/:id/checklist en POST /admin/kyc/dossier/:id/besluit
  */
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch, parseError } from '../../../services/api';
@@ -32,6 +35,7 @@ import {
   DOCUMENT_LABEL, BRON_LABEL, CHECKLIST_LABEL, ACTIE_LABEL,
   VERVOLG_LABEL, VERVOLG_STIJL, label,
   DOEL_LABEL, VOLUME_LABEL, HERKOMST_LABEL, ANTWOORD_BRON_LABEL,
+  BESLUIT_LABEL, ROL_LABEL, REDEN_LABEL,
 } from './kycLabels';
 
 // ── Kleine bouwstenen ────────────────────────────────────────────────────────
@@ -270,13 +274,126 @@ function ChecklistPunt({ punt, waarde, bezig, onKies, tx }) {
   );
 }
 
-function VraagBesluit({ besluit, checklist, magBeoordelen, status, dossierId, tx, onBijgewerkt }) {
+/** Leesbare teksten voor besluit, rol en redencode; vertaald via src/i18n. */
+function besluitTeksten(tx) {
+  return {
+    besluit: (code) => tx(`kyc_admin_besluit_${code}`, label(BESLUIT_LABEL, code)),
+    rol: (code) => tx(`kyc_admin_rol_${code}`, label(ROL_LABEL, code)),
+    reden: (code) => tx(`kyc_admin_reden_${code}`, label(REDEN_LABEL, code)),
+  };
+}
+
+/** Besluiten die de tweede beoordelaar kan bevestigen (API lib/vierogen.js). */
+const AFSLUITENDE_BESLUITEN = ['goedgekeurd', 'afgewezen', 'beeindigd'];
+
+/**
+ * Wat de eerste beoordelaar besloot: besluit, reden, wie (naam en rol) en
+ * wanneer. Zonder dit bevestigde de tweede beoordelaar blind, en stuurde de
+ * knop altijd 'goedgekeurd', ook na een afwijzing door de eerste.
+ */
+function EersteBeoordeling({ eerste, tx }) {
+  const teksten = besluitTeksten(tx);
+  const kop = tx('kyc_admin_eerste_kop', 'Besluit van de eerste beoordelaar');
+  if (!eerste) {
+    return (
+      <div role="group" aria-label={kop} className="rounded-md border border-amber-200 bg-amber-50 p-3 mb-3 text-sm text-amber-700">
+        {tx('kyc_admin_eerste_kwijt',
+          'Het besluit van de eerste beoordelaar is niet terug te vinden. Zet het dossier terug in behandeling; dan begint de beoordeling opnieuw.')}
+      </div>
+    );
+  }
+  const wie = eerste.beoordelaar
+    ? `${eerste.beoordelaar.naam} (${teksten.rol(eerste.beoordelaar.rol)})`
+    : tx('kyc_admin_eerste_onbekend', 'Onbekende medewerker');
+  return (
+    <div role="group" aria-label={kop} className="rounded-md border border-brand-100 bg-brand-50 p-3 mb-3">
+      <div className="text-[0.7rem] uppercase tracking-[0.14em] text-gray-500 mb-1">{kop}</div>
+      <Regel naam={tx('kyc_admin_eerste_besluit', 'Besluit')}>
+        <span className={`font-medium ${eerste.besluit === 'goedgekeurd' ? 'text-success-700' : 'text-red-600'}`}>
+          {teksten.besluit(eerste.besluit)}
+        </span>
+      </Regel>
+      {eerste.redenCode && (
+        <Regel naam={tx('kyc_admin_eerste_reden', 'Reden')}>{teksten.reden(eerste.redenCode)}</Regel>
+      )}
+      <Regel naam={tx('kyc_admin_eerste_wie', 'Door')}>{wie}</Regel>
+      <Regel naam={tx('kyc_admin_eerste_wanneer', 'Op')}>{fmtDatum(eerste.op)}</Regel>
+    </div>
+  );
+}
+
+/** Een keuzelijst met de redencodes bij afwijzen. */
+function RedenKeuze({ id, codes, waarde, onKies, tx }) {
+  const teksten = besluitTeksten(tx);
+  return (
+    <div className="mb-3">
+      <label htmlFor={id} className="block text-sm font-medium text-ink-1 mb-1">
+        {tx('kyc_admin_afwijzen_kop', 'Reden van de afwijzing')}
+      </label>
+      <select
+        id={id}
+        value={waarde}
+        onChange={(e) => onKies(e.target.value)}
+        className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-ink-1"
+      >
+        <option value="">{tx('kyc_admin_afwijzen_kies', 'Kies een reden')}</option>
+        {codes.map((c) => <option key={c} value={c}>{teksten.reden(c)}</option>)}
+      </select>
+      <p className="text-xs text-ink-2 mt-1">
+        {tx('kyc_admin_afwijzen_uitleg', 'De reden blijft intern. De klant krijgt alleen de vaste tekst die bij deze reden hoort.')}
+      </p>
+    </div>
+  );
+}
+
+const KNOP_NEUTRAAL = 'px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40';
+const KNOP_ROOD = 'px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40';
+const KNOP_GROEN = 'px-4 py-2 rounded-md bg-success-600 hover:bg-success-700 text-sm text-white font-semibold disabled:opacity-40';
+const TEKSTVAK = 'w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-ink-1';
+
+function VraagBesluit({
+  besluit, checklist, magBeoordelen, status, eersteBeoordeling, screening, dossierId, tx, onBijgewerkt,
+}) {
   const blokkerend = besluit.ontbreekt.filter((o) => o.blokkerend);
   const overig = besluit.ontbreekt.filter((o) => !o.blokkerend);
+  const teksten = besluitTeksten(tx);
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState('');
   const [ontbreekt, setOntbreekt] = useState([]);
+  // Welk invulvak open staat: 'info' (vraag aan de klant), 'afwijzen' (reden)
+  // of 'oneens' (de tweede beoordelaar kiest iets anders dan de eerste).
+  const [formulier, setFormulier] = useState(null);
+  const [tekst, setTekst] = useState('');
+  const [redenCode, setRedenCode] = useState('');
+  const [oneensKeuze, setOneensKeuze] = useState('in_behandeling');
+  const [trefferVerworpen, setTrefferVerworpen] = useState(false);
   const wachtOpTweede = status === 'wacht_op_tweede';
+  const mag = magBeoordelen?.mag === true;
+  const eerste = wachtOpTweede ? eersteBeoordeling : null;
+  const teBevestigen = eerste && AFSLUITENDE_BESLUITEN.includes(eerste.besluit) ? eerste.besluit : null;
+  const redenCodes = Array.isArray(besluit.redenCodes) ? besluit.redenCodes : Object.keys(REDEN_LABEL);
+
+  // Een gedeeltelijke overeenkomst met de sanctielijst: goedkeuren kan pas als
+  // de beoordelaar uitdrukkelijk zegt dat hij hem zelf heeft nagekeken en
+  // verworpen. De poort vraagt dat van beide beoordelaars.
+  const mogelijkeTreffer = Boolean(
+    screening && screening.uitgevoerd && !screening.hit && Number(screening.mogelijkeTreffers) > 0
+  );
+  const vraagNaarTreffer = mogelijkeTreffer && (wachtOpTweede ? teBevestigen === 'goedgekeurd' : true);
+  const trefferOpen = vraagNaarTreffer && !trefferVerworpen;
+
+  function openFormulier(welk) {
+    setFormulier((nu) => (nu === welk ? null : welk));
+    setTekst('');
+    setFout('');
+  }
+
+  function sluitFormulier() {
+    setFormulier(null);
+    setTekst('');
+    setRedenCode('');
+    setOneensKeuze('in_behandeling');
+  }
 
   async function kiesAntwoord(punt, waarde) {
     setBezig(true);
@@ -294,25 +411,52 @@ function VraagBesluit({ besluit, checklist, magBeoordelen, status, dossierId, tx
     }
   }
 
-  async function neemBesluit(welk) {
+  /**
+   * Stuurt een besluit. body is precies wat de API krijgt: { besluit } plus,
+   * waar nodig, de vraag aan de klant of de notitie (opmerking), de redencode
+   * of mogelijkeTrefferBeoordeeld.
+   */
+  async function neemBesluit(body) {
     setBezig(true);
     setFout('');
     setOntbreekt([]);
     try {
-      await apiFetch(`/admin/kyc/dossier/${dossierId}/besluit`, {
-        method: 'POST',
-        body: { besluit: welk },
-      });
+      await apiFetch(`/admin/kyc/dossier/${dossierId}/besluit`, { method: 'POST', body });
+      sluitFormulier();
+      setTrefferVerworpen(false);
       onBijgewerkt?.();
     } catch (e) {
       setFout(e?.body?.error || e?.message || 'Het besluit kon niet worden vastgelegd.');
       // De API vertelt WELKE punten nog ontbreken; dat is bruikbaarder dan
       // alleen "checklist niet volledig".
       if (Array.isArray(e?.body?.ontbreekt)) setOntbreekt(e.body.ontbreekt);
+      // De poort screende de klant zojuist opnieuw. Het dossier opnieuw
+      // ophalen laat de verse uitslag zien, en zo nodig de vraag of de
+      // beoordelaar een mogelijke treffer zelf heeft verworpen.
+      if (e?.body?.errorCode === 'KYC_POORT_GEWEIGERD') onBijgewerkt?.();
     } finally {
       setBezig(false);
     }
   }
+
+  function goedkeuren() {
+    neemBesluit(vraagNaarTreffer
+      ? { besluit: 'goedgekeurd', mogelijkeTrefferBeoordeeld: trefferVerworpen }
+      : { besluit: 'goedgekeurd' });
+  }
+
+  /** De tweede handtekening: precies het besluit (en de reden) van de eerste. */
+  function bevestig() {
+    if (teBevestigen === 'goedgekeurd') return goedkeuren();
+    const body = { besluit: teBevestigen };
+    if (teBevestigen === 'afgewezen') body.redenCode = eerste.redenCode || redenCode;
+    return neemBesluit(body);
+  }
+
+  // Een oudere eerste afwijzing zonder vastgelegde reden: dan kiest de tweede
+  // de reden, want zonder reden weigert de API.
+  const redenOntbreekt = teBevestigen === 'afgewezen' && !eerste?.redenCode;
+  const bevestigenKan = mag && !bezig && !trefferOpen && !(redenOntbreekt && !redenCode);
 
   return (
     <Blok nummer={2} vraag={tx('kyc_admin_vraag2', 'Accepteer ik hem, en waarom?')}>
@@ -368,13 +512,49 @@ function VraagBesluit({ besluit, checklist, magBeoordelen, status, dossierId, tx
         ))}
       </ul>
 
+      {besluit.interneNotitie && (
+        <div
+          role="group"
+          aria-label={tx('kyc_admin_notitie_kop', 'Interne notitie bij het vorige besluit')}
+          className="rounded-md border border-border bg-surface-2 p-3 mb-3"
+        >
+          <div className="text-[0.7rem] uppercase tracking-[0.14em] text-gray-500 mb-1">
+            {tx('kyc_admin_notitie_kop', 'Interne notitie bij het vorige besluit')}
+          </div>
+          <p className="text-sm text-ink-1 whitespace-pre-line">{besluit.interneNotitie}</p>
+        </div>
+      )}
+
+      {wachtOpTweede && <EersteBeoordeling eerste={eerste} tx={tx} />}
+
       {wachtOpTweede && (
         <div className="rounded-md border border-brand-100 bg-brand-50 p-3 mb-3 text-sm text-ink-1">
-          {magBeoordelen?.mag
-            ? tx('kyc_admin_tweede_jij', 'Een collega heeft dit dossier al beoordeeld. Jij kunt het bevestigen.')
+          {mag
+            ? tx('kyc_admin_tweede_uitleg',
+              'Jij bent de tweede beoordelaar: je bevestigt dit besluit. Ben je het niet eens, kies dan "Niet eens" en schrijf op waarom.')
             : (magBeoordelen?.reden
               || tx('kyc_admin_tweede_ander', 'Dit dossier wacht op een tweede beoordelaar.'))}
         </div>
+      )}
+
+      {redenOntbreekt && mag && (
+        <RedenKeuze id={`kyc-reden-tweede-${dossierId}`} codes={redenCodes} waarde={redenCode} onKies={setRedenCode} tx={tx} />
+      )}
+
+      {vraagNaarTreffer && (
+        <label className="flex items-start gap-2 rounded-md border border-amber-200 bg-amber-50 p-3 mb-3 text-sm text-amber-800">
+          <input
+            type="checkbox"
+            className="mt-0.5"
+            checked={trefferVerworpen}
+            disabled={bezig || !mag}
+            onChange={(e) => setTrefferVerworpen(e.target.checked)}
+          />
+          <span>
+            {tx('kyc_admin_treffer_verworpen',
+              'Ik heb de mogelijke treffer zelf nagekeken op de sanctielijst: het is niet deze klant.')}
+          </span>
+        </label>
       )}
 
       {fout && (
@@ -388,35 +568,145 @@ function VraagBesluit({ besluit, checklist, magBeoordelen, status, dossierId, tx
         </div>
       )}
 
+      {wachtOpTweede ? (
+        <div className="flex flex-wrap gap-2 justify-end">
+          <button type="button" disabled={bezig || !mag} onClick={() => openFormulier('oneens')} className={KNOP_NEUTRAAL}>
+            {teBevestigen
+              ? tx('kyc_admin_knop_oneens', 'Niet eens')
+              : tx('kyc_admin_knop_terugzetten', 'Terug in behandeling')}
+          </button>
+          {teBevestigen && (
+            <button
+              type="button"
+              disabled={!bevestigenKan}
+              onClick={bevestig}
+              className={teBevestigen === 'goedgekeurd' ? KNOP_GROEN : KNOP_ROOD}
+            >
+              {tx('kyc_admin_knop_bevestig_besluit', 'Bevestigen: {besluit}', { besluit: teksten.besluit(teBevestigen) })}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-2 justify-end">
+          <button type="button" disabled={bezig} onClick={() => openFormulier('info')} className={KNOP_NEUTRAAL}>
+            {tx('kyc_admin_knop_info', 'Informatie opvragen')}
+          </button>
+          <button type="button" disabled={bezig || !mag} onClick={() => openFormulier('afwijzen')} className={KNOP_ROOD}>
+            {tx('kyc_admin_knop_afwijzen', 'Afwijzen')}
+          </button>
+          <button type="button" disabled={bezig || !mag || trefferOpen} onClick={goedkeuren} className={KNOP_GROEN}>
+            {tx('kyc_admin_knop_goedkeuren', 'Goedkeuren')}
+          </button>
+        </div>
+      )}
+
+      {formulier === 'info' && (
+        <BesluitFormulier
+          bezig={bezig}
+          kanVersturen={Boolean(tekst.trim())}
+          knop={tx('kyc_admin_info_versturen', 'Vraag versturen')}
+          onVerstuur={() => neemBesluit({ besluit: 'info_nodig', opmerking: tekst.trim() })}
+          onAnnuleer={sluitFormulier}
+          tx={tx}
+        >
+          <VrijeTekst
+            id={`kyc-info-${dossierId}`}
+            label={tx('kyc_admin_info_vraag', 'Wat heb je van de klant nodig? De klant krijgt deze tekst in de app en in de mail.')}
+            waarde={tekst}
+            onWijzig={setTekst}
+            max={2000}
+          />
+        </BesluitFormulier>
+      )}
+
+      {formulier === 'afwijzen' && (
+        <BesluitFormulier
+          bezig={bezig}
+          kanVersturen={Boolean(redenCode)}
+          knop={tx('kyc_admin_knop_afwijzen_bevestigen', 'Afwijzing vastleggen')}
+          stijl={KNOP_ROOD}
+          onVerstuur={() => neemBesluit({ besluit: 'afgewezen', redenCode })}
+          onAnnuleer={sluitFormulier}
+          tx={tx}
+        >
+          <RedenKeuze id={`kyc-reden-${dossierId}`} codes={redenCodes} waarde={redenCode} onKies={setRedenCode} tx={tx} />
+        </BesluitFormulier>
+      )}
+
+      {formulier === 'oneens' && (
+        <BesluitFormulier
+          bezig={bezig}
+          kanVersturen={Boolean(tekst.trim())}
+          knop={tx('kyc_admin_knop_oneens_versturen', 'Vastleggen')}
+          onVerstuur={() => neemBesluit({ besluit: oneensKeuze, opmerking: tekst.trim() })}
+          onAnnuleer={sluitFormulier}
+          tx={tx}
+        >
+          <fieldset className="mb-3">
+            <legend className="text-sm font-medium text-ink-1 mb-1">
+              {tx('kyc_admin_oneens_kop', 'Wat moet er nu gebeuren?')}
+            </legend>
+            {[
+              { waarde: 'in_behandeling', tekst: tx('kyc_admin_oneens_terug', 'Terug in behandeling: de beoordeling begint opnieuw') },
+              { waarde: 'info_nodig', tekst: tx('kyc_admin_oneens_info', 'Informatie opvragen bij de klant') },
+            ].map((k) => (
+              <label key={k.waarde} className="flex items-center gap-2 text-sm text-ink-1 py-0.5">
+                <input
+                  type="radio"
+                  name={`kyc-oneens-${dossierId}`}
+                  value={k.waarde}
+                  checked={oneensKeuze === k.waarde}
+                  onChange={() => setOneensKeuze(k.waarde)}
+                />
+                {k.tekst}
+              </label>
+            ))}
+          </fieldset>
+          <VrijeTekst
+            id={`kyc-oneens-tekst-${dossierId}`}
+            label={oneensKeuze === 'info_nodig'
+              ? tx('kyc_admin_info_vraag', 'Wat heb je van de klant nodig? De klant krijgt deze tekst in de app en in de mail.')
+              : tx('kyc_admin_oneens_reden', 'Waarom ben je het niet eens? Dit is een interne notitie; de klant ziet hem niet.')}
+            waarde={tekst}
+            onWijzig={setTekst}
+            max={oneensKeuze === 'info_nodig' ? 2000 : 500}
+          />
+        </BesluitFormulier>
+      )}
+    </Blok>
+  );
+}
+
+/** Een invulvak onder de besluitknoppen, met Annuleren en een verstuurknop. */
+function BesluitFormulier({ bezig, kanVersturen, knop, stijl = KNOP_GROEN, onVerstuur, onAnnuleer, tx, children }) {
+  return (
+    <div className="mt-3 rounded-md border border-border bg-surface-2 p-3">
+      {children}
       <div className="flex flex-wrap gap-2 justify-end">
-        <button
-          type="button"
-          disabled={bezig}
-          onClick={() => neemBesluit('info_nodig')}
-          className="px-4 py-2 rounded-md bg-surface border border-border text-sm text-ink-1 hover:bg-surface-3 disabled:opacity-40"
-        >
-          {tx('kyc_admin_knop_info', 'Informatie opvragen')}
+        <button type="button" disabled={bezig} onClick={onAnnuleer} className={KNOP_NEUTRAAL}>
+          {tx('annuleren', 'Annuleren')}
         </button>
-        <button
-          type="button"
-          disabled={bezig || !magBeoordelen?.mag}
-          onClick={() => neemBesluit('afgewezen')}
-          className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-sm text-white font-semibold disabled:opacity-40"
-        >
-          {tx('kyc_admin_knop_afwijzen', 'Afwijzen')}
-        </button>
-        <button
-          type="button"
-          disabled={bezig || !magBeoordelen?.mag}
-          onClick={() => neemBesluit('goedgekeurd')}
-          className="px-4 py-2 rounded-md bg-success-600 hover:bg-success-700 text-sm text-white font-semibold disabled:opacity-40"
-        >
-          {wachtOpTweede
-            ? tx('kyc_admin_knop_bevestigen', 'Bevestigen als tweede beoordelaar')
-            : tx('kyc_admin_knop_goedkeuren', 'Goedkeuren')}
+        <button type="button" disabled={bezig || !kanVersturen} onClick={onVerstuur} className={stijl}>
+          {knop}
         </button>
       </div>
-    </Blok>
+    </div>
+  );
+}
+
+function VrijeTekst({ id, label: tekstLabel, waarde, onWijzig, max }) {
+  return (
+    <div className="mb-3">
+      <label htmlFor={id} className="block text-sm font-medium text-ink-1 mb-1">{tekstLabel}</label>
+      <textarea
+        id={id}
+        rows={3}
+        maxLength={max}
+        value={waarde}
+        onChange={(e) => onWijzig(e.target.value)}
+        className={TEKSTVAK}
+      />
+    </div>
   );
 }
 
@@ -468,18 +758,50 @@ function VraagVastlegging({ vastlegging, tx }) {
         </div>
       </div>
 
-      <div className="mt-4 rounded-md border border-amber-200 bg-amber-50 p-3">
-        <div className="text-sm font-medium text-amber-700">
-          {tx('kyc_admin_screening_kop', 'Screening')}
-        </div>
-        <p className="text-sm text-amber-700/90 mt-0.5">
-          {vastlegging.screening === null
-            ? tx('kyc_admin_screening_nooit',
-              'Er is voor deze klant nooit gescreend op sanctielijsten. Dat is een wettelijke verplichting zonder drempel.')
-            : tx('kyc_admin_screening_wel', 'Screening uitgevoerd.')}
-        </p>
-      </div>
+      <ScreeningUitslag screening={vastlegging.screening} tx={tx} />
     </Blok>
+  );
+}
+
+/**
+ * De uitslag van de laatste sanctiescreening van de KYC-poort. Tot 14-10-2026
+ * stond hier alleen "Screening uitgevoerd", ook bij een (mogelijke) treffer;
+ * dan wist de beoordelaar niet dat hij iets moest nakijken. De API geeft
+ * bewust alleen aantallen en scores, geen namen van de lijst.
+ */
+function ScreeningUitslag({ screening: s, tx }) {
+  let stijl = 'border-amber-200 bg-amber-50 text-amber-700';
+  let tekst;
+  if (!s) {
+    tekst = tx('kyc_admin_screening_nooit',
+      'Er is voor deze klant nooit gescreend op sanctielijsten. Dat is een wettelijke verplichting zonder drempel.');
+  } else if (!s.uitgevoerd || s.unavailable) {
+    tekst = tx('kyc_admin_screening_onbereikbaar',
+      'De laatste screening kon niet worden uitgevoerd: de lijst was niet bereikbaar. Zonder screening geen goedkeuring.');
+  } else if (s.hit) {
+    stijl = 'border-red-200 bg-red-50 text-red-700';
+    tekst = tx('kyc_admin_screening_treffer', 'Treffer op de sanctielijst. Dit dossier kan niet worden goedgekeurd.');
+  } else if (Number(s.mogelijkeTreffers) > 0) {
+    tekst = tx('kyc_admin_screening_mogelijk',
+      'Mogelijke treffer op de sanctielijst: {n}, hoogste overeenkomst {score}. Kijk zelf na of het om deze klant gaat.',
+      {
+        n: s.mogelijkeTreffers,
+        score: typeof s.hoogsteScore === 'number' ? `${Math.round(s.hoogsteScore * 100)}%` : '-',
+      });
+  } else {
+    stijl = 'border-success-100 bg-success-50 text-success-700';
+    tekst = tx('kyc_admin_screening_schoon', 'Geen treffer op de sanctielijst.');
+  }
+  return (
+    <div className={`mt-4 rounded-md border p-3 ${stijl}`}>
+      <div className="text-sm font-medium">{tx('kyc_admin_screening_kop', 'Screening')}</div>
+      <p className="text-sm mt-0.5 opacity-90">{tekst}</p>
+      {s?.op && (
+        <p className="text-xs mt-1 opacity-80">
+          {tx('kyc_admin_screening_op', 'Laatste screening: {op}', { op: fmtDatum(s.op) })}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -637,6 +959,8 @@ function DossierPaneel({ dossierId, onSluit, tx }) {
                 checklist={dossier.checklist}
                 magBeoordelen={dossier.magBeoordelen}
                 status={dossier.status}
+                eersteBeoordeling={dossier.eersteBeoordeling || null}
+                screening={dossier.vastlegging?.screening || null}
                 dossierId={dossierId}
                 tx={tx}
                 onBijgewerkt={herlaadDossier}

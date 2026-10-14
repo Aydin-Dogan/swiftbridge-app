@@ -251,18 +251,13 @@ describe('het scherm neemt besluiten', () => {
     });
   });
 
-  test('de besluitknoppen staan er, en zijn uit als deze medewerker niet mag', async () => {
-    // magBeoordelen komt van de server. Staat die op false, dan heeft deze
-    // medewerker de eerste beoordeling zelf gedaan en mag hij zijn eigen besluit
-    // niet bevestigen. De knop uitzetten is alleen een vriendelijkheid; de
-    // echte blokkade zit in de API.
-    toon({ magBeoordelen: { mag: false, reden: 'Een tweede beoordeling moet door een andere medewerker gebeuren.' } });
+  test('de besluitknoppen staan er bij een eerste beoordeling', async () => {
+    toon();
     fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
     await screen.findByText(/Wat is het risico van deze klant/);
 
-    expect(screen.getByRole('button', { name: /goedkeuren|bevestigen/i })).toBeDisabled();
-    expect(screen.getByRole('button', { name: /^afwijzen$/i })).toBeDisabled();
-    // Informatie opvragen is geen afsluitend besluit en mag altijd.
+    expect(screen.getByRole('button', { name: /^goedkeuren$/i })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: /^afwijzen$/i })).not.toBeDisabled();
     expect(screen.getByRole('button', { name: /informatie opvragen/i })).not.toBeDisabled();
   });
 
@@ -318,5 +313,251 @@ describe('de antwoorden van de klant over doel en gebruik', () => {
     await openMet({ antwoorden: null });
     expect(screen.getByText('nooit gevraagd')).toBeInTheDocument();
     expect(screen.queryByRole('group', { name: 'Wat de klant opgaf' })).not.toBeInTheDocument();
+  });
+});
+
+// ── Het beoordelaarsscherm (14-10-2026) ─────────────────────────────────────
+// Open punten uit de review van de KYC-poort: de tweede beoordelaar zag niet
+// wat de eerste besloot en "Bevestigen" stuurde altijd 'goedgekeurd';
+// "Informatie opvragen" stuurde geen vraag mee (de API gaf 400); "Afwijzen"
+// stuurde geen reden mee; een mogelijke treffer kon niet worden verworpen.
+
+/** Het laatste besluit dat het scherm naar de server stuurde. */
+function laatsteBesluit() {
+  const aanroepen = apiFetch.mock.calls.filter(([pad]) => String(pad).includes('/besluit'));
+  return aanroepen.length ? aanroepen[aanroepen.length - 1][1] : null;
+}
+
+async function openDossierMet(extra) {
+  toon(extra);
+  fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
+  await screen.findByText(/Wat is het risico van deze klant/);
+}
+
+const WACHT_OP_TWEEDE = {
+  status: 'wacht_op_tweede',
+  magBeoordelen: { mag: true },
+  checklist: {
+    identiteit_geverifieerd: 'akkoord', document_geldig: 'akkoord', gelijkenis_gecontroleerd: 'akkoord',
+    sancties_gecontroleerd: 'akkoord', pep_beoordeeld: 'akkoord', doel_gebruik_begrepen: 'akkoord',
+  },
+  eersteBeoordeling: {
+    besluit: 'afgewezen',
+    redenCode: 'risico_te_hoog',
+    op: '2026-10-14T09:30:00.000Z',
+    beoordelaar: { naam: 'Fatma Eerste', rol: 'compliance_officer' },
+  },
+};
+
+describe('punt a: de tweede beoordelaar ziet en bevestigt het besluit van de eerste', () => {
+  test('hij ziet welk besluit de eerste nam, met reden, naam, rol en tijd', async () => {
+    await openDossierMet(WACHT_OP_TWEEDE);
+    const blok = screen.getByRole('group', { name: 'Besluit van de eerste beoordelaar' });
+    expect(within(blok).getByText('Afwijzen')).toBeInTheDocument();
+    expect(within(blok).getByText('Risico te hoog (algemene tekst)')).toBeInTheDocument();
+    expect(within(blok).getByText(/Fatma Eerste/)).toBeInTheDocument();
+    expect(within(blok).getByText(/Compliance officer/)).toBeInTheDocument();
+    expect(within(blok).getByText(/14 okt\.? 2026/)).toBeInTheDocument();
+  });
+
+  test('"Bevestigen" stuurt het besluit van de eerste, met diens reden, en niet "goedgekeurd"', async () => {
+    await openDossierMet(WACHT_OP_TWEEDE);
+    // Een ander afsluitend besluit is er in deze stand niet.
+    expect(screen.queryByRole('button', { name: /^goedkeuren$/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^afwijzen$/i })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Bevestigen: Afwijzen' }));
+
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'afgewezen', redenCode: 'risico_te_hoog' });
+  });
+
+  test('een goedkeuring van de eerste bevestigt hij als goedkeuring', async () => {
+    await openDossierMet({
+      ...WACHT_OP_TWEEDE,
+      eersteBeoordeling: { ...WACHT_OP_TWEEDE.eersteBeoordeling, besluit: 'goedgekeurd', redenCode: null },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Bevestigen: Goedkeuren' }));
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toMatchObject({ besluit: 'goedgekeurd' });
+  });
+
+  test('een ander besluit kiest hij alleen bewust, met een reden', async () => {
+    await openDossierMet(WACHT_OP_TWEEDE);
+    fireEvent.click(screen.getByRole('button', { name: 'Niet eens' }));
+
+    const opslaan = screen.getByRole('button', { name: 'Vastleggen' });
+    expect(opslaan).toBeDisabled();
+    expect(laatsteBesluit()).toBeNull();
+
+    fireEvent.change(screen.getByLabelText(/Waarom ben je het niet eens/), {
+      target: { value: '  De selfie lijkt niet op de pasfoto.  ' },
+    });
+    expect(opslaan).not.toBeDisabled();
+    fireEvent.click(opslaan);
+
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'in_behandeling', opmerking: 'De selfie lijkt niet op de pasfoto.' });
+  });
+
+  test('niet eens kan ook: informatie opvragen bij de klant', async () => {
+    await openDossierMet(WACHT_OP_TWEEDE);
+    fireEvent.click(screen.getByRole('button', { name: 'Niet eens' }));
+    fireEvent.click(screen.getByLabelText('Informatie opvragen bij de klant'));
+    fireEvent.change(screen.getByLabelText(/Wat heb je van de klant nodig/), {
+      target: { value: 'Graag een recent adresbewijs.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Vastleggen' }));
+
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'info_nodig', opmerking: 'Graag een recent adresbewijs.' });
+  });
+
+  test('wie de eerste beoordeling zelf deed, kan niets bevestigen of terugzetten', async () => {
+    await openDossierMet({
+      ...WACHT_OP_TWEEDE,
+      magBeoordelen: { mag: false, reden: 'Een tweede beoordeling moet door een andere medewerker gebeuren.' },
+    });
+    expect(screen.getByText(/moet door een andere medewerker gebeuren/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bevestigen: Afwijzen' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Niet eens' })).toBeDisabled();
+  });
+
+  test('is het eerste besluit niet terug te vinden, dan alleen terugzetten', async () => {
+    await openDossierMet({ ...WACHT_OP_TWEEDE, eersteBeoordeling: null });
+    expect(screen.getByText(/niet terug te vinden/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^Bevestigen/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Terug in behandeling' })).not.toBeDisabled();
+  });
+
+  test('een oudere afwijzing zonder vastgelegde reden: de tweede kiest de reden', async () => {
+    await openDossierMet({
+      ...WACHT_OP_TWEEDE,
+      eersteBeoordeling: { ...WACHT_OP_TWEEDE.eersteBeoordeling, redenCode: null },
+    });
+    const bevestig = screen.getByRole('button', { name: 'Bevestigen: Afwijzen' });
+    expect(bevestig).toBeDisabled();
+    fireEvent.change(screen.getByLabelText('Reden van de afwijzing'), { target: { value: 'identiteit_niet_verifieerbaar' } });
+    fireEvent.click(bevestig);
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'afgewezen', redenCode: 'identiteit_niet_verifieerbaar' });
+  });
+
+  test('de volgende beoordelaar ziet waarom een collega het dossier terugzette', async () => {
+    await openDossierMet({ besluit: { ...DOSSIER.besluit, interneNotitie: 'Adres klopt niet met iDIN.' } });
+    const blok = screen.getByRole('group', { name: 'Interne notitie bij het vorige besluit' });
+    expect(within(blok).getByText('Adres klopt niet met iDIN.')).toBeInTheDocument();
+  });
+});
+
+describe('punt b: informatie opvragen stuurt een vraag aan de klant mee', () => {
+  test('eerst de vraag, dan pas versturen; de vraag gaat mee', async () => {
+    await openDossierMet();
+    fireEvent.click(screen.getByRole('button', { name: /informatie opvragen/i }));
+    // Er is nog niets verstuurd: zonder vraag weigert de API, en de klant zou
+    // een melding zonder vraag krijgen.
+    expect(laatsteBesluit()).toBeNull();
+
+    const versturen = screen.getByRole('button', { name: 'Vraag versturen' });
+    expect(versturen).toBeDisabled();
+    fireEvent.change(screen.getByLabelText(/Wat heb je van de klant nodig/), {
+      target: { value: 'Graag een scherpere foto van de voorkant van uw paspoort.' },
+    });
+    fireEvent.click(versturen);
+
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({
+      besluit: 'info_nodig', opmerking: 'Graag een scherpere foto van de voorkant van uw paspoort.',
+    });
+  });
+
+  test('annuleren stuurt niets', async () => {
+    await openDossierMet();
+    fireEvent.click(screen.getByRole('button', { name: /informatie opvragen/i }));
+    fireEvent.click(screen.getByRole('button', { name: 'Annuleren' }));
+    expect(screen.queryByRole('button', { name: 'Vraag versturen' })).not.toBeInTheDocument();
+    expect(laatsteBesluit()).toBeNull();
+  });
+});
+
+describe('punt c: afwijzen met reden, en een mogelijke treffer bewust verwerpen', () => {
+  test('afwijzen vraagt een reden en stuurt die mee', async () => {
+    await openDossierMet();
+    fireEvent.click(screen.getByRole('button', { name: /^afwijzen$/i }));
+    const vastleggen = screen.getByRole('button', { name: 'Afwijzing vastleggen' });
+    expect(vastleggen).toBeDisabled();
+
+    fireEvent.change(screen.getByLabelText('Reden van de afwijzing'), { target: { value: 'identiteit_niet_verifieerbaar' } });
+    fireEvent.click(vastleggen);
+
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'afgewezen', redenCode: 'identiteit_niet_verifieerbaar' });
+  });
+
+  const MOGELIJKE_TREFFER = {
+    op: '2026-10-14T09:00:00.000Z', uitgevoerd: true, hit: false, unavailable: false,
+    mogelijkeTreffers: 1, hoogsteScore: 0.71, bron: 'eu', pep: { beoordeeld: false, treffer: false, bron: null },
+  };
+
+  test('bij een mogelijke treffer keurt hij pas goed als hij hem zelf verwierp', async () => {
+    await openDossierMet({ vastlegging: { ...DOSSIER.vastlegging, screening: MOGELIJKE_TREFFER } });
+    expect(screen.getByText(/Mogelijke treffer op de sanctielijst/)).toBeInTheDocument();
+    expect(screen.getByText(/71%/)).toBeInTheDocument();
+
+    const goedkeuren = screen.getByRole('button', { name: /^goedkeuren$/i });
+    expect(goedkeuren).toBeDisabled();
+    fireEvent.click(screen.getByLabelText(/het is niet deze klant/));
+    expect(goedkeuren).not.toBeDisabled();
+    fireEvent.click(goedkeuren);
+
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'goedgekeurd', mogelijkeTrefferBeoordeeld: true });
+  });
+
+  test('ook de tweede beoordelaar verwerpt de mogelijke treffer zelf', async () => {
+    await openDossierMet({
+      ...WACHT_OP_TWEEDE,
+      eersteBeoordeling: { ...WACHT_OP_TWEEDE.eersteBeoordeling, besluit: 'goedgekeurd', redenCode: null },
+      vastlegging: { ...DOSSIER.vastlegging, screening: MOGELIJKE_TREFFER },
+    });
+    const bevestig = screen.getByRole('button', { name: 'Bevestigen: Goedkeuren' });
+    expect(bevestig).toBeDisabled();
+    fireEvent.click(screen.getByLabelText(/het is niet deze klant/));
+    fireEvent.click(bevestig);
+    await waitFor(() => expect(laatsteBesluit()).not.toBeNull());
+    expect(laatsteBesluit().body).toEqual({ besluit: 'goedgekeurd', mogelijkeTrefferBeoordeeld: true });
+  });
+
+  test('vraag 3 toont de uitslag van de laatste screening', async () => {
+    await openDossierMet({
+      vastlegging: { ...DOSSIER.vastlegging, screening: { ...MOGELIJKE_TREFFER, mogelijkeTreffers: 0, hoogsteScore: null } },
+    });
+    expect(screen.getByText(/Geen treffer op de sanctielijst/)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/het is niet deze klant/)).not.toBeInTheDocument();
+  });
+
+  test('na een weigering door de poort haalt het scherm het dossier opnieuw op (verse screening)', async () => {
+    await openDossierMet();
+    apiFetch.mockImplementation(async (pad) => {
+      if (pad.includes('/besluit')) {
+        const e = new Error('Dit dossier kan (nog) niet worden goedgekeurd.');
+        e.body = {
+          errorCode: 'KYC_POORT_GEWEIGERD',
+          error: 'Dit dossier kan (nog) niet worden goedgekeurd. De sanctiescreening geeft een mogelijke treffer.',
+          redenen: [{ code: 'sanctie_mogelijke_treffer', wat: 'De sanctiescreening geeft een mogelijke treffer.' }],
+        };
+        throw e;
+      }
+      if (pad.startsWith('/admin/kyc/dossier/')) return dossierAntwoord;
+      return WACHTRIJ;
+    });
+    const voor = apiFetch.mock.calls.filter(([pad]) => pad === '/admin/kyc/dossier/k1').length;
+
+    fireEvent.click(screen.getByRole('button', { name: /^goedkeuren$/i }));
+
+    await screen.findByText(/geeft een mogelijke treffer/);
+    await waitFor(() => {
+      expect(apiFetch.mock.calls.filter(([pad]) => pad === '/admin/kyc/dossier/k1').length).toBeGreaterThan(voor);
+    });
   });
 });

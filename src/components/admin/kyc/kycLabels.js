@@ -7,8 +7,9 @@
  * staan alleen de dingen waar de API enkel een code voor geeft.
  *
  * Teksten lopen via useTx uit kybAdminLabels: die gebruikt de vertaling als die
- * bestaat en anders de Nederlandse tekst die hier staat. Zo hoeven er geen
- * nieuwe sleutels in de vijf taalbestanden, wat de pariteitstest zou breken.
+ * bestaat en anders de Nederlandse tekst die hier staat. Nieuwe teksten (vanaf
+ * het beoordelaarsscherm, 14-10-2026) staan in alle vijf taalbestanden; deze
+ * tabellen zijn dan alleen de terugval.
  */
 
 /** Kleur per risicoklasse. Dezelfde pill-vorm als STATUS_STIJL bij zakelijk. */
@@ -134,6 +135,45 @@ export const ANTWOORD_BRON_LABEL = {
   klant: 'door de klant in de app',
   dossier: 'uit het dossier',
   kyb: 'uit de zakelijke aanvraag',
+};
+
+/**
+ * Het beoordelaarsscherm (14-10-2026). Deze teksten staan ook in src/i18n
+ * (kyc_admin_besluit_*, kyc_admin_rol_*, kyc_admin_reden_*) in alle vijf
+ * talen; dit is de Nederlandse terugval voor useTx.
+ */
+
+/** Het besluit van een beoordelaar, als handeling ("Bevestigen: Afwijzen"). */
+export const BESLUIT_LABEL = {
+  goedgekeurd: 'Goedkeuren',
+  afgewezen: 'Afwijzen',
+  beeindigd: 'Relatie beëindigen',
+};
+
+/** De rollen van een medewerker (API src/lib/medewerkerInvoer.js ROLLEN). */
+export const ROL_LABEL = {
+  beoordelaar: 'Beoordelaar',
+  compliance_officer: 'Compliance officer',
+  mlro: 'MLRO',
+  beheerder: 'Beheerder',
+};
+
+/**
+ * De interne redencodes bij afwijzen (API src/lib/kyc/keuzes.js REDEN_CODE).
+ * De klant ziet deze nooit; bij vier ervan krijgt hij alleen een algemene
+ * tekst (Wwft art. 23), en dat staat erbij zodat de beoordelaar het weet.
+ */
+export const REDEN_LABEL = {
+  identiteit_niet_verifieerbaar: 'Identiteit niet vast te stellen',
+  document_vervalst: 'Document vermoedelijk vervalst',
+  gegevens_wijken_af_idin: 'Gegevens wijken af van iDIN',
+  selfie_komt_niet_overeen: 'Selfie komt niet overeen met het document',
+  sanctie: 'Sanctie (algemene tekst)',
+  pep_niet_acceptabel: 'Politiek prominent, niet acceptabel (algemene tekst)',
+  herkomst_middelen_onduidelijk: 'Herkomst van het geld onduidelijk',
+  klant_reageert_niet: 'Klant reageert niet',
+  risico_te_hoog: 'Risico te hoog (algemene tekst)',
+  overig: 'Overig (algemene tekst)',
 };
 
 /** Leest een label uit een tabel, met de code zelf als terugval. */
