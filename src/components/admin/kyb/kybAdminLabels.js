@@ -10,6 +10,7 @@
  */
 import { useCallback, useMemo } from 'react';
 import { useTaal } from '../../../i18n';
+import { normaliseerNaam } from '../../../lib/naamNormaal';
 
 export const STATUSSEN = ['geen', 'concept', 'ingediend', 'in_behandeling', 'info_nodig', 'goedgekeurd', 'afgewezen', 'ingetrokken'];
 export const CHECKLIST = ['identiteit_geverifieerd', 'kvk_gecontroleerd', 'ubo_compleet', 'sancties_gecontroleerd', 'pep_beoordeeld', 'doel_aard_begrepen'];
@@ -220,9 +221,14 @@ export function adresRegel(a) {
   return [straat, plaats, a.land].filter(Boolean).join(', ') || '-';
 }
 
-/** Genormaliseerde vergelijking voor "Wijkt af"-markering. */
+/**
+ * Genormaliseerde vergelijking voor "Wijkt af"-markering. Hoofdletters, accenten
+ * en Turkse letters tellen niet ('Yılmaz' = 'YILMAZ', 'Şahin' = 'SAHIN'); de
+ * volgorde wel, want hier gaan ook datums en adressen doorheen.
+ */
 export function wijktAf(a, b) {
-  const n = (x) => String(x ?? '').toLowerCase().replace(/\s+/g, ' ').trim();
-  if (!n(a) && !n(b)) return false;
-  return n(a) !== n(b);
+  const na = normaliseerNaam(a);
+  const nb = normaliseerNaam(b);
+  if (!na && !nb) return false;
+  return na !== nb;
 }
