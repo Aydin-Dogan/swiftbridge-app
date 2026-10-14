@@ -4,7 +4,8 @@
  * - Multi-currency: TRY, AZN, KZT, UZS, TMT, KGS, USD, GBP, EUR, MAD
  * - Snelle bedragknoppen
  * - Opgeslagen ontvangers (server, /beneficiaries; de server bewaart ze zelf na
- *   een geslaagde betaling — aanmeldroute punt 11)
+ *   een geslaagde betaling — aanmeldroute punt 11). Geen vinkje "Bewaar als
+ *   favoriete ontvanger" meer, wel een optionele bijnaam (services/ontvangerBijnaam)
  * - "Snel opnieuw": klaargezette ontvanger + bank + bedrag → meteen bevestigen
  * - Laatst gebruikte betaalmethode voorgekozen (alleen de naam, op dit toestel)
  * - Transactie opslaan + dashboard notificatie
@@ -32,6 +33,7 @@ import { methodeKanNu, geldigeMethode } from '../services/betaalmethodes'; // al
 import { startBetaling, doorsturenNaar } from '../services/betaalStart'; // geen vals "gelukt" meer
 import { haalOpnieuwKlaar } from '../services/opnieuwVersturen'; // "Snel opnieuw" / "Opnieuw versturen"
 import { leesLaatsteBetaalmethode, bewaarLaatsteBetaalmethode } from '../services/laatsteBetaalmethode';
+import { bewaarBijnaam, BIJNAAM_MAX } from '../services/ontvangerBijnaam';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -151,31 +153,6 @@ function slaTransactieOp(tx) {
   const bestaand = JSON.parse(localStorage.getItem(TX_KEY) || '[]');
   localStorage.setItem(TX_KEY, JSON.stringify([tx, ...bestaand]));
   window.dispatchEvent(new Event('swiftbridge_tx_update'));
-}
-
-// ── Beneficiary helper: opslaan via API (best-effort, faalt stil) ────────────
-function leesCsrfCookie() {
-  if (typeof document === 'undefined' || !document.cookie) return null;
-  const m = document.cookie.match(/(?:^|;\s*)sb_csrf=([^;]+)/);
-  return m ? decodeURIComponent(m[1]) : null;
-}
-
-async function slaBeneficiaryOpAPI({ token, naam, iban, bank, valuta, bijnaam }) {
-  try {
-    const headers = { 'Content-Type': 'application/json' };
-    const csrf = leesCsrfCookie();
-    if (csrf) headers['X-CSRF-Token'] = csrf;
-    if (token) headers.Authorization = `Bearer ${token}`;
-    await fetch(`${API}/beneficiaries`, {
-      method: 'POST',
-      credentials: 'include',
-      headers,
-      body: JSON.stringify({ naam, iban, bank, valuta, bijnaam: bijnaam || null }),
-    });
-  } catch (e) {
-    // Best-effort — niet fataal voor de transactie
-    console.warn('Beneficiary opslaan mislukt:', e?.message);
-  }
 }
 
 // ── Ontvanger modal ───────────────────────────────────────────────────────────
@@ -306,7 +283,7 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
   );
 }
 
-function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, bankBeschikbaar = true, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bewaarAlsFavoriet, setBewaarAlsFavoriet, favorieten, toggleFavoriet }) {
+function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelheid, ontvanger, setOntvanger, iban, setIban, liveKoersTry, uitbetaalMethode, setUitbetaalMethode, bankBeschikbaar = true, paparaIdentifier, setPaparaIdentifier, paparaIdentifierType, setPaparaIdentifierType, ontvangerBank, setOntvangerBank, onVolgende, ontvangerLabel, setOntvangerLabel, token, bijnaam, setBijnaam, favorieten, toggleFavoriet }) {
   const { t } = useTaal();
   const [toonOntvangers, setToonOntvangers] = useState(false);
   const ontvangers = laadOntvangers();
@@ -503,19 +480,6 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           setOntvangerLabel={setOntvangerLabel}
         />
 
-        {/* Bewaar als favoriete ontvanger checkbox */}
-        {ontvanger && iban && (
-          <label className="flex items-center gap-2 mt-2 cursor-pointer text-xs text-ink-2 select-none">
-            <input
-              type="checkbox"
-              checked={!!bewaarAlsFavoriet}
-              onChange={e => setBewaarAlsFavoriet?.(e.target.checked)}
-              className="h-4 w-4 accent-brand-600"
-            />
-            <span>Bewaar als favoriete ontvanger</span>
-          </label>
-        )}
-
         {/* Familie label selector */}
         {ontvanger && (
           <div className="mt-3">
@@ -632,6 +596,24 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               </p>
             )}
           </div>
+          {/* Bijnaam (optioneel). Was het vinkje "Bewaar als favoriete ontvanger";
+              de server bewaart een bankontvanger na een geslaagde betaling toch al
+              (review aanmeldroute punt 11). */}
+          {ontvanger && iban && (
+            <div>
+              <label htmlFor="pf-bijnaam" className="block text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-2">{t('benef_bijnaam')}</label>
+              <input
+                id="pf-bijnaam"
+                value={bijnaam || ''}
+                onChange={e => setBijnaam?.(e.target.value)}
+                maxLength={BIJNAAM_MAX}
+                placeholder={t('benef_bijnaam_placeholder')}
+                autoComplete="off"
+                className="w-full border border-border rounded-md px-4 py-3 outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">{t('benef_bijnaam_uitleg')}</p>
+            </div>
+          )}
         </div>
       ) : (
         <div className="space-y-2">
@@ -1216,7 +1198,9 @@ export default function PaymentFlow({ token }) {
   const [transactie, setTransactie ] = useState(null);
   const [laden, setLaden ] = useState(false);
   const [fout, setFout ] = useState('');
-  const [bewaarAlsFavoriet, setBewaarAlsFavoriet] = useState(false);
+  // Optionele bijnaam voor de opgeslagen ontvanger (leeg = de app slaat niets op;
+  // de server bewaart een bankontvanger na een geslaagde betaling zelf).
+  const [bijnaam, setBijnaam] = useState('');
   // Email verificatie — bij EMAIL_NIET_GEVERIFIEERD tonen we een resend-link
   const [emailNietGeverifieerd, setEmailNietGeverifieerd] = useState(false);
   const [resendLaden, setResendLaden ] = useState(false);
@@ -1480,8 +1464,8 @@ export default function PaymentFlow({ token }) {
       };
 
       slaTransactieOp(tx);
-      if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
-        await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
+      if (uitbetaalMethode === 'bank' && iban) {
+        await bewaarBijnaam({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam });
       }
       setTransactie(tx);
       // Geen browsermelding "Betaling verstuurd!" meer: in de simulatie is er
@@ -1517,8 +1501,10 @@ export default function PaymentFlow({ token }) {
         status: 'wacht_op_betaling',
         datum: new Date().toISOString(),
       });
-      if (bewaarAlsFavoriet && uitbetaalMethode === 'bank' && iban) {
-        await slaBeneficiaryOpAPI({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam: ontvangerLabel });
+      // Alleen met een bijnaam (anders doet bewaarBijnaam niets). Vóór het
+      // doorsturen: daarna breekt de browser lopende verzoeken af.
+      if (uitbetaalMethode === 'bank' && iban) {
+        await bewaarBijnaam({ token, naam: ontvanger, iban, bank: ontvangerBank, valuta, bijnaam });
       }
       setBetaalStartFout(null);
       // Redirect naar Mollie checkout
@@ -1578,7 +1564,7 @@ export default function PaymentFlow({ token }) {
         ))}
       </div>
 
-      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bewaarAlsFavoriet={bewaarAlsFavoriet} setBewaarAlsFavoriet={setBewaarAlsFavoriet} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} bankBeschikbaar={bankBeschikbaar} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
+      {stap === 0 && <StapBedrag token={token} favorieten={favorieten} toggleFavoriet={toggleFavoriet} bijnaam={bijnaam} setBijnaam={setBijnaam} bedrag={bedrag} setBedrag={setBedrag} valuta={valuta} setValuta={setValuta} snelheid={snelheid} setSnelheid={setSnelheid} ontvanger={ontvanger} setOntvanger={setOntvanger} ontvangerLabel={ontvangerLabel} setOntvangerLabel={setOntvangerLabel} iban={iban} setIban={setIban} liveKoersTry={liveKoersTry} uitbetaalMethode={uitbetaalMethode} setUitbetaalMethode={setUitbetaalMethode} bankBeschikbaar={bankBeschikbaar} paparaIdentifier={paparaIdentifier} setPaparaIdentifier={setPaparaIdentifier} paparaIdentifierType={paparaIdentifierType} setPaparaIdentifierType={setPaparaIdentifierType} ontvangerBank={ontvangerBank} setOntvangerBank={setOntvangerBank} onVolgende={() => {
         // WL-2: bij binnenkort-valuta open de wachtlijst-modal i.p.v. door
         // naar betaling. Voorkomt dat klant iDEAL betaalt voor onmogelijke uitbetaling.
         if (getValuta(valuta)?.status === 'binnenkort') {

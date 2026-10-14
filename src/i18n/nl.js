@@ -668,6 +668,7 @@ export const nl = {
  benef_naam:'Volledige naam',
  benef_bijnaam:'Bijnaam (optioneel)',
  benef_bijnaam_placeholder:'bijv. Mama, Broer Ahmet',
+ benef_bijnaam_uitleg:'Na een geslaagde betaling staat deze ontvanger in Mijn ontvangers. Daar kun je hem altijd verwijderen.',
  benef_iban:'IBAN',
  benef_iban_geldig:'Geldig IBAN',
  benef_bank:'Bank',

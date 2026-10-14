@@ -667,6 +667,7 @@ export const en = {
  benef_naam:'Full name',
  benef_bijnaam:'Nickname (optional)',
  benef_bijnaam_placeholder:'e.g. Mom, Brother Ahmet',
+ benef_bijnaam_uitleg:'After a successful payment, this recipient is listed in My recipients. You can delete them there at any time.',
  benef_iban:'IBAN',
  benef_iban_geldig:'Valid IBAN',
  benef_bank:'Bank',

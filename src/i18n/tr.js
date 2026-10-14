@@ -667,6 +667,7 @@ export const tr = {
  benef_naam:'Tam ad',
  benef_bijnaam:'Takma ad (isteğe bağlı)',
  benef_bijnaam_placeholder:'örn. Anne, Kardeş Ahmet',
+ benef_bijnaam_uitleg:'Başarılı bir ödemeden sonra bu alıcı Alıcılarım listesinde yer alır. Onu orada istediğiniz zaman silebilirsiniz.',
  benef_iban:'IBAN',
  benef_iban_geldig:'Geçerli IBAN',
  benef_bank:'Banka',

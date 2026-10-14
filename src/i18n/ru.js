@@ -603,6 +603,7 @@ export const ru = {
  benef_naam:'Полное имя',
  benef_bijnaam:'Псевдоним (необязательно)',
  benef_bijnaam_placeholder:'напр. Мама, Брат Ахмет',
+ benef_bijnaam_uitleg:'После успешной оплаты этот получатель появится в разделе «Мои получатели». Там его можно удалить в любое время.',
  benef_iban:'IBAN',
  benef_iban_geldig:'Действительный IBAN',
  benef_bank:'Банк',

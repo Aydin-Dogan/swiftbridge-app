@@ -603,6 +603,7 @@ export const az = {
  benef_naam:'Tam ad',
  benef_bijnaam:'Ləqəb (istəyə bağlı)',
  benef_bijnaam_placeholder:'məs. Ana, Qardaş Əhməd',
+ benef_bijnaam_uitleg:'Uğurlu ödənişdən sonra bu alıcı Alıcılarım siyahısında görünür. Onu orada istənilən vaxt silə bilərsiniz.',
  benef_iban:'IBAN',
  benef_iban_geldig:'Etibarlı IBAN',
  benef_bank:'Bank',
