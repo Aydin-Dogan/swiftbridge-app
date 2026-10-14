@@ -13,6 +13,7 @@ import { formatBedrag } from '../../services/currencies';
 import { useTaal } from '../../i18n';
 import { CheckCircle, Clock, XCircle, X as XIcon, Info } from '../icons/Icons';
 import { gegevensUitTransactie, isGeslaagd, zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
+import { naamBevat } from '../../lib/naamNormaal';
 
 function fmtEur(n) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(n || 0);
@@ -65,9 +66,10 @@ export default function Tijdlijn({
     if (zoekTerm.trim()) {
       const term = zoekTerm.toLowerCase().trim();
       lijst = lijst.filter(tx => {
-        const naam = (tx.ontvangerNaam || tx.ontvanger_naam || '').toLowerCase();
+        // Naam: hoofdletters en Turkse letters tellen niet ('ayse' vindt 'Ayşe').
+        const naam = tx.ontvangerNaam || tx.ontvanger_naam || '';
         const notitie = (tx.notitie || '').toLowerCase();
-        return naam.includes(term) || notitie.includes(term) || String(tx.eurBedrag || '').includes(term);
+        return naamBevat(naam, zoekTerm) || notitie.includes(term) || String(tx.eurBedrag || '').includes(term);
       });
     }
     if (limiet) lijst = lijst.slice(0, limiet);

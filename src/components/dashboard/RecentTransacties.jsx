@@ -17,6 +17,7 @@ import { useTaal } from '../../i18n';
 import { apiFetch } from '../../services/api';
 import { CheckCircle, Clock, XCircle, X as XIcon, Zap, Info, Calendar, Refresh } from '../icons/Icons';
 import { gegevensUitTransactie, isGeslaagd, zetOpnieuwKlaar } from '../../services/opnieuwVersturen';
+import { naamBevat } from '../../lib/naamNormaal';
 
 // Gapanalyse §3 — statustabs zoals zakelijk bankieren:
 // Geweigerd = mislukt/geannuleerd; In behandeling omvat ook de "Info nodig"-
@@ -142,10 +143,11 @@ export default function RecentTransacties({ transacties = [], laden = false }) {
       if (!groep.includes(tx.status)) return false;
     }
     if (zoekTerm) {
+      // Naam: hoofdletters en Turkse letters tellen niet ('yilmaz' vindt 'Yılmaz').
       const term = zoekTerm.toLowerCase().trim();
-      const naam = (tx.ontvangerNaam || tx.ontvanger_naam || '').toLowerCase();
+      const naam = tx.ontvangerNaam || tx.ontvanger_naam || '';
       const bedrag = String(tx.eurBedrag || '');
-      if (!naam.includes(term) && !bedrag.includes(term)) return false;
+      if (!naamBevat(naam, zoekTerm) && !bedrag.includes(term)) return false;
     }
     return true;
   });

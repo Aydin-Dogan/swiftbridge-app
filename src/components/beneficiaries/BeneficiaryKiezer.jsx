@@ -10,6 +10,7 @@ import { maskeerIban } from './BeneficiaryKaart';
 import { getValuta } from '../../services/currencies';
 import Vlag from '../Vlag';
 import { Users, Bank, ChevronDown } from '../icons/Icons';
+import { naamBevat } from '../../lib/naamNormaal';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -63,12 +64,12 @@ export default function BeneficiaryKiezer({ token, onSelect }) {
   const gefilterd = useMemo(() => {
     const q = zoek.trim().toLowerCase();
     if (!q) return lijst;
+    // Naam, bijnaam en bank: hoofdletters en Turkse letters tellen niet
+    // ('sahin' vindt 'Şahin', 'ziraat bankasi' vindt 'Ziraat Bankası').
     return lijst.filter(b => {
-      const n = (b.naam || '').toLowerCase();
-      const bn = (b.bijnaam || b.label || '').toLowerCase();
       const i = (b.iban || '').toLowerCase();
-      const bk = (b.bank || '').toLowerCase();
-      return n.includes(q) || bn.includes(q) || i.includes(q) || bk.includes(q);
+      return naamBevat(b.naam, zoek) || naamBevat(b.bijnaam || b.label, zoek)
+        || i.includes(q) || naamBevat(b.bank, zoek);
     });
   }, [lijst, zoek]);
 
