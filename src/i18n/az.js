@@ -263,7 +263,6 @@ export const az = {
  landing_trust_dnb:'Niderland B.V. · KvK 42138434',
  landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit şifrələnib',
- landing_trust_reviews:'4,8 — 1 240 rəy',
 
  // Currency widget
  landing_widget_titel:'Köçürmənizi hesablayın',
@@ -312,20 +311,8 @@ export const az = {
  tariefkaart_disclaimer:'Mübadilə kursu canlı orta bazar kursuna əsaslanır. Hər köçürmə üçün sabit €4,95 komissiya; kurs marjası (1,2%-dən, üzvlük səviyyəsinə görə azalır) şəffaf göstərilir. Minimum €50.',
 
  // Social proof / stats
- landing_stat_overboekingen:'İşlənmiş köçürmələr',
- landing_stat_omzet:'Cəmi göndərilib',
- landing_stat_reviews:'Orta Trustpilot reytinqi',
- landing_stat_gebruikers:'Aktiv istifadəçilər',
- landing_stat_banken:'Dəstəklənən bank və pul kisələri',
  landing_stat_talen:'Mövcud dil',
- landing_stat_snelheid:'Orta çatdırılma vaxtı (iDEAL)',
  landing_stat_fee:'Köçürmə başına sabit komissiya',
- landing_reviews_eyebrow:'Müştərilərimiz nə deyir',
- landing_reviews_titel:'Müştərilərimizin etibar etdiyi tətbiq',
- landing_reviews_aantal:'1 240 rəy',
- landing_testimonial_aydin:'Nəhayət düzgün işləyən bir tətbiq. Bankıma nisbətən €15 qənaət etdim və anam pulu 4 dəqiqədə aldı.',
- landing_testimonial_elif:'Çox şəffafdır — qəbul edənin nə alacağını dərhal görürsən. Western Union kimi gizli komissiya yoxdur.',
- landing_testimonial_mehmet:'Hər ay atam üçün pul göndərirəm. Sabit, sürətli və WhatsApp təsdiqi qızıl bir detaldır.',
 
  // Pricing
  landing_pricing_eyebrow:'Şəffaf qiymətlər',
@@ -1066,7 +1053,7 @@ export const az = {
  notif_voorkeuren_titel:'Bildiriş tərcihləri',
  notif_voorkeuren_uitleg:'Hansı kanallardan yeniləmə almaq istədiyinizi seçin. Sonra dəyişdirə bilərsiniz.',
  notif_email_label:'E-poçt',
- notif_email_uitleg:'Hər transfer üçün təsdiq + aylıq xülasə',
+ notif_email_uitleg:'Hər transfer üçün təsdiq',
  notif_push_label:'Push bildirişlər',
  notif_push_uitleg:'Məzənnə və əməliyyat statusu üçün sürətli bildiriş',
  notif_whatsapp_label:'WhatsApp',

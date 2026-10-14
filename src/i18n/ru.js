@@ -263,7 +263,6 @@ export const ru = {
  landing_trust_dnb:'Нидерландская B.V. · KvK 42138434',
  landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-битное шифрование',
- landing_trust_reviews:'4,8 — 1 240 отзывов',
 
  // Currency widget
  landing_widget_titel:'Рассчитайте ваш перевод',
@@ -312,20 +311,8 @@ export const ru = {
  tariefkaart_disclaimer:'Курс основан на живом среднерыночном курсе. Одна фиксированная комиссия €4,95 за перевод; курсовая маржа (от 1,2%, ниже по уровню участника) показывается прозрачно. Минимум €50.',
 
  // Social proof / stats
- landing_stat_overboekingen:'Обработанных переводов',
- landing_stat_omzet:'Всего отправлено',
- landing_stat_reviews:'Средняя оценка Trustpilot',
- landing_stat_gebruikers:'Активных пользователей',
- landing_stat_banken:'Поддерживаемых банков и кошельков',
  landing_stat_talen:'Доступных языков',
- landing_stat_snelheid:'Среднее время доставки (iDEAL)',
  landing_stat_fee:'Фиксированная комиссия за перевод',
- landing_reviews_eyebrow:'Что говорят наши клиенты',
- landing_reviews_titel:'Нам доверяют наши клиенты',
- landing_reviews_aantal:'1 240 отзывов',
- landing_testimonial_aydin:'Наконец-то приложение, которое работает как надо. Сэкономил €15 по сравнению со своим банком, а мама получила деньги за 4 минуты.',
- landing_testimonial_elif:'Очень прозрачно — сразу видно, сколько получит получатель. Никаких скрытых комиссий, как в Western Union.',
- landing_testimonial_mehmet:'Каждый месяц перевожу деньги отцу. Стабильно, быстро, а подтверждение по WhatsApp — золотая деталь.',
 
  // Pricing
  landing_pricing_eyebrow:'Прозрачные тарифы',
@@ -1066,7 +1053,7 @@ export const ru = {
  notif_voorkeuren_titel:'Настройки уведомлений',
  notif_voorkeuren_uitleg:'Выберите по каким каналам получать обновления. Можно изменить позже.',
  notif_email_label:'Email',
- notif_email_uitleg:'Подтверждение по каждому переводу + месячная сводка',
+ notif_email_uitleg:'Подтверждение по каждому переводу',
  notif_push_label:'Push-уведомления',
  notif_push_uitleg:'Быстрые уведомления о курсе и статусе транзакции',
  notif_whatsapp_label:'WhatsApp',

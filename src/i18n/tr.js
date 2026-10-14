@@ -278,7 +278,6 @@ export const tr = {
  landing_trust_dnb:'Hollanda B.V. · KvK 42138434',
  landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit şifreli',
- landing_trust_reviews:'4,8 — 1.240 yorum',
 
  // Currency widget
  landing_widget_titel:'Transferinizi hesaplayın',
@@ -327,20 +326,8 @@ export const tr = {
  tariefkaart_disclaimer:'Döviz kuru canlı orta piyasa kuruna dayanır. Transfer başına sabit €4,95 ücret; kur marjı (%1,2\'den, üyelik seviyesine göre düşer) şeffaf gösterilir. Minimum €50.',
 
  // Social proof / stats
- landing_stat_overboekingen:'Tamamlanan transfer',
- landing_stat_omzet:'Toplam gönderilen',
- landing_stat_reviews:'Ortalama Trustpilot puanı',
- landing_stat_gebruikers:'Aktif kullanıcı',
- landing_stat_banken:'Desteklenen banka ve cüzdan',
  landing_stat_talen:'Mevcut dil',
- landing_stat_snelheid:'Ortalama teslimat süresi (iDEAL)',
  landing_stat_fee:'Transfer başına sabit ücret',
- landing_reviews_eyebrow:'Müşterilerimiz ne diyor',
- landing_reviews_titel:'Müşterilerimizin güvendiği uygulama',
- landing_reviews_aantal:'1.240 yorum',
- landing_testimonial_aydin:'Sonunda işi doğru yapan bir uygulama. Bankaya kıyasla €15 tasarruf ettim ve annem parayı 4 dakikada aldı.',
- landing_testimonial_elif:'Çok şeffaf — alıcının ne alacağını anında görüyorsun. Western Union\'daki gibi gizli ücret yok.',
- landing_testimonial_mehmet:'Her ay babam için para gönderiyorum. İstikrarlı, hızlı ve WhatsApp onayı altın değerinde.',
 
  // Pricing
  landing_pricing_eyebrow:'Şeffaf fiyatlandırma',
@@ -1156,7 +1143,7 @@ export const tr = {
  notif_voorkeuren_titel:'Bildirim tercihleri',
  notif_voorkeuren_uitleg:'Hangi kanallardan güncelleme almak istediğinizi seçin. Daha sonra değiştirebilirsiniz.',
  notif_email_label:'E-posta',
- notif_email_uitleg:'Her transfer için onay + aylık özet',
+ notif_email_uitleg:'Her transfer için onay',
  notif_push_label:'Push bildirimler',
  notif_push_uitleg:'Kur uyarıları ve işlem durumu için hızlı bildirim',
  notif_whatsapp_label:'WhatsApp',

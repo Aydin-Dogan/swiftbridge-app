@@ -279,7 +279,6 @@ export const nl = {
  landing_trust_dnb:'Nederlandse B.V. · KvK 42138434',
  landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit versleuteld',
- landing_trust_reviews:'Reviews volgen na de start',
 
  // Currency widget
  landing_widget_titel:'Bereken je overboeking',
@@ -328,20 +327,8 @@ export const nl = {
  tariefkaart_disclaimer:'Wisselkoers op basis van live mid-market koers. Eén vaste fee van €4,95 per overboeking; de koersmarge (vanaf 1,2%, lager per ledenniveau) wordt transparant getoond. Minimum €50.',
 
  // Social proof / stats
- landing_stat_overboekingen:'Overboekingen verwerkt',
- landing_stat_omzet:'Totaal overgemaakt',
- landing_stat_reviews:'Gemiddelde Trustpilot-score',
- landing_stat_gebruikers:'Actieve gebruikers',
- landing_stat_banken:'Banken en wallets ondersteund',
  landing_stat_talen:'Talen beschikbaar',
- landing_stat_snelheid:'Gemiddelde levertijd (iDEAL)',
  landing_stat_fee:'Vaste fee per overboeking',
- landing_reviews_eyebrow:'Wat onze klanten zeggen',
- landing_reviews_titel:'Vertrouwd door onze klanten',
- landing_reviews_aantal:'Reviews volgen na de start',
- landing_testimonial_aydin:'Eindelijk een app die werkt zoals het hoort. €15 bespaard ten opzichte van mijn bank en mijn moeder had het geld in 4 minuten.',
- landing_testimonial_elif:'Heel transparant — je ziet meteen wat de ontvanger krijgt. Geen verborgen kosten zoals bij Western Union.',
- landing_testimonial_mehmet:'Maak elke maand geld over voor mijn vader. Stabiel, snel en de WhatsApp-bevestiging is een gouden detail.',
 
  // Pricing
  landing_pricing_eyebrow:'Transparant geprijsd',
@@ -1036,7 +1023,7 @@ export const nl = {
  notif_voorkeuren_titel:'Notificatie voorkeuren',
  notif_voorkeuren_uitleg:'Kies via welke kanalen je updates wilt ontvangen. Je kunt dit altijd later wijzigen.',
  notif_email_label:'E-mail',
- notif_email_uitleg:'Bevestiging per overboeking + maandelijkse samenvatting',
+ notif_email_uitleg:'Bevestiging per overboeking',
  notif_push_label:'Push notificaties',
  notif_push_uitleg:'Snelle melding bij koers-alerts en transactie-status',
  notif_whatsapp_label:'WhatsApp',

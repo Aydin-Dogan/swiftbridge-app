@@ -1,30 +1,13 @@
 /**
- * SocialProof.jsx — Stats bar + testimonial cards with Turkish names.
+ * SocialProof.jsx — balk met de twee getallen die echt kloppen: aantal talen en
+ * de vaste fee.
+ *
+ * 14-10-2026: de verzonnen klantverhalen, sterren en reviewaantallen zijn weg,
+ * ook uit de taalbestanden (bewaakt door src/lib/geenNepReviews.test.js).
+ * Klantervaringen komen pas terug als ze echt zijn, met schriftelijke
+ * toestemming en bronvermelding.
  */
 import { useTaal } from '../../i18n';
-
-function StarRating({ rating = 5 }) {
-  return (
-    <div className="inline-flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map(i => (
-        <svg
-          key={i}
-          viewBox="0 0 24 24"
-          className={`w-4 h-4 ${i <= rating ? 'fill-amber-400' : 'fill-gray-200'}`}
-          aria-hidden="true"
-        >
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
-
-// Tot we échte (geanonimiseerde) klant-testimonials hebben met geschreven
-// toestemming, blijven deze placeholders met initialen + stad uit en wachten
-// we tot er werkelijke quotes binnenkomen. Wel landing tonen door inhoud
-// in i18n keys leeg te laten als we geen echte reviews hebben.
-const TESTIMONIALS = [];
 
 // HARDE REGEL: geen verzonnen statistieken op landing. Tot we échte data
 // hebben (geverifieerd via admin/stats endpoint of Trustpilot-koppeling)
@@ -78,50 +61,6 @@ export default function SocialProof() {
             ))}
           </div>
         </div>
-
-        {/* Testimonials worden zichtbaar zodra we échte klant-quotes hebben
-            (met schriftelijke toestemming). Tot dan: alleen stats-bar boven. */}
-        {TESTIMONIALS.length > 0 && (
-          <>
-            <div className="text-center mb-10">
-              <p className="text-[0.68rem] font-medium text-brand-600 uppercase tracking-[0.26em] mb-3">
-                {t('landing_reviews_eyebrow')}
-              </p>
-              <h2 className="font-display text-3xl sm:text-4xl font-medium text-gray-900 leading-[1.18] mb-2.5">
-                {t('landing_reviews_titel')}
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {TESTIMONIALS.map((tt, i) => (
-                <div
-                  key={tt.key}
-                  className="card-glass p-6 animate-fade-up"
-                  style={{ animationDelay: `${i * 0.08}s` }}
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md"
-                      style={{ background: tt.color }}
-                    >
-                      {tt.initial}
-                    </div>
-                    <div>
-                      <div className="font-bold text-gray-900">{tt.naam}</div>
-                      <div className="text-xs text-gray-500">{tt.plaats}</div>
-                    </div>
-                    <div className="ml-auto">
-                      <StarRating rating={5} />
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-700 leading-relaxed italic">
-                    &ldquo;{t(`landing_testimonial_${tt.key}`)}&rdquo;
-                  </p>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
       </div>
     </section>
   );

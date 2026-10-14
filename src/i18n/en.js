@@ -278,7 +278,6 @@ export const en = {
  landing_trust_dnb:'Dutch B.V. · Chamber of Commerce 42138434',
  landing_trust_ideal:'iDEAL',
  landing_trust_encrypted:'256-bit encryption',
- landing_trust_reviews:'Reviews will follow after launch',
 
  // Currency widget
  landing_widget_titel:'Calculate your transfer',
@@ -327,20 +326,8 @@ export const en = {
  tariefkaart_disclaimer:'Exchange rate based on the live mid-market rate. One fixed fee of €4.95 per transfer; the FX margin (from 1.2%, lower per membership level) is shown transparently. Minimum €50.',
 
  // Social proof / stats
- landing_stat_overboekingen:'Transfers processed',
- landing_stat_omzet:'Total sent',
- landing_stat_reviews:'Average Trustpilot score',
- landing_stat_gebruikers:'Active users',
- landing_stat_banken:'Banks and wallets supported',
  landing_stat_talen:'Languages available',
- landing_stat_snelheid:'Average delivery time (iDEAL)',
  landing_stat_fee:'Fixed fee per transfer',
- landing_reviews_eyebrow:'What our customers say',
- landing_reviews_titel:'Trusted by our customers',
- landing_reviews_aantal:'Reviews will follow after launch',
- landing_testimonial_aydin:'Finally an app that does it right. Saved €15 vs my bank and my mom had the money in 4 minutes.',
- landing_testimonial_elif:'Super transparent — you see right away what the recipient gets. No hidden fees like Western Union.',
- landing_testimonial_mehmet:'Send money for my dad every month. Stable, fast and the WhatsApp confirmation is gold.',
 
  // Pricing
  landing_pricing_eyebrow:'Transparent pricing',
@@ -1156,7 +1143,7 @@ export const en = {
  notif_voorkeuren_titel:'Notification preferences',
  notif_voorkeuren_uitleg:'Choose which channels you want updates on. You can change this later.',
  notif_email_label:'Email',
- notif_email_uitleg:'Confirmation per transfer + monthly summary',
+ notif_email_uitleg:'Confirmation per transfer',
  notif_push_label:'Push notifications',
  notif_push_uitleg:'Quick alerts for rate changes and transaction status',
  notif_whatsapp_label:'WhatsApp',
