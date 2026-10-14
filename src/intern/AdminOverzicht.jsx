@@ -1,8 +1,10 @@
 /**
  * AdminOverzicht.jsx — KPI dashboard voor admin (Verbetering XX).
  *
- * Route: /admin/overzicht
- * Auth: admin (?secret= header of authMiddleware + isAdmin)
+ * Route: /overzicht in de interne omgeving (InternApp.jsx)
+ * Auth: de medewerkerssessie (cookie). Het gedeelde geheim (?secret= en de
+ * header X-Admin-Secret) kent de API sinds 29-9-2026 niet meer; sinds
+ * 14-10-2026 stuurt dit scherm het ook niet meer mee.
  *
  * Toont realtime KPIs uit /admin/stats endpoint:
  * - Gebruikers totaal + KYC funnel
@@ -14,7 +16,7 @@
  * Auto-refresh elke 60s. Quick-links naar admin sub-pagina's.
  */
 import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { API_URL } from '../services/api';
 import { useTaal } from '../i18n';
 import { Users, IdCard, Banknote, Calendar, Euro, Shield, Lock, Clock, Globe } from '../components/icons/Icons';
@@ -50,8 +52,6 @@ function fmtEur(n) {
 export default function AdminOverzicht() {
   const { t } = useTaal();
   const tx = useTx();
-  const [params] = useSearchParams();
-  const secret = params.get('secret') || '';
 
   const [stats, setStats] = useState(null);
   const [laden, setLaden] = useState(true);
@@ -60,10 +60,7 @@ export default function AdminOverzicht() {
 
   const laad = useCallback(async () => {
     try {
-      const res = await fetch(`${API_URL}/admin/stats`, {
-        credentials: 'include',
-        headers: secret ? { 'X-Admin-Secret': secret } : {},
-      });
+      const res = await fetch(`${API_URL}/admin/stats`, { credentials: 'include' });
       if (!res.ok) {
         if (res.status === 401) throw new Error(t('admin_ov_geen_auth'));
         if (res.status === 403) throw new Error(t('admin_ov_geen_admin'));
@@ -78,7 +75,7 @@ export default function AdminOverzicht() {
     } finally {
       setLaden(false);
     }
-  }, [secret, t]);
+  }, [t]);
 
   useEffect(() => {
     document.title = `${t('admin_ov_titel')} — SwiftBridge`;
@@ -200,16 +197,17 @@ export default function AdminOverzicht() {
             {/* Aanmeldroute, sectie 6: waar haken nieuwe klanten af (GET /admin/trechter) */}
             <TrechterOverzicht />
 
-            {/* Quick-links naar sub-paginas */}
+            {/* Quick-links naar sub-paginas. De paden zijn die van InternApp.jsx;
+                tot 14-10-2026 stonden hier nog de oude klantapp-paden
+                (/admin/...), die hier op "pagina niet gevonden" uitkwamen. */}
             <div className="bg-surface rounded-md border border-border p-5 shadow-soft">
               <h2 className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-gray-500 mb-3">
                 {t('admin_ov_quick_links')}
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {[
-                  ['/admin/errors', t('admin_ov_link_errors')],
-                  ['/admin/compliance', t('admin_ov_link_compliance')],
-                  [`/admin?secret=${encodeURIComponent(secret)}`, t('admin_ov_link_kyc')],
+                  ['/fouten', t('admin_ov_link_errors')],
+                  ['/', t('admin_ov_link_compliance')],
                 ].map(([url, label]) => (
                   <Link
                     key={url}

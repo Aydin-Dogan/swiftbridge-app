@@ -3,8 +3,9 @@
  * naar /errors/frontend zijn gepost (Verbetering Z).
  *
  * Auth:
- * - Vereist ingelogde admin (cookie-based JWT)
- * - X-Admin-Secret header via ?secret= query (legacy pad)
+ * - Vereist een medewerkerssessie (cookie). Het oude pad met ?secret= en de
+ *   header X-Admin-Secret kent de API sinds 29-9-2026 niet meer; sinds
+ *   14-10-2026 stuurt dit scherm het ook niet meer mee.
  *
  * Filtering:
  * - ?errorId=ERR-XXXX (exact match)
@@ -46,7 +47,6 @@ export default function AdminErrors() {
   const [fout, setFout] = useState('');
   const [openId, setOpenId] = useState(null);
 
-  const secret = params.get('secret') || '';
   const errorId = params.get('errorId') || '';
   const days = Math.min(90, Math.max(1, parseInt(params.get('days')) || 7));
 
@@ -59,10 +59,7 @@ export default function AdminErrors() {
       if (errorId) q.set('errorId', errorId);
       q.set('limit', '200');
 
-      const res = await fetch(`${API_URL}/errors/frontend/list?${q.toString()}`, {
-        credentials: 'include',
-        headers: secret ? { 'X-Admin-Secret': secret } : {},
-      });
+      const res = await fetch(`${API_URL}/errors/frontend/list?${q.toString()}`, { credentials: 'include' });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         if (res.status === 401) throw new Error(t('admin_errors_geen_auth'));
@@ -76,7 +73,7 @@ export default function AdminErrors() {
     } finally {
       setLaden(false);
     }
-  }, [secret, errorId, days, t]);
+  }, [errorId, days, t]);
 
   useEffect(() => {
     laad();
@@ -170,11 +167,6 @@ export default function AdminErrors() {
         {fout && (
           <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4 text-sm text-red-700">
             <strong>{t('admin_errors_fout')}:</strong> {fout}
-            {fout === t('admin_errors_geen_admin') && (
-              <p className="text-xs text-red-600 mt-1">
-                {t('admin_errors_hint_secret')}
-              </p>
-            )}
           </div>
         )}
 
@@ -247,8 +239,10 @@ export default function AdminErrors() {
                               <dd className="font-mono text-ink-1">{formatTime(err.opgetreden_op)}</dd>
                             </div>
                           </dl>
+                          {/* /fouten is de route in InternApp.jsx; /admin/errors
+                              bestaat in de interne omgeving niet. */}
                           <Link
-                            to={`/admin/errors?errorId=${encodeURIComponent(err.error_id)}${secret ? `&secret=${encodeURIComponent(secret)}` : ''}`}
+                            to={`/fouten?errorId=${encodeURIComponent(err.error_id)}`}
                             className="inline-block mt-3 text-xs font-semibold text-brand-700 hover:underline underline-offset-4"
                           >
                             {t('admin_errors_zoek_alle')} →
