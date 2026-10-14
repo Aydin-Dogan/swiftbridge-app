@@ -1050,7 +1050,7 @@ export const ru = {
  afmelden_klaar_uitleg:'Вы можете снова включить их в любое время в своём профиле.',
  afmelden_fout_titel:'Сейчас не получилось',
  afmelden_fout_uitleg:'Пожалуйста, попробуйте позже. Напоминания также можно отключить в вашем профиле.',
- afmelden_onvolledig_titel:'Эта ссылка неполная',
+ afmelden_onvolledig_titel:'Эта ссылка неполная или больше не действует',
  afmelden_onvolledig_uitleg:'Напоминания также можно отключить в вашем профиле.',
  afmelden_naar_voorkeuren:'Перейти к настройкам',
  afmelden_opnieuw:'Попробовать снова',

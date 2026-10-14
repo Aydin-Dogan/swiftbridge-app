@@ -1050,7 +1050,7 @@ export const az = {
  afmelden_klaar_uitleg:'Onları istənilən vaxt profilinizdə yenidən aktiv edə bilərsiniz.',
  afmelden_fout_titel:'Bu, hazırda alınmadı',
  afmelden_fout_uitleg:'Zəhmət olmasa, bir az sonra yenidən cəhd edin. Xatırlatmaları profilinizdə də söndürə bilərsiniz.',
- afmelden_onvolledig_titel:'Bu keçid natamamdır',
+ afmelden_onvolledig_titel:'Bu keçid natamamdır və ya artıq etibarlı deyil',
  afmelden_onvolledig_uitleg:'Xatırlatmaları profilinizdə də söndürə bilərsiniz.',
  afmelden_naar_voorkeuren:'Tərcihlərimə keçin',
  afmelden_opnieuw:'Yenidən cəhd edin',

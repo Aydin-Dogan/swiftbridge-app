@@ -1037,7 +1037,7 @@ export const nl = {
  afmelden_klaar_uitleg:'Je kunt ze altijd weer aanzetten in je profiel.',
  afmelden_fout_titel:'Dat lukte nu niet',
  afmelden_fout_uitleg:'Probeer het later opnieuw. Herinneringen zet je ook uit in je profiel.',
- afmelden_onvolledig_titel:'Deze link is niet compleet',
+ afmelden_onvolledig_titel:'Deze link is niet compleet of niet meer geldig',
  afmelden_onvolledig_uitleg:'Herinneringen zet je ook uit in je profiel.',
  afmelden_naar_voorkeuren:'Naar mijn voorkeuren',
  afmelden_opnieuw:'Opnieuw proberen',

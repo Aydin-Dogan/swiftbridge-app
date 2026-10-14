@@ -1140,7 +1140,7 @@ export const tr = {
  afmelden_klaar_uitleg:'Hatırlatmaları profilinizden istediğiniz zaman yeniden açabilirsiniz.',
  afmelden_fout_titel:'Bu işlem şu anda yapılamadı',
  afmelden_fout_uitleg:'Lütfen daha sonra tekrar deneyin. Hatırlatmaları profilinizden de kapatabilirsiniz.',
- afmelden_onvolledig_titel:'Bu bağlantı eksik',
+ afmelden_onvolledig_titel:'Bu bağlantı eksik veya artık geçerli değil',
  afmelden_onvolledig_uitleg:'Hatırlatmaları profilinizden de kapatabilirsiniz.',
  afmelden_naar_voorkeuren:'Tercihlerime gidin',
  afmelden_opnieuw:'Tekrar deneyin',

@@ -174,6 +174,48 @@ describe('/afmelden: één klik, zonder inloggen', () => {
   });
 });
 
+// Review ronde 3: de API geeft bij een afgekapte, verlopen of vervalste link
+// 400 LINK_ONGELDIG (vóór er een account wordt opgezocht). Opnieuw proberen
+// helpt dan nooit; de klant moet naar de schakelaar in Profiel.
+describe('ongeldige of verlopen link', () => {
+  function apiZegtOngeldig() {
+    apiFetch.mockImplementation(async (pad) => {
+      if (pad === '/users/afmelden') {
+        const fout = new Error('Deze link is niet compleet of niet meer geldig.');
+        fout.status = 400;
+        fout.errorCode = 'LINK_ONGELDIG';
+        throw fout;
+      }
+      if (pad === '/auth/pin/status') return { ingeschakeld: false };
+      if (pad === '/users/me') return { taal: 'nl' };
+      return { ok: true };
+    });
+  }
+
+  test('de klant leest dat de link niet werkt, niet "afgemeld" en niet "probeer opnieuw"', async () => {
+    apiZegtOngeldig();
+    start('/afmelden?token=afgekapt.00&taal=nl');
+    await klik();
+
+    expect(await screen.findByText(nl.afmelden_onvolledig_titel)).toBeInTheDocument();
+    expect(nl.afmelden_onvolledig_titel).toMatch(/niet meer geldig/);
+    expect(screen.queryByText(nl.afmelden_klaar_titel)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: nl.afmelden_opnieuw })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: nl.afmelden_naar_voorkeuren })).toBeInTheDocument();
+  });
+
+  test('een storing (500) geeft wel "opnieuw proberen"', async () => {
+    apiFetch.mockImplementation(async (pad) => {
+      if (pad === '/users/afmelden') { const f = new Error('Server fout'); f.status = 500; throw f; }
+      return { ok: true };
+    });
+    start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
+
+    expect(await screen.findByRole('button', { name: nl.afmelden_opnieuw })).toBeInTheDocument();
+  });
+});
+
 describe('geen info-lek', () => {
   test('een vervalst token geeft precies dezelfde pagina als een echt token', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`);

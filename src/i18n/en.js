@@ -1140,7 +1140,7 @@ export const en = {
  afmelden_klaar_uitleg:'You can turn them back on at any time in your profile.',
  afmelden_fout_titel:'That did not work just now',
  afmelden_fout_uitleg:'Please try again later. You can also turn reminders off in your profile.',
- afmelden_onvolledig_titel:'This link is incomplete',
+ afmelden_onvolledig_titel:'This link is incomplete or no longer valid',
  afmelden_onvolledig_uitleg:'You can also turn reminders off in your profile.',
  afmelden_naar_voorkeuren:'Go to my preferences',
  afmelden_opnieuw:'Try again',

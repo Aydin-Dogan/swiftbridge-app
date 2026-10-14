@@ -14,9 +14,12 @@
  *   POST /users/afmelden, met het token in de body en niet in het adres.
  *   Afmelden met één klik vanuit het mailprogramma loopt via de headers
  *   List-Unsubscribe en List-Unsubscribe-Post op de API, niet via deze pagina.
- * - De API antwoordt altijd { ok: true }, ook bij een ongeldig, verlopen of
- *   vervalst token. De pagina toont dus altijd dezelfde neutrale bevestiging:
- *   hij verraadt niet of een link klopt of een account bestaat.
+ * - Een geldig token geeft altijd { ok: true }, ook voor een onbekende of al
+ *   afgemelde klant: de pagina verraadt niet of een account bestaat.
+ * - Een afgekapt, verlopen of vervalst token geeft 400 LINK_ONGELDIG (de API
+ *   controleert de handtekening vóór hij een account opzoekt). De klant leest
+ *   dan dat de link niet (meer) werkt en gaat naar de schakelaar in Profiel,
+ *   zonder 'Opnieuw proberen' (review ronde 3).
  * - Alleen een storing (serverfout, te veel verzoeken, geen verbinding) geeft
  *   een foutmelding, met 'Opnieuw proberen'.
  * - Zonder token gaat er niets naar de server.
@@ -53,9 +56,10 @@ export default function Afmelden() {
     try {
       await apiFetch('/users/afmelden', { method: 'POST', body: { token } });
       if (actief.current) setStatus('klaar');
-    } catch {
-      // Geen foutdetails op het scherm of in de console: alleen dat het nu niet lukte.
-      if (actief.current) setStatus('fout');
+    } catch (e) {
+      // Geen foutdetails op het scherm of in de console. Een ongeldige link wordt
+      // nooit geldig door opnieuw te proberen: dan naar de schakelaar in Profiel.
+      if (actief.current) setStatus(e?.errorCode === 'LINK_ONGELDIG' ? 'onvolledig' : 'fout');
     }
   }
 
