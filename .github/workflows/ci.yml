@@ -26,7 +26,7 @@ jobs:
       - name: i18n consistency check
         run: node scripts/i18n-check.mjs --strict
 
-      - name: Pricing consistency check (geen verouderde flat-fee strings)
+      - name: Pricing consistency check (teksten volgen het prijsmodel uit kosten.js)
         run: node scripts/pricing-consistency.mjs --strict
 
       - name: Claims check (KYB-teksten zonder bank/IBAN/NFC/gratis-claims of emoji)
