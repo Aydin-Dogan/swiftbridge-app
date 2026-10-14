@@ -21,7 +21,8 @@ import { apiFetch } from './api';
 export const BIJNAAM_MAX = 50;
 
 // De betaalflow wacht hierop vóór het doorsturen naar de betaalpagina; een
-// trage server mag dat niet lang ophouden (apiFetch wacht anders 30 s).
+// trage server mag dat niet lang ophouden (apiFetch wacht anders 30 s). Eén
+// wachttijd voor alles samen: ook bij 409 + bijwerken niet langer dan dit.
 const WACHTTIJD_MS = 8000;
 
 function kortSignaal() {
@@ -34,11 +35,12 @@ export async function bewaarBijnaam({ naam, iban, bank, valuta, bijnaam, token }
   if (!schoon || !ibanSchoon) return { bewaard: false };
 
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const signaal = kortSignaal();
   try {
     await apiFetch('/beneficiaries', {
       method: 'POST',
       headers,
-      signal: kortSignaal(),
+      signal: signaal,
       body: {
         naam,
         iban: ibanSchoon,
@@ -58,7 +60,7 @@ export async function bewaarBijnaam({ naam, iban, bank, valuta, bijnaam, token }
       await apiFetch(`/beneficiaries/${encodeURIComponent(bestaandId)}`, {
         method: 'PATCH',
         headers,
-        signal: kortSignaal(),
+        signal: signaal,
         body: { bijnaam: schoon },
       });
       return { bewaard: true };

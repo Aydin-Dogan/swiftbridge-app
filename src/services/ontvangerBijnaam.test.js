@@ -70,6 +70,20 @@ describe('bewaarBijnaam', () => {
     expect(patch.body).toEqual({ bijnaam: 'Broer' });
   });
 
+  // Review 14-10-2026: POST en PATCH kregen elk een eigen wachttijd van 8 s, dus
+  // bij een trage server wachtte de klant tot 16 s op de betaalpagina.
+  test('409 en daarna bijwerken: samen één wachttijd (hetzelfde signaal)', async () => {
+    globalThis.fetch = maakFetchMock([
+      { methode: 'POST', pad: '/beneficiaries', status: 409, body: { errorCode: 'CONFLICT', error: 'x', bestaandId: BESTAAND } },
+      { methode: 'PATCH', pad: `/beneficiaries/${BESTAAND}`, body: { beneficiary: { id: BESTAAND } } },
+    ]);
+    await bewaarBijnaam({ naam: 'Oefen Ontvanger', iban: IBAN, valuta: 'TRY', bijnaam: 'Broer' });
+
+    const [post, patch] = globalThis.fetch.mock.calls.map(([, o]) => o);
+    expect(post.signal).toBeTruthy();
+    expect(patch.signal).toBe(post.signal);
+  });
+
   test('te lang: afgekapt op 50 tekens (de server weigert langer)', async () => {
     globalThis.fetch = maakFetchMock([
       { methode: 'POST', pad: '/beneficiaries', status: 201, body: { beneficiary: { id: 'nieuw' } } },
