@@ -1,19 +1,24 @@
 /**
- * NotificatieVoorkeuren.jsx — toggles voor email / push / whatsapp opt-in (GGG)
+ * NotificatieVoorkeuren.jsx — toggles voor push / whatsapp opt-in (GGG)
  * en de herinneringen bij een onafgemaakte aanmelding (ronde 3, onderdeel 8).
  *
- * Sluit aan op PATCH /users/me dat email_opt_in + push_opt_in + whatsapp_opt_in
- * en herinneringen ondersteunt. Toont 4 toggles, slaat direct op bij wijziging.
+ * Sluit aan op PATCH /users/me dat push_opt_in + whatsapp_opt_in en
+ * herinneringen ondersteunt. Toont 3 toggles, slaat direct op bij wijziging.
  *
  * 'Herinneringen' is een eigen schakelaar (besluit Aydin 14-10-2026), dezelfde
  * die de afmeldlink onderaan de herinneringsmail uitzet. Besluit-, informatie-
  * en betaalmails lezen hem niet en zijn nooit uit te zetten; dat staat er in
  * één zin onder.
+ *
+ * Er stond ook een schakelaar 'E-mail – Bevestiging per overboeking'. Die is
+ * weg (review ronde 3): de server leest email_opt_in nergens bij het versturen,
+ * dus hij deed niets, en een betaalbevestiging is volgens het besluit juist
+ * nooit uit te zetten. De link 'Uitschrijven' onderaan elke mail komt hier uit.
  */
 import { useState } from 'react';
 import { apiFetch, parseError } from '../services/api';
 import { useTaal } from '../i18n';
-import { Mail, Bell, MessageCircle, Clock } from './icons/Icons';
+import { Bell, MessageCircle, Clock } from './icons/Icons';
 
 function Toggle({ aan, onChange, disabled, label }) {
   return (
@@ -42,7 +47,6 @@ export default function NotificatieVoorkeuren({ profiel, onUpdate }) {
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState('');
 
-  const huidigEmail = profiel?.emailOptIn ?? true;
   const huidigPush = profiel?.pushOptIn ?? true;
   const huidigWhatsApp = profiel?.whatsappOptIn ?? true;
   // Standaard aan, net als op de server (herinneringen_opt_in = 1).
@@ -80,18 +84,6 @@ export default function NotificatieVoorkeuren({ profiel, onUpdate }) {
       </div>
 
       <div className="space-y-2">
-        {/* Email */}
-        <div className="flex items-center justify-between py-2.5 px-3 bg-white rounded-lg border border-gray-100">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <Mail className="w-5 h-5 text-gray-500 flex-shrink-0" />
-            <div>
-              <div className="font-semibold text-sm text-gray-900">{t('notif_email_label')}</div>
-              <div className="text-xs text-gray-500">{t('notif_email_uitleg')}</div>
-            </div>
-          </div>
-          <Toggle aan={huidigEmail} onChange={(v) => update('emailOptIn', v)} disabled={bezig} label={t('notif_email_label')} />
-        </div>
-
         {/* Push */}
         <div className="flex items-center justify-between py-2.5 px-3 bg-white rounded-lg border border-gray-100">
           <div className="flex items-center gap-3 flex-1 min-w-0">

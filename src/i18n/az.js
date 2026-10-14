@@ -1037,8 +1037,6 @@ export const az = {
  // ── Bildiriş tərcihləri (Təkmilləşdirmə GGG) ─────────────────────────────
  notif_voorkeuren_titel:'Bildiriş tərcihləri',
  notif_voorkeuren_uitleg:'Hansı kanallardan yeniləmə almaq istədiyinizi seçin. Sonra dəyişdirə bilərsiniz.',
- notif_email_label:'E-poçt',
- notif_email_uitleg:'Hər transfer üçün təsdiq',
  notif_push_label:'Push bildirişlər',
  notif_push_uitleg:'Məzənnə və əməliyyat statusu üçün sürətli bildiriş',
  notif_whatsapp_label:'WhatsApp',

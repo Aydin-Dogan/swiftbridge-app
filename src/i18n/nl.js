@@ -1020,8 +1020,6 @@ export const nl = {
  // ── Notificatie voorkeuren (Verbetering GGG) ─────────────────────────────
  notif_voorkeuren_titel:'Notificatie voorkeuren',
  notif_voorkeuren_uitleg:'Kies via welke kanalen je updates wilt ontvangen. Je kunt dit altijd later wijzigen.',
- notif_email_label:'E-mail',
- notif_email_uitleg:'Bevestiging per overboeking',
  notif_push_label:'Push notificaties',
  notif_push_uitleg:'Snelle melding bij koers-alerts en transactie-status',
  notif_whatsapp_label:'WhatsApp',

@@ -1127,8 +1127,6 @@ export const en = {
  // ── Notification preferences (Improvement GGG) ───────────────────────────
  notif_voorkeuren_titel:'Notification preferences',
  notif_voorkeuren_uitleg:'Choose which channels you want updates on. You can change this later.',
- notif_email_label:'Email',
- notif_email_uitleg:'Confirmation per transfer',
  notif_push_label:'Push notifications',
  notif_push_uitleg:'Quick alerts for rate changes and transaction status',
  notif_whatsapp_label:'WhatsApp',

@@ -1127,8 +1127,6 @@ export const tr = {
  // ── Bildirim tercihleri (İyileştirme GGG) ────────────────────────────────
  notif_voorkeuren_titel:'Bildirim tercihleri',
  notif_voorkeuren_uitleg:'Hangi kanallardan güncelleme almak istediğinizi seçin. Daha sonra değiştirebilirsiniz.',
- notif_email_label:'E-posta',
- notif_email_uitleg:'Her transfer için onay',
  notif_push_label:'Push bildirimler',
  notif_push_uitleg:'Kur uyarıları ve işlem durumu için hızlı bildirim',
  notif_whatsapp_label:'WhatsApp',

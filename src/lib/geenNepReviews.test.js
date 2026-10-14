@@ -138,8 +138,11 @@ describe('geen verzonnen klantverhalen, reviews of levertijden', () => {
     expect(sleutels.filter((k) => /^landing_(reviews_|trust_reviews|testimonial_)/.test(k))).toEqual([]);
   });
 
-  test.each(Object.keys(TALEN))('%s: de e-mailvoorkeur belooft geen maandelijkse samenvatting', (code) => {
-    expect(TALEN[code].notif_email_uitleg).toBeTruthy();
-    expect(TALEN[code].notif_email_uitleg).not.toMatch(/maand|month|aylık|месяч|aylıq/i);
+  // De e-mailschakelaar zelf is inmiddels weg (hij regelde niets); geen enkele
+  // meldingsvoorkeur mag de samenvatting opnieuw beloven.
+  test.each(Object.keys(TALEN))('%s: geen meldingsvoorkeur belooft een maandelijkse samenvatting', (code) => {
+    const voorkeuren = Object.entries(TALEN[code]).filter(([k]) => k.startsWith('notif_'));
+    expect(voorkeuren.length).toBeGreaterThan(0);
+    for (const [k, v] of voorkeuren) expect(v, `${code}.${k}`).not.toMatch(/maand|month|aylık|месяч|aylıq/i);
   });
 });

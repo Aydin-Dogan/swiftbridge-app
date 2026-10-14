@@ -7,6 +7,9 @@
  * één zin welke mails altijd komen: het besluit over de identificatie, een
  * vraag van ons en de betaalbevestiging. Die lezen de schakelaar niet en zijn
  * nooit uit te zetten.
+ *
+ * De schakelaar 'E-mail' is weg (review ronde 3): hij regelde niets en sprak
+ * die zin tegen.
  */
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
@@ -88,12 +91,45 @@ describe("schakelaar 'Herinneringen'", () => {
     expect(schakelaar()).toHaveAttribute('aria-checked', 'true');
   });
 
-  test("de schakelaar 'E-mail' blijft los: hij stuurt geen herinneringen mee", async () => {
-    toon({ emailOptIn: true, herinneringen: true });
-    fireEvent.click(screen.getByRole('switch', { name: nl.notif_email_label }));
+});
 
-    await waitFor(() => expect(patches()).toHaveLength(1));
-    expect(patches()[0][1].body).toEqual({ emailOptIn: false });
+// De schakelaar 'E-mail – Bevestiging per overboeking' deed niets: de server
+// leest email_opt_in nergens bij het versturen. En de zin eronder zegt dat een
+// betaalbevestiging nooit uit te zetten is (besluit Aydin 14-10-2026). De link
+// 'Uitschrijven' onderaan elke mail komt precies bij dit blok uit; daar mag
+// geen schakelaar staan die niets doet en de zin eronder tegenspreekt.
+describe("geen schakelaar 'E-mail' meer", () => {
+  // Label en uitleg van de oude schakelaar, per taal.
+  const OUD = {
+    nl: ['E-mail', 'Bevestiging per overboeking'],
+    en: ['Email', 'Confirmation per transfer'],
+    tr: ['E-posta', 'Her transfer için onay'],
+    ru: ['Email', 'Подтверждение по каждому переводу'],
+    az: ['E-poçt', 'Hər transfer üçün təsdiq'],
+  };
+
+  test.each(Object.keys(TALEN))('%s: geen E-mailschakelaar en geen belofte dat een overboekingsbevestiging uit kan', (taal) => {
+    localStorage.setItem('swiftbridge_taal', taal);
+    toon({ emailOptIn: true, herinneringen: true });
+    const [label, uitleg] = OUD[taal];
+    expect(screen.queryByRole('switch', { name: label })).not.toBeInTheDocument();
+    expect(screen.queryByText(uitleg)).not.toBeInTheDocument();
+    // De zin over wat altijd komt staat er wel.
+    expect(screen.getByText(TALEN[taal].notif_altijd)).toBeInTheDocument();
+  });
+
+  test('de andere schakelaars blijven: push, WhatsApp en herinneringen', () => {
+    toon({ emailOptIn: false, herinneringen: true });
+    expect(screen.getAllByRole('switch').map((s) => s.getAttribute('aria-label'))).toEqual([
+      nl.notif_push_label, nl.notif_whatsapp_label, nl.notif_herinneringen_label,
+    ]);
+  });
+
+  test('de tekst van de oude schakelaar staat in geen enkele taal meer in de bundel', () => {
+    for (const taal of Object.keys(TALEN)) {
+      expect(TALEN[taal].notif_email_label, taal).toBeUndefined();
+      expect(TALEN[taal].notif_email_uitleg, taal).toBeUndefined();
+    }
   });
 });
 

@@ -1037,8 +1037,6 @@ export const ru = {
  // ── Настройки уведомлений (Улучшение GGG) ────────────────────────────────
  notif_voorkeuren_titel:'Настройки уведомлений',
  notif_voorkeuren_uitleg:'Выберите по каким каналам получать обновления. Можно изменить позже.',
- notif_email_label:'Email',
- notif_email_uitleg:'Подтверждение по каждому переводу',
  notif_push_label:'Push-уведомления',
  notif_push_uitleg:'Быстрые уведомления о курсе и статусе транзакции',
  notif_whatsapp_label:'WhatsApp',
