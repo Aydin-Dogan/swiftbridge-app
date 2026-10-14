@@ -1054,6 +1054,9 @@ export const az = {
  afmelden_onvolledig_uitleg:'Xatırlatmaları profilinizdə də söndürə bilərsiniz.',
  afmelden_naar_voorkeuren:'Tərcihlərimə keçin',
  afmelden_opnieuw:'Yenidən cəhd edin',
+ afmelden_vraag_titel:'Artıq xatırlatma almaq istəmirsiniz?',
+ afmelden_vraag_uitleg:'Bu, qeydiyyatınız hələ tamamlanmadıqda göndərdiyimiz xatırlatmalara aiddir.',
+ afmelden_knop:'Xatırlatmaları söndürün',
 
  // ── Təkrarlanan ical (Təkmilləşdirmə III) ────────────────────────────────
  recurring_ical_knop:'Təqvim (.ics)',

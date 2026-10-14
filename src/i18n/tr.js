@@ -1144,6 +1144,9 @@ export const tr = {
  afmelden_onvolledig_uitleg:'Hatırlatmaları profilinizden de kapatabilirsiniz.',
  afmelden_naar_voorkeuren:'Tercihlerime gidin',
  afmelden_opnieuw:'Tekrar deneyin',
+ afmelden_vraag_titel:'Artık hatırlatma almak istemiyor musunuz?',
+ afmelden_vraag_uitleg:'Bu, kaydınız henüz tamamlanmadığında gönderdiğimiz hatırlatmalarla ilgilidir.',
+ afmelden_knop:'Hatırlatmaları kapatın',
 
  // ── Tekrarlayan ical (İyileştirme III) ───────────────────────────────────
  recurring_ical_knop:'Takvim (.ics)',

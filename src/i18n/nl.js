@@ -1041,6 +1041,9 @@ export const nl = {
  afmelden_onvolledig_uitleg:'Herinneringen zet je ook uit in je profiel.',
  afmelden_naar_voorkeuren:'Naar mijn voorkeuren',
  afmelden_opnieuw:'Opnieuw proberen',
+ afmelden_vraag_titel:'Geen herinneringen meer ontvangen?',
+ afmelden_vraag_uitleg:'Het gaat om de herinneringen als je aanmelding nog niet af is.',
+ afmelden_knop:'Geen herinneringen meer',
 
  // ── Recurring ical export (Verbetering III) ──────────────────────────────
  recurring_ical_knop:'Calendar (.ics)',

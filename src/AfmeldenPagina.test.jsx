@@ -6,8 +6,13 @@
  * (swiftbridge-api src/services/emailService.js); een GET op de API-route
  * stuurt hierheen zonder taal. Deze test bewijst:
  * - de pagina is openbaar: uitgelogd geen omweg via inloggen, geen foutpagina;
- * - bij het laden precies één POST /users/afmelden met alleen { token } in de
- *   body, het token niet in het adres van de aanroep (ook onder StrictMode);
+ * - bij het laden GEEN POST (review ronde 3): linkscanners die links in een
+ *   sandbox met JavaScript openen (Defender Safe Links, Proofpoint, Mimecast)
+ *   zouden de klant anders al afmelden voordat hij de mail heeft gezien. Pas
+ *   de knop 'Geen herinneringen meer' doet precies één POST /users/afmelden
+ *   met alleen { token } in de body, het token niet in het adres van de
+ *   aanroep (ook onder StrictMode). Eén klik vanuit het mailprogramma loopt
+ *   via List-Unsubscribe-Post op de API;
  * - geen info-lek: de API antwoordt altijd { ok: true }, de pagina toont dus
  *   voor elk token dezelfde neutrale bevestiging en vraagt verder niets op;
  * - in de taal van de mail (?taal=), anders de taal van de app;
@@ -67,6 +72,16 @@ function start(pad, { streng = false } = {}) {
 
 const afmeldAanroepen = () => apiFetch.mock.calls.filter(([pad]) => String(pad).startsWith('/users/afmelden'));
 
+// De klant klikt op 'Geen herinneringen meer'.
+async function klik(d = nl) {
+  fireEvent.click(await screen.findByRole('button', { name: d.afmelden_knop }));
+}
+
+// Laat lopende effecten en aanroepen afronden.
+async function rustig() {
+  await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
+}
+
 let consoleSpies;
 
 beforeEach(() => {
@@ -90,8 +105,19 @@ afterEach(() => {
 });
 
 describe('/afmelden: één klik, zonder inloggen', () => {
+  test('bij het laden gaat er niets naar de server: een linkscanner meldt niemand af', async () => {
+    start(`/afmelden?token=${TOKEN}&taal=nl`);
+
+    expect(await screen.findByText(nl.afmelden_vraag_titel)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: nl.afmelden_knop })).toBeInTheDocument();
+    await rustig();
+    expect(afmeldAanroepen()).toHaveLength(0);
+    expect(screen.queryByText(nl.afmelden_klaar_titel)).not.toBeInTheDocument();
+  });
+
   test('uitgelogd: de pagina zelf, niet inloggen en niet de foutpagina', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
 
     expect(await screen.findByText(nl.afmelden_klaar_titel)).toBeInTheDocument();
     expect(screen.getByText(nl.afmelden_klaar_uitleg)).toBeInTheDocument();
@@ -100,8 +126,9 @@ describe('/afmelden: één klik, zonder inloggen', () => {
     expect(window.location.pathname).toBe('/afmelden');
   });
 
-  test('precies één POST /users/afmelden met alleen { token } in de body', async () => {
+  test('na de klik precies één POST /users/afmelden met alleen { token } in de body', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
     await screen.findByText(nl.afmelden_klaar_titel);
 
     expect(afmeldAanroepen()).toHaveLength(1);
@@ -112,17 +139,22 @@ describe('/afmelden: één klik, zonder inloggen', () => {
     expect(opties.body).toEqual({ token: TOKEN });
   });
 
-  test('ook onder StrictMode (effecten draaien dan twee keer) maar één POST', async () => {
+  test('ook onder StrictMode (effecten draaien dan twee keer): laden geen POST, de klik één', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`, { streng: true });
-    await screen.findByText(nl.afmelden_klaar_titel);
-    await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
+    await screen.findByRole('button', { name: nl.afmelden_knop });
+    await rustig();
+    expect(afmeldAanroepen()).toHaveLength(0);
 
+    await klik();
+    await screen.findByText(nl.afmelden_klaar_titel);
+    await rustig();
     expect(afmeldAanroepen()).toHaveLength(1);
   });
 
   test('ingelogd werkt het net zo: geen omleiding naar de app', async () => {
     haalProfiel.mockResolvedValue(KLANT);
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
 
     expect(await screen.findByText(nl.afmelden_klaar_titel)).toBeInTheDocument();
     expect(afmeldAanroepen()).toHaveLength(1);
@@ -143,17 +175,20 @@ describe('/afmelden: één klik, zonder inloggen', () => {
 describe('geen info-lek', () => {
   test('een vervalst token geeft precies dezelfde pagina als een echt token', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
     await screen.findByText(nl.afmelden_klaar_titel);
     const echt = document.body.textContent;
     cleanup();
 
     start('/afmelden?token=vervalst.0000&taal=nl');
+    await klik();
     await screen.findByText(nl.afmelden_klaar_titel);
     expect(document.body.textContent).toBe(echt);
   });
 
   test('de pagina vraagt niets anders op dan de afmelding: geen profiel, geen account', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
     await screen.findByText(nl.afmelden_klaar_titel);
 
     expect(apiFetch.mock.calls.map(([pad]) => pad)).toEqual(['/users/afmelden']);
@@ -162,10 +197,12 @@ describe('geen info-lek', () => {
 
   test('het token komt niet in de console', async () => {
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
     await screen.findByText(nl.afmelden_klaar_titel);
     apiFetch.mockRejectedValueOnce(Object.assign(new Error('Server fout'), { status: 500 }));
     cleanup();
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
     await screen.findByText(nl.afmelden_fout_titel);
 
     const alles = consoleSpies.flatMap((s) => s.mock.calls.flat()).map((a) => {
@@ -176,9 +213,12 @@ describe('geen info-lek', () => {
 });
 
 describe('in de taal van de klant', () => {
-  test.each(Object.keys(TALEN))('?taal=%s: de bevestiging in die taal', async (taal) => {
+  test.each(Object.keys(TALEN))('?taal=%s: de vraag, de knop en de bevestiging in die taal', async (taal) => {
     start(`/afmelden?token=${TOKEN}&taal=${taal}`);
     const d = TALEN[taal];
+    expect(await screen.findByText(d.afmelden_vraag_titel)).toBeInTheDocument();
+    expect(screen.getByText(d.afmelden_vraag_uitleg)).toBeInTheDocument();
+    await klik(d);
     expect(await screen.findByText(d.afmelden_klaar_titel)).toBeInTheDocument();
     expect(screen.getByText(d.afmelden_klaar_uitleg)).toBeInTheDocument();
     // Ook hier: welke mails altijd komen.
@@ -189,18 +229,20 @@ describe('in de taal van de klant', () => {
   test('zonder ?taal= (via de doorverwijzing van de API): de taal van de app', async () => {
     localStorage.setItem('swiftbridge_taal', 'ru');
     start(`/afmelden?token=${TOKEN}`);
+    expect(await screen.findByText(ru.afmelden_vraag_titel)).toBeInTheDocument();
+    await klik(ru);
     expect(await screen.findByText(ru.afmelden_klaar_titel)).toBeInTheDocument();
   });
 
   test('een onbekende ?taal= negeren: de taal van de app', async () => {
     localStorage.setItem('swiftbridge_taal', 'en');
     start(`/afmelden?token=${TOKEN}&taal=de`);
-    expect(await screen.findByText(en.afmelden_klaar_titel)).toBeInTheDocument();
+    expect(await screen.findByText(en.afmelden_vraag_titel)).toBeInTheDocument();
   });
 
   test('de vier talen naast nl zijn echt vertaald, niet de Nederlandse tekst', () => {
     const sleutels = Object.keys(nl).filter((k) => k.startsWith('afmelden_'));
-    expect(sleutels.length).toBeGreaterThanOrEqual(8);
+    expect(sleutels.length).toBeGreaterThanOrEqual(11);
     for (const taal of ['en', 'tr', 'ru', 'az']) {
       for (const sleutel of sleutels) {
         expect(TALEN[taal][sleutel], `${taal}.${sleutel}`).toBeTruthy();
@@ -228,6 +270,7 @@ describe('storing en ontbrekend token', () => {
   ])('%s: een foutmelding, en "Opnieuw proberen" stuurt nog één POST', async (_naam, fout) => {
     apiFetch.mockRejectedValueOnce(fout);
     start(`/afmelden?token=${TOKEN}&taal=nl`);
+    await klik();
 
     expect(await screen.findByText(nl.afmelden_fout_titel)).toBeInTheDocument();
     expect(screen.queryByText(nl.afmelden_klaar_titel)).not.toBeInTheDocument();
@@ -248,5 +291,7 @@ describe('storing en ontbrekend token', () => {
     expect(screen.getByRole('button', { name: d.afmelden_naar_voorkeuren })).toBeInTheDocument();
     expect(afmeldAanroepen()).toHaveLength(0);
     expect(screen.queryByText(d.afmelden_klaar_titel)).not.toBeInTheDocument();
+    // Zonder token ook geen knop die niets kan doen.
+    expect(screen.queryByRole('button', { name: d.afmelden_knop })).not.toBeInTheDocument();
   });
 });

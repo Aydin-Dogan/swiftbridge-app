@@ -1144,6 +1144,9 @@ export const en = {
  afmelden_onvolledig_uitleg:'You can also turn reminders off in your profile.',
  afmelden_naar_voorkeuren:'Go to my preferences',
  afmelden_opnieuw:'Try again',
+ afmelden_vraag_titel:'Stop receiving reminders?',
+ afmelden_vraag_uitleg:'This is about the reminders we send when your sign-up is not finished yet.',
+ afmelden_knop:'No more reminders',
 
  // ── Recurring ical export (Improvement III) ──────────────────────────────
  recurring_ical_knop:'Calendar (.ics)',

@@ -7,8 +7,13 @@
  * src/services/emailService.js). Een GET op de afmeldroute van de API stuurt
  * ook hierheen, dan zonder ?taal=.
  *
- * - Eén klik is het klikken op de link: bij het laden gaat er meteen één
+ * - Bij het laden gaat er niets naar de server (review ronde 3). Linkscanners
+ *   die links in een sandbox met JavaScript openen (Defender Safe Links,
+ *   Proofpoint, Mimecast) zouden de klant anders al afmelden voordat hij de
+ *   mail heeft gezien. Pas de knop 'Geen herinneringen meer' doet één
  *   POST /users/afmelden, met het token in de body en niet in het adres.
+ *   Afmelden met één klik vanuit het mailprogramma loopt via de headers
+ *   List-Unsubscribe en List-Unsubscribe-Post op de API, niet via deze pagina.
  * - De API antwoordt altijd { ok: true }, ook bij een ongeldig, verlopen of
  *   vervalst token. De pagina toont dus altijd dezelfde neutrale bevestiging:
  *   hij verraadt niet of een link klopt of een account bestaat.
@@ -35,11 +40,9 @@ export default function Afmelden() {
   // Eén keer lezen bij het openen.
   const [token] = useState(() => params.get('token') || '');
   const [linkTaal] = useState(() => params.get('taal'));
-  // 'bezig' | 'klaar' | 'fout' | 'onvolledig'
-  const [status, setStatus] = useState(token ? 'bezig' : 'onvolledig');
+  // 'vraag' | 'bezig' | 'klaar' | 'fout' | 'onvolledig'
+  const [status, setStatus] = useState(token ? 'vraag' : 'onvolledig');
 
-  // StrictMode draait effecten in ontwikkeling twee keer: de POST maar één keer.
-  const gestart = useRef(false);
   const actief = useRef(true);
 
   async function afmelden() {
@@ -57,10 +60,6 @@ export default function Afmelden() {
     actief.current = true;
     // De taal van de mail; een onbekende waarde negeren.
     if (GELDIGE_TALEN.includes(linkTaal) && linkTaal !== taal) zetTaal(linkTaal);
-    if (token && !gestart.current) {
-      gestart.current = true;
-      afmelden();
-    }
     return () => { actief.current = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -77,6 +76,19 @@ export default function Afmelden() {
         </div>
 
         <div className="bg-surface border border-border rounded-md shadow-soft p-6 text-center space-y-3" role="status" aria-live="polite">
+          {status === 'vraag' && (
+            <>
+              <h1 className="font-display text-lg font-medium text-ink-1">{t('afmelden_vraag_titel')}</h1>
+              <p className="text-sm text-ink-2">{t('afmelden_vraag_uitleg')}</p>
+              <button type="button" onClick={afmelden} className="btn-primary w-full py-3">
+                {t('afmelden_knop')}
+              </button>
+              <button type="button" onClick={naarVoorkeuren} className="w-full text-sm font-semibold text-brand-600 hover:text-brand-700 py-2">
+                {t('afmelden_naar_voorkeuren')}
+              </button>
+            </>
+          )}
+
           {status === 'bezig' && (
             <p className="text-sm text-ink-3 py-6">{t('laden')}</p>
           )}
