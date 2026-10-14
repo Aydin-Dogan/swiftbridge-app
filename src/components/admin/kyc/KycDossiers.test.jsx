@@ -413,6 +413,23 @@ describe('punt a: de tweede beoordelaar ziet en bevestigt het besluit van de eer
     expect(laatsteBesluit().body).toEqual({ besluit: 'info_nodig', opmerking: 'Graag een recent adresbewijs.' });
   });
 
+  test('review: een interne notitie gaat niet als vraag naar de klant als hij daarna "informatie opvragen" kiest', async () => {
+    // Het vak is eerst een interne notitie ("de klant ziet hem niet") en bij
+    // informatie opvragen de vraag aan de klant. Bleef de tekst staan bij het
+    // wisselen, dan ging de interne notitie met één klik naar de klant, in de
+    // app en in de mail (Wwft art. 23).
+    await openDossierMet(WACHT_OP_TWEEDE);
+    fireEvent.click(screen.getByRole('button', { name: 'Niet eens' }));
+    fireEvent.change(screen.getByLabelText(/Waarom ben je het niet eens/), {
+      target: { value: 'Mogelijk een stroman; overleg met de MLRO.' },
+    });
+    fireEvent.click(screen.getByLabelText('Informatie opvragen bij de klant'));
+
+    expect(screen.getByLabelText(/Wat heb je van de klant nodig/)).toHaveValue('');
+    expect(screen.getByRole('button', { name: 'Vastleggen' })).toBeDisabled();
+    expect(laatsteBesluit()).toBeNull();
+  });
+
   test('wie de eerste beoordeling zelf deed, kan niets bevestigen of terugzetten', async () => {
     await openDossierMet({
       ...WACHT_OP_TWEEDE,

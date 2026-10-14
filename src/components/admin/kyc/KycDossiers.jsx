@@ -656,7 +656,10 @@ function VraagBesluit({
                   name={`kyc-oneens-${dossierId}`}
                   value={k.waarde}
                   checked={oneensKeuze === k.waarde}
-                  onChange={() => setOneensKeuze(k.waarde)}
+                  // Het vak is een interne notitie OF de vraag aan de klant.
+                  // Bij wisselen leeg, anders gaat een interne notitie met een
+                  // klik naar de klant, in de app en in de mail (Wwft art. 23).
+                  onChange={() => { setOneensKeuze(k.waarde); setTekst(''); }}
                 />
                 {k.tekst}
               </label>
