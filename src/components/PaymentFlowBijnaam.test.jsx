@@ -98,6 +98,28 @@ describe('PaymentFlow: bijnaam in plaats van het vinkje', () => {
     });
   });
 
+  // Review 14-10-2026: reset() wiste ontvanger en IBAN, maar niet de bijnaam.
+  // Bij de volgende overschrijving stond "Mama" dan al ingevuld bij een andere
+  // ontvanger, en zonder opletten kreeg die ontvanger die bijnaam.
+  test('nieuwe overschrijving: de bijnaam van de vorige ontvanger staat er niet meer', async () => {
+    globalThis.fetch = maakFetchMock(routes().filter((r) => r.pad !== '/payments/start').concat([
+      { methode: 'POST', pad: '/payments/start', status: 503, body: { errorCode: 'PAY_NIET_GECONFIGUREERD', error: 'x' } },
+    ]));
+    vulOverboekingVooraf();
+    renderMetRouter(<PaymentFlow token="oefen-token" />);
+
+    fireEvent.change(await screen.findByLabelText('Bijnaam (optioneel)'), { target: { value: 'Mama' } });
+    fireEvent.click(await screen.findByRole('button', { name: /Betaalmethode kiezen/ }));
+    await screen.findByText('Kies betaalmethode');
+    fireEvent.click(screen.getByRole('button', { name: /Controleren/ }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Bevestigen & betalen' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Nieuwe overschrijving' }));
+
+    fireEvent.change(await screen.findByPlaceholderText('Mehmet Yilmaz'), { target: { value: 'Oefen Broer' } });
+    fireEvent.change(screen.getByPlaceholderText(IBAN), { target: { value: 'NL91ABNA0417164300' } });
+    expect(await screen.findByLabelText('Bijnaam (optioneel)')).toHaveValue('');
+  });
+
   test('bijnaam leeg: de app slaat zelf niets op (dat doet de server na de betaling)', async () => {
     globalThis.fetch = maakFetchMock(routes());
     vulOverboekingVooraf();

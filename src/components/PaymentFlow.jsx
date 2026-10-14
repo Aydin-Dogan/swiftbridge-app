@@ -1536,6 +1536,8 @@ export default function PaymentFlow({ token }) {
   function reset() {
     setStap(0); setTransactie(null); setBedrag('500');
     setOntvanger(''); setIban(''); setMethode(geldigeMethode('ideal', beschikbaar)); setFout('');
+    // De bijnaam hoort bij de vorige ontvanger; anders krijgt de volgende hem.
+    setBijnaam('');
     setOpenTx(null); setBetaalStartFout(null);
   }
 
