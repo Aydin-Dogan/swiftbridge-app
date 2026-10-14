@@ -510,6 +510,16 @@ export const az = {
  admin_errors_hint_secret:'Təcili giriş üçün URL-ə?secret=... əlavə edin (ADMIN_SECRET).',
  admin_errors_count:'{n} xəta göstərilir',
 
+ // ── İdarə: saxlanılan ödənişlər (Wwft, 14-10-2026) ────────────────────────
+ admin_payout_vastgehouden:'Saxlanılıb',
+ admin_payout_vastgehouden_informatieverzoek:'Saxlanılıb: açıq məlumat sorğusu var',
+ admin_payout_vastgehouden_account_opgeschort:'Saxlanılıb: hesab dayandırılıb',
+ admin_payout_vastgehouden_kyc_niet_goedgekeurd:'Saxlanılıb: müştərinin KYC yoxlaması təsdiqlənməyib',
+ admin_payout_vastgehouden_kyb_niet_goedgekeurd:'Saxlanılıb: biznes profili təsdiqlənməyib',
+ admin_payout_vastgehouden_klant_onbekend:'Saxlanılıb: müştəri tapılmadı',
+ admin_payout_vastgehouden_uitleg:'Saxlanılan ödənişi əl ilə etməyin. Səbəb aradan qaldırıldıqda ödəniş avtomatik olaraq bir dəfə növbəyə qoyulur.',
+ admin_payout_niet_uitbetaald_status:'Status {status}: ödənilib, köçürülməyib',
+
  // ── PWA quraşdırma banner (Təkmilləşdirmə AA) ────────────────────────────
  install_android_titel:'SwiftBridge quraşdır',
  install_android_subtitel:'Əsas ekrandan daha sürətli giriş',

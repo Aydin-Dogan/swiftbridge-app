@@ -524,6 +524,16 @@ export const tr = {
  admin_errors_hint_secret:'Acil erişim için URL\'ye?secret=... ekleyin (ADMIN_SECRET).',
  admin_errors_count:'{n} hata gösteriliyor',
 
+ // ── Yönetim: bekletilen ödemeler (Wwft, 14-10-2026) ───────────────────────
+ admin_payout_vastgehouden:'Bekletiliyor',
+ admin_payout_vastgehouden_informatieverzoek:'Bekletiliyor: açık bir bilgi talebi var',
+ admin_payout_vastgehouden_account_opgeschort:'Bekletiliyor: hesap askıya alındı',
+ admin_payout_vastgehouden_kyc_niet_goedgekeurd:'Bekletiliyor: müşterinin KYC doğrulaması onaylanmadı',
+ admin_payout_vastgehouden_kyb_niet_goedgekeurd:'Bekletiliyor: kurumsal profil onaylanmadı',
+ admin_payout_vastgehouden_klant_onbekend:'Bekletiliyor: müşteri bulunamadı',
+ admin_payout_vastgehouden_uitleg:'Bekletilen bir ödemeyi elle yapmayın. Neden giderildiğinde ödeme otomatik olarak bir kez kuyruğa alınır.',
+ admin_payout_niet_uitbetaald_status:'Durum {status}: ödeme alındı, gönderilmedi',
+
  // ── PWA kurulum banner (İyileştirme AA) ──────────────────────────────────
  install_android_titel:'SwiftBridge kur',
  install_android_subtitel:'Ana ekrandan daha hızlı erişim',

@@ -510,6 +510,16 @@ export const ru = {
  admin_errors_hint_secret:'Добавьте?secret=... к URL для экстренного доступа через ADMIN_SECRET.',
  admin_errors_count:'Показано {n} ошибок',
 
+ // ── Админ: удержанные выплаты (Wwft, 14-10-2026) ───────────────────────────
+ admin_payout_vastgehouden:'Удержано',
+ admin_payout_vastgehouden_informatieverzoek:'Удержано: открыт запрос информации',
+ admin_payout_vastgehouden_account_opgeschort:'Удержано: аккаунт приостановлен',
+ admin_payout_vastgehouden_kyc_niet_goedgekeurd:'Удержано: KYC клиента не одобрен',
+ admin_payout_vastgehouden_kyb_niet_goedgekeurd:'Удержано: бизнес-профиль не одобрен',
+ admin_payout_vastgehouden_klant_onbekend:'Удержано: клиент не найден',
+ admin_payout_vastgehouden_uitleg:'Не выплачивайте удержанную выплату вручную. Когда причина устранена, выплата автоматически один раз ставится в очередь.',
+ admin_payout_niet_uitbetaald_status:'Статус {status}: оплачено, не выплачено',
+
  // ── PWA баннер установки (Улучшение AA) ──────────────────────────────────
  install_android_titel:'Установить SwiftBridge',
  install_android_subtitel:'Быстрый доступ с главного экрана',

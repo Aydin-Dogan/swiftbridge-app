@@ -24,6 +24,18 @@ function tijdGeleden(iso) {
   return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 }
 
+// Redenen waarom de API een uitbetaling vasthoudt (API:
+// services/uitbetalingVasthouden.js). Een onbekende reden krijgt de algemene tekst.
+const VASTHOUD_REDENEN = [
+  'informatieverzoek', 'account_opgeschort', 'kyc_niet_goedgekeurd', 'kyb_niet_goedgekeurd', 'klant_onbekend',
+];
+
+function vastgehoudenTekst(t, reden) {
+  return VASTHOUD_REDENEN.includes(reden)
+    ? t(`admin_payout_vastgehouden_${reden}`)
+    : t('admin_payout_vastgehouden');
+}
+
 function StatusBadge({ status }) {
   const { t } = useTaal();
   const map = {
@@ -224,6 +236,8 @@ export default function AdminPanel() {
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
+        // Nog vastgehouden: de reden zeggen, niet een algemene foutmelding.
+        if (d.reden) throw new Error(vastgehoudenTekst(t, d.reden));
         throw Object.assign(new Error(d.error || 'Fout'), { errorCode: d.errorCode, data: d });
       }
       laadData();
@@ -312,6 +326,9 @@ export default function AdminPanel() {
             </h2>
             <div className="bg-accent-400/10 border border-accent-400/30 rounded-md p-3 text-sm text-ink-2 mb-3">
               {t('admin_payouts_pending_uitleg') || 'Betaald maar (nog) niet uitbetaald — er is geen echte payout-rail actief. Handmatige opvolging vereist.'}
+              {payouts.some(p => p.vastgehouden) && (
+                <div className="mt-1 font-medium text-ink-1">{t('admin_payout_vastgehouden_uitleg')}</div>
+              )}
             </div>
             <div className="overflow-x-auto bg-surface rounded-md border border-border shadow-soft">
               <table className="w-full text-sm">
@@ -332,6 +349,9 @@ export default function AdminPanel() {
                       <td className="px-3 py-2">
                         <div className="font-medium text-ink-1">{p.ontvangerNaam || '—'}</div>
                         <div className="text-xs text-ink-3">{p.uitbetaalReferentie || p.ontvangerBank || ''}</div>
+                        {p.vastgehouden && (
+                          <div className="text-xs font-medium text-red-700 mt-1">{vastgehoudenTekst(t, p.redenVasthouden)}</div>
+                        )}
                       </td>
                       <td className="px-3 py-2 capitalize">{p.uitbetaalMethode || '—'}</td>
                       <td className="px-3 py-2 text-right tabular-nums">
@@ -340,16 +360,31 @@ export default function AdminPanel() {
                       </td>
                       <td className="px-3 py-2 text-ink-2 whitespace-nowrap">{tijdGeleden(p.aangemaaktOp)}</td>
                       <td className="px-3 py-2 text-right whitespace-nowrap">
-                        <button
-                          onClick={() => payoutActie(p.id, 'handmatig-uitbetaald')}
-                          className="text-[0.7rem] font-medium uppercase tracking-[0.14em] bg-success-600 hover:bg-success-700 text-white px-2.5 py-1.5 rounded-md transition">
-                          {t('admin_payout_btn_uitbetaald') || 'Uitbetaald'}
-                        </button>
-                        <button
-                          onClick={() => payoutActie(p.id, 'opnieuw')}
-                          className="ml-1.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] bg-surface-3 hover:bg-surface-2 text-ink-2 px-2.5 py-1.5 rounded-md transition">
-                          {t('admin_payout_btn_opnieuw') || 'Opnieuw'}
-                        </button>
+                        {/* Vastgehouden: niet met de hand uitbetalen. "Opnieuw" kijkt
+                            of de reden weg is; zo niet, dan zegt de API welke. Een
+                            geannuleerde of mislukte overboeking: geen knoppen. */}
+                        {p.status !== 'in_behandeling' && !p.vastgehouden ? (
+                          <span className="text-xs text-ink-3 whitespace-normal">
+                            {t('admin_payout_niet_uitbetaald_status', { status: p.status })}
+                          </span>
+                        ) : (
+                          <>
+                            {!p.vastgehouden && (
+                              <button
+                                onClick={() => payoutActie(p.id, 'handmatig-uitbetaald')}
+                                className="text-[0.7rem] font-medium uppercase tracking-[0.14em] bg-success-600 hover:bg-success-700 text-white px-2.5 py-1.5 rounded-md transition">
+                                {t('admin_payout_btn_uitbetaald') || 'Uitbetaald'}
+                              </button>
+                            )}
+                            {p.status === 'in_behandeling' && (
+                              <button
+                                onClick={() => payoutActie(p.id, 'opnieuw')}
+                                className="ml-1.5 text-[0.7rem] font-medium uppercase tracking-[0.14em] bg-surface-3 hover:bg-surface-2 text-ink-2 px-2.5 py-1.5 rounded-md transition">
+                                {t('admin_payout_btn_opnieuw') || 'Opnieuw'}
+                              </button>
+                            )}
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))}

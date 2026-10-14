@@ -524,6 +524,16 @@ export const en = {
  admin_errors_hint_secret:'Add?secret=... to the URL for emergency access via ADMIN_SECRET.',
  admin_errors_count:'{n} errors shown',
 
+ // ── Admin: payouts on hold (Wwft, 14-10-2026) ─────────────────────────────
+ admin_payout_vastgehouden:'On hold',
+ admin_payout_vastgehouden_informatieverzoek:'On hold: an information request is open',
+ admin_payout_vastgehouden_account_opgeschort:'On hold: the account is suspended',
+ admin_payout_vastgehouden_kyc_niet_goedgekeurd:"On hold: the customer's KYC is not approved",
+ admin_payout_vastgehouden_kyb_niet_goedgekeurd:'On hold: the business profile is not approved',
+ admin_payout_vastgehouden_klant_onbekend:'On hold: customer not found',
+ admin_payout_vastgehouden_uitleg:'Do not pay out a payout on hold by hand. Once the reason has been resolved, it is queued once automatically.',
+ admin_payout_niet_uitbetaald_status:'Status {status}: paid, not paid out',
+
  // ── PWA install banner (Improvement AA) ──────────────────────────────────
  install_android_titel:'Install SwiftBridge',
  install_android_subtitel:'Faster access from your home screen',

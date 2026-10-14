@@ -525,6 +525,16 @@ export const nl = {
  admin_errors_hint_secret:'Voeg?secret=... toe aan de URL voor noodtoegang via ADMIN_SECRET.',
  admin_errors_count:'{n} errors getoond',
 
+ // ── Beheer: vastgehouden uitbetalingen (Wwft, 14-10-2026) ─────────────────
+ admin_payout_vastgehouden:'Vastgehouden',
+ admin_payout_vastgehouden_informatieverzoek:'Vastgehouden: er staat een informatieverzoek open',
+ admin_payout_vastgehouden_account_opgeschort:'Vastgehouden: het account is opgeschort',
+ admin_payout_vastgehouden_kyc_niet_goedgekeurd:'Vastgehouden: de KYC van de klant is niet goedgekeurd',
+ admin_payout_vastgehouden_kyb_niet_goedgekeurd:'Vastgehouden: het zakelijke profiel is niet goedgekeurd',
+ admin_payout_vastgehouden_klant_onbekend:'Vastgehouden: klant niet gevonden',
+ admin_payout_vastgehouden_uitleg:'Een vastgehouden uitbetaling niet met de hand uitbetalen. Is de reden afgehandeld, dan gaat hij vanzelf één keer de wachtrij in.',
+ admin_payout_niet_uitbetaald_status:'Status {status}: betaald, niet uitbetaald',
+
  // ── PWA install banner (Verbetering AA) ──────────────────────────────────
  install_android_titel:'Installeer SwiftBridge',
  install_android_subtitel:'Snellere toegang vanaf je beginscherm',
