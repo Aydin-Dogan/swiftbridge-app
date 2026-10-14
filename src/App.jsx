@@ -15,6 +15,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import OudAdresNaarApp from './components/OudAdresNaarApp';
 import { OUDE_APP_PADEN } from './lib/oudeAppPaden';
 import { betaalTerugId, loginPadVoor } from './lib/betaalTerug';
+import { voorkeurenPad, tabUitZoek } from './lib/meldingsvoorkeuren';
 import { kleurUitNaam } from './components/Avatar';
 import { useTaal } from './i18n';
 import { haalProfiel, logout as logoutApi, apiFetch } from './services/api';
@@ -293,7 +294,11 @@ function AppShell({ gebruiker, token, onLogout }) {
       document.removeEventListener('keydown', onEsc);
     };
   }, [accountMenuOpen]);
-  const [actief, setActief] = useState('dashboard');
+  const locatie = useLocation();
+  // /app?tab=profiel (de mail-links via /account/notificaties, of ?next= na
+  // het inloggen): Profiel open, bij de meldingsvoorkeuren.
+  const [actief, setActief] = useState(() => tabUitZoek(locatie.search) || 'dashboard');
+  const [profielOpenBij, setProfielOpenBij] = useState(() => (tabUitZoek(locatie.search) === 'profiel' ? 'meldingen' : null));
   // Betalingen-pagina kan direct op het Gepland-tabblad openen
   // ("Ingeplande opdrachten" in Direct naar / Beheer zelf)
   const [betalingenTab, setBetalingenTab] = useState('alles');
@@ -304,8 +309,17 @@ function AppShell({ gebruiker, token, onLogout }) {
   // Terug van iDEAL: Mollie stuurt naar /app?payment=<transactie-id>. Die
   // parameter werd nergens gelezen (analyse aanmeldroute 13-10-2026); nu toont
   // de BetaalStatusKaart wat er met de betaling is gebeurd.
-  const locatie = useLocation();
   const betaalTerug = betaalTerugId(locatie.search);
+
+  // ?tab= is een opdracht, geen stand: na het openen gaat hij weer uit het
+  // adres, zodat verversen gewoon de app opent. ?payment= blijft staan.
+  useEffect(() => {
+    const zoek = new URLSearchParams(locatie.search);
+    if (!zoek.has('tab')) return;
+    zoek.delete('tab');
+    const rest = zoek.toString();
+    navigate({ pathname: locatie.pathname, search: rest ? `?${rest}` : '' }, { replace: true });
+  }, [locatie.pathname, locatie.search, navigate]);
   function sluitBetaalStatus() {
     const rest = new URLSearchParams(locatie.search);
     rest.delete('payment');
@@ -560,7 +574,10 @@ function AppShell({ gebruiker, token, onLogout }) {
             </VragenVoorBetalen>
           )}
           {actief === 'alerts' && <KoersAlerts token={token} />}
-          {actief === 'profiel' && <Profiel token={token} gebruiker={gebruiker} />}
+          {actief === 'profiel' && (
+            <Profiel token={token} gebruiker={gebruiker}
+              openBij={profielOpenBij} onGeopend={() => setProfielOpenBij(null)} />
+          )}
           {actief === 'kyc' && (
             // Nog niet goedgekeurd: eerst de vragen (stap 6), dan de identificatie.
             <VragenVoorBetalen gebruikerId={gebruiker?.id} overslaan={!kycNogTeBeoordelen}>
@@ -714,6 +731,12 @@ export default function App() {
   const [gebruiker, setGebruiker] = useState(undefined);
   const token = gebruiker ? TOKEN_SENTINEL : null;
 
+  // De server moet de taal van de klant kennen (mails, pushberichten). De
+  // TaalProvider stuurt hem mee bij een taalwissel; daarvoor moet hij weten
+  // wie er is ingelogd. Bij inloggen gaat de taal meteen mee (handleLogin).
+  const { koppelAccount } = useTaal();
+  useEffect(() => { koppelAccount(gebruiker || null); }, [gebruiker, koppelAccount]);
+
   // PIN-1: app-lock state.
   // pinIngeschakeld = backend status; ontgrendeld = sessie deze bezoek al PIN-gevalideerd?
   const [pinIngeschakeld, setPinIngeschakeld] = useState(null); // null = onbekend, true/false = bekend
@@ -836,6 +859,9 @@ export default function App() {
   function handleLogin(_t, g) {
     // Token kwam mee in body voor backward compat — negeren, cookie is leidend.
     setGebruiker(g);
+    // Inloggen of registreren: heeft de server een andere taal dan de app,
+    // dan gaat de taal van de app mee (één PATCH /users/me met alleen {taal}).
+    koppelAccount(g, { naarServer: true });
   }
 
   // Profiel opnieuw ophalen (o.a. kybStatus na indienen/goedkeuren van de zakelijke aanvraag).
@@ -1004,6 +1030,11 @@ export default function App() {
             ) : <Navigate to="/login" replace />
           } />
           <Route path="/r/:code" element={<ReferralRedirect />} />
+          {/* "Voorkeuren beheren" en "Uitschrijven" (?unsubscribe=1) onderaan
+              elke mail. Ingelogd: Profiel, bij de meldingsvoorkeuren; uitgelogd:
+              eerst inloggen, daarna daarheen. ?unsubscribe=1 zet nog niets
+              automatisch uit: daarvoor is eerst een ondertekend afmeldtoken nodig. */}
+          <Route path="/account/notificaties" element={<Navigate to={voorkeurenPad(!!token)} replace />} />
           <Route path="/verifieer-email" element={<VerifyEmail />} />
           {/* BETAALVERZOEK-1: publieke betaalpagina — geen account nodig */}
           <Route path="/betaal/:token" element={

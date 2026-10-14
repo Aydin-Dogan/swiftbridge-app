@@ -3,7 +3,7 @@
  * Naam, e-mail, telefoon, adres
  * Beschikbaar na KYC verificatie
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaal } from '../i18n';
 import { parseError } from '../services/api';
@@ -199,9 +199,17 @@ function ZakelijkProfielSectie({ profiel, gebruiker }) {
   );
 }
 
-export default function Profiel({ token, gebruiker, onUpdate }) {
+export default function Profiel({ token, gebruiker, onUpdate, openBij, onGeopend }) {
   const { t } = useTaal();
   const [laden, setLaden] = useState(true);
+  // De mail-links (/account/notificaties) openen Profiel bij de
+  // meldingsvoorkeuren: dat blok schuift in beeld zodra het profiel er is.
+  const meldingenRef = useRef(null);
+  useEffect(() => {
+    if (laden || openBij !== 'meldingen' || !meldingenRef.current) return;
+    meldingenRef.current.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+    onGeopend?.();
+  }, [laden, openBij, onGeopend]);
   const [bezig, setBezig] = useState(false);
   const [bericht, setBericht] = useState(null);
   const [fout, setFout] = useState('');
@@ -565,11 +573,14 @@ export default function Profiel({ token, gebruiker, onUpdate }) {
       {/* BIO-1: passkeys — biometrisch inloggen */}
       <PasskeyInstellingen />
 
-      {/* Notificatie voorkeuren (Verbetering GGG) — email/push/whatsapp toggles */}
-      <NotificatieVoorkeuren
-        profiel={profiel}
-        onUpdate={(patch) => setProfiel(p => ({ ...p, ...patch }))}
-      />
+      {/* Notificatie voorkeuren (Verbetering GGG) — email/push/whatsapp toggles.
+          Anker voor /account/notificaties (de links onderaan elke mail). */}
+      <div id="meldingsvoorkeuren" ref={meldingenRef} className="scroll-mt-20">
+        <NotificatieVoorkeuren
+          profiel={profiel}
+          onUpdate={(patch) => setProfiel(p => ({ ...p, ...patch }))}
+        />
+      </div>
 
       {/* Login historiek (Verbetering JJ) — recente login-events voor security */}
       <LoginHistory />
