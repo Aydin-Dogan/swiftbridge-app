@@ -1510,6 +1510,7 @@ export const nl = {
  ovs_frequentie:'Frequentie',
  ovs_startdatum:'Eerste uitvoering',
  ovs_naam_fout:'Vul de naam van de ontvanger in',
+ ontvanger_naam_hint:'Naam precies zoals bij de bank van de ontvanger',
  ovs_versturen:'Versturen',
  ovs_knop_inplannen:'Inplannen',
  ovs_periodiek_instellen:'Periodiek instellen',

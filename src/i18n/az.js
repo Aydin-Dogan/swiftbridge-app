@@ -1500,6 +1500,7 @@ export const az = {
  ovs_frequentie:'Tezlik',
  ovs_startdatum:'İlk icra',
  ovs_naam_fout:'Alıcının adını daxil edin',
+ ontvanger_naam_hint:'Adı alıcının bankında qeydə alındığı kimi yazın',
  ovs_versturen:'Göndər',
  ovs_knop_inplannen:'Planlaşdır',
  ovs_periodiek_instellen:'Müntəzəm tapşırıq yarat',

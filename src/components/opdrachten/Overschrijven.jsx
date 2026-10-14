@@ -24,6 +24,7 @@ import Card from '../ui/Card';
 import Knop from '../ui/Knop';
 import VeldGroep from '../ui/VeldGroep';
 import { Send, Calendar, Check } from '../icons/Icons';
+import { ontvangerNaamGeldig } from '../../lib/naamNormaal';
 
 // ── IBAN validatie (mod-97) — zelfde patroon als BeneficiaryFormulier ──────
 const IBAN_LENGTES = {
@@ -142,7 +143,7 @@ export default function Overschrijven() {
 
   function valideer() {
     const f = {};
-    if (!naam || naam.trim().length < 2) f.naam = t('ovs_naam_fout');
+    if (!ontvangerNaamGeldig(naam)) f.naam = t('ovs_naam_fout');
     if (!iban || !valideerIban(iban).geldig) f.iban = t('ovs_iban_fout');
     const b = Number(String(bedrag).replace(',', '.'));
     if (!isFinite(b) || b < MIN_BEDRAG || b > MAX_BEDRAG) f.bedrag = t('ovs_bedrag_fout');
@@ -304,7 +305,7 @@ export default function Overschrijven() {
           </div>
         )}
 
-        <VeldGroep label={t('ovs_ontvanger_naam')} verplicht fout={fouten.naam}
+        <VeldGroep label={t('ovs_ontvanger_naam')} verplicht fout={fouten.naam} hint={t('ontvanger_naam_hint')}
           value={naam} onChange={e => { setNaam(e.target.value); setGekozenId(''); }} autoComplete="off" />
 
         <VeldGroep label={t('ovs_iban')} verplicht fout={fouten.iban}

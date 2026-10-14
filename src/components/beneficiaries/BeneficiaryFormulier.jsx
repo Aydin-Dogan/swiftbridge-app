@@ -9,6 +9,7 @@ import { VALUTAS, getValuta } from '../../services/currencies';
 import { LAND_INFO, bankenPerLand } from '../../services/turkstaligeBanken';
 import Vlag from '../Vlag';
 import { X } from '../icons/Icons';
+import { ontvangerNaamGeldig } from '../../lib/naamNormaal';
 
 // ── IBAN landcode mapping (eerste 2 chars) ──────────────────────────────────
 const IBAN_LANDCODES = {
@@ -129,7 +130,8 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
 
   function indien() {
     setLokaleFout('');
-    if (!form.naam.trim()) { setLokaleFout(t('benef_fout_naam_vereist')); return; }
+    // Zelfde ondergrens als de server en Overschrijven: na trim minimaal 2 tekens.
+    if (!ontvangerNaamGeldig(form.naam)) { setLokaleFout(t('benef_fout_naam_vereist')); return; }
     const c = valideerIban(form.iban);
     if (!c.geldig) { setLokaleFout(c.fout); return; }
     onOpslaan({
@@ -163,8 +165,10 @@ export default function BeneficiaryFormulier({ open, initial, bezig, fout, onAnn
               onChange={e => update('naam', e.target.value)}
               placeholder="Mehmet Yilmaz"
               maxLength={100}
+              aria-describedby="benef-naam-hint"
               className="w-full border border-border rounded-md px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
             />
+            <p id="benef-naam-hint" className="text-[11px] text-ink-3 mt-1">{t('ontvanger_naam_hint')}</p>
           </div>
 
           {/* Bijnaam */}

@@ -1508,6 +1508,7 @@ export const en = {
  ovs_frequentie:'Frequency',
  ovs_startdatum:'First execution',
  ovs_naam_fout:'Enter the recipient name',
+ ontvanger_naam_hint:'Name exactly as registered at the recipient\'s bank',
  ovs_versturen:'Send',
  ovs_knop_inplannen:'Schedule',
  ovs_periodiek_instellen:'Set up recurring',

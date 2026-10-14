@@ -34,6 +34,7 @@ import { startBetaling, doorsturenNaar } from '../services/betaalStart'; // geen
 import { haalOpnieuwKlaar } from '../services/opnieuwVersturen'; // "Snel opnieuw" / "Opnieuw versturen"
 import { leesLaatsteBetaalmethode, bewaarLaatsteBetaalmethode } from '../services/laatsteBetaalmethode';
 import { bewaarBijnaam, BIJNAAM_MAX } from '../services/ontvangerBijnaam';
+import { naamBevat, normaliseerNaam, ontvangerNaamGeldig } from '../lib/naamNormaal'; // Turkse letters tellen niet
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const SWIFTNEWS = import.meta.env.VITE_SWIFTNEWS_URL || 'https://news-production-8477.up.railway.app';
@@ -211,8 +212,9 @@ function OntvangerModal({ onKies, onSluit }) {
 // ── BeneficiaryAutocomplete (Verbetering WWW) ────────────────────────────
 // Input voor ontvanger-naam met live suggesties uit /beneficiaries.
 // Op klik op suggestie → vult IBAN + bank + label automatisch in.
-// Vereist >=2 karakters om suggesties te tonen.
-function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setBijnaam }) {
+// Vereist >=2 karakters om suggesties te tonen. Hoofdletters en Turkse letters
+// tellen niet: 'yilmaz' vindt 'Yılmaz' (lib/naamNormaal).
+function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setOntvangerBank, setBijnaam, beschrijvingId }) {
   const [alle, setAlle] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -229,14 +231,10 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
     return () => { cancelled = true; };
   }, [token]);
 
-  const term = (ontvanger || '').trim().toLowerCase();
+  const term = normaliseerNaam(ontvanger);
   const suggesties = !alle || term.length < 2
     ? []
-    : alle.filter(b => {
-        const naam = (b.naam || '').toLowerCase();
-        const bijnaam = (b.bijnaam || '').toLowerCase();
-        return naam.includes(term) || bijnaam.includes(term);
-      }).slice(0, 5);
+    : alle.filter(b => naamBevat(b.naam, term) || naamBevat(b.bijnaam, term)).slice(0, 5);
 
   function kies(b) {
     setOntvanger(b.naam);
@@ -256,6 +254,7 @@ function BeneficiaryAutocomplete({ token, ontvanger, setOntvanger, setIban, setO
         placeholder="Mehmet Yilmaz"
         className="w-full border border-border rounded-md px-4 py-3 outline-none bg-surface focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
         autoComplete="off"
+        aria-describedby={beschrijvingId}
       />
       {open && suggesties.length > 0 && (
         <ul className="absolute z-20 left-0 right-0 mt-1 bg-surface border border-border rounded-md shadow-soft max-h-64 overflow-y-auto">
@@ -315,7 +314,10 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
   // De ondergrens komt uit het prijsmodel, niet uit een los getal. Hier stond 10,
   // waardoor een klant met EUR 30 helemaal tot het bevestigingsscherm kwam en pas
   // bij Versturen te horen kreeg dat het niet kan.
-  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= MIN_BEDRAG && ontvanger && ontvangerInfoOK;
+  // Naam ontvanger: dezelfde regel als Overschrijven (na trim minimaal 2 tekens).
+  // Hier was elke niet-lege tekst goed, ook een spatie (bouwplan ronde 3, onderdeel 4).
+  const naamOK = ontvangerNaamGeldig(ontvanger);
+  const kanVolgende = bedrag && !isNaN(bedrag) && parseFloat(bedrag) >= MIN_BEDRAG && naamOK && ontvangerInfoOK;
 
   return (
     <div className="bg-surface border border-border rounded-md shadow-soft p-6 space-y-5 animate-fade-up">
@@ -483,7 +485,15 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
           setIban={setIban}
           setOntvangerBank={setOntvangerBank}
           setBijnaam={setBijnaam}
+          beschrijvingId={ontvanger && !naamOK ? 'pf-ontvanger-fout' : 'pf-ontvanger-hint'}
         />
+        {/* Zelfde opbouw als VeldGroep: een fout vervangt de hint. Pas een fout
+            als er iets staat; een leeg veld zet alleen de knop uit. */}
+        {ontvanger && !naamOK ? (
+          <p id="pf-ontvanger-fout" role="alert" className="text-[11px] text-fg-error mt-1">{t('ovs_naam_fout')}</p>
+        ) : (
+          <p id="pf-ontvanger-hint" className="text-[11px] text-ink-3 mt-1">{t('ontvanger_naam_hint')}</p>
+        )}
       </div>
 
       {/* Uitbetaal methode toggle: bank vs Papara */}
@@ -603,7 +613,8 @@ function StapBedrag({ bedrag, setBedrag, valuta, setValuta, snelheid, setSnelhei
               <div role="group" aria-labelledby="pf-bijnaam-snel" className="flex gap-1.5 flex-wrap">
                 {BIJNAAM_SNELKEUZES.map((id) => {
                   const tekst = t(`benef_snel_${id}`);
-                  const gekozen = (bijnaam || '').trim().toLocaleLowerCase() === tekst.toLocaleLowerCase();
+                  // Zelfgetypt 'buyukanne' is de knop 'Büyükanne' (lib/naamNormaal).
+                  const gekozen = normaliseerNaam(bijnaam) === normaliseerNaam(tekst);
                   return (
                     <button key={id} type="button" aria-pressed={gekozen}
                       onClick={() => setBijnaam?.(gekozen ? '' : tekst)}
@@ -1389,7 +1400,7 @@ export default function PaymentFlow({ token }) {
         },
         body: JSON.stringify({
           eurBedrag: parseFloat(bedrag),
-          ontvangerNaam: ontvanger,
+          ontvangerNaam: String(ontvanger || '').trim(), // de server neemt elke niet-lege tekst aan
           ontvangerIBAN: uitbetaalMethode === 'bank' ? iban : null,
           ontvangerBank: ontvangerBank,
           methode,

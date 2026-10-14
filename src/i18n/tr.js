@@ -1508,6 +1508,7 @@ export const tr = {
  ovs_frequentie:'Sıklık',
  ovs_startdatum:'İlk işlem',
  ovs_naam_fout:'Alıcı adını girin',
+ ontvanger_naam_hint:'Adı, alıcının bankasında kayıtlı olduğu gibi yazın',
  ovs_versturen:'Gönder',
  ovs_knop_inplannen:'Planla',
  ovs_periodiek_instellen:'Düzenli talimat oluştur',

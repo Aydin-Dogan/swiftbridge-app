@@ -1500,6 +1500,7 @@ export const ru = {
  ovs_frequentie:'Периодичность',
  ovs_startdatum:'Первое исполнение',
  ovs_naam_fout:'Введите имя получателя',
+ ontvanger_naam_hint:'Укажите имя точно так, как в банке получателя',
  ovs_versturen:'Отправить',
  ovs_knop_inplannen:'Запланировать',
  ovs_periodiek_instellen:'Настроить регулярный перевод',
