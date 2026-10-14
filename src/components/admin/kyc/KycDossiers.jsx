@@ -31,6 +31,7 @@ import {
   RISICO_STIJL, RISICO_LABEL, KYC_STATUS_STIJL, STATUS_LABEL,
   DOCUMENT_LABEL, BRON_LABEL, CHECKLIST_LABEL, ACTIE_LABEL,
   VERVOLG_LABEL, VERVOLG_STIJL, label,
+  DOEL_LABEL, VOLUME_LABEL, HERKOMST_LABEL, ANTWOORD_BRON_LABEL,
 } from './kycLabels';
 
 // ── Kleine bouwstenen ────────────────────────────────────────────────────────
@@ -482,18 +483,65 @@ function VraagVastlegging({ vastlegging, tx }) {
   );
 }
 
-function VraagGedrag({ gedrag, tx }) {
+/**
+ * Wat de klant zelf opgaf over doel en gebruik (stap 6 van de aanmeldroute,
+ * 14-10-2026), precies zoals de KYC-poort het ziet. Na een wijziging staat bij
+ * elk veranderd antwoord wat het eerst was: een wijziging na goedkeuring kan de
+ * klant terug in beoordeling hebben gezet, en dan wil de beoordelaar weten wat er
+ * veranderde. De PEP-verklaring "ja" valt op: die beslist het hoger management
+ * van de principaal, niet deze beoordelaar.
+ */
+function AntwoordenKlant({ antwoorden: a, tx }) {
+  const vorige = a.vorige || {};
+  const veranderd = new Set(a.gewijzigd || []);
+  const landen = (lijst) => (Array.isArray(lijst) && lijst.length ? lijst.join(', ') : '-');
+  const pep = (w) => {
+    if (w === true) return tx('ja', 'Ja');
+    if (w === false) return tx('nee', 'Nee');
+    return '-';
+  };
+  const regels = [
+    { veld: 'doel', naam: tx('kyc_admin_doel', 'Waarvoor'), toon: (x) => label(DOEL_LABEL, x.doel) },
+    { veld: 'verwachtMaandVolume', naam: tx('kyc_admin_volume', 'Bedrag per maand'), toon: (x) => label(VOLUME_LABEL, x.verwachtMaandVolume) },
+    { veld: 'bronInkomen', naam: tx('kyc_admin_herkomst', 'Herkomst van het geld'), toon: (x) => label(HERKOMST_LABEL, x.bronInkomen) },
+    { veld: 'pep', naam: tx('kyc_admin_pep_verklaring', 'Politiek prominent (eigen verklaring)'), toon: (x) => pep(x.pep) },
+    { veld: 'landen', naam: tx('kyc_admin_opgegeven_landen', 'Naar welke landen'), toon: (x) => landen(x.landen) },
+  ];
+  const kop = [
+    a.versie ? `${tx('kyc_admin_versie', 'versie')} ${a.versie}` : null,
+    a.opgeslagenOp ? fmtDatum(a.opgeslagenOp) : null,
+    a.bron ? label(ANTWOORD_BRON_LABEL, a.bron) : null,
+  ].filter(Boolean).join(' · ');
+  const opgaf = tx('kyc_admin_verwacht', 'Wat de klant opgaf');
+
+  return (
+    <div role="group" aria-label={opgaf} className="mt-3 rounded-md border border-border p-3">
+      <div className="text-[0.7rem] uppercase tracking-[0.14em] text-gray-500">{opgaf}</div>
+      {kop && <p className="text-xs text-ink-3 mt-0.5 mb-1">{kop}</p>}
+      {regels.map((r) => (
+        <Regel key={r.veld} naam={r.naam}>
+          <span className={r.veld === 'pep' && a.pep === true ? 'text-red-600 font-medium' : undefined}>{r.toon(a)}</span>
+          {veranderd.has(r.veld) && (
+            <span className="block text-xs text-amber-700">{tx('kyc_admin_eerder', 'eerder')}: {r.toon(vorige)}</span>
+          )}
+        </Regel>
+      ))}
+    </div>
+  );
+}
+
+function VraagGedrag({ gedrag, antwoorden, tx }) {
   return (
     <Blok nummer={4} vraag={tx('kyc_admin_vraag4', 'Klopt zijn gedrag later nog met zijn verhaal?')}>
       <Regel naam={tx('kyc_admin_tx', 'Uitgevoerde overboekingen')}>{gedrag.aantalTransacties}</Regel>
       <Regel naam={tx('kyc_admin_landen', 'Landen van de ontvangers')}>
         {gedrag.bestemmingslanden?.length ? gedrag.bestemmingslanden.join(', ') : '-'}
       </Regel>
-      <Regel naam={tx('kyc_admin_verwacht', 'Wat de klant opgaf')}>
-        {gedrag.opgegevenVerwachting
-          ? gedrag.opgegevenVerwachting
-          : <span className="text-amber-700">{tx('kyc_admin_niet_gevraagd', 'nooit gevraagd')}</span>}
-      </Regel>
+      {antwoorden ? <AntwoordenKlant antwoorden={antwoorden} tx={tx} /> : (
+        <Regel naam={tx('kyc_admin_verwacht', 'Wat de klant opgaf')}>
+          <span className="text-amber-700">{tx('kyc_admin_niet_gevraagd', 'nooit gevraagd')}</span>
+        </Regel>
+      )}
       {!gedrag.vergelijkingMogelijk && (
         <p className="text-sm text-ink-2 mt-3">{gedrag.toelichting}</p>
       )}
@@ -594,7 +642,7 @@ function DossierPaneel({ dossierId, onSluit, tx }) {
                 onBijgewerkt={herlaadDossier}
               />
               <VraagVastlegging vastlegging={dossier.vastlegging} tx={tx} />
-              <VraagGedrag gedrag={dossier.gedrag} tx={tx} />
+              <VraagGedrag gedrag={dossier.gedrag} antwoorden={dossier.antwoorden} tx={tx} />
             </>
           )}
         </div>

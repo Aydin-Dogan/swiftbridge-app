@@ -95,6 +95,47 @@ export const VERVOLG_STIJL = {
   intake_uitbreiden: 'bg-accent-400/10 text-accent-600 border-accent-400/40',
 };
 
+/**
+ * De antwoorden van de klant over doel en gebruik (14-10-2026). Spiegel van de
+ * keuzes in de API (src/lib/kyc/antwoorden.js); de klant zag dezelfde keuzes
+ * in zijn eigen taal (app src/services/kycAntwoorden.js).
+ */
+export const DOEL_LABEL = {
+  familie: 'Familie ondersteunen',
+  eigen_rekening: 'Naar een eigen rekening',
+  huur: 'Huur of woning',
+  zorg: 'Zorg of medische kosten',
+  onderwijs: 'Studie of school',
+  cadeau: 'Een cadeau',
+  zakelijk: 'Voor een eigen bedrijf',
+  anders: 'Iets anders',
+};
+
+export const VOLUME_LABEL = {
+  tot_500: 'Tot € 500',
+  '500_2000': '€ 500 tot € 2.000',
+  '2000_5000': '€ 2.000 tot € 5.000',
+  '5000_10000': '€ 5.000 tot € 10.000',
+  meer: 'Meer dan € 10.000',
+};
+
+export const HERKOMST_LABEL = {
+  loon: 'Salaris',
+  eigen_bedrijf: 'Eigen bedrijf',
+  uitkering: 'Uitkering',
+  pensioen: 'Pensioen',
+  spaargeld: 'Spaargeld',
+  schenking: 'Schenking of erfenis',
+  overig: 'Een andere bron',
+};
+
+/** Waar de antwoorden vandaan komen. */
+export const ANTWOORD_BRON_LABEL = {
+  klant: 'door de klant in de app',
+  dossier: 'uit het dossier',
+  kyb: 'uit de zakelijke aanvraag',
+};
+
 /** Leest een label uit een tabel, met de code zelf als terugval. */
 export function label(tabel, code) {
   if (!code) return '-';

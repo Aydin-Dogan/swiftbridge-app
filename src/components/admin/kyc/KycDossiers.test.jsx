@@ -11,7 +11,7 @@
  * niet.
  */
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { TaalProvider } from '../../../i18n';
 import { forceerNederlands } from '../../kyb/kybTestHulp';
 import KycDossiers from './KycDossiers';
@@ -271,5 +271,52 @@ describe('het scherm neemt besluiten', () => {
     fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
     await screen.findByText(/Wat is het risico van deze klant/);
     expect(screen.queryByText(/worden actief zodra het vierogenprincipe/i)).not.toBeInTheDocument();
+  });
+});
+
+/**
+ * De antwoorden van de klant over doel en gebruik (14-10-2026). Zonder die
+ * antwoorden keurt de KYC-poort niet goed; de beoordelaar moet ze kunnen lezen,
+ * en na een wijziging zien wat er veranderde.
+ */
+describe('de antwoorden van de klant over doel en gebruik', () => {
+  const ANTWOORDEN = {
+    doel: 'onderwijs', verwachtMaandVolume: '500_2000', bronInkomen: 'uitkering', pep: true, landen: ['TR', 'DE'],
+    bron: 'klant', versie: 2, opgeslagenOp: '2026-10-14 09:12:00',
+    vorige: { doel: 'familie', verwachtMaandVolume: '500_2000', bronInkomen: 'uitkering', pep: false, landen: ['TR'] },
+    gewijzigd: ['doel', 'pep', 'landen'],
+  };
+
+  async function openMet(extra) {
+    toon(extra);
+    fireEvent.click((await screen.findAllByRole('button', { name: /bekijken/i }))[0]);
+    await screen.findByText(/Wat is het risico van deze klant/);
+  }
+
+  test('staan leesbaar in het dossier, met de PEP-verklaring opvallend', async () => {
+    await openMet({ antwoorden: ANTWOORDEN, gedrag: { ...DOSSIER.gedrag, opgegevenVerwachting: '500_2000' } });
+    const blok = screen.getByRole('group', { name: 'Wat de klant opgaf' });
+    expect(within(blok).getByText('Studie of school')).toBeInTheDocument();
+    expect(within(blok).getByText('€ 500 tot € 2.000')).toBeInTheDocument();
+    expect(within(blok).getByText('Uitkering')).toBeInTheDocument();
+    expect(within(blok).getByText('Ja')).toHaveClass('text-red-600');
+    expect(within(blok).getByText('TR, DE')).toBeInTheDocument();
+    expect(within(blok).getByText(/versie 2/)).toBeInTheDocument();
+  });
+
+  test('na een wijziging staat erbij wat de klant eerder opgaf', async () => {
+    await openMet({ antwoorden: ANTWOORDEN });
+    const blok = screen.getByRole('group', { name: 'Wat de klant opgaf' });
+    expect(within(blok).getByText(/eerder: Familie ondersteunen/)).toBeInTheDocument();
+    expect(within(blok).getByText(/eerder: Nee/)).toBeInTheDocument();
+    expect(within(blok).getByText('eerder: TR')).toBeInTheDocument();
+    // Wat niet veranderde, krijgt geen 'eerder'.
+    expect(within(blok).queryByText(/eerder: Uitkering/)).not.toBeInTheDocument();
+  });
+
+  test('zonder antwoorden zegt het dossier dat ze nog niet zijn gegeven', async () => {
+    await openMet({ antwoorden: null });
+    expect(screen.getByText('nooit gevraagd')).toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'Wat de klant opgaf' })).not.toBeInTheDocument();
   });
 });
