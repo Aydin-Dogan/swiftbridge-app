@@ -796,7 +796,7 @@ export const az = {
 
  // ── KYC Sənəd yükləməsi (NL bankı olmayan istifadəçilər üçün ehtiyat) ─────
  kyc_fallback_titel:'NL bankınız yoxdur? ID sənədinizi yükləyin',
- kyc_fallback_subtitel:'iDIN olmadan təsdiq edin — 1-2 iş günü ərzində manual yoxlama',
+ kyc_fallback_subtitel:'iDIN olmadan təsdiq edin — sənədlərinizi əməkdaşımız yoxlayır',
  kyc_upload_wizard_titel:'Sənəd yükləməsi',
  kyc_upload_wizard_subtitel:'Addım {huidig} / {totaal}',
  kyc_upload_privacy_disclaimer:'Sənədləriniz şifrələnmiş şəkildə saxlanılır və yalnız uyğunluq komandamız üçün əlçatandır.',
@@ -830,7 +830,7 @@ export const az = {
  kyc_upload_verzenden:'Göndər',
  kyc_upload_progress:'Yüklənir... %{pct}',
  kyc_upload_succes_titel:'Sənədlər alındı',
- kyc_upload_succes_omschrijving:'Sənədlərinizi aldıq. Yoxlama 1-2 iş günü çəkir.',
+ kyc_upload_succes_omschrijving:'Sənədlərinizi aldıq. Prosesin necə davam edəcəyini sizə e-poçtla bildirəcəyik.',
  kyc_upload_succes_email_info:'Doğrulama tamamlandıqda sizə e-poçt göndərəcəyik.',
  kyc_upload_sluit:'Bağla',
  kyc_camera_video_label:'Selfie üçün canlı kamera görüntüsü',

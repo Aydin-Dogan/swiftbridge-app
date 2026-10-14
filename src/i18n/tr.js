@@ -886,7 +886,7 @@ export const tr = {
 
  // ── KYC Belge yükleme (NL bankası olmayan kullanıcılar için yedek) ────────
  kyc_fallback_titel:'NL bankanız yok mu? Kimlik belgenizi yükleyin',
- kyc_fallback_subtitel:'iDIN olmadan doğrulayın — manuel inceleme 1-2 iş günü içinde',
+ kyc_fallback_subtitel:'iDIN olmadan doğrulayın — belgelerinizi bir çalışanımız inceler',
  kyc_upload_wizard_titel:'Belge yükleme',
  kyc_upload_wizard_subtitel:'Adım {huidig} / {totaal}',
  kyc_upload_privacy_disclaimer:'Belgeleriniz şifrelenmiş olarak saklanır ve yalnızca uyum ekibimiz erişebilir.',
@@ -920,7 +920,7 @@ export const tr = {
  kyc_upload_verzenden:'Gönder',
  kyc_upload_progress:'Yükleniyor... %{pct}',
  kyc_upload_succes_titel:'Belgeler alındı',
- kyc_upload_succes_omschrijving:'Belgelerinizi aldık. İnceleme 1-2 iş günü sürer.',
+ kyc_upload_succes_omschrijving:'Belgelerinizi aldık. Sürecin nasıl ilerleyeceğini size e-posta ile bildireceğiz.',
  kyc_upload_succes_email_info:'Doğrulamanız tamamlandığında size e-posta göndereceğiz.',
  kyc_upload_sluit:'Kapat',
  kyc_camera_video_label:'Selfie için canlı kamera görüntüsü',

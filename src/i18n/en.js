@@ -886,7 +886,7 @@ export const en = {
 
  // ── KYC Document upload (fallback for users without NL bank) ──────────────
  kyc_fallback_titel:'No NL bank? Upload your ID document',
- kyc_fallback_subtitel:'Verify without iDIN — manual review within 1-2 business days',
+ kyc_fallback_subtitel:'Verify without iDIN — a staff member reviews your documents',
  kyc_upload_wizard_titel:'Document upload',
  kyc_upload_wizard_subtitel:'Step {huidig} of {totaal}',
  kyc_upload_privacy_disclaimer:'Your documents are stored encrypted and only accessible to our compliance team.',
@@ -920,7 +920,7 @@ export const en = {
  kyc_upload_verzenden:'Submit',
  kyc_upload_progress:'Uploading... {pct}%',
  kyc_upload_succes_titel:'Documents received',
- kyc_upload_succes_omschrijving:'We have received your documents. Review takes 1-2 business days.',
+ kyc_upload_succes_omschrijving:'We have received your documents. We will let you know by email how things proceed.',
  kyc_upload_succes_email_info:'You\'ll get an email once your verification is complete.',
  kyc_upload_sluit:'Close',
  kyc_camera_video_label:'Live camera view for selfie',

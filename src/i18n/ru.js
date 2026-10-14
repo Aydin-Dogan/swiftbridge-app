@@ -796,7 +796,7 @@ export const ru = {
 
  // ── KYC Загрузка документа (резервный вариант без NL банка) ───────────────
  kyc_fallback_titel:'Нет NL банка? Загрузите документ',
- kyc_fallback_subtitel:'Подтвердите без iDIN — ручная проверка в течение 1-2 рабочих дней',
+ kyc_fallback_subtitel:'Подтвердите без iDIN — ваши документы проверит наш сотрудник',
  kyc_upload_wizard_titel:'Загрузка документа',
  kyc_upload_wizard_subtitel:'Шаг {huidig} из {totaal}',
  kyc_upload_privacy_disclaimer:'Ваши документы хранятся в зашифрованном виде и доступны только нашей команде комплаенса.',
@@ -830,7 +830,7 @@ export const ru = {
  kyc_upload_verzenden:'Отправить',
  kyc_upload_progress:'Загрузка... {pct}%',
  kyc_upload_succes_titel:'Документы получены',
- kyc_upload_succes_omschrijving:'Мы получили ваши документы. Проверка занимает 1-2 рабочих дня.',
+ kyc_upload_succes_omschrijving:'Мы получили ваши документы. О дальнейших шагах мы сообщим вам по электронной почте.',
  kyc_upload_succes_email_info:'Мы пришлём e-mail, как только верификация будет завершена.',
  kyc_upload_sluit:'Закрыть',
  kyc_camera_video_label:'Прямая трансляция камеры для селфи',
